@@ -1,5 +1,5 @@
-from src.utils import load
 from src.cpoint import CPoint
+from src.sidebar import Sidebar
 from manim import *
 from manim_editor import PresentationSectionType
 
@@ -8,18 +8,18 @@ config.height = 9
 
 class EllipticCurves(Scene):
     def construct(self):
-        self.next_section("Title", type=PresentationSectionType.NORMAL)
-        self.title_sequence()
-        self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
-        self.equation()
+        # self.next_section("Title", type=PresentationSectionType.NORMAL)
+        # self.title_sequence()
+        # self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
+        # self.equation()
         self.next_section("Chart", type=PresentationSectionType.NORMAL)
         group, ax = self.elliptic_chart()
         self.next_section("Operations", type=PresentationSectionType.NORMAL)
         self.operations(group)
         self.next_section("Negation", type=PresentationSectionType.NORMAL)
         self.negation(ax)
-        self.next_section("Addition", type=PresentationSectionType.NORMAL)
-        self.addition(ax)
+        # self.next_section("Addition", type=PresentationSectionType.NORMAL)
+        # self.addition(ax)
 
     def title_sequence(self):
         title = Text("Elliptic Curves")
@@ -108,15 +108,22 @@ class EllipticCurves(Scene):
         return [group, ax]
 
     def operations(self, group):
-        sidebar = Tex(load("data/operations.tex"), font_size=22)
-        self.play(group.animate.shift(LEFT * 3), Wait())
-        sidebar.next_to(group, RIGHT, buff=0.5)
+        self.play(group.animate.shift(LEFT * 3.2), Wait())
+        sidebar = Sidebar(group, "Operations", tex_filename="data/operations.tex")
         self.play(Write(sidebar), Wait())
+        self.play(FadeOut(sidebar), Wait())
+
+
 
     def negation(self, ax):
+        sidebar = Sidebar(ax, "Negation", code_filename="data/neg.py")
+        self.play(Write(sidebar), Wait())
+
         p = CPoint.from_compressed(2)
         self.draw_point(ax, "A", p)
         self.draw_point(ax, "-A", p.neg())
+
+        self.play(FadeOut(sidebar), Wait())
 
     def addition(self, ax):
         p1 = CPoint.from_compressed(2)
