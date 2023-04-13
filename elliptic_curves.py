@@ -1,12 +1,10 @@
 from src.utils import load
-from cpoint import CPoint
+from src.cpoint import CPoint
 from manim import *
 from manim_editor import PresentationSectionType
 
 config.width = 16
 config.height = 9
-
-
 
 class EllipticCurves(Scene):
     def construct(self):
