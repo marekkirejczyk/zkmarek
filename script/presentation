@@ -1,0 +1,3 @@
+#!/bin/sh
+manim --save_sections elliptic_curves.py
+manim_editor

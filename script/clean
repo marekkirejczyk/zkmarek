@@ -1,0 +1,3 @@
+#!/bin/sh
+rm -fr ./media
+rm -fr ./elliptic_curves

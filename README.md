@@ -3,17 +3,13 @@
 To run animation type with low res (for working):
 
 ```sh
-manim -pql elliptic_curves.py
+script/test
 ```
 
 To generate presentation:
 
 ```sh
-manim --save_sections elliptic_curves.py
+script/presentation
 ```
 
-To run presentation:
-
-```sh
-manim_editor
-```
+Note: Scripts are tested and work OS X.

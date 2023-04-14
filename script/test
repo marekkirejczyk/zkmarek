@@ -1,0 +1,3 @@
+#!/bin/sh
+osascript -e 'quit app "QuickTime Player"'
+manim -pql elliptic_curves.py
