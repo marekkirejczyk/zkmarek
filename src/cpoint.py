@@ -17,7 +17,7 @@ class CPoint:
     def y(self):
         return self.y
 
-    def neg(self):
+    def __neg__(self):
         return CPoint(self.x, -self.y)
 
     def __add__(self, other):
@@ -30,6 +30,3 @@ class CPoint:
         x = slope ** 2 - self.x - other.x
         y = slope * (self.x - x) - self.y
         return CPoint(x, y)
-
-    def to_coord(self, ax):
-        return ax.c2p(self.x, self.y)
