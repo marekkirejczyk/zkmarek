@@ -22,12 +22,12 @@ class EllipticCurves(Scene):
         self.next_section("Operations", type=PresentationSectionType.NORMAL)
         operations = self.operations(group, ax)
 
-        self.next_section("Negation", type=PresentationSectionType.NORMAL)
-        self.play(FadeOut(operations), Wait())
-        negation = self.negation(ax)
+        # self.next_section("Negation", type=PresentationSectionType.NORMAL)
+        # self.play(FadeOut(operations), Wait())
+        # negation = self.negation(ax)
 
         self.next_section("Addition", type=PresentationSectionType.NORMAL)
-        self.play(FadeOut(negation), Wait())
+        # self.play(FadeOut(negation), Wait())
         addition = self.addition(ax)
 
         self.play(FadeOut(addition), Wait())
@@ -143,6 +143,7 @@ class EllipticCurves(Scene):
         line2 = LineThroughPoints(p3, p4)
         self.play(Write(line2), Wait(2))
         self.play(*p3.animate_appear(), Wait())
-        return VGroup(p1, p2, p3, p4, line1, line2)
+        sidebar = Sidebar(ax, "Addition", tex_filename="data/add.tex", code_filename="data/add.py")
+        return VGroup(p1, p2, p3, p4, line1, line2, sidebar)
 
 

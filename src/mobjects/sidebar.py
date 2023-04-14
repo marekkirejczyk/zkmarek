@@ -8,13 +8,13 @@ class Sidebar(VGroup):
         self.add(label)
         bottom = label
         if tex_filename:
-            tex = Tex(load(tex_filename))
+            tex = Tex(load(tex_filename), font_size=32)
             tex.next_to(bottom, DOWN, buff=0.5)
             self.add(tex)
             bottom = tex
         if code_filename:
             code = Code(file_name=code_filename, tab_width=2, background="rectangle",
-                language="Python", font="Monospace", font_size=15)
+                language="Python", font="Monospace", font_size=14)
             code.next_to(bottom, DOWN, buff=0.5)
             self.add(code)
         self.next_to(ax, RIGHT, buff=0.5)
