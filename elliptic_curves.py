@@ -11,6 +11,7 @@ from src.presentation import Presentation
 from src.slides.equation import EquationSlide
 from src.slides.operations import OperationsSlide
 from src.slides.title import TitleSlide
+from src.slides.negation import NegationSlide
 
 config.width = 16
 config.height = 9
@@ -26,30 +27,15 @@ class EllipticCurves(Scene):
                 TitleSlide(),
                 EquationSlide(),
                 OperationsSlide(),
+                NegationSlide()
             ]
         Presentation(self).play(scenes)
 
         # self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
-        # operations = self.operations(group, ax)
-
         # self.next_section("Negation", type=PresentationSectionType.NORMAL)
-        # self.play(FadeOut(operations), Wait())
-        # negation = self.negation(ax)
-
         # self.next_section("Addition", type=PresentationSectionType.NORMAL)
-        # self.play(FadeOut(negation), Wait())
         # addition = self.addition(ax)
-
         # self.play(FadeOut(addition), Wait())
-
-    def negation(self, ax):
-        sidebar = Sidebar("Negation", tex_filename="data/neg.tex", code_filename="data/neg.py")
-        a = CPoint.from_compressed(2)
-        p1 = PointOnCurve(ax, "A", a, include_lines=True)
-        p2 = PointOnCurve(ax, "-A", -a, include_lines=True)
-        self.play(p1.animate_appear(), p2.animate_appear(), Wait())
-        self.play(Write(sidebar), Wait())
-        return VGroup(p1, p2, sidebar)
 
     def addition(self, ax):
         a = CPoint.from_compressed(2)
