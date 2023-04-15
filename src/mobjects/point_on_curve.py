@@ -21,7 +21,7 @@ class PointOnCurve(VGroup):
         if self.include_lines:
             result.append(Create(self.lines))
         result.append(Write(self.label))
-        return result
+        return AnimationGroup(*result)
 
     def to_coord(self):
         return self.ax.c2p(self.p.x, self.p.y)

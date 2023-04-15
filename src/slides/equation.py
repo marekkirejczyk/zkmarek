@@ -1,0 +1,59 @@
+from manim import *
+
+
+class EquationSlide(VGroup):
+    def __init__(self) -> None:
+        VGroup.__init__(self)
+
+        self.weierstrass_form = Text(r"Weierstrass form")
+        self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b")
+        self.secp256k1_label = Text(r"Secp256k1 equation")
+        self.secp_equation1 = self.weierstrass_equation.copy()
+        self.secp_equation2 = MathTex(r"y^2 = x^3 + 0x + 7")
+        self.secp_equation3 = MathTex(r"y^2 = x^3 + 7")
+        self.a = MathTex(r"a = 0", color=YELLOW)
+        self.b = MathTex(r"b = 7", color=YELLOW)
+        self.ab = VGroup(self.a, self.b).arrange_submobjects()
+
+        self.secp_equation1[0][6:7].set_color(YELLOW)
+        self.secp_equation1[0][9:10].set_color(YELLOW)
+        self.secp_equation2[0][6:7].set_color(YELLOW)
+        self.secp_equation2[0][9:10].set_color(YELLOW)
+
+        # postions
+        self.weierstrass_form.next_to(self.weierstrass_equation, UP)
+        self.secp256k1_label.next_to(self.weierstrass_equation, DOWN, buff=1)
+        self.secp_equation1.generate_target()
+        self.secp_equation1.target.next_to(self.secp256k1_label, DOWN)
+        self.secp_equation2.next_to(self.secp256k1_label, DOWN)
+        self.secp_equation3.next_to(self.secp256k1_label, DOWN)
+        self.ab.next_to(self.secp_equation2, DOWN)
+
+    def animate_in(self):
+        return [
+            Write(self.weierstrass_form),
+            Write(self.weierstrass_equation),
+            Wait(),
+            Write(self.secp256k1_label),
+            Write(self.secp_equation1),
+            MoveToTarget(self.secp_equation1),
+            FadeIn(self.ab),
+            AnimationGroup(
+                ReplacementTransform(self.secp_equation1, self.secp_equation2),
+                FadeOut(self.ab),
+            ),
+            Wait(),
+            Wait(),
+            ReplacementTransform(self.secp_equation2, self.secp_equation3),
+            Wait(),
+        ]
+
+    def animate_out(self):
+        return [
+            FadeOut(self.weierstrass_form),
+            FadeOut(self.weierstrass_equation),
+            Wait(),
+            FadeOut(self.secp256k1_label),
+            FadeOut(self.secp_equation3),
+            Wait(),
+        ]
