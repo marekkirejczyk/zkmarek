@@ -1,3 +1,4 @@
+from src.presentation import Presentation
 from src.cpoint import CPoint
 from src.mobjects.sidebar import Sidebar
 from src.mobjects.line_through_points import LineThroughPoints
@@ -13,11 +14,15 @@ config.height = 9
 
 class EllipticCurves(Scene):
     def construct(self):
-        self.play_slide(TitleSlide())
-        self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
-        self.play_slide(EquationSlide())
+        scenes = [
+            TitleSlide(),
+            EquationSlide()
+        ]
+        Presentation(self).play(scenes)
 
+        # self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
         # self.next_section("Chart", type=PresentationSectionType.NORMAL)
+
         # group, ax = self.elliptic_chart()
 
         # self.next_section("Operations", type=PresentationSectionType.NORMAL)
@@ -33,11 +38,7 @@ class EllipticCurves(Scene):
 
         # self.play(FadeOut(addition), Wait())
 
-    def play_slide(self, slide):
-        for a in slide.animate_in():
-            self.play(a, Wait())
-        for a in slide.animate_out():
-            self.play(a, Wait())
+
 
     def elliptic_chart(self):
         chart = ContinuousEllipticChart()
@@ -84,5 +85,3 @@ class EllipticCurves(Scene):
         self.play(p3.animate_appear(), Wait())
         sidebar = Sidebar(ax, "Addition", tex_filename="data/add.tex", code_filename="data/add.py")
         return VGroup(p1, p2, p3, p4, line1, line2, sidebar)
-
-
