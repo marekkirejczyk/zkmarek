@@ -12,6 +12,7 @@ from src.slides.equation import EquationSlide
 from src.slides.operations import OperationsSlide
 from src.slides.title import TitleSlide
 from src.slides.negation import NegationSlide
+from src.slides.addition import AdditionSlide
 
 config.width = 16
 config.height = 9
@@ -27,31 +28,11 @@ class EllipticCurves(Scene):
                 TitleSlide(),
                 EquationSlide(),
                 OperationsSlide(),
-                NegationSlide()
+                NegationSlide(),
+                AdditionSlide()
             ]
         Presentation(self).play(scenes)
 
         # self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
         # self.next_section("Negation", type=PresentationSectionType.NORMAL)
         # self.next_section("Addition", type=PresentationSectionType.NORMAL)
-        # addition = self.addition(ax)
-        # self.play(FadeOut(addition), Wait())
-
-    def addition(self, ax):
-        a = CPoint.from_compressed(2)
-        b = CPoint.from_compressed(3)
-        c = a + b
-        p1 = PointOnCurve(ax, "A", a)
-        p2 = PointOnCurve(ax, "B", b)
-        p3 = PointOnCurve(ax, "A + B", c, label_direction=LEFT)
-        p4 = PointOnCurve(ax, "-(A + B)", -c, label_direction=LEFT)
-        self.play(p1.animate_appear(), Wait())
-        self.play(p2.animate_appear(), Wait())
-        line1 = LineThroughPoints(p1, p2)
-        self.play(Write(line1), Wait(2))
-        self.play(p4.animate_appear(), Wait())
-        line2 = LineThroughPoints(p3, p4)
-        self.play(Write(line2), Wait(2))
-        self.play(p3.animate_appear(), Wait())
-        sidebar = Sidebar("Addition", tex_filename="data/add.tex", code_filename="data/add.py")
-        return VGroup(p1, p2, p3, p4, line1, line2, sidebar)
