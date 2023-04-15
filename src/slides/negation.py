@@ -10,7 +10,7 @@ class NegationSlide(VGroup):
     def __init__(self):
         VGroup.__init__(self)
         self.chart = ContinuousEllipticChart()
-        self.chart.shift(LEFT * 3.2)
+        self.chart.align_on_border(LEFT)
         self.sidebar = Sidebar("Negation", tex_filename="data/neg.tex", code_filename="data/neg.py")
         a = CPoint.from_compressed(2)
         self.p1 = PointOnCurve(self.chart.ax, "A", a, include_lines=True)
