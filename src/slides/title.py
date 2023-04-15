@@ -11,7 +11,3 @@ class TitleSlide(VGroup):
 
     def animate_out(self):
         return [FadeOut(self.title)]
-
-
-
-

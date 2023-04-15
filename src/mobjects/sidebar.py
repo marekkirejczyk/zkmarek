@@ -2,7 +2,7 @@ from manim import *
 from src.utils import load
 
 class Sidebar(VGroup):
-    def __init__(self, ax, title, code_filename=None, tex_filename=None):
+    def __init__(self, title, code_filename=None, tex_filename=None):
         VGroup.__init__(self)
         label = Tex(title)
         self.add(label)
@@ -17,5 +17,5 @@ class Sidebar(VGroup):
                 language="Python", font="Monospace", font_size=14)
             code.next_to(bottom, DOWN, buff=0.5)
             self.add(code)
-        self.next_to(ax, RIGHT, buff=0.5)
         self.align_on_border(UP)
+        self.align_on_border(RIGHT)

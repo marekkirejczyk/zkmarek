@@ -1,4 +1,6 @@
 from manim import *
+import types
+
 
 class Presentation():
     def __init__(self, scene):
@@ -9,7 +11,14 @@ class Presentation():
             self.play_slide(slide)
 
     def play_slide(self, slide):
-        for a in slide.animate_in():
-            self.scene.play(a, Wait())
-        for a in slide.animate_out():
-            self.scene.play(a, Wait())
+        self.play_animation(slide.animate_in())
+        self.play_animation(slide.animate_out())
+
+    def play_animation(self, item):
+        if isinstance(item, list):
+            for a in item:
+                self.play_animation(a)
+        elif isinstance(item, types.LambdaType):
+            item()
+        else:
+            self.scene.play(item, Wait())

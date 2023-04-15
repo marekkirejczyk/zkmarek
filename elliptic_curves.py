@@ -1,31 +1,35 @@
-from src.presentation import Presentation
+import os
+
+from manim import *
+
 from src.cpoint import CPoint
-from src.mobjects.sidebar import Sidebar
+from src.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from src.mobjects.line_through_points import LineThroughPoints
 from src.mobjects.point_on_curve import PointOnCurve
-from src.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
-from src.slides.title import TitleSlide
+from src.mobjects.sidebar import Sidebar
+from src.presentation import Presentation
 from src.slides.equation import EquationSlide
-from manim import *
-from manim_editor import PresentationSectionType
+from src.slides.operations import OperationsSlide
+from src.slides.title import TitleSlide
 
 config.width = 16
 config.height = 9
 
 class EllipticCurves(Scene):
     def construct(self):
-        scenes = [
-            TitleSlide(),
-            EquationSlide()
-        ]
+        if "MANIM_SLIDE" in os.environ:
+            cls_name = os.environ["MANIM_SLIDE"]
+            cls = globals()[cls_name]();
+            scenes = [cls]
+        else:
+            scenes = [
+                TitleSlide(),
+                EquationSlide(),
+                OperationsSlide(),
+            ]
         Presentation(self).play(scenes)
 
         # self.next_section("Elliptic Curve equation", type=PresentationSectionType.NORMAL)
-        # self.next_section("Chart", type=PresentationSectionType.NORMAL)
-
-        # group, ax = self.elliptic_chart()
-
-        # self.next_section("Operations", type=PresentationSectionType.NORMAL)
         # operations = self.operations(group, ax)
 
         # self.next_section("Negation", type=PresentationSectionType.NORMAL)
@@ -38,28 +42,8 @@ class EllipticCurves(Scene):
 
         # self.play(FadeOut(addition), Wait())
 
-
-
-    def elliptic_chart(self):
-        chart = ContinuousEllipticChart()
-        self.play(Create(chart))
-        return [chart, chart.ax]
-
-    def operations(self, group, ax):
-        a = CPoint.from_compressed(1)
-        p1 = PointOnCurve(ax, "A(x, y)", a)
-        p2 = PointOnCurve(ax, "A", a, include_coords=True)
-        self.play(p1.animate_appear(), Wait())
-        self.play(ReplacementTransform(p1, p2), Wait())
-        self.play(FadeOut(p2), Wait())
-
-        self.play(group.animate.shift(LEFT * 3.2), Wait())
-        sidebar = Sidebar(group, "Operations", tex_filename="data/operations.tex")
-        self.play(Write(sidebar), Wait())
-        self.play(FadeOut(sidebar), Wait())
-
     def negation(self, ax):
-        sidebar = Sidebar(ax, "Negation", tex_filename="data/neg.tex", code_filename="data/neg.py")
+        sidebar = Sidebar("Negation", tex_filename="data/neg.tex", code_filename="data/neg.py")
         a = CPoint.from_compressed(2)
         p1 = PointOnCurve(ax, "A", a, include_lines=True)
         p2 = PointOnCurve(ax, "-A", -a, include_lines=True)
@@ -83,5 +67,5 @@ class EllipticCurves(Scene):
         line2 = LineThroughPoints(p3, p4)
         self.play(Write(line2), Wait(2))
         self.play(p3.animate_appear(), Wait())
-        sidebar = Sidebar(ax, "Addition", tex_filename="data/add.tex", code_filename="data/add.py")
+        sidebar = Sidebar("Addition", tex_filename="data/add.tex", code_filename="data/add.py")
         return VGroup(p1, p2, p3, p4, line1, line2, sidebar)

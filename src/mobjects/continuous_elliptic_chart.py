@@ -1,6 +1,8 @@
 from manim import *
 
 class ContinuousEllipticChart(VGroup):
+    ax = None
+
     def __init__(self, **kwargs):
         VGroup.__init__(self, **kwargs)
         self.ax = Axes(
@@ -22,5 +24,5 @@ class ContinuousEllipticChart(VGroup):
         self.add(self.ax, self.labels, self.graph)
 
     def animate_appear(self):
-        return Succession(Create(self.ax), Create(self.labels), Create(self.graph))
+        return [Create(self.ax), Create(self.labels), Write(self.graph)]
 
