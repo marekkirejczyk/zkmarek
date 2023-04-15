@@ -1,15 +1,23 @@
 # Manim animations
 
-To run animation type with low res (for working):
+Generate and watch animation in low res for testing:
 
 ```sh
 script/test
 ```
 
-To generate presentation:
+Generate and watch single slide:
+```sh
+MANIM_SLIDE=<slide_class_name> script/test
+```
+
+Generate presentation:
 
 ```sh
 script/presentation
 ```
 
-Note: Scripts are tested and work OS X.
+
+
+Note: Scripts are tested and work on OS X.
+

@@ -20,12 +20,12 @@ class AdditionSlide(VGroup):
         self.p2 = PointOnCurve(self.chart.ax, "B", b)
         self.p3 = PointOnCurve(self.chart.ax, "A + B", c, label_direction=LEFT)
         self.p4 = PointOnCurve(self.chart.ax, "-(A + B)", -c, label_direction=LEFT)
-        self.line1 = LineThroughPoints(self.p1, self.p4)
+        self.line1 = LineThroughPoints(self.p2, self.p4)
         self.line2 = LineThroughPoints(self.p4, self.p3)
         self.sidebar = Sidebar(
             "Addition", tex_filename="data/add.tex", code_filename="data/add.py"
         )
-        self.add(self.p1, self.p2, self.p3, self.p4, self.line1, self.line2, self.sidebar)
+        self.add(self.chart, self.p1, self.p2, self.p3, self.p4, self.line1, self.line2, self.sidebar)
 
     def animate_in(self):
         return [
