@@ -1,13 +1,13 @@
 from manim import *
 
-class TitleSlide(VGroup):
-    def __init__(self) -> None:
-        VGroup.__init__(self)
-        self.title = Text("Elliptic Curves")
-        pass
+from .slide_base import NewSection, SlideBase
+
+
+class TitleSlide(SlideBase):
+    def __init__(self, title) -> None:
+        SlideBase.__init__(self)
+        self.title = Text(title)
+        self.add(self.title)
 
     def animate_in(self):
         return [Write(self.title)]
-
-    def animate_out(self):
-        return [FadeOut(self.title)]

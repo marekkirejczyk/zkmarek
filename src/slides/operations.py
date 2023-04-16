@@ -1,21 +1,24 @@
 from manim import *
-from ..mobjects.sidebar import Sidebar
+
+from ..cpoint import CPoint
 from ..mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from ..mobjects.point_on_curve import PointOnCurve
-from ..cpoint import CPoint
+from ..mobjects.sidebar import Sidebar
+from .slide_base import NewSection, SlideBase
 
 
-class OperationsSlide(VGroup):
+class OperationsSlide(SlideBase):
     def __init__(self):
-        VGroup.__init__(self)
+        SlideBase.__init__(self)
         self.chart = ContinuousEllipticChart()
-        self.a = CPoint.from_compressed(1)
-        self.p1 = PointOnCurve(self.chart.ax, "A(x, y)", self.a)
-        self.p2 = PointOnCurve(self.chart.ax, "A", self.a, include_coords=True)
+        a = CPoint.from_compressed(1)
+        self.p1 = PointOnCurve(self.chart.ax, "A(x, y)", a)
+        self.p2 = PointOnCurve(self.chart.ax, "A", a, include_coords=True)
         self.sidebar = Sidebar("Operations", tex_filename="data/operations.tex")
 
     def animate_in(self):
         return [
+            NewSection("Operations"),
             self.chart.animate_appear(),
             self.p1.animate_appear(),
             VGroup(self.p1, self.chart).animate.align_on_border(LEFT),
@@ -25,4 +28,4 @@ class OperationsSlide(VGroup):
         ]
 
     def animate_out(self):
-        return [FadeOut(self.p2), FadeOut(self.sidebar)]
+        return [FadeOut(self.p2), FadeOut(self.chart), FadeOut(self.sidebar)]

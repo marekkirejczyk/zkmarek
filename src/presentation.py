@@ -1,5 +1,8 @@
-from manim import *
 import types
+
+from manim import *
+
+from .slides.slide_base import NewSection
 
 
 class Presentation():
@@ -20,5 +23,7 @@ class Presentation():
                 self.play_animation(a)
         elif isinstance(item, types.LambdaType):
             item()
+        elif isinstance(item, NewSection):
+            self.scene.next_section(item.title, item.type)
         else:
             self.scene.play(item, Wait())

@@ -5,11 +5,12 @@ from ..mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from ..mobjects.line_through_points import LineThroughPoints
 from ..mobjects.point_on_curve import PointOnCurve
 from ..mobjects.sidebar import Sidebar
+from .slide_base import NewSection, SlideBase
 
 
-class AdditionSlide(VGroup):
+class AdditionSlide(SlideBase):
     def __init__(self):
-        VGroup.__init__(self)
+        SlideBase.__init__(self)
         self.chart = ContinuousEllipticChart()
         self.chart.align_on_border(LEFT)
 
@@ -29,6 +30,7 @@ class AdditionSlide(VGroup):
 
     def animate_in(self):
         return [
+            NewSection("Addition"),
             Create(self.chart),
             self.p1.animate_appear(),
             self.p2.animate_appear(),
@@ -38,6 +40,3 @@ class AdditionSlide(VGroup):
             self.p3.animate_appear(),
             Write(self.sidebar)
         ]
-
-    def animate_out(self):
-        return [FadeOut(self)]

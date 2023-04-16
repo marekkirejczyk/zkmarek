@@ -1,9 +1,11 @@
 from manim import *
 
+from .slide_base import NewSection, SlideBase
 
-class EquationSlide(VGroup):
+
+class EquationSlide(SlideBase):
     def __init__(self) -> None:
-        VGroup.__init__(self)
+        SlideBase.__init__(self)
 
         self.weierstrass_form = Text(r"Weierstrass form")
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b")
@@ -31,6 +33,7 @@ class EquationSlide(VGroup):
 
     def animate_in(self):
         return [
+            NewSection("Elliptic Curve equation"),
             Write(self.weierstrass_form),
             Write(self.weierstrass_equation),
             Wait(),
@@ -52,8 +55,6 @@ class EquationSlide(VGroup):
         return [
             FadeOut(self.weierstrass_form),
             FadeOut(self.weierstrass_equation),
-            Wait(),
             FadeOut(self.secp256k1_label),
-            FadeOut(self.secp_equation3),
-            Wait(),
+            FadeOut(self.secp_equation3)
         ]
