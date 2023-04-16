@@ -20,9 +20,10 @@ class OperationsSlide(SlideBase):
         return [
             self.chart.animate_appear(),
             self.p1.animate_appear(),
-            VGroup(self.p1, self.chart).animate.align_on_border(LEFT),
-            lambda : self.p2.position_update(),
             ReplacementTransform(self.p1, self.p2),
+            NewSection("Sidebar"),
+            VGroup(self.p2, self.chart).animate.align_on_border(LEFT),
+            lambda : self.p2.position_update(),
             Write(self.sidebar),
         ]
 
