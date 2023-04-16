@@ -9,7 +9,7 @@ from .slide_base import NewSection, SlideBase
 
 class OperationsSlide(SlideBase):
     def __init__(self):
-        SlideBase.__init__(self)
+        SlideBase.__init__(self, title="Operations")
         self.chart = ContinuousEllipticChart()
         a = CPoint.from_compressed(1)
         self.p1 = PointOnCurve(self.chart.ax, "A(x, y)", a)
@@ -18,7 +18,6 @@ class OperationsSlide(SlideBase):
 
     def animate_in(self):
         return [
-            NewSection("Operations"),
             self.chart.animate_appear(),
             self.p1.animate_appear(),
             VGroup(self.p1, self.chart).animate.align_on_border(LEFT),

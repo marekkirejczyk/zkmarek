@@ -2,6 +2,7 @@
 __pycache__
 media/
 elliptic_curves/
+EllipticCurves/
 channeldata.json
 .vscode
 noarch

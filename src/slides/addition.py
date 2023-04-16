@@ -10,7 +10,7 @@ from .slide_base import NewSection, SlideBase
 
 class AdditionSlide(SlideBase):
     def __init__(self):
-        SlideBase.__init__(self)
+        SlideBase.__init__(self, title="Addition")
         self.chart = ContinuousEllipticChart()
         self.chart.align_on_border(LEFT)
 
@@ -30,12 +30,13 @@ class AdditionSlide(SlideBase):
 
     def animate_in(self):
         return [
-            NewSection("Addition"),
             Create(self.chart),
             self.p1.animate_appear(),
             self.p2.animate_appear(),
+            NewSection("Line through points"),
             Write(self.line1),
             self.p4.animate_appear(),
+            NewSection("Mirror line"),
             Write(self.line2),
             self.p3.animate_appear(),
             Write(self.sidebar)

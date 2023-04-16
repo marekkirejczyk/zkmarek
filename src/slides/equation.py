@@ -5,7 +5,7 @@ from .slide_base import NewSection, SlideBase
 
 class EquationSlide(SlideBase):
     def __init__(self) -> None:
-        SlideBase.__init__(self)
+        SlideBase.__init__(self, title="Elliptic Curve equation")
 
         self.weierstrass_form = Text(r"Weierstrass form")
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b")
@@ -33,10 +33,9 @@ class EquationSlide(SlideBase):
 
     def animate_in(self):
         return [
-            NewSection("Elliptic Curve equation"),
             Write(self.weierstrass_form),
             Write(self.weierstrass_equation),
-            Wait(),
+            NewSection("Secp256k1"),
             Write(self.secp256k1_label),
             Write(self.secp_equation1),
             MoveToTarget(self.secp_equation1),
@@ -45,10 +44,7 @@ class EquationSlide(SlideBase):
                 ReplacementTransform(self.secp_equation1, self.secp_equation2),
                 FadeOut(self.ab),
             ),
-            Wait(),
-            Wait(),
             ReplacementTransform(self.secp_equation2, self.secp_equation3),
-            Wait(),
         ]
 
     def animate_out(self):

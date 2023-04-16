@@ -1,6 +1,7 @@
 import types
 
 from manim import *
+from manim_editor import PresentationSectionType
 
 from .slides.slide_base import NewSection
 
@@ -10,11 +11,14 @@ class Presentation():
         self.scene = scene
 
     def play(self, slides):
-        for slide in slides:
-            self.play_slide(slide)
+        for (i, slide) in enumerate(slides):
+            next_slide = slides[i+1] if i < len(slides) - 1 else None
+            self.play_slide(slide, next_slide)
 
-    def play_slide(self, slide):
+    def play_slide(self, slide, next_slide):
         self.play_animation(slide.animate_in())
+        if next_slide:
+            self.scene.next_section(next_slide.title, PresentationSectionType.NORMAL)
         self.play_animation(slide.animate_out())
 
     def play_animation(self, item):
