@@ -13,8 +13,8 @@ class SlideBase(VGroup):
         VGroup.__init__(self, **kwargs)
         self.title=title
 
-    def animate_in(self):
+    def animate_in(self, scene):
         return []
 
-    def animate_out(self):
+    def animate_out(self, scene):
         return [FadeOut(self)]

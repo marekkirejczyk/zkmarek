@@ -20,7 +20,7 @@ class NegationSlide(SlideBase):
         self.p2 = PointOnCurve(self.chart.ax, "-A", -a, include_lines=True)
         self.add(self.p1, self.p2, self.chart, self.sidebar)
 
-    def animate_in(self):
+    def animate_in(self, scene):
         return [
             Create(self.chart),
             self.p1.animate_appear(),

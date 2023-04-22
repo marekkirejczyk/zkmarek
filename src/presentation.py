@@ -16,10 +16,10 @@ class Presentation():
             self.play_slide(slide, next_slide)
 
     def play_slide(self, slide, next_slide):
-        self.play_animation(slide.animate_in())
+        self.play_animation(slide.animate_in(self.scene))
         if next_slide is not None:
             self.scene.next_section(next_slide.title, PresentationSectionType.NORMAL)
-        self.play_animation(slide.animate_out())
+        self.play_animation(slide.animate_out(self.scene))
 
     def play_animation(self, item):
         if isinstance(item, list):

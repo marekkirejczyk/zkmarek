@@ -11,3 +11,6 @@ class LineThroughPoints(DashedLine):
             color=DARK_GREY,
             **kwargs
         )
+
+    def update_start_and_end(self, p1, p2):
+        self.put_start_and_end_on(p1.to_coord(), p2.to_coord())

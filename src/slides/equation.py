@@ -31,7 +31,7 @@ class EquationSlide(SlideBase):
         self.secp_equation3.next_to(self.secp256k1_label, DOWN)
         self.ab.next_to(self.secp_equation2, DOWN)
 
-    def animate_in(self):
+    def animate_in(self, scene):
         return [
             Write(self.weierstrass_form),
             Write(self.weierstrass_equation),
@@ -47,7 +47,7 @@ class EquationSlide(SlideBase):
             ReplacementTransform(self.secp_equation2, self.secp_equation3),
         ]
 
-    def animate_out(self):
+    def animate_out(self, scene):
         return [
             FadeOut(self.weierstrass_form),
             FadeOut(self.weierstrass_equation),

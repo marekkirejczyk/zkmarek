@@ -9,5 +9,5 @@ class TitleSlide(SlideBase):
         self.title_label = Text(title)
         self.add(self.title_label)
 
-    def animate_in(self):
+    def animate_in(self, scene):
         return [Write(self.title_label)]
