@@ -5,7 +5,7 @@ from ..mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from ..mobjects.line_through_points import LineThroughPoints
 from ..mobjects.point_on_curve import PointOnCurve
 from ..mobjects.sidebar import Sidebar
-from .slide_base import NewSection, SlideBase
+from .slide_base import SlideBase
 
 
 class AdditionSlide(SlideBase):
@@ -61,7 +61,6 @@ class AdditionSlide(SlideBase):
         scene.next_section("Show math and code")
         scene.play(Write(self.sidebar))
 
-        return []
 
     def animate_out(self, scene):
         scene.play(
@@ -74,4 +73,4 @@ class AdditionSlide(SlideBase):
             FadeOut(self.line2),
             FadeOut(self.sidebar),
         )
-        return []
+

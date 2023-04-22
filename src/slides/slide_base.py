@@ -1,10 +1,4 @@
 from manim import *
-from manim_editor import PresentationSectionType
-
-class NewSection():
-    def __init__(self, title, type=PresentationSectionType.NORMAL):
-        self.title = title
-        self.type = type
 
 class SlideBase(VGroup):
     title = ""
@@ -14,7 +8,7 @@ class SlideBase(VGroup):
         self.title=title
 
     def animate_in(self, scene):
-        return []
+        pass
 
     def animate_out(self, scene):
-        return [FadeOut(self)]
+        scene.play(FadeOut(self))

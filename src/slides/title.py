@@ -1,6 +1,6 @@
 from manim import *
 
-from .slide_base import NewSection, SlideBase
+from .slide_base import  SlideBase
 
 
 class TitleSlide(SlideBase):
@@ -10,4 +10,7 @@ class TitleSlide(SlideBase):
         self.add(self.title_label)
 
     def animate_in(self, scene):
-        return [Write(self.title_label)]
+        scene.play(Write(self.title_label))
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.title_label))

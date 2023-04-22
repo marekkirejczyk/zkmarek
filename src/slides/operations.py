@@ -4,7 +4,7 @@ from ..cpoint import CPoint
 from ..mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from ..mobjects.point_on_curve import PointOnCurve
 from ..mobjects.sidebar import Sidebar
-from .slide_base import NewSection, SlideBase
+from .slide_base import SlideBase
 
 
 class OperationsSlide(SlideBase):
@@ -17,14 +17,14 @@ class OperationsSlide(SlideBase):
         self.sidebar = Sidebar("Operations", tex_filename="data/operations.tex")
 
     def animate_in(self, scene):
-        return [
-            self.chart.animate_appear(),
-            self.p1.animate_appear(),
-            ReplacementTransform(self.p1, self.p2),
-            NewSection("Sidebar"),
-            VGroup(self.p2, self.chart).animate.align_on_border(LEFT),
-            Write(self.sidebar),
-        ]
+        scene.play(self.chart.animate_appear())
+        scene.play(self.p1.animate_appear())
+        scene.play(ReplacementTransform(self.p1, self.p2))
+        scene.next_section("Sidebar"),
+        scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT))
+        scene.play(Write(self.sidebar))
 
     def animate_out(self, scene):
-        return [FadeOut(self.p2), FadeOut(self.chart), FadeOut(self.sidebar)]
+        scene.play(FadeOut(self.p2))
+        scene.play(FadeOut(self.chart))
+        scene.play(FadeOut(self.sidebar))

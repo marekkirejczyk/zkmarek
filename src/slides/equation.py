@@ -1,6 +1,6 @@
 from manim import *
 
-from .slide_base import NewSection, SlideBase
+from .slide_base import SlideBase
 
 
 class EquationSlide(SlideBase):
@@ -22,7 +22,7 @@ class EquationSlide(SlideBase):
         self.secp_equation2[0][6:7].set_color(YELLOW)
         self.secp_equation2[0][9:10].set_color(YELLOW)
 
-        # postions
+        # positions
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
         self.secp256k1_label.next_to(self.weierstrass_equation, DOWN, buff=1)
         self.secp_equation1.generate_target()
@@ -32,25 +32,27 @@ class EquationSlide(SlideBase):
         self.ab.next_to(self.secp_equation2, DOWN)
 
     def animate_in(self, scene):
-        return [
-            Write(self.weierstrass_form),
-            Write(self.weierstrass_equation),
-            NewSection("Secp256k1"),
-            Write(self.secp256k1_label),
-            Write(self.secp_equation1),
-            MoveToTarget(self.secp_equation1),
-            FadeIn(self.ab),
-            AnimationGroup(
-                ReplacementTransform(self.secp_equation1, self.secp_equation2),
-                FadeOut(self.ab),
-            ),
-            ReplacementTransform(self.secp_equation2, self.secp_equation3),
-        ]
+        scene.play(Write(self.weierstrass_form))
+        scene.play(Write(self.weierstrass_equation))
+
+        scene.next_section("Secp256k1")
+        scene.play(Write(self.secp256k1_label))
+        scene.play(Write(self.secp_equation1))
+        scene.play(MoveToTarget(self.secp_equation1))
+        scene.play(FadeIn(self.ab))
+        scene.play(AnimationGroup(
+                    ReplacementTransform(self.secp_equation1, self.secp_equation2),
+                    FadeOut(self.ab),
+                ))
+        scene.play(ReplacementTransform(self.secp_equation2, self.secp_equation3))
+
 
     def animate_out(self, scene):
-        return [
-            FadeOut(self.weierstrass_form),
-            FadeOut(self.weierstrass_equation),
-            FadeOut(self.secp256k1_label),
-            FadeOut(self.secp_equation3)
-        ]
+        scene.play(
+            Succession(
+                FadeOut(self.weierstrass_form),
+                FadeOut(self.weierstrass_equation),
+                FadeOut(self.secp256k1_label),
+                FadeOut(self.secp_equation3),
+            )
+        )

@@ -25,4 +25,4 @@ class ContinuousEllipticChart(VGroup):
         self.add(self.ax, self.labels, self.graph)
 
     def animate_appear(self):
-        return [Create(self.ax), Create(self.labels), Write(self.graph)]
+        return Succession(Create(self.ax), Create(self.labels), Write(self.graph))

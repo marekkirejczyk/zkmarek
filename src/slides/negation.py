@@ -4,7 +4,7 @@ from ..cpoint import CPoint
 from ..mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from ..mobjects.point_on_curve import PointOnCurve
 from ..mobjects.sidebar import Sidebar
-from .slide_base import NewSection, SlideBase
+from .slide_base import SlideBase
 
 
 class NegationSlide(SlideBase):
@@ -21,9 +21,7 @@ class NegationSlide(SlideBase):
         self.add(self.p1, self.p2, self.chart, self.sidebar)
 
     def animate_in(self, scene):
-        return [
-            Create(self.chart),
-            self.p1.animate_appear(),
-            self.p2.animate_appear(),
-            Write(self.sidebar),
-        ]
+        scene.play(Create(self.chart))
+        scene.play(self.p1.animate_appear())
+        scene.play(self.p2.animate_appear())
+        scene.play(Write(self.sidebar))
