@@ -23,8 +23,8 @@ class AdditionSlide(SlideBase):
         self.p2 = PointOnCurve(self.chart.ax, "B", b)
         self.p3 = PointOnCurve(self.chart.ax, "A + B", c, label_direction=LEFT)
         self.p4 = PointOnCurve(self.chart.ax, "-(A + B)", -c, label_direction=LEFT)
-        self.line1 = LineThroughPoints(self.p2, self.p4)
-        self.line2 = LineThroughPoints(self.p4, self.p3)
+        self.line1 = LineThroughPoints(self.p4, self.p2)
+        self.line2 = LineThroughPoints(self.p3, self.p4)
         self.sidebar = Sidebar(
             "Addition", tex_filename="data/add.tex", code_filename="data/add.py"
         )
@@ -41,22 +41,24 @@ class AdditionSlide(SlideBase):
         self.line2.update_start_and_end(self.p3, self.p4)
 
     def animate_in(self, scene):
+        scene.play(self.chart.animate_appear())
+        scene.play(self.p1.animate_appear())
+        scene.play(self.p2.animate_appear())
+
         scene.add(self.p1)
-        scene.play(Create(self.chart), self.p1.animate_appear(), self.p2.animate_appear()
-)
         scene.add(self.p1_x)
         self.p1.add_updater(self.update_p1)
 
         scene.next_section("Line through points")
-        scene.play(Succession(Write(self.line1), self.p4.animate_appear()))
+        scene.play(Succession(Create(self.line1), self.p4.animate_appear()))
 
         scene.next_section("Mirror line")
-        scene.play(Succession(Write(self.line2), self.p3.animate_appear()))
+        scene.play(Succession(Create(self.line2), self.p3.animate_appear()))
 
         scene.next_section("Animate addition")
-        scene.play(self.p1_x.animate(run_time=10).set_value(-(7 ** (1.0 / 3))))
+        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-(7 ** (1.0 / 3))))
         self.p1_sgn = -1
-        scene.play(self.p1_x.animate(run_time=10).set_value(2))
+        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2))
 
         scene.next_section("Show math and code")
         scene.play(Write(self.sidebar))
