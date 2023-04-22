@@ -42,29 +42,24 @@ class AdditionSlide(SlideBase):
 
     def animate_in(self, scene):
         scene.add(self.p1)
-        scene.play(
-            Create(self.chart), self.p1.animate_appear(), self.p2.animate_appear()
-        )
+        scene.play(Create(self.chart), self.p1.animate_appear(), self.p2.animate_appear()
+)
         scene.add(self.p1_x)
         self.p1.add_updater(self.update_p1)
-        # NewSection("Line through points"),
-        # NewSection("Mirror line"),
-        scene.play(
-            Succession(
-                Write(self.line1),
-                self.p4.animate_appear(),
-                Write(self.line2),
-                self.p3.animate_appear(),
-                Write(self.sidebar),
-                self.p1_x.animate(run_time=10).set_value(-7 ** (1. / 3)),
-            )
-        )
+
+        scene.next_section("Line through points")
+        scene.play(Succession(Write(self.line1), self.p4.animate_appear()))
+
+        scene.next_section("Mirror line")
+        scene.play(Succession(Write(self.line2), self.p3.animate_appear()))
+
+        scene.next_section("Animate addition")
+        scene.play(self.p1_x.animate(run_time=10).set_value(-(7 ** (1.0 / 3))))
         self.p1_sgn = -1
-        scene.play(
-            Succession(
-                self.p1_x.animate(run_time=10).set_value(2),
-            )
-        )
+        scene.play(self.p1_x.animate(run_time=10).set_value(2))
+
+        scene.next_section("Show math and code")
+        scene.play(Write(self.sidebar))
 
         return []
 
