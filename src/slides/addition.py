@@ -37,7 +37,9 @@ class AdditionSlide(SlideBase):
         self.p4.set_p(-new_c)
 
         left = self.p1 if self.p1.p.x < self.p4.p.x else self.p4
-        self.line1.update_start_and_end(left, self.p2)
+        right = self.p2 if self.p2.p.x > self.p4.p.x else self.p4
+        right = self.p1 if self.p1.p.x > right.p.x else right
+        self.line1.update_start_and_end(left, right)
         self.line2.update_start_and_end(self.p3, self.p4)
 
     def animate_in(self, scene):
