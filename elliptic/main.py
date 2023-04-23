@@ -2,12 +2,13 @@ import os
 
 from manim import *
 
-from src.presentation import Presentation
-from src.slides.addition import AdditionSlide
-from src.slides.equation import EquationSlide
-from src.slides.negation import NegationSlide
-from src.slides.operations import OperationsSlide
-from src.slides.title import TitleSlide
+from presentation import Presentation
+from slides.addition import AdditionSlide
+from slides.equation import EquationSlide
+from slides.negation import NegationSlide
+from slides.operations import OperationsSlide
+from slides.title import TitleSlide
+from slides.discreet_secp256k1 import DiscreetSecp256k1
 
 config.width = 16
 config.height = 9
@@ -24,6 +25,7 @@ class EllipticCurves(Scene):
                 EquationSlide(),
                 OperationsSlide(),
                 NegationSlide(),
-                AdditionSlide()
+                AdditionSlide(),
+                DiscreetSecp256k1(),
             ]
         Presentation(self).play(scenes)

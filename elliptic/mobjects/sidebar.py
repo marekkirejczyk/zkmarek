@@ -1,5 +1,5 @@
 from manim import *
-from src.utils import load
+from utils import load
 
 class Sidebar(VGroup):
     def __init__(self, title, code_filename=None, tex_filename=None):

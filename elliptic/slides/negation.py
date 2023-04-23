@@ -1,9 +1,9 @@
 from manim import *
 
-from ..cpoint import CPoint
-from ..mobjects.continuous_elliptic_chart import ContinuousEllipticChart
-from ..mobjects.point_on_curve import PointOnCurve
-from ..mobjects.sidebar import Sidebar
+from cpoint import CPoint
+from mobjects.continuous_elliptic_chart import ContinuousEllipticChart
+from mobjects.point_on_curve import PointOnCurve
+from mobjects.sidebar import Sidebar
 from .slide_base import SlideBase
 
 
