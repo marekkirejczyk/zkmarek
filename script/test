@@ -1,1 +1,1 @@
-python -m unittest discover elliptic/test "*_test.py"
+python -m unittest discover elliptic/test -v
