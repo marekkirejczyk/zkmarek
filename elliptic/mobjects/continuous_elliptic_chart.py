@@ -12,11 +12,11 @@ class ContinuousEllipticChart(VGroup):
             x_length=7,
             axis_config={"include_numbers": True}
         )
-        myTemplate = TexTemplate()
-        myTemplate.add_to_preamble(r"\usepackage{amsfonts}")
+        template = TexTemplate()
+        template.add_to_preamble(r"\usepackage{amsfonts}")
         self.labels = self.ax.get_axis_labels(
-            Tex(r"$\mathbb{R}$", tex_template=myTemplate, font_size=26),
-            Tex(r"$\mathbb{R}$", tex_template=myTemplate, font_size=26)
+            Tex(r"$\mathbb{R}$", tex_template=template, font_size=26),
+            Tex(r"$\mathbb{R}$", tex_template=template, font_size=26)
         )
         self.graph = self.ax.plot_implicit_curve(
             lambda x, y: y**2 - x**3 - 7,
