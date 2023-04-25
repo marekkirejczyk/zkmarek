@@ -1,37 +1,44 @@
 class Field:
     value = None
-    modulus = None
+    order = None
 
-    def __init__(self, value, modulus):
+    def __init__(self, value, order):
+        assert isinstance(order, int)
         self.value = value
-        self.modulus = modulus
+        self.order = order
 
     def __eq__(self, other) -> bool:
-        assert(self.modulus == other.modulus)
+        assert(self.order == other.order)
         return self.value == other.value
 
     def __add__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.modulus)
-        assert(self.modulus == other.modulus)
-        return Field((self.value + other.value) % self.modulus, self.modulus)
+        other = Field.from_int_or_self(rhs, self.order)
+        assert(self.order == other.order)
+        return Field((self.value + other.value) % self.order, self.order)
 
     def __sub__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.modulus)
-        assert(self.modulus == other.modulus)
-        return Field((self.value - other.value) % self.modulus, self.modulus)
+        other = Field.from_int_or_self(rhs, self.order)
+        assert(self.order == other.order)
+        return Field((self.value - other.value) % self.order, self.order)
 
     def __mul__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.modulus)
-        assert(self.modulus == other.modulus)
-        return Field((self.value * other.value) % self.modulus, self.modulus)
+        other = Field.from_int_or_self(rhs, self.order)
+        assert(self.order == other.order)
+        return Field((self.value * other.value) % self.order, self.order)
 
     def __pow__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.modulus)
-        assert(self.modulus == other.modulus)
-        return Field(pow(self.value, other.value, self.modulus), self.modulus)
+        other = Field.from_int_or_self(rhs, self.order)
+        assert(self.order == other.order)
+        return Field(pow(self.value, other.value, self.order), self.order)
 
     def __str__(self):
-        return f'({self.value} % {self.modulus})'
+        return f'({self.value} % {self.order})'
+
+    def __repr__(self):
+        return f'({self.value} % {self.order})'
+
+    def __neg__(self):
+        return Field(-self.value % self.order, self.order)
 
     def from_int_or_self(other, modulus):
         if isinstance(other, int):
