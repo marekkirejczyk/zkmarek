@@ -1,5 +1,6 @@
 import unittest
 from elliptic.crypto.extended_euclid import extended_euclid
+from elliptic.test.constant import TEST_PRIMES
 
 class TestExtendedEuclid(unittest.TestCase):
 
@@ -23,7 +24,7 @@ class TestExtendedEuclid(unittest.TestCase):
             self.assertEqual(extended_euclid(i, i), (i, 1, 1, 1, 0))
 
     def test_prime_dividend(self):
-        for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]:
+        for p in TEST_PRIMES:
             for i in range(1, p):
                 (gcd, _, _, a, b) = extended_euclid(p, i)
                 self.assertEqual(extended_euclid(p, i)[:3], (1, p, i))

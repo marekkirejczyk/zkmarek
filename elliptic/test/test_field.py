@@ -1,5 +1,6 @@
 import unittest
 from elliptic.crypto.field import Field
+from elliptic.test.constant import TEST_PRIMES
 
 class TestField(unittest.TestCase):
     def test_init(self):
@@ -50,6 +51,15 @@ class TestField(unittest.TestCase):
         self.assertEqual(-Field(17, 29), Field(12, 29))
 
     def test_neg_add(self):
-        for p in [5, 7, 11, 13, 17, 19, 23, 29]:
+        for p in TEST_PRIMES:
             for i in range(1, p):
                 self.assertEqual(--Field(i, p), Field(i, p))
+
+    def test_inv_simple(self):
+        self.assertEqual(Field(2, 5).inv(), Field(3, 5))
+
+    def test_inv(self):
+        for p in TEST_PRIMES:
+            for i in range(1, p):
+                self.assertEqual(Field(i, p).inv() * Field(i, p), Field(1, p))
+
