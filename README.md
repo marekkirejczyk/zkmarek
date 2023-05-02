@@ -1,5 +1,7 @@
 # Elliptic curves
 
+[![Lint and test](https://github.com/marekkirejczyk/elliptic_curves_video/actions/workflows/lint_and_test.yml/badge.svg)](https://github.com/marekkirejczyk/elliptic_curves_video/actions/workflows/lint_and_test.yml)
+
 Educational implementation and Manim videos about elliptic curves cryptography.
 
 ## Code
