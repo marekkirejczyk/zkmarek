@@ -12,7 +12,7 @@ jobs:
         id: renderer
         with:
           source_file: elliptic/main.py
-        args: "--high_quality"
+        args: "-ql"
       - name: Save output as artifacts
         uses: actions/upload-artifact@v2
         with:
