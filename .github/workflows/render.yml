@@ -3,7 +3,7 @@ name: Render
 on: [push]
 
 jobs:
-  test:
+  render:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,7 +12,7 @@ jobs:
         id: renderer
         with:
           source_file: elliptic/main.py
-        args: "-ql"
+
       - name: Save output as artifacts
         uses: actions/upload-artifact@v2
         with:
