@@ -17,7 +17,7 @@ class EllipticCurves(Scene):
     def construct(self):
         if "MANIM_SLIDE" in os.environ:
             cls_name = os.environ["MANIM_SLIDE"]
-            cls = globals()[cls_name]();
+            cls = globals()[cls_name]()
             scenes = [cls]
         else:
             scenes = [

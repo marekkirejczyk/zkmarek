@@ -1,15 +1,26 @@
 from manim import *
 
+
 class PointOnCurve(VGroup):
     label = None
 
-    def __init__(self, ax, label, p, include_lines=False, include_coords=False, label_direction=RIGHT):
+    def __init__(
+        self,
+        ax,
+        label,
+        p,
+        include_lines=False,
+        include_coords=False,
+        label_direction=RIGHT,
+    ):
         VGroup.__init__(self)
         self.ax = ax
         self.include_lines = include_lines
         self.label_direction = label_direction
 
-        text = r"{}({:.4f}, {:.4f})".format(label, p.x, p.y) if include_coords else label
+        text = (
+            r"{}({:.4f}, {:.4f})".format(label, p.x, p.y) if include_coords else label
+        )
         self.dot = Dot(ax.coords_to_point(p.x, p.y), color=GREEN)
         self.add(self.dot)
 

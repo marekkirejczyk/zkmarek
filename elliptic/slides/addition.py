@@ -58,13 +58,13 @@ class AdditionSlide(SlideBase):
         scene.play(Succession(Create(self.line2), self.p3.animate_appear()))
 
         scene.next_section("Animate addition")
-        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-(7 ** (1.0 / 3))))
+        target_x = -(7 ** (1.0 / 3))
+        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = -1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2))
 
         scene.next_section("Show math and code")
         scene.play(Write(self.sidebar))
-
 
     def animate_out(self, scene):
         scene.play(
@@ -77,4 +77,3 @@ class AdditionSlide(SlideBase):
             FadeOut(self.line2),
             FadeOut(self.sidebar),
         )
-

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ruff check elliptic --ignore F405 --ignore F403 "$@"
