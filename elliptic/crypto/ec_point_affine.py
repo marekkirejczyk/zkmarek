@@ -14,3 +14,13 @@ class ECPointAffine:
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+
+    def __add__(self, other):
+        slope = (other.y - self.y) / (other.x - self.x)
+        x = slope ** 2 - self.x - other.x
+        y = slope * (self.x - x) - self.y
+        return ECPointAffine(x, y)
+
+    def __str__(self):
+        return f"({self.x.value}, {self.y.value})"
+

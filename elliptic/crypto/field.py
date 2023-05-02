@@ -43,11 +43,15 @@ class Field:
     def __neg__(self):
         return Field(-self.value % self.order, self.order)
 
+    def inv(self):
+        (_, _, _, a, _) = extended_euclid(self.order, self.value)
+        return Field(a % self.order, self.order)
+
+    def __truediv__(self, other):
+        return self * other.inv()
+
     def from_int_or_self(other, modulus):
         if isinstance(other, int):
             return Field(other, modulus)
         return other
 
-    def inv(self):
-        (_, _, _, a, _) = extended_euclid(self.order, self.value)
-        return Field(a % self.order, self.order)
