@@ -62,3 +62,8 @@ class TestField(unittest.TestCase):
         for p in TEST_PRIMES:
             for i in range(1, p):
                 self.assertEqual(Field(i, p).inv() * Field(i, p), Field(1, p))
+
+    def test_div(self):
+        self.assertEqual(Field(2, 5) / Field(2, 5), Field(1, 5))
+        self.assertEqual(Field(4, 5) / Field(2, 5), Field(2, 5))
+        self.assertEqual(Field(2, 5) / Field(3, 5), Field(4, 5))

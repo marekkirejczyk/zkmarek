@@ -27,5 +27,10 @@ class TestECPointAffine(unittest.TestCase):
             p = ECPointAffine(Field(i, 13), Field(i, 13))
             self.assertEqual(--p, p)
 
+    def test_add(self):
+        p = ECPointAffine(1, 2, 13)
+        q = ECPointAffine(2, 1, 13)
+        self.assertEqual(p + q, ECPointAffine(11, 8, 13))
+
 if __name__ == "__main__":
     unittest.main()
