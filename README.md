@@ -1,14 +1,25 @@
-# Manim animations
+# Elliptic curves
 
-Generate and watch animation in low res for testing:
+Educational implementation and Manim videos about elliptic curves cryptography.
+
+## Code
+
+Run tests:
 
 ```sh
 script/test
 ```
 
-Generate and watch single slide:
+## Manim animations
+Generate and open movie:
+
 ```sh
-MANIM_SLIDE=<slide_class_name> script/test
+script/test
+```
+
+Generate and open single slide:
+```sh
+MANIM_SLIDE=<slide_class_name> script/movie
 ```
 
 Generate presentation:
@@ -17,7 +28,5 @@ Generate presentation:
 script/presentation
 ```
 
-
-
-Note: Scripts are tested and work on OS X.
+Note: Movie related scripts are tested and work on OS X.
 
