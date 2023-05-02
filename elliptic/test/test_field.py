@@ -62,4 +62,3 @@ class TestField(unittest.TestCase):
         for p in TEST_PRIMES:
             for i in range(1, p):
                 self.assertEqual(Field(i, p).inv() * Field(i, p), Field(1, p))
-
