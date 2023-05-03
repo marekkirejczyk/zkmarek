@@ -1,5 +1,5 @@
 from .extended_euclid import extended_euclid
-
+from typing import Union, Optional
 
 class Field:
     value: int
@@ -14,22 +14,22 @@ class Field:
         return self.value == other.value
 
     def __add__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.order)
+        other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field((self.value + other.value) % self.order, self.order)
 
     def __sub__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.order)
+        other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field((self.value - other.value) % self.order, self.order)
 
     def __mul__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.order)
+        other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field((self.value * other.value) % self.order, self.order)
 
     def __pow__(self, rhs):
-        other = Field.from_int_or_self(rhs, self.order)
+        other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field(pow(self.value, other.value, self.order), self.order)
 
@@ -50,8 +50,9 @@ class Field:
         return self * other.inv()
 
     @staticmethod
-    def from_int_or_self(other, modulus):
+    def create_from(other: "FieldLike", modulus: Optional[int] = None):
         if isinstance(other, int):
             return Field(other, modulus)
         return other
 
+FieldLike = Union[int, Field]

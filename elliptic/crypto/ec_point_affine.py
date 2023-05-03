@@ -1,8 +1,6 @@
-from elliptic.crypto.field import Field
+from elliptic.crypto.field import Field, FieldLike
 from elliptic.crypto.weierstrass_curve import WeierstrassCurve
-from typing import Union
 
-FieldLike = Union[int, Field]
 
 class ECPointAffine:
     x: Field
@@ -10,8 +8,8 @@ class ECPointAffine:
 
     def __init__(self, x: FieldLike, y: FieldLike, curve:WeierstrassCurve):
         self.curve = curve
-        self.x = x if isinstance(x, Field) else Field(x, curve.p)
-        self.y = y if isinstance(y, Field) else Field(y, curve.p)
+        self.x = Field.create_from(x, curve.p)
+        self.y = Field.create_from(y, curve.p)
         assert self.x.order > 0 and self.x.order == self.y.order
 
     def __neg__(self):
