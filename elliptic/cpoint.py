@@ -1,21 +1,18 @@
 import math
 
 class CPoint:
-    def __init__(self, _x, _y):
-        self.x = _x
-        self.y = _y
+    x: float
+    y: float
+
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
 
     @staticmethod
     def from_compressed(x, sgn = 1):
         y_squared = x ** 3 + 7
         y = math.sqrt(y_squared)
         return CPoint(x, -y) if sgn < 0 else CPoint(x, y)
-
-    def x(self):
-        return self.x
-
-    def y(self):
-        return self.y
 
     def __neg__(self):
         return CPoint(self.x, -self.y)

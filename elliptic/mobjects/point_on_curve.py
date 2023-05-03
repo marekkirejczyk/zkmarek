@@ -1,13 +1,13 @@
-from manim import *
+from manim import GREEN, RIGHT, Dot, MathTex, Create, Succession, VGroup, Write
 
 
 class PointOnCurve(VGroup):
-    label = None
+    label: MathTex
 
     def __init__(
         self,
         ax,
-        label,
+        label: str,
         p,
         include_lines=False,
         include_coords=False,

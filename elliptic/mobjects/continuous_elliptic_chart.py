@@ -1,7 +1,9 @@
-from manim import *
+from manim import (YELLOW, Axes, Create, Succession, Tex,
+                   TexTemplate, VGroup, Write)
+
 
 class ContinuousEllipticChart(VGroup):
-    ax = None
+    ax: Axes
     graph = None
 
     def __init__(self, **kwargs):

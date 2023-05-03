@@ -1,5 +1,3 @@
-from manim import *
-
 from .slide_base import SlideBase
 from mobjects.discreet_elliptic_chart import DiscreetEllipticChart
 

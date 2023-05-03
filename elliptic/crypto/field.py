@@ -2,11 +2,10 @@ from .extended_euclid import extended_euclid
 
 
 class Field:
-    value = None
-    order = None
+    value: int
+    order: int
 
-    def __init__(self, value, order):
-        assert isinstance(order, int)
+    def __init__(self, value: int, order: int):
         self.value = value
         self.order = order
 
@@ -50,6 +49,7 @@ class Field:
     def __truediv__(self, other):
         return self * other.inv()
 
+    @staticmethod
     def from_int_or_self(other, modulus):
         if isinstance(other, int):
             return Field(other, modulus)

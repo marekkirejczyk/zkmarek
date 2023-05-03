@@ -1,4 +1,4 @@
-from manim import *
+from manim import Text, Write, FadeOut
 
 from .slide_base import  SlideBase
 

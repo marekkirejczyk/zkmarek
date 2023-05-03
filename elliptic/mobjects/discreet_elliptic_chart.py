@@ -1,4 +1,4 @@
-from manim import *
+from manim import Axes, Tex, TexTemplate, VGroup, Dot, Create, FadeOut, YELLOW
 from crypto.field import Field
 
 
