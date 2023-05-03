@@ -7,5 +7,5 @@ else
     quality_arg="-ql"
 fi
 
-manim -p $quality_arg elliptic/main.py
+python -m manim -p $quality_arg elliptic/main.py
 
