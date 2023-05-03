@@ -1,4 +1,4 @@
-from manim import *
+from manim import UP, RIGHT, DOWN, VGroup, Tex, Code
 from utils import load
 
 class Sidebar(VGroup):

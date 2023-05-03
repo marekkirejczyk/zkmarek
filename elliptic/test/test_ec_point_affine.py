@@ -32,8 +32,9 @@ class TestECPointAffine(unittest.TestCase):
 
     def test_double_neg(self):
         for i in range(1, 13):
-            p = ECPointAffine(Field(i, 13), Field(i, 13))
-            self.assertEqual(--p, p)
+            for j in range(1, 13):
+                p = ECPointAffine(i, j, self.curve)
+                self.assertEqual(--p, p)
 
     def test_add(self):
         p = ECPointAffine(1, 2, self.curve)

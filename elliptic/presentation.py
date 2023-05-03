@@ -1,5 +1,4 @@
 
-from manim import *
 from manim_editor import PresentationSectionType
 
 

@@ -1,6 +1,6 @@
 import os
 
-from manim import *
+from manim import Scene, config
 
 from presentation import Presentation
 from slides.addition import AdditionSlide

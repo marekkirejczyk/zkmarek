@@ -1,4 +1,4 @@
-from manim import *
+from manim import VGroup, FadeOut
 
 class SlideBase(VGroup):
     title = ""

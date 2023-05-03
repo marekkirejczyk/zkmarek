@@ -1,10 +1,11 @@
-from manim import *
-
 from cpoint import CPoint
+from manim import (LEFT, Create, FadeOut, Succession, ValueTracker, Write,
+                   linear)
 from mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from mobjects.line_through_points import LineThroughPoints
 from mobjects.point_on_curve import PointOnCurve
 from mobjects.sidebar import Sidebar
+
 from .slide_base import SlideBase
 
 

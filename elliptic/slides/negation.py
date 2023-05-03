@@ -1,4 +1,4 @@
-from manim import *
+from manim import Write, LEFT, Create
 
 from cpoint import CPoint
 from mobjects.continuous_elliptic_chart import ContinuousEllipticChart

@@ -1,9 +1,9 @@
-from manim import *
-
 from cpoint import CPoint
+from manim import LEFT, FadeOut, ReplacementTransform, VGroup, Write, Scene
 from mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from mobjects.point_on_curve import PointOnCurve
 from mobjects.sidebar import Sidebar
+
 from .slide_base import SlideBase
 
 
@@ -16,7 +16,7 @@ class OperationsSlide(SlideBase):
         self.p2 = PointOnCurve(self.chart.ax, "A", a, include_coords=True)
         self.sidebar = Sidebar("Operations", tex_filename="data/operations.tex")
 
-    def animate_in(self, scene):
+    def animate_in(self, scene: Scene):
         scene.play(self.chart.animate_appear())
         scene.play(self.p1.animate_appear())
         scene.play(ReplacementTransform(self.p1, self.p2))
@@ -24,7 +24,7 @@ class OperationsSlide(SlideBase):
         scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT))
         scene.play(Write(self.sidebar))
 
-    def animate_out(self, scene):
+    def animate_out(self, scene: Scene):
         scene.play(FadeOut(self.p2))
         scene.play(FadeOut(self.chart))
         scene.play(FadeOut(self.sidebar))

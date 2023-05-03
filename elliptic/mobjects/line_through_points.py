@@ -1,4 +1,4 @@
-from manim import *
+from manim import DARK_GREY, DashedLine
 
 
 class LineThroughPoints(DashedLine):
