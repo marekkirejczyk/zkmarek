@@ -2,3 +2,4 @@
 rm -fr ./media
 rm -fr ./elliptic_curves
 rm -fr ./EllipticCurves
+rm -fr ./.ruff_cache

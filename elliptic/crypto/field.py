@@ -1,4 +1,4 @@
-from elliptic.crypto.extended_euclid import extended_euclid
+from .extended_euclid import extended_euclid
 
 
 class Field:

@@ -7,3 +7,4 @@ channeldata.json
 .vscode
 noarch
 todo.md
+.ruff_cache
