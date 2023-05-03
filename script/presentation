@@ -1,5 +1,5 @@
 #!/bin/sh
 rm -fr elliptic_curves EllipticCurves
-manim --save_sections elliptic/main.py
+python -m manim --save_sections elliptic/main.py
 manim_editor --quick_present_export media/videos/main/1080p60/sections/EllipticCurves.json
-python3 -m http.server 8000 --directory EllipticCurves
+python -m http.server 8000 --directory EllipticCurves
