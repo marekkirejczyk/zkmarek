@@ -1,10 +1,11 @@
 from manim import (YELLOW, Axes, Create, Succession, Tex,
                    TexTemplate, VGroup, Write)
 
+from manim.mobject.graphing.functions import ImplicitFunction
 
 class ContinuousEllipticChart(VGroup):
     ax: Axes
-    graph = None
+    graph: ImplicitFunction
 
     def __init__(self, **kwargs):
         VGroup.__init__(self, **kwargs)

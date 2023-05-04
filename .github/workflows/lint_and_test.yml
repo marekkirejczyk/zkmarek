@@ -10,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Install apt dependencies
+      run: |
+        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
     - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
-        python-version: "3.11"
-    - name: Install dependencies
+        python-version: '3.11'
+        cache: 'pip'
+    - name: Install pip dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install ruff
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint (ruff)
       run: |
