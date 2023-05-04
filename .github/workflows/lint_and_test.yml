@@ -8,6 +8,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: manimcommunity/manim
     steps:
     - uses: actions/checkout@v3
     - name: Install apt dependencies
