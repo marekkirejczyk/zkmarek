@@ -23,9 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install manim-editor #Temporary, install here as it
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint (ruff)
+    - name: Render movie (manim)
       run: |
-        script/lint
-    - name: Tests (unittest)
-      run: |
-        script/test
+        script/movie
+
