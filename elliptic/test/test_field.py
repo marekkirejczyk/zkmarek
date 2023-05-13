@@ -1,5 +1,6 @@
 import unittest
 from elliptic.crypto.field import Field
+from elliptic.crypto.weierstrass_curve import Secp256k_Order
 from elliptic.test.constant import TEST_PRIMES
 
 
@@ -58,13 +59,21 @@ class TestField(unittest.TestCase):
         with self.assertRaises(AssertionError):
             Field(2, 13) * Field(2, 2)
 
-    def test_pow(self):
+    def test_pow_simple(self):
         self.assertEqual(Field(2, 13) ** 2, Field(4, 13))
-        self.assertEqual(Field(2, 2**256 - 1) ** 256, Field(1, 2**256 - 1))
-        self.assertEqual(Field(2, 13) ** Field(2, 13), Field(4, 13))
-        self.assertEqual(
-            Field(2, 2**256 - 1) ** Field(256, 2**256 - 1), Field(1, 2**256 - 1)
-        )
+        self.assertEqual(Field(2, 13) ** 4, Field(3, 13))
+
+    def test_pow_to_prime_order_small(self):
+        for p in TEST_PRIMES:
+            for i in range(1, p):
+                self.assertEqual(Field(i, p) ** p, Field(i, p))
+                self.assertEqual(Field(i, p) ** (p-1), Field(1, p))
+
+    def test_pow_to_prime_order_big(self):
+        p = Secp256k_Order
+        for i in [1, 2, 3, 7, 100, 1024, 2**128, 2**254]:
+            self.assertEqual(Field(i, p) ** p, Field(i, p))
+            self.assertEqual(Field(i, p) ** (p-1), Field(1, p))
 
     def test_neg(self):
         self.assertEqual(-Field(1, 3), Field(2, 3))
