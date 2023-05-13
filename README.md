@@ -4,19 +4,25 @@
 
 Educational implementation and Manim videos about elliptic curves cryptography.
 
-## Code
+## Test
 
-Run tests:
+Run all tests:
 
 ```sh
 script/test
+```
+
+Run a single test:
+
+```sh
+script/test elliptic.test.algo.test_sqrt.TestSqrt.test_tonelli_shanks_sqrt_none
 ```
 
 ## Manim animations
 Generate and open movie:
 
 ```sh
-script/test
+script/movie
 ```
 
 Generate and open single slide:
