@@ -6,7 +6,7 @@ class Field:
     order: int
 
     def __init__(self, value: int, order: int):
-        self.value = value
+        self.value = value % order
         self.order = order
 
     def __eq__(self, other) -> bool:
