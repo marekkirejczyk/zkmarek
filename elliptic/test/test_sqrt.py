@@ -1,5 +1,6 @@
 import unittest
-from elliptic.crypto.sqrt import find_pow2_divisor, has_sqrt
+from elliptic.crypto.field import Field
+from elliptic.crypto.sqrt import find_pow2_divisor, has_sqrt, tonelli_shanks_sqrt
 from elliptic.test.constant import TEST_PRIMES
 
 def naive_find_sqrt(a, p):
@@ -21,4 +22,12 @@ class TestSqrt(unittest.TestCase):
         self.assertEqual(find_pow2_divisor(256), (8, 1))
         with self.assertRaises(AssertionError):
             find_pow2_divisor(0)
+
+    def test_tonelli_shanks_sqrt_none(self):
+        for p in TEST_PRIMES:
+            for i in range(1, p):
+                expected = naive_find_sqrt(i, p)
+                if expected is None:
+                    result = tonelli_shanks_sqrt(Field(i, p))
+                    self.assertIsNone(result)
 
