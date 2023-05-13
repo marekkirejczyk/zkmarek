@@ -1,5 +1,3 @@
-from elliptic.crypto.ec_point_affine import ECPointAffine
-
 
 class WeierstrassCurve:
     p = None
@@ -11,9 +9,7 @@ class WeierstrassCurve:
         self.b = b
         self.p = p
 
-    def evaluate_at(self, point: ECPointAffine):
-        x = point.x.value
-        y = point.y.value
+    def evaluate_at(self, x, y):
         return (y**2 - x**3 - self.a * x - self.b) % self.p
 
     def __eq__(self, other):
