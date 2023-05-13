@@ -22,3 +22,8 @@ def tonelli_shanks_sqrt(el: Field):
         return None
     return "Not yet implemented"
 
+def find_non_residue(p):
+    while True:
+        z = Field.random(p)
+        if not has_sqrt(z.value, p):
+            return z

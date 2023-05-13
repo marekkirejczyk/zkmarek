@@ -1,16 +1,22 @@
 import unittest
 from elliptic.crypto.field import Field
-from elliptic.crypto.sqrt import find_pow2_divisor, has_sqrt, tonelli_shanks_sqrt
+from elliptic.crypto.sqrt import (
+    find_pow2_divisor,
+    has_sqrt,
+    find_non_residue,
+    tonelli_shanks_sqrt,
+)
 from elliptic.test.constant import TEST_PRIMES
+
 
 def naive_find_sqrt(a, p):
     for i in range(p):
-        if i*i % p == a:
+        if i * i % p == a:
             return i
     return None
 
-class TestSqrt(unittest.TestCase):
 
+class TestSqrt(unittest.TestCase):
     def test_has_sqrt(self):
         for p in TEST_PRIMES:
             for i in range(1, p):
@@ -31,3 +37,9 @@ class TestSqrt(unittest.TestCase):
                     result = tonelli_shanks_sqrt(Field(i, p))
                     self.assertIsNone(result)
 
+    def test_find_non_residue(self):
+        test_primes_without_2 = filter(lambda v: v != 2, TEST_PRIMES)
+        for p in test_primes_without_2:
+            for i in range(1, 1000):
+                z = find_non_residue(p)
+                self.assertFalse(has_sqrt(z.value, p))
