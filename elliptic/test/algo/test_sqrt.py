@@ -1,6 +1,6 @@
 import unittest
 from elliptic.crypto.field import Field
-from elliptic.crypto.sqrt import (
+from elliptic.crypto.algo.sqrt import (
     find_pow2_divisor,
     has_sqrt,
     find_non_residue,
