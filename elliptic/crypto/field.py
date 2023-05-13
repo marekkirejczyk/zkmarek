@@ -31,10 +31,8 @@ class Field:
         assert self.order == other.order
         return Field((self.value * other.value) % self.order, self.order)
 
-    def __pow__(self, rhs):
-        other = Field.create_from(rhs, self.order)
-        assert self.order == other.order
-        return Field(pow(self.value, other.value, self.order), self.order)
+    def __pow__(self, rhs: int):
+        return Field(pow(self.value, rhs, self.order), self.order)
 
     def __str__(self):
         return f"({self.value} % {self.order})"
