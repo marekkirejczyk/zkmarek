@@ -1,5 +1,5 @@
 import unittest
-from elliptic.crypto.extended_euclid import extended_euclid
+from elliptic.crypto.algo.extended_euclid import extended_euclid
 from elliptic.test.constant import TEST_PRIMES
 
 class TestExtendedEuclid(unittest.TestCase):
