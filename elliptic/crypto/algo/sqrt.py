@@ -14,13 +14,22 @@ def find_pow2_divisor(q_1):
 
 def tonelli_shanks_sqrt(el: Field):
     p = el.order
-    a = el.value
-    (s, t) = find_pow2_divisor(p - 1)
-    w = el ** ((t - 1) // 2)
-    a0 = ((w*w*a) ** (2 ** (s - 1)))
+    (s, q) = find_pow2_divisor(p - 1)
+    w = el ** ((q - 1) // 2)
+    a0 = ((w*w*el.value) ** (2 ** (s - 1)))
     if a0 == Field(-1, p):
         return None
     return "Not yet implemented"
+
+def find_two_pow_order(t: Field, m: int):
+    i = 1
+    pow = 2
+    while i < m:
+        if t ** pow == Field(1, t.order):
+            return i
+        pow *= 2
+        i += 1
+    return i
 
 def find_non_residue(p):
     while True:

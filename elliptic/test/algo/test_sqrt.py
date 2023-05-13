@@ -2,6 +2,7 @@ import unittest
 from elliptic.crypto.field import Field
 from elliptic.crypto.algo.sqrt import (
     find_pow2_divisor,
+    find_two_pow_order,
     has_sqrt,
     find_non_residue,
     tonelli_shanks_sqrt,
@@ -29,6 +30,13 @@ class TestSqrt(unittest.TestCase):
         with self.assertRaises(AssertionError):
             find_pow2_divisor(0)
 
+    def test_find_non_residue(self):
+        test_primes_without_2 = filter(lambda v: v != 2, TEST_PRIMES)
+        for p in test_primes_without_2:
+            for i in range(1, 1000):
+                z = find_non_residue(p)
+                self.assertFalse(has_sqrt(z.value, p))
+
     def test_tonelli_shanks_sqrt_none(self):
         for p in TEST_PRIMES:
             for i in range(1, p):
@@ -37,9 +45,13 @@ class TestSqrt(unittest.TestCase):
                     result = tonelli_shanks_sqrt(Field(i, p))
                     self.assertIsNone(result)
 
-    def test_find_non_residue(self):
-        test_primes_without_2 = filter(lambda v: v != 2, TEST_PRIMES)
-        for p in test_primes_without_2:
-            for i in range(1, 1000):
-                z = find_non_residue(p)
-                self.assertFalse(has_sqrt(z.value, p))
+    def test_find_two_pow_order_simple(self):
+        nf = Field(9, 41)
+        self.assertEqual(find_two_pow_order(nf, 41), 2)
+
+    def test_find_two_pow_order(self):
+        for i in [9, 32, 40]:
+            nf = Field(i, 41)
+            self.assertEqual(nf **(2 ** find_two_pow_order(nf, 41)), Field(1, 41))
+
+
