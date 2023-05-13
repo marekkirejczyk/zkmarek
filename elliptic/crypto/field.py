@@ -1,5 +1,7 @@
 from .extended_euclid import extended_euclid
 from typing import Union, Optional
+import secrets
+
 
 class Field:
     value: int
@@ -50,9 +52,14 @@ class Field:
         return self * other.inv()
 
     @staticmethod
+    def random(p):
+        return Field(secrets.randbelow(p), p)
+
+    @staticmethod
     def create_from(other: "FieldLike", modulus: Optional[int] = None):
         if isinstance(other, int):
             return Field(other, modulus)
         return other
+
 
 FieldLike = Union[int, Field]

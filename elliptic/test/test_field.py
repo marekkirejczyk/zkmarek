@@ -88,3 +88,8 @@ class TestField(unittest.TestCase):
         self.assertEqual(Field(2, 5) / Field(2, 5), Field(1, 5))
         self.assertEqual(Field(4, 5) / Field(2, 5), Field(2, 5))
         self.assertEqual(Field(2, 5) / Field(3, 5), Field(4, 5))
+
+    def test_rand(self):
+        for p in TEST_PRIMES:
+            for _ in range(-p*2, p*2):
+                self.assertTrue(0 <= Field.random(p).value < p)
