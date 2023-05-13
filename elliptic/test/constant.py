@@ -63,3 +63,6 @@ TEST_PRIMES = [
     503,
     541,
 ]
+
+
+TEST_PRIMES_WITHOUT_2 = filter(lambda v: v != 2, TEST_PRIMES)
