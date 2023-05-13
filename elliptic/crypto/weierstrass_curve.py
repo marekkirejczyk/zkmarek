@@ -12,9 +12,9 @@ class WeierstrassCurve:
         self.p = p
 
     def evaluate_at(self, point: ECPointAffine):
-        return (
-            point.y.value**2 - point.x.value**3 - self.a * point.x.value - self.b
-        ) % self.p
+        x = point.x.value
+        y = point.y.value
+        return (y**2 - x**3 - self.a * x - self.b) % self.p
 
     def __eq__(self, other):
         return self.a == other.a and self.b == other.b and self.p == other.p
