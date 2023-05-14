@@ -2,8 +2,9 @@ import unittest
 
 from elliptic.crypto.ec_point_affine import ECPointAffine
 from elliptic.crypto.field import Field
-from elliptic.crypto.weierstrass_curve import Secp256k1_13, Secp256k1_29, WeierstrassCurve
+from elliptic.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
 from elliptic.test.constant import TEST_PRIMES_WITHOUT_2
+
 
 class TestECPointAffine(unittest.TestCase):
     curve = Secp256k1_13
