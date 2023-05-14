@@ -5,6 +5,13 @@ from elliptic.crypto.field import Field
 from elliptic.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
 from elliptic.test.constant import TEST_PRIMES_WITHOUT_2
 
+def naive_generate_points(curve: WeierstrassCurve):
+    p = curve.p
+    for x in range(0, p):
+        for y in range(0, p):
+            point = ECPointAffine(x, y, curve)
+            if curve.evaluate_at(x, y) == 0:
+                yield point
 
 class TestECPointAffine(unittest.TestCase):
     curve = Secp256k1_13
@@ -65,3 +72,18 @@ class TestECPointAffine(unittest.TestCase):
                 if fe0.y.value != 0:
                     fe1 = ECPointAffine.from_x(Field(i, p), 1)
                     self.assertEqual(fe1.y.value % 2, 1)
+
+    def test_from_x_completeness(self):
+        for p in TEST_PRIMES_WITHOUT_2:
+            curve = WeierstrassCurve(0, 7, p)
+            points = set(naive_generate_points(curve))
+            for i in range(0, p):
+                fe = ECPointAffine.from_x(Field(i, p), 0)
+                if fe is not None:
+                    self.assertIn(fe, points)
+                    points.remove(fe)
+                    if fe.y.value != 0:
+                        fe2 = ECPointAffine.from_x(Field(i, p), 1)
+                        self.assertIn(fe2, points)
+                        points.remove(fe2)
+            self.assertEqual(len(points), 0)

@@ -33,6 +33,9 @@ class ECPointAffine:
     def __repr__(self) -> str:
         return f"({self.x.value}, {self.y.value})[%{self.curve.p}]"
 
+    def __hash__(self):
+        return hash((self.x, self.y))
+
     @staticmethod
     def from_x(x: Field, sgn: int) -> "Optional[ECPointAffine]":
         y = tonelli_shanks_sqrt(x**3 + 7)

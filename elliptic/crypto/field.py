@@ -50,6 +50,9 @@ class Field:
     def __truediv__(self, other) -> "Field":
         return self * other.inv()
 
+    def __hash__(self):
+        return hash((self.value, self.order))
+
     @staticmethod
     def random(p) -> "Field":
         return Field(secrets.randbelow(p), p)
