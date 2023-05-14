@@ -1,8 +1,8 @@
 
 class WeierstrassCurve:
-    p = None
-    a = None
-    b = None
+    p: int
+    a: int
+    b: int
 
     def __init__(self, a: int, b: int, p: int) -> None:
         self.a = a

@@ -57,6 +57,7 @@ class Field:
     @staticmethod
     def create_from(other: "FieldLike", modulus: Optional[int] = None):
         if isinstance(other, int):
+            assert modulus is not None
             return Field(other, modulus)
         return other
 
