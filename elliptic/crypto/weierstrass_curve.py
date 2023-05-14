@@ -9,12 +9,11 @@ class WeierstrassCurve:
         self.b = b
         self.p = p
 
-    def evaluate_at(self, x, y):
+    def evaluate_at(self, x: int, y: int) -> int:
         return (y**2 - x**3 - self.a * x - self.b) % self.p
 
-    def __eq__(self, other):
+    def __eq__(self, other: "WeierstrassCurve") -> bool:
         return self.a == other.a and self.b == other.b and self.p == other.p
-
 
 Secp256k_Order = 2**256 - 2**32 - 2**9 - 2**8 - 2**7 - 2**6 - 2**4 - 1
 Secp256k1 = WeierstrassCurve(0, 7, Secp256k_Order)
