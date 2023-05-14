@@ -1,5 +1,4 @@
 from elliptic.crypto.field import Field
-from typing import Tuple
 
 
 def has_sqrt(a: int, p: int):
