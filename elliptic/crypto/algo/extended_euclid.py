@@ -1,4 +1,6 @@
-def extended_euclid(prev_r, r):
+from typing import Tuple
+
+def extended_euclid(prev_r: int, r: int) -> Tuple[int, int, int, int, int]:
     assert prev_r >= r
     prev_s, s = 1, 0
     prev_t, t = 0, 1

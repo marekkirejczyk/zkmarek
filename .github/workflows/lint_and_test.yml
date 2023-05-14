@@ -25,6 +25,9 @@ jobs:
     - name: Lint (ruff)
       run: |
         script/lint
+    - name: Types (pyright)
+      run: |
+        script/types
     - name: Tests (unittest)
       run: |
         script/test

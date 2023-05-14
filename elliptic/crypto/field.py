@@ -12,51 +12,52 @@ class Field:
         self.value = value % order
         self.order = order
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: "Field") -> bool:
         assert self.order == other.order
         return self.value == other.value
 
-    def __add__(self, rhs):
+    def __add__(self, rhs: "FieldLike") -> "Field":
         other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field((self.value + other.value) % self.order, self.order)
 
-    def __sub__(self, rhs):
+    def __sub__(self, rhs: "FieldLike") -> "Field":
         other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field((self.value - other.value) % self.order, self.order)
 
-    def __mul__(self, rhs):
+    def __mul__(self, rhs: "FieldLike") -> "Field":
         other = Field.create_from(rhs, self.order)
         assert self.order == other.order
         return Field((self.value * other.value) % self.order, self.order)
 
-    def __pow__(self, rhs: int):
+    def __pow__(self, rhs: int) -> "Field":
         return Field(pow(self.value, rhs, self.order), self.order)
 
-    def __str__(self):
-        return f"({self.value} % {self.order})"
-
-    def __repr__(self):
-        return f"({self.value} % {self.order})"
-
-    def __neg__(self):
+    def __neg__(self) -> "Field":
         return Field(-self.value % self.order, self.order)
 
-    def inv(self):
+    def inv(self) -> "Field":
         (_, _, _, a, _) = extended_euclid(self.order, self.value)
         return Field(a % self.order, self.order)
 
-    def __truediv__(self, other):
+    def __str__(self) -> str:
+        return f"({self.value} % {self.order})"
+
+    def __repr__(self) -> str:
+        return f"({self.value} % {self.order})"
+
+    def __truediv__(self, other) -> "Field":
         return self * other.inv()
 
     @staticmethod
-    def random(p):
+    def random(p) -> "Field":
         return Field(secrets.randbelow(p), p)
 
     @staticmethod
-    def create_from(other: "FieldLike", modulus: Optional[int] = None):
+    def create_from(other: "FieldLike", modulus: Optional[int] = None) -> "Field":
         if isinstance(other, int):
+            assert modulus is not None
             return Field(other, modulus)
         return other
 
