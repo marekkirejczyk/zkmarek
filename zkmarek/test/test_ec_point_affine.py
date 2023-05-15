@@ -3,7 +3,7 @@ import unittest
 from zkmarek.crypto.ec_point_affine import ECPointAffine
 from zkmarek.crypto.field import Field
 from zkmarek.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
-from zkmarek.test.constant import TEST_PRIMES, TEST_PRIMES_WITHOUT_2
+from zkmarek.test.constant import TEST_PRIMES_WITHOUT_2
 
 
 def naive_generate_points(curve: WeierstrassCurve):
@@ -75,7 +75,7 @@ class TestECPointAffine(unittest.TestCase):
                     self.assertEqual(fe1.y.value % 2, 1)
 
     def test_generate_points(self):
-        for p in [3, 5, 7, 11, 13, 17, 97, 137, 211, 499,]:
+        for p in [3, 5, 7, 11, 13, 17, 97, 137, 211, 499]:
             curve = WeierstrassCurve(0, 7, p)
             expected = set(naive_generate_points(curve))
             actual = set(ECPointAffine.generate_points(curve))

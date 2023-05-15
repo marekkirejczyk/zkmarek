@@ -15,7 +15,7 @@ script/test
 Run a single test:
 
 ```sh
-script/test elliptic.test.algo.test_sqrt.TestSqrt.test_tonelli_shanks_sqrt_none
+script/test zkmarek.test.algo.test_sqrt.TestSqrt.test_tonelli_shanks_sqrt_none
 ```
 
 ## Manim animations

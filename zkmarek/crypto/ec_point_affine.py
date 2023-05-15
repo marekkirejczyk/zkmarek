@@ -9,7 +9,7 @@ class ECPointAffine:
     x: Field
     y: Field
 
-    def __init__(self, x: FieldLike, y: FieldLike, curve:WeierstrassCurve):
+    def __init__(self, x: FieldLike, y: FieldLike, curve: WeierstrassCurve):
         self.curve = curve
         self.x = Field.create_from(x, curve.p)
         self.y = Field.create_from(y, curve.p)
@@ -19,13 +19,13 @@ class ECPointAffine:
         return ECPointAffine(self.x, -self.y, self.curve)
 
     def __eq__(self, other: "ECPointAffine") -> bool:
-        assert(self.curve == other.curve)
+        assert self.curve == other.curve
         return self.x == other.x and self.y == other.y
 
     def __add__(self, other: "ECPointAffine") -> "ECPointAffine":
-        assert(self.curve == other.curve)
+        assert self.curve == other.curve
         slope = (other.y - self.y) / (other.x - self.x)
-        x = slope ** 2 - self.x - other.x
+        x = slope**2 - self.x - other.x
         y = slope * (self.x - x) - self.y
         return ECPointAffine(x, y, self.curve)
 
@@ -39,7 +39,9 @@ class ECPointAffine:
         return hash((self.x, self.y))
 
     @staticmethod
-    def from_x(x: Field, sgn: int, curve: WeierstrassCurve) -> "Optional[ECPointAffine]":
+    def from_x(
+        x: Field, sgn: int, curve: WeierstrassCurve
+    ) -> "Optional[ECPointAffine]":
         assert x.order == curve.p
         y = tonelli_shanks_sqrt(x**3 + 7)
         if y is None:
