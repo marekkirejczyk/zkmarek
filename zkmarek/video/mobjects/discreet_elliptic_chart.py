@@ -1,11 +1,6 @@
 from manim import Axes, Tex, TexTemplate, VGroup, Dot, Create, FadeOut, YELLOW
 from zkmarek.crypto.ec_point_affine import ECPointAffine
-from zkmarek.crypto.field import Field
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
-
-
-def secp256k1(x, y):
-    return y**2 - x**3 - 7
 
 
 class DiscreetEllipticChart(VGroup):
