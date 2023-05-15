@@ -41,7 +41,7 @@ class ECPointAffine:
     @staticmethod
     def from_x(x: int, sgn: int, curve: WeierstrassCurve) -> "Optional[ECPointAffine]":
         fx = Field(x, curve.p)
-        fy = tonelli_shanks_sqrt(fx**3 + 7)
+        fy = tonelli_shanks_sqrt(fx**3 + fx * curve.a + curve.b)
         if fy is None:
             return None
         r = ECPointAffine(fx, fy, curve)
