@@ -1,5 +1,5 @@
 from manim import Axes, Tex, TexTemplate, VGroup, Dot, Create, FadeOut, YELLOW
-from crypto.field import Field
+from zkmarek.crypto.field import Field
 
 
 def secp256k1(x, y):

@@ -1,5 +1,5 @@
 from .slide_base import SlideBase
-from video.mobjects.discreet_elliptic_chart import DiscreetEllipticChart
+from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreetEllipticChart
 
 class DiscreetSecp256k1(SlideBase):
     def __init__(self):
