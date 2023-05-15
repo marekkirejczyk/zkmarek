@@ -1,14 +1,11 @@
 import unittest
-from elliptic.crypto.field import Field
-from elliptic.crypto.algo.sqrt import (
-    find_pow2_divisor,
-    find_two_pow_order,
-    has_sqrt,
-    find_non_residue,
-    tonelli_shanks_sqrt,
-)
-from elliptic.crypto.weierstrass_curve import Secp256k_Order
-from elliptic.test.constant import TEST_PRIMES, TEST_PRIMES_WITHOUT_2
+
+from zkmarek.crypto.algo.sqrt import (find_non_residue, find_pow2_divisor,
+                                      find_two_pow_order, has_sqrt,
+                                      tonelli_shanks_sqrt)
+from zkmarek.crypto.field import Field
+from zkmarek.crypto.weierstrass_curve import Secp256k_Order
+from zkmarek.test.constant import TEST_PRIMES, TEST_PRIMES_WITHOUT_2
 
 
 def naive_find_sqrt(a, p):
