@@ -1,8 +1,8 @@
 from cpoint import CPoint
 from manim import LEFT, FadeOut, ReplacementTransform, VGroup, Write, Scene
-from mobjects.continuous_elliptic_chart import ContinuousEllipticChart
-from mobjects.point_on_curve import PointOnCurve
-from mobjects.sidebar import Sidebar
+from video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
+from video.mobjects.point_on_curve import PointOnCurve
+from video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
 
