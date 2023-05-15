@@ -1,8 +1,10 @@
-from cpoint import CPoint
-from manim import LEFT, FadeOut, ReplacementTransform, VGroup, Write, Scene
-from mobjects.continuous_elliptic_chart import ContinuousEllipticChart
-from mobjects.point_on_curve import PointOnCurve
-from mobjects.sidebar import Sidebar
+from manim import LEFT, FadeOut, ReplacementTransform, Scene, VGroup, Write
+
+from zkmarek.crypto.cpoint import CPoint
+from zkmarek.video.mobjects.continuous_elliptic_chart import \
+    ContinuousEllipticChart
+from zkmarek.video.mobjects.point_on_curve import PointOnCurve
+from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
 
