@@ -1,5 +1,5 @@
 from manim import Axes, Tex, TexTemplate, VGroup, Dot, Create, FadeOut, YELLOW
-from zkmarek.crypto.ec_point_affine import ECPointAffine
+from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 
 
@@ -28,7 +28,7 @@ class DiscreetEllipticChart(VGroup):
         self.gen_points()
 
     def gen_points(self):
-        points = ECPointAffine.generate_points(self.curve)
+        points = ECAffine.generate_points(self.curve)
         for p in points:
             self.add(Dot(self.ax.c2p(p.x.value, p.y.value), color=YELLOW))
 

@@ -1,6 +1,6 @@
 from manim import LEFT, FadeOut, ReplacementTransform, Scene, VGroup, Write
 
-from zkmarek.crypto.cpoint import CPoint
+from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.point_on_curve import PointOnCurve
@@ -13,7 +13,7 @@ class OperationsSlide(SlideBase):
     def __init__(self):
         SlideBase.__init__(self, title="Operations")
         self.chart = ContinuousEllipticChart()
-        a = CPoint.from_compressed(1)
+        a = CECAffine.from_compressed(1)
         self.p1 = PointOnCurve(self.chart.ax, "A(x, y)", a)
         self.p2 = PointOnCurve(self.chart.ax, "A", a, include_coords=True)
         self.sidebar = Sidebar("Operations", tex_filename="data/operations.tex")
