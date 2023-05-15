@@ -1,7 +1,7 @@
 import secrets
 from typing import Optional, Union
 
-from elliptic.crypto.algo.extended_euclid import extended_euclid
+from zkmarek.crypto.algo.extended_euclid import extended_euclid
 
 
 class Field:

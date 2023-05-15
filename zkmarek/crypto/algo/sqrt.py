@@ -1,6 +1,6 @@
 from typing import Optional
 
-from elliptic.crypto.field import Field
+from zkmarek.crypto.field import Field
 
 
 def has_sqrt(a: int, p: int):

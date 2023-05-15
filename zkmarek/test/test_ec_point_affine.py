@@ -1,9 +1,9 @@
 import unittest
 
-from elliptic.crypto.ec_point_affine import ECPointAffine
-from elliptic.crypto.field import Field
-from elliptic.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
-from elliptic.test.constant import TEST_PRIMES_WITHOUT_2
+from zkmarek.crypto.ec_point_affine import ECPointAffine
+from zkmarek.crypto.field import Field
+from zkmarek.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
+from zkmarek.test.constant import TEST_PRIMES_WITHOUT_2
 
 def naive_generate_points(curve: WeierstrassCurve):
     p = curve.p

@@ -1,7 +1,9 @@
 from typing import Optional
-from elliptic.crypto.field import Field, FieldLike
-from elliptic.crypto.weierstrass_curve import WeierstrassCurve
-from elliptic.crypto.algo.sqrt import tonelli_shanks_sqrt
+
+from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
+from zkmarek.crypto.field import Field, FieldLike
+from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
+
 
 class ECPointAffine:
     x: Field

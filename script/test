@@ -4,5 +4,5 @@
 if [[ -n $1 ]]; then
     python -m unittest -v "$@"
 else
-    python -m unittest discover elliptic/test -v
+    python -m unittest discover zkmarek/test -v
 fi
