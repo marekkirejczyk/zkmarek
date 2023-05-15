@@ -19,8 +19,8 @@ class AdditionSlide(SlideBase):
 
         self.p1_x = ValueTracker(3)
         self.p1_sgn = 1
-        a = CECAffine.from_compressed(self.p1_x.get_value())
-        b = CECAffine.from_compressed(2)
+        a = CECAffine.from_x(self.p1_x.get_value())
+        b = CECAffine.from_x(2)
         c = a + b
         self.p1 = PointOnCurve(self.chart.ax, "A", a)
         self.p2 = PointOnCurve(self.chart.ax, "B", b)
@@ -33,7 +33,7 @@ class AdditionSlide(SlideBase):
         )
 
     def update_p1(self, p1):
-        new_a = CECAffine.from_compressed(self.p1_x.get_value(), self.p1_sgn)
+        new_a = CECAffine.from_x(self.p1_x.get_value(), self.p1_sgn)
         new_c = new_a + self.p2.p
         self.p1.set_p(new_a)
         self.p3.set_p(new_c)
