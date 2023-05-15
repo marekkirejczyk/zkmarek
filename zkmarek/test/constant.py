@@ -65,4 +65,4 @@ TEST_PRIMES = [
 ]
 
 
-TEST_PRIMES_WITHOUT_2 = filter(lambda v: v != 2, TEST_PRIMES)
+TEST_PRIMES_WITHOUT_2 = list(filter(lambda v: v != 2, TEST_PRIMES))
