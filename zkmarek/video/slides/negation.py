@@ -17,7 +17,7 @@ class NegationSlide(SlideBase):
         self.sidebar = Sidebar(
             "Negation", tex_filename="data/neg.tex", code_filename="data/neg.py"
         )
-        a = CECAffine.from_compressed(2)
+        a = CECAffine.from_x(2)
         self.p1 = PointOnCurve(self.chart.ax, "A", a, include_lines=True)
         self.p2 = PointOnCurve(self.chart.ax, "-A", -a, include_lines=True)
         self.add(self.p1, self.p2, self.chart, self.sidebar)

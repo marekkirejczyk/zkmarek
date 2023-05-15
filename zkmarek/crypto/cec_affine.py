@@ -9,7 +9,7 @@ class CECAffine:
         self.y = y
 
     @staticmethod
-    def from_compressed(x, sgn = 1):
+    def from_x(x, sgn = 1):
         y_squared = x ** 3 + 7
         y = math.sqrt(y_squared)
         return CECAffine(x, -y) if sgn < 0 else CECAffine(x, y)

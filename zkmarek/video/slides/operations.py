@@ -13,7 +13,7 @@ class OperationsSlide(SlideBase):
     def __init__(self):
         SlideBase.__init__(self, title="Operations")
         self.chart = ContinuousEllipticChart()
-        a = CECAffine.from_compressed(1)
+        a = CECAffine.from_x(1)
         self.p1 = PointOnCurve(self.chart.ax, "A(x, y)", a)
         self.p2 = PointOnCurve(self.chart.ax, "A", a, include_coords=True)
         self.sidebar = Sidebar("Operations", tex_filename="data/operations.tex")
