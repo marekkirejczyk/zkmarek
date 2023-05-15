@@ -39,21 +39,19 @@ class ECPointAffine:
         return hash((self.x, self.y))
 
     @staticmethod
-    def from_x(
-        x: Field, sgn: int, curve: WeierstrassCurve
-    ) -> "Optional[ECPointAffine]":
-        assert x.order == curve.p
-        y = tonelli_shanks_sqrt(x**3 + 7)
-        if y is None:
+    def from_x(x: int, sgn: int, curve: WeierstrassCurve) -> "Optional[ECPointAffine]":
+        fx = Field(x, curve.p)
+        fy = tonelli_shanks_sqrt(fx**3 + 7)
+        if fy is None:
             return None
-        r = ECPointAffine(x, y, curve)
+        r = ECPointAffine(fx, fy, curve)
         return r if r.y.value % 2 == sgn % 2 else -r
 
     @staticmethod
     def generate_points(curve: WeierstrassCurve) -> "List[ECPointAffine]":
         points = []
         for x in range(0, curve.p):
-            point = ECPointAffine.from_x(Field(x, curve.p), 0, curve)
+            point = ECPointAffine.from_x(x, 0, curve)
             if point is not None:
                 points.append(point)
                 if point.y.value != 0:
