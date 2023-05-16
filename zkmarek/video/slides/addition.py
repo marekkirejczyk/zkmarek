@@ -1,4 +1,4 @@
-from manim import LEFT, UP, DOWN, FadeOut, Write, ValueTracker, linear
+from manim import LEFT, UP, DOWN, FadeOut, Write, ValueTracker, linear, Wait
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
@@ -93,7 +93,9 @@ class AdditionSlide(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
-        # TODO: Update sidebar with doubling point math+code
+        self.sidebar.animate_replace_code(scene, "data/cec/add_double.py")
+        scene.play(Wait())
+        self.sidebar.animate_replace_code(scene, "data/cec/double.py")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(4))
 
     def animate_in(self, scene):

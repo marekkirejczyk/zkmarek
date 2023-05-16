@@ -58,5 +58,6 @@ class Sidebar(VGroup):
     def animate_replace_code(self, scene, code_path: str):
         new_code = self.create_sidebar(code_path)
         scene.play(ReplacementTransform(self.code, new_code))
+        self.remove(self.code)
         self.code = new_code
         self.add(self.code)
