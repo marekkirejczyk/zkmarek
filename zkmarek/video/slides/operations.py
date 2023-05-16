@@ -16,7 +16,7 @@ class OperationsSlide(SlideBase):
         a = CECAffine.from_x(1)
         self.p1 = DotOnCurve(self.chart.ax, "A(x, y)", a)
         self.p2 = DotOnCurve(self.chart.ax, "A", a, include_coords=True)
-        self.sidebar = Sidebar("Operations", tex_path="data/operations.tex")
+        self.sidebar = Sidebar("Operations", tex_path="data/cec/operations.tex")
 
     def animate_in(self, scene: Scene):
         scene.play(self.chart.animate_appear())

@@ -15,7 +15,7 @@ class NegationSlide(SlideBase):
         self.chart = ContinuousEllipticChart()
         self.chart.align_on_border(LEFT)
         self.sidebar = Sidebar(
-            "Negation", tex_path="data/neg.tex", code_path="data/neg.py"
+            "Negation", tex_path="data/cec/neg.tex", code_path="data/cec/neg.py"
         )
         a = CECAffine.from_x(2)
         self.p1 = DotOnCurve(self.chart.ax, "A", a, include_lines=True)

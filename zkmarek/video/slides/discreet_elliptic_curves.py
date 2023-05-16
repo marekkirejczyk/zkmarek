@@ -30,7 +30,7 @@ class DiscreetEllipticCurves(SlideBase):
 
     def create_sidebar(self):
         self.sidebar = Sidebar(
-            "Negation", tex_path="data/neg.tex", code_path="data/ec_neg.py"
+            "Negation", tex_path="data/cec/neg.tex", code_path="data/ec/neg.py"
         )
         self.sidebar.to_edge(RIGHT)
 
