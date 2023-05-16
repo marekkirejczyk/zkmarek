@@ -1,8 +1,8 @@
-from manim import FadeIn, FadeOut, Flash, Line, Wait
+from manim import LEFT, RIGHT, FadeIn, FadeOut, Flash, Line, Wait
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
-from zkmarek.video.mobjects.discreet_elliptic_chart import \
-    DiscreetEllipticChart
+from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreetEllipticChart
+from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
 
@@ -10,6 +10,7 @@ from .slide_base import SlideBase
 class DiscreetSecp256k1(SlideBase):
     curve: WeierstrassCurve
     chart: DiscreetEllipticChart
+    sidebar: Sidebar
 
     def __init__(self):
         self.curve = Secp256k1_41
@@ -58,6 +59,15 @@ class DiscreetSecp256k1(SlideBase):
         self.animate_symmetry(scene)
         self.animate_vertical(scene)
         self.animate_negate(scene)
+
+        self.chart.align_on_border(LEFT)
+
+        self.sidebar = Sidebar("Negation",
+            tex_path="data/neg.tex",
+            code_path="data/ec_neg.py"
+        )
+        self.sidebar.to_edge(RIGHT)
+        self.sidebar.animate_respectively(scene)
 
     def animate_out(self, scene):
         scene.play(self.chart.animate_disappear())
