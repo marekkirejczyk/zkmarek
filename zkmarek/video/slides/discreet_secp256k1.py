@@ -1,8 +1,8 @@
-from manim import LEFT, FadeIn, FadeOut, Flash, Line, Wait
+from manim import FadeIn, FadeOut, Flash, Line, Wait
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
-from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreetEllipticChart
-from zkmarek.video.mobjects.sidebar import Sidebar
+from zkmarek.video.mobjects.discreet_elliptic_chart import \
+    DiscreetEllipticChart
 
 from .slide_base import SlideBase
 
