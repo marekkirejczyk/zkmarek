@@ -7,7 +7,7 @@ from zkmarek.video.mobjects.sidebar import Sidebar
 from .slide_base import SlideBase
 
 
-class DiscreetSecp256k1(SlideBase):
+class DiscreetEllipticCurves(SlideBase):
     curve: WeierstrassCurve
     chart: DiscreetEllipticChart
     sidebar: Sidebar
