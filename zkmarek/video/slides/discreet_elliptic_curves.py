@@ -1,7 +1,8 @@
 from manim import LEFT, RIGHT, FadeIn, FadeOut, Flash, Line, Wait
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
-from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreetEllipticChart
+from zkmarek.video.mobjects.discreet_elliptic_chart import \
+    DiscreetEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
@@ -18,14 +19,20 @@ class DiscreetEllipticCurves(SlideBase):
 
     def create_symmetry_line(self):
         mid_y = self.curve.p / 2
-        s = self.chart.ax.c2p(-10, mid_y)
-        e = self.chart.ax.c2p(self.curve.p + 10, mid_y)
+        s = self.chart.ax.c2p(-2, mid_y)
+        e = self.chart.ax.c2p(self.curve.p + 2, mid_y)
         return Line(s, e, color="red")
 
     def create_vertical_line(self, x):
         s = self.chart.ax.c2p(x, 0)
         e = self.chart.ax.c2p(x, self.curve.p)
         return Line(s, e, color="red")
+
+    def create_sidebar(self):
+        self.sidebar = Sidebar(
+            "Negation", tex_path="data/neg.tex", code_path="data/ec_neg.py"
+        )
+        self.sidebar.to_edge(RIGHT)
 
     def animate_symmetry(self, scene):
         line = self.create_symmetry_line()
@@ -44,6 +51,8 @@ class DiscreetEllipticCurves(SlideBase):
             scene.play(FadeOut(line))
 
     def animate_negate(self, scene):
+        scene.play(self.chart.animate.align_on_border(LEFT))
+
         line = self.create_vertical_line(9)
         scene.play(FadeIn(line))
         dots = list(filter(lambda d: d.point.x.value == 9, self.chart.dots))
@@ -51,23 +60,18 @@ class DiscreetEllipticCurves(SlideBase):
         sline = self.create_symmetry_line()
         scene.play(FadeIn(sline), Wait())
         scene.play(Flash(dots[1]))
+
+        self.sidebar.animate_respectively(scene)
         scene.play(FadeOut(sline))
         scene.play(FadeOut(line))
 
     def animate_in(self, scene):
+        self.create_sidebar()
         scene.play(self.chart.animate_appear())
         self.animate_symmetry(scene)
         self.animate_vertical(scene)
         self.animate_negate(scene)
 
-        self.chart.align_on_border(LEFT)
-
-        self.sidebar = Sidebar("Negation",
-            tex_path="data/neg.tex",
-            code_path="data/ec_neg.py"
-        )
-        self.sidebar.to_edge(RIGHT)
-        self.sidebar.animate_respectively(scene)
-
     def animate_out(self, scene):
+        scene.play(FadeOut(self.sidebar))
         scene.play(self.chart.animate_disappear())
