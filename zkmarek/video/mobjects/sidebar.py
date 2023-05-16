@@ -59,3 +59,4 @@ class Sidebar(VGroup):
         new_code = self.create_sidebar(code_path)
         scene.play(ReplacementTransform(self.code, new_code))
         self.code = new_code
+        self.add(self.code)

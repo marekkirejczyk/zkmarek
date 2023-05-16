@@ -15,3 +15,7 @@ class TestCecAffine(unittest.TestCase):
         self.assertEqual(a + INFINITY, a)
         self.assertEqual(INFINITY + a, a)
         self.assertEqual(INFINITY + INFINITY, INFINITY)
+
+    def test_double(self):
+        a = CECAffine.from_x(1)
+        self.assertEqual(a.double(), a + a)

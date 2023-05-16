@@ -17,10 +17,18 @@ class CECAffine:
     def __neg__(self):
         return CECAffine(self.x, -self.y)
 
+    def double(self):
+        if self == INFINITY:
+            return INFINITY
+        slope = (3 * self.x ** 2) / (2 * self.y)
+        x = slope ** 2 - 2 * self.x
+        y = slope * (self.x - x) - self.y
+        return CECAffine(x, y)
+
     def __add__(self, other):
-        # if self.x == other.x and self.y == other.y:
-        #     return self.double()
-        if self.x == other.x and self.y == -other.y:
+        if self.x == other.x and self.y == other.y:
+            return self.double()
+        elif self.x == other.x and self.y == -other.y:
             return INFINITY
         elif self == INFINITY:
             return other
