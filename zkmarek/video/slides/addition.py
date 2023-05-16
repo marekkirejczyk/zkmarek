@@ -84,8 +84,8 @@ class AdditionSlide(SlideBase):
         self.sidebar.animate_respectively(scene)
 
         scene.next_section("Infinity point")
-        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.95))
-        # TODO: Update sidebar with add infinity point math +code
+        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
+        self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
 
     def animate_to_double(self, scene):
         scene.next_section("Doubling")
@@ -93,7 +93,7 @@ class AdditionSlide(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
-        # TODO: Update sidebar with doubling point math +code
+        # TODO: Update sidebar with doubling point math+code
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(4))
 
     def animate_in(self, scene):
