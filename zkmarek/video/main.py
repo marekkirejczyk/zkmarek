@@ -26,6 +26,7 @@ class EllipticCurves(Scene):
                 OperationsSlide(),
                 NegationSlide(),
                 AdditionSlide(),
+                TitleSlide("Discreet Elliptic Curves"),
                 DiscreetEllipticCurves(),
             ]
         Presentation(self).play(scenes)
