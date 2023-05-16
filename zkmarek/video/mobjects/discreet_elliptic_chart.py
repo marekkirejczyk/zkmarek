@@ -3,8 +3,20 @@ from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 
 
+class DotOnCurve(Dot):
+    point: ECAffine
+
+    def __init__(self, ax: Axes, p: ECAffine):
+        super(DotOnCurve, self).__init__(
+            ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW
+        )
+        self.point = p
+
+
 class DiscreetEllipticChart(VGroup):
     curve: WeierstrassCurve
+    dots: list[Dot] = []
+    ax: Axes
 
     def __init__(self, curve=Secp256k1_41):
         VGroup.__init__(self)
@@ -30,7 +42,9 @@ class DiscreetEllipticChart(VGroup):
     def gen_points(self):
         points = ECAffine.generate_points(self.curve)
         for p in points:
-            self.add(Dot(self.ax.c2p(p.x.value, p.y.value), color=YELLOW))
+            dot = DotOnCurve(self.ax, p)
+            self.dots.append(dot)
+            self.add(dot)
 
     def animate_appear(self):
         return Create(self)

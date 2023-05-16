@@ -29,7 +29,7 @@ class AdditionSlide(SlideBase):
         self.line1 = LineThroughPoints(self.p4, self.p2)
         self.line2 = LineThroughPoints(self.p3, self.p4)
         self.sidebar = Sidebar(
-            "Addition", tex_filename="data/add.tex", code_filename="data/add.py"
+            "Addition", tex_path="data/add.tex", code_path="data/add.py"
         )
 
     def update_p1(self, p1):

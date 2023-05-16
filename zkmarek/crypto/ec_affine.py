@@ -8,6 +8,7 @@ from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
 class ECAffine:
     x: Field
     y: Field
+    curve: WeierstrassCurve
 
     def __init__(self, x: FieldLike, y: FieldLike, curve: WeierstrassCurve):
         self.curve = curve
