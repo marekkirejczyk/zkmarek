@@ -3,7 +3,7 @@ from manim import LEFT, Create, Write
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
-from zkmarek.video.mobjects.point_on_curve import DotOnCurve
+from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
