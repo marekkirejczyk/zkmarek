@@ -5,13 +5,23 @@ from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.line_through_points import LineThroughPoints
-from zkmarek.video.mobjects.point_on_curve import PointOnCurve
+from zkmarek.video.mobjects.point_on_curve import DotOnCurve
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
 
 
 class AdditionSlide(SlideBase):
+    sidebar: Sidebar
+    line1: LineThroughPoints
+    line2: LineThroughPoints
+    p1: DotOnCurve
+    p2: DotOnCurve
+    p3: DotOnCurve
+    p4: DotOnCurve
+    p1_x: ValueTracker
+    p1_sgn: int
+
     def __init__(self):
         SlideBase.__init__(self, title="Addition")
         self.chart = ContinuousEllipticChart()
@@ -22,10 +32,10 @@ class AdditionSlide(SlideBase):
         a = CECAffine.from_x(self.p1_x.get_value())
         b = CECAffine.from_x(2)
         c = a + b
-        self.p1 = PointOnCurve(self.chart.ax, "A", a)
-        self.p2 = PointOnCurve(self.chart.ax, "B", b)
-        self.p3 = PointOnCurve(self.chart.ax, "A + B", c, label_direction=LEFT)
-        self.p4 = PointOnCurve(self.chart.ax, "-(A + B)", -c, label_direction=LEFT)
+        self.p1 = DotOnCurve(self.chart.ax, "A", a)
+        self.p2 = DotOnCurve(self.chart.ax, "B", b)
+        self.p3 = DotOnCurve(self.chart.ax, "A + B", c, label_direction=LEFT)
+        self.p4 = DotOnCurve(self.chart.ax, "-(A + B)", -c, label_direction=LEFT)
         self.line1 = LineThroughPoints(self.p4, self.p2)
         self.line2 = LineThroughPoints(self.p3, self.p4)
         self.sidebar = Sidebar(
