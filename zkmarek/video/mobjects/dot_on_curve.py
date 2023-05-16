@@ -1,16 +1,26 @@
-from manim import GREEN, RIGHT, Dot, MathTex, Create, Succession, VGroup, Write
+from manim import (GREEN, RIGHT, Axes, Create, Dot, MathTex, Succession,
+                   VGroup, Write)
+from zkmarek.crypto.cec_affine import CECAffine
 
 
-class PointOnCurve(VGroup):
+class DotOnCurve(VGroup):
     label: MathTex
+    ax: Axes
+    dot: Dot
+    lines: VGroup
+
+    p: CECAffine
+    include_lines: bool
+    include_coords: bool
+    label_direction: int
 
     def __init__(
         self,
-        ax,
+        ax: Axes,
         label: str,
-        p,
-        include_lines=False,
-        include_coords=False,
+        p: CECAffine,
+        include_lines: bool= False,
+        include_coords: bool = False,
         label_direction=RIGHT,
     ):
         VGroup.__init__(self)
@@ -29,7 +39,6 @@ class PointOnCurve(VGroup):
             self.add(self.lines)
         self.label = MathTex(text, font_size=30)
         self.add(self.label)
-
         self.set_p(p)
 
     def set_p(self, p):

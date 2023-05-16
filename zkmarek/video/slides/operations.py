@@ -3,7 +3,7 @@ from manim import LEFT, FadeOut, ReplacementTransform, Scene, VGroup, Write
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
-from zkmarek.video.mobjects.point_on_curve import PointOnCurve
+from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
@@ -14,9 +14,9 @@ class OperationsSlide(SlideBase):
         SlideBase.__init__(self, title="Operations")
         self.chart = ContinuousEllipticChart()
         a = CECAffine.from_x(1)
-        self.p1 = PointOnCurve(self.chart.ax, "A(x, y)", a)
-        self.p2 = PointOnCurve(self.chart.ax, "A", a, include_coords=True)
-        self.sidebar = Sidebar("Operations", tex_path="data/operations.tex")
+        self.p1 = DotOnCurve(self.chart.ax, "A(x, y)", a)
+        self.p2 = DotOnCurve(self.chart.ax, "A", a, include_coords=True)
+        self.sidebar = Sidebar("Operations", tex_path="data/cec/operations.tex")
 
     def animate_in(self, scene: Scene):
         scene.play(self.chart.animate_appear())

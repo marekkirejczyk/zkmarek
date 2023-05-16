@@ -1,13 +1,12 @@
-from manim import DARK_GREY, DashedLine
+from manim import DARK_GREY, Line
 
 
-class LineThroughPoints(DashedLine):
+class LineThroughPoints(Line):
     def __init__(self, p1, p2, **kwargs):
-        DashedLine.__init__(
+        Line.__init__(
             self,
             start=p1.to_coord(),
             end=p2.to_coord(),
-            dashed_ratio=0.6,
             color=DARK_GREY,
             **kwargs
         )
