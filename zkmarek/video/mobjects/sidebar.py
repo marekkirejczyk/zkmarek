@@ -1,6 +1,6 @@
 from typing import Optional
 
-from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut,
+from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut, Unwrite,
                    ReplacementTransform, Tex, VGroup, VMobject, Write)
 from utils import load
 
@@ -71,12 +71,19 @@ class Sidebar(VGroup):
         scene.play(FadeIn(self.math))
         self.add(self.math)
 
-    def animate_respectively(self, scene):
+    def animate_appear(self, scene):
         scene.play(Write(self.label))
         if self.math is not None:
             scene.play(Write(self.math))
         if self.code is not None:
             scene.play(Write(self.code))
+
+    def animate_disappear(self, scene):
+        if self.code is not None and self.code in self.submobjects:
+            scene.play(Unwrite(self.code))
+        if self.math is not None and self.math in self.submobjects:
+            scene.play(Unwrite(self.math))
+        scene.play(Unwrite(self.label))
 
     def animate_replace_math(self, scene, tex_path: str):
         new_math = self.create_math(tex_path)

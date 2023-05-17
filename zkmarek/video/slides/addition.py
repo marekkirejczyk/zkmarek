@@ -1,4 +1,4 @@
-from manim import DOWN, LEFT, UP, FadeOut, ValueTracker, Write, linear
+from manim import DOWN, LEFT, UP, FadeOut, ValueTracker, Write, linear, Succession
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
@@ -88,7 +88,7 @@ class AdditionSlide(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-0.5))
 
         scene.next_section("Math and code")
-        self.sidebar.animate_respectively(scene)
+        self.sidebar.animate_appear(scene)
         self.animate_update_chart_position(scene)
 
     def animate_infinity_point(self, scene):
@@ -114,7 +114,7 @@ class AdditionSlide(SlideBase):
         self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_double.py")
         self.sidebar.animate_replace_code(scene, "data/cec/double.py")
-        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(4))
+        scene.play(self.p1_x.animate(run_time=3, rate_func=linear).set_value(3.5))
 
     def animate_in(self, scene):
         self.animate_build_scene(scene)
@@ -124,13 +124,15 @@ class AdditionSlide(SlideBase):
         self.animate_doubling(scene)
 
     def animate_out(self, scene):
+        self.sidebar.animate_disappear(scene)
         scene.play(
-            FadeOut(self.chart),
-            FadeOut(self.p1),
-            FadeOut(self.p2),
-            FadeOut(self.p3),
-            FadeOut(self.p4),
-            FadeOut(self.line1),
-            FadeOut(self.line2),
-            FadeOut(self.sidebar),
+            Succession(
+                FadeOut(self.p3),
+                FadeOut(self.line2),
+                FadeOut(self.p4),
+                FadeOut(self.line1),
+                FadeOut(self.p2),
+                FadeOut(self.p1),
+                FadeOut(self.chart),
+            )
         )

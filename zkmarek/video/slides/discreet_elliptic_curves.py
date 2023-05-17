@@ -61,7 +61,7 @@ class DiscreetEllipticCurves(SlideBase):
         scene.play(FadeIn(sline), Wait())
         scene.play(Flash(dots[1]))
 
-        self.sidebar.animate_respectively(scene)
+        self.sidebar.animate_appear(scene)
         scene.play(FadeOut(sline))
         scene.play(FadeOut(line))
 
