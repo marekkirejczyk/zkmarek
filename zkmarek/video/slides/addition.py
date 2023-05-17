@@ -73,7 +73,7 @@ class AdditionSlide(SlideBase):
         scene.next_section("Mirror line")
         scene.play(Write(self.line2), self.p3.animate_appear())
 
-    def animate_to_infinity(self, scene):
+    def animate_addition(self, scene):
         scene.next_section("Animate addition")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
@@ -83,11 +83,16 @@ class AdditionSlide(SlideBase):
         scene.next_section("Math and code")
         self.sidebar.animate_respectively(scene)
 
+    def animate_infinity_point(self, scene):
         scene.next_section("Infinity point")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
+        self.sidebar.animate_hide_code(scene)
+        self.sidebar.animate_replace_math(scene, "data/cec/add_inf.tex")
+        self.sidebar.animate_hide_math(scene)
+        self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
 
-    def animate_to_double(self, scene):
+    def animate_doubling(self, scene):
         scene.next_section("Doubling")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
@@ -101,8 +106,9 @@ class AdditionSlide(SlideBase):
     def animate_in(self, scene):
         self.animate_build_scene(scene)
         self.animate_add_lines(scene)
-        self.animate_to_infinity(scene)
-        self.animate_to_double(scene)
+        self.animate_addition(scene)
+        self.animate_infinity_point(scene)
+        self.animate_doubling(scene)
 
     def animate_out(self, scene):
         scene.play(
