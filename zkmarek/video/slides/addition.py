@@ -3,7 +3,7 @@ from manim import DOWN, LEFT, UP, FadeOut, ValueTracker, Write, linear, Successi
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
-from zkmarek.video.mobjects.line_through_points import LineThroughPoints
+from zkmarek.video.mobjects.line_through_points import LineThroughDots
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
@@ -11,8 +11,8 @@ from .slide_base import SlideBase
 
 class AdditionSlide(SlideBase):
     sidebar: Sidebar
-    line1: LineThroughPoints
-    line2: LineThroughPoints
+    line1: LineThroughDots
+    line2: LineThroughDots
     p1: DotOnCurve
     p2: DotOnCurve
     p3: DotOnCurve
@@ -38,8 +38,8 @@ class AdditionSlide(SlideBase):
         self.p4 = DotOnCurve(
             self.chart.ax, "-(A + B)", -c, label_direction=(LEFT + 0.5 * DOWN)
         )
-        self.line1 = LineThroughPoints(self.p4, self.p2)
-        self.line2 = LineThroughPoints(self.p3, self.p4)
+        self.line1 = LineThroughDots(self.p4, self.p2)
+        self.line2 = LineThroughDots(self.p3, self.p4)
         self.sidebar = Sidebar(
             "Addition", tex_path="data/cec/add.tex", code_path="data/cec/add.py"
         )
@@ -52,10 +52,8 @@ class AdditionSlide(SlideBase):
         self.p3.set_p(new_c)
         self.p4.set_p(-new_c)
 
-        left = self.p1 if self.p1.p.x < self.p4.p.x else self.p4
-        right = self.p2 if self.p2.p.x > self.p4.p.x else self.p4
-        right = self.p1 if self.p1.p.x > right.p.x else right
-        self.line1.update_start_and_end(left, right)
+        sorted_dots = sorted([self.p1, self.p2, self.p4], key=lambda d: d.p.x)
+        self.line1.update_start_and_end(sorted_dots[0], sorted_dots[-1])
         self.line2.update_start_and_end(self.p3, self.p4)
 
     def animate_update_chart_position(self, scene):

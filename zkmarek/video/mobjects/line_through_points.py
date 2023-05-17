@@ -1,8 +1,9 @@
 from manim import DARK_GREY, Line
+from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 
 
-class LineThroughPoints(Line):
-    def __init__(self, p1, p2, **kwargs):
+class LineThroughDots(Line):
+    def __init__(self, p1: DotOnCurve, p2: DotOnCurve, **kwargs):
         Line.__init__(
             self,
             start=p1.to_coord(),
