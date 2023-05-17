@@ -4,6 +4,6 @@ from zkmarek.video.slides.slide_base import SlideBase
 
 class TestSlide(SlideBase):
     def animate_in(self, scene):
-        tex_path = "data/cec/add.tex"
+        tex_path = "data/cec/add_double.tex"
         self.add(Tex(load(tex_path), font_size=32))
 

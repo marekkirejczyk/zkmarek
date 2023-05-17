@@ -1,4 +1,4 @@
-from manim import LEFT, UP, DOWN, FadeOut, Write, ValueTracker, linear, Wait
+from manim import DOWN, LEFT, UP, FadeOut, ValueTracker, Write, linear
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
@@ -24,14 +24,14 @@ class AdditionSlide(SlideBase):
         SlideBase.__init__(self, title="Addition")
         self.chart = ContinuousEllipticChart()
         self.chart.align_on_border(LEFT)
-
+        self.chart.align_on_border(UP)
         self.p1_x = ValueTracker(1)
         self.p1_sgn = 1
         a = CECAffine.from_x(self.p1_x.get_value())
         b = CECAffine.from_x(3)
         c = a + b
         self.p1 = DotOnCurve(self.chart.ax, "A", a)
-        self.p2 = DotOnCurve(self.chart.ax, "B", b)
+        self.p2 = DotOnCurve(self.chart.ax, "B", b, label_direction=(LEFT + 0.5 * UP))
         self.p3 = DotOnCurve(
             self.chart.ax, "A + B", c, label_direction=(LEFT + 0.5 * UP)
         )
@@ -48,6 +48,7 @@ class AdditionSlide(SlideBase):
         new_a = CECAffine.from_x(self.p1_x.get_value(), self.p1_sgn)
         new_c = new_a + self.p2.p
         self.p1.set_p(new_a)
+        self.p2.set_p(CECAffine.from_x(3))
         self.p3.set_p(new_c)
         self.p4.set_p(-new_c)
 
@@ -57,12 +58,18 @@ class AdditionSlide(SlideBase):
         self.line1.update_start_and_end(left, right)
         self.line2.update_start_and_end(self.p3, self.p4)
 
+    def animate_update_chart_position(self, scene):
+        scene.play(
+            self.chart.animate.next_to(self.sidebar, LEFT, buff=0.5).align_on_border(UP)
+        )
+
     def animate_build_scene(self, scene):
         scene.play(self.chart.animate_appear())
         scene.play(self.p1.animate_appear())
         scene.play(self.p2.animate_appear())
 
         scene.add(self.p1)
+        scene.add(self.p2)
         scene.add(self.p1_x)
         self.p1.add_updater(self.update_p1)
 
@@ -82,6 +89,7 @@ class AdditionSlide(SlideBase):
 
         scene.next_section("Math and code")
         self.sidebar.animate_respectively(scene)
+        self.animate_update_chart_position(scene)
 
     def animate_infinity_point(self, scene):
         scene.next_section("Infinity point")
@@ -98,8 +106,13 @@ class AdditionSlide(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
+        self.sidebar.animate_hide_code(scene)
+        self.sidebar.animate_show_math(scene)
+        self.sidebar.animate_replace_math(scene, "data/cec/add_double.tex")
+        self.animate_update_chart_position(scene)
+        self.sidebar.animate_hide_math(scene)
+        self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_double.py")
-        scene.play(Wait())
         self.sidebar.animate_replace_code(scene, "data/cec/double.py")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(4))
 

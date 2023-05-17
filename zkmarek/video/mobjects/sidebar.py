@@ -32,7 +32,7 @@ class Sidebar(VGroup):
         self.align_on_border(RIGHT)
 
     def create_math(self, tex_path: str):
-        math = Tex(load(tex_path), font_size=32)
+        math = Tex(load(tex_path), font_size=28)
         math.next_to(self.label, DOWN, buff=0.5)
         return math
 
