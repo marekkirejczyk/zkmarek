@@ -10,6 +10,8 @@ from slides.operations import OperationsSlide
 from slides.title import TitleSlide
 from slides.discreet_elliptic_curves import DiscreetEllipticCurves
 
+from zkmarek.video.slides.test_slide import TestSlide # noqa: F401 # pyright: ignore
+
 config.width = 16
 config.height = 9
 
