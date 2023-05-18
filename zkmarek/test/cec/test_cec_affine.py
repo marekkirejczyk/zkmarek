@@ -1,6 +1,6 @@
 import unittest
 
-from zkmarek.crypto.cec_affine import INFINITY, CECAffine
+from zkmarek.crypto.cec.cec_affine import INFINITY, CECAffine
 
 class TestCecAffine(unittest.TestCase):
     def test_neg(self):

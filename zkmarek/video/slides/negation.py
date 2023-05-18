@@ -1,6 +1,6 @@
 from manim import LEFT, Create, Write
 
-from zkmarek.crypto.cec_affine import CECAffine
+from zkmarek.crypto.cec.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve

@@ -1,6 +1,6 @@
 from manim import (GREEN, RIGHT, Axes, Create, Dot, MathTex, Succession,
                    VGroup, Write)
-from zkmarek.crypto.cec_affine import CECAffine
+from zkmarek.crypto.cec.cec_affine import CECAffine
 
 
 class DotOnCurve(VGroup):

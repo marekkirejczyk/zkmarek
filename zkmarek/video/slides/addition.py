@@ -1,6 +1,6 @@
 from manim import DOWN, LEFT, UP, FadeOut, ValueTracker, Write, linear, Succession
 
-from zkmarek.crypto.cec_affine import CECAffine
+from zkmarek.crypto.cec.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.line_through_points import LineThroughDots
