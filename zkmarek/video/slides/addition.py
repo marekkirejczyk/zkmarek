@@ -1,5 +1,5 @@
 from manim import (DOWN, GREEN, LEFT, UP, Create, Dot, FadeOut, Flash,
-                   Succession, TangentLine, ValueTracker, linear)
+                   Succession, ValueTracker, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
