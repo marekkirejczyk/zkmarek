@@ -1,5 +1,5 @@
-from manim import (DOWN, GREEN, LEFT, UP, Create, Dot, FadeOut, Flash,
-                   Succession, ValueTracker, linear)
+from manim import (DOWN, GREEN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
+                   MathTex, Succession, ValueTracker, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
@@ -21,6 +21,7 @@ class AdditionSlide(SlideBase):
     p3: DotOnCurve
     p4: DotOnCurve
     point_at_infinity: DotOnCurve
+    point_at_label: MathTex
     p1_x: ValueTracker
     p1_sgn: int
 
@@ -42,7 +43,9 @@ class AdditionSlide(SlideBase):
         self.p4 = DotOnCurve(
             self.chart.ax, "-(A + B)", -c, label_direction=(LEFT + 0.5 * DOWN)
         )
-        self.point_at_infinity = Dot(self.chart.ax.coords_to_point(7, 7), color=GREEN)
+        self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7), color=GREEN)
+        self.point_at_label = MathTex("\infty")
+        self.point_at_label.next_to(self.point_at_infinity, RIGHT)
         self.line1 = LineThroughDots(self.p4, self.p2)
         self.line2 = LineThroughDots(self.p3, self.p4)
         self.sidebar = Sidebar(
@@ -101,16 +104,16 @@ class AdditionSlide(SlideBase):
         scene.next_section("Infinity point")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
         scene.play(Create(self.point_at_infinity))
-        scene.add(self.point_at_infinity)
+        scene.play(Create(self.point_at_label))
+
         scene.play(Flash(self.point_at_infinity))
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf.tex")
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
+        scene.play(FadeOut(self.point_at_label))
         scene.play(FadeOut(self.point_at_infinity))
-        scene.remove(self.point_at_infinity)
-
 
     def animate_doubling(self, scene):
         scene.next_section("Doubling")
@@ -131,9 +134,9 @@ class AdditionSlide(SlideBase):
     def animate_in(self, scene):
         self.animate_build_scene(scene)
         self.animate_add_lines(scene)
-        # self.animate_addition(scene)
+        self.animate_addition(scene)
         self.animate_infinity_point(scene)
-        # self.animate_doubling(scene)
+        self.animate_doubling(scene)
 
     def animate_out(self, scene):
         self.sidebar.animate_disappear(scene)
