@@ -10,7 +10,7 @@ class ContinuousEllipticChart(VGroup):
     def __init__(self, **kwargs):
         VGroup.__init__(self, **kwargs)
         self.ax = Axes(
-            x_range=[-5, 7, 2],
+            x_range=[-3, 7, 2],
             y_range=[-8, 8, 2],
             x_length=7,
             axis_config={"include_numbers": True}

@@ -11,6 +11,7 @@ class LineThroughDots(Line):
             color=DARK_GREY,
             **kwargs
         )
+        self.set_z_index(1, family=True)
 
     def update_start_and_end(self, p1, p2):
         self.put_start_and_end_on(p1.to_coord(), p2.to_coord())

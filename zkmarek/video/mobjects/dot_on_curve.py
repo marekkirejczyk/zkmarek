@@ -40,6 +40,7 @@ class DotOnCurve(VGroup):
         self.label = MathTex(text, font_size=30)
         self.add(self.label)
         self.set_p(p)
+        self.set_z_index(2, family=True)
 
     def set_p(self, p):
         self.p = p
