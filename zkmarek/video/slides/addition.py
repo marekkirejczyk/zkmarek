@@ -28,8 +28,6 @@ class AdditionSlide(SlideBase):
     def __init__(self):
         SlideBase.__init__(self, title="Addition")
         self.chart = ContinuousEllipticChart()
-        self.chart.align_on_border(LEFT)
-        self.chart.align_on_border(UP)
         self.p1_x = ValueTracker(1)
         self.p1_sgn = 1
         a = CECAffine.from_x(self.p1_x.get_value())
@@ -101,12 +99,14 @@ class AdditionSlide(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-0.5))
 
         scene.next_section("Math and code")
+        scene.play(self.chart.animate.align_on_border(LEFT))
         self.sidebar.animate_appear(scene)
         self.animate_update_chart_position(scene)
 
     def animate_infinity_point(self, scene):
         scene.next_section("Infinity point")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
+        self.point_at_infinity.move_to(self.chart.ax.coords_to_point(6, 7))
         scene.play(Create(self.point_at_infinity))
         scene.play(Create(self.point_at_label))
 
