@@ -1,7 +1,9 @@
-from manim import DOWN, LEFT, UP, FadeOut, ValueTracker, Write, linear, Succession
+from manim import (DOWN, GREEN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
+                   MathTex, Succession, ValueTracker, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
-from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
+from zkmarek.video.mobjects.continuous_elliptic_chart import \
+    ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.line_through_points import LineThroughDots
 from zkmarek.video.mobjects.sidebar import Sidebar
@@ -10,6 +12,7 @@ from .slide_base import SlideBase
 
 
 class AdditionSlide(SlideBase):
+    chart: ContinuousEllipticChart
     sidebar: Sidebar
     line1: LineThroughDots
     line2: LineThroughDots
@@ -17,6 +20,8 @@ class AdditionSlide(SlideBase):
     p2: DotOnCurve
     p3: DotOnCurve
     p4: DotOnCurve
+    point_at_infinity: DotOnCurve
+    point_at_label: MathTex
     p1_x: ValueTracker
     p1_sgn: int
 
@@ -38,6 +43,9 @@ class AdditionSlide(SlideBase):
         self.p4 = DotOnCurve(
             self.chart.ax, "-(A + B)", -c, label_direction=(LEFT + 0.5 * DOWN)
         )
+        self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7), color=GREEN)
+        self.point_at_label = MathTex("\infty")
+        self.point_at_label.next_to(self.point_at_infinity, RIGHT)
         self.line1 = LineThroughDots(self.p4, self.p2)
         self.line2 = LineThroughDots(self.p3, self.p4)
         self.sidebar = Sidebar(
@@ -52,8 +60,12 @@ class AdditionSlide(SlideBase):
         self.p3.set_p(new_c)
         self.p4.set_p(-new_c)
 
-        sorted_dots = sorted([self.p1, self.p2, self.p4], key=lambda d: d.p.x)
-        self.line1.update_start_and_end(sorted_dots[0], sorted_dots[-1])
+        if abs(self.p1.p.x - self.p2.p.x) < 0.3 and self.p1_sgn < 0:
+            self.line1.update_start_and_end(self.p1, self.p2)
+        else:
+            sorted_dots = sorted([self.p1, self.p2, self.p4], key=lambda d: d.p.x)
+            self.line1.update_start_and_end(sorted_dots[0], sorted_dots[-1])
+
         self.line2.update_start_and_end(self.p3, self.p4)
 
     def animate_update_chart_position(self, scene):
@@ -65,7 +77,6 @@ class AdditionSlide(SlideBase):
         scene.play(self.chart.animate_appear())
         scene.play(self.p1.animate_appear())
         scene.play(self.p2.animate_appear())
-
         scene.add(self.p1)
         scene.add(self.p2)
         scene.add(self.p1_x)
@@ -73,10 +84,10 @@ class AdditionSlide(SlideBase):
 
     def animate_add_lines(self, scene):
         scene.next_section("Line through points")
-        scene.play(Write(self.line1), self.p4.animate_appear())
+        scene.play(Create(self.line1), self.p4.animate_appear())
 
         scene.next_section("Mirror line")
-        scene.play(Write(self.line2), self.p3.animate_appear())
+        scene.play(Create(self.line2), self.p3.animate_appear())
 
     def animate_addition(self, scene):
         scene.next_section("Animate addition")
@@ -92,11 +103,17 @@ class AdditionSlide(SlideBase):
     def animate_infinity_point(self, scene):
         scene.next_section("Infinity point")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
+        scene.play(Create(self.point_at_infinity))
+        scene.play(Create(self.point_at_label))
+
+        scene.play(Flash(self.point_at_infinity))
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf.tex")
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
+        scene.play(FadeOut(self.point_at_label))
+        scene.play(FadeOut(self.point_at_infinity))
 
     def animate_doubling(self, scene):
         scene.next_section("Doubling")
