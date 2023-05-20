@@ -82,12 +82,13 @@ class AdditionSlide(SlideBase):
         scene.add(self.p1_x)
         self.p1.add_updater(self.update_p1)
 
-    def animate_add_lines(self, scene):
         scene.next_section("Line through points")
         scene.play(Create(self.line1), self.p4.animate_appear())
+        scene.add(self.p4)
 
         scene.next_section("Mirror line")
         scene.play(Create(self.line2), self.p3.animate_appear())
+        scene.add(self.p3)
 
     def animate_addition(self, scene):
         scene.next_section("Animate addition")
@@ -133,7 +134,6 @@ class AdditionSlide(SlideBase):
 
     def animate_in(self, scene):
         self.animate_build_scene(scene)
-        self.animate_add_lines(scene)
         self.animate_addition(scene)
         self.animate_infinity_point(scene)
         self.animate_doubling(scene)
