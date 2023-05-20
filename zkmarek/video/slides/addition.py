@@ -125,6 +125,11 @@ class AdditionSlide(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
+
+        line_double = self.line1.copy()
+        self.chart.add(line_double)
+        scene.play(line_double.animate(run_time=2).scale(2))
+
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_show_math(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_double.tex")
@@ -133,6 +138,9 @@ class AdditionSlide(SlideBase):
         self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_double.py")
         self.sidebar.animate_replace_code(scene, "data/cec/double.py")
+
+        scene.play(line_double.animate(run_time=2).scale(0.5))
+        self.chart.remove(line_double)
         scene.play(self.p1_x.animate(run_time=3, rate_func=linear).set_value(3.5))
 
     def animate_in(self, scene):
