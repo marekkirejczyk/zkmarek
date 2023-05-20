@@ -1,5 +1,5 @@
 from manim import (DOWN, GREEN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
-                   MathTex, Succession, ValueTracker, linear)
+                   GrowFromPoint, MathTex, Succession, ValueTracker, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
@@ -80,15 +80,18 @@ class AdditionSlide(SlideBase):
         scene.add(self.p1)
         scene.add(self.p2)
         scene.add(self.p1_x)
-        self.p1.add_updater(self.update_p1)
 
         scene.next_section("Line through points")
-        scene.play(Create(self.line1), self.p4.animate_appear())
+        scene.play(GrowFromPoint(self.line1, point=self.p2.to_coord(), run_time=5))
+        scene.play(self.p4.animate_appear())
         scene.add(self.p4)
 
         scene.next_section("Mirror line")
-        scene.play(Create(self.line2), self.p3.animate_appear())
+        scene.play(GrowFromPoint(self.line2, point=self.p4.to_coord(), run_time=5))
+        scene.play(self.p3.animate_appear())
         scene.add(self.p3)
+
+        self.p1.add_updater(self.update_p1)
 
     def animate_addition(self, scene):
         scene.next_section("Animate addition")
