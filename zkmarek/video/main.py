@@ -8,7 +8,8 @@ from slides.equation import EquationSlide
 from slides.negation import NegationSlide
 from slides.operations import OperationsSlide
 from slides.title import TitleSlide
-from slides.discrete_elliptic_curves import DiscreteEllipticCurves
+from slides.ec.negation import Negation as ECNegation
+from slides.ec.addition import Addition as ECAddition
 
 from zkmarek.video.slides.test_slide import TestSlide # noqa: F401 # pyright: ignore
 
@@ -29,6 +30,7 @@ class EllipticCurves(Scene):
                 NegationSlide(),
                 AdditionSlide(),
                 TitleSlide("Discrete Elliptic Curves"),
-                DiscreteEllipticCurves(),
+                ECNegation(),
+                ECAddition(),
             ]
         Presentation(self).play(scenes)
