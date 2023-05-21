@@ -3,6 +3,7 @@ from typing import Optional
 from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut, Unwrite,
                    ReplacementTransform, Tex, VGroup, VMobject, Write)
 from utils import load
+from zkmarek.video.slides.slide_base import SlideBase
 
 
 class Sidebar(VGroup):
@@ -71,11 +72,15 @@ class Sidebar(VGroup):
         scene.play(FadeIn(self.math))
         self.add(self.math)
 
-    def animate_appear(self, scene):
+    def animate_appear(self, scene, slide: Optional[SlideBase] = None):
         scene.play(Write(self.label))
         if self.math is not None:
+            if slide is not None:
+                slide.new_subsection(scene, "Math")
             scene.play(Write(self.math))
         if self.code is not None:
+            if slide is not None:
+                slide.new_subsection(scene, "Code")
             scene.play(Write(self.code))
 
     def animate_disappear(self, scene):

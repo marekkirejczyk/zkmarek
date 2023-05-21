@@ -26,4 +26,4 @@ class NegationSlide(SlideBase):
         scene.play(Create(self.chart))
         scene.play(self.p1.animate_appear())
         scene.play(self.p2.animate_appear())
-        scene.play(Write(self.sidebar))
+        self.sidebar.animate_appear(scene, self)

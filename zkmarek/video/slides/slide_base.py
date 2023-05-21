@@ -1,11 +1,14 @@
 from manim import VGroup, FadeOut
 
 class SlideBase(VGroup):
-    title = ""
+    title: str = ""
 
-    def __init__(self, title="", **kwargs) -> None:
+    def __init__(self, title:str = "", **kwargs) -> None:
         VGroup.__init__(self, **kwargs)
-        self.title=title
+        self.title = title
+
+    def new_subsection(self, scene, title):
+        scene.next_section(f"{self.title}: {title}")
 
     def animate_in(self, scene):
         pass
