@@ -18,7 +18,7 @@ class Sidebar(VGroup):
         code_path: Optional[str] = None,
         tex_path: Optional[str] = None,
     ):
-        VGroup.__init__(self)
+        super().__init__()
         self.label = Tex(title)
         self.add(self.label)
 

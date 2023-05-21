@@ -19,7 +19,7 @@ class DiscreetEllipticChart(VGroup):
     ax: Axes
 
     def __init__(self, curve=Secp256k1_41):
-        VGroup.__init__(self)
+        super().__init__()
         self.curve = curve
 
         self.ax = Axes(

@@ -11,7 +11,7 @@ from .slide_base import SlideBase
 
 class NegationSlide(SlideBase):
     def __init__(self):
-        SlideBase.__init__(self, title="Negation")
+        super().__init__(title="Negation")
         self.chart = ContinuousEllipticChart()
         self.chart.align_on_border(LEFT)
         self.sidebar = Sidebar(

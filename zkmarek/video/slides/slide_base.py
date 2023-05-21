@@ -3,8 +3,8 @@ from manim import VGroup, FadeOut
 class SlideBase(VGroup):
     title: str = ""
 
-    def __init__(self, title:str = "", **kwargs) -> None:
-        VGroup.__init__(self, **kwargs)
+    def __init__(self, title:str, **kwargs) -> None:
+        super().__init__(**kwargs)
         self.title = title
 
     def new_subsection(self, scene, title):
