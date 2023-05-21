@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, FadeOut, Flash, Line, Wait
+from manim import LEFT, DARK_GREY, ORIGIN, FadeIn, FadeOut, Flash, Line, VGroup, Wait
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
@@ -6,7 +6,6 @@ from zkmarek.video.mobjects.discreet_elliptic_chart import \
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
-
 
 class DiscreetEllipticCurves(SlideBase):
     curve: WeierstrassCurve
@@ -17,23 +16,23 @@ class DiscreetEllipticCurves(SlideBase):
         SlideBase.__init__(self, title="Discreet elliptic curves chart")
         self.curve = Secp256k1_41
         self.chart = DiscreetEllipticChart(self.curve)
+        self.chart.set_z_index(1, family=True)
 
     def create_symmetry_line(self):
         mid_y = self.curve.p / 2
-        s = self.chart.ax.c2p(-2, mid_y)
-        e = self.chart.ax.c2p(self.curve.p + 2, mid_y)
-        return Line(s, e, color="red")
+        s = self.chart.ax.c2p(-1, mid_y)
+        e = self.chart.ax.c2p(self.curve.p, mid_y)
+        return Line(s, e, color=DARK_GREY, z_index=0)
 
     def create_vertical_line(self, x):
-        s = self.chart.ax.c2p(x, 0)
+        s = self.chart.ax.c2p(x, -1)
         e = self.chart.ax.c2p(x, self.curve.p)
-        return Line(s, e, color="red")
+        return Line(s, e, color=DARK_GREY, z_index=0)
 
     def create_sidebar(self):
         self.sidebar = Sidebar(
             "Negation", tex_path="data/cec/neg.tex", code_path="data/ec/neg.py"
         )
-        self.sidebar.to_edge(RIGHT)
 
     def animate_symmetry(self, scene):
         line = self.create_symmetry_line()

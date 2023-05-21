@@ -43,6 +43,7 @@ class DiscreetEllipticChart(VGroup):
         points = ECAffine.generate_points(self.curve)
         for p in points:
             dot = DotOnCurve(self.ax, p)
+            dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
 
