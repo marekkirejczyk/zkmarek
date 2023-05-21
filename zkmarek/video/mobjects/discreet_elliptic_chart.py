@@ -1,4 +1,5 @@
-from manim import Axes, Tex, TexTemplate, VGroup, Dot, Create, FadeOut, YELLOW
+from manim import YELLOW, Axes, Create, Dot, FadeOut, Tex, TexTemplate, VGroup
+
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 
@@ -46,6 +47,9 @@ class DiscreetEllipticChart(VGroup):
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
+
+    def find_dots_by_x(self, x):
+        return list(filter(lambda d: d.point.x.value == x, self.dots))
 
     def animate_appear(self):
         return Create(self)
