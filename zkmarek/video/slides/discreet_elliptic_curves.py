@@ -87,5 +87,7 @@ class DiscreetEllipticCurves(SlideBase):
         self.animate_negate(scene)
 
     def animate_out(self, scene):
+        scene.play(FadeOut(self.label1))
+        scene.play(FadeOut(self.label2))
         scene.play(FadeOut(self.sidebar))
         scene.play(self.chart.animate_disappear())

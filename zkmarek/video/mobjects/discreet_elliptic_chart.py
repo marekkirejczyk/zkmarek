@@ -6,9 +6,8 @@ from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 
 class DotOnCurve(Dot):
     point: ECAffine
-
     def __init__(self, ax: Axes, p: ECAffine):
-        super(DotOnCurve, self).__init__(
+        super().__init__(
             ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW, radius=0.05
         )
         self.point = p
