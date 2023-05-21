@@ -13,7 +13,7 @@ class DotOnCurve(Dot):
         self.point = p
 
 
-class DiscreetEllipticChart(VGroup):
+class DiscreteEllipticChart(VGroup):
     curve: WeierstrassCurve
     dots: list[Dot] = []
     ax: Axes

@@ -3,24 +3,24 @@ from manim import (DARK_GREY, LEFT, RED, RIGHT, FadeIn, FadeOut, Indicate,
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
-    DiscreetEllipticChart
+    DiscreteEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
 
 
-class DiscreetEllipticCurves(SlideBase):
+class DiscreteEllipticCurves(SlideBase):
     curve: WeierstrassCurve
-    chart: DiscreetEllipticChart
+    chart: DiscreteEllipticChart
     sidebar: Sidebar
     label1: Tex
     label2: Tex
 
 
     def __init__(self):
-        super().__init__(title="Discreet elliptic curves chart")
+        super().__init__(title="Discrete elliptic curves chart")
         self.curve = Secp256k1_41
-        self.chart = DiscreetEllipticChart(self.curve)
+        self.chart = DiscreteEllipticChart(self.curve)
         self.chart.set_z_index(1, family=True)
         self.label1 = Tex("A", font_size=28)
         self.label2 = Tex("-A", font_size=28)
