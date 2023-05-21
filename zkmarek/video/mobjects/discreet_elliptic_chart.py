@@ -8,7 +8,7 @@ class DotOnCurve(Dot):
 
     def __init__(self, ax: Axes, p: ECAffine):
         super(DotOnCurve, self).__init__(
-            ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW
+            ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW, radius=0.05
         )
         self.point = p
 

@@ -1,4 +1,4 @@
-from manim import LEFT, DARK_GREY, ORIGIN, FadeIn, FadeOut, Flash, Line, VGroup, Wait
+from manim import LEFT, DARK_GREY, FadeIn, FadeOut, Flash, Line, Wait
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
