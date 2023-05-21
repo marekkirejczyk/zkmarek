@@ -14,6 +14,7 @@ class DiscreetEllipticCurves(SlideBase):
     sidebar: Sidebar
 
     def __init__(self):
+        SlideBase.__init__(self, title="Discreet elliptic curves chart")
         self.curve = Secp256k1_41
         self.chart = DiscreetEllipticChart(self.curve)
 
@@ -51,6 +52,7 @@ class DiscreetEllipticCurves(SlideBase):
             scene.play(FadeOut(line))
 
     def animate_negate(self, scene):
+        self.new_subsection(scene, "Negation")
         scene.play(self.chart.animate.align_on_border(LEFT))
 
         line = self.create_vertical_line(9)
@@ -61,7 +63,7 @@ class DiscreetEllipticCurves(SlideBase):
         scene.play(FadeIn(sline), Wait())
         scene.play(Flash(dots[1]))
 
-        self.sidebar.animate_appear(scene)
+        self.sidebar.animate_appear(scene, self)
         scene.play(FadeOut(sline))
         scene.play(FadeOut(line))
 
