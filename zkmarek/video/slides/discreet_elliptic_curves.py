@@ -14,6 +14,7 @@ class DiscreetEllipticCurves(SlideBase):
     sidebar: Sidebar
 
     def __init__(self):
+        SlideBase.__init__(self, title="Discreet elliptic curves chart")
         self.curve = Secp256k1_41
         self.chart = DiscreetEllipticChart(self.curve)
 
