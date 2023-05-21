@@ -1,4 +1,4 @@
-from manim import LEFT, Create, Write
+from manim import LEFT, Create
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
