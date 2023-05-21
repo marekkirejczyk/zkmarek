@@ -3,10 +3,10 @@ import os
 from manim import Scene, config
 
 from presentation import Presentation
-from slides.addition import AdditionSlide
+from slides.addition import Addition
 from slides.equation import EquationSlide
-from slides.negation import NegationSlide
-from slides.operations import OperationsSlide
+from slides.cec.negation import Negation as CECNegation
+from slides.cec.operations import Operations as CECOperations
 from slides.title import TitleSlide
 from slides.ec.negation import Negation as ECNegation
 from slides.ec.addition import Addition as ECAddition
@@ -26,9 +26,9 @@ class EllipticCurves(Scene):
             scenes = [
                 TitleSlide("Elliptic Curves"),
                 EquationSlide(),
-                OperationsSlide(),
-                NegationSlide(),
-                AdditionSlide(),
+                CECOperations(),
+                CECNegation(),
+                Addition(),
                 TitleSlide("Discrete Elliptic Curves"),
                 ECNegation(),
                 ECAddition(),
