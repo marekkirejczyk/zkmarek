@@ -1,4 +1,5 @@
-from manim import LEFT, DARK_GREY, FadeIn, FadeOut, Flash, Line, Wait
+from manim import (DARK_GREY, LEFT, RED, RIGHT, FadeIn, FadeOut, Indicate,
+                   Line, Tex, Wait)
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
@@ -7,16 +8,22 @@ from zkmarek.video.mobjects.sidebar import Sidebar
 
 from .slide_base import SlideBase
 
+
 class DiscreetEllipticCurves(SlideBase):
     curve: WeierstrassCurve
     chart: DiscreetEllipticChart
     sidebar: Sidebar
+    label1: Tex
+    label2: Tex
+
 
     def __init__(self):
         SlideBase.__init__(self, title="Discreet elliptic curves chart")
         self.curve = Secp256k1_41
         self.chart = DiscreetEllipticChart(self.curve)
         self.chart.set_z_index(1, family=True)
+        self.label1 = Tex("A", font_size=28)
+        self.label2 = Tex("-A", font_size=28)
 
     def create_symmetry_line(self):
         mid_y = self.curve.p / 2
@@ -56,11 +63,17 @@ class DiscreetEllipticCurves(SlideBase):
 
         line = self.create_vertical_line(9)
         scene.play(FadeIn(line))
-        dots = list(filter(lambda d: d.point.x.value == 9, self.chart.dots))
-        scene.play(Flash(dots[0]))
+        dots = self.chart.find_dots_by_x(9)
+        scene.play(Indicate(dots[0], scale_factor=2))
+        dots[0].set_color(RED)
+        self.label1.next_to(dots[0], RIGHT)
+        scene.play(FadeIn(self.label1))
         sline = self.create_symmetry_line()
         scene.play(FadeIn(sline), Wait())
-        scene.play(Flash(dots[1]))
+        scene.play(Indicate(dots[1], scale_factor=2))
+        dots[1].set_color(RED)
+        self.label2.next_to(dots[1], RIGHT)
+        scene.play(FadeIn(self.label2))
 
         self.sidebar.animate_appear(scene, self)
         scene.play(FadeOut(sline))
