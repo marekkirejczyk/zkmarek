@@ -43,7 +43,6 @@ class AdditionSlide(SlideBase):
         )
         self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7), color=GREEN)
         self.point_at_label = MathTex("\infty")
-        self.point_at_label.next_to(self.point_at_infinity, RIGHT)
         self.line1 = LineThroughDots(self.p4, self.p2)
         self.line2 = LineThroughDots(self.p3, self.p4)
         self.sidebar = Sidebar(
@@ -107,6 +106,7 @@ class AdditionSlide(SlideBase):
         scene.next_section("Infinity point")
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
         self.point_at_infinity.move_to(self.chart.ax.coords_to_point(6, 7))
+        self.point_at_label.next_to(self.point_at_infinity, RIGHT)
         scene.play(Create(self.point_at_infinity))
         scene.play(Create(self.point_at_label))
 
