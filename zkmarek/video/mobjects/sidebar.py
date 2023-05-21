@@ -45,6 +45,9 @@ class Sidebar(VGroup):
             language="Python",
             font="Monospace",
             font_size=14,
+            margin=0.2,
+            style="github-dark",
+            line_no_buff=0.2
         )
         self.position_code(code)
         return code

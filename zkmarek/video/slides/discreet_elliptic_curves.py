@@ -52,7 +52,7 @@ class DiscreetEllipticCurves(SlideBase):
 
     def animate_negate(self, scene):
         self.new_subsection(scene, "Negation")
-        scene.play(self.chart.animate.align_on_border(LEFT))
+        scene.play(self.chart.animate.align_on_border(LEFT, buff=0.2))
 
         line = self.create_vertical_line(9)
         scene.play(FadeIn(line))
