@@ -23,7 +23,7 @@ class DotOnCurve(VGroup):
         include_coords: bool = False,
         label_direction=RIGHT,
     ):
-        VGroup.__init__(self)
+        super().__init__()
         self.ax = ax
         self.include_lines = include_lines
         self.label_direction = label_direction

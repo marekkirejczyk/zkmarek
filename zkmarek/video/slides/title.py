@@ -5,7 +5,7 @@ from .slide_base import  SlideBase
 
 class TitleSlide(SlideBase):
     def __init__(self, title) -> None:
-        SlideBase.__init__(self, title=title)
+        super().__init__(title=title)
         self.title_label = Text(title)
         self.add(self.title_label)
 

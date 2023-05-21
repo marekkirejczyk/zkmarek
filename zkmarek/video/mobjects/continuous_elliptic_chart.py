@@ -8,7 +8,7 @@ class ContinuousEllipticChart(VGroup):
     graph: ImplicitFunction
 
     def __init__(self, **kwargs):
-        VGroup.__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.ax = Axes(
             x_range=[-3, 7, 2],
             y_range=[-8, 8, 2],

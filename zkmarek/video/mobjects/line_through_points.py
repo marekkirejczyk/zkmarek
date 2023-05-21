@@ -4,8 +4,7 @@ from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 
 class LineThroughDots(Line):
     def __init__(self, p1: DotOnCurve, p2: DotOnCurve, **kwargs):
-        Line.__init__(
-            self,
+        super().__init__(
             start=p1.to_coord(),
             end=p2.to_coord(),
             color=DARK_GREY,

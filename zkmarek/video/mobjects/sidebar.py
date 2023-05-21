@@ -18,7 +18,7 @@ class Sidebar(VGroup):
         code_path: Optional[str] = None,
         tex_path: Optional[str] = None,
     ):
-        VGroup.__init__(self)
+        super().__init__()
         self.label = Tex(title)
         self.add(self.label)
 
@@ -45,6 +45,9 @@ class Sidebar(VGroup):
             language="Python",
             font="Monospace",
             font_size=14,
+            margin=0.2,
+            style="github-dark",
+            line_no_buff=0.2
         )
         self.position_code(code)
         return code
