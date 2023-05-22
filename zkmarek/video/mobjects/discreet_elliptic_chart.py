@@ -1,4 +1,5 @@
-from manim import YELLOW, Axes, Create, Dot, FadeOut, Tex, TexTemplate, VGroup
+from manim import (DARK_GREY, YELLOW, Axes, Create, Dot, FadeIn, FadeOut, Line,
+                   Tex, TexTemplate, VGroup)
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
@@ -56,3 +57,21 @@ class DiscreteEllipticChart(VGroup):
     def animate_disappear(self, scene):
         scene.play(FadeOut(self))
 
+    def create_horizontal_line(self):
+        mid_y = self.curve.p / 2
+        s = self.ax.c2p(-1, mid_y)
+        e = self.ax.c2p(self.curve.p, mid_y)
+        return Line(s, e, color=DARK_GREY, z_index=0)
+
+    def create_vertical_line(self, x):
+        s = self.ax.c2p(x, -1)
+        e = self.ax.c2p(x, self.curve.p)
+        return Line(s, e, color=DARK_GREY, z_index=0)
+
+    def animate_add(self, scene, *mobjects, animation_class=FadeIn):
+        self.add(*mobjects)
+        scene.play(animation_class(*mobjects))
+
+    def animate_remove(self, scene, *mobject, animation_class=FadeOut):
+        scene.play(animation_class(*mobject))
+        self.remove(*mobject)
