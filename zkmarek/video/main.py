@@ -10,9 +10,9 @@ from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 from slides.title import TitleSlide
 from zkmarek.video.slides.slide_base import SlideBase
-
-from zkmarek.video.slides.test_slide import TestSlide
-from zkmarek.video.utils import get_slides_from_names # noqa: F401 # pyright: ignore
+from zkmarek.video.slides.test_slide import \
+    TestSlide  # noqa: F401 # pyright: ignore
+from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
 config.height = 9

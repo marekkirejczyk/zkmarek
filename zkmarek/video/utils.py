@@ -1,6 +1,3 @@
-from typing import Optional
-from slides.equation import SlideBase
-
 def load(filename):
     with open(filename, 'r') as file:
         data = file.read()
