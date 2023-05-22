@@ -5,7 +5,6 @@ from presentation import Presentation
 from slides.cec.addition import Addition as CECAddition
 from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
-from slides.ec.addition import Addition as ECAddition
 from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
 from slides.equation import EquationSlide
 from slides.title import TitleSlide
@@ -25,7 +24,6 @@ SLIDES = [
     CECAddition(),
     TitleSlide("Discrete Elliptic Curves"),
     DiscreteEllipticCurves(),
-    ECAddition(),
 ]
 
 
