@@ -3,11 +3,11 @@ import os
 from manim import Scene, config
 
 from presentation import Presentation
-from slides.addition import Addition
+from slides.title import TitleSlide
 from slides.equation import EquationSlide
+from slides.cec.addition import Addition
 from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
-from slides.title import TitleSlide
 from slides.ec.negation import Negation as ECNegation
 from slides.ec.addition import Addition as ECAddition
 
