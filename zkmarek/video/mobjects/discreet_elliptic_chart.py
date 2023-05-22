@@ -50,8 +50,9 @@ class DiscreteEllipticChart(VGroup):
     def find_dots_by_x(self, x):
         return list(filter(lambda d: d.point.x.value == x, self.dots))
 
-    def animate_appear(self):
-        return Create(self)
+    def animate_appear(self, scene):
+        scene.play(Create(self))
 
-    def animate_disappear(self):
-        return FadeOut(self)
+    def animate_disappear(self, scene):
+        scene.play(FadeOut(self))
+
