@@ -5,11 +5,11 @@ from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.sidebar import Sidebar
+from zkmarek.video.slides.slide_base import SlideBase
 
-from .slide_base import SlideBase
 
 
-class OperationsSlide(SlideBase):
+class Operations(SlideBase):
     def __init__(self):
         super().__init__(title="Operations")
         self.chart = ContinuousEllipticChart()

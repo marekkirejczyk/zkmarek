@@ -3,12 +3,13 @@ import os
 from manim import Scene, config
 
 from presentation import Presentation
-from slides.addition import AdditionSlide
-from slides.equation import EquationSlide
-from slides.negation import NegationSlide
-from slides.operations import OperationsSlide
 from slides.title import TitleSlide
-from slides.discrete_elliptic_curves import DiscreteEllipticCurves
+from slides.equation import EquationSlide
+from slides.cec.addition import Addition
+from slides.cec.negation import Negation as CECNegation
+from slides.cec.operations import Operations as CECOperations
+from slides.ec.negation import Negation as ECNegation
+from slides.ec.addition import Addition as ECAddition
 
 from zkmarek.video.slides.test_slide import TestSlide # noqa: F401 # pyright: ignore
 
@@ -25,10 +26,11 @@ class EllipticCurves(Scene):
             scenes = [
                 TitleSlide("Elliptic Curves"),
                 EquationSlide(),
-                OperationsSlide(),
-                NegationSlide(),
-                AdditionSlide(),
+                CECOperations(),
+                CECNegation(),
+                Addition(),
                 TitleSlide("Discrete Elliptic Curves"),
-                DiscreteEllipticCurves(),
+                ECNegation(),
+                ECAddition(),
             ]
         Presentation(self).play(scenes)
