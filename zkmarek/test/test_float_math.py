@@ -1,6 +1,6 @@
 import unittest
 
-from zkmarek.crypto.algo.math import calculate_line, find_x_min_max, is_collinear
+from zkmarek.crypto.float_math import calculate_line, find_x_min_max, is_collinear
 
 class TestFloatMath(unittest.TestCase):
 
