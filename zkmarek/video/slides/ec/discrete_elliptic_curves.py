@@ -47,17 +47,12 @@ class DiscreteEllipticCurves(SlideBase):
         self.sidebar.animate_disappear(scene)
         negation_slide.animate_out(scene)
 
-    def animate_add(self, scene):
-        slide = Addition(self.chart)
-        slide.animate_in(scene)
-        slide.animate_out(scene)
-
     def animate_in(self, scene):
         self.chart.animate_appear(scene)
         self.animate_symmetry(scene)
         self.animate_vertical(scene)
         self.animate_negate(scene)
-        self.animate_add(scene)
+        Addition.play(scene, self.chart)
 
     def animate_out(self, scene):
         self.chart.animate_disappear(scene)

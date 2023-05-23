@@ -2,9 +2,9 @@ from manim import (DARK_GREY, RIGHT, Dot, FadeIn, FadeOut, GrowFromPoint, Line,
                    Scene, Tex)
 
 from zkmarek.crypto.ec_affine import ECAffine
+from zkmarek.crypto.float_math import find_x_min_max
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
-from zkmarek.video.utils import find_x_min_max
 
 
 class AnimateAddition:
