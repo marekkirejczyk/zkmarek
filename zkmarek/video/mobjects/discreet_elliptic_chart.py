@@ -6,16 +6,14 @@ from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 
 
 class DotOnCurve(Dot):
-    point: ECAffine
+    coords: ECAffine
 
     def __init__(self, ax: Axes, p: ECAffine):
         super().__init__(
             ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW, radius=0.05
         )
-        self.point = p
+        self.coords = p
 
-    def to_coords(self, ax):
-        return ax.c2p(self.point.x.value, self.point.y.value)
 
 class DiscreteEllipticChart(VGroup):
     curve: WeierstrassCurve
@@ -51,8 +49,14 @@ class DiscreteEllipticChart(VGroup):
             self.dots.append(dot)
             self.add(dot)
 
-    def find_dots_by_x(self, x):
-        return list(filter(lambda d: d.point.x.value == x, self.dots))
+    def find_dots_by_x(self, x) -> list[DotOnCurve]:
+        return list(filter(lambda d: d.coords.x.value == x, self.dots))
+
+    def find_affine_by_x(self, x) -> list[ECAffine]:
+        return list(map(lambda d: d.coords, self.find_dots_by_x(x)))
+
+    def affine_to_point(self, p: ECAffine):
+        return self.ax.c2p(p.x.value, p.y.value)
 
     def animate_appear(self, scene):
         scene.play(Create(self))
