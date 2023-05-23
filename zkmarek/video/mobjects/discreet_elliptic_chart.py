@@ -1,16 +1,19 @@
-from manim import YELLOW, Axes, Create, Dot, FadeOut, Tex, TexTemplate, VGroup
+from manim import (DARK_GREY, YELLOW, Axes, Create, Dot, FadeIn, FadeOut, Line,
+                   Tex, TexTemplate, VGroup)
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
+from numpy import ndarray
 
 
 class DotOnCurve(Dot):
-    point: ECAffine
+    coords: ECAffine
+
     def __init__(self, ax: Axes, p: ECAffine):
         super().__init__(
             ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW, radius=0.05
         )
-        self.point = p
+        self.coords = p
 
 
 class DiscreteEllipticChart(VGroup):
@@ -47,11 +50,39 @@ class DiscreteEllipticChart(VGroup):
             self.dots.append(dot)
             self.add(dot)
 
-    def find_dots_by_x(self, x):
-        return list(filter(lambda d: d.point.x.value == x, self.dots))
+    def find_dot_by_affine(self, p: ECAffine) -> DotOnCurve:
+        return next(filter(lambda d: d.coords == p, self.dots))
 
-    def animate_appear(self):
-        return Create(self)
+    def find_dots_by_x(self, x) -> list[DotOnCurve]:
+        return list(filter(lambda d: d.coords.x.value == x, self.dots))
 
-    def animate_disappear(self):
-        return FadeOut(self)
+    def find_affine_by_x(self, x) -> list[ECAffine]:
+        return list(map(lambda d: d.coords, self.find_dots_by_x(x)))
+
+    def affine_to_point(self, p: ECAffine) -> ndarray:
+        return self.ax.c2p(p.x.value, p.y.value)
+
+    def animate_appear(self, scene) -> None:
+        scene.play(Create(self))
+
+    def animate_disappear(self, scene) -> None:
+        scene.play(FadeOut(self))
+
+    def create_horizontal_line(self):
+        mid_y = self.curve.p / 2
+        s = self.ax.c2p(-1, mid_y)
+        e = self.ax.c2p(self.curve.p, mid_y)
+        return Line(s, e, color=DARK_GREY, z_index=0)
+
+    def create_vertical_line(self, x):
+        s = self.ax.c2p(x, -1)
+        e = self.ax.c2p(x, self.curve.p)
+        return Line(s, e, color=DARK_GREY, z_index=0)
+
+    def animate_add(self, scene, *mobjects, animation_class=FadeIn):
+        self.add(*mobjects)
+        scene.play(animation_class(*mobjects))
+
+    def animate_remove(self, scene, *mobject, animation_class=FadeOut):
+        scene.play(animation_class(*mobject))
+        self.remove(*mobject)

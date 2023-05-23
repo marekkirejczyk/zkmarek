@@ -27,7 +27,7 @@ script/movie
 
 Generate and open single slide:
 ```sh
-MANIM_SLIDE=<slide_class_name> script/movie
+SLIDES=<slide_class_name> script/movie
 ```
 
 Generate presentation:
