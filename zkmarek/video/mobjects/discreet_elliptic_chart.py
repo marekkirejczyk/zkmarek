@@ -3,6 +3,7 @@ from manim import (DARK_GREY, YELLOW, Axes, Create, Dot, FadeIn, FadeOut, Line,
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
+from numpy import ndarray
 
 
 class DotOnCurve(Dot):
@@ -49,19 +50,22 @@ class DiscreteEllipticChart(VGroup):
             self.dots.append(dot)
             self.add(dot)
 
+    def find_dot_by_affine(self, p: ECAffine) -> DotOnCurve:
+        return next(filter(lambda d: d.coords == p, self.dots))
+
     def find_dots_by_x(self, x) -> list[DotOnCurve]:
         return list(filter(lambda d: d.coords.x.value == x, self.dots))
 
     def find_affine_by_x(self, x) -> list[ECAffine]:
         return list(map(lambda d: d.coords, self.find_dots_by_x(x)))
 
-    def affine_to_point(self, p: ECAffine):
+    def affine_to_point(self, p: ECAffine) -> ndarray:
         return self.ax.c2p(p.x.value, p.y.value)
 
-    def animate_appear(self, scene):
+    def animate_appear(self, scene) -> None:
         scene.play(Create(self))
 
-    def animate_disappear(self, scene):
+    def animate_disappear(self, scene) -> None:
         scene.play(FadeOut(self))
 
     def create_horizontal_line(self):
