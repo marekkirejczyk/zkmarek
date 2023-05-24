@@ -1,12 +1,10 @@
-from typing import Optional, Sequence
 from manim import (DARK_GREY, RIGHT, Dot, FadeIn, FadeOut, GrowFromPoint, Line,
-                   Scene, Tex, line_intersection)
+                   Scene, Tex)
 
 from zkmarek.crypto.ec_affine import ECAffine
-from zkmarek.crypto.line import line_through_collinear, is_collinear, lines_through_affine
+from zkmarek.crypto.line import line_through_collinear, lines_through_affine
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
-
 
 
 class AnimateAddition:
@@ -35,8 +33,8 @@ class AnimateAddition:
         scene.play(FadeIn(self.labels[0]))
         scene.play(FadeIn(self.labels[1]))
         lines = lines_through_affine(c[0], c[1], c[2])
-        for l in lines:
-            [s, e] = self.chart.ax.c2p(l)
+        for line_coords in lines:
+            [s, e] = self.chart.ax.c2p(line_coords)
             line = Line(s, e, color=DARK_GREY)
             self.lines.append(line)
             scene.play(GrowFromPoint(line, point=s, run_time=5))
