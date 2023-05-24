@@ -2,9 +2,9 @@ from manim import (DARK_GREY, RIGHT, Dot, FadeIn, FadeOut, GrowFromPoint, Line,
                    Scene, Tex)
 
 from zkmarek.crypto.ec_affine import ECAffine
+from zkmarek.crypto.line import line_through_collinear, lines_through_affine
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
-from zkmarek.video.utils import find_x_min_max
 
 
 class AnimateAddition:
@@ -12,7 +12,7 @@ class AnimateAddition:
     start: Dot
     end: Dot
     result: Dot
-    line1: Line
+    lines: list[Line] = []
     line2: Line
     labels: list[Tex]
 
@@ -28,15 +28,21 @@ class AnimateAddition:
         for i in range(4):
             self.labels[i].next_to(self.chart.find_dot_by_affine(c[i]), RIGHT)
 
-        (s, e) = find_x_min_max([p[0], p[1], p[2]])
-        self.line1 = Line(s, e, color=DARK_GREY)
-        self.line2 = Line(e, p[3], color=DARK_GREY)
+        (s, e) = line_through_collinear([p[0], p[1], p[2]])
+
         scene.play(FadeIn(self.labels[0]))
         scene.play(FadeIn(self.labels[1]))
-        scene.play(GrowFromPoint(self.line1, point=s, run_time=5))
+        lines = lines_through_affine(c[0], c[1], c[2])
+        for line_coords in lines:
+            [s, e] = self.chart.ax.c2p(line_coords)
+            line = Line(s, e, color=DARK_GREY)
+            self.lines.append(line)
+            scene.play(GrowFromPoint(line, point=s, run_time=5))
+
         scene.play(FadeIn(self.labels[2]))
-        scene.play(GrowFromPoint(self.line2, point=e, run_time=5))
+        self.line2 = Line(p[2], p[3], color=DARK_GREY)
+        scene.play(GrowFromPoint(self.line2, point=p[2], run_time=5))
         scene.play(FadeIn(self.labels[3]))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.line1, self.line2, *self.labels))
+        scene.play(FadeOut(self.line2, *self.lines, *self.labels))

@@ -56,8 +56,8 @@ class DiscreteEllipticChart(VGroup):
     def find_dots_by_x(self, x) -> list[DotOnCurve]:
         return list(filter(lambda d: d.coords.x.value == x, self.dots))
 
-    def find_affine_by_x(self, x) -> list[ECAffine]:
-        return list(map(lambda d: d.coords, self.find_dots_by_x(x)))
+    def find_affine_by_x(self, x: int, odd: int) -> list[ECAffine]:
+        return list(map(lambda d: d.coords, self.find_dots_by_x(x)))[odd]
 
     def affine_to_point(self, p: ECAffine) -> ndarray:
         return self.ax.c2p(p.x.value, p.y.value)
