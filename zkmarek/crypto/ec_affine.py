@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Sequence
 
 from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
 from zkmarek.crypto.field import Field, FieldLike
@@ -38,6 +38,9 @@ class ECAffine:
 
     def __hash__(self):
         return hash((self.x, self.y))
+
+    def to_coords(self) -> Sequence[float]:
+        return [float(self.x.value), float(self.y.value), 0.]
 
     @staticmethod
     def from_x(x: int, sgn: int, curve: WeierstrassCurve) -> "Optional[ECAffine]":
