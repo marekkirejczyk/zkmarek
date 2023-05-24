@@ -23,7 +23,7 @@ class Addition(SlideBase):
 
     def animate_in(self, scene):
         self.animate_addition(scene, 5, 1, 10, 0)
-        self.animate_addition(scene, 5, 1, 15, 0)
+        self.animate_addition(scene, 5, 1, 9, 1)
 
     def animate_out(self, scene):
         pass
