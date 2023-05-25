@@ -1,4 +1,4 @@
-from manim import LEFT, FadeIn, FadeOut, Wait
+from manim import FadeIn, FadeOut, Wait
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
@@ -42,10 +42,11 @@ class DiscreteEllipticCurves(SlideBase):
     def animate_negate(self, scene):
         negation_slide = Negation(self.chart)
         negation_slide.animate_in(scene)
-        scene.play(self.chart.animate.align_on_border(LEFT, buff=0.2))
+        self.chart.animate_align_left(scene)
         self.sidebar.animate_appear(scene, self)
         self.sidebar.animate_disappear(scene)
         negation_slide.animate_out(scene)
+        self.chart.animate_align_center(scene)
 
     def animate_in(self, scene):
         self.chart.animate_appear(scene)

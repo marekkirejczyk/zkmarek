@@ -1,9 +1,9 @@
-from manim import (DARK_GREY, YELLOW, Axes, Create, Dot, FadeIn, FadeOut, Line,
-                   Tex, TexTemplate, VGroup)
+from manim import (DARK_GREY, LEFT, YELLOW, Axes, Create, Dot, FadeIn, FadeOut,
+                   Line, Tex, TexTemplate, VGroup)
+from numpy import ndarray
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
-from numpy import ndarray
 
 
 class DotOnCurve(Dot):
@@ -86,3 +86,9 @@ class DiscreteEllipticChart(VGroup):
     def animate_remove(self, scene, *mobject, animation_class=FadeOut):
         scene.play(animation_class(*mobject))
         self.remove(*mobject)
+
+    def animate_align_left(self, scene):
+        scene.play(self.animate.align_on_border(LEFT, buff=0.2))
+
+    def animate_align_center(self, scene):
+        scene.play(self.animate.center())

@@ -1,8 +1,9 @@
 from typing import Optional
 
-from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut, Unwrite,
-                   ReplacementTransform, Tex, VGroup, VMobject, Write)
+from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut,
+                   ReplacementTransform, Tex, Unwrite, VGroup, VMobject, Write)
 from utils import load
+
 from zkmarek.video.slides.slide_base import SlideBase
 
 
