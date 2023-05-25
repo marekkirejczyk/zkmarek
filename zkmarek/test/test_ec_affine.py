@@ -31,6 +31,14 @@ class TestECAffine(unittest.TestCase):
         self.assertEqual(p.x, Field(1, 13))
         self.assertEqual(p.y, Field(2, 13))
 
+    def test_infinity(self):
+        p = ECAffine.infinity_point(self.curve)
+        self.assertTrue(p.is_infinity())
+        for p in p.generate_points(self.curve):
+            self.assertFalse(p.is_infinity())
+            self.assertNotEqual(p, ECAffine.infinity_point(self.curve))
+            self.assertEqual(p.infinity(), ECAffine.infinity_point(self.curve))
+
     def test_eq(self):
         curve = self.curve
         self.assertTrue(ECAffine(1, 2, curve) == ECAffine(1, 2, curve))
@@ -50,6 +58,19 @@ class TestECAffine(unittest.TestCase):
         p = ECAffine(1, 2, self.curve)
         q = ECAffine(2, 1, self.curve)
         self.assertEqual(p + q, ECAffine(11, 8, self.curve))
+
+    def test_double(self):
+        for prime in TEST_PRIMES_WITHOUT_2:
+            curve = WeierstrassCurve(0, 7, prime)
+            points = ECAffine.generate_points(curve)
+            for p in points:
+                p2 = p.double()
+                pmp = p2 + (- p)
+                self.assertEqual(p2-p, p)
+
+    def test_double_infinity(self):
+        p = ECAffine.infinity_point(self.curve)
+        self.assertEqual(p.double(), p.infinity())
 
     def test_from_x(self):
         for p in TEST_PRIMES_WITHOUT_2:
