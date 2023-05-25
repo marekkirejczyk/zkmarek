@@ -10,11 +10,12 @@ ZkMarek consists of two sub projects in two respective folders:
 * zkmarek/video - source of videos created in Manim, used to create presentations and educational videos.
 
 The code is tested and written in a reasonably readable manner, therefore it should serve well as an educational material. It should be easier to learn cryptographic algorithms than to form production libraries code.
-Warning
+
+### Warning ⚠️
+
 Implementation here is focused on learning algorithms, rather than building actual production-ready solution. In particular, it is not optimized for security and performance. It is not audited, nor there is a plan to be audited in the future. Do not use it to build actual applications. Use it at your own responsibility.
 
 ## Contributing
-
 
 ### Test
 
