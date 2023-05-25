@@ -12,21 +12,24 @@ class AnimateAddition:
     start: Dot
     end: Dot
     result: Dot
-    lines: list[Line] = []
+    lines: list[Line]
     line2: Line
     labels: list[Tex]
 
     def __init__(self, chart: DiscreteEllipticChart) -> None:
         self.chart = chart
+        self.lines = []
         self.labels = [
             Tex(c, font_size=24) for i, c in enumerate(["A", "B", "-(A+B)", "A+B"])
         ]
 
     def animate_in(self, scene: Scene, c0: ECAffine, c1: ECAffine):
         c = [c0, c1, -(c0 + c1), c0 + c1]
+
         p = list(map(lambda i: self.chart.affine_to_point(c[i]), range(4)))
         for i in range(4):
-            self.labels[i].next_to(self.chart.find_dot_by_affine(c[i]), RIGHT)
+            dot = self.chart.find_dot_by_affine(c[i])
+            self.labels[i].next_to(dot, RIGHT)
 
         (s, e) = line_through_collinear([p[0], p[1], p[2]])
 
@@ -45,4 +48,21 @@ class AnimateAddition:
         scene.play(FadeIn(self.labels[3]))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.line2, *self.lines, *self.labels))
+        scene.play(FadeOut(*self.labels))
+        scene.play(FadeOut(self.line2))
+        scene.play(FadeOut(*self.lines))
+
+    @staticmethod
+    def play(
+        scene: Scene,
+        chart: DiscreteEllipticChart,
+        a1_x: int,
+        a1_odd: int,
+        a2_x: int,
+        a2_odd: int,
+    ):
+        a1 = chart.find_affine_by_x(a1_x, a1_odd)
+        a2 = chart.find_affine_by_x(a2_x, a2_odd)
+        anim = AnimateAddition(chart)
+        anim.animate_in(scene, a1, a2)
+        anim.animate_out(scene)

@@ -17,18 +17,9 @@ class Addition(SlideBase):
             title="Addition", code_path="data/ec/add.py", tex_path="data/ec/add.tex"
         )
 
-    def animate_addition(
-        self, scene: Scene, a1_x: int, a1_odd: int, a2_x: int, a2_odd: int
-    ):
-        a1 = self.chart.find_affine_by_x(a1_x, a1_odd)
-        a2 = self.chart.find_affine_by_x(a2_x, a2_odd)
-        anim = AnimateAddition(self.chart)
-        anim.animate_in(scene, a1, a2)
-        anim.animate_out(scene)
-
     def animate_in(self, scene):
-        self.animate_addition(scene, 5, 1, 10, 0)
-        self.animate_addition(scene, 5, 1, 9, 1)
+        AnimateAddition.play(scene, self.chart, 5, 1, 10, 0)
+        AnimateAddition.play(scene, self.chart, 5, 1, 9, 1)
         self.chart.animate_align_left(scene)
         self.sidebar.animate_appear(scene, self)
 
