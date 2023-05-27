@@ -118,19 +118,3 @@ class TestECAffine(unittest.TestCase):
                     if p.y.value != 0:
                         self.assertEqual(expected, actual)
 
-    def test_double_and_add_zero(self):
-        p = ECAffine(17, 0, Secp256k1_41)
-        pp = ECAffine(7, 0, Secp256k1_41)
-        print(f"p = {p}")
-        print(f"pp = {pp}")
-        print(f"2pp = {pp+pp}")
-        print(f"pp+p = {pp+p}")
-        print(f"pp+p+p = {pp+p+p}")
-        print(f"pp+pp = {pp+pp}")
-        # print(f"1p = {p}")
-        # print(f"2p = {p + p}")
-        # print(f"3p = {p + p + p}")
-        # print(f"4p = {p + p + p + p}")
-
-        # print(f"dp={p.double()}")
-        # print(f"2p + p.d={p + p + p.double()}")
