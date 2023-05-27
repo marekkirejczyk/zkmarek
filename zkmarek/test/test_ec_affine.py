@@ -2,7 +2,8 @@ import unittest
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.field import Field
-from zkmarek.crypto.weierstrass_curve import Secp256k1_13, Secp256k1_41, WeierstrassCurve
+from zkmarek.crypto.weierstrass_curve import (Secp256k1_13, Secp256k1_41,
+                                              WeierstrassCurve)
 from zkmarek.test.constant import SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
 
 
@@ -14,11 +15,13 @@ def naive_generate_points(curve: WeierstrassCurve):
             if curve.evaluate_at(x, y) == 0:
                 yield point
 
+
 def naive_mul(p: ECAffine, k: int) -> ECAffine:
     res = p.infinity()
     for _ in range(k):
         res += p
     return res
+
 
 class TestECAffine(unittest.TestCase):
     curve = Secp256k1_13
@@ -70,7 +73,7 @@ class TestECAffine(unittest.TestCase):
             curve = WeierstrassCurve(0, 7, prime)
             points = ECAffine.generate_points(curve)
             for p in points:
-                self.assertEqual(p.double()-p, p)
+                self.assertEqual(p.double() - p, p)
 
     def test_double_infinity(self):
         p = ECAffine.infinity_point(self.curve)
@@ -110,7 +113,24 @@ class TestECAffine(unittest.TestCase):
             points = ECAffine.generate_points(Secp256k1_41)
             for p in points:
                 for i in range(prime + 2):
-                    expected=naive_mul(p, i)
+                    expected = naive_mul(p, i)
                     actual = p.double_and_add(i)
                     if p.y.value != 0:
                         self.assertEqual(expected, actual)
+
+    def test_double_and_add_zero(self):
+        p = ECAffine(17, 0, Secp256k1_41)
+        pp = ECAffine(7, 0, Secp256k1_41)
+        print(f"p = {p}")
+        print(f"pp = {pp}")
+        print(f"2pp = {pp+pp}")
+        print(f"pp+p = {pp+p}")
+        print(f"pp+p+p = {pp+p+p}")
+        print(f"pp+pp = {pp+pp}")
+        # print(f"1p = {p}")
+        # print(f"2p = {p + p}")
+        # print(f"3p = {p + p + p}")
+        # print(f"4p = {p + p + p + p}")
+
+        # print(f"dp={p.double()}")
+        # print(f"2p + p.d={p + p + p.double()}")
