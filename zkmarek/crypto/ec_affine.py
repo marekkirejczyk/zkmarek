@@ -1,6 +1,7 @@
 from typing import List, Optional, Sequence
 
 from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
+from zkmarek.crypto.bits import bits
 from zkmarek.crypto.field import Field, FieldLike
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
 
@@ -25,8 +26,28 @@ class ECAffine:
 
     def __add__(self, other: "ECAffine") -> "ECAffine":
         assert self.curve == other.curve
-        slope = (other.y - self.y) / (other.x - self.x)
-        x = slope**2 - self.x - other.x
+        if self.x == other.x and self.y == other.y:
+            return self.double()
+        elif self.x == other.x and self.y == -other.y:
+            return self.infinity()
+        elif self.is_infinity():
+            return other
+        elif self.is_infinity():
+            return self
+        else:
+            slope = (other.y - self.y) / (other.x - self.x)
+            x = slope**2 - self.x - other.x
+            y = slope * (self.x - x) - self.y
+            return ECAffine(x, y, self.curve)
+
+    def __sub__(self, other: "ECAffine") -> "ECAffine":
+        return self + (-other)
+
+    def double(self) -> "ECAffine":
+        if self.is_infinity():
+            return self
+        slope = ((self.x ** 2)*3) / (self.y * 2)
+        x = slope ** 2 - self.x * 2
         y = slope * (self.x - x) - self.y
         return ECAffine(x, y, self.curve)
 
@@ -36,11 +57,34 @@ class ECAffine:
     def __repr__(self) -> str:
         return f"({self.x.value}, {self.y.value})[%{self.curve.p}]"
 
+    def __format__(self, format_spec):
+        return format(str(self), format_spec)
+
+
     def __hash__(self):
         return hash((self.x, self.y))
 
     def to_coords(self) -> Sequence[float]:
         return [float(self.x.value), float(self.y.value), 0.]
+
+    def infinity(self) -> "ECAffine":
+        return ECAffine(0, 0, self.curve)
+
+    def is_infinity(self):
+        return self.x.value == 0 and self.y.value == 0
+
+    def double_and_add(self, k: int):
+        result = self.infinity()
+        tmp = self
+        for bit in bits(k):
+            if bit == 1:
+                result = result + tmp
+            tmp = tmp.double()
+        return result
+
+    @staticmethod
+    def infinity_point(curve: WeierstrassCurve) -> "ECAffine":
+        return ECAffine(0, 0, curve)
 
     @staticmethod
     def from_x(x: int, sgn: int, curve: WeierstrassCurve) -> "Optional[ECAffine]":
@@ -61,3 +105,5 @@ class ECAffine:
                 if point.y.value != 0:
                     points.append(-point)
         return points
+
+INFINITY = ECAffine(0, 0, WeierstrassCurve(0, 0, 1))

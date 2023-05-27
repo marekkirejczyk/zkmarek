@@ -2,8 +2,9 @@ import unittest
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.field import Field
-from zkmarek.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
-from zkmarek.test.constant import TEST_PRIMES_WITHOUT_2
+from zkmarek.crypto.weierstrass_curve import (Secp256k1_13, Secp256k1_41,
+                                              WeierstrassCurve)
+from zkmarek.test.constant import SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
 
 
 def naive_generate_points(curve: WeierstrassCurve):
@@ -13,6 +14,14 @@ def naive_generate_points(curve: WeierstrassCurve):
             point = ECAffine(x, y, curve)
             if curve.evaluate_at(x, y) == 0:
                 yield point
+
+
+def naive_mul(p: ECAffine, k: int) -> ECAffine:
+    res = p.infinity()
+    for _ in range(k):
+        res += p
+    return res
+
 
 class TestECAffine(unittest.TestCase):
     curve = Secp256k1_13
@@ -30,6 +39,14 @@ class TestECAffine(unittest.TestCase):
         p = ECAffine(Field(1, 13), Field(2, 13), self.curve)
         self.assertEqual(p.x, Field(1, 13))
         self.assertEqual(p.y, Field(2, 13))
+
+    def test_infinity(self):
+        p = ECAffine.infinity_point(self.curve)
+        self.assertTrue(p.is_infinity())
+        for p in p.generate_points(self.curve):
+            self.assertFalse(p.is_infinity())
+            self.assertNotEqual(p, ECAffine.infinity_point(self.curve))
+            self.assertEqual(p.infinity(), ECAffine.infinity_point(self.curve))
 
     def test_eq(self):
         curve = self.curve
@@ -50,6 +67,17 @@ class TestECAffine(unittest.TestCase):
         p = ECAffine(1, 2, self.curve)
         q = ECAffine(2, 1, self.curve)
         self.assertEqual(p + q, ECAffine(11, 8, self.curve))
+
+    def test_double(self):
+        for prime in TEST_PRIMES_WITHOUT_2:
+            curve = WeierstrassCurve(0, 7, prime)
+            points = ECAffine.generate_points(curve)
+            for p in points:
+                self.assertEqual(p.double() - p, p)
+
+    def test_double_infinity(self):
+        p = ECAffine.infinity_point(self.curve)
+        self.assertEqual(p.double(), p.infinity())
 
     def test_from_x(self):
         for p in TEST_PRIMES_WITHOUT_2:
@@ -79,3 +107,14 @@ class TestECAffine(unittest.TestCase):
             expected = set(naive_generate_points(curve))
             actual = set(ECAffine.generate_points(curve))
             self.assertEqual(actual, expected)
+
+    def test_double_and_add(self):
+        for prime in SMALL_PRIMES:
+            points = ECAffine.generate_points(Secp256k1_41)
+            for p in points:
+                for i in range(prime + 2):
+                    expected = naive_mul(p, i)
+                    actual = p.double_and_add(i)
+                    if p.y.value != 0:
+                        self.assertEqual(expected, actual)
+
