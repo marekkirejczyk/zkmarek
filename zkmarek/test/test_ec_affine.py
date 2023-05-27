@@ -2,8 +2,8 @@ import unittest
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.field import Field
-from zkmarek.crypto.weierstrass_curve import Secp256k1_13, WeierstrassCurve
-from zkmarek.test.constant import TEST_PRIMES_WITHOUT_2
+from zkmarek.crypto.weierstrass_curve import Secp256k1_13, Secp256k1_41, WeierstrassCurve
+from zkmarek.test.constant import SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
 
 
 def naive_generate_points(curve: WeierstrassCurve):
@@ -13,6 +13,12 @@ def naive_generate_points(curve: WeierstrassCurve):
             point = ECAffine(x, y, curve)
             if curve.evaluate_at(x, y) == 0:
                 yield point
+
+def naive_mul(p: ECAffine, k: int) -> ECAffine:
+    res = p.infinity()
+    for _ in range(k):
+        res += p
+    return res
 
 class TestECAffine(unittest.TestCase):
     curve = Secp256k1_13
@@ -98,3 +104,13 @@ class TestECAffine(unittest.TestCase):
             expected = set(naive_generate_points(curve))
             actual = set(ECAffine.generate_points(curve))
             self.assertEqual(actual, expected)
+
+    def test_double_and_add(self):
+        for prime in SMALL_PRIMES:
+            points = ECAffine.generate_points(Secp256k1_41)
+            for p in points:
+                for i in range(prime + 2):
+                    expected=naive_mul(p, i)
+                    actual = p.double_and_add(i)
+                    if p.y.value != 0:
+                        self.assertEqual(expected, actual)
