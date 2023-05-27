@@ -64,9 +64,7 @@ class TestECAffine(unittest.TestCase):
             curve = WeierstrassCurve(0, 7, prime)
             points = ECAffine.generate_points(curve)
             for p in points:
-                p2 = p.double()
-                pmp = p2 + (- p)
-                self.assertEqual(p2-p, p)
+                self.assertEqual(p.double()-p, p)
 
     def test_double_infinity(self):
         p = ECAffine.infinity_point(self.curve)

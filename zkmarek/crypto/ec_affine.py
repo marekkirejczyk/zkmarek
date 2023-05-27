@@ -1,6 +1,7 @@
 from typing import List, Optional, Sequence
 
 from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
+from zkmarek.crypto.bits import bits
 from zkmarek.crypto.field import Field, FieldLike
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
 
@@ -72,6 +73,15 @@ class ECAffine:
     def is_infinity(self):
         return self.x.value == 0 and self.y.value == 0
 
+    def double_and_add(self, k: int):
+        result = self.infinity()
+        tmp = self
+        for bit in bits(k):
+            if bit == 1:
+                result = result + tmp
+            tmp = tmp.double()
+        return result
+
     @staticmethod
     def infinity_point(curve: WeierstrassCurve) -> "ECAffine":
         return ECAffine(0, 0, curve)
@@ -95,6 +105,5 @@ class ECAffine:
                 if point.y.value != 0:
                     points.append(-point)
         return points
-
 
 INFINITY = ECAffine(0, 0, WeierstrassCurve(0, 0, 1))

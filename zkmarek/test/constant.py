@@ -1,3 +1,12 @@
+SMALL_PRIMES = [
+    2,
+    3,
+    5,
+    7,
+    17,
+    29
+]
+
 TEST_PRIMES = [
     2,
     3,
