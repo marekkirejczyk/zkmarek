@@ -69,10 +69,16 @@ class TestECAffine(unittest.TestCase):
         for p in points:
             self.assertEqual(--p, p)
 
-    def test_add(self):
+    def test_add_simple(self):
         p = ECAffine(7, 8, self.curve)
         q = ECAffine(8, 8, self.curve)
         self.assertEqual(p + q, ECAffine(11, 5, self.curve))
+
+    def test_add_infinity(self):
+        p = ECAffine(7, 8, self.curve)
+        self.assertEqual(p + p.infinity(), p)
+        p = ECAffine(7, 8, self.curve)
+        self.assertEqual(p.infinity() + p, p)
 
     def test_double(self):
         for prime in TEST_PRIMES_WITHOUT_2:

@@ -35,7 +35,7 @@ class ECAffine:
             return self.infinity()
         elif self.is_infinity():
             return other
-        elif self.is_infinity():
+        elif other.is_infinity():
             return self
         else:
             if self.y.value == 0 and other.y.value == 0:
