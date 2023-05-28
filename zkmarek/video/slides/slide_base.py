@@ -17,6 +17,6 @@ class SlideBase(VGroup):
         scene.play(FadeOut(self))
 
     @staticmethod
-    def print(slides):
+    def print(slides, all_slides):
         for i, slide in enumerate(slides):
-            print(f"{i+1}. {slide.title}")
+            print(f"{all_slides.index(slide)}. {slide.title}")

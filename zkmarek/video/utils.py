@@ -1,11 +1,26 @@
+from typing import List
+from zkmarek.video.slides.slide_base import SlideBase
+
 
 def load(filename):
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         data = file.read()
     return data
 
-def get_slides_from_names(slide_names, globals=globals()):
-    if slide_names is None:
-        return None
-    return [globals[name.strip()]() for name in slide_names.split(",")]
 
+def get_slide_by_label(slide_id, all_slides, globals) -> SlideBase:
+    try:
+        return all_slides[int(slide_id.strip()) - 1]
+    except ValueError:
+        return globals[slide_id.strip()]()
+
+
+def get_slides_from_names(
+    slide_names: List[str], all_slides: List[SlideBase], globals=globals()
+) -> List[SlideBase]:
+    if slide_names is None:
+        return all_slides
+    return [
+        get_slide_by_label(label, all_slides, globals)
+        for label in slide_names.split(",")
+    ]

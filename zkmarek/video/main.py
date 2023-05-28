@@ -10,8 +10,7 @@ from slides.equation import EquationSlide
 from slides.title import TitleSlide
 from zkmarek.video.slides.code_slide import CodeSlide
 from zkmarek.video.slides.slide_base import SlideBase
-from zkmarek.video.slides.test_slide import \
-    TestSlide  # noqa: F401 # pyright: ignore
+from zkmarek.video.slides.test_slide import TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -27,16 +26,15 @@ SLIDES = [
     DiscreteEllipticCurves(),
     TitleSlide("Multiplication by scalar"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
-    CodeSlide("Double and always add", "data/ec/double_and_always_add.py")
+    CodeSlide("Double and always add", "data/ec/double_and_always_add.py"),
 ]
 
 
 class EllipticCurves(Scene):
     def construct(self):
-        env_slides = get_slides_from_names(dict(os.environ).get("SLIDES"), globals())
-        slides = slides = SLIDES if env_slides is None else env_slides
-
+        slides = get_slides_from_names(
+            dict(os.environ).get("SLIDES"), SLIDES, globals()
+        )
         print("Rendering slides: ")
-        SlideBase.print(slides)
-
+        SlideBase.print(slides, SLIDES)
         Presentation(self).play(slides)
