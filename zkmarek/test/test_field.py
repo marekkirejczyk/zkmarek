@@ -89,6 +89,10 @@ class TestField(unittest.TestCase):
     def test_inv_simple(self):
         self.assertEqual(Field(2, 5).inv(), Field(3, 5))
 
+    def test_inv_zero(self):
+        with self.assertRaises(ZeroDivisionError):
+            Field(0, 5).inv()
+
     def test_inv(self):
         for p in TEST_PRIMES:
             for i in range(1, p):

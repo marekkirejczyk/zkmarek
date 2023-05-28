@@ -16,6 +16,9 @@ class ECAffine:
         self.x = Field.create_from(x, curve.p)
         self.y = Field.create_from(y, curve.p)
         assert self.x.order > 0 and self.x.order == self.y.order
+        assert curve.is_at(
+            self.x.value, self.y.value
+        ), f"Point ({x}, {y}) is not on curve"
 
     def __neg__(self) -> "ECAffine":
         return ECAffine(self.x, -self.y, self.curve)
@@ -35,6 +38,8 @@ class ECAffine:
         elif self.is_infinity():
             return self
         else:
+            if self.y.value == 0 and other.y.value == 0:
+                return self.infinity()
             slope = (other.y - self.y) / (other.x - self.x)
             x = slope**2 - self.x - other.x
             y = slope * (self.x - x) - self.y
@@ -46,26 +51,29 @@ class ECAffine:
     def double(self) -> "ECAffine":
         if self.is_infinity():
             return self
-        slope = ((self.x ** 2)*3) / (self.y * 2)
-        x = slope ** 2 - self.x * 2
+        if self.y.value == 0:
+            return self.infinity()
+        slope = ((self.x**2) * 3) / (self.y * 2)
+        x = slope**2 - self.x * 2
         y = slope * (self.x - x) - self.y
         return ECAffine(x, y, self.curve)
 
     def __str__(self) -> str:
-        return f"({self.x.value}, {self.y.value})[%{self.curve.p}]"
+        return repr(self)
 
     def __repr__(self) -> str:
+        if self.is_infinity():
+            return f"INF[%{self.curve.p}]"
         return f"({self.x.value}, {self.y.value})[%{self.curve.p}]"
 
     def __format__(self, format_spec):
         return format(str(self), format_spec)
 
-
     def __hash__(self):
         return hash((self.x, self.y))
 
     def to_coords(self) -> Sequence[float]:
-        return [float(self.x.value), float(self.y.value), 0.]
+        return [float(self.x.value), float(self.y.value), 0.0]
 
     def infinity(self) -> "ECAffine":
         return ECAffine(0, 0, self.curve)
@@ -100,10 +108,11 @@ class ECAffine:
         points = []
         for x in range(0, curve.p):
             point = ECAffine.from_x(x, 0, curve)
-            if point is not None:
+            if point is not None and not point.is_infinity():
                 points.append(point)
                 if point.y.value != 0:
                     points.append(-point)
         return points
+
 
 INFINITY = ECAffine(0, 0, WeierstrassCurve(0, 0, 1))
