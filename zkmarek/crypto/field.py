@@ -38,6 +38,10 @@ class Field:
         return Field(-self.value % self.order, self.order)
 
     def inv(self) -> "Field":
+        if self.value == 0:
+            raise ZeroDivisionError(
+                "Division by zero (in field modulo {self.order})}))"
+            )
         (_, _, _, a, _) = extended_euclid(self.order, self.value)
         return Field(a % self.order, self.order)
 

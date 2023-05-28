@@ -12,6 +12,12 @@ class WeierstrassCurve:
     def evaluate_at(self, x: int, y: int) -> int:
         return (y**2 - x**3 - self.a * x - self.b) % self.p
 
+    def is_at(self, x: int, y: int) -> int:
+        return self.evaluate_at(x, y) == 0 or self.is_infinity(x, y)
+
+    def is_infinity(self, x: int, y: int) -> bool:
+        return x == 0 and y == 0
+
     def __eq__(self, other: "WeierstrassCurve") -> bool:
         return self.a == other.a and self.b == other.b and self.p == other.p
 

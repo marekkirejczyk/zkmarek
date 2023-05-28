@@ -11,9 +11,8 @@ def naive_generate_points(curve: WeierstrassCurve):
     p = curve.p
     for x in range(0, p):
         for y in range(0, p):
-            point = ECAffine(x, y, curve)
-            if curve.evaluate_at(x, y) == 0:
-                yield point
+            if curve.is_at(x, y) and not curve.is_infinity(x, y):
+                yield ECAffine(x, y, curve)
 
 
 def naive_mul(p: ECAffine, k: int) -> ECAffine:
@@ -31,14 +30,22 @@ class TestECAffine(unittest.TestCase):
         self.p = self.curve.p
 
     def test_init_with_int(self):
-        p = ECAffine(1, 2, self.curve)
-        self.assertEqual(p.x, Field(1, 13))
-        self.assertEqual(p.y, Field(2, 13))
+        p = ECAffine(7, 8, self.curve)
+        self.assertEqual(p.x, Field(7, 13))
+        self.assertEqual(p.y, Field(8, 13))
+        p = ECAffine(20, -5, self.curve)
+        self.assertEqual(p.x, Field(7, 13))
+        self.assertEqual(p.y, Field(8, 13))
+
+
+    def test_init_not_on_curve(self):
+        with self.assertRaises(AssertionError):
+            ECAffine(7, 7, self.curve)
 
     def test_init_with_field(self):
-        p = ECAffine(Field(1, 13), Field(2, 13), self.curve)
-        self.assertEqual(p.x, Field(1, 13))
-        self.assertEqual(p.y, Field(2, 13))
+        p = ECAffine(Field(7, 13), Field(8, 13), self.curve)
+        self.assertEqual(p.x, Field(7, 13))
+        self.assertEqual(p.y, Field(8, 13))
 
     def test_infinity(self):
         p = ECAffine.infinity_point(self.curve)
@@ -50,33 +57,34 @@ class TestECAffine(unittest.TestCase):
 
     def test_eq(self):
         curve = self.curve
-        self.assertTrue(ECAffine(1, 2, curve) == ECAffine(1, 2, curve))
-        self.assertFalse(ECAffine(1, 2, curve) == ECAffine(2, 1, curve))
+        self.assertTrue(ECAffine(7, 8, curve) == ECAffine(7, 8, curve))
+        self.assertFalse(ECAffine(8, 8, curve) == ECAffine(7, 8, curve))
 
-    def test_neg(self):
-        p = ECAffine(1, 2, self.curve)
-        self.assertEqual(-p, ECAffine(1, 11, self.curve))
+    def test_neg_simple(self):
+        p = ECAffine(7, 8, self.curve)
+        self.assertEqual(-p, ECAffine(7, 5, self.curve))
 
-    def test_double_neg(self):
-        for i in range(1, 13):
-            for j in range(1, 13):
-                p = ECAffine(i, j, self.curve)
-                self.assertEqual(--p, p)
+    def test_neg_double(self):
+        points = ECAffine.generate_points(self.curve)
+        for p in points:
+            self.assertEqual(--p, p)
 
     def test_add(self):
-        p = ECAffine(1, 2, self.curve)
-        q = ECAffine(2, 1, self.curve)
-        self.assertEqual(p + q, ECAffine(11, 8, self.curve))
+        p = ECAffine(7, 8, self.curve)
+        q = ECAffine(8, 8, self.curve)
+        self.assertEqual(p + q, ECAffine(11, 5, self.curve))
 
     def test_double(self):
         for prime in TEST_PRIMES_WITHOUT_2:
             curve = WeierstrassCurve(0, 7, prime)
             points = ECAffine.generate_points(curve)
             for p in points:
-                self.assertEqual(p.double() - p, p)
+                self.assertEqual(p.double()-p, p)
 
     def test_double_infinity(self):
         p = ECAffine.infinity_point(self.curve)
+        self.assertEqual(p.double(), p.infinity())
+        p = ECAffine(17, 0, Secp256k1_41)
         self.assertEqual(p.double(), p.infinity())
 
     def test_from_x(self):
@@ -110,11 +118,10 @@ class TestECAffine(unittest.TestCase):
 
     def test_double_and_add(self):
         for prime in SMALL_PRIMES:
-            points = ECAffine.generate_points(Secp256k1_41)
+            points = ECAffine.generate_points(WeierstrassCurve(0, 7, prime))
             for p in points:
                 for i in range(prime + 2):
                     expected = naive_mul(p, i)
                     actual = p.double_and_add(i)
                     if p.y.value != 0:
                         self.assertEqual(expected, actual)
-
