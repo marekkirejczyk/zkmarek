@@ -1,4 +1,4 @@
-SMALL_PRIMES = [
+TEST_SMALL_PRIMES = [
     3,
     5,
     7,

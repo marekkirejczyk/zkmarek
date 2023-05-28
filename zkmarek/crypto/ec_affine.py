@@ -1,7 +1,7 @@
 from typing import List, Optional, Sequence
 
 from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
-from zkmarek.crypto.bits import bits
+from zkmarek.crypto.bits import bits, bits_lsb
 from zkmarek.crypto.field import Field, FieldLike
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
 
@@ -81,6 +81,14 @@ class ECAffine:
     def is_infinity(self):
         return self.x.value == 0 and self.y.value == 0
 
+    def __mul__(self, k: int) -> "ECAffine":
+        if k == 0:
+            return self.infinity()
+        elif k == 1:
+            return self
+        else:
+            return self.double_and_add(k)
+
     def double_and_add(self, k: int):
         result = self.infinity()
         tmp = self
@@ -88,6 +96,19 @@ class ECAffine:
             if bit == 1:
                 result = result + tmp
             tmp = tmp.double()
+        return result
+
+    # Note: This is not constant time multiplication, as
+    # underlying Elliptic Curve operations are not constant time
+    def double_and_always_add(self, k: int):
+        tmp = self
+        result = self.infinity()
+        for bit in bits_lsb(k):
+            result = result.double()
+            tmp = result + self
+            one = result * (1-bit)
+            two = tmp * bit
+            result =  one + two
         return result
 
     @staticmethod

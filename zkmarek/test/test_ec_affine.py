@@ -4,7 +4,7 @@ from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.field import Field
 from zkmarek.crypto.weierstrass_curve import (Secp256k1_13, Secp256k1_41,
                                               WeierstrassCurve)
-from zkmarek.test.constant import SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
+from zkmarek.test.constant import TEST_SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
 
 
 def naive_generate_points(curve: WeierstrassCurve):
@@ -36,7 +36,6 @@ class TestECAffine(unittest.TestCase):
         p = ECAffine(20, -5, self.curve)
         self.assertEqual(p.x, Field(7, 13))
         self.assertEqual(p.y, Field(8, 13))
-
 
     def test_init_not_on_curve(self):
         with self.assertRaises(AssertionError):
@@ -123,11 +122,21 @@ class TestECAffine(unittest.TestCase):
             self.assertEqual(actual, expected)
 
     def test_double_and_add(self):
-        for prime in SMALL_PRIMES:
+        for prime in TEST_SMALL_PRIMES:
             points = ECAffine.generate_points(WeierstrassCurve(0, 7, prime))
             for p in points:
                 for i in range(prime + 2):
                     expected = naive_mul(p, i)
                     actual = p.double_and_add(i)
+                    if p.y.value != 0:
+                        self.assertEqual(expected, actual)
+
+    def test_double_and_always_add(self):
+        for prime in TEST_SMALL_PRIMES:
+            points = ECAffine.generate_points(WeierstrassCurve(0, 7, prime))
+            for p in points:
+                for i in range(prime + 2):
+                    expected = p.double_and_add(i)
+                    actual = p.double_and_always_add(i)
                     if p.y.value != 0:
                         self.assertEqual(expected, actual)
