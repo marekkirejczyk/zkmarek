@@ -9,7 +9,6 @@ from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
 from slides.equation import EquationSlide
 from slides.title import TitleSlide
 from zkmarek.video.slides.code_slide import CodeSlide
-from zkmarek.video.slides.slide_base import SlideBase
 from zkmarek.video.slides.test_slide import TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.utils import get_slides_from_names
 
@@ -35,6 +34,6 @@ class EllipticCurves(Scene):
         slides = get_slides_from_names(
             dict(os.environ).get("SLIDES"), SLIDES, globals()
         )
-        print("Rendering slides: ")
-        SlideBase.print(slides, SLIDES)
-        Presentation(self).play(slides)
+        presentation = Presentation(self, SLIDES, slides)
+        presentation.print_slides()
+        presentation.play()
