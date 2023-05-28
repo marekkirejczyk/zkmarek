@@ -26,7 +26,8 @@ SLIDES = [
     TitleSlide("Discrete Elliptic Curves"),
     DiscreteEllipticCurves(),
     TitleSlide("Multiplication by scalar"),
-    CodeSlide("Double and add", "data/ec/double_and_add.py")
+    CodeSlide("Double and add", "data/ec/double_and_add.py"),
+    CodeSlide("Double and always add", "data/ec/double_and_always_add.py")
 ]
 
 

@@ -1,4 +1,4 @@
-from manim import DOWN, UP, Code, Text, Write
+from manim import DOWN, UP, Code, Text, Write, FadeOut
 
 from zkmarek.video.slides.slide_base import SlideBase
 
@@ -18,3 +18,6 @@ class CodeSlide(SlideBase):
         scene.play(Write(self.title))
         scene.play(Write(self.code))
 
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.code))
+        scene.play(FadeOut(self.title))
