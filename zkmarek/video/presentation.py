@@ -39,5 +39,6 @@ class Presentation:
 
         print("Rendering slides: ")
         for slide in self.all_slides:
-            prefix = "->" if index_of(slide, self.slides) >= 0 else "  "
-            print(f"{prefix}{index_of(slide, self.all_slides)+1}. {slide.title}")
+            prefix = "-> " if index_of(slide, self.slides) >= 0 else "   "
+            index = index_of(slide, self.all_slides)+1
+            print(f"{prefix}{index:2}. {slide.title}")
