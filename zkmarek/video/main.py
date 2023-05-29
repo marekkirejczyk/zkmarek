@@ -26,6 +26,8 @@ SLIDES = [
     CECNegation(),
     CECAddition(),
     TitleSlide("Prime Fields"),
+    ImageSlide("Extended Euclidean algorithm", "data/pf/xgcd.png"),
+    CodeSlide("Extended Euclidean algorithm", "data/pf/xgcd.py"),
     ImageSlide(
         "Square root", "data/pf/sqrt.png", image_scale=0.7
     ),
