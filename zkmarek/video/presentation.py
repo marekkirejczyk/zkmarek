@@ -1,6 +1,6 @@
 from manim import Scene
 from manim_editor import PresentationSectionType
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Presentation:
@@ -31,6 +31,13 @@ class Presentation:
         slide.animate_out(self.scene)
 
     def print_slides(self):
+        def index_of(slide, slides):
+            try:
+                return slides.index(slide)
+            except ValueError:
+                return -1
+
         print("Rendering slides: ")
-        for slide in self.slides:
-            print(f"{self.all_slides.index(slide)}. {slide.title}")
+        for slide in self.all_slides:
+            prefix = "->" if index_of(slide, self.slides) >= 0 else "  "
+            print(f"{prefix}{index_of(slide, self.all_slides)+1}. {slide.title}")

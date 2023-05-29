@@ -1,6 +1,6 @@
 from manim import Tex
 from utils import load
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 class TestSlide(SlideBase):
     def __init__(self):

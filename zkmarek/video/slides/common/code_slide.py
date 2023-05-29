@@ -1,6 +1,6 @@
 from manim import DOWN, UP, Code, Text, Write, FadeOut
 
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class CodeSlide(SlideBase):

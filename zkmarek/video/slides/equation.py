@@ -2,7 +2,7 @@ from manim import (DOWN, UP, YELLOW, AnimationGroup, FadeIn, FadeOut, MathTex,
                    MoveToTarget, ReplacementTransform, Succession, Text,
                    VGroup, Write)
 
-from .slide_base import SlideBase
+from .common.slide_base import SlideBase
 
 
 class EquationSlide(SlideBase):

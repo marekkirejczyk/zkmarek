@@ -1,7 +1,7 @@
 from manim import RED, RIGHT, Dot, Indicate, Line, Tex
 
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Negation(SlideBase):
