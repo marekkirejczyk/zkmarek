@@ -29,6 +29,7 @@ SLIDES = [
     ImageSlide(
         "Square root", "data/pf/sqrt.png", image_scale=0.7
     ),
+    CodeSlide("Tonelli Shanks algorithm", "data/pf/sqrt.py"),
     TitleSlide("Discrete Elliptic Curves"),
     DiscreteEllipticCurves(),
     TitleSlide("Multiplication by scalar"),
