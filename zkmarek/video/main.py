@@ -25,6 +25,10 @@ SLIDES = [
     CECOperations(),
     CECNegation(),
     CECAddition(),
+    TitleSlide("Prime Fields"),
+    ImageSlide(
+        "Square root", "data/pf/sqrt.png", image_scale=0.7
+    ),
     TitleSlide("Discrete Elliptic Curves"),
     DiscreteEllipticCurves(),
     TitleSlide("Multiplication by scalar"),
