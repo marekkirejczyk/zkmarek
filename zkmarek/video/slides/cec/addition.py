@@ -7,7 +7,7 @@ from zkmarek.video.mobjects.continuous_elliptic_chart import \
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.line_through_points import LineThroughDots
 from zkmarek.video.mobjects.sidebar import Sidebar
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Addition(SlideBase):

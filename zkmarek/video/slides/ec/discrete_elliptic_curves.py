@@ -6,7 +6,7 @@ from zkmarek.video.mobjects.discreet_elliptic_chart import \
 from zkmarek.video.mobjects.sidebar import Sidebar
 from zkmarek.video.slides.ec.addition import Addition
 from zkmarek.video.slides.ec.negation import Negation
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class DiscreteEllipticCurves(SlideBase):

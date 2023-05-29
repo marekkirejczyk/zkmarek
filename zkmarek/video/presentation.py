@@ -1,6 +1,6 @@
 from manim import Scene
 from manim_editor import PresentationSectionType
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Presentation:

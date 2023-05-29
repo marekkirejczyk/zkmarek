@@ -3,7 +3,7 @@ from manim import Scene
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
 from zkmarek.video.slides.ec.animate_addition import AnimateAddition
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Addition(SlideBase):

@@ -1,5 +1,5 @@
 from typing import List
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 def load(filename):

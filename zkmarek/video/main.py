@@ -5,11 +5,13 @@ from presentation import Presentation
 from slides.cec.addition import Addition as CECAddition
 from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
+from slides.common.title import TitleSlide
 from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
 from slides.equation import EquationSlide
-from slides.title import TitleSlide
-from zkmarek.video.slides.code_slide import CodeSlide
-from zkmarek.video.slides.test_slide import TestSlide  # noqa: F401 # pyright: ignore
+
+from zkmarek.video.slides.common.code_slide import CodeSlide
+from zkmarek.video.slides.common.test_slide import \
+    TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16

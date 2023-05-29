@@ -4,7 +4,7 @@ from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut,
                    ReplacementTransform, Tex, Unwrite, VGroup, VMobject, Write)
 from utils import load
 
-from zkmarek.video.slides.slide_base import SlideBase
+from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Sidebar(VGroup):
