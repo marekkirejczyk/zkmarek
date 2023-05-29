@@ -36,6 +36,9 @@ SLIDES = [
     ImageSlide(
         "Coordination systems (costs)", "data/ec/coords_costs.png"
     ),
+    TitleSlide("Constant time operations"),
+    CodeSlide("Constant time conditional swap", "data/ct/cswap.py", language="python"),
+    CodeSlide("Constant time equal", "data/ct/ct_eq.rs", language="rust"),
 ]
 
 
