@@ -31,6 +31,11 @@ class Presentation:
         slide.animate_out(self.scene)
 
     def print_slides(self):
+        def index_of(slide):
+            try:
+                return self.all_slides.index(slide)
+            except ValueError:
+                return 0
         print("Rendering slides: ")
         for slide in self.slides:
-            print(f"{self.all_slides.index(slide)}. {slide.title}")
+            print(f"{index_of(slide)}. {slide.title}")
