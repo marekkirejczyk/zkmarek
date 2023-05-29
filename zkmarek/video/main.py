@@ -13,6 +13,7 @@ from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.slides.common.image_slide import ImageSlide
 from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
+from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -33,12 +34,11 @@ SLIDES = [
     ImageSlide(
         "Coordination systems", "data/ec/coords_conversions.png", image_scale=0.75
     ),
-    ImageSlide(
-        "Coordination systems (costs)", "data/ec/coords_costs.png"
-    ),
+    ImageSlide("Coordination systems (costs)", "data/ec/coords_costs.png"),
     TitleSlide("Constant time operations"),
     CodeSlide("Constant time conditional swap", "data/ct/cswap.py", language="python"),
     CodeSlide("Constant time equal", "data/ct/ct_eq.rs", language="rust"),
+    TexSlide("Discrete Elliptic Curves operations", "data/ec/operations.tex"),
 ]
 
 
