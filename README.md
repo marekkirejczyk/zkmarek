@@ -41,6 +41,8 @@ script/movie
 Generate and open single slide:
 ```sh
 SLIDES=<slide_class_name> script/movie
+SLIDES=<index_of_slide> script/movie
+SLIDES=<list,of,indexes,and,class_names> script/movie
 ```
 
 Generate presentation:
