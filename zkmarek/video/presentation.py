@@ -31,11 +31,13 @@ class Presentation:
         slide.animate_out(self.scene)
 
     def print_slides(self):
-        def index_of(slide):
+        def index_of(slide, slides):
             try:
-                return self.all_slides.index(slide)
+                return slides.index(slide)
             except ValueError:
-                return 0
+                return -1
+
         print("Rendering slides: ")
-        for slide in self.slides:
-            print(f"{index_of(slide)}. {slide.title}")
+        for slide in self.all_slides:
+            prefix = "->" if index_of(slide, self.slides) >= 0 else "  "
+            print(f"{prefix}{index_of(slide, self.all_slides)+1}. {slide.title}")

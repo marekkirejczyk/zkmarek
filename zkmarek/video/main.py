@@ -10,6 +10,7 @@ from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
+from zkmarek.video.slides.common.image_slide import ImageSlide
 from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.utils import get_slides_from_names
@@ -28,6 +29,9 @@ SLIDES = [
     TitleSlide("Multiplication by scalar"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
     CodeSlide("Double and always add", "data/ec/double_and_always_add.py"),
+    TitleSlide("Coordination systems"),
+    ImageSlide("Coordination systems", "data/ec/coords_conversions.png"),
+    ImageSlide("Coordination systems (costs)", "data/ec/coords_costs.png"),
 ]
 
 
