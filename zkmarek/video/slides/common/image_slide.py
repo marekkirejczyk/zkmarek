@@ -8,11 +8,12 @@ class ImageSlide(SlideBase):
     title: Text
     image: ImageMobject
 
-    def __init__(self, title: str, image_path: str):
+    def __init__(self, title: str, image_path: str, image_scale=1.0):
         super().__init__(title)
         self.title = Text(title)
         self.image = ImageMobject(image_path)
         self.title.to_edge(UP)
+        self.image.scale(image_scale)
         self.image.next_to(self.title, DOWN)
 
     def animate_in(self, scene: Scene):

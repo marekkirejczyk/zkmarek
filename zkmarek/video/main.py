@@ -30,8 +30,12 @@ SLIDES = [
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
     CodeSlide("Double and always add", "data/ec/double_and_always_add.py"),
     TitleSlide("Coordination systems"),
-    ImageSlide("Coordination systems", "data/ec/coords_conversions.png"),
-    ImageSlide("Coordination systems (costs)", "data/ec/coords_costs.png"),
+    ImageSlide(
+        "Coordination systems", "data/ec/coords_conversions.png", image_scale=0.75
+    ),
+    ImageSlide(
+        "Coordination systems (costs)", "data/ec/coords_costs.png"
+    ),
 ]
 
 
