@@ -89,7 +89,7 @@ class Sidebar(VGroup):
 
     def animate_disappear(self, scene):
         if self.code is not None and self.code in self.submobjects:
-            scene.play(Unwrite(self.code))
+            scene.play(FadeOut(self.code))
         if self.math is not None and self.math in self.submobjects:
             scene.play(Unwrite(self.math))
         scene.play(Unwrite(self.label))

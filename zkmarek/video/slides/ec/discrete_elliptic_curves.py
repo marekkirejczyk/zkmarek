@@ -4,7 +4,6 @@ from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
-from zkmarek.video.slides.ec.addition import Addition
 from zkmarek.video.slides.ec.negation import Negation
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -18,7 +17,7 @@ class DiscreteEllipticCurves(SlideBase):
         super().__init__("Discrete elliptic curves chart")
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve)
-        self.chart.set_z_index(1, family=True)
+
         self.sidebar = Sidebar(
             "Negation", tex_path="data/cec/neg.tex", code_path="data/ec/neg.py"
         )
@@ -53,7 +52,6 @@ class DiscreteEllipticCurves(SlideBase):
         self.animate_symmetry(scene)
         self.animate_vertical(scene)
         self.animate_negate(scene)
-        Addition.play(scene, self.chart)
 
     def animate_out(self, scene):
         self.chart.animate_disappear(scene)

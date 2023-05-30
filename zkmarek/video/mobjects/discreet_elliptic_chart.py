@@ -40,6 +40,7 @@ class DiscreteEllipticChart(VGroup):
         )
         self.add(self.ax)
         self.add(self.labels)
+        self.set_z_index(1, family=True)
         self.gen_points()
 
     def gen_points(self):

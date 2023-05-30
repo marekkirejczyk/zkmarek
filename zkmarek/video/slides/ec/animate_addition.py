@@ -49,8 +49,7 @@ class AnimateAddition:
 
     def animate_out(self, scene):
         scene.play(FadeOut(*self.labels))
-        scene.play(FadeOut(self.line2))
-        scene.play(FadeOut(*self.lines))
+        scene.play(FadeOut(self.line2), FadeOut(*self.lines))
 
     @staticmethod
     def play(
