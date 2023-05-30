@@ -7,6 +7,7 @@ from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
 from slides.common.title import TitleSlide
 from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
+from slides.ec.negation import Negation as ECNegation
 from slides.ec.addition import Addition as ECAddition
 from slides.equation import EquationSlide
 
@@ -39,6 +40,7 @@ SLIDES = [
     TitleSlide("Discrete Elliptic Curves"),
 
     DiscreteEllipticCurves(),
+    ECNegation(),
     ECAddition(),
 
     TitleSlide("Multiplication by scalar"),
