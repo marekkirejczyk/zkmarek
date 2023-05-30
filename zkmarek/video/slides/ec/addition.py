@@ -1,4 +1,4 @@
-from manim import FadeOut, FadeIn
+from manim import FadeOut
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
@@ -22,7 +22,7 @@ class Addition(SlideBase):
         )
 
     def animate_in(self, scene):
-        scene.play(FadeIn(self.chart))
+        scene.add(self.chart)
         AnimateAddition.play(scene, self.chart, 5, 1, 10, 0)
         AnimateAddition.play(scene, self.chart, 5, 1, 9, 1)
         self.chart.animate_align_left(scene)

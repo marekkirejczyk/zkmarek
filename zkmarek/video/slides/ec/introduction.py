@@ -5,10 +5,9 @@ from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.ec.negation import Negation
 
 
-class DiscreteEllipticCurves(SlideBase):
+class Introduction(SlideBase):
     curve: WeierstrassCurve
     chart: DiscreteEllipticChart
     sidebar: Sidebar
@@ -41,4 +40,4 @@ class DiscreteEllipticCurves(SlideBase):
         self.animate_vertical(scene)
 
     def animate_out(self, scene):
-        self.chart.animate_disappear(scene)
+        scene.remove(self.chart)

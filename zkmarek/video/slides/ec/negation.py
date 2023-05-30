@@ -1,4 +1,4 @@
-from manim import RED, RIGHT, Dot, FadeOut, Indicate, Line, Tex, FadeIn
+from manim import RED, RIGHT, Dot, Indicate, Line, Tex
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
@@ -34,7 +34,7 @@ class Negation(SlideBase):
         self.chart.animate_add(scene, label)
 
     def animate_in(self, scene):
-        scene.play(FadeIn(self.chart))
+        scene.add(self.chart)
         self.v_line = self.chart.create_vertical_line(9)
         self.chart.animate_add(scene, self.v_line)
         self.indicate_dot(scene, self.dots[0], self.label1)
@@ -58,4 +58,4 @@ class Negation(SlideBase):
             self.dots[0],
             self.dots[1],
         )
-        scene.play(FadeOut(self.chart))
+        scene.remove(self.chart)

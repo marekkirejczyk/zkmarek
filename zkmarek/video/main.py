@@ -6,7 +6,7 @@ from slides.cec.addition import Addition as CECAddition
 from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
 from slides.common.title import TitleSlide
-from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
+from slides.ec.introduction import Introduction
 from slides.ec.negation import Negation as ECNegation
 from slides.ec.addition import Addition as ECAddition
 from slides.equation import EquationSlide
@@ -39,7 +39,7 @@ SLIDES = [
     CodeSlide("Tonelli Shanks algorithm", "data/pf/sqrt.py"),
     TitleSlide("Discrete Elliptic Curves"),
 
-    DiscreteEllipticCurves(),
+    Introduction(),
     ECNegation(),
     ECAddition(),
 
