@@ -16,6 +16,7 @@ from zkmarek.video.slides.common.image_slide import ImageSlide
 from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
+from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -42,6 +43,7 @@ SLIDES = [
     Introduction(),
     ECNegation(),
     ECAddition(),
+    AdditionToInfinity(),
 
     TitleSlide("Multiplication by scalar"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
