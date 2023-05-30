@@ -23,7 +23,10 @@ class AdditionToInfinity(SlideBase):
         scene.add(self.chart)
         dots = self.chart.find_dots_by_x(9)
         self.line = Line(
-            dots[1].get_center(), self.point_at_infinity.dot.get_center(), color=DARK_GREY, z_index=0
+            dots[1].get_center(),
+            self.point_at_infinity.dot.get_center(),
+            color=DARK_GREY,
+            z_index=0,
         )
         scene.play(GrowFromPoint(self.line, point=dots[1].get_center(), run_time=3))
         self.point_at_infinity.animate_in(scene)
