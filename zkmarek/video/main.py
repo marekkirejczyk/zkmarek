@@ -26,7 +26,8 @@ SLIDES = [
     CECNegation(),
     CECAddition(),
     TitleSlide("Prime Fields"),
-    CodeSlide("Example implementation", "data/pf/field.py"),
+    CodeSlide("Example amateur implementation", "data/pf/field.py"),
+    CodeSlide("Example pro implementation", "data/pf/add.rs", language="rust"),
     ImageSlide("Extended Euclidean algorithm", "data/pf/xgcd.png"),
     CodeSlide("Extended Euclidean algorithm", "data/pf/xgcd.py"),
     ImageSlide(

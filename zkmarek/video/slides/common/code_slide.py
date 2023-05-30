@@ -22,7 +22,7 @@ class CodeSlide(SlideBase):
             **kwargs
         )
         self.title_text.to_edge(UP, buff=1)
-        self.code.next_to(self.title_text, DOWN, buff=1)
+        self.code.next_to(self.title_text, DOWN, buff=0.5)
 
     def animate_in(self, scene):
         scene.play(Write(self.title_text))
