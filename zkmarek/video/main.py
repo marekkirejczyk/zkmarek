@@ -6,7 +6,9 @@ from slides.cec.addition import Addition as CECAddition
 from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
 from slides.common.title import TitleSlide
-from slides.ec.discrete_elliptic_curves import DiscreteEllipticCurves
+from slides.ec.introduction import Introduction
+from slides.ec.negation import Negation as ECNegation
+from slides.ec.addition import Addition as ECAddition
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
@@ -14,6 +16,7 @@ from zkmarek.video.slides.common.image_slide import ImageSlide
 from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
+from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -25,6 +28,7 @@ SLIDES = [
     CECOperations(),
     CECNegation(),
     CECAddition(),
+
     TitleSlide("Prime Fields"),
     CodeSlide("Example amateur implementation", "data/pf/field.py"),
     CodeSlide("Example pro implementation", "data/pf/add.rs", language="rust"),
@@ -35,7 +39,12 @@ SLIDES = [
     ),
     CodeSlide("Tonelli Shanks algorithm", "data/pf/sqrt.py"),
     TitleSlide("Discrete Elliptic Curves"),
-    DiscreteEllipticCurves(),
+
+    Introduction(),
+    ECNegation(),
+    ECAddition(),
+    AdditionToInfinity(),
+
     TitleSlide("Multiplication by scalar"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
     CodeSlide("Double and always add", "data/ec/double_and_always_add.py"),

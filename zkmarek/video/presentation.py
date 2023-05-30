@@ -29,6 +29,7 @@ class Presentation:
         if next_slide is not None:
             self.scene.next_section(next_slide.title, PresentationSectionType.NORMAL)
         slide.animate_out(self.scene)
+        self.scene.clear()
 
     def print_slides(self):
         def index_of(slide, slides):
