@@ -16,10 +16,10 @@ class Subgroup:
 
     def __repr__(self) -> str:
         points = ", ".join([str(point) for point in self.points])
-        alt_gen = ", ".join([str(point) for point in self.all_generators])
+        all_gen = ", ".join([str(point) for point in self.all_generators])
         n = len(self.points)
         return f"Subgroup(order={n}\n generator={self.generator}\n" \
-               f"altgen=[{alt_gen}]\n points=[{points}])"
+               f"allgen=[{all_gen}]\n points=[{points}])"
 
     def __eq__(self, other: object) -> bool:
         return set(self.points) == set(other.points)
