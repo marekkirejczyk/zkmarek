@@ -11,13 +11,16 @@ class ImageSlide(SlideBase):
     background_rect: rectangle
 
     def __init__(self, title: str, image_path: str, image_scale=1.0):
-        super().__init__(f"{title} (IMAGE)")
+        super().__init__(title)
         self.title_text = Text(title)
         self.image = ImageMobject(image_path)
         self.title_text.to_edge(UP)
         self.title_text.set_color(BLACK)
         self.image.scale(image_scale)
         self.image.next_to(self.title_text, DOWN)
+
+    def __str__(self):
+        return f"{self.title} (IMAGE)"
 
     def animate_in(self, scene: Scene):
         self.background_rect = Rectangle(

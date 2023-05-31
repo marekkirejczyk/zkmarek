@@ -8,6 +8,9 @@ class TexSlide(SlideBase):
     title_text: Text
     tex: Tex
 
+    def __str__(self):
+        return f"{self.title} (MATH)"
+
     def __init__(self, title: str, tex_path: str, **kwargs):
         super().__init__(title)
         self.title_text = Text(title)

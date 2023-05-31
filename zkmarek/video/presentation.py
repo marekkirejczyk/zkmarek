@@ -25,6 +25,7 @@ class Presentation:
             self.play_slide(slide, next_slide)
 
     def play_slide(self, slide, next_slide):
+        slide.construct()
         slide.animate_in(self.scene)
         if next_slide is not None:
             self.scene.next_section(next_slide.title, PresentationSectionType.NORMAL)
@@ -42,4 +43,4 @@ class Presentation:
         for slide in self.all_slides:
             prefix = "-> " if index_of(slide, self.slides) >= 0 else "   "
             index = index_of(slide, self.all_slides)+1
-            print(f"{prefix}{index:2}. {slide.title}")
+            print(f"{prefix}{index:2}. {slide}")

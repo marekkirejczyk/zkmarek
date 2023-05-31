@@ -8,7 +8,7 @@ class CodeSlide(SlideBase):
     code: Code
 
     def __init__(self, title, code_path, **kwargs):
-        super().__init__(f"{title} (CODE)")
+        super().__init__(title)
         self.title_text = Text(title)
         self.code = Code(
             code_path,
@@ -23,6 +23,9 @@ class CodeSlide(SlideBase):
         )
         self.title_text.to_edge(UP, buff=1)
         self.code.next_to(self.title_text, DOWN, buff=0.5)
+
+    def __str__(self):
+        return f"{self.title} (CODE)"
 
     def animate_in(self, scene):
         scene.play(Write(self.title_text))

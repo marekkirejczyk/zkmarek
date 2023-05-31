@@ -6,6 +6,13 @@ class SlideBase(VGroup):
     def __init__(self, title:str, **kwargs) -> None:
         super().__init__(**kwargs)
         self.title = title
+        print(f"SlideBase: {self.title}")
+
+    def __str__(self):
+        return self.title
+
+    def construct(self):
+        pass
 
     def new_subsection(self, scene, title):
         scene.next_section(f"{self.title}: {title}")
