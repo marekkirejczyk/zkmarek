@@ -17,6 +17,8 @@ class Negation(SlideBase):
 
     def __init__(self) -> None:
         super().__init__("Negation")
+
+    def construct(self):
         self.chart = DiscreteEllipticChart(Secp256k1_41)
         self.chart.center()
         self.label1 = Tex("A", font_size=28)

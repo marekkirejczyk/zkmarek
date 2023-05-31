@@ -6,7 +6,6 @@ class SlideBase(VGroup):
     def __init__(self, title:str, **kwargs) -> None:
         super().__init__(**kwargs)
         self.title = title
-        print(f"SlideBase: {self.title}")
 
     def __str__(self):
         return self.title

@@ -25,7 +25,9 @@ class Addition(SlideBase):
     p1_sgn: int
 
     def __init__(self):
-        super().__init__(title="Elliptic Curves addition")
+        super().__init__("Elliptic Curves addition")
+
+    def construct(self):
         self.chart = ContinuousEllipticChart()
         self.p1_x = ValueTracker(1)
         self.p1_sgn = 1

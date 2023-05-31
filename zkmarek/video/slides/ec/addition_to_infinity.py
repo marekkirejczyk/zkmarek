@@ -13,7 +13,9 @@ class AdditionToInfinity(SlideBase):
     line: Line
 
     def __init__(self):
-        super().__init__(title="Discrete elliptic curves addition - point at infinity")
+        super().__init__("Discrete elliptic curves addition - point at infinity")
+
+    def construct(self):
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve)
         self.chart.center()

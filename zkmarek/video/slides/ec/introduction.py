@@ -14,6 +14,8 @@ class Introduction(SlideBase):
 
     def __init__(self):
         super().__init__("Discrete elliptic curves chart")
+
+    def construct(self):
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve)
         self.chart.center()

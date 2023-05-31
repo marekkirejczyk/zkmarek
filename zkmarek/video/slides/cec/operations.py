@@ -11,7 +11,9 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 class Operations(SlideBase):
     def __init__(self):
-        super().__init__(title="Operations")
+        super().__init__("Operations")
+
+    def construct(self):
         self.chart = ContinuousEllipticChart()
         a = CECAffine.from_x(1)
         self.p1 = DotOnCurve(self.chart.ax, "A(x, y)", a)

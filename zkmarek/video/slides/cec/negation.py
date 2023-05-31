@@ -10,7 +10,9 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 class Negation(SlideBase):
     def __init__(self):
-        super().__init__(title="Negation")
+        super().__init__("Negation")
+
+    def construct(self):
         self.chart = ContinuousEllipticChart()
         self.chart.align_on_border(LEFT)
         self.sidebar = Sidebar(
