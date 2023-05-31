@@ -13,7 +13,9 @@ class Addition(SlideBase):
     sidebar: Sidebar
 
     def __init__(self):
-        super().__init__(title="Discrete elliptic curves - addition")
+        super().__init__("Discrete elliptic curves - addition")
+
+    def construct(self):
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve)
         self.chart.center()

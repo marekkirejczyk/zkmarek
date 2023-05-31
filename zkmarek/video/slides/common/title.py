@@ -1,13 +1,19 @@
-from manim import Text, Write, FadeOut
+from manim import FadeOut, Text, Write
 
-from .slide_base import  SlideBase
+from .slide_base import SlideBase
 
 
 class TitleSlide(SlideBase):
     title_text: Text
+
     def __init__(self, title) -> None:
-        super().__init__(title=f"{title} (TITLE)")
-        self.title_text = Text(title)
+        super().__init__(title)
+
+    def __str__(self):
+        return f"{self.title} (TITLE)"
+
+    def construct(self):
+        self.title_text = Text(self.title)
         self.add(self.title_text)
 
     def animate_in(self, scene):
