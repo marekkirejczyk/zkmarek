@@ -7,18 +7,24 @@ from zkmarek.video.utils import load
 class TexSlide(SlideBase):
     title_text: Text
     tex: Tex
+    tex_path: str
+    kwargs: dict
 
     def __str__(self):
         return f"{self.title} (MATH)"
 
     def __init__(self, title: str, tex_path: str, **kwargs):
         super().__init__(title)
-        self.title_text = Text(title)
+        self.tex_path = tex_path
+        self.kwargs = kwargs
+
+    def construct(self):
+        self.title_text = Text(self.title)
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage[normalem]{ulem}")
-        self.tex = Tex(load(tex_path), tex_template=template, **kwargs)
+        self.tex = Tex(load(self.tex_path), tex_template=template, **self.kwargs)
         self.title_text.to_edge(UP)
-        self.tex.next_to(self.title_text, DOWN)
+        self.tex.next_to(self.title_text, DOWN, buff=1)
 
     def animate_in(self, scene):
         scene.play(Write(self.title_text))

@@ -13,7 +13,7 @@ class TitleSlide(SlideBase):
         return f"{self.title} (TITLE)"
 
     def construct(self):
-        self.title_text = Text(self.title_str)
+        self.title_text = Text(self.title)
         self.add(self.title_text)
 
     def animate_in(self, scene):

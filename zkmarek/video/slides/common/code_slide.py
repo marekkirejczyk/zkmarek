@@ -6,12 +6,18 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 class CodeSlide(SlideBase):
     title_text: Text
     code: Code
+    code_path: str
+    kwargs: dict
 
     def __init__(self, title, code_path, **kwargs):
         super().__init__(title)
         self.title_text = Text(title)
+        self.code_path = code_path
+        self.kwargs = kwargs
+
+    def construct(self):
         self.code = Code(
-            code_path,
+            self.code_path,
             background="rectangle",
             insert_line_no=True,
             font="Monospace",
@@ -19,7 +25,7 @@ class CodeSlide(SlideBase):
             margin=0.2,
             style="fruity",
             line_no_buff=0.2,
-            **kwargs
+            **self.kwargs
         )
         self.title_text.to_edge(UP, buff=1)
         self.code.next_to(self.title_text, DOWN, buff=0.5)

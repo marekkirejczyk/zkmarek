@@ -9,14 +9,20 @@ class ImageSlide(SlideBase):
     title_text: Text
     image: ImageMobject
     background_rect: rectangle
+    image_path: str
+    image_scale: float
 
     def __init__(self, title: str, image_path: str, image_scale=1.0):
         super().__init__(title)
-        self.title_text = Text(title)
-        self.image = ImageMobject(image_path)
+        self.image_path = image_path
+        self.image_scale = image_scale
+
+    def construct(self):
+        self.title_text = Text(self.title)
+        self.image = ImageMobject(self.image_path)
         self.title_text.to_edge(UP)
         self.title_text.set_color(BLACK)
-        self.image.scale(image_scale)
+        self.image.scale(self.image_scale)
         self.image.next_to(self.title_text, DOWN)
 
     def __str__(self):
