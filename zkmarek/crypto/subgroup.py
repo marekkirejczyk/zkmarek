@@ -21,8 +21,11 @@ class Subgroup:
         return f"Subgroup(order={n}\n generator={self.generator}\n" \
                f"allgen=[{all_gen}]\n points=[{points}])"
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other: "Subgroup") -> bool:
         return set(self.points) == set(other.points)
+
+    def order(self) -> int:
+        return len(self.points)
 
     @staticmethod
     def generate_all(curve: WeierstrassCurve) -> "List[Subgroup]":
