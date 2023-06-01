@@ -33,6 +33,7 @@ class Subgroups(SlideBase):
 
         animation2 = AnimateSubgroups(self.chart)
         animation2.target_color = GREEN
+        animation2.runtime_per_step = 0.5
         animation2.animate_subgroup(scene, subgroup, subgroup.all_generators[1])
         animation2.animate_out_labels(scene)
         animation1.animate_out_dots(scene)

@@ -1,4 +1,4 @@
-from manim import BLUE, RIGHT, Dot, FadeOut, Indicate, MathTex, Scene, Write
+from manim import BLUE, RIGHT, Dot, FadeOut, Flash, MathTex, Scene, Write
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
@@ -22,9 +22,10 @@ class AnimateSubgroups:
 
     def animate_dot(self, scene: Scene, dot: Dot, label: str):
         dup_dot = dot.copy()
+        scene.add(dup_dot)
         self.duplicates.append(dup_dot)
-        scene.play(Indicate(dup_dot), run_time=self.runtime_per_step)
         dup_dot.set_color(self.target_color)
+        scene.play(Flash(dup_dot), run_time=self.runtime_per_step)
         self.labels.append(MathTex(label, font_size=20))
         self.labels[-1].next_to(dup_dot, direction=RIGHT, buff=0.15)
         scene.play(Write(self.labels[-1]), run_time=self.runtime_per_step)
@@ -39,13 +40,15 @@ class AnimateSubgroups:
             self.chart.point_at_infinity.animate_in(scene)
         self.animate_dot(scene, self.chart.point_at_infinity.dot, "")
         gen_dot = self.chart.find_dot_by_affine(generator)
-        scene.play(Indicate(gen_dot), run_time=self.runtime_per_step)
+        scene.play(Flash(gen_dot), run_time=self.runtime_per_step)
 
     def animate_out_labels(self, scene: Scene):
         scene.play(FadeOut(*self.labels))
 
     def animate_out_dots(self, scene: Scene):
         scene.play(FadeOut(*self.duplicates))
+        scene.remove(*self.duplicates)
+
 
     def animate_affine(self, scene: Scene, affine: ECAffine, label: str):
         self.animate_dot(scene, self.chart.find_dot_by_affine(affine), label)
