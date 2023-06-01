@@ -1,4 +1,4 @@
-from manim import GREEN
+from manim import RED, FadeIn, FadeOut
 
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
@@ -24,7 +24,7 @@ class Subgroups(SlideBase):
         self.subgroups = Subgroup.generate_all(self.curve)
 
     def animate_in(self, scene):
-        scene.add(self.chart)
+        scene.play(FadeIn(self.chart))
         subgroup = self.subgroups[0]
 
         animation1 = AnimateSubgroups(self.chart)
@@ -32,7 +32,7 @@ class Subgroups(SlideBase):
         animation1.animate_out_labels(scene)
 
         animation2 = AnimateSubgroups(self.chart)
-        animation2.target_color = GREEN
+        animation2.target_color = RED
         animation2.runtime_per_step = 0.5
         animation2.animate_subgroup(scene, subgroup, subgroup.all_generators[1])
         animation2.animate_out_labels(scene)
@@ -40,4 +40,4 @@ class Subgroups(SlideBase):
         animation2.animate_out_dots(scene)
 
     def animate_out(self, scene):
-        scene.remove(self.chart)
+        scene.play(FadeOut(self.chart))

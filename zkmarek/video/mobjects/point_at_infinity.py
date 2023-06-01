@@ -10,6 +10,7 @@ class PointAtInfinity(VGroup):
     y: float
 
     def __init__(self, ax: Axes, x: float, y: float):
+        super().__init__()
         self.ax = ax
         self.x = x
         self.y = y
