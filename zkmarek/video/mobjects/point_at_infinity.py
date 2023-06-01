@@ -1,4 +1,4 @@
-from manim import (GREEN, RIGHT, Axes, Create, Dot, FadeOut, Flash, MathTex,
+from manim import (GREEN, RIGHT, Axes, Create, Dot, FadeOut, Indicate, MathTex,
                    VGroup)
 
 
@@ -13,7 +13,7 @@ class PointAtInfinity(VGroup):
         self.ax = ax
         self.x = x
         self.y = y
-        self.dot = Dot(ax.c2p(x, y), color=GREEN)
+        self.dot = Dot(ax.c2p(x, y), color=GREEN, radius=0.05)
         self.label = MathTex("\infty")
 
     def animate_in(self, scene):
@@ -21,7 +21,7 @@ class PointAtInfinity(VGroup):
         self.label.next_to(self.dot, RIGHT)
         scene.play(Create(self.dot))
         scene.play(Create(self.label))
-        scene.play(Flash(self.dot))
+        scene.play(Indicate(self.dot))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.label))
