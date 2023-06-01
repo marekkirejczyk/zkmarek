@@ -4,6 +4,7 @@ from numpy import ndarray
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
+from zkmarek.video.mobjects.point_at_infinity import PointAtInfinity
 
 
 class DotOnCurve(Dot):
@@ -20,11 +21,12 @@ class DiscreteEllipticChart(VGroup):
     curve: WeierstrassCurve
     dots: list[Dot] = []
     ax: Axes
+    point_at_infinity: PointAtInfinity
 
     def __init__(self, curve=Secp256k1_41):
         super().__init__()
         self.curve = curve
-
+        self.point_at_infinity = None
         self.ax = Axes(
             x_range=[0, curve.p + 1, 5],
             y_range=[0, curve.p + 1, 5],
@@ -42,6 +44,13 @@ class DiscreteEllipticChart(VGroup):
         self.add(self.labels)
         self.set_z_index(1, family=True)
         self.gen_points()
+
+    def create_point_at_infinity(self, x, y):
+        if self.point_at_infinity is None:
+            self.point_at_infinity = PointAtInfinity(self.ax, x, y)
+            self.add(self.point_at_infinity)
+        else:
+            self.point_at_infinity.move_to(self.ax.c2p(x, y))
 
     def gen_points(self):
         points = ECAffine.generate_points(self.curve)

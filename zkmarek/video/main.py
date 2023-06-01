@@ -17,6 +17,7 @@ from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
+from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -48,6 +49,10 @@ SLIDES = [
     TitleSlide("Multiplication by scalar"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
     CodeSlide("Double and always add", "data/ec/double_and_always_add.py"),
+
+    TitleSlide("Subgroups"),
+    Subgroups(),
+
     TitleSlide("Coordination systems"),
     ImageSlide(
         "Coordination systems", "data/ec/coords_conversions.png", image_scale=0.75

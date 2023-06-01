@@ -10,10 +10,11 @@ class PointAtInfinity(VGroup):
     y: float
 
     def __init__(self, ax: Axes, x: float, y: float):
+        super().__init__()
         self.ax = ax
         self.x = x
         self.y = y
-        self.dot = Dot(ax.c2p(x, y), color=GREEN)
+        self.dot = Dot(ax.c2p(x, y), color=GREEN, radius=0.05)
         self.label = MathTex("\infty")
 
     def animate_in(self, scene):

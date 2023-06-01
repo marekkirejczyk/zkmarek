@@ -135,5 +135,3 @@ class ECAffine:
                     points.append(-point)
         return points
 
-
-INFINITY = ECAffine(0, 0, WeierstrassCurve(0, 0, 1))
