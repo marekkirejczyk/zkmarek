@@ -17,6 +17,7 @@ from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
+from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.utils import get_slides_from_names
 
@@ -52,6 +53,9 @@ SLIDES = [
 
     TitleSlide("Subgroups"),
     Subgroups(),
+
+    TitleSlide("Elliptic Curve Standards"),
+    Standards(),
 
     TitleSlide("Coordination systems"),
     ImageSlide(
