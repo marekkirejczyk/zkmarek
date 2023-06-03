@@ -1,10 +1,13 @@
-from manim import DOWN, GREEN, RED, FadeIn, FadeOut, Text, Transform, VGroup, Rectangle, SurroundingRectangle, LEFT, UP, Scene, UL
+from manim import (DOWN, GREEN, LEFT, RED, RIGHT, UL, UP, Create, DashedLine,
+                   FadeIn, FadeOut, Rectangle, Scene, SurroundingRectangle,
+                   Text, Transform, VGroup)
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Box(VGroup):
     rectangle: Rectangle
+
     def __init__(self, *mobjects, **kwargs):
         super().__init__(*mobjects, **kwargs)
         self.arrange(DOWN, aligned_edge=LEFT)
@@ -36,20 +39,37 @@ class KeyBox(Box):
         self.private_key = new_private_key
 
 
-
 class Signature(SlideBase):
     key_box = KeyBox()
+    sender_label: Text
+    receiver_label: Text
+    h_line: DashedLine
+
     def __init__(self):
         super().__init__("Signature")
-        self.title = "Signature"
 
     def construct(self):
-        pass
+        self.title = "Signature"
+        self.sender_label = Text("Sender")
+        self.receiver_label = Text("Receiver")
+
+    def fade_in_labels(self, scene):
+        self.sender_label.move_to(scene.camera.frame_width / 4 * LEFT)
+        self.receiver_label.move_to(scene.camera.frame_width / 4 * RIGHT)
+        self.sender_label.to_edge(UP)
+        self.receiver_label.to_edge(UP)
+        scene.play(FadeIn(self.sender_label), FadeIn(self.receiver_label))
+
+        self.h_line = DashedLine(
+            scene.camera.frame_height / 2 * DOWN, scene.camera.frame_height / 2 * UP
+        )
+        scene.play(Create(self.h_line))
 
     def animate_in(self, scene):
         scene.play(FadeIn(self.key_box))
         self.key_box.animate_to_math(scene)
         scene.play(self.key_box.animate.to_corner(UL))
+        self.fade_in_labels(scene)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.key_box))
