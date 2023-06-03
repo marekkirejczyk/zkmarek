@@ -17,6 +17,7 @@ from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
+from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.utils import get_slides_from_names
@@ -57,6 +58,9 @@ SLIDES = [
     TitleSlide("Elliptic Curve Standards"),
     Standards(),
 
+    TexSlide("Discrete Elliptic Curves operations", "data/ec/operations.tex"),
+    Signature(),
+
     TitleSlide("Coordination systems"),
     ImageSlide(
         "Coordination systems", "data/ec/coords_conversions.png", image_scale=0.75
@@ -65,7 +69,6 @@ SLIDES = [
     TitleSlide("Constant time operations"),
     CodeSlide("Constant time conditional swap", "data/ct/cswap.py", language="python"),
     CodeSlide("Constant time equal", "data/ct/ct_eq.rs", language="rust"),
-    TexSlide("Discrete Elliptic Curves operations", "data/ec/operations.tex"),
 ]
 
 
