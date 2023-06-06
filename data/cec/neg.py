@@ -1,9 +1,11 @@
-class CPoint:
-    def __init__(self, x, y):
+class CECAffine:
+    x: float
+    y: float
+
+    def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
-
     ...
 
-    def neg(self):
-        return CPoint(self.x, -self.y)
+    def __neg__(self):
+        return CECAffine(self.x, -self.y)

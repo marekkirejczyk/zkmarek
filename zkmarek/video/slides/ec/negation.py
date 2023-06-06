@@ -47,10 +47,10 @@ class Negation(SlideBase):
 
         self.chart.animate_align_left(scene)
         self.sidebar.animate_appear(scene, self)
-        self.sidebar.animate_disappear(scene)
-        self.chart.animate_align_center(scene)
 
     def animate_out(self, scene):
+        self.sidebar.animate_disappear(scene)
+        self.chart.animate_align_center(scene)
         self.chart.animate_remove(
             scene,
             self.v_line,

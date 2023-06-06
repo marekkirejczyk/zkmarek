@@ -26,7 +26,9 @@ class Addition(SlideBase):
     def animate_in(self, scene):
         scene.add(self.chart)
         AnimateAddition.play(scene, self.chart, 5, 1, 10, 0)
+        self.new_subsection(scene, "Overflow the field")
         AnimateAddition.play(scene, self.chart, 5, 1, 9, 1)
+        self.new_subsection(scene, "Sidebar")
         self.chart.animate_align_left(scene)
         self.sidebar.animate_appear(scene, self)
 

@@ -27,10 +27,13 @@ class Subgroups(SlideBase):
         scene.play(FadeIn(self.chart))
         subgroup = self.subgroups[0]
 
+
+        self.new_subsection(scene, "Subgroup 1")
         animation1 = AnimateSubgroups(self.chart)
         animation1.animate_subgroup(scene, subgroup, subgroup.generator)
         animation1.animate_out_labels(scene)
 
+        self.new_subsection(scene, "Subgroup 2")
         animation2 = AnimateSubgroups(self.chart)
         animation2.target_color = RED
         animation2.runtime_per_step = 0.5
