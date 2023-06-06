@@ -1,5 +1,6 @@
 #!/bin/sh
 rm -fr elliptic_curves EllipticCurves
-python -m manim --save_sections zkmarek/video/main.py &&
-manim_editor --quick_present_export media/videos/main/1080p60/sections/EllipticCurves.json &&
+python -m manim --save_sections zkmarek/video/main.py -qk &&
+# manim_editor --quick_present_export media/videos/main/1080p60/sections/EllipticCurves.json &&
+manim_editor --quick_present_export media/videos/main/2160p60/sections/EllipticCurves.json &&
 python -m http.server 8000 --directory EllipticCurves
