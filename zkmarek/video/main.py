@@ -59,6 +59,9 @@ SLIDES = [
     Standards(),
 
     TexSlide("Discrete Elliptic Curves operations", "data/ec/operations.tex"),
+    ImageSlide("Groups", "data/groups.png", image_scale=0.85),
+
+    TitleSlide("Signatures"),
     Signature(),
 
     TitleSlide("Coordination systems"),
