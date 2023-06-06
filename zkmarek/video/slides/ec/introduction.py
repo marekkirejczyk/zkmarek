@@ -36,9 +36,16 @@ class Introduction(SlideBase):
             scene.play(FadeIn(line))
             scene.play(FadeOut(line))
 
+        for x in range(17, 18):
+            line = self.chart.create_vertical_line(x)
+            scene.play(FadeIn(line), Wait())
+            scene.play(FadeOut(line))
+
     def animate_in(self, scene):
         self.chart.animate_appear(scene)
+        self.new_subsection(scene, "Symmetry")
         self.animate_symmetry(scene)
+        self.new_subsection(scene, "Vertical lines")
         self.animate_vertical(scene)
 
     def animate_out(self, scene):
