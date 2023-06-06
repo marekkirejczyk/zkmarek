@@ -63,6 +63,7 @@ SLIDES = [
 
     TitleSlide("Signatures"),
     Signature(),
+    CodeSlide("Recover", "data/ec/recover.sol", language="solidity"),
 
     TitleSlide("Coordination systems"),
     ImageSlide(
