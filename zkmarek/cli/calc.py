@@ -20,7 +20,9 @@ class CalcCli:
         print(f"Calculating subgroups of elliptic curve with order: {args.order}")
         groups = Subgroup.generate_all(WeierstrassCurve(0, 7, args.order))
         for group in groups:
-            sorted_points = sorted(group.points, key=lambda p: p.x.value * args.order + p.y.value)
+            sorted_points = sorted(group.points,
+                key=lambda p: p.x.value * args.order + p.y.value
+            )
             print(", ".join(map(lambda g: f"{g}" , sorted_points)))
 
 if __name__ == "__main__":

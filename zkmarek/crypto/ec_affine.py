@@ -60,7 +60,7 @@ class ECAffine:
 
     def __str__(self) -> str:
         if self.is_infinity():
-            return f"(INF)"
+            return "(INF)"
         return f"({self.x.value}, {self.y.value})"
 
     def __repr__(self) -> str:
