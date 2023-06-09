@@ -53,3 +53,10 @@ script/presentation
 
 Note: Movie related scripts are tested and work on OS X.
 
+### Command line interface
+
+There is a useful calc script, which allows to perform miscellaneous calculations like finding all subgroups of an elliptic curve. Run with -h options to see the syntax.
+
+```sh
+script/calc -h
+```
