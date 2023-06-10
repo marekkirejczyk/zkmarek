@@ -42,7 +42,7 @@ class Introduction(SlideBase):
             scene.play(FadeOut(line))
 
     def animate_in(self, scene):
-        self.chart.animate_appear(scene)
+        self.chart.animate_in(scene)
         self.new_subsection(scene, "Symmetry")
         self.animate_symmetry(scene)
         self.new_subsection(scene, "Vertical lines")

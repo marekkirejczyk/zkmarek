@@ -72,7 +72,7 @@ class Addition(SlideBase):
         )
 
     def animate_build_scene(self, scene):
-        scene.play(self.chart.animate_appear())
+        self.chart.animate_in(scene)
         scene.play(self.p1.animate_appear())
         scene.play(self.p2.animate_appear())
         scene.add(self.p1)
@@ -99,7 +99,7 @@ class Addition(SlideBase):
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-0.5))
 
         scene.play(self.chart.animate.align_on_border(LEFT))
-        self.sidebar.animate_appear(scene, self)
+        self.sidebar.animate_in(scene, self)
         self.animate_update_chart_position(scene)
 
     def animate_infinity_point(self, scene):
@@ -160,7 +160,7 @@ class Addition(SlideBase):
 
     def animate_out(self, scene):
         self.new_subsection(scene, "Point addition - clean up")
-        self.sidebar.animate_disappear(scene)
+        self.sidebar.animate_out(scene)
         scene.play(
             Succession(
                 FadeOut(self.p3),

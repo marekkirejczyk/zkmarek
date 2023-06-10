@@ -23,25 +23,27 @@ class DiscreteEllipticChart(VGroup):
     ax: Axes
     point_at_infinity: PointAtInfinity
 
-    def __init__(self, curve=Secp256k1_41):
+    def __init__(self, curve=Secp256k1_41, include_details=True,):
         super().__init__()
         self.curve = curve
         self.point_at_infinity = None
+        step = 5 if include_details else 500
         self.ax = Axes(
-            x_range=[0, curve.p + 1, 5],
-            y_range=[0, curve.p + 1, 5],
+            x_range=[0, curve.p + 1, step],
+            y_range=[0, curve.p + 1, step],
             x_length=7,
             axis_config={"include_numbers": True},
         )
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
-        field_label = r"$\mathbb{F}_{" + str(curve.p) + "}$"
-        self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template, font_size=26),
-            Tex(field_label, tex_template=template, font_size=26),
-        )
         self.add(self.ax)
-        self.add(self.labels)
+        if include_details:
+            field_label = r"$\mathbb{F}_{" + str(curve.p) + "}$"
+            self.labels = self.ax.get_axis_labels(
+                Tex(field_label, tex_template=template, font_size=26),
+                Tex(field_label, tex_template=template, font_size=26),
+            )
+            self.add(self.labels)
         self.set_z_index(1, family=True)
         self.gen_points()
 
@@ -72,10 +74,10 @@ class DiscreteEllipticChart(VGroup):
     def affine_to_point(self, p: ECAffine) -> ndarray:
         return self.ax.c2p(p.x.value, p.y.value)
 
-    def animate_appear(self, scene) -> None:
+    def animate_in(self, scene) -> None:
         scene.play(Create(self))
 
-    def animate_disappear(self, scene) -> None:
+    def animate_out(self, scene) -> None:
         scene.play(FadeOut(self))
 
     def create_horizontal_line(self):

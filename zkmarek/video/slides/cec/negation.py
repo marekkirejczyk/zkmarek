@@ -1,5 +1,4 @@
-from manim import LEFT, Create
-
+from manim import LEFT
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
@@ -24,7 +23,7 @@ class Negation(SlideBase):
         self.add(self.p1, self.p2, self.chart, self.sidebar)
 
     def animate_in(self, scene):
-        scene.play(Create(self.chart))
+        self.chart.animate_in(scene)
         scene.play(self.p1.animate_appear())
         scene.play(self.p2.animate_appear())
-        self.sidebar.animate_appear(scene, self)
+        self.sidebar.animate_in(scene, self)

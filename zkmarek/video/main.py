@@ -21,12 +21,14 @@ from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.prime_fields import PrimeFields
+from zkmarek.video.slides.in_this_episode import InThisEpisode
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
 config.height = 9
 
 SLIDES = [
+    InThisEpisode(),
     TitleSlide("Elliptic Curves"),
     EquationSlide(),
     CECOperations(),
@@ -43,6 +45,7 @@ SLIDES = [
         "Square root", "data/pf/sqrt.png", image_scale=0.7
     ),
     CodeSlide("Tonelli Shanks algorithm", "data/pf/sqrt.py"),
+
     TitleSlide("Discrete Elliptic Curves"),
     ECIntroduction(),
     ECNegation(),

@@ -76,7 +76,7 @@ class Sidebar(VGroup):
         scene.play(FadeIn(self.math))
         self.add(self.math)
 
-    def animate_appear(self, scene, slide: Optional[SlideBase] = None):
+    def animate_in(self, scene, slide: Optional[SlideBase] = None):
         scene.play(Write(self.label))
         if self.math is not None:
             if slide is not None:
@@ -87,7 +87,7 @@ class Sidebar(VGroup):
                 slide.new_subsection(scene, "Code")
             scene.play(Write(self.code))
 
-    def animate_disappear(self, scene):
+    def animate_out(self, scene):
         if self.code is not None and self.code in self.submobjects:
             scene.play(FadeOut(self.code))
         if self.math is not None and self.math in self.submobjects:

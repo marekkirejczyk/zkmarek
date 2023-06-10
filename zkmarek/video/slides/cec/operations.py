@@ -21,7 +21,7 @@ class Operations(SlideBase):
         self.sidebar = Sidebar("Operations", tex_path="data/cec/operations.tex")
 
     def animate_in(self, scene: Scene):
-        scene.play(self.chart.animate_appear())
+        self.chart.animate_in(scene)
         scene.play(self.p1.animate_appear())
         scene.play(ReplacementTransform(self.p1, self.p2))
         scene.next_section("Sidebar"),

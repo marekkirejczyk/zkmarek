@@ -30,10 +30,10 @@ class Addition(SlideBase):
         AnimateAddition.play(scene, self.chart, 5, 1, 9, 1)
         self.new_subsection(scene, "Sidebar")
         self.chart.animate_align_left(scene)
-        self.sidebar.animate_appear(scene, self)
+        self.sidebar.animate_in(scene, self)
 
     def animate_out(self, scene):
-        self.sidebar.animate_disappear(scene)
+        self.sidebar.animate_out(scene)
         self.chart.animate_align_center(scene)
         scene.play(FadeOut(self.chart))
 
