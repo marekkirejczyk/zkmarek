@@ -22,7 +22,7 @@ class Operations(SlideBase):
 
     def animate_in(self, scene: Scene):
         self.chart.animate_in(scene)
-        scene.play(self.p1.animate_appear())
+        self.p1.animate_in(scene)
         scene.play(ReplacementTransform(self.p1, self.p2))
         scene.next_section("Sidebar"),
         scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT))

@@ -1,5 +1,4 @@
-from manim import (GREEN, RIGHT, Axes, Create, Dot, MathTex, Succession,
-                   VGroup, Write)
+from manim import GREEN, RIGHT, Axes, Create, Dot, MathTex, VGroup, Write
 from zkmarek.crypto.cec_affine import CECAffine
 
 
@@ -47,12 +46,11 @@ class DotOnCurve(VGroup):
         self.dot.move_to(self.ax.coords_to_point(p.x, p.y))
         self.label.next_to(self.dot, self.label_direction)
 
-    def animate_appear(self):
-        result = [Create(self.dot)]
+    def animate_in(self, scene):
+        scene.play(Create(self.dot))
         if self.include_lines:
-            result.append(Create(self.lines))
-        result.append(Write(self.label))
-        return Succession(*result)
+            scene.play(Create(self.lines))
+        scene.play(Write(self.label))
 
     def to_coord(self):
         return self.ax.c2p(self.p.x, self.p.y)

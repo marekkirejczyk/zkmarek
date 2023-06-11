@@ -24,6 +24,6 @@ class Negation(SlideBase):
 
     def animate_in(self, scene):
         self.chart.animate_in(scene)
-        scene.play(self.p1.animate_appear())
-        scene.play(self.p2.animate_appear())
+        self.p1.animate_in(scene)
+        self.p2.animate_in(scene)
         self.sidebar.animate_in(scene, self)
