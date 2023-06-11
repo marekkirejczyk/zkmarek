@@ -29,6 +29,7 @@ config.height = 9
 
 SLIDES = [
     InThisEpisode(),
+
     TitleSlide("Elliptic Curves"),
     EquationSlide(),
     CECOperations(),
@@ -38,13 +39,8 @@ SLIDES = [
     TitleSlide("Prime Fields"),
     PrimeFields(),
     CodeSlide("Example amateur implementation", "data/pf/field.py"),
-    CodeSlide("Example pro implementation", "data/pf/add.rs", language="rust"),
     ImageSlide("Extended Euclidean algorithm", "data/pf/xgcd.png"),
     CodeSlide("Extended Euclidean algorithm", "data/pf/xgcd.py"),
-    ImageSlide(
-        "Square root", "data/pf/sqrt.png", image_scale=0.7
-    ),
-    CodeSlide("Tonelli Shanks algorithm", "data/pf/sqrt.py"),
 
     TitleSlide("Discrete Elliptic Curves"),
     ECIntroduction(),
@@ -68,15 +64,6 @@ SLIDES = [
     TitleSlide("Signatures"),
     Signature(),
     CodeSlide("Recover", "data/ec/recover.sol", language="solidity"),
-
-    TitleSlide("Coordination systems"),
-    ImageSlide(
-        "Coordination systems", "data/ec/coords_conversions.png", image_scale=0.75
-    ),
-    ImageSlide("Coordination systems (costs)", "data/ec/coords_costs.png"),
-    TitleSlide("Constant time operations"),
-    CodeSlide("Constant time conditional swap", "data/ct/cswap.py", language="python"),
-    CodeSlide("Constant time equal", "data/ct/ct_eq.rs", language="rust"),
 ]
 
 
