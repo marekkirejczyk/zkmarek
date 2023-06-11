@@ -1,5 +1,4 @@
-from manim import (GREEN, RIGHT, Axes, Create, Dot, MathTex, Succession,
-                   VGroup, Write)
+from manim import GREEN, RIGHT, Axes, Create, Dot, MathTex, VGroup, Write
 from zkmarek.crypto.cec_affine import CECAffine
 
 
