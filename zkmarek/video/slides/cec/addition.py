@@ -73,20 +73,20 @@ class Addition(SlideBase):
 
     def animate_build_scene(self, scene):
         self.chart.animate_in(scene)
-        scene.play(self.p1.animate_appear())
-        scene.play(self.p2.animate_appear())
+        self.p1.animate_in(scene)
+        self.p2.animate_in(scene)
         scene.add(self.p1)
         scene.add(self.p2)
         scene.add(self.p1_x)
 
         self.new_subsection(scene, "Line through points")
         scene.play(GrowFromPoint(self.line1, point=self.p2.to_coord(), run_time=5))
-        scene.play(self.p4.animate_appear())
+        self.p4.animate_in(scene)
         scene.add(self.p4)
 
         self.new_subsection(scene, "Point reflection")
         scene.play(GrowFromPoint(self.line2, point=self.p4.to_coord(), run_time=3))
-        scene.play(self.p3.animate_appear())
+        self.p3.animate_in(scene)
         scene.add(self.p3)
 
         self.p1.add_updater(self.update_p1)
