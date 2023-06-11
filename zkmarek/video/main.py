@@ -12,7 +12,6 @@ from slides.ec.addition import Addition as ECAddition
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
-from zkmarek.video.slides.common.image_slide import ImageSlide
 from zkmarek.video.slides.common.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
@@ -38,9 +37,6 @@ SLIDES = [
 
     TitleSlide("Prime Fields"),
     PrimeFields(),
-    CodeSlide("Example amateur implementation", "data/pf/field.py"),
-    ImageSlide("Extended Euclidean algorithm", "data/pf/xgcd.png"),
-    CodeSlide("Extended Euclidean algorithm", "data/pf/xgcd.py"),
 
     TitleSlide("Discrete Elliptic Curves"),
     ECIntroduction(),
@@ -57,9 +53,7 @@ SLIDES = [
 
     TitleSlide("Elliptic Curve Standards"),
     Standards(),
-
     TexSlide("Discrete Elliptic Curves operations", "data/ec/operations.tex"),
-    ImageSlide("Groups", "data/groups.png", image_scale=0.85),
 
     TitleSlide("Signatures"),
     Signature(),
