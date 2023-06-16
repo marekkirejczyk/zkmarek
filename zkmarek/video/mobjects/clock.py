@@ -14,21 +14,21 @@ class Clock(VGroup):
         self.use_zero = use_zero
         self.modulus = modulus
         self.circle = Circle(radius=3)
-        self.markings = self.create_markings(12)
+        self.markings = self.create_markings(modulus)
         self.add(self.circle)
         self.add(self.markings)
 
     def label_at(self, index):
         if self.use_zero and index == 0:
             return str(self.modulus)
-        return str(index % 12)
+        return str(index % self.modulus)
 
     def create_markings(self, n):
         result = VGroup()
         for i in range(n):
             angle = i * 360 / n
             line = Line(2.8 * UP, 3 * UP, color=GREEN)
-            number = Text(self.label_at(i)).scale(0.5)
+            number = Text(self.label_at(i)).scale(0.4)
             number.next_to(line.get_center(), direction=DOWN, buff=0.5)
             line.rotate(-np.deg2rad(angle), about_point=ORIGIN)
             number.rotate(-np.deg2rad(angle), about_point=ORIGIN)
