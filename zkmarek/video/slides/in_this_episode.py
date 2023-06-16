@@ -1,4 +1,5 @@
 from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
+from pydub import AudioSegment
 
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
@@ -33,7 +34,7 @@ class InThisEpisode(SlideBase):
         ]
         self.descriptions = [
             "Mathematical concept of Elliptic Curves living in the realm of reals ",
-            "Arythmetic of big prime numbers used in cryptography ",
+            "Arythmetic of big prime numbers used in cryptography",
             "Discrete Elliptic Curves build on Prime Fields used in cryptography ",
             "Curves and groups standards applied in real-life protocols ",
             "Using Elliptic Curves to create keys and digital signatures "
@@ -44,6 +45,13 @@ class InThisEpisode(SlideBase):
             DiscreteEllipticChart(include_details=False),
             secp256k1_standard(),
             Signature()
+        ]
+        self.sounds = [
+            "data/sound/in_this_episode/p1.m4a",
+            "data/sound/in_this_episode/p2.m4a",
+            "data/sound/in_this_episode/p3.m4a",
+            "data/sound/in_this_episode/p45.m4a",
+            "data/sound/in_this_episode/p45.m4a",
         ]
 
     def construct(self):
@@ -70,9 +78,22 @@ class InThisEpisode(SlideBase):
             self.add(thumbnail)
 
 
+
     def animate_in(self, scene):
         for i, label in enumerate(self.labels):
-            self.new_subsection(scene, self.titles[i])
+            self.new_subsection(scene, self.titles[i], sound=self.sounds[i])
+            start = scene.renderer.time
+            sound_len = get_sound_length(self.sounds[i])
+            scene.add_sound(self.sounds[i])
             scene.play(Create(self.thumbnails_borders[i]))
             self.thumbnails[i].animate_in(scene)
             scene.play(Write(label))
+            end = scene.renderer.time
+            wait_time = sound_len - end + start
+            scene.wait(wait_time)
+            # print(f"start: {start}, end: {end}, wait_time: {wait_time}, sound_len: {sound_len}")
+
+
+
+def get_sound_length(path):
+    return len(AudioSegment.from_file(path))/1000
