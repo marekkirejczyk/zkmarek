@@ -13,8 +13,8 @@ class PrimeFields(SlideBase):
 
     def construct(self):
         self.clock = Clock()
-        self.clock2 = Clock(use_zero=False)
-        self.clock3 = Clock(use_zero=False, modulus=41)
+        self.clock2 = Clock(use_zero=True)
+        self.clock3 = Clock(use_zero=True, modulus=41)
         self.sidebar = Sidebar("Prime Field", code_path="data/pf/field.py")
 
     def animate_in(self, scene):

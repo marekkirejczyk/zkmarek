@@ -9,7 +9,7 @@ class Clock(VGroup):
     modulus: int
     radius: float
 
-    def __init__(self, use_zero=True, modulus=12):
+    def __init__(self, use_zero=False, modulus=12):
         super().__init__()
         self.use_zero = use_zero
         self.modulus = modulus
@@ -19,7 +19,7 @@ class Clock(VGroup):
         self.add(self.markings)
 
     def label_at(self, index):
-        if self.use_zero and index == 0:
+        if not self.use_zero and index == 0:
             return str(self.modulus)
         return str(index % self.modulus)
 
