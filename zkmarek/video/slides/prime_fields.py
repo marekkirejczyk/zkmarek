@@ -1,20 +1,20 @@
 from manim import LEFT, Transform
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.sidebar import Sidebar
-
+from typing import Optional
 from .common.slide_base import SlideBase
 
 class PrimeFields(SlideBase):
-    clock: Clock
+    clock: Optional[Clock] = None
     sidebar: Sidebar
 
     def __init__(self):
         super().__init__(title="Prime Fields")
 
     def construct(self):
-        self.clock = Clock()
-        self.clock2 = Clock(use_zero=True)
-        self.clock3 = Clock(use_zero=True, modulus=41)
+        self.clock = Clock(hour=9)
+        self.clock2 = Clock(use_zero=True, hour=9)
+        self.clock3 = Clock(use_zero=True, hour=31, modulus=41)
         self.sidebar = Sidebar("Prime Field", code_path="data/pf/field.py")
 
     def animate_in(self, scene):
