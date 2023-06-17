@@ -1,9 +1,9 @@
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Create, DashedLine,
-                   FadeIn, FadeOut, MathTex, Mobject, Rectangle, Scene,
-                   SurroundingRectangle, Text, Transform, VGroup)
+                   FadeIn, FadeOut, MathTex, Rectangle, SurroundingRectangle,
+                   Text, Transform, VGroup)
 from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
-
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.utils import into_groups
 
 class BoxWithIcons(VGroup):
     rectangle: Rectangle
@@ -16,46 +16,13 @@ class BoxWithIcons(VGroup):
         self.rectangle.set_center(self.get_center())
         self.scale(0.65)
 
-    def morph_to(self, scene: Scene, index: int, new_mobject: Mobject):
-        old = self[index]
-        new_mobject.align_to(old, LEFT + UP)
-        scene.play(Transform(old, new_mobject))
-        self[index] = new_mobject
-        new_rect = SurroundingRectangle(self, buff=0.2, corner_radius=0.1)
-        scene.play(Transform(self.rectangle, new_rect))
-        scene.remove(new_rect)
-        scene.remove(self.rectangle)
-        self.rectangle = new_rect
-
     @staticmethod
-    def create_one_row(text1, math1, color1):
-        return BoxWithIcons(
-            Text(text1, color=color1),
-            MathTex(math1, color=color1))
-
-    @staticmethod
-    def create_two_rows(text1, math1, color1, text2, math2, color2):
-        return BoxWithIcons(
-            Text(text1, color=color1),
-            MathTex(math1, color=color1),
-            Text(text2, color=color2),
-            MathTex(math2, color=color2))
-
-
-
-class SignatureBox(BoxWithIcons):
-    def __init__(self):
-        super().__init__(
-            Text("⚂", color=RED),
-            MathTex("secret = rand()", color=RED),
-            Text("⚂", color=GREEN),
-            MathTex("R = secret \cdot G", color=GREY),
-            Text("⚂", color=GREEN),
-            MathTex("r = R_x \mod n", color=GREEN),
-            Text("⚂", color=GREEN),
-            MathTex("s = (msg + r * K_{Priv})*secret^{-1} \mod n", color=GREEN),
-        )
-
+    def create(*arg_list):
+        result = []
+        for three in into_groups(arg_list, 3):
+            result.append(Text(three[0], color=three[2]))
+            result.append(MathTex(three[1], color=three[2]))
+        return BoxWithIcons(*result)
 
 class VerifyBox(BoxWithIcons):
     def __init__(self, *mobjects, **kwargs):
@@ -98,10 +65,9 @@ class Signature(SlideBase):
         super().__init__("Signature")
 
     def construct(self):
-        self.signature_box = SignatureBox()
+        self.title = "Signature"
         self.verify_box = VerifyBox()
         self.expansion_box = ExpansionBox()
-        self.title = "Signature"
         self.sender_label = Text("Sender")
         self.receiver_label = Text("Receiver")
 
@@ -118,32 +84,53 @@ class Signature(SlideBase):
 
     def animate_in(self, scene):
         self.fade_in_board(scene)
-        key_box1 = BoxWithIcons.create_two_rows(
+        key_box1 = BoxWithIcons.create(
             "⚿", "Private\ key", RED,
-            "⚿", "Public", GREEN
+            "⚿", "Public\ key", GREEN
         ).next_to(self.sender_label, DOWN, buff=0.5)
 
-
-        key_box2 = BoxWithIcons.create_two_rows(
+        key_box2 = BoxWithIcons.create(
             "⚿", "K_{Priv} = k\ (random)", RED,
             "⚿", "K_{Pub} = k \cdot G", GREEN
         ).next_to(self.sender_label, DOWN, buff=0.5)
 
-        msg_box1 =  BoxWithIcons.create_one_row(
+        msg_box1 =  BoxWithIcons.create(
             "✉", "Lorem\ ipsum\ dolor\ sit\ amet...", GREEN
             ).next_to(key_box2, DOWN, buff=0.5)
 
-        msg_box2 =  BoxWithIcons.create_one_row(
+        msg_box2 =  BoxWithIcons.create(
             "✉", "hash(\"Lorem\ ipsum\ dolor\ sit\ amet...\")", GREEN
             ).next_to(key_box2, DOWN, buff=0.5)
 
-        msg_box3 =  BoxWithIcons.create_one_row(
+        msg_box3 =  BoxWithIcons.create(
             "✉", "hash(\"...\")", GREEN
             ).next_to(key_box2, DOWN, buff=0.5)
 
         signature = SignatureBoxFront(height=1).next_to(
             msg_box3, DOWN, buff=0.5
         )
+
+        signature2 = BoxWithIcons.create(
+            "⚂", "secret\ (random)", RED
+        ).next_to(msg_box3, DOWN, buff=0.5)
+
+        signature3 = BoxWithIcons.create(
+            "⚂", "secret\ (random)", RED,
+            "⚂", "R = secret \cdot G", GREY
+        ).next_to(msg_box3, DOWN, buff=0.5)
+
+        signature4 = BoxWithIcons.create(
+            "⚂", "secret\ (random)", RED,
+            "⚂", "R = secret \cdot G", GREY,
+            "⎘", "r = R_x \mod n", GREEN
+        ).next_to(msg_box3, DOWN, buff=0.5)
+
+        signature5 = BoxWithIcons.create(
+            "⚂", "secret\ (random)", RED,
+            "⚂", "R = secret \cdot G", GREY,
+            "⎘", "r = R_x \mod n", GREEN,
+            "⎘", "s = (msg + r * K_{Priv})*secret^{-1} \mod n", GREEN
+        ).next_to(msg_box3, DOWN, buff=0.5)
 
         scene.play(FadeIn(key_box1))
         scene.play(FadeIn(msg_box1))
@@ -152,6 +139,13 @@ class Signature(SlideBase):
         scene.remove(msg_box1)
         scene.play(Transform(msg_box2, msg_box3))
         scene.play(Transform(key_box1, key_box2))
+        scene.play(Transform(signature, signature2))
+        scene.remove(signature)
+        scene.play(Transform(signature2, signature3))
+        scene.remove(signature2)
+        scene.play(Transform(signature3, signature4))
+        scene.remove(signature3)
+        scene.play(Transform(signature4, signature5))
 
 
     def animate_in2(self, scene):
