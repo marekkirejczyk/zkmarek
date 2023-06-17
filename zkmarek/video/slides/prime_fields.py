@@ -1,8 +1,12 @@
-from manim import LEFT, Transform
-from zkmarek.video.mobjects.clock import Clock
-from zkmarek.video.mobjects.sidebar import Sidebar
 from typing import Optional
+
+from manim import LEFT, FadeIn, FadeOut, Transform
+from zkmarek.video.mobjects.clock import Clock
+from zkmarek.video.mobjects.fill_angle import FillAngle
+from zkmarek.video.mobjects.sidebar import Sidebar
+
 from .common.slide_base import SlideBase
+
 
 class PrimeFields(SlideBase):
     clock: Optional[Clock] = None
@@ -11,17 +15,33 @@ class PrimeFields(SlideBase):
     def __init__(self):
         super().__init__(title="Prime Fields")
 
-    def construct(self):
-        self.clock = Clock(hour=9)
-        self.clock2 = Clock(use_zero=True, hour=9)
-        self.clock3 = Clock(use_zero=True, hour=31, modulus=41)
-        self.sidebar = Sidebar("Prime Field", code_path="data/pf/field.py")
-
     def animate_in(self, scene):
-        self.clock.animate_in(scene)
-        scene.play(Transform(self.clock, self.clock2))
-        scene.remove(self.clock)
-        scene.play(Transform(self.clock2, self.clock3))
-        scene.remove(self.clock2)
-        scene.play(self.clock3.animate.align_on_border(LEFT, buff=0.2))
+        clock = Clock(hour=9)
+        clock.set_z_index(3)
+        clock.animate_in(scene)
+        angle = FillAngle(deg1=270, deg2=330)
+        scene.play(FadeIn(angle))
+
+        clock2 = Clock(hour=11)
+        scene.play(Transform(clock, clock2))
+        scene.play(FadeOut(angle))
+
+        angle2 = FillAngle(deg1=330, deg2=30)
+        scene.play(FadeIn(angle2))
+        clock3 = Clock(hour=1)
+        scene.remove(clock)
+        scene.play(Transform(clock2, clock3))
+        scene.play(FadeOut(angle2))
+
+        scene.remove(clock2)
+        clock4 = Clock(use_zero=True, hour=1)
+        scene.play(Transform(clock3, clock4))
+
+        scene.remove(clock3)
+        clock5 = Clock(use_zero=True, hour=4, modulus=41)
+        scene.play(Transform(clock4, clock5))
+
+        scene.remove(clock4)
+        scene.play(clock5.animate.align_on_border(LEFT, buff=0.2))
+        self.sidebar = Sidebar("Prime Field", code_path="data/pf/field.py")
         self.sidebar.animate_in(scene)
