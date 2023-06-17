@@ -1,16 +1,16 @@
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Create, DashedLine,
                    FadeIn, FadeOut, MathTex, Mobject, Rectangle, Scene,
                    SurroundingRectangle, Text, Transform, VGroup)
+from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 
-
-class Box(VGroup):
+class BoxWithIcons(VGroup):
     rectangle: Rectangle
 
     def __init__(self, *mobjects, **kwargs):
         super().__init__(*mobjects, **kwargs)
-        self.arrange_in_grid(cols=2, cell_alignment=LEFT + UP)
+        self.arrange_in_grid(cols=2, cell_alignment=LEFT)
         self.rectangle = SurroundingRectangle(self, buff=0.2, corner_radius=0.1)
         self.add(self.rectangle)
         self.rectangle.set_center(self.get_center())
@@ -27,26 +27,23 @@ class Box(VGroup):
         scene.remove(self.rectangle)
         self.rectangle = new_rect
 
+    @staticmethod
+    def create_one_row(text1, math1, color1):
+        return BoxWithIcons(
+            Text(text1, color=color1),
+            MathTex(math1, color=color1))
 
-class KeyBox(Box):
-    def __init__(self):
-        super().__init__(
-            Text("⚿", color=RED),
-            MathTex("K_{Priv} = k (random)", color=RED),
-            Text("⚿", color=GREEN),
-            MathTex("K_{Pub} = k \cdot G", color=GREEN),
-        )
-
-
-class MsgBox(Box):
-    def __init__(self):
-        super().__init__(
-            Text("✉", color=GREEN),
-            MathTex('msg = hash("...")', color=GREEN),
-        )
+    @staticmethod
+    def create_two_rows(text1, math1, color1, text2, math2, color2):
+        return BoxWithIcons(
+            Text(text1, color=color1),
+            MathTex(math1, color=color1),
+            Text(text2, color=color2),
+            MathTex(math2, color=color2))
 
 
-class SignatureBox(Box):
+
+class SignatureBox(BoxWithIcons):
     def __init__(self):
         super().__init__(
             Text("⚂", color=RED),
@@ -60,7 +57,7 @@ class SignatureBox(Box):
         )
 
 
-class VerifyBox(Box):
+class VerifyBox(BoxWithIcons):
     def __init__(self, *mobjects, **kwargs):
         super().__init__(
             Text(""),
@@ -74,7 +71,7 @@ class VerifyBox(Box):
         )
 
 
-class ExpansionBox(Box):
+class ExpansionBox(BoxWithIcons):
     def __init__(self, *mobjects, **kwargs):
         super().__init__(
             Text(""),
@@ -101,9 +98,7 @@ class Signature(SlideBase):
         super().__init__("Signature")
 
     def construct(self):
-        self.key_box = KeyBox()
         self.signature_box = SignatureBox()
-        self.msg_box = MsgBox()
         self.verify_box = VerifyBox()
         self.expansion_box = ExpansionBox()
         self.title = "Signature"
@@ -123,6 +118,44 @@ class Signature(SlideBase):
 
     def animate_in(self, scene):
         self.fade_in_board(scene)
+        key_box1 = BoxWithIcons.create_two_rows(
+            "⚿", "Private\ key", RED,
+            "⚿", "Public", GREEN
+        ).next_to(self.sender_label, DOWN, buff=0.5)
+
+
+        key_box2 = BoxWithIcons.create_two_rows(
+            "⚿", "K_{Priv} = k\ (random)", RED,
+            "⚿", "K_{Pub} = k \cdot G", GREEN
+        ).next_to(self.sender_label, DOWN, buff=0.5)
+
+        msg_box1 =  BoxWithIcons.create_one_row(
+            "✉", "Lorem\ ipsum\ dolor\ sit\ amet...", GREEN
+            ).next_to(key_box2, DOWN, buff=0.5)
+
+        msg_box2 =  BoxWithIcons.create_one_row(
+            "✉", "hash(\"Lorem\ ipsum\ dolor\ sit\ amet...\")", GREEN
+            ).next_to(key_box2, DOWN, buff=0.5)
+
+        msg_box3 =  BoxWithIcons.create_one_row(
+            "✉", "hash(\"...\")", GREEN
+            ).next_to(key_box2, DOWN, buff=0.5)
+
+        signature = SignatureBoxFront(height=1).next_to(
+            msg_box3, DOWN, buff=0.5
+        )
+
+        scene.play(FadeIn(key_box1))
+        scene.play(FadeIn(msg_box1))
+        signature.animate_in(scene)
+        scene.play(Transform(msg_box1, msg_box2))
+        scene.remove(msg_box1)
+        scene.play(Transform(msg_box2, msg_box3))
+        scene.play(Transform(key_box1, key_box2))
+
+
+    def animate_in2(self, scene):
+        self.fade_in_board(scene)
         self.key_box.next_to(self.sender_label, DOWN, buff=1)
         scene.play(FadeIn(self.key_box))
         self.msg_box.next_to(self.key_box, DOWN, buff=0.5)
@@ -137,7 +170,7 @@ class Signature(SlideBase):
         self.expansion_box.next_to(self.verify_box, DOWN, buff=0.5)
         scene.play(FadeIn(self.expansion_box))
 
-    def animate_out(self, scene):
+    def animate_out2(self, scene):
         scene.play(
             FadeOut(self.expansion_box),
             FadeOut(self.verify_box),
