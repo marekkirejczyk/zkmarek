@@ -1,10 +1,10 @@
-from re import S
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Circumscribe,
-                   Create, DashedLine, FadeIn, FadeOut, Indicate, Line, Text,
+                   Create, DashedLine, FadeIn, FadeOut, Indicate, Text,
                    Transform, Write)
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
 from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
+from zkmarek.video.mobjects.strike_line import StrikeLine
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
@@ -170,7 +170,8 @@ class Signature(SlideBase):
         scene.play(Transform(ver_signature, ver_signature2))
 
         c_box4 = EquationBox(
-            "C = G \cdot secret * {{(msg + r * K_{Priv})^{-1}}} * {{(msg + r * K_{Priv})}}",
+            "C = G \cdot secret * {{(msg + r * K_{Priv})^{-1}}}"
+            " * {{(msg + r * K_{Priv})}}",
             "C_x \mod n \stackrel{?}{=} r"
         ).next_to(
             equation_box, DOWN, buff=0.5
@@ -182,12 +183,10 @@ class Signature(SlideBase):
         scene.remove(c_box2)
         scene.play(Transform(c_box3, c_box4), Transform(self.h_line, h_line2))
 
-        c1 = c_box4[0][1]
-        strike1 = Line(start=c1.get_critical_point(DOWN + LEFT), end=c1.get_critical_point(UP + RIGHT))
+        strike1 = StrikeLine(c_box4[0][1])
         scene.play(Write(strike1))
 
-        c2 = c_box4[0][3]
-        strike2 = Line(start=c2.get_critical_point(DOWN + LEFT), end=c2.get_critical_point(UP + RIGHT))
+        strike2 = StrikeLine(c_box4[0][3])
         scene.play(Write(strike2))
 
         c_box5 = EquationBox(
