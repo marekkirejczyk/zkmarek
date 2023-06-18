@@ -1,4 +1,4 @@
-from manim import DOWN, LEFT, YELLOW, Create, Line, Rectangle, Text, Write, VGroup
+from manim import DOWN, LEFT, YELLOW, Create, Line, Rectangle, MathTex, Write, VGroup
 
 class Signature(VGroup):
     def __init__(self, height=3, color=YELLOW):
@@ -8,7 +8,7 @@ class Signature(VGroup):
         start = 0.45 * width * LEFT + 0.25 * height * DOWN
         end = -0.45 * width * LEFT + 0.25 * height * DOWN
         self.line = Line(start, end, color=color)
-        self.text = Text("Signature", color=color)
+        self.text = MathTex("Signature", color=color)
         self.text.scale(height)
         self.add(self.rect, self.line, self.text)
 
