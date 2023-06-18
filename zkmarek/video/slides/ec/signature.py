@@ -1,5 +1,7 @@
+from re import S
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Circumscribe,
-                   Create, DashedLine, FadeIn, Text, Transform)
+                   Create, DashedLine, FadeIn, FadeOut, Indicate, Line, Text,
+                   Transform, Write)
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
 from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
@@ -7,6 +9,9 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Signature(SlideBase):
+    sender_label: Text
+    receiver_label: Text
+    h_line: DashedLine
 
     def __init__(self):
         super().__init__("Signature")
@@ -23,7 +28,7 @@ class Signature(SlideBase):
         self.receiver_label.to_edge(UP)
         scene.play(FadeIn(self.sender_label), FadeIn(self.receiver_label))
         self.h_line = DashedLine(
-            scene.camera.frame_height / 2 * DOWN, scene.camera.frame_height / 2 * UP
+            scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 2 * DOWN
         )
         scene.play(Create(self.h_line))
 
@@ -156,7 +161,54 @@ class Signature(SlideBase):
         scene.play(Transform(c_box2, c_box3))
         scene.play(Circumscribe(c_box3[0][1]))
 
-        # "Note: s^{-1} = (msg + r * K_{Priv})^{-1} * secret"
-        # "C = G \cdot secret * (msg + r * K_{Priv})^{-1} * (msg + r * K_{Priv})"
-        # "C = G \cdot secret = R"
-        # "C_x \mod n \stackrel{?}{=} R_x \mod n"
+        scene.play(Indicate(ver_signature[3]))
+
+        ver_signature2 = EquationBoxWithIcons.create(
+            "⎘", "r = R_x \mod n", GREEN,
+            "⎘", "s^{-1} = (msg + r * K_{Priv})^{-1} * secret", GREEN
+        ).next_to(ver_msg_box, DOWN, buff=0.5)
+        scene.play(Transform(ver_signature, ver_signature2))
+
+        c_box4 = EquationBox(
+            "C = G \cdot secret * {{(msg + r * K_{Priv})^{-1}}} * {{(msg + r * K_{Priv})}}",
+            "C_x \mod n \stackrel{?}{=} r"
+        ).next_to(
+            equation_box, DOWN, buff=0.5
+        ).align_on_border(RIGHT)
+
+        h_line2 = DashedLine(
+            scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 3 * DOWN
+        )
+        scene.remove(c_box2)
+        scene.play(Transform(c_box3, c_box4), Transform(self.h_line, h_line2))
+
+        c1 = c_box4[0][1]
+        strike1 = Line(start=c1.get_critical_point(DOWN + LEFT), end=c1.get_critical_point(UP + RIGHT))
+        scene.play(Write(strike1))
+
+        c2 = c_box4[0][3]
+        strike2 = Line(start=c2.get_critical_point(DOWN + LEFT), end=c2.get_critical_point(UP + RIGHT))
+        scene.play(Write(strike2))
+
+        c_box5 = EquationBox(
+            "C = G \cdot secret",
+            "C_x \mod n \stackrel{?}{=} r"
+        ).next_to(
+            equation_box, DOWN, buff=0.5
+        )
+        h_line3 = DashedLine(
+            scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 2 * DOWN
+        )
+
+        scene.remove(c_box3)
+        scene.remove(self.h_line)
+        scene.play(
+            Transform(c_box4, c_box5),
+            Transform(h_line2, h_line3),
+            FadeOut(strike1),
+            FadeOut(strike2))
+
+        scene.play(Indicate(c_box5[0]))
+        scene.play(Indicate(signature5[3]))
+        scene.play(Indicate(c_box5[1]))
+        scene.play(Indicate(signature5[5]))
