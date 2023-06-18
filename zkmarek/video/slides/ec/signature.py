@@ -133,14 +133,29 @@ class Signature(SlideBase):
         scene.play(Circumscribe(c_box[0][3]))
 
         c_box2 = EquationBox(
-            "C = msg * s^{-1}\cdot G + r * s^{-1} * K_{Priv} \cdot G",
+            "C = msg * {{s^{-1}}}\cdot {{G}} + r * {{s^{-1}}} * K_{Priv} \cdot {{G}}",
             "C_x \mod n \stackrel{?}{=} r"
         ).next_to(
             equation_box, DOWN, buff=0.5
         )
 
         scene.play(Transform(c_box, c_box2))
-        # "C = s^{-1} \cdot G (msg + r * K_{Priv})"
+        scene.play(Circumscribe(c_box2[0][1]))
+        scene.play(Circumscribe(c_box2[0][5]))
+        scene.play(Circumscribe(c_box2[0][3]))
+        scene.play(Circumscribe(c_box2[0][7]))
+
+        c_box3 = EquationBox(
+            "C = {{s^{-1} \cdot G}} (msg + r * K_{Priv})",
+            "C_x \mod n \stackrel{?}{=} r"
+        ).next_to(
+            equation_box, DOWN, buff=0.5
+        )
+
+        scene.remove(c_box)
+        scene.play(Transform(c_box2, c_box3))
+        scene.play(Circumscribe(c_box3[0][1]))
+
         # "Note: s^{-1} = (msg + r * K_{Priv})^{-1} * secret"
         # "C = G \cdot secret * (msg + r * K_{Priv})^{-1} * (msg + r * K_{Priv})"
         # "C = G \cdot secret = R"
