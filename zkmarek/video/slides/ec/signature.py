@@ -1,44 +1,11 @@
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Create, DashedLine,
-                   FadeIn, FadeOut, MathTex, Rectangle, SurroundingRectangle,
-                   Text, Transform, VGroup)
+                   FadeIn, FadeOut, MathTex, Text, Transform)
+from zkmarek.video.mobjects.equation_box import (EquationBox,
+                                                 EquationBoxWithIcons)
 from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.utils import into_groups
 
-class BoxWithIcons(VGroup):
-    rectangle: Rectangle
-
-    def __init__(self, *mobjects, **kwargs):
-        super().__init__(*mobjects, **kwargs)
-        self.arrange_in_grid(cols=2, cell_alignment=LEFT)
-        self.rectangle = SurroundingRectangle(self, buff=0.2, corner_radius=0.1)
-        self.add(self.rectangle)
-        self.rectangle.set_center(self.get_center())
-        self.scale(0.65)
-
-    @staticmethod
-    def create(*arg_list):
-        result = []
-        for three in into_groups(arg_list, 3):
-            result.append(Text(three[0], color=three[2]))
-            result.append(MathTex(three[1], color=three[2]))
-        return BoxWithIcons(*result)
-
-class VerifyBox(BoxWithIcons):
-    def __init__(self, *mobjects, **kwargs):
-        super().__init__(
-            Text(""),
-            MathTex("U = msg * s^{-1} \mod n"),
-            Text(""),
-            MathTex("V = r * s^{-1} \mod n"),
-            Text(""),
-            MathTex("C = U \cdot G + V \cdot K_{Pub}"),
-            Text(""),
-            MathTex("C_x \mod n \stackrel{?}{=} r"),
-        )
-
-
-class ExpansionBox(BoxWithIcons):
+class ExpansionBox(EquationBoxWithIcons):
     def __init__(self, *mobjects, **kwargs):
         super().__init__(
             Text(""),
@@ -66,8 +33,6 @@ class Signature(SlideBase):
 
     def construct(self):
         self.title = "Signature"
-        self.verify_box = VerifyBox()
-        self.expansion_box = ExpansionBox()
         self.sender_label = Text("Sender")
         self.receiver_label = Text("Receiver")
 
@@ -84,48 +49,48 @@ class Signature(SlideBase):
 
     def animate_in(self, scene):
         self.fade_in_board(scene)
-        key_box1 = BoxWithIcons.create(
+        key_box1 = EquationBoxWithIcons.create(
             "⚿", "Private\ key", RED,
             "⚿", "Public\ key", GREEN
         ).next_to(self.sender_label, DOWN, buff=0.5)
 
-        key_box2 = BoxWithIcons.create(
+        key_box2 = EquationBoxWithIcons.create(
             "⚿", "K_{Priv} = k\ (random)", RED,
             "⚿", "K_{Pub} = k \cdot G", GREEN
         ).next_to(self.sender_label, DOWN, buff=0.5)
 
-        msg_box1 =  BoxWithIcons.create(
+        msg_box1 =  EquationBoxWithIcons.create(
             "✉", "Lorem\ ipsum\ dolor\ sit\ amet...", GREEN
             ).next_to(key_box2, DOWN, buff=0.5)
 
-        msg_box2 =  BoxWithIcons.create(
+        msg_box2 =  EquationBoxWithIcons.create(
             "✉", "hash(\"Lorem\ ipsum\ dolor\ sit\ amet...\")", GREEN
             ).next_to(key_box2, DOWN, buff=0.5)
 
-        msg_box3 =  BoxWithIcons.create(
-            "✉", "hash(\"...\")", GREEN
+        msg_box3 =  EquationBoxWithIcons.create(
+            "✉", "msg =hash(\"...\")", GREEN
             ).next_to(key_box2, DOWN, buff=0.5)
 
         signature = SignatureBoxFront(height=1).next_to(
             msg_box3, DOWN, buff=0.5
         )
 
-        signature2 = BoxWithIcons.create(
+        signature2 = EquationBoxWithIcons.create(
             "⚂", "secret\ (random)", RED
         ).next_to(msg_box3, DOWN, buff=0.5)
 
-        signature3 = BoxWithIcons.create(
+        signature3 = EquationBoxWithIcons.create(
             "⚂", "secret\ (random)", RED,
             "⚂", "R = secret \cdot G", GREY
         ).next_to(msg_box3, DOWN, buff=0.5)
 
-        signature4 = BoxWithIcons.create(
+        signature4 = EquationBoxWithIcons.create(
             "⚂", "secret\ (random)", RED,
             "⚂", "R = secret \cdot G", GREY,
             "⎘", "r = R_x \mod n", GREEN
         ).next_to(msg_box3, DOWN, buff=0.5)
 
-        signature5 = BoxWithIcons.create(
+        signature5 = EquationBoxWithIcons.create(
             "⚂", "secret\ (random)", RED,
             "⚂", "R = secret \cdot G", GREY,
             "⎘", "r = R_x \mod n", GREEN,
@@ -146,6 +111,36 @@ class Signature(SlideBase):
         scene.play(Transform(signature3, signature4))
         scene.remove(signature3)
         scene.play(Transform(signature4, signature5))
+
+        ver_key_box = EquationBoxWithIcons.create(
+            "⚿", "K_{Pub} = k \cdot G", GREEN
+        ).align_to(key_box2, DOWN)
+        scene.play(ver_key_box.animate.next_to(
+            self.receiver_label, DOWN, buff=0.5
+        ))
+
+        ver_msg_box = msg_box3.copy()
+        scene.play(ver_msg_box.animate.next_to(
+            ver_key_box, DOWN, buff=0.5
+        ))
+
+        ver_signature = EquationBoxWithIcons.create(
+            "⎘", "r = R_x \mod n", GREEN,
+            "⎘", "s = (msg + r * K_{Priv})*secret^{-1} \mod n", GREEN
+        ).align_to(signature5, DOWN)
+        scene.play(ver_signature.animate.next_to(
+            ver_msg_box, DOWN, buff=0.5
+        ))
+
+        equation_box = EquationBox(
+            "U = msg * s^{-1} \mod n",
+            "V = r * s^{-1} \mod n",
+            "C = U \cdot G + V \cdot K_{Pub}",
+            "C_x \mod n \stackrel{?}{=} r"
+        ).next_to(
+            ver_signature, DOWN, buff=0.5
+        )
+        scene.play(FadeIn(equation_box))
 
 
     def animate_in2(self, scene):
