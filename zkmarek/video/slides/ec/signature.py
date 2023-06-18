@@ -1,29 +1,9 @@
-from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Create, DashedLine,
-                   FadeIn, FadeOut, MathTex, Text, Transform)
+from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Circumscribe,
+                   Create, DashedLine, FadeIn, Text, Transform)
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
 from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
 from zkmarek.video.slides.common.slide_base import SlideBase
-
-class ExpansionBox(EquationBoxWithIcons):
-    def __init__(self, *mobjects, **kwargs):
-        super().__init__(
-            Text(""),
-            MathTex("C = msg * s^{-1}\cdot G + r * s^{-1} * K_{Priv} \cdot G"),
-            Text(""),
-            MathTex("C = s^{-1} \cdot G (msg + r * K_{Priv})"),
-            Text(""),
-            MathTex("Note: s^{-1} = (msg + r * K_{Priv})^{-1} * secret"),
-            Text(""),
-            MathTex(
-                "C = G \cdot secret * (msg + r * K_{Priv})^{-1} * (msg + r * K_{Priv})"
-            ),
-            Text(""),
-            MathTex("C = G \cdot secret = R"),
-            Text(""),
-            MathTex("C_x \mod n \stackrel{?}{=} R_x \mod n"),
-        )
-        self.scale(0.8)
 
 
 class Signature(SlideBase):
@@ -133,40 +113,35 @@ class Signature(SlideBase):
         ))
 
         equation_box = EquationBox(
-            "U = msg * s^{-1} \mod n",
-            "V = r * s^{-1} \mod n",
-            "C = U \cdot G + V \cdot K_{Pub}",
-            "C_x \mod n \stackrel{?}{=} r"
+            "{{U}} = msg * s^{-1} \mod n",
+            "{{V}} = r * s^{-1} \mod n",
         ).next_to(
             ver_signature, DOWN, buff=0.5
         )
         scene.play(FadeIn(equation_box))
 
-
-    def animate_in2(self, scene):
-        self.fade_in_board(scene)
-        self.key_box.next_to(self.sender_label, DOWN, buff=1)
-        scene.play(FadeIn(self.key_box))
-        self.msg_box.next_to(self.key_box, DOWN, buff=0.5)
-        scene.play(FadeIn(self.msg_box))
-        self.new_subsection(scene, "Introduce r, s")
-        self.signature_box.next_to(self.msg_box, DOWN, buff=0.5)
-        scene.play(FadeIn(self.signature_box))
-        self.new_subsection(scene, "Introduce s, v")
-        self.verify_box.next_to(self.receiver_label, DOWN, buff=1)
-        scene.play(FadeIn(self.verify_box))
-        self.new_subsection(scene, "Expand")
-        self.expansion_box.next_to(self.verify_box, DOWN, buff=0.5)
-        scene.play(FadeIn(self.expansion_box))
-
-    def animate_out2(self, scene):
-        scene.play(
-            FadeOut(self.expansion_box),
-            FadeOut(self.verify_box),
-            FadeOut(self.signature_box),
-            FadeOut(self.msg_box),
-            FadeOut(self.key_box),
-            FadeOut(self.sender_label),
-            FadeOut(self.receiver_label),
-            FadeOut(self.h_line),
+        c_box = EquationBox(
+            "C = {{U}} \cdot G + {{V}} \cdot K_{Pub}",
+            "C_x \mod n \stackrel{?}{=} r"
+        ).next_to(
+            equation_box, DOWN, buff=0.5
         )
+        scene.play(FadeIn(c_box))
+        scene.play(Circumscribe(equation_box[0][0]))
+        scene.play(Circumscribe(c_box[0][1]))
+        scene.play(Circumscribe(equation_box[1][0]))
+        scene.play(Circumscribe(c_box[0][3]))
+
+        c_box2 = EquationBox(
+            "C = msg * s^{-1}\cdot G + r * s^{-1} * K_{Priv} \cdot G",
+            "C_x \mod n \stackrel{?}{=} r"
+        ).next_to(
+            equation_box, DOWN, buff=0.5
+        )
+
+        scene.play(Transform(c_box, c_box2))
+        # "C = s^{-1} \cdot G (msg + r * K_{Priv})"
+        # "Note: s^{-1} = (msg + r * K_{Priv})^{-1} * secret"
+        # "C = G \cdot secret * (msg + r * K_{Priv})^{-1} * (msg + r * K_{Priv})"
+        # "C = G \cdot secret = R"
+        # "C_x \mod n \stackrel{?}{=} R_x \mod n"
