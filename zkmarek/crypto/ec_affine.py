@@ -38,8 +38,6 @@ class ECAffine:
         elif other.is_infinity():
             return self
         else:
-            if self.y.value == 0 and other.y.value == 0:
-                return self.infinity()
             slope = (other.y - self.y) / (other.x - self.x)
             x = slope**2 - self.x - other.x
             y = slope * (self.x - x) - self.y

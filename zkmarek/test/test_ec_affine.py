@@ -128,8 +128,7 @@ class TestECAffine(unittest.TestCase):
                 for i in range(prime + 2):
                     expected = naive_mul(p, i)
                     actual = p.double_and_add(i)
-                    if p.y.value != 0:
-                        self.assertEqual(expected, actual)
+                    self.assertEqual(expected, actual)
 
     def test_double_and_always_add(self):
         for prime in TEST_SMALL_PRIMES:
@@ -138,5 +137,4 @@ class TestECAffine(unittest.TestCase):
                 for i in range(prime + 2):
                     expected = p.double_and_add(i)
                     actual = p.double_and_always_add(i)
-                    if p.y.value != 0:
-                        self.assertEqual(expected, actual)
+                    self.assertEqual(expected, actual)
