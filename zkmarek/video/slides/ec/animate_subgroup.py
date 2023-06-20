@@ -46,11 +46,11 @@ class AnimateSubgroups:
 
     def animate_out_labels(self, scene: Scene):
         scene.play(FadeOut(*self.labels))
+        self.chart.point_at_infinity.animate_update_label(scene, "\infty")
 
     def animate_out_dots(self, scene: Scene):
         scene.play(FadeOut(*self.duplicates))
         scene.remove(*self.duplicates)
-
 
     def animate_affine(self, scene: Scene, affine: ECAffine, label: str):
         self.animate_dot(scene, self.chart.find_dot_by_affine(affine), label)

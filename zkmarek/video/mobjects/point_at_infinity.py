@@ -1,5 +1,5 @@
 from manim import (GREEN, RIGHT, Axes, Create, Dot, FadeOut, Flash, MathTex,
-                   VGroup)
+                   TransformMatchingTex, VGroup)
 
 
 class PointAtInfinity(VGroup):
@@ -30,3 +30,12 @@ class PointAtInfinity(VGroup):
     def animate_out(self, scene):
         scene.play(FadeOut(self.label))
         scene.play(FadeOut(self.dot))
+
+    def animate_update_label(self, scene, label):
+        new_label = MathTex(label, font_size=20)
+        new_label.next_to(self.dot, RIGHT)
+        scene.play(TransformMatchingTex(self.label, new_label))
+        self.remove(self.label)
+        self.label = new_label
+        self.add(self.label)
+
