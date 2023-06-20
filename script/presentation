@@ -1,6 +1,14 @@
 #!/bin/sh
+
 rm -fr elliptic_curves EllipticCurves
-python -m manim --save_sections zkmarek/video/main.py -qk &&
-# manim_editor --quick_present_export media/videos/main/1080p60/sections/EllipticCurves.json &&
-manim_editor --quick_present_export media/videos/main/2160p60/sections/EllipticCurves.json &&
+if [ "$1" = "-qk" ]; then
+    res="2160p60"
+elif [ "$1" = "-ql" ]; then
+    res="480p15"
+else
+    res="1080p60"
+fi
+
+python -m manim --save_sections zkmarek/video/main.py $1
+manim_editor --quick_present_export media/videos/main/$res/sections/EllipticCurves.json &&
 python -m http.server 8000 --directory EllipticCurves

@@ -19,8 +19,8 @@ class Signature(SlideBase):
 
     def construct(self):
         self.title = "Signature"
-        self.sender_label = Text("Sender")
-        self.receiver_label = Text("Receiver")
+        self.sender_label = Text("Signatory")
+        self.receiver_label = Text("Verifier")
 
     def fade_in_board(self, scene):
         self.sender_label.move_to(scene.camera.frame_width / 4 * LEFT)
@@ -83,17 +83,28 @@ class Signature(SlideBase):
             "⎘", "s = (msg + r * K_{Priv})*secret^{-1} \mod n", GREEN
         ).next_to(msg_box3, DOWN, buff=0.5)
 
+        self.new_subsection(scene, "Introduce keys")
         scene.play(FadeIn(key_box1))
+        self.new_subsection(scene, "Introduce message")
         scene.play(FadeIn(msg_box1))
+        self.new_subsection(scene, "Introduce signature")
         signature.animate_in(scene)
+        self.new_subsection(scene, "Message is hash")
         scene.play(ReplacementTransform(msg_box1, msg_box2))
+        self.new_subsection(scene, "Message is msg")
         scene.play(ReplacementTransform(msg_box2, msg_box3))
+        self.new_subsection(scene, "What are keys")
         scene.play(ReplacementTransform(key_box1, key_box2))
+        self.new_subsection(scene, "What is signature")
         scene.play(ReplacementTransform(signature, signature2))
+        self.new_subsection(scene, "Introduce R")
         scene.play(ReplacementTransform(signature2, signature3))
+        self.new_subsection(scene, "Introduce r")
         scene.play(ReplacementTransform(signature3, signature4))
+        self.new_subsection(scene, "Introduce s")
         scene.play(ReplacementTransform(signature4, signature5))
 
+        self.new_subsection(scene, "From sender to receiver")
         ver_key_box = EquationBoxWithIcons.create(
             "⚿", "K_{Pub} = k \cdot G", GREEN
         ).align_to(key_box2, DOWN)
@@ -114,6 +125,8 @@ class Signature(SlideBase):
             ver_msg_box, DOWN, buff=0.5
         ))
 
+
+        self.new_subsection(scene, "Introduce U and V")
         equation_box = EquationBox(
             "{{U}} = msg * s^{-1} \mod n",
             "{{V}} = r * s^{-1} \mod n",
@@ -122,6 +135,7 @@ class Signature(SlideBase):
         )
         scene.play(FadeIn(equation_box))
 
+        self.new_subsection(scene, "Introduce C")
         c_box = EquationBox(
             "C = {{U}} \cdot G + {{V}} \cdot K_{Pub}",
             "C_x \mod n \stackrel{?}{=} r"
@@ -129,6 +143,8 @@ class Signature(SlideBase):
             equation_box, DOWN, buff=0.5
         )
         scene.play(FadeIn(c_box))
+
+        self.new_subsection(scene, "Substitute U and V")
         scene.play(Circumscribe(equation_box[0][0]))
         scene.play(Circumscribe(c_box[0][1]))
         scene.play(Circumscribe(equation_box[1][0]))
@@ -142,21 +158,22 @@ class Signature(SlideBase):
         )
 
         scene.play(ReplacementTransform(c_box, c_box2))
+
+        self.new_subsection(scene, "Extract common factor")
         scene.play(Circumscribe(c_box2[0][1]))
         scene.play(Circumscribe(c_box2[0][5]))
         scene.play(Circumscribe(c_box2[0][3]))
         scene.play(Circumscribe(c_box2[0][7]))
-
         c_box3 = EquationBox(
             "C = {{s^{-1} \cdot G}} (msg + r * K_{Priv})",
             "C_x \mod n \stackrel{?}{=} r"
         ).next_to(
             equation_box, DOWN, buff=0.5
         )
-
         scene.play(ReplacementTransform(c_box2, c_box3))
-        scene.play(Circumscribe(c_box3[0][1]))
 
+        self.new_subsection(scene, "Calculate inverse of s")
+        scene.play(Circumscribe(c_box3[0][1]))
         scene.play(Indicate(ver_signature[3]))
 
         ver_signature2 = EquationBoxWithIcons.create(
@@ -165,6 +182,7 @@ class Signature(SlideBase):
         ).next_to(ver_msg_box, DOWN, buff=0.5)
         scene.play(ReplacementTransform(ver_signature, ver_signature2))
 
+        self.new_subsection(scene, "Substitute inverse of s")
         c_box4 = EquationBox(
             "C = G \cdot secret * {{(msg + r * K_{Priv})^{-1}}}"
             " * {{(msg + r * K_{Priv})}}",
@@ -181,6 +199,7 @@ class Signature(SlideBase):
             ReplacementTransform(c_box3, c_box4),
             ReplacementTransform(self.h_line, h_line2))
 
+        self.new_subsection(scene, "Cancel s with inverse of s")
         strike1 = StrikeLine(c_box4[0][1])
         scene.play(Write(strike1))
 
@@ -203,6 +222,7 @@ class Signature(SlideBase):
             FadeOut(strike1),
             FadeOut(strike2))
 
+        self.new_subsection(scene, "Summary")
         scene.play(Indicate(c_box5[0]))
         scene.play(Indicate(signature5[3]))
         scene.play(Indicate(c_box5[1]))
