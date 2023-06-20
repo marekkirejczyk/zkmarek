@@ -1,6 +1,7 @@
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Circumscribe,
-                   Create, DashedLine, FadeIn, FadeOut, Indicate, Text,
-                   Transform, Write)
+                   Create, DashedLine, FadeIn, FadeOut, Indicate,
+                   ReplacementTransform, Text, Write)
+
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
 from zkmarek.video.mobjects.signature import Signature as SignatureBoxFront
@@ -85,17 +86,13 @@ class Signature(SlideBase):
         scene.play(FadeIn(key_box1))
         scene.play(FadeIn(msg_box1))
         signature.animate_in(scene)
-        scene.play(Transform(msg_box1, msg_box2))
-        scene.remove(msg_box1)
-        scene.play(Transform(msg_box2, msg_box3))
-        scene.play(Transform(key_box1, key_box2))
-        scene.play(Transform(signature, signature2))
-        scene.remove(signature)
-        scene.play(Transform(signature2, signature3))
-        scene.remove(signature2)
-        scene.play(Transform(signature3, signature4))
-        scene.remove(signature3)
-        scene.play(Transform(signature4, signature5))
+        scene.play(ReplacementTransform(msg_box1, msg_box2))
+        scene.play(ReplacementTransform(msg_box2, msg_box3))
+        scene.play(ReplacementTransform(key_box1, key_box2))
+        scene.play(ReplacementTransform(signature, signature2))
+        scene.play(ReplacementTransform(signature2, signature3))
+        scene.play(ReplacementTransform(signature3, signature4))
+        scene.play(ReplacementTransform(signature4, signature5))
 
         ver_key_box = EquationBoxWithIcons.create(
             "⚿", "K_{Pub} = k \cdot G", GREEN
@@ -144,7 +141,7 @@ class Signature(SlideBase):
             equation_box, DOWN, buff=0.5
         )
 
-        scene.play(Transform(c_box, c_box2))
+        scene.play(ReplacementTransform(c_box, c_box2))
         scene.play(Circumscribe(c_box2[0][1]))
         scene.play(Circumscribe(c_box2[0][5]))
         scene.play(Circumscribe(c_box2[0][3]))
@@ -157,8 +154,7 @@ class Signature(SlideBase):
             equation_box, DOWN, buff=0.5
         )
 
-        scene.remove(c_box)
-        scene.play(Transform(c_box2, c_box3))
+        scene.play(ReplacementTransform(c_box2, c_box3))
         scene.play(Circumscribe(c_box3[0][1]))
 
         scene.play(Indicate(ver_signature[3]))
@@ -167,7 +163,7 @@ class Signature(SlideBase):
             "⎘", "r = R_x \mod n", GREEN,
             "⎘", "s^{-1} = (msg + r * K_{Priv})^{-1} * secret", GREEN
         ).next_to(ver_msg_box, DOWN, buff=0.5)
-        scene.play(Transform(ver_signature, ver_signature2))
+        scene.play(ReplacementTransform(ver_signature, ver_signature2))
 
         c_box4 = EquationBox(
             "C = G \cdot secret * {{(msg + r * K_{Priv})^{-1}}}"
@@ -180,8 +176,10 @@ class Signature(SlideBase):
         h_line2 = DashedLine(
             scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 3 * DOWN
         )
-        scene.remove(c_box2)
-        scene.play(Transform(c_box3, c_box4), Transform(self.h_line, h_line2))
+
+        scene.play(
+            ReplacementTransform(c_box3, c_box4),
+            ReplacementTransform(self.h_line, h_line2))
 
         strike1 = StrikeLine(c_box4[0][1])
         scene.play(Write(strike1))
@@ -199,11 +197,9 @@ class Signature(SlideBase):
             scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 2 * DOWN
         )
 
-        scene.remove(c_box3)
-        scene.remove(self.h_line)
         scene.play(
-            Transform(c_box4, c_box5),
-            Transform(h_line2, h_line3),
+            ReplacementTransform(c_box4, c_box5),
+            ReplacementTransform(h_line2, h_line3),
             FadeOut(strike1),
             FadeOut(strike2))
 

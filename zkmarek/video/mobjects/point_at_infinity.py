@@ -16,6 +16,8 @@ class PointAtInfinity(VGroup):
         self.y = y
         self.dot = Dot(ax.c2p(x, y), color=GREEN, radius=0.05)
         self.label = MathTex("\infty")
+        self.add(self.dot)
+        self.add(self.label)
 
     def animate_in(self, scene):
         self.dot.move_to(self.ax.c2p(self.x, self.y))

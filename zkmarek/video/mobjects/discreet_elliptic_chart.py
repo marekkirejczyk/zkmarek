@@ -10,12 +10,13 @@ from zkmarek.video.mobjects.point_at_infinity import PointAtInfinity
 class DotOnCurve(Dot):
     coords: ECAffine
 
-    def __init__(self, ax: Axes, p: ECAffine):
+    def __init__(self, ax: Axes, coords: ECAffine):
         super().__init__(
-            ax.c2p(float(p.x.value), float(p.y.value)), color=YELLOW, radius=0.05
+            ax.c2p(float(coords.x.value), float(coords.y.value)),
+            color=YELLOW,
+            radius=0.05
         )
-        self.coords = p
-
+        self.coords = coords
 
 class DiscreteEllipticChart(VGroup):
     curve: WeierstrassCurve

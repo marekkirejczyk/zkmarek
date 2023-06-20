@@ -46,10 +46,16 @@ class AnimateAddition:
         self.line2 = Line(p[2], p[3], color=DARK_GREY)
         scene.play(GrowFromPoint(self.line2, point=p[2], run_time=5))
         scene.play(FadeIn(self.labels[3]))
+        self.chart.add(*self.lines)
+        self.chart.add(self.line2)
+        self.chart.add(*self.labels)
 
     def animate_out(self, scene):
         scene.play(FadeOut(*self.labels))
         scene.play(FadeOut(self.line2), FadeOut(*self.lines))
+        self.chart.remove(*self.lines)
+        self.chart.remove(self.line2)
+        self.chart.remove(*self.labels)
 
     @staticmethod
     def play(
@@ -59,9 +65,12 @@ class AnimateAddition:
         a1_odd: int,
         a2_x: int,
         a2_odd: int,
+        animate_out: bool = True,
     ):
         a1 = chart.find_affine_by_x(a1_x, a1_odd)
         a2 = chart.find_affine_by_x(a2_x, a2_odd)
         anim = AnimateAddition(chart)
         anim.animate_in(scene, a1, a2)
-        anim.animate_out(scene)
+        if animate_out:
+            anim.animate_out(scene)
+        return anim

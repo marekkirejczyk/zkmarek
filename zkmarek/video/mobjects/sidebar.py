@@ -76,6 +76,10 @@ class Sidebar(VGroup):
         scene.play(FadeIn(self.math))
         self.add(self.math)
 
+    def animate_show_label(self, scene):
+        scene.play(FadeIn(self.label))
+        self.add(self.label)
+
     def animate_in(self, scene, slide: Optional[SlideBase] = None):
         scene.play(Write(self.label))
         if self.math is not None:
