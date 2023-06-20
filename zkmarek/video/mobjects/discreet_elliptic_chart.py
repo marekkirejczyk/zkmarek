@@ -48,9 +48,9 @@ class DiscreteEllipticChart(VGroup):
         self.set_z_index(1, family=True)
         self.gen_points()
 
-    def create_point_at_infinity(self, x, y):
+    def create_point_at_infinity(self, x, y, label="\infty"):
         if self.point_at_infinity is None:
-            self.point_at_infinity = PointAtInfinity(self.ax, x, y)
+            self.point_at_infinity = PointAtInfinity(self.ax, x, y, label)
             self.add(self.point_at_infinity)
         else:
             self.point_at_infinity.move_to(self.ax.c2p(x, y))

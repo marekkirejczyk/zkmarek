@@ -36,19 +36,21 @@ class AnimateSubgroups:
             self.animate_affine(scene, generator * i, f"{i} \cdot G")
 
         if self.chart.point_at_infinity is None:
-            self.chart.create_point_at_infinity(9, 43)
+            infinity_label = f"{subgroup.order()} \cdot G = \infty"
+            self.chart.create_point_at_infinity(9, 43, infinity_label)
             self.chart.point_at_infinity.animate_in(scene)
         self.animate_dot(scene, self.chart.point_at_infinity.dot, "")
+
         gen_dot = self.chart.find_dot_by_affine(generator)
         scene.play(Flash(gen_dot), run_time=self.runtime_per_step)
 
     def animate_out_labels(self, scene: Scene):
         scene.play(FadeOut(*self.labels))
+        self.chart.point_at_infinity.animate_update_label(scene, "\infty")
 
     def animate_out_dots(self, scene: Scene):
         scene.play(FadeOut(*self.duplicates))
         scene.remove(*self.duplicates)
-
 
     def animate_affine(self, scene: Scene, affine: ECAffine, label: str):
         self.animate_dot(scene, self.chart.find_dot_by_affine(affine), label)

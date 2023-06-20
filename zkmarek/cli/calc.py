@@ -42,13 +42,22 @@ class CalcCli:
             print(f"{p:8} | {d:8} | {p.slope()}")
 
     def subgroup(self, order):
-        print(f"Calculating subgroups of elliptic curve with order: {order}")
+        print(f"Subgroups of elliptic curve with order: {order}")
+        print("[] - group generators, () - non-generators, (0,0) - neutral element)")
         groups = Subgroup.generate_all(WeierstrassCurve(0, 7, order))
         for group in groups:
             sorted_points = sorted(group.points,
                 key=lambda p: p.x.value * order + p.y.value
             )
-            print(", ".join(map(lambda g: f"{g}" , sorted_points)))
+            print(", ".join(map(
+                lambda g: point_to_str(g,  g in group.all_generators),
+                sorted_points)))
+
+def point_to_str(p, is_generator):
+    if is_generator:
+        return f"[{p.x.value:2},{p.y.value:2}]"
+    else:
+        return f"({p.x.value:2},{p.y.value:2})"
 
 if __name__ == "__main__":
     CalcCli().run(sys.argv[1:])
