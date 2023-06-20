@@ -36,9 +36,11 @@ class AnimateSubgroups:
             self.animate_affine(scene, generator * i, f"{i} \cdot G")
 
         if self.chart.point_at_infinity is None:
-            self.chart.create_point_at_infinity(9, 43)
+            infinity_label = f"{subgroup.order()} \cdot G = \infty"
+            self.chart.create_point_at_infinity(9, 43, infinity_label)
             self.chart.point_at_infinity.animate_in(scene)
         self.animate_dot(scene, self.chart.point_at_infinity.dot, "")
+
         gen_dot = self.chart.find_dot_by_affine(generator)
         scene.play(Flash(gen_dot), run_time=self.runtime_per_step)
 

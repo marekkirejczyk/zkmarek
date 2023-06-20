@@ -20,7 +20,6 @@ class Subgroups(SlideBase):
 
     def construct(self):
         self.chart = DiscreteEllipticChart(self.curve)
-        self.chart.center()
         self.subgroups = Subgroup.generate_all(self.curve)
 
     def animate_in(self, scene):

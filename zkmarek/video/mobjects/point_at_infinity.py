@@ -9,13 +9,14 @@ class PointAtInfinity(VGroup):
     x: float
     y: float
 
-    def __init__(self, ax: Axes, x: float, y: float):
+    def __init__(self, ax: Axes, x: float, y: float, label="\infty"):
         super().__init__()
         self.ax = ax
         self.x = x
         self.y = y
         self.dot = Dot(ax.c2p(x, y), color=GREEN, radius=0.05)
-        self.label = MathTex("\infty")
+        self.dot.set_z_index(1, family=True)
+        self.label = MathTex(label, font_size=20)
         self.add(self.dot)
         self.add(self.label)
 
