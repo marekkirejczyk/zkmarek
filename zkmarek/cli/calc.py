@@ -43,13 +43,15 @@ class CalcCli:
 
     def subgroup(self, order):
         print(f"Subgroups of elliptic curve with order: {order}")
-        print(f"In [] group generators, in () non-generators, (0,0) is the neutral element)")
+        print("[] - group generators, () - non-generators, (0,0) - neutral element)")
         groups = Subgroup.generate_all(WeierstrassCurve(0, 7, order))
         for group in groups:
             sorted_points = sorted(group.points,
                 key=lambda p: p.x.value * order + p.y.value
             )
-            print(", ".join(map(lambda g: point_to_str(g,  g in group.all_generators) , sorted_points)))
+            print(", ".join(map(
+                lambda g: point_to_str(g,  g in group.all_generators),
+                sorted_points)))
 
 def point_to_str(p, is_generator):
     if is_generator:
