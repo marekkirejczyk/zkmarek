@@ -46,6 +46,11 @@ class ECAffine:
     def __sub__(self, other: "ECAffine") -> "ECAffine":
         return self + (-other)
 
+    def slope(self) -> Optional[Field]:
+        if self.is_infinity() or self.y.value == 0:
+            return None
+        return ((self.x**2) * 3) / (self.y * 2)
+
     def double(self) -> "ECAffine":
         if self.is_infinity():
             return self
