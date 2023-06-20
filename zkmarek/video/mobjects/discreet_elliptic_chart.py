@@ -18,7 +18,6 @@ class DotOnCurve(Dot):
         )
         self.coords = coords
 
-
 class DiscreteEllipticChart(VGroup):
     curve: WeierstrassCurve
     dots: list[Dot] = []
