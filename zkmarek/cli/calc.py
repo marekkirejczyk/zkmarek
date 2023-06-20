@@ -1,5 +1,6 @@
 import sys
 from argparse import ArgumentParser
+from zkmarek.crypto.ec_affine import ECAffine
 
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
@@ -10,18 +11,42 @@ class CalcCli:
     def __init__(self):
         self.parser = ArgumentParser(
             prog="script/calc",
-            description="Calculates subgroups of elliptic curve",
+            description="Calculates helpful values for elliptic curve cryptography",
             epilog="",
         )
-        self.parser.add_argument('order', type=int, help='order of the curve')
+        subparsers = self.parser.add_subparsers(dest='command', help='Choose a command')
+
+        subgroup_parser = subparsers.add_parser('subgroups',
+            help='Prints subgroups of an elliptic curve group for a given order')
+        subgroup_parser.add_argument('subgroup', help='Prime field order', type=int)
+
+        double_parser = subparsers.add_parser('double',
+            help='Prints result of EC double operation for each point on a given curve')
+        double_parser.add_argument('order', help='Prime field order', type=int)
 
     def run(self, args):
         args = self.parser.parse_args()
-        print(f"Calculating subgroups of elliptic curve with order: {args.order}")
-        groups = Subgroup.generate_all(WeierstrassCurve(0, 7, args.order))
+        if args.command == 'subgroups':
+            self.subgroup(args.subgroup)
+        elif args.command == 'double':
+            self.double(args.order)
+        else:
+            self.parser.print_help()
+
+    def double(self, order):
+        print(f"Calculating double of points on elliptic curve with order: {order}")
+        curve = WeierstrassCurve(0, 7, order)
+        print(f" point   |  double  |   slope")
+        for p in ECAffine.generate_points(curve):
+            d = p.double()
+            print(f"{p:8} | {d:8} | {p.slope()}")
+
+    def subgroup(self, order):
+        print(f"Calculating subgroups of elliptic curve with order: {order}")
+        groups = Subgroup.generate_all(WeierstrassCurve(0, 7, order))
         for group in groups:
             sorted_points = sorted(group.points,
-                key=lambda p: p.x.value * args.order + p.y.value
+                key=lambda p: p.x.value * order + p.y.value
             )
             print(", ".join(map(lambda g: f"{g}" , sorted_points)))
 
