@@ -36,7 +36,7 @@ class CalcCli:
     def double(self, order):
         print(f"Calculating double of points on elliptic curve with order: {order}")
         curve = WeierstrassCurve(0, 7, order)
-        print(f" point   |  double  |   slope")
+        print(" point   |  double  |   slope")
         for p in ECAffine.generate_points(curve):
             d = p.double()
             print(f"{p:8} | {d:8} | {p.slope()}")
