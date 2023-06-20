@@ -177,7 +177,9 @@ class Signature(SlideBase):
             scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 3 * DOWN
         )
 
-        scene.play(ReplacementTransform(c_box3, c_box4), ReplacementTransform(self.h_line, h_line2))
+        scene.play(
+            ReplacementTransform(c_box3, c_box4),
+            ReplacementTransform(self.h_line, h_line2))
 
         strike1 = StrikeLine(c_box4[0][1])
         scene.play(Write(strike1))

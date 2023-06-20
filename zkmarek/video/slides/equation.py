@@ -1,6 +1,6 @@
-from manim import (DOWN, UP, YELLOW, AnimationGroup, FadeIn, FadeOut, MathTex,
-                   MoveToTarget, ReplacementTransform, Succession, Text,
-                   VGroup, Write)
+from manim import (DOWN, UP, YELLOW, FadeIn, FadeOut, MathTex, MoveToTarget,
+                   ReplacementTransform, Text, TransformMatchingShapes, VGroup,
+                   Write)
 
 from .common.slide_base import SlideBase
 
@@ -42,19 +42,14 @@ class EquationSlide(SlideBase):
         scene.play(Write(self.secp_equation1))
         scene.play(MoveToTarget(self.secp_equation1))
         scene.play(FadeIn(self.ab))
-        scene.play(AnimationGroup(
-                    ReplacementTransform(self.secp_equation1, self.secp_equation2),
-                    FadeOut(self.ab),
-                ))
-        scene.play(ReplacementTransform(self.secp_equation2, self.secp_equation3))
+        scene.play(
+            ReplacementTransform(self.secp_equation1, self.secp_equation2),
+            FadeOut(self.ab))
+        scene.play(TransformMatchingShapes(self.secp_equation2, self.secp_equation3))
+
 
 
     def animate_out(self, scene):
-        scene.play(
-            Succession(
-                FadeOut(self.weierstrass_form),
-                FadeOut(self.weierstrass_equation),
-                FadeOut(self.secp256k1_label),
-                FadeOut(self.secp_equation3),
-            )
-        )
+        scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
+        scene.play(FadeOut(self.secp256k1_label), FadeOut(self.secp_equation3))
+
