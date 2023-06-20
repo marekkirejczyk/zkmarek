@@ -21,7 +21,9 @@ class AdditionToInfinity(SlideBase):
         self.chart = DiscreteEllipticChart(self.curve)
         self.point_at_infinity = PointAtInfinity(self.chart.ax, 9, 43)
         self.sidebar = Sidebar(
-            title="Addition", code_path="data/ec/add_inf.py", tex_path="data/ec/add_inf.tex"
+            title="Addition",
+            code_path="data/ec/add_inf.py",
+            tex_path="data/ec/add_inf.tex"
         )
 
     def animate_in(self, scene):

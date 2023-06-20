@@ -12,7 +12,9 @@ class DotOnCurve(Dot):
 
     def __init__(self, ax: Axes, coords: ECAffine):
         super().__init__(
-            ax.c2p(float(coords.x.value), float(coords.y.value)), color=YELLOW, radius=0.05
+            ax.c2p(float(coords.x.value), float(coords.y.value)),
+            color=YELLOW,
+            radius=0.05
         )
         self.coords = coords
 
