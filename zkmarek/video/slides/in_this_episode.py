@@ -32,10 +32,10 @@ class InThisEpisode(SlideBase):
         ]
         self.descriptions = [
             "Mathematical concept of Elliptic Curves living in the realm of reals",
-            "Arythmetic modulo big primne numbers used in cryptography",
+            "Arythmetic of big prime numbers used in cryptography",
             "Discrete Elliptic Curves build on Prime Fields used in cryptography",
-            "Standarisation of cruves and groups to be applied in real protocols",
-            "Using Elliptic Curves to create keys and use digital signature"
+            "Curves and groups standards applied in real-life protocols",
+            "Using Elliptic Curves to private keys and digital signatures in Ethereum"
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
