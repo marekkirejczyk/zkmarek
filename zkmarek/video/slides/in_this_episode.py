@@ -1,4 +1,5 @@
-from manim import Create, Rectangle, Text, mobject, VGroup, DOWN, LEFT
+from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
+
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
@@ -31,15 +32,15 @@ class InThisEpisode(SlideBase):
             "5. Digital signature"
         ]
         self.descriptions = [
-            "Mathematical concept of Elliptic Curves living in the realm of reals",
-            "Arythmetic modulo big primne numbers used in cryptography",
-            "Discrete Elliptic Curves build on Prime Fields used in cryptography",
-            "Standarisation of cruves and groups to be applied in real protocols",
-            "Using Elliptic Curves to create keys and use digital signature"
+            "Mathematical concept of Elliptic Curves living in the realm of reals ",
+            "Arythmetic of big prime numbers used in cryptography ",
+            "Discrete Elliptic Curves build on Prime Fields used in cryptography ",
+            "Curves and groups standards applied in real-life protocols ",
+            "Using Elliptic Curves to create keys and digital signatures "
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
-            Clock(),
+            Clock(hour=1),
             DiscreteEllipticChart(include_details=False),
             secp256k1_standard(),
             Signature()
@@ -71,6 +72,7 @@ class InThisEpisode(SlideBase):
 
     def animate_in(self, scene):
         for i, label in enumerate(self.labels):
+            self.new_subsection(scene, self.titles[i])
             scene.play(Create(self.thumbnails_borders[i]))
             self.thumbnails[i].animate_in(scene)
-            scene.play(Create(label))
+            scene.play(Write(label))
