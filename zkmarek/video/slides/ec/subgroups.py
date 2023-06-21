@@ -10,9 +10,7 @@ from zkmarek.video.slides.ec.animate_subgroup import AnimateSubgroups
 
 class Subgroups(SlideBase):
     chart: DiscreteEllipticChart
-
     curve: WeierstrassCurve
-    # subgroups: list[Subgroup]
 
     def __init__(self, curve: WeierstrassCurve = Secp256k1_41):
         super().__init__(title="Subgroups")
@@ -21,11 +19,9 @@ class Subgroups(SlideBase):
 
     def construct(self):
         self.chart = DiscreteEllipticChart(self.curve)
-        # self.subgroups = Subgroup.generate_all(self.curve)
 
     def animate_in(self, scene):
         scene.play(FadeIn(self.chart))
-        # subgroup = self.subgroups[0]
 
         generator1 = ECAffine(10, 8, self.curve)
         subgroup1 = Subgroup.from_generator(generator1)
