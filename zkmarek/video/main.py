@@ -28,6 +28,9 @@ config.width = 16
 config.height = 9
 
 SLIDES = [
+    TitleSlide(
+        "Elliptic Curves, Signatures and Ethereum",
+        subtitle="@ethmarek"),
     InThisEpisode(),
 
     TitleSlide("Elliptic Curves"),
@@ -59,7 +62,10 @@ SLIDES = [
     TitleSlide("Signatures"),
     Signature(),
     CodeSlide("Ethereum Transaction", "data/eth/transaction.py", language="python"),
-    ECRecoverSlide()
+    ECRecoverSlide(),
+
+    TitleSlide("Thank you!", subtitle="Questions?"),
+    TitleSlide("Subscribe", subtitle="youtube.com/@zkmarek")
 ]
 
 
