@@ -29,6 +29,8 @@ class Presentation:
         slide.animate_in(self.scene)
         if next_slide is not None:
             self.scene.next_section(next_slide.title, PresentationSectionType.NORMAL)
+        else:
+            self.scene.next_section("End", PresentationSectionType.NORMAL)
         slide.animate_out(self.scene)
         self.scene.clear()
 
