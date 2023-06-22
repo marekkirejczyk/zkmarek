@@ -19,6 +19,7 @@ from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
+from zkmarek.video.slides.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.prime_fields import PrimeFields
 from zkmarek.video.slides.in_this_episode import InThisEpisode
 from zkmarek.video.utils import get_slides_from_names
@@ -57,7 +58,8 @@ SLIDES = [
 
     TitleSlide("Signatures"),
     Signature(),
-    CodeSlide("Recover", "data/ec/recover.sol", language="solidity"),
+    CodeSlide("Ethereum Transaction", "data/eth/transaction.py", language="python"),
+    ECRecoverSlide()
 ]
 
 
