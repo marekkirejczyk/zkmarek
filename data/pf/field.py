@@ -13,14 +13,14 @@ class Field:
     def __add__(self, rhs: "FieldLike") -> "Field":
         other = Field.create_from(rhs, self.order)
         assert self.order == other.order
-        return Field((self.value + other.value) % self.order, self.order)
+        return Field(self.value + other.value, self.order)
 
     def __sub__(self, rhs: "FieldLike") -> "Field":
         other = Field.create_from(rhs, self.order)
         assert self.order == other.order
-        return Field((self.value - other.value) % self.order, self.order)
+        return Field(self.value - other.value, self.order)
 
     def __mul__(self, rhs: "FieldLike") -> "Field":
         other = Field.create_from(rhs, self.order)
         assert self.order == other.order
-        return Field((self.value * other.value) % self.order, self.order)
+        return Field(self.value * other.value, self.order)

@@ -30,3 +30,4 @@ class TitleSlide(SlideBase):
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_text))
+        scene.play(FadeOut(self.subtitle_text))
