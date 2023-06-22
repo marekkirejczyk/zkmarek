@@ -48,7 +48,8 @@ SLIDES = [
     ECAddition(),
     AdditionToInfinity(),
 
-    TitleSlide("Multiplication by scalar"),
+    TitleSlide("Scalar multiplication"),
+    TexSlide("Scalar multiplication", "data/ec/multiplication.tex"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
 
 
