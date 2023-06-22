@@ -26,6 +26,7 @@ class Standards(SlideBase):
     def animate_in(self, scene):
         scene.play(FadeIn(self.label))
         scene.play(FadeIn(self.secp256k1))
+        self.new_subsection(scene, "Curve25519")
         scene.play(FadeIn(self.curve25519))
 
     def animate_out(self, scene):
