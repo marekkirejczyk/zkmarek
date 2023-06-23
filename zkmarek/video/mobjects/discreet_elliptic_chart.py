@@ -26,6 +26,7 @@ class DiscreteEllipticChart(VGroup):
 
     def __init__(self, curve=Secp256k1_41, include_details=True,):
         super().__init__()
+        self.dots = []
         self.curve = curve
         self.point_at_infinity = None
         step = 5 if include_details else 500
