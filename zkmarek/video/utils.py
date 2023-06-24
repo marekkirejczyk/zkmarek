@@ -26,3 +26,13 @@ def get_slides_from_names(
         get_slide_by_label(label, all_slides, globals)
         for label in slide_names.split(",")
     ]
+
+# code: Code (arg)
+#   code: Paragraph
+#     lines_text: Text
+#       text: str // with some whitespaces removed
+#       original_text: str
+def find_in_code(code, subject):
+    text = code.code.lines_text
+    arr = text._find_indexes(subject, text.original_text)
+    return [text.chars[start:end] for start, end in arr]

@@ -6,9 +6,9 @@ from slides.cec.addition import Addition as CECAddition
 from slides.cec.negation import Negation as CECNegation
 from slides.cec.operations import Operations as CECOperations
 from slides.common.title import TitleSlide
+from slides.ec.addition import Addition as ECAddition
 from slides.ec.introduction import Introduction as ECIntroduction
 from slides.ec.negation import Negation as ECNegation
-from slides.ec.addition import Addition as ECAddition
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
@@ -19,9 +19,10 @@ from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
-from zkmarek.video.slides.ecrecover import ECRecoverSlide
-from zkmarek.video.slides.prime_fields import PrimeFields
+from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
+from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
 from zkmarek.video.slides.in_this_episode import InThisEpisode
+from zkmarek.video.slides.prime_fields import PrimeFields
 from zkmarek.video.slides.season_teaser import SeasonTeaser
 from zkmarek.video.utils import get_slides_from_names
 
@@ -34,6 +35,8 @@ SLIDES = [
         subtitle="@ethmarek"),
     SeasonTeaser(),
     InThisEpisode(),
+    EthereumTransaction(),
+    ECRecoverSlide(),
 
     TitleSlide("Elliptic Curves"),
     EquationSlide(),
@@ -64,7 +67,7 @@ SLIDES = [
 
     TitleSlide("Signatures"),
     Signature(),
-    CodeSlide("Ethereum Transaction", "data/eth/transaction.py", language="python"),
+    EthereumTransaction(),
     ECRecoverSlide(),
 
     TitleSlide("Thank you!", subtitle="Questions?"),
