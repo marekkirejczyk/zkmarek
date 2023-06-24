@@ -1,4 +1,4 @@
-from manim import (DOWN, LEFT, RIGHT, UP, Create, FadeIn, FadeOut, Graph,
+from manim import (DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, Graph,
                    Rectangle, Text, VGroup)
 
 from zkmarek.video.mobjects.signature import Signature
@@ -40,7 +40,10 @@ class Tree(Graph):
             G.add_edge("ROOT", "Child_%i" % i)
             G.add_edge("Child_0", "Grandchild_%i" % i)
             G.add_edge("Grandchild_1", "Greatgrandchild_%i" % i)
-        super().__init__(list(G.nodes), list(G.edges), layout="tree", root_vertex="ROOT")
+        super().__init__(list(G.nodes),
+                         list(G.edges),
+                         layout="tree",
+                         root_vertex="ROOT")
 
 
 class SeasonTeaser(SlideBase):
