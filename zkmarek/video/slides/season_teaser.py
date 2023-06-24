@@ -80,9 +80,9 @@ class SeasonTeaser(SlideBase):
 
     def animate_in(self, scene):
         for i, item in enumerate(self.stack):
+            self.new_subsection(scene, item)
             if i > 0:
                 scene.play(FadeOut(self.extras[i-1]))
-            self.new_subsection(scene, item)
             scene.play(FadeIn(item))
             self.new_subsection(scene, f"{item} - extras")
             self.extras[i].move_to(RIGHT * 3)
