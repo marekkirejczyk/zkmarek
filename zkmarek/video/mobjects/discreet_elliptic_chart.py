@@ -20,7 +20,7 @@ class DotOnCurve(Dot):
 
 class DiscreteEllipticChart(VGroup):
     curve: WeierstrassCurve
-    dots: list[Dot] = []
+    dots: list[Dot]
     ax: Axes
     point_at_infinity: PointAtInfinity
 

@@ -22,6 +22,7 @@ from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.prime_fields import PrimeFields
 from zkmarek.video.slides.in_this_episode import InThisEpisode
+from zkmarek.video.slides.season_teaser import SeasonTeaser
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -31,6 +32,7 @@ SLIDES = [
     TitleSlide(
         "Elliptic Curves, Signatures and Ethereum",
         subtitle="@ethmarek"),
+    SeasonTeaser(),
     InThisEpisode(),
 
     TitleSlide("Elliptic Curves"),
