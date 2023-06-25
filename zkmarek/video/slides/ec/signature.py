@@ -1,6 +1,7 @@
 from manim import (DOWN, GREEN, GREY, LEFT, RED, RIGHT, UP, Circumscribe,
-                   Create, DashedLine, FadeIn, FadeOut, Indicate,
-                   ReplacementTransform, Text, Write)
+                   Create, DashedLine, FadeIn, FadeOut, Indicate, MathTex,
+                   ReplacementTransform, Text, TransformMatchingTex, VGroup,
+                   Write)
 
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
@@ -41,8 +42,8 @@ class Signature(SlideBase):
         ).next_to(self.sender_label, DOWN, buff=0.5)
 
         key_box2 = EquationBoxWithIcons.create(
-            "⚿", "K_{Priv} = k\ (random)", RED,
-            "⚿", "K_{Pub} = k \cdot G", GREEN
+            "⚿", "K_{Priv} = random()", RED,
+            "⚿", "K_{Pub} = {{K_{Priv} \cdot G}}", GREEN
         ).next_to(self.sender_label, DOWN, buff=0.5)
 
         msg_box1 =  EquationBoxWithIcons.create(
@@ -62,25 +63,25 @@ class Signature(SlideBase):
         )
 
         signature2 = EquationBoxWithIcons.create(
-            "⚂", "secret\ (random)", RED
+            "⚂", "secret = random()", RED
         ).next_to(msg_box3, DOWN, buff=0.5)
 
         signature3 = EquationBoxWithIcons.create(
-            "⚂", "secret\ (random)", RED,
+            "⚂", "secret = random()", RED,
             "⚂", "R = secret \cdot G", GREY
         ).next_to(msg_box3, DOWN, buff=0.5)
 
         signature4 = EquationBoxWithIcons.create(
-            "⚂", "secret\ (random)", RED,
+            "⚂", "secret = random()", RED,
             "⚂", "R = secret \cdot G", GREY,
             "⎘", "r = R_x \mod n", GREEN
         ).next_to(msg_box3, DOWN, buff=0.5)
 
         signature5 = EquationBoxWithIcons.create(
-            "⚂", "secret\ (random)", RED,
-            "⚂", "R = secret \cdot G", GREY,
+            "⚂", "secret = random()", RED,
+            "⚂", "R = {{secret \cdot G}}", GREY,
             "⎘", "r = R_x \mod n", GREEN,
-            "⎘", "s = (msg + r * K_{Priv})*secret^{-1} \mod n", GREEN
+            "⎘", "s = {{ (msg + r \cdot K_{Priv}) \cdot secret^{-1} }} \mod n", GREEN
         ).next_to(msg_box3, DOWN, buff=0.5)
 
         self.new_subsection(scene, "Introduce keys")
@@ -105,125 +106,187 @@ class Signature(SlideBase):
         scene.play(ReplacementTransform(signature4, signature5))
 
         self.new_subsection(scene, "From sender to receiver")
-        ver_key_box = EquationBoxWithIcons.create(
-            "⚿", "K_{Pub} = k \cdot G", GREEN
-        ).align_to(key_box2, DOWN)
-        scene.play(ver_key_box.animate.next_to(
-            self.receiver_label, DOWN, buff=0.5
-        ))
 
         ver_msg_box = msg_box3.copy()
         scene.play(ver_msg_box.animate.next_to(
-            ver_key_box, DOWN, buff=0.5
+            self.receiver_label, DOWN, buff=0.5
         ))
 
         ver_signature = EquationBoxWithIcons.create(
             "⎘", "r = R_x \mod n", GREEN,
-            "⎘", "s = (msg + r * K_{Priv})*secret^{-1} \mod n", GREEN
+            "⎘", "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n", GREEN
         ).align_to(signature5, DOWN)
         scene.play(ver_signature.animate.next_to(
             ver_msg_box, DOWN, buff=0.5
         ))
 
+        self.new_subsection(scene, "Recover R")
+        r_box = EquationBox("R = (r, ?)").next_to(
+            ver_signature, DOWN, buff=0.5)
+        scene.play(FadeIn(r_box))
 
-        self.new_subsection(scene, "Introduce U and V")
-        equation_box = EquationBox(
-            "{{U}} = msg * s^{-1} \mod n",
-            "{{V}} = r * s^{-1} \mod n",
-        ).next_to(
-            ver_signature, DOWN, buff=0.5
-        )
-        scene.play(FadeIn(equation_box))
+        self.new_subsection(scene, "Introduce U1 and U2")
+        variable_box = EquationBox(
+            "{{R}} = (r, {{?}})",
+            "u_1 = {{-msg \cdot r^{-1} }}",
+            "u_2 = {{s \cdot r^{-1} }}",
+        ).next_to(ver_signature, DOWN, buff=0.5)
+        scene.play(ReplacementTransform(r_box, variable_box))
 
-        self.new_subsection(scene, "Introduce C")
-        c_box = EquationBox(
-            "C = {{U}} \cdot G + {{V}} \cdot K_{Pub}",
-            "C_x \mod n \stackrel{?}{=} r"
-        ).next_to(
-            equation_box, DOWN, buff=0.5
-        )
-        scene.play(FadeIn(c_box))
+        self.new_subsection(scene, "Introduce Q")
+        q_box = EquationBox(
+            "Q = u_1 \cdot G + u_2 \cdot {{R}}"
+        ).next_to(variable_box, DOWN, buff=0.5)
+        scene.play(FadeIn(q_box))
 
-        self.new_subsection(scene, "Substitute U and V")
-        scene.play(Circumscribe(equation_box[0][0]))
-        scene.play(Circumscribe(c_box[0][1]))
-        scene.play(Circumscribe(equation_box[1][0]))
-        scene.play(Circumscribe(c_box[0][3]))
+        self.new_subsection(scene, "Equal to public key")
+        q_box2 = EquationBox(
+            "Q = u_1 \cdot G + u_2 \cdot {{R}} \stackrel{?}{=} K_{Pub}"
+        ).next_to(variable_box, DOWN, buff=0.5)
+        scene.play(ReplacementTransform(q_box, q_box2))
 
-        c_box2 = EquationBox(
-            "C = msg * {{s^{-1}}}\cdot {{G}} + r * {{s^{-1}}} * K_{Priv} \cdot {{G}}",
-            "C_x \mod n \stackrel{?}{=} r"
-        ).next_to(
-            equation_box, DOWN, buff=0.5
-        )
 
-        scene.play(ReplacementTransform(c_box, c_box2))
+        self.new_subsection(scene, "Proof")
+        equation = MathTex(
+            "Q = u_1 \cdot G + u_2 {{\cdot R}}"
+            ).scale(0.65).align_to(q_box2[0], LEFT + DOWN)
+        scene.play(equation.animate.next_to(q_box, DOWN, buff=0.5))
+
+        self.new_subsection(scene, "Expand R")
+        scene.play(Circumscribe(equation[1]))
+        scene.play(Circumscribe(signature5[3][1]))
+
+        equation2 = MathTex(
+            "Q = u_1 \cdot G + u_2 \cdot {{secret \cdot G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5)
+        scene.play(TransformMatchingTex(
+            VGroup(equation, signature5[3].copy()), equation2))
+
+        equation2b = MathTex(
+            "Q = {{u_1}} {{\cdot G}} + {{u_2}} {{\cdot secret}} {{\cdot G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5)
+        scene.play(TransformMatchingTex(equation2, equation2b))
 
         self.new_subsection(scene, "Extract common factor")
-        scene.play(Circumscribe(c_box2[0][1]))
-        scene.play(Circumscribe(c_box2[0][5]))
-        scene.play(Circumscribe(c_box2[0][3]))
-        scene.play(Circumscribe(c_box2[0][7]))
-        c_box3 = EquationBox(
-            "C = {{s^{-1} \cdot G}} (msg + r * K_{Priv})",
-            "C_x \mod n \stackrel{?}{=} r"
-        ).next_to(
-            equation_box, DOWN, buff=0.5
-        )
-        scene.play(ReplacementTransform(c_box2, c_box3))
+        equation3 = MathTex(
+            "Q = ({{u_1}} + {{u_2}} {{\cdot secret}}) {{\cdot  G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5)
+        scene.play(TransformMatchingTex(equation2b, equation3))
 
-        self.new_subsection(scene, "Calculate inverse of s")
-        scene.play(Circumscribe(c_box3[0][1]))
-        scene.play(Indicate(ver_signature[3]))
+        self.new_subsection(scene, "Substitute u1 and u2")
+        scene.play(Circumscribe(equation3[1]))
+        scene.play(Circumscribe(variable_box[1][1]))
 
-        ver_signature2 = EquationBoxWithIcons.create(
-            "⎘", "r = R_x \mod n", GREEN,
-            "⎘", "s^{-1} = (msg + r * K_{Priv})^{-1} * secret", GREEN
-        ).next_to(ver_msg_box, DOWN, buff=0.5)
-        scene.play(ReplacementTransform(ver_signature, ver_signature2))
+        scene.play(Circumscribe(equation3[3]))
+        scene.play(Circumscribe(variable_box[2][1]))
 
-        self.new_subsection(scene, "Substitute inverse of s")
-        c_box4 = EquationBox(
-            "C = G \cdot secret * {{(msg + r * K_{Priv})^{-1}}}"
-            " * {{(msg + r * K_{Priv})}}",
-            "C_x \mod n \stackrel{?}{=} r"
-        ).next_to(
-            equation_box, DOWN, buff=0.5
-        ).align_on_border(RIGHT)
+        equation4 = MathTex(
+            "Q = ({{-msg \cdot r^{-1} }} + {{s \cdot r^{-1}}} {{secret}}) {{\cdot  G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5)
+        scene.play(TransformMatchingTex(
+            VGroup(variable_box[1].copy(), variable_box[2].copy(), equation3),
+            equation4))
+
+        equation4b = MathTex(
+            "Q = (-msg \cdot r^{-1} + {{s}} {{\cdot r^{-1} secret) \cdot  G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5)
+        scene.play(TransformMatchingTex(equation4, equation4b))
+
+        self.new_subsection(scene, "Substitute s")
+        equation5 = MathTex(
+            "Q = (-msg \cdot r^{-1} + {{ (msg + r \cdot K_{Priv}) \cdot secret^{-1} }} {{\cdot r^{-1} secret) \cdot  G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
 
         h_line2 = DashedLine(
             scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 3 * DOWN
         )
 
         scene.play(
-            ReplacementTransform(c_box3, c_box4),
+            TransformMatchingTex(
+                VGroup(equation4b, signature5[7].copy()),
+                equation5),
             ReplacementTransform(self.h_line, h_line2))
 
-        self.new_subsection(scene, "Cancel s with inverse of s")
-        strike1 = StrikeLine(c_box4[0][1])
+        equation5b = MathTex(
+            "Q = (-msg \cdot r^{-1} + (msg + r \cdot K_{Priv}) {{\cdot secret^{-1}}}  \cdot r^{-1} {{secret}}) \cdot  G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+
+        scene.add(equation5b)
+        scene.remove(equation5)
+
+        self.new_subsection(scene, "Cancel secrete with inverse")
+
+        scene.play(Indicate(equation5b[1]))
+        scene.play(Indicate(equation5b[3]))
+        strike1 = StrikeLine(equation5b[1])
         scene.play(Write(strike1))
 
-        strike2 = StrikeLine(c_box4[0][3])
+        strike2 = StrikeLine(equation5b[3])
         scene.play(Write(strike2))
 
-        c_box5 = EquationBox(
-            "C = G \cdot secret",
-            "C_x \mod n \stackrel{?}{=} r"
-        ).next_to(
-            equation_box, DOWN, buff=0.5
-        )
-        h_line3 = DashedLine(
-            scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 2 * DOWN
-        )
+        equation6 = MathTex(
+            "Q = (-msg \cdot r^{-1} + (msg + r \cdot K_{Priv}) {{}}  \cdot r^{-1} {{}}) \cdot G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+        scene.play(TransformMatchingTex(equation5b, equation6),
+            FadeOut(strike1),
+            FadeOut(strike2))
 
-        scene.play(
-            ReplacementTransform(c_box4, c_box5),
-            ReplacementTransform(h_line2, h_line3),
+
+        self.new_subsection(scene, "Multiply inverse of r")
+        equation6b = MathTex(
+            "Q = (-msg \cdot r^{-1} + ({{msg}} {{ }} + {{r \cdot}} K_{Priv}) {{\cdot r^{-1})}} \cdot G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+
+        scene.add(equation6b)
+        scene.remove(equation6)
+        scene.play(Indicate(equation6b[7]))
+        scene.play(Indicate(equation6b[1]))
+        scene.play(Indicate(equation6b[5]))
+
+        equation7 = MathTex(
+            "Q = (-msg \cdot r^{-1} + ({{msg}} {{\cdot r^{-1} }} + {{ }} K_{Priv}) ) {{ }} \cdot G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+
+        scene.play(TransformMatchingTex(equation6b, equation7))
+
+        self.new_subsection(scene, "Remove brackets")
+        equation7b = MathTex(
+            "Q = (-msg \cdot r^{-1} + (msg \cdot r^{-1} + K_{Priv}) ) \cdot G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+        scene.add(equation7b)
+        scene.remove(equation7)
+
+        equation8 = MathTex(
+            "Q = {{(-msg \cdot r^{-1} + }} {{(}}{{msg \cdot r^{-1} + }} K_{Priv} {{)}} {{ ) }} \cdot G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+
+        scene.play(TransformMatchingTex(equation7b, equation8))
+
+        equation9 = MathTex(
+            "Q = {{(-msg \cdot r^{-1} + }} {{ }}{{msg \cdot r^{-1} + }}  K_{Priv} {{ }} {{ ) }} \cdot G}}" # noqa: E501 # pyright: ignore
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5).align_on_border(RIGHT)
+
+        scene.play(TransformMatchingTex(equation8, equation9))
+
+        self.new_subsection(scene, "Cancel msg*r^-1 with inverse")
+        strike1 = StrikeLine(equation9[1])
+        scene.play(Write(strike1))
+
+        strike2 = StrikeLine(equation9[4])
+        scene.play(Write(strike2))
+
+
+        equation10 = MathTex(
+            "Q = {{}} {{ }}{{ }} K_{Priv} {{ }} {{ }} \cdot G}}"
+            ).scale(0.65).next_to(q_box, DOWN, buff=0.5)
+
+        scene.play(TransformMatchingTex(equation9, equation10),
             FadeOut(strike1),
             FadeOut(strike2))
 
         self.new_subsection(scene, "Summary")
-        scene.play(Indicate(c_box5[0]))
-        scene.play(Indicate(signature5[3]))
-        scene.play(Indicate(c_box5[1]))
-        scene.play(Indicate(signature5[5]))
+        scene.play(Indicate(equation10))
+        scene.play(Indicate(key_box2[3]))
+
+        self.new_subsection(scene, "Note v")
+        scene.play(Indicate(variable_box[0][2]))
