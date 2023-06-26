@@ -42,11 +42,12 @@ class AdditionToInfinity(SlideBase):
         self.chart.animate_align_left(scene)
         self.sidebar.animate_show_label(scene)
         self.sidebar.animate_show_math(scene)
+        self.new_subsection(scene, "Code")
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
-        self.sidebar.animate_hide_code(scene)
 
     def animate_out(self, scene):
+        self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_out(scene)
         self.chart.animate_align_center(scene)
         scene.play(FadeOut(self.chart))
