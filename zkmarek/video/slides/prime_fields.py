@@ -1,6 +1,8 @@
 from typing import Optional
 
-from manim import LEFT, FadeIn, FadeOut, ReplacementTransform
+from manim import (DOWN, LEFT, RED, FadeIn, FadeOut, NumberLine,
+                   ReplacementTransform, TransformMatchingShapes)
+
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.fill_angle import FillAngle
 from zkmarek.video.mobjects.sidebar import Sidebar
@@ -49,8 +51,19 @@ class PrimeFields(SlideBase):
         clock6 = Clock(use_zero=True, hour=4, modulus=41)
         scene.play(ReplacementTransform(clock5, clock6))
 
+        self.new_subsection(scene, "Morph to line")
+        line = NumberLine(
+            x_range=[0, 41, 2],
+            length=10,
+            color=RED,
+            include_numbers=True,
+            label_direction=DOWN,
+            include_tip=True,
+        )
+        scene.play(TransformMatchingShapes(clock6, line))
+
         self.new_subsection(scene, "Sidebar")
-        scene.play(clock6.animate.align_on_border(LEFT, buff=0.2))
+        scene.play(line.animate.align_on_border(LEFT, buff=0.2).scale(0.6))
         self.sidebar = Sidebar("Prime Field", code_path="data/pf/field.py")
         self.sidebar.animate_in(scene)
 
