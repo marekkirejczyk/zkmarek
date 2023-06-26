@@ -34,7 +34,7 @@ class Clock(VGroup):
 
     def create_hand(self, hour, length=2):
         angle = hour * 360 / self.modulus
-        line = Line(ORIGIN, length*UP)
+        line = Line(ORIGIN, length*UP, z_index=2)
         line.rotate(-np.deg2rad(angle), about_point=ORIGIN)
         return line
 
