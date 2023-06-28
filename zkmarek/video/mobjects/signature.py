@@ -10,7 +10,8 @@ class Signature(VGroup):
         start = 0.45 * width * LEFT + 0.25 * height * DOWN
         end = -0.45 * width * LEFT + 0.25 * height * DOWN
         self.line = Line(start, end, color=color)
-        self.text = Text("Signature", font="Zapfino", color=color).shift(DOWN * height * 0.2)
+        self.text = Text("Signature", font="Zapfino", color=color).shift(
+            DOWN * height * 0.2)
         self.text.scale(height*2/3)
         self.add(self.rect, self.line, self.text)
 

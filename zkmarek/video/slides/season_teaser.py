@@ -1,10 +1,9 @@
-from manim import (DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, Graph,
-                   Rectangle, Text, VGroup)
+from manim import (DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, Rectangle, Text,
+                   VGroup)
 
 from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
-
 
 
 class Box(VGroup):
