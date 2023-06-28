@@ -1,9 +1,9 @@
-from manim import (DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, Graph,
-                   Rectangle, Text, VGroup)
+from manim import (DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, Rectangle, Text,
+                   VGroup)
 
 from zkmarek.video.mobjects.signature import Signature
+from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
-import networkx as nx
 
 
 class Box(VGroup):
@@ -22,46 +22,37 @@ class Box(VGroup):
             color=fore_color)
         self.add(self.rect, self.text)
 
-class Stack(VGroup):
-    def __init__(self, labels):
-        super().__init__()
-        for item in labels:
-            self.add(Box(item))
-        self.arrange(direction=UP)
 
-class Tree(Graph):
-    def __init__(self):
-        G = nx.Graph()
-        G.add_node("ROOT")
-        for i in range(5):
-            G.add_node("Child_%i" % i)
-            G.add_node("Grandchild_%i" % i)
-            G.add_node("Greatgrandchild_%i" % i)
-            G.add_edge("ROOT", "Child_%i" % i)
-            G.add_edge("Child_0", "Grandchild_%i" % i)
-            G.add_edge("Grandchild_1", "Greatgrandchild_%i" % i)
-        super().__init__(list(G.nodes),
-                         list(G.edges),
-                         layout="tree",
-                         root_vertex="ROOT")
+
+
+class Stack(VGroup):
+    def __init__(self, items):
+        super().__init__()
+        for item in items:
+            self.add(item)
+        self.arrange(direction=UP)
 
 
 class SeasonTeaser(SlideBase):
-
     stack: Stack
+    back_stack: Stack
 
     def __init__(self):
         super().__init__("Season Teaser")
 
     def construct(self):
-        font_size=font_size=32
-        self.stack = Stack([
+        font_size=32
+        self.plonk = Text("PLONK", font_size=100, color="#646464")
+        self.labels = [
             "Elliptic curves",
             "Pairings",
             "Commitment schemes",
-            "SNARKS",
+            "zk-SNARKs",
             "Recursive proofs\n",
-            "Arithmetization"])
+            "Arithmetization"]
+        self.stack = Stack([Box(label) for label in self.labels])
+        self.back_stack = Stack([Rectangle(width=5, height=0.8) for _ in range(6)])
+
         self.extras = [
             Signature(height=1),
             VGroup(
@@ -71,18 +62,24 @@ class SeasonTeaser(SlideBase):
                 .arrange(direction=DOWN),
             VGroup(
                 Text("Verkle Trees", font_size=font_size),
-                Tree()).arrange(direction=DOWN),
+                VerkleTree()).arrange(direction=DOWN),
             Text("Tornado Cash", font_size=font_size),
             Text("zkRollups", font_size=font_size),
             Text("zkEVMs", font_size=font_size),
         ]
         self.stack.align_on_border(LEFT, buff=1)
+        self.back_stack.align_on_border(LEFT, buff=1)
+        self.plonk.move_to(RIGHT * 3)
 
     def animate_in(self, scene):
+        scene.play(FadeIn(self.plonk))
+        scene.play(FadeIn(self.back_stack))
         for i, item in enumerate(self.stack):
             self.new_subsection(scene, item)
             if i > 0:
                 scene.play(FadeOut(self.extras[i-1]))
+            else:
+                scene.play(FadeOut(self.plonk))
             scene.play(FadeIn(item))
             self.new_subsection(scene, f"{item} - extras")
             self.extras[i].move_to(RIGHT * 3)

@@ -25,7 +25,7 @@ class InThisEpisode(SlideBase):
         self.thumbnails = []
         self.thumbnails_borders = []
         self.titles = [
-            "1. Continues Elliptic Curves",
+            "1. Continuous Elliptic Curves",
             "2. Prime Fields",
             "3. Discrete Elliptic Curves",
             "4. Groups and standards",
