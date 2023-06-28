@@ -12,9 +12,9 @@ from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
-from zkmarek.video.slides.common.test_slide import \
+from zkmarek.video.slides.debug.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
-from zkmarek.video.slides.common.font_slide import \
+from zkmarek.video.slides.debug.font_slide import \
     FontSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity

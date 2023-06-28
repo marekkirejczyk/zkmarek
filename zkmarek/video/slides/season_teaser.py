@@ -41,7 +41,8 @@ class SeasonTeaser(SlideBase):
         super().__init__("Season Teaser")
 
     def construct(self):
-        font_size=font_size=32
+        font_size=32
+        self.plonk = Text("PLONK", font_size=100, color="#646464")
         self.labels = [
             "Elliptic curves",
             "Pairings",
@@ -68,14 +69,17 @@ class SeasonTeaser(SlideBase):
         ]
         self.stack.align_on_border(LEFT, buff=1)
         self.back_stack.align_on_border(LEFT, buff=1)
+        self.plonk.move_to(RIGHT * 3)
 
     def animate_in(self, scene):
-        scene.add(self.back_stack)
-
+        scene.play(FadeIn(self.plonk))
+        scene.play(FadeIn(self.back_stack))
         for i, item in enumerate(self.stack):
             self.new_subsection(scene, item)
             if i > 0:
                 scene.play(FadeOut(self.extras[i-1]))
+            else:
+                scene.play(FadeOut(self.plonk))
             scene.play(FadeIn(item))
             self.new_subsection(scene, f"{item} - extras")
             self.extras[i].move_to(RIGHT * 3)
