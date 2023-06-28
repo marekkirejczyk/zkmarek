@@ -59,7 +59,7 @@ class SeasonTeaser(SlideBase):
             "Elliptic curves",
             "Pairings",
             "Commitment schemes",
-            "SNARKS",
+            "zk-SNARKSs",
             "Recursive proofs\n",
             "Arithmetization"])
         self.extras = [
@@ -79,6 +79,13 @@ class SeasonTeaser(SlideBase):
         self.stack.align_on_border(LEFT, buff=1)
 
     def animate_in(self, scene):
+        # for i, item in enumerate(self.stack):
+        #     rect = Rectangle(
+        #         width=5,
+        #         height=0.8,
+        #         color="#eadadb")
+        # self.arrange(direction=UP)
+
         for i, item in enumerate(self.stack):
             self.new_subsection(scene, item)
             if i > 0:
