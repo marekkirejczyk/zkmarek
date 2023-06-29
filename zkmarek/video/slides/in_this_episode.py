@@ -49,8 +49,8 @@ class InThisEpisode(SlideBase):
             "data/sound/in_this_episode/p1.m4a",
             "data/sound/in_this_episode/p2.m4a",
             "data/sound/in_this_episode/p3.m4a",
-            "data/sound/in_this_episode/p45.m4a",
-            "data/sound/in_this_episode/p45.m4a",
+            "data/sound/in_this_episode/p4.m4a",
+            "data/sound/in_this_episode/p5.m4a",
         ]
 
     def construct(self):
