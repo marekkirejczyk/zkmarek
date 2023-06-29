@@ -1,5 +1,5 @@
 from manim import LEFT, MathTex, SurroundingRectangle, Text, VGroup
-from zkmarek.video.utils import into_groups
+from zkmarek.video.utils import chunks
 
 
 class EquationBoxWithIcons(VGroup):
@@ -16,7 +16,7 @@ class EquationBoxWithIcons(VGroup):
     @staticmethod
     def create(*arg_list):
         result = []
-        for three in into_groups(arg_list, 3):
+        for three in chunks(arg_list, 3):
             result.append(Text(three[0], color=three[2]))
             result.append(MathTex(three[1], color=three[2]))
         return EquationBoxWithIcons(*result)

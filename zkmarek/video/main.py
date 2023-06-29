@@ -17,6 +17,8 @@ from zkmarek.video.slides.debug.font_slide import \
     FontSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.debug.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
+from zkmarek.video.slides.debug.code_style_slide import \
+    CodeStyleSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards

@@ -1,8 +1,9 @@
 from typing import List
 from zkmarek.video.slides.common.slide_base import SlideBase
 
-def into_groups(arr, n):
-    return [arr[i:i + n] for i in range(0, len(arr), n)]
+def chunks(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 def load(filename):
     with open(filename, "r") as file:
@@ -36,3 +37,4 @@ def find_in_code(code, subject):
     text = code.code.lines_text
     arr = text._find_indexes(subject, text.original_text)
     return [text.chars[start:end] for start, end in arr]
+
