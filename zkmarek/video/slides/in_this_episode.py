@@ -1,5 +1,4 @@
 from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
-from pydub import AudioSegment
 
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
@@ -77,23 +76,9 @@ class InThisEpisode(SlideBase):
             thumbnail.move_to(self.thumbnails_borders[i].get_center())
             self.add(thumbnail)
 
-
-
     def animate_in(self, scene):
         for i, label in enumerate(self.labels):
             self.new_subsection(scene, self.titles[i], sound=self.sounds[i])
-            start = scene.renderer.time
-            sound_len = get_sound_length(self.sounds[i])
-            scene.add_sound(self.sounds[i])
             scene.play(Create(self.thumbnails_borders[i]))
             self.thumbnails[i].animate_in(scene)
             scene.play(Write(label))
-            end = scene.renderer.time
-            wait_time = sound_len - end + start
-            scene.wait(wait_time)
-            # print(f"start: {start}, end: {end}, wait_time: {wait_time}, sound_len: {sound_len}")
-
-
-
-def get_sound_length(path):
-    return len(AudioSegment.from_file(path))/1000
