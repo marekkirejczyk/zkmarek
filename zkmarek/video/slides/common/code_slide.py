@@ -18,10 +18,10 @@ class CodeSlide(SlideBase):
     def construct(self):
         self.code = Code(
             self.code_path,
-            background="rectangle",
+            background="window",
             insert_line_no=True,
             font="Monospace",
-            font_size=14,
+            font_size=18,
             margin=0.2,
             style="fruity",
             line_no_buff=0.2,
