@@ -1,19 +1,32 @@
-import networkx as nx
-from manim import Graph
+from manim import VGroup, RIGHT, DOWN, Arrow
+from zkmarek.video.mobjects.array import Cell
 
-
-class VerkleTree(Graph):
+class VerkleTree(VGroup):
     def __init__(self):
-        G = nx.Graph()
-        G.add_node("ROOT")
-        for i in range(5):
-            G.add_node("Child_%i" % i)
-            G.add_node("Grandchild_%i" % i)
-            G.add_node("Greatgrandchild_%i" % i)
-            G.add_edge("ROOT", "Child_%i" % i)
-            G.add_edge("Child_0", "Grandchild_%i" % i)
-            G.add_edge("Grandchild_1", "Greatgrandchild_%i" % i)
-        super().__init__(list(G.nodes),
-                         list(G.edges),
-                         layout="tree",
-                         root_vertex="ROOT")
+        super().__init__()
+        l0 = Cell("root", text_config={"font_size": 32})
+        l1 = VGroup(Cell("01"), Cell("11"))
+        l2a = VGroup(Cell("00"), Cell("01"), Cell("11"))
+        l2b = VGroup(Cell("01"), Cell("10"), Cell("11"))
+        l1.arrange(RIGHT, buff=4)
+        l2a.arrange(RIGHT, buff=0.5)
+        l2b.arrange(RIGHT, buff=0.5)
+        l1.next_to(l0, DOWN, buff=1)
+        l2a.next_to(l1[0], DOWN, buff=1)
+        l2b.next_to(l1[1], DOWN, buff=1)
+        a = []
+        a.append(create_arrow(l0, l1[0]))
+        a.append(create_arrow(l0, l1[1]))
+        for i in range(3):
+            a.append(create_arrow(l1[0], l2a[i]))
+            a.append(create_arrow(l1[1], l2b[i]))
+        self.add(l0, l1, l2a, l2b, *a)
+
+
+def create_arrow(start, end):
+    return Arrow(
+        start=start.get_bottom(),
+        end=end[0].get_top(),
+        buff=0,
+        max_tip_length_to_length_ratio=0.1,
+        max_stroke_width_to_length_ratio=1)

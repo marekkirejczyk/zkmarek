@@ -62,7 +62,7 @@ class SeasonTeaser(SlideBase):
                 .arrange(direction=DOWN),
             VGroup(
                 Text("Verkle Trees", font_size=font_size),
-                VerkleTree()).arrange(direction=DOWN),
+                VerkleTree().scale(0.5)).arrange(direction=DOWN),
             Text("Tornado Cash", font_size=font_size),
             Text("zkRollups", font_size=font_size),
             Text("zkEVMs", font_size=font_size),
