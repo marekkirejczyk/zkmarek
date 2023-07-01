@@ -12,6 +12,7 @@ from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
+from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.debug.font_slide import \
     FontSlide  # noqa: F401 # pyright: ignore
@@ -74,8 +75,7 @@ SLIDES = [
     EthereumTransaction(),
     ECRecoverSlide(),
 
-    TitleSlide("Thank you!", subtitle="Questions?"),
-    TitleSlide("Subscribe", subtitle="youtube.com/@zkmarek")
+    Subscribe()
 ]
 
 
