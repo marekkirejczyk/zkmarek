@@ -65,7 +65,6 @@ SLIDES = [
     TexSlide("Scalar multiplication", "data/ec/multiplication.tex"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
 
-
     TitleSlide("Subgroups"),
     Subgroups(),
 

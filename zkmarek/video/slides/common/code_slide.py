@@ -1,4 +1,5 @@
 from manim import DOWN, UP, Code, FadeOut, Text, Write
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -11,7 +12,7 @@ class CodeSlide(SlideBase):
 
     def __init__(self, title, code_path, **kwargs):
         super().__init__(title)
-        self.title_text = Text(title)
+        self.title_text = Text(title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.code_path = code_path
         self.kwargs = kwargs
 
