@@ -29,6 +29,10 @@ class Subscribe(SlideBase):
         scene.play(AddTextLetterByLetter(self.title))
         scene.play(FadeIn(self.button), run_time=0.5)
         scene.wait(0.5)
+
+        # Source of sound under Creative Commons 0 License.
+        # https://freesound.org/people/joebro10/sounds/219318/
+        scene.add_sound("data/subscribe/click.wav", gain=10)
         scene.play(FadeIn(self.button_clicked), run_time=0.2)
         scene.play(FadeOut(self.button_clicked), run_time=0.2)
         scene.wait(1)
