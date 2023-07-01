@@ -1,7 +1,7 @@
-from manim import (LEFT, ORIGIN, RIGHT, UP, MoveToTarget,
-                   ImageMobject, Text, Group, rate_functions)
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from manim import (LEFT, ORIGIN, RIGHT, Group, ImageMobject, MoveToTarget,
+                   Text, rate_functions)
 
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 

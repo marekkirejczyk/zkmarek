@@ -1,13 +1,25 @@
-from manim import VGroup, RIGHT, DOWN, Arrow
-from zkmarek.video.mobjects.array import Cell
+from manim import VGroup, RIGHT, DOWN, Arrow, Square, Text
+from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
+
+class Node(VGroup):
+    def __init__(self, value):
+        super().__init__()
+        square = Square(
+            color = PRIMARY_COLOR,
+            fill_color = BACKGROUND_COLOR,
+            fill_opacity = 1,
+            side_length = 1,
+        )
+        text = Text(str(value), z_index=1, font_size=32, font=PRIMARY_FONT)
+        self.add(square, text)
 
 class VerkleTree(VGroup):
     def __init__(self):
         super().__init__()
-        l0 = Cell("root", text_config={"font_size": 32})
-        l1 = VGroup(Cell("01"), Cell("11"))
-        l2a = VGroup(Cell("00"), Cell("01"), Cell("11"))
-        l2b = VGroup(Cell("01"), Cell("10"), Cell("11"))
+        l0 = Node("root")
+        l1 = VGroup(Node("01"), Node("11"))
+        l2a = VGroup(Node("00"), Node("01"), Node("11"))
+        l2b = VGroup(Node("01"), Node("10"), Node("11"))
         l1.arrange(RIGHT, buff=4)
         l2a.arrange(RIGHT, buff=0.5)
         l2b.arrange(RIGHT, buff=0.5)
@@ -27,6 +39,7 @@ def create_arrow(start, end):
     return Arrow(
         start=start.get_bottom(),
         end=end[0].get_top(),
+        color=PRIMARY_COLOR,
         buff=0,
         max_tip_length_to_length_ratio=0.1,
         max_stroke_width_to_length_ratio=1)
