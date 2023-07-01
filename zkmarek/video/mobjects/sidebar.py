@@ -1,9 +1,11 @@
 from typing import Optional
 
 from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut,
-                   ReplacementTransform, Tex, Unwrite, VGroup, VMobject, Write)
+                   ReplacementTransform, Tex, Text, Unwrite, VGroup, VMobject,
+                   Write)
 from utils import load
 
+from zkmarek.video.constant import PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
@@ -20,7 +22,7 @@ class Sidebar(VGroup):
         tex_path: Optional[str] = None,
     ):
         super().__init__()
-        self.label = Tex(title)
+        self.label = Text(title, font=PRIMARY_FONT)
         self.add(self.label)
 
         if tex_path:

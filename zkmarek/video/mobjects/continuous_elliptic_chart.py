@@ -1,5 +1,7 @@
-from manim import YELLOW, Axes, Create, Tex, TexTemplate, VGroup, Write
+from manim import Axes, Create, Tex, TexTemplate, VGroup, Write
 from manim.mobject.graphing.functions import ImplicitFunction
+
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 
 
 class ContinuousEllipticChart(VGroup):
@@ -15,13 +17,20 @@ class ContinuousEllipticChart(VGroup):
             x_range=[-3, 7, step],
             y_range=[-8, 8, step],
             x_length=7,
-            axis_config={"include_numbers": include_details}
+            axis_config={
+                "include_numbers": include_details,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
         )
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
         self.graph = self.ax.plot_implicit_curve(
             lambda x, y: y**2 - x**3 - 7,
-            color=YELLOW
+            color=SECONDARY_COLOR
         )
         self.add(self.ax)
         if include_details:

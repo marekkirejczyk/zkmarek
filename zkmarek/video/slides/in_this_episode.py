@@ -1,4 +1,5 @@
 from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
+from zkmarek.video.constant import PRIMARY_FONT
 
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
@@ -56,8 +57,9 @@ class InThisEpisode(SlideBase):
     def construct(self):
         self.labels = []
         for i in range(0, len(self.titles)):
-            title = Text(self.titles[i])
-            description = Text(self.descriptions[i], font_size=24)
+            title = Text(self.titles[i], font=PRIMARY_FONT)
+            description = Text(self.descriptions[i], font_size=24,
+                font=PRIMARY_FONT)
             description.next_to(title, DOWN)
             description.align_to(title, LEFT)
             self.labels.append(VGroup(title, description))
