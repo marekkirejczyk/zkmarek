@@ -39,8 +39,8 @@ config.height = 9
 SLIDES = [
     Intro(),
     TitleSlide(
-        "Elliptic Curves, Digital Signatures",
-        subtitle="in Ethereum"),
+        "Elliptic curves and Digital signature",
+        subtitle="used in Ethereum"),
     SeasonTeaser(),
     InThisEpisode(),
     EthereumTransaction(),

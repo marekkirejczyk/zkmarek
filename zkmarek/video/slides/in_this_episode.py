@@ -33,11 +33,11 @@ class InThisEpisode(SlideBase):
             "5. Digital signature"
         ]
         self.descriptions = [
-            "Mathematical concept of Elliptic Curves living in the realm of reals ",
-            "Arythmetic of big prime numbers used in cryptography",
-            "Discrete Elliptic Curves build on Prime Fields used in cryptography ",
-            "Curves and groups standards applied in real-life protocols ",
-            "Using Elliptic Curves to create keys and digital signatures "
+            "Mathematical concept of Elliptic Curves ",
+            "Arythmetics used in cryptography ",
+            "Elliptic Curves used in cryptography ",
+            "Curves used in real-life protocols ",
+            "Digital signature algorithm used in Ethereum"
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
