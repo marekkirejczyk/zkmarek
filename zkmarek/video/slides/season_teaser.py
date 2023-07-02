@@ -1,5 +1,6 @@
-from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, FadeIn,
-                   FadeOut, Rectangle, RemoveTextLetterByLetter, Text, VGroup)
+from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Create,
+                   FadeIn, FadeOut, Rectangle, RemoveTextLetterByLetter, Text,
+                   VGroup)
 
 from zkmarek.video.constant import (BACKGROUND_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
@@ -43,12 +44,6 @@ class SeasonTeaser(SlideBase):
         super().__init__("Season Teaser")
 
     def construct(self):
-        def label(text):
-            return Text(text,
-                font_size=32,
-                font=PRIMARY_FONT,
-                color=SECONDARY_COLOR)
-
         self.plonk = Text("PLONK", font_size=100,
             font=PRIMARY_FONT,
             color=SECONDARY_COLOR)
@@ -63,21 +58,64 @@ class SeasonTeaser(SlideBase):
         self.back_stack = Stack([EmptyBox() for _ in range(6)])
 
         self.extras = [
-            Signature(height=1),
-            VGroup(
-                label("BLS signatures"),
-                label("Account abstraction"),
-                label("Smart Wallets"))
-                .arrange(direction=DOWN),
-            VGroup(
-                label("Verkle Trees"),
-                VerkleTree().scale(0.5)).arrange(direction=DOWN),
-            label("Tornado Cash"),
-            label("zkRollups"),
-            label("zkEVMs"),
+            self.animate_1,
+            self.animate_2,
+            self.animate_3,
+            self.animate_4,
+            self.animate_5,
+            self.animate_6,
         ]
         self.stack.align_on_border(LEFT, buff=1)
         self.back_stack.align_on_border(LEFT, buff=1)
+
+    def label(self, text):
+        return Text(text,
+            font_size=32,
+            font=PRIMARY_FONT,
+            color=SECONDARY_COLOR)
+
+    def animate_1(self, scene):
+        signature = Signature(height=1).move_to(RIGHT * 3)
+        signature.animate_in(scene)
+        return signature
+
+    def animate_2(self, scene):
+        group = VGroup(
+            self.label("BLS signatures"),
+            self.label("Account abstraction"),
+            self.label("Smart Wallets")).arrange(direction=DOWN).move_to(RIGHT * 3)
+        for i in range(3):
+            scene.wait(1)
+            scene.play(AddTextLetterByLetter(group[i]))
+        return group
+
+    def animate_3(self, scene):
+        group = VGroup(
+            self.label("Verkle Trees"),
+            VerkleTree().scale(0.5)).arrange(direction=DOWN).move_to(RIGHT * 3)
+        scene.wait(1)
+        scene.play(AddTextLetterByLetter(group[0]), run_time=2)
+        scene.play(Create(group[1]), run_time=3)
+        scene.wait(2)
+        return group
+
+    def animate_4(self, scene):
+        result = self.label("Tornado Cash").move_to(RIGHT * 3)
+        scene.play(AddTextLetterByLetter(result))
+        scene.wait(3)
+        return result
+
+    def animate_5(self, scene):
+        result = self.label("zkRollups").move_to(RIGHT * 3)
+        scene.play(AddTextLetterByLetter(result))
+        scene.wait(3)
+        return result
+
+    def animate_6(self, scene):
+        result = self.label("zkEVMs").move_to(RIGHT * 3)
+        scene.play(AddTextLetterByLetter(result))
+        scene.wait(3)
+        return result
 
     def animate_in(self, scene):
         self.play_sound(scene, "data/sound/season_teaser/p0.m4a")
@@ -92,5 +130,4 @@ class SeasonTeaser(SlideBase):
             self.new_subsection(scene, item,
                 sound=f"data/sound/season_teaser/p{i+1}.m4a")
             scene.play(FadeIn(item))
-            self.extras[i].move_to(RIGHT * 3)
-            scene.play(FadeIn(self.extras[i]))
+            self.extras[i] = self.extras[i](scene)
