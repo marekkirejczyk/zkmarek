@@ -14,7 +14,9 @@ class TitleSlide(SlideBase):
     sound: Optional[str]
 
 
-    def __init__(self, title: str, subtitle: Optional[str] = None, sound: Optional[str] = None) -> None:
+    def __init__(self, title: str,
+            subtitle: Optional[str] = None,
+            sound: Optional[str] = None) -> None:
         super().__init__(title)
         self.subtitle = subtitle
         self.sound = sound

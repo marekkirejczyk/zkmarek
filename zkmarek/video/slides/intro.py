@@ -30,8 +30,10 @@ class Intro(SlideBase):
         self.logo.shift(8 * LEFT)
         self.marek.shift(8 * RIGHT)
         scene.play(
-            MoveToTarget(self.marek, rate_func=rate_functions.ease_out_bounce, run_time=2),
-            MoveToTarget(self.logo, rate_func=rate_functions.ease_out_bounce), run_time=2)
+            MoveToTarget(self.marek, rate_func=rate_functions.ease_out_bounce,
+                run_time=2),
+            MoveToTarget(self.logo, rate_func=rate_functions.ease_out_bounce),
+                run_time=2)
         scene.wait(2)
 
     def animate_out(self, scene):

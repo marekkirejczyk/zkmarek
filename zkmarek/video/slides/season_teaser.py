@@ -89,7 +89,8 @@ class SeasonTeaser(SlideBase):
         for i, item in enumerate(self.stack):
             if i > 0:
                 scene.play(FadeOut(self.extras[i-1]))
-            self.new_subsection(scene, item, sound=f"data/sound/season_teaser/p{i+1}.m4a")
+            self.new_subsection(scene, item,
+                sound=f"data/sound/season_teaser/p{i+1}.m4a")
             scene.play(FadeIn(item))
             self.extras[i].move_to(RIGHT * 3)
             scene.play(FadeIn(self.extras[i]))
