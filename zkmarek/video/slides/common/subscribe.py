@@ -1,5 +1,6 @@
 from manim import (DOWN, UP, AddTextLetterByLetter, FadeIn, FadeOut, Group,
                    ImageMobject, Text)
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -16,7 +17,9 @@ class Subscribe(SlideBase):
     def construct(self):
         self.title = Text(
             "youtube.com/@zkmarek",
-            font="Arial").move_to(0.5*UP)
+            font=PRIMARY_FONT,
+            color=PRIMARY_COLOR,
+            ).move_to(0.5*UP)
         self.button = ImageMobject(
             "data/subscribe/normal.png").scale(0.4)
         self.button_clicked = ImageMobject(

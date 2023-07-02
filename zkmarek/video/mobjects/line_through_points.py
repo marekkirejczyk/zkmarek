@@ -1,4 +1,6 @@
-from manim import DARK_GREY, Line
+from manim import Line
+
+from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 
 
@@ -7,7 +9,7 @@ class LineThroughDots(Line):
         super().__init__(
             start=p1.to_coord(),
             end=p2.to_coord(),
-            color=DARK_GREY,
+            color=PRIMARY_COLOR,
             **kwargs
         )
         self.set_z_index(1, family=True)

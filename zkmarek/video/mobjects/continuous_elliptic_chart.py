@@ -1,4 +1,4 @@
-from manim import Axes, Create, Tex, TexTemplate, VGroup, Write
+from manim import Axes, Create, SingleStringMathTex, TexTemplate, VGroup, Write
 from manim.mobject.graphing.functions import ImplicitFunction
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
@@ -35,8 +35,10 @@ class ContinuousEllipticChart(VGroup):
         self.add(self.ax)
         if include_details:
             self.labels = self.ax.get_axis_labels(
-                Tex(r"$\mathbb{R}$", tex_template=template, font_size=26),
-                Tex(r"$\mathbb{R}$", tex_template=template, font_size=26)
+                SingleStringMathTex(r"\mathbb{R}", tex_template=template,
+                    font_size=26, color=PRIMARY_COLOR),
+                SingleStringMathTex(r"\mathbb{R}", tex_template=template,
+                    font_size=26, color=PRIMARY_COLOR)
             )
             self.add(self.labels)
         self.add(self.graph)
