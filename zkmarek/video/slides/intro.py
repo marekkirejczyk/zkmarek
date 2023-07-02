@@ -24,14 +24,15 @@ class Intro(SlideBase):
         self.group.move_to(ORIGIN)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "Intro", sound="data/sound/teaser/intro.m4a")
         self.logo.generate_target()
         self.marek.generate_target()
         self.logo.shift(8 * LEFT)
         self.marek.shift(8 * RIGHT)
         scene.play(
-            MoveToTarget(self.marek, rate_func=rate_functions.ease_out_bounce),
-            MoveToTarget(self.logo, rate_func=rate_functions.ease_out_bounce))
-        scene.wait(1)
+            MoveToTarget(self.marek, rate_func=rate_functions.ease_out_bounce, run_time=2),
+            MoveToTarget(self.logo, rate_func=rate_functions.ease_out_bounce), run_time=2)
+        scene.wait(2)
 
     def animate_out(self, scene):
         self.marek.generate_target()

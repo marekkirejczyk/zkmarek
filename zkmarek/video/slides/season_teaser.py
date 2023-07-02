@@ -1,5 +1,5 @@
-from manim import (DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, Rectangle, Text,
-                   VGroup)
+from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, FadeIn,
+                   FadeOut, Rectangle, RemoveTextLetterByLetter, Text, VGroup)
 
 from zkmarek.video.constant import (BACKGROUND_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
@@ -78,18 +78,18 @@ class SeasonTeaser(SlideBase):
         ]
         self.stack.align_on_border(LEFT, buff=1)
         self.back_stack.align_on_border(LEFT, buff=1)
-        self.plonk.move_to(RIGHT * 3)
 
     def animate_in(self, scene):
-        scene.play(FadeIn(self.plonk))
+        self.play_sound(scene, "data/sound/season_teaser/p0.m4a")
+        scene.play(AddTextLetterByLetter(self.plonk))
+        scene.wait(2)
+        scene.play(self.plonk.animate.move_to(RIGHT * 3), run_time=2)
         scene.play(FadeIn(self.back_stack))
+        scene.play(RemoveTextLetterByLetter(self.plonk), run_time=2)
         for i, item in enumerate(self.stack):
-            self.new_subsection(scene, item)
             if i > 0:
                 scene.play(FadeOut(self.extras[i-1]))
-            else:
-                scene.play(FadeOut(self.plonk))
+            self.new_subsection(scene, item, sound=f"data/sound/season_teaser/p{i+1}.m4a")
             scene.play(FadeIn(item))
-            self.new_subsection(scene, f"{item} - extras")
             self.extras[i].move_to(RIGHT * 3)
             scene.play(FadeIn(self.extras[i]))
