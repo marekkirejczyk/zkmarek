@@ -36,11 +36,26 @@ from zkmarek.video.utils import get_slides_from_names
 config.width = 16
 config.height = 9
 
-SLIDES = [
+TEASER = [
     Intro(),
     TitleSlide(
-        "Elliptic Curves, Digital Signatures",
-        subtitle="in Ethereum"),
+        "Zero Knowledge Proofs",
+        subtitle="Season 1",
+        sound="data/sound/teaser/title.m4a"),
+    SeasonTeaser(),
+    TitleSlide(
+        "Elliptic curves and Digital signature \n used in Ethereum",
+        subtitle="Episode 1"),
+    EthereumTransaction(),
+    ECRecoverSlide(),
+    Subscribe()
+]
+
+ALL_SLIDES = [
+    Intro(),
+    TitleSlide(
+        "Elliptic curves and Digital signature",
+        subtitle="used in Ethereum"),
     SeasonTeaser(),
     InThisEpisode(),
     EthereumTransaction(),
@@ -65,7 +80,6 @@ SLIDES = [
     TexSlide("Scalar multiplication", "data/ec/multiplication.tex"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
 
-
     TitleSlide("Subgroups"),
     Subgroups(),
 
@@ -81,6 +95,7 @@ SLIDES = [
     Subscribe()
 ]
 
+SLIDES = TEASER
 
 class EllipticCurves(Scene):
     def construct(self):

@@ -19,21 +19,30 @@ class SlideBase(VGroup):
     def construct(self):
         pass
 
-    def new_subsection(self, scene, title, sound=None):
+    def wait_for_sound(self, scene):
         if self.current_sound is not None:
             end_time = scene.renderer.time
             sound_len = get_sound_length(self.current_sound)
             wait_time = sound_len - end_time + self.start_time
-            scene.wait(wait_time)
+            if wait_time > 0:
+                scene.wait(wait_time)
             self.start_time = None
             self.current_sound = None
 
-        scene.next_section(f"{self.title}: {title}")
-
+    def do_play_sound(self, scene, sound):
         if sound is not None:
             self.start_time = scene.renderer.time
             self.current_sound = sound
             scene.add_sound(sound)
+
+    def play_sound(self, scene, sound):
+        self.wait_for_sound(scene)
+        self.do_play_sound(scene, sound)
+
+    def new_subsection(self, scene, title, sound=None):
+        self.wait_for_sound(scene)
+        scene.next_section(f"{self.title}: {title}")
+        self.do_play_sound(scene, sound)
 
 
     def animate_in(self, scene):

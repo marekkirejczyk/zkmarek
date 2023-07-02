@@ -1,7 +1,10 @@
 
-import numpy as np
-from manim import GREEN, ORIGIN, DOWN, Circle, Create, Line, VGroup, Text, UP
 from typing import Optional
+
+import numpy as np
+from manim import DOWN, ORIGIN, UP, Circle, Create, Line, Text, VGroup
+
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 
 
 class Clock(VGroup):
@@ -17,7 +20,7 @@ class Clock(VGroup):
         super().__init__()
         self.use_zero = use_zero
         self.modulus = modulus
-        self.circle = Circle(radius=3)
+        self.circle = Circle(radius=3, color=SECONDARY_COLOR)
         self.hour = hour
         self.markings = self.create_markings(modulus)
         if hour is not None:
@@ -43,8 +46,8 @@ class Clock(VGroup):
         result = VGroup()
         for i in range(n):
             angle = i * 360 / n
-            line = Line(2.8 * UP, 3 * UP, color=GREEN)
-            number = Text(self.label_at(i)).scale(0.4)
+            line = Line(2.8 * UP, 3 * UP, color=SECONDARY_COLOR)
+            number = Text(self.label_at(i), color=PRIMARY_COLOR).scale(0.4)
             number.next_to(line.get_center(), direction=DOWN, buff=0.5)
             line.rotate(-np.deg2rad(angle), about_point=ORIGIN)
             number.rotate(-np.deg2rad(angle), about_point=ORIGIN)

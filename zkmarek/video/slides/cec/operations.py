@@ -11,7 +11,7 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 class Operations(SlideBase):
     def __init__(self):
-        super().__init__("Operations")
+        super().__init__("Elliptic Curves Operations")
 
     def construct(self):
         self.chart = ContinuousEllipticChart()

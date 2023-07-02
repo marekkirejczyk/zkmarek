@@ -1,4 +1,5 @@
 from manim import Indicate
+from zkmarek.video.constant import SECONDARY_COLOR
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
 
@@ -27,5 +28,5 @@ class EthereumTransaction(CodeSlide):
 
         for fragment in fragments:
             chars = find_in_code(self.code, fragment)
-            scene.play(Indicate(*chars))
+            scene.play(Indicate(*chars, color=SECONDARY_COLOR))
 
