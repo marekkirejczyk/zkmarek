@@ -1,7 +1,7 @@
 from manim import RIGHT, Axes, Create, Dot, MathTex, VGroup, Write
 
 from zkmarek.crypto.cec_affine import CECAffine
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR
 
 
 class DotOnCurve(VGroup):
@@ -32,7 +32,7 @@ class DotOnCurve(VGroup):
         text = (
             r"{}({:.4f}, {:.4f})".format(label, p.x, p.y) if include_coords else label
         )
-        self.dot = Dot(ax.coords_to_point(p.x, p.y), color=SECONDARY_COLOR)
+        self.dot = Dot(ax.coords_to_point(p.x, p.y), color=PRIMARY_COLOR)
         self.add(self.dot)
 
         if include_lines:

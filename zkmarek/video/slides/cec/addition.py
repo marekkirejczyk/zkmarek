@@ -3,7 +3,7 @@ from manim import (DOWN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
                    ValueTracker, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -45,7 +45,7 @@ class Addition(SlideBase):
             self.chart.ax, "-(A + B)", -c, label_direction=(LEFT + 0.5 * DOWN)
         )
         self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7),
-                                     color=SECONDARY_COLOR)
+                                     color=PRIMARY_COLOR)
         self.point_at_label = SingleStringMathTex("\infty", color=PRIMARY_COLOR)
         self.line1 = LineThroughDots(self.p4, self.p2)
         self.line2 = LineThroughDots(self.p3, self.p4)
