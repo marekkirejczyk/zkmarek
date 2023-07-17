@@ -1,4 +1,4 @@
-from manim import Indicate
+from manim import Indicate, FadeOut
 from zkmarek.video.constant import SECONDARY_COLOR
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
@@ -12,7 +12,9 @@ class EthereumTransaction(CodeSlide):
             language="python")
 
     def animate_in(self, scene):
+        self.play_sound(scene, "data/sound/teaser/s2.m4a")
         super().animate_in(scene)
+        scene.wait(1)
         fragments = [
             '"from"',
             '"to"',
@@ -21,8 +23,8 @@ class EthereumTransaction(CodeSlide):
             '"chainId"',
             '"hash"',
             '...',
-            '"r": "0xa99c1ac8787f592251ae67055afaeab9ade2e36eea47a2db213aa5f76f00ba49"',
             '"s": "0x4a94e0265f31fd90dc414433d5acdaf28d3ebf0a7657841c4edc7564808b078b"',
+            '"r": "0xa99c1ac8787f592251ae67055afaeab9ade2e36eea47a2db213aa5f76f00ba49"',
             '"v": "0x0"'
         ]
 
@@ -30,3 +32,6 @@ class EthereumTransaction(CodeSlide):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR))
 
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.code), FadeOut(self.title_text), run_time=0.5)

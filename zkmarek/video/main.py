@@ -45,22 +45,19 @@ TEASER = [
     SeasonTeaser(),
     TitleSlide(
         "Elliptic curves and Digital signature \n used in Ethereum",
-        subtitle="Episode 1"),
+        subtitle="Episode 1",
+        sound="data/sound/teaser/s1.m4a"),
     EthereumTransaction(),
     ECRecoverSlide(),
     Subscribe()
 ]
 
-ALL_SLIDES = [
+MAIN_SLIDES = [
     Intro(),
     TitleSlide(
         "Elliptic curves and Digital signature",
         subtitle="used in Ethereum"),
-    SeasonTeaser(),
     InThisEpisode(),
-    EthereumTransaction(),
-    ECRecoverSlide(),
-
     TitleSlide("Elliptic Curves"),
     EquationSlide(),
     CECOperations(),
@@ -95,7 +92,7 @@ ALL_SLIDES = [
     Subscribe()
 ]
 
-SLIDES = TEASER
+SLIDES = MAIN_SLIDES
 
 class EllipticCurves(Scene):
     def construct(self):

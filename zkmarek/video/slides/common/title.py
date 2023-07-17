@@ -1,6 +1,6 @@
 from typing import Optional
 
-from manim import DOWN, AddTextLetterByLetter, RemoveTextLetterByLetter, Text
+from manim import DOWN, Write, Text
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 
@@ -42,11 +42,8 @@ class TitleSlide(SlideBase):
     def animate_in(self, scene):
         if self.sound is not None:
             self.play_sound(scene, sound=self.sound)
-        scene.play(AddTextLetterByLetter(self.title_text))
+        scene.play(Write(self.title_text))
         if self.subtitle_text is not None:
-            scene.play(AddTextLetterByLetter(self.subtitle_text))
+            scene.play(Write(self.subtitle_text))
         scene.wait(1)
 
-    def animate_out(self, scene):
-        scene.play(RemoveTextLetterByLetter(self.title_text))
-        scene.play(RemoveTextLetterByLetter(self.subtitle_text))

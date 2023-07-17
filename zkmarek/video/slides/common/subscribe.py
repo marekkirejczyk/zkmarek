@@ -29,13 +29,14 @@ class Subscribe(SlideBase):
         self.button_clicked.next_to(self.title, DOWN, buff=0.5)
 
     def animate_in(self, scene):
+        self.play_sound(scene, "data/sound/teaser/s5.m4a")
         scene.play(AddTextLetterByLetter(self.title))
         scene.play(FadeIn(self.button), run_time=0.5)
-        scene.wait(0.5)
+        scene.wait(2)
 
         # Source of sound under Creative Commons 0 License.
         # https://freesound.org/people/joebro10/sounds/219318/
-        scene.add_sound("data/subscribe/click.wav", gain=10)
+        scene.add_sound("data/subscribe/click.wav", gain=20)
         scene.play(FadeIn(self.button_clicked), run_time=0.2)
         scene.play(FadeOut(self.button_clicked), run_time=0.2)
         scene.wait(1)

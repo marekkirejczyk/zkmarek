@@ -19,11 +19,14 @@ class SlideBase(VGroup):
     def construct(self):
         pass
 
+    def play_music(self, scene, sound):
+        scene.add_sound(sound)
+
     def wait_for_sound(self, scene):
         if self.current_sound is not None:
             end_time = scene.renderer.time
             sound_len = get_sound_length(self.current_sound)
-            wait_time = sound_len - end_time + self.start_time
+            wait_time = sound_len - end_time + self.start_time + 0.3
             if wait_time > 0:
                 scene.wait(wait_time)
             self.start_time = None
@@ -50,6 +53,8 @@ class SlideBase(VGroup):
 
     def animate_out(self, scene):
         scene.play(FadeOut(self))
+        self.wait_for_sound(scene)
+
 
 
 def get_sound_length(path):
