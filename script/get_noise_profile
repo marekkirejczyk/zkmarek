@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sleep 1.5
+#arecord -vv -d 3 -fdat noise.wav
+sox -d -r 48000 -c 2 data/sound/noise.wav trim 0 3
+sox data/sound/noise.wav -n noiseprof data/sound/record.noise-profile
+rm data/sound/noise.wav
