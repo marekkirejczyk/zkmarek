@@ -38,6 +38,7 @@ class TitleSlide(SlideBase):
                 font=PRIMARY_FONT,
                 color=SECONDARY_COLOR)
             self.subtitle_text.next_to(self.title_text, DOWN)
+            self.add(self.subtitle_text)
 
     def animate_in(self, scene):
         if self.sound is not None:

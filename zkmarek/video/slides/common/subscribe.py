@@ -29,7 +29,7 @@ class Subscribe(SlideBase):
         self.button_clicked.next_to(self.title, DOWN, buff=0.5)
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/teaser/s7.wav")
+        self.play_sound(scene, "data/sound/teaser/s8.wav")
         scene.play(AddTextLetterByLetter(self.title))
         scene.play(FadeIn(self.button), run_time=0.5)
         scene.wait(2)

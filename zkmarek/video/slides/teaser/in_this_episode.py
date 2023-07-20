@@ -9,7 +9,7 @@ from zkmarek.video.mobjects.discreet_elliptic_chart import \
 from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.standard import secp256k1_standard
 
-from .common.slide_base import SlideBase
+from ..common.slide_base import SlideBase
 
 
 class InThisEpisode(SlideBase):
