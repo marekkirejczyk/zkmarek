@@ -1,6 +1,6 @@
 from manim import (DOWN, UP, AddTextLetterByLetter, FadeIn, FadeOut, Group,
                    ImageMobject, Text)
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -19,6 +19,9 @@ class Subscribe(SlideBase):
             "youtube.com/@zkmarek",
             font=PRIMARY_FONT,
             color=PRIMARY_COLOR,
+            t2c={
+                '[:12]': PRIMARY_COLOR,
+                '[12:]': SECONDARY_COLOR}
             ).move_to(0.5*UP)
         self.button = ImageMobject(
             "data/subscribe/normal.png").scale(0.4)
