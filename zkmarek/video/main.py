@@ -27,9 +27,11 @@ from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
+from zkmarek.video.slides.teaser.ecc_title import ECCTitleSlide
 from zkmarek.video.slides.teaser.in_this_episode import InThisEpisode
 from zkmarek.video.slides.intro import Intro
 from zkmarek.video.slides.prime_fields import PrimeFields
+from zkmarek.video.slides.teaser.list import ListSlide
 from zkmarek.video.slides.teaser.season_teaser import SeasonTeaser
 from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
 from zkmarek.video.utils import get_slides_from_names
@@ -41,12 +43,10 @@ TEASER = [
     Intro(),
     ZKPSTitle(),
     SeasonTeaser(),
-    TitleSlide(
-        "Elliptic curves and Digital signature \n used in Ethereum",
-        subtitle="Episode 1",
-        sound="data/sound/teaser/s4.wav"),
+    ECCTitleSlide(),
     EthereumTransaction(),
     ECRecoverSlide(),
+    ListSlide(),
     Subscribe()
 ]
 

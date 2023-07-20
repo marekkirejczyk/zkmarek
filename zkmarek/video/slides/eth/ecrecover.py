@@ -48,4 +48,3 @@ class ECRecoverSlide(SlideBase):
 
         for i in range(1, 8, 2):
             scene.play(Indicate(self.docs[i]), run_time=0.5)
-        self.play_sound(scene, "data/sound/teaser/s7.wav")
