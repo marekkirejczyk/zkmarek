@@ -1,7 +1,9 @@
-from manim import (DOWN, GREEN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
-                   GrowFromPoint, MathTex, Succession, ValueTracker, linear)
+from manim import (DOWN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
+                   GrowFromPoint, MathTex, SingleStringMathTex, Succession,
+                   ValueTracker, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
+from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -42,8 +44,9 @@ class Addition(SlideBase):
         self.p4 = DotOnCurve(
             self.chart.ax, "-(A + B)", -c, label_direction=(LEFT + 0.5 * DOWN)
         )
-        self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7), color=GREEN)
-        self.point_at_label = MathTex("\infty")
+        self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7),
+                                     color=PRIMARY_COLOR)
+        self.point_at_label = SingleStringMathTex("\infty", color=PRIMARY_COLOR)
         self.line1 = LineThroughDots(self.p4, self.p2)
         self.line2 = LineThroughDots(self.p3, self.p4)
         self.sidebar = Sidebar(
@@ -65,11 +68,6 @@ class Addition(SlideBase):
             self.line1.update_start_and_end(sorted_dots[0], sorted_dots[-1])
 
         self.line2.update_start_and_end(self.p3, self.p4)
-
-    def animate_update_chart_position(self, scene):
-        scene.play(
-            self.chart.animate.next_to(self.sidebar, LEFT, buff=0.5).align_on_border(UP)
-        )
 
     def animate_build_scene(self, scene):
         self.chart.animate_in(scene)
@@ -98,9 +96,8 @@ class Addition(SlideBase):
         self.p1_sgn = -1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-0.5))
 
-        scene.play(self.chart.animate.align_on_border(LEFT))
+        scene.play(self.chart.animate.align_on_border(LEFT, buff=0.2))
         self.sidebar.animate_in(scene, self)
-        self.animate_update_chart_position(scene)
 
     def animate_infinity_point(self, scene):
         self.new_subsection(scene, "Point at infinity - move to negation")
@@ -133,13 +130,12 @@ class Addition(SlideBase):
         self.new_subsection(scene, "Point doubling - tangent line")
         line_double = self.line1.copy()
         self.chart.add(line_double)
-        scene.play(line_double.animate(run_time=2).scale(2))
+        scene.play(line_double.animate(run_time=2).scale(1.8))
 
         self.new_subsection(scene, "Point doubling - math")
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_show_math(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_double.tex")
-        self.animate_update_chart_position(scene)
         self.new_subsection(scene, "Point doubling - code")
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)

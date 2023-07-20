@@ -1,0 +1,31 @@
+#!python
+
+"""A script for normalizing the recorded voicelines."""
+from os import path
+# import argparse
+
+import soundfile as sf
+import pyloudnorm as pyln
+
+from glob import glob
+
+audio_directory = "data/audio"
+
+raw_directory = path.join(audio_directory, "raw")
+normalized_directory = path.join(audio_directory, "normalized")
+pattern = path.abspath(path.join(raw_directory, "*.wav"))
+
+for path_in in glob(pattern):
+    name = path.basename(path_in)
+    print(f"Normalizing {path_in}...")
+
+    data, rate = sf.read(path_in)
+
+    meter = pyln.Meter(rate)
+    loudness = meter.integrated_loudness(data)
+
+    loudness_normalized_audio = pyln.normalize.loudness(data, loudness, -25.0)
+
+    path_out = path.join(normalized_directory, name)
+    print(f"Writing {path_out}...")
+    sf.write(path_out, loudness_normalized_audio, rate)

@@ -1,9 +1,10 @@
-from manim import (DOWN, LEFT, YELLOW, Create, Line, Rectangle, Text, VGroup,
-                   Write)
+from manim import DOWN, LEFT, Create, Line, Rectangle, Text, VGroup, Write
+
+from zkmarek.video.constant import SECONDARY_COLOR
 
 
 class Signature(VGroup):
-    def __init__(self, height=3, color=YELLOW):
+    def __init__(self, height=3, color=SECONDARY_COLOR):
         super().__init__()
         width=height*3
         self.rect = Rectangle(width=width, height=height, color=color)

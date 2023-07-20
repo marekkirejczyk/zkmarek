@@ -1,9 +1,11 @@
 from typing import Optional
 
-from manim import (DOWN, RIGHT, UP, Code, FadeIn, FadeOut,
-                   ReplacementTransform, Tex, Unwrite, VGroup, VMobject, Write)
+from manim import (DOWN, RIGHT, UP, AddTextLetterByLetter, Code, FadeIn,
+                   FadeOut, RemoveTextLetterByLetter, ReplacementTransform,
+                   Tex, Text, TransformMatchingShapes, VGroup, VMobject)
 from utils import load
 
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
@@ -20,7 +22,7 @@ class Sidebar(VGroup):
         tex_path: Optional[str] = None,
     ):
         super().__init__()
-        self.label = Tex(title)
+        self.label = Text(title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.add(self.label)
 
         if tex_path:
@@ -81,26 +83,26 @@ class Sidebar(VGroup):
         self.add(self.label)
 
     def animate_in(self, scene, slide: Optional[SlideBase] = None):
-        scene.play(Write(self.label))
+        scene.play(AddTextLetterByLetter(self.label))
         if self.math is not None:
             if slide is not None:
                 slide.new_subsection(scene, "Math")
-            scene.play(Write(self.math))
+            scene.play(AddTextLetterByLetter(self.math))
         if self.code is not None:
             if slide is not None:
                 slide.new_subsection(scene, "Code")
-            scene.play(Write(self.code))
+            scene.play(AddTextLetterByLetter(self.code))
 
     def animate_out(self, scene):
         if self.code is not None and self.code in self.submobjects:
             scene.play(FadeOut(self.code))
         if self.math is not None and self.math in self.submobjects:
-            scene.play(Unwrite(self.math))
-        scene.play(Unwrite(self.label))
+            scene.play(RemoveTextLetterByLetter(self.math))
+        scene.play(RemoveTextLetterByLetter(self.label))
 
     def animate_replace_math(self, scene, tex_path: str):
         new_math = self.create_math(tex_path)
-        scene.play(ReplacementTransform(self.math, new_math))
+        scene.play(TransformMatchingShapes(self.math, new_math))
         self.remove(self.math)
         self.math = new_math
         self.add(self.math)

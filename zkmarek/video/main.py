@@ -27,25 +27,35 @@ from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
-from zkmarek.video.slides.in_this_episode import InThisEpisode
+from zkmarek.video.slides.teaser.in_this_episode import InThisEpisode
 from zkmarek.video.slides.intro import Intro
 from zkmarek.video.slides.prime_fields import PrimeFields
-from zkmarek.video.slides.season_teaser import SeasonTeaser
+from zkmarek.video.slides.teaser.season_teaser import SeasonTeaser
+from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
 config.height = 9
 
-SLIDES = [
+TEASER = [
     Intro(),
-    TitleSlide(
-        "Elliptic Curves, Digital Signatures",
-        subtitle="in Ethereum"),
+    ZKPSTitle(),
     SeasonTeaser(),
-    InThisEpisode(),
+    TitleSlide(
+        "Elliptic curves and Digital signature \n used in Ethereum",
+        subtitle="Episode 1",
+        sound="data/sound/teaser/s4.wav"),
     EthereumTransaction(),
     ECRecoverSlide(),
+    Subscribe()
+]
 
+MAIN_SLIDES = [
+    Intro(),
+    TitleSlide(
+        "Elliptic curves and Digital signature",
+        subtitle="used in Ethereum"),
+    InThisEpisode(),
     TitleSlide("Elliptic Curves"),
     EquationSlide(),
     CECOperations(),
@@ -65,7 +75,6 @@ SLIDES = [
     TexSlide("Scalar multiplication", "data/ec/multiplication.tex"),
     CodeSlide("Double and add", "data/ec/double_and_add.py"),
 
-
     TitleSlide("Subgroups"),
     Subgroups(),
 
@@ -81,6 +90,7 @@ SLIDES = [
     Subscribe()
 ]
 
+SLIDES = TEASER
 
 class EllipticCurves(Scene):
     def construct(self):

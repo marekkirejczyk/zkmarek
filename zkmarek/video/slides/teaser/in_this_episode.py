@@ -1,4 +1,5 @@
 from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
+from zkmarek.video.constant import PRIMARY_FONT
 
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
@@ -8,7 +9,7 @@ from zkmarek.video.mobjects.discreet_elliptic_chart import \
 from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.standard import secp256k1_standard
 
-from .common.slide_base import SlideBase
+from ..common.slide_base import SlideBase
 
 
 class InThisEpisode(SlideBase):
@@ -32,11 +33,11 @@ class InThisEpisode(SlideBase):
             "5. Digital signature"
         ]
         self.descriptions = [
-            "Mathematical concept of Elliptic Curves living in the realm of reals ",
-            "Arythmetic of big prime numbers used in cryptography",
-            "Discrete Elliptic Curves build on Prime Fields used in cryptography ",
-            "Curves and groups standards applied in real-life protocols ",
-            "Using Elliptic Curves to create keys and digital signatures "
+            "Mathematical concept of Elliptic Curves ",
+            "Arythmetics used in cryptography ",
+            "Elliptic Curves used in cryptography ",
+            "Curves used in real-life protocols ",
+            "Digital signature algorithm used in Ethereum"
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
@@ -56,8 +57,9 @@ class InThisEpisode(SlideBase):
     def construct(self):
         self.labels = []
         for i in range(0, len(self.titles)):
-            title = Text(self.titles[i])
-            description = Text(self.descriptions[i], font_size=24)
+            title = Text(self.titles[i], font=PRIMARY_FONT)
+            description = Text(self.descriptions[i], font_size=24,
+                font=PRIMARY_FONT)
             description.next_to(title, DOWN)
             description.align_to(title, LEFT)
             self.labels.append(VGroup(title, description))

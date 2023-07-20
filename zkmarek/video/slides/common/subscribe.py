@@ -1,5 +1,6 @@
 from manim import (DOWN, UP, AddTextLetterByLetter, FadeIn, FadeOut, Group,
                    ImageMobject, Text)
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -16,7 +17,9 @@ class Subscribe(SlideBase):
     def construct(self):
         self.title = Text(
             "youtube.com/@zkmarek",
-            font="Arial").move_to(0.5*UP)
+            font=PRIMARY_FONT,
+            color=PRIMARY_COLOR,
+            ).move_to(0.5*UP)
         self.button = ImageMobject(
             "data/subscribe/normal.png").scale(0.4)
         self.button_clicked = ImageMobject(
@@ -26,13 +29,14 @@ class Subscribe(SlideBase):
         self.button_clicked.next_to(self.title, DOWN, buff=0.5)
 
     def animate_in(self, scene):
+        self.play_sound(scene, "data/sound/teaser/s8.wav")
         scene.play(AddTextLetterByLetter(self.title))
         scene.play(FadeIn(self.button), run_time=0.5)
-        scene.wait(0.5)
+        scene.wait(2)
 
         # Source of sound under Creative Commons 0 License.
         # https://freesound.org/people/joebro10/sounds/219318/
-        scene.add_sound("data/subscribe/click.wav", gain=10)
+        scene.add_sound("data/sound/click.wav", gain=20)
         scene.play(FadeIn(self.button_clicked), run_time=0.2)
         scene.play(FadeOut(self.button_clicked), run_time=0.2)
         scene.wait(1)
