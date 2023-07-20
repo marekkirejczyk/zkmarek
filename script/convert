@@ -1,0 +1,21 @@
+#!python
+
+"""A script for normalizing the recorded voicelines."""
+from os import path
+from glob import glob
+import subprocess
+
+
+raw_directory = "data/audio/raw"
+pattern = path.abspath(path.join(raw_directory, "*.m4a"))
+
+for path_in in glob(pattern):
+    name = path.basename(path_in)
+    print(f"Converting {name}...")
+
+    # -acodec pcm_s16le -ac 1 -ar 16000
+    path_out = path.join(raw_directory, name.replace('.m4a', '.wav'))
+    subprocess.run(["ffmpeg", "-i", path_in, path_out])
+
+
+
