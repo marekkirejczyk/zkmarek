@@ -24,5 +24,5 @@ class ZKPSTitle(TitleSlide):
         scene.play(ReplacementTransform(self.title_text, question_mark))
         scene.play(Indicate(question_mark, color=HIGHLIGHT_COLOR,
             scale_factor=3,
-            run_time=1.5))
-        scene.play(FadeOut(question_mark))
+            run_time=2))
+        scene.play(FadeOut(question_mark), run_time=1.5)
