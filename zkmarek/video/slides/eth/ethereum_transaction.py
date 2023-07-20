@@ -12,25 +12,31 @@ class EthereumTransaction(CodeSlide):
             language="python")
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/teaser/s2.m4a")
+        self.play_sound(scene, "data/sound/teaser/s5.wav")
         super().animate_in(scene)
-        scene.wait(1)
-        fragments = [
+        scene.wait(3)
+        fragments1 = [
             '"from"',
             '"to"',
             '"value"',
             '"nonce"',
             '"chainId"',
             '"hash"',
-            '...',
+            '...']
+        fragments2 = [
             '"s": "0x4a94e0265f31fd90dc414433d5acdaf28d3ebf0a7657841c4edc7564808b078b"',
             '"r": "0xa99c1ac8787f592251ae67055afaeab9ade2e36eea47a2db213aa5f76f00ba49"',
             '"v": "0x0"'
         ]
 
-        for fragment in fragments:
+        for fragment in fragments1:
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR))
+
+        for fragment in fragments2:
+            chars = find_in_code(self.code, fragment)
+            scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
+
 
 
     def animate_out(self, scene):

@@ -41,12 +41,12 @@ TEASER = [
     TitleSlide(
         "Zero Knowledge Proofs",
         subtitle="Season 1",
-        sound="data/sound/teaser/title.m4a"),
+        sound="data/sound/teaser/s2.wav"),
     SeasonTeaser(),
     TitleSlide(
         "Elliptic curves and Digital signature \n used in Ethereum",
         subtitle="Episode 1",
-        sound="data/sound/teaser/s1.m4a"),
+        sound="data/sound/teaser/s4.wav"),
     EthereumTransaction(),
     ECRecoverSlide(),
     Subscribe()

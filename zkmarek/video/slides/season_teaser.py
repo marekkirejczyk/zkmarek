@@ -8,7 +8,6 @@ from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
 
-
 class Box(VGroup):
     def __init__(self, label):
         super().__init__()
@@ -118,7 +117,7 @@ class SeasonTeaser(SlideBase):
         return result
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/season_teaser/p0.m4a")
+        self.play_sound(scene, "data/sound/teaser/s3-0.wav")
         scene.play(AddTextLetterByLetter(self.plonk))
         scene.wait(2)
         scene.play(self.plonk.animate.move_to(RIGHT * 3), run_time=2)
@@ -128,6 +127,6 @@ class SeasonTeaser(SlideBase):
             if i > 0:
                 scene.play(FadeOut(self.extras[i-1]))
             self.new_subsection(scene, item,
-                sound=f"data/sound/season_teaser/p{i+1}.m4a")
+                sound=f"data/sound/teaser/s3-{i+1}.wav")
             scene.play(FadeIn(item))
             self.extras[i] = self.extras[i](scene)

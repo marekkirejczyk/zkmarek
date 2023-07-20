@@ -34,7 +34,7 @@ class ECRecoverSlide(SlideBase):
         self.docs.next_to(self.code, DOWN, buff=0.5)
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/teaser/s3.m4a")
+        self.play_sound(scene, "data/sound/teaser/s6.wav")
         scene.play(FadeIn(self.title_text))
         scene.play(FadeIn(self.code))
         scene.play(FadeIn(self.docs))
@@ -44,6 +44,8 @@ class ECRecoverSlide(SlideBase):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars))
 
+        scene.wait(3)
+
         for i in range(1, 8, 2):
-            scene.play(Indicate(self.docs[i]))
-        self.play_sound(scene, "data/sound/teaser/s4.m4a")
+            scene.play(Indicate(self.docs[i]), run_time=0.5)
+        self.play_sound(scene, "data/sound/teaser/s7.wav")
