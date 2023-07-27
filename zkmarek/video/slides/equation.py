@@ -1,7 +1,7 @@
-from manim import (DOWN, UP, YELLOW, FadeIn, FadeOut, MathTex, MoveToTarget,
+from manim import (DOWN, UP, FadeIn, FadeOut, MathTex, MoveToTarget,
                    ReplacementTransform, Text, TransformMatchingShapes, VGroup,
                    Write)
-
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
 from .common.slide_base import SlideBase
 
 
@@ -9,20 +9,20 @@ class EquationSlide(SlideBase):
     def __init__(self) -> None:
         super().__init__(title="Elliptic Curve equation")
 
-        self.weierstrass_form = Text(r"Weierstrass form")
-        self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b")
-        self.secp256k1_label = Text(r"Secp256k1 equation")
+        self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR)
+        self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b", color=PRIMARY_COLOR)
+        self.secp256k1_label = Text(r"Secp256k1 equation", color=PRIMARY_COLOR)
         self.secp_equation1 = self.weierstrass_equation.copy()
-        self.secp_equation2 = MathTex(r"y^2 = x^3 + 0x + 7")
-        self.secp_equation3 = MathTex(r"y^2 = x^3 + 7")
-        self.a = MathTex(r"a = 0", color=YELLOW)
-        self.b = MathTex(r"b = 7", color=YELLOW)
+        self.secp_equation2 = MathTex(r"y^2 = x^3 + 0x + 7", color=PRIMARY_COLOR)
+        self.secp_equation3 = MathTex(r"y^2 = x^3 + 7", color=PRIMARY_COLOR)
+        self.a = MathTex(r"a = 0", color=SECONDARY_COLOR)
+        self.b = MathTex(r"b = 7", color=SECONDARY_COLOR)
         self.ab = VGroup(self.a, self.b).arrange_submobjects()
 
-        self.secp_equation1[0][6:7].set_color(YELLOW)
-        self.secp_equation1[0][9:10].set_color(YELLOW)
-        self.secp_equation2[0][6:7].set_color(YELLOW)
-        self.secp_equation2[0][9:10].set_color(YELLOW)
+        self.secp_equation1[0][6:7].set_color(SECONDARY_COLOR)
+        self.secp_equation1[0][9:10].set_color(SECONDARY_COLOR)
+        self.secp_equation2[0][6:7].set_color(SECONDARY_COLOR)
+        self.secp_equation2[0][9:10].set_color(SECONDARY_COLOR)
 
         # positions
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)

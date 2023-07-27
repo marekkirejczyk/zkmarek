@@ -90,7 +90,7 @@ MAIN_SLIDES = [
     Subscribe()
 ]
 
-SLIDES = TEASER
+SLIDES = MAIN_SLIDES
 
 class EllipticCurves(Scene):
     def construct(self):
