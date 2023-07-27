@@ -1,6 +1,6 @@
 from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
-from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR, HIGHLIGHT_COLOR, BACKGROUND_COLOR
 
+from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
