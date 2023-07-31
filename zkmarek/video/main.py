@@ -44,8 +44,8 @@ TEASER = [
     ZKPSTitle(),
     SeasonTeaser(),
     ECCTitleSlide(),
-    EthereumTransaction(),
     ECRecoverSlide(),
+    EthereumTransaction(),
     ListSlide(),
     Subscribe()
 ]
@@ -90,7 +90,7 @@ MAIN_SLIDES = [
     Subscribe()
 ]
 
-SLIDES = MAIN_SLIDES
+SLIDES = TEASER
 
 class EllipticCurves(Scene):
     def construct(self):
