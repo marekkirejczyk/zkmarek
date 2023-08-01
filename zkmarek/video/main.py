@@ -41,6 +41,9 @@ config.height = 9
 
 TEASER = [
     Intro(),
+    TitleSlide(
+        "Episode 1",
+        subtitle="Teaser"),
     ZKPSTitle(),
     SeasonTeaser(),
     ECCTitleSlide(),
