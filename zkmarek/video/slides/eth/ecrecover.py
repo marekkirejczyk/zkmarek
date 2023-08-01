@@ -1,4 +1,4 @@
-from manim import DOWN, UP, Code, FadeIn, Tex, Text, Indicate
+from manim import DOWN, UP, Code, FadeIn, Tex, Text, Indicate, FadeOut
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.utils import find_in_code, load
@@ -34,17 +34,18 @@ class ECRecoverSlide(SlideBase):
         self.docs.next_to(self.code, DOWN, buff=0.5)
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/teaser/s6.wav")
+        self.play_sound(scene, "data/sound/teaser/s5.wav")
         scene.play(FadeIn(self.title_text))
         scene.play(FadeIn(self.code))
         scene.play(FadeIn(self.docs))
-        fragments = ["bytes32 r", "bytes32 s", "uint8 v", ]
-
-        for fragment in fragments:
-            chars = find_in_code(self.code, fragment)
-            scene.play(Indicate(*chars))
+        fragments = ["bytes32 s", "bytes32 r", "uint8 v", ]
 
         scene.wait(3)
 
-        for i in range(1, 8, 2):
-            scene.play(Indicate(self.docs[i]), run_time=0.5)
+        for fragment in fragments:
+            chars = find_in_code(self.code, fragment)
+            scene.play(Indicate(*chars), run_time=0.5)
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self), run_time=0.5)
+        self.wait_for_sound(scene)

@@ -10,5 +10,5 @@
 
   "s": "0x4a94e0265f31fd90dc414433d5acdaf28d3ebf0a7657841c4edc7564808b078b",
   "r": "0xa99c1ac8787f592251ae67055afaeab9ade2e36eea47a2db213aa5f76f00ba49",
-  "v": "0x0"
+  "v": "0x0" //equals 0, 1, 27 or 28
 }
