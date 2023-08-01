@@ -35,14 +35,13 @@ class Subscribe(SlideBase):
         self.play_sound(scene, "data/sound/teaser/s8.wav")
         scene.play(AddTextLetterByLetter(self.title))
         scene.play(FadeIn(self.button), run_time=0.5)
-        scene.wait(2)
 
         # Source of sound under Creative Commons 0 License.
         # https://freesound.org/people/joebro10/sounds/219318/
         scene.add_sound("data/sound/click.wav", gain=20)
         scene.play(FadeIn(self.button_clicked), run_time=0.2)
         scene.play(FadeOut(self.button_clicked), run_time=0.2)
-        scene.wait(1)
+        scene.wait(0.5)
 
     def animate_out(self, scene):
         pass
