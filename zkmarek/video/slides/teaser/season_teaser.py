@@ -99,15 +99,17 @@ class SeasonTeaser(SlideBase):
         return group
 
     def animate_4(self, scene):
+        scene.wait(1)
         result = self.label("Tornado Cash").move_to(RIGHT * 3)
         scene.play(AddTextLetterByLetter(result))
-        scene.wait(3)
+        scene.wait(4)
         return result
 
     def animate_5(self, scene):
+        scene.wait(1)
         result = self.label("zkRollups").move_to(RIGHT * 3)
         scene.play(AddTextLetterByLetter(result))
-        scene.wait(3)
+        scene.wait(3.5)
         return result
 
     def animate_6(self, scene):
@@ -118,10 +120,13 @@ class SeasonTeaser(SlideBase):
 
     def animate_in(self, scene):
         self.play_sound(scene, "data/sound/teaser/s3-0.wav")
-        scene.play(AddTextLetterByLetter(self.plonk))
-        scene.wait(2)
+        scene.wait(0.5)
+        scene.play(AddTextLetterByLetter(self.plonk), run_time=2)
+        scene.wait(0.5)
         scene.play(self.plonk.animate.move_to(RIGHT * 3), run_time=2)
-        scene.play(FadeIn(self.back_stack))
+        scene.wait(1)
+        scene.play(FadeIn(self.back_stack), run_time=2)
+        scene.wait(1)
         scene.play(RemoveTextLetterByLetter(self.plonk), run_time=2)
         for i, item in enumerate(self.stack):
             if i > 0:
