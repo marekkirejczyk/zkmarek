@@ -60,3 +60,14 @@ There is a useful calc script, which allows to perform miscellaneous calculation
 ```sh
 script/calc -h
 ```
+
+### Music license
+
+Thannoid - Bodytonic
+
+License: #2601
+
+Date: 08/01/2023
+
+app.sessions.blue
+
