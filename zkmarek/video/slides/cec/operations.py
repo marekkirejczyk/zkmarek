@@ -6,10 +6,14 @@ from zkmarek.video.mobjects.continuous_elliptic_chart import \
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.mobjects.sidebar import Sidebar
 from zkmarek.video.slides.common.slide_base import SlideBase
-
+from zkmarek.video.constant import HIGHLIGHT_COLOR
 
 
 class Operations(SlideBase):
+    sidebar: Sidebar
+    p1: DotOnCurve
+    p2: DotOnCurve
+
     def __init__(self):
         super().__init__("Elliptic Curves Operations")
 
@@ -21,12 +25,23 @@ class Operations(SlideBase):
         self.sidebar = Sidebar("Operations", tex_path="data/cec/operations.tex")
 
     def animate_in(self, scene: Scene):
+        self.play_sound(scene, "data/sound/episode/s6-1.wav")
         self.chart.animate_in(scene)
         self.p1.animate_in(scene)
         scene.play(ReplacementTransform(self.p1, self.p2))
-        scene.next_section("Sidebar"),
+        self.new_subsection(scene,
+            "Operations",
+            sound="data/sound/episode/s6-2.wav")
         scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT))
         scene.play(Write(self.sidebar))
+
+        list = self.sidebar.math
+        list.set_color_by_tex("Negation", HIGHLIGHT_COLOR)
+        scene.wait(2)
+        list.set_color_by_tex("Addition", HIGHLIGHT_COLOR)
+        scene.wait(2)
+        list.set_color_by_tex("Doubling", HIGHLIGHT_COLOR)
+
 
     def animate_out(self, scene: Scene):
         scene.play(FadeOut(self.p2))
