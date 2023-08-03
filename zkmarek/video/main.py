@@ -57,7 +57,8 @@ MAIN_SLIDES = [
     Intro(),
     TitleSlide(
         "Elliptic curves and Digital signature",
-        subtitle="used in Ethereum"),
+        subtitle="used in Ethereum",
+        sound="data/sound/episode/s2.wav"),
     InThisEpisode(),
     TitleSlide("Elliptic Curves"),
     EquationSlide(),
@@ -93,7 +94,7 @@ MAIN_SLIDES = [
     Subscribe()
 ]
 
-SLIDES = TEASER
+SLIDES = MAIN_SLIDES
 
 class EllipticCurves(Scene):
     def construct(self):
