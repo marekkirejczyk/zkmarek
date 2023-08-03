@@ -60,7 +60,7 @@ MAIN_SLIDES = [
         subtitle="used in Ethereum",
         sound="data/sound/episode/s2.wav"),
     InThisEpisode(),
-    TitleSlide("Elliptic Curves"),
+    TitleSlide("Elliptic Curves", sound="data/sound/episode/s4.wav"),
     EquationSlide(),
     CECOperations(),
     CECNegation(),
