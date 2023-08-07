@@ -1,5 +1,4 @@
-from manim import (LEFT, FadeOut, Indicate, ReplacementTransform, Scene,
-                   VGroup, Write)
+from manim import LEFT, FadeOut, Indicate, ReplacementTransform, Scene, VGroup
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.constant import HIGHLIGHT_COLOR
@@ -33,9 +32,14 @@ class Operations(SlideBase):
         scene.play(ReplacementTransform(self.p1, self.p2))
 
         scene.wait(3)
-        scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT), run_time=2)
+        scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT),
+            run_time=2)
         self.sidebar.animate_show_label(scene)
-        scene.wait(3)
+        scene.wait(2)
+
+        copy = self.p2.dot.copy()
+        scene.play(Indicate(copy))
+
         self.sidebar.animate_show_math(scene)
 
         self.new_subsection(scene,
