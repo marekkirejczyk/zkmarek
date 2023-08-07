@@ -13,6 +13,7 @@ class Operations(SlideBase):
     sidebar: Sidebar
     p1: DotOnCurve
     p2: DotOnCurve
+    copy: DotOnCurve
 
     def __init__(self):
         super().__init__("Elliptic Curves Operations")
@@ -37,8 +38,8 @@ class Operations(SlideBase):
         self.sidebar.animate_show_label(scene)
         scene.wait(2)
 
-        copy = self.p2.dot.copy()
-        scene.play(Indicate(copy))
+        self.copy = self.p2.dot.copy()
+        scene.play(Indicate(self.copy))
 
         self.sidebar.animate_show_math(scene)
 
@@ -52,10 +53,10 @@ class Operations(SlideBase):
         list[0][12:25].set_color(HIGHLIGHT_COLOR)
         scene.wait(2)
         list[0][25:38].set_color(HIGHLIGHT_COLOR)
-
-
+        scene.wait(1)
 
     def animate_out(self, scene: Scene):
-        scene.play(FadeOut(self.p2))
-        scene.play(FadeOut(self.chart))
+        scene.play(FadeOut(self.p2),
+            FadeOut(self.copy),
+            FadeOut(self.chart))
         scene.play(FadeOut(self.sidebar))

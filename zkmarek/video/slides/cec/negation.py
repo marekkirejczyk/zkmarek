@@ -1,4 +1,4 @@
-from manim import LEFT
+from manim import LEFT, FadeIn
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
@@ -23,7 +23,19 @@ class Negation(SlideBase):
         self.add(self.p1, self.p2, self.chart, self.sidebar)
 
     def animate_in(self, scene):
-        self.chart.animate_in(scene)
-        self.p1.animate_in(scene)
+        self.new_subsection(scene,
+            "Negation",
+            sound="data/sound/episode/s7-1.wav")
+
+        scene.play(FadeIn(self.chart), FadeIn(self.p1))
+        self.sidebar.animate_show_label(scene)
         self.p2.animate_in(scene)
-        self.sidebar.animate_in(scene, self)
+        self.sidebar.animate_show_math(scene)
+        self.play_sound(scene, "data/sound/episode/s7-2.wav")
+        self.sidebar.animate_show_code(scene)
+        scene.wait(2)
+        # self.play_sound(scene, "data/sound/episode/s7-3.wav")
+        # self.play_sound(scene, "data/sound/episode/s7-4.wav")
+        # self.play_sound(scene, "data/sound/episode/s7-5.wav")
+        # self.play_sound(scene, "data/sound/episode/s7-6.wav")
+
