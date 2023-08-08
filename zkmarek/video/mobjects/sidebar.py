@@ -1,12 +1,14 @@
 from typing import Optional
 
 from manim import (DOWN, RIGHT, UP, AddTextLetterByLetter, Code, FadeIn,
-                   FadeOut, RemoveTextLetterByLetter, ReplacementTransform,
-                   Tex, Text, TransformMatchingShapes, VGroup, VMobject)
+                   FadeOut, Indicate, RemoveTextLetterByLetter,
+                   ReplacementTransform, Scene, Tex, Text,
+                   TransformMatchingShapes, VGroup, VMobject)
 from utils import load
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.utils import find_in_code
 
 
 class Sidebar(VGroup):
@@ -113,3 +115,8 @@ class Sidebar(VGroup):
         self.remove(self.code)
         self.code = new_code
         self.add(self.code)
+
+    def indicate_code(self, scene: Scene, fragment: str, index=0):
+            chars = find_in_code(self.code, fragment)
+            scene.play(Indicate(chars[index]), run_time=0.5)
+
