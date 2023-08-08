@@ -1,9 +1,11 @@
-from manim import (DOWN, LEFT, RIGHT, UP, Create, Dot, FadeOut, Flash,
-                   GrowFromPoint, MathTex, SingleStringMathTex, Succession,
-                   ValueTracker, linear)
+from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Create, Dot,
+                   FadeOut, Flash, GrowFromPoint, Indicate, MathTex,
+                   ReplacementTransform, ShowPassingFlash, SingleStringMathTex,
+                   Succession, TransformMatchingTex, ValueTracker, Write,
+                   linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
-from zkmarek.video.constant import PRIMARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -17,12 +19,17 @@ class Addition(SlideBase):
     sidebar: Sidebar
     line1: LineThroughDots
     line2: LineThroughDots
+    line1_tmp: LineThroughDots
+    line2_tmp: LineThroughDots
     p1: DotOnCurve
     p2: DotOnCurve
     p3: DotOnCurve
     p4: DotOnCurve
+    p4_tmp: DotOnCurve
     point_at_infinity: DotOnCurve
     point_at_label: MathTex
+    equation1: MathTex
+    equation2: MathTex
     p1_x: ValueTracker
     p1_sgn: int
 
@@ -44,14 +51,24 @@ class Addition(SlideBase):
         self.p4 = DotOnCurve(
             self.chart.ax, "-(A + B)", -c, label_direction=(LEFT + 0.5 * DOWN)
         )
+        self.p4_tmp = DotOnCurve(
+            self.chart.ax, "C", -c, label_direction=(LEFT + 0.5 * DOWN)
+        )
         self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7),
                                      color=PRIMARY_COLOR)
         self.point_at_label = SingleStringMathTex("\infty", color=PRIMARY_COLOR)
         self.line1 = LineThroughDots(self.p4, self.p2)
-        self.line2 = LineThroughDots(self.p3, self.p4)
+        self.line1_tmp = LineThroughDots(self.p2, self.p4)
+        self.line2 = LineThroughDots(self.p4, self.p3)
+        self.line2_tmp = LineThroughDots(self.p4, self.p3)
+
         self.sidebar = Sidebar(
             "Addition", tex_path="data/cec/add.tex", code_path="data/cec/add.py"
         )
+        self.equation1 = MathTex("{{A}} + {{B}} + {{C}} = 0")
+        self.equation2 = MathTex("{{C}} = -({{A}} + {{B}})")
+        self.equation1.to_corner(DOWN + LEFT)
+        self.equation2.to_corner(DOWN + LEFT)
 
     def update_p1(self, p1):
         new_a = CECAffine.from_x(self.p1_x.get_value(), self.p1_sgn)
@@ -70,24 +87,62 @@ class Addition(SlideBase):
         self.line2.update_start_and_end(self.p3, self.p4)
 
     def animate_build_scene(self, scene):
+        self.new_subsection(scene,
+            "Two points",
+            sound="data/sound/episode/s8-1.wav")
         self.chart.animate_in(scene)
-        self.p1.animate_in(scene)
-        self.p2.animate_in(scene)
+        scene.play(Create(self.p1.dot))
+        scene.play(Create(self.p2.dot))
+        scene.play(Write(self.p1.label))
+        scene.play(Write(self.p2.label))
+
         scene.add(self.p1)
         scene.add(self.p2)
         scene.add(self.p1_x)
 
-        self.new_subsection(scene, "Line through points")
+        self.new_subsection(scene,
+            "Line through points",
+            sound="data/sound/episode/s8-2.wav")
         scene.play(GrowFromPoint(self.line1, point=self.p2.to_coord(), run_time=5))
-        self.p4.animate_in(scene)
-        scene.add(self.p4)
+        self.p4_tmp.animate_in(scene)
+        scene.add(self.p4_tmp)
 
-        self.new_subsection(scene, "Point reflection")
+        self.new_subsection(scene,
+            "Addition definition",
+            sound="data/sound/episode/s8-3.wav")
+        scene.play(AddTextLetterByLetter(self.equation1), run_time=5)
+
+        self.new_subsection(scene,
+            "Addition formula",
+            sound="data/sound/episode/s8-4.wav")
+        scene.play(TransformMatchingTex(self.equation1, self.equation2), run_time=2)
+        scene.wait(3)
+        scene.play(ReplacementTransform(self.p4_tmp, self.p4), run_time=2)
+
+        self.new_subsection(scene,
+            "Point reflection",
+            sound="data/sound/episode/s8-5.wav")
         scene.play(GrowFromPoint(self.line2, point=self.p4.to_coord(), run_time=3))
         self.p3.animate_in(scene)
         scene.add(self.p3)
 
+        self.new_subsection(scene,
+            "Addition summary",
+            sound="data/sound/episode/s8-6.wav")
+
         self.p1.add_updater(self.update_p1)
+        scene.wait(2)
+        scene.play(
+            ShowPassingFlash(self.line1_tmp.set_color(SECONDARY_COLOR),
+            time_width=1,
+            run_time=1))
+        scene.play(Indicate(self.p4))
+        scene.wait(2)
+        scene.play(
+            ShowPassingFlash(self.line2_tmp.set_color(SECONDARY_COLOR),
+            time_width=1,
+            run_time=1))
+        scene.play(Indicate(self.p3))
 
     def animate_addition(self, scene):
         self.new_subsection(scene, "Move around")

@@ -44,7 +44,8 @@ class ContinuousEllipticChart(VGroup):
         self.add(self.graph)
 
     def animate_in(self, scene):
-        scene.play(Create(self.ax))
         if self.include_details:
-            scene.play(Create(self.labels))
+            scene.play(Create(self.ax), Create(self.labels))
+        else:
+            scene.play(Create(self.ax))
         scene.play(Write(self.graph))
