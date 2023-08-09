@@ -248,19 +248,19 @@ class Addition(SlideBase):
         scene.wait(2)
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
-        scene.wait(2)
-        self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
 
         self.new_subsection(scene,
             "Addition - point at infinity - code",
             sound="data/sound/episode/s8c-7.wav")
+        scene.wait(1)
+        self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
 
-        scene.wait(5)
+        scene.wait(4)
         self.sidebar.indicate_code(scene,
             "self.x == other.x and self.y == -other.y")
         self.sidebar.indicate_code(scene, "self == INFINITY")
         self.sidebar.indicate_code(scene, "other == INFINITY")
-        scene.wait(4)
+        scene.wait(3)
 
         self.sidebar.indicate_code(scene,
             "slope = (other.y - self.y) / (other.x - self.x)")
