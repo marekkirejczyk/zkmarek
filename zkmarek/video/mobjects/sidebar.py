@@ -116,7 +116,7 @@ class Sidebar(VGroup):
         self.code = new_code
         self.add(self.code)
 
-    def indicate_code(self, scene: Scene, fragment: str, index=0):
+    def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
             chars = find_in_code(self.code, fragment)
-            scene.play(Indicate(chars[index]), run_time=0.5)
+            scene.play(Indicate(chars[index]), run_time=run_time)
 
