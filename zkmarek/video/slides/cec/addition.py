@@ -1,11 +1,12 @@
-from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Create, Dot,
-                   FadeOut, Flash, GrowFromPoint, Indicate, MathTex,
+from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Angle, Create,
+                   Dot, FadeOut, Flash, GrowFromPoint, Indicate, MathTex,
                    ReplacementTransform, ShowPassingFlash, SingleStringMathTex,
                    Succession, TransformMatchingTex, ValueTracker, Write,
                    linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
+from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
+                                    SECONDARY_COLOR)
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -32,12 +33,14 @@ class Addition(SlideBase):
     equation2: MathTex
     p1_x: ValueTracker
     p1_sgn: int
+    angle: Angle
+
 
     def __init__(self):
         super().__init__("Elliptic Curves addition")
 
     def construct(self):
-        self.chart = ContinuousEllipticChart()
+        self.chart = ContinuousEllipticChart(include_details=False)
         self.p1_x = ValueTracker(1)
         self.p1_sgn = 1
         a = CECAffine.from_x(self.p1_x.get_value())
@@ -61,12 +64,11 @@ class Addition(SlideBase):
         self.line1_tmp = LineThroughDots(self.p2, self.p4)
         self.line2 = LineThroughDots(self.p4, self.p3)
         self.line2_tmp = LineThroughDots(self.p4, self.p3)
-
         self.sidebar = Sidebar(
             "Addition", tex_path="data/cec/add.tex", code_path="data/cec/add.py"
         )
-        self.equation1 = MathTex("{{A}} + {{B}} + {{C}} = 0")
-        self.equation2 = MathTex("{{C}} = -({{A}} + {{B}})")
+        self.equation1 = MathTex("{{A}} + {{B}} + {{C}} = 0", color=PRIMARY_COLOR)
+        self.equation2 = MathTex("{{C}} = -({{A}} + {{B}})", color=PRIMARY_COLOR)
         self.equation1.to_corner(DOWN + LEFT)
         self.equation2.to_corner(DOWN + LEFT)
 
@@ -86,7 +88,7 @@ class Addition(SlideBase):
 
         self.line2.update_start_and_end(self.p3, self.p4)
 
-    def animate_build_scene(self, scene):
+    def animate_addition_base(self, scene):
         self.new_subsection(scene,
             "Two points",
             sound="data/sound/episode/s8-1.wav")
@@ -117,7 +119,10 @@ class Addition(SlideBase):
             sound="data/sound/episode/s8-4.wav")
         scene.play(TransformMatchingTex(self.equation1, self.equation2), run_time=2)
         scene.wait(3)
-        scene.play(ReplacementTransform(self.p4_tmp, self.p4), run_time=2)
+        scene.play(
+            ReplacementTransform(self.equation2, self.p4),
+            FadeOut(self.p4_tmp),
+            run_time=2)
 
         self.new_subsection(scene,
             "Point reflection",
@@ -126,6 +131,7 @@ class Addition(SlideBase):
         self.p3.animate_in(scene)
         scene.add(self.p3)
 
+    def animate_addition_base_summary(self, scene):
         self.new_subsection(scene,
             "Addition summary",
             sound="data/sound/episode/s8-6.wav")
@@ -144,15 +150,50 @@ class Addition(SlideBase):
             run_time=1))
         scene.play(Indicate(self.p3))
 
-    def animate_addition(self, scene):
+    def animate_addition_math_and_code(self, scene):
+        self.new_subsection(scene,
+            "Sidebar addition math",
+            sound="data/sound/episode/s8b-1.wav")
+        scene.play(self.chart.animate.align_on_border(LEFT, buff=0.8))
+        self.sidebar.animate_show_label(scene)
+        self.sidebar.animate_show_math(scene)
+        math = self.sidebar.math
+        scene.wait(3.5)
+        math[0][0:12].set_color(HIGHLIGHT_COLOR)
+
+        scene.wait(1)
+        self.angle = Angle(self.line1,
+            self.chart.ax.x_axis,
+            other_angle=True,
+            color=SECONDARY_COLOR)
+        scene.play(Write(self.angle))
+
+        scene.wait(5.5)
+        math[0][12:24].set_color(HIGHLIGHT_COLOR)
+        scene.wait(0.5)
+        math[0][24:38].set_color(HIGHLIGHT_COLOR)
+
+        self.new_subsection(scene,
+            "Sidebar addition code",
+            sound="data/sound/episode/s8b-2.wav")
+        self.sidebar.animate_show_code(scene)
+
+        scene.wait(3)
+        self.sidebar.indicate_code(scene, "def __add__(self, other)")
+        scene.wait(1)
+        self.sidebar.indicate_code(scene,
+            "slope = (other.y - self.y) / (other.x - self.x)")
+        self.sidebar.indicate_code(scene, "x = slope ** 2 - self.x - other.x")
+        self.sidebar.indicate_code(scene, "y = slope * (self.x - x) - self.y")
+        scene.play(FadeOut(self.angle))
+
+
+    def animate_addition_move_around(self, scene):
         self.new_subsection(scene, "Move around")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = -1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-0.5))
-
-        scene.play(self.chart.animate.align_on_border(LEFT, buff=0.2))
-        self.sidebar.animate_in(scene, self)
 
     def animate_infinity_point(self, scene):
         self.new_subsection(scene, "Point at infinity - move to negation")
@@ -204,8 +245,10 @@ class Addition(SlideBase):
         scene.play(self.p1_x.animate(run_time=3, rate_func=linear).set_value(3.5))
 
     def animate_in(self, scene):
-        self.animate_build_scene(scene)
-        self.animate_addition(scene)
+        self.animate_addition_base(scene)
+        self.animate_addition_base_summary(scene)
+        self.animate_addition_math_and_code(scene)
+        self.animate_addition_move_around(scene)
         self.animate_infinity_point(scene)
         self.animate_doubling(scene)
 
