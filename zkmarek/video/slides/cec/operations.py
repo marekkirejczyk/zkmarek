@@ -26,7 +26,10 @@ class Operations(SlideBase):
         self.sidebar = Sidebar("Operations", tex_path="data/cec/operations.tex")
 
     def animate_in(self, scene: Scene):
-        self.play_sound(scene, "data/sound/episode/s6-1.wav")
+        self.new_subsection(scene,
+            "Operations",
+            sound="data/sound/episode/s6-1.wav")
+
         self.chart.animate_in(scene)
         self.p1.animate_in(scene)
         scene.wait(0.5)
