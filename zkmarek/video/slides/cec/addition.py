@@ -160,7 +160,6 @@ class Addition(SlideBase):
         math = self.sidebar.math
         scene.wait(3.5)
         math[0][0:12].set_color(HIGHLIGHT_COLOR)
-
         scene.wait(1)
         self.angle = Angle(self.line1,
             self.chart.ax.x_axis,
@@ -176,6 +175,7 @@ class Addition(SlideBase):
         self.new_subsection(scene,
             "Sidebar addition code",
             sound="data/sound/episode/s8b-2.wav")
+        math[0][0:38].set_color(PRIMARY_COLOR)
         self.sidebar.animate_show_code(scene)
 
         scene.wait(3)
@@ -188,31 +188,86 @@ class Addition(SlideBase):
         scene.play(FadeOut(self.angle))
 
 
-    def animate_addition_move_around(self, scene):
-        self.new_subsection(scene, "Move around")
-        target_x = -(7 ** (1.0 / 3))
-        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
-        self.p1_sgn = -1
-        scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(-0.5))
-
     def animate_infinity_point(self, scene):
-        self.new_subsection(scene, "Point at infinity - move to negation")
+        self.new_subsection(scene,
+            "Addition - move around",
+            sound="data/sound/episode/s8c-1.wav")
+        scene.wait(1)
+        scene.play(Indicate(self.p4.dot))
+
+        self.new_subsection(scene,
+            "Addition - move around",
+            sound="data/sound/episode/s8c-2.wav")
+        target_x = -(7 ** (1.0 / 3))
+        scene.play(self.p1_x.animate(run_time=6, rate_func=linear).set_value(target_x))
+        self.p1_sgn = -1
+        scene.play(self.p1_x.animate(run_time=6, rate_func=linear).set_value(-0.5))
+
+
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(2.99))
         self.point_at_infinity.move_to(self.chart.ax.coords_to_point(6, 7))
         self.point_at_label.next_to(self.point_at_infinity, RIGHT)
 
-        self.new_subsection(scene, "Point at infinity - show point")
-        scene.play(Create(self.point_at_infinity))
-        scene.play(Create(self.point_at_label))
+        scene.wait(5)
 
+        self.sidebar.math[0][8:13].set_color(SECONDARY_COLOR)
+
+        self.new_subsection(scene,
+            "Addition - point at infinity",
+            sound="data/sound/episode/s8c-3.wav")
+
+        scene.wait(3)
+        scene.play(Create(self.point_at_infinity))
+        scene.wait(3)
         scene.play(Flash(self.point_at_infinity))
-        self.new_subsection(scene, "Point at infinity - math")
+        scene.wait(1)
+        scene.play(Create(self.point_at_label))
+        self.sidebar.math[0][8:13].set_color(PRIMARY_COLOR)
+
+        self.new_subsection(scene,
+            "Addition - point at infinity - math",
+            sound="data/sound/episode/s8c-4.wav")
+
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf.tex")
-        self.new_subsection(scene, "Point at infinity - code")
+        scene.wait(1)
+        self.sidebar.math[0][0:6].set_color(SECONDARY_COLOR)
+        self.new_subsection(scene,
+            "Addition - point at infinity - neutral element",
+            sound="data/sound/episode/s8c-5.wav")
+
+        scene.wait(12)
+        self.sidebar.animate_replace_math(scene, "data/cec/add_inf2.tex")
+        self.sidebar.math[0][6:11].set_color(SECONDARY_COLOR)
+        scene.wait(3)
+        self.sidebar.math[0][11:16].set_color(SECONDARY_COLOR)
+        self.new_subsection(scene,
+            "Addition - point at infinity - code",
+            sound="data/sound/episode/s8c-6.wav")
+
+        scene.wait(2)
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
+        scene.wait(2)
         self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
+
+        self.new_subsection(scene,
+            "Addition - point at infinity - code",
+            sound="data/sound/episode/s8c-7.wav")
+
+        scene.wait(5)
+        self.sidebar.indicate_code(scene,
+            "self.x == other.x and self.y == -other.y")
+        self.sidebar.indicate_code(scene, "self == INFINITY")
+        self.sidebar.indicate_code(scene, "other == INFINITY")
+        scene.wait(4)
+
+        self.sidebar.indicate_code(scene,
+            "slope = (other.y - self.y) / (other.x - self.x)")
+        self.sidebar.indicate_code(scene, "x = slope ** 2 - self.x - other.x")
+        self.sidebar.indicate_code(scene, "y = slope * (self.x - x) - self.y")
+        self.sidebar.indicate_code(scene, "return CECAffine(x, y)")
+
         scene.play(FadeOut(self.point_at_label))
         scene.play(FadeOut(self.point_at_infinity))
 
@@ -248,7 +303,6 @@ class Addition(SlideBase):
         self.animate_addition_base(scene)
         self.animate_addition_base_summary(scene)
         self.animate_addition_math_and_code(scene)
-        self.animate_addition_move_around(scene)
         self.animate_infinity_point(scene)
         self.animate_doubling(scene)
 
