@@ -66,7 +66,8 @@ MAIN_SLIDES = [
     CECNegation(),
     CECAddition(),
 
-    TitleSlide("Prime Fields"),
+    TitleSlide("Prime Fields", wait_time=2,
+        sound="data/sound/episode/s9.wav"),
     PrimeFields(),
 
     TitleSlide("Discrete Elliptic Curves"),
