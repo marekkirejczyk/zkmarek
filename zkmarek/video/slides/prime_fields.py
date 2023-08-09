@@ -2,7 +2,7 @@ from typing import Optional
 
 from manim import (DOWN, LEFT, RED, FadeIn, FadeOut, Indicate, NumberLine,
                    ReplacementTransform, MathTex, TransformMatchingShapes,
-                   TransformMatchingTex)
+                   TransformMatchingTex, TexTemplate)
 
 from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.mobjects.clock import Clock
@@ -79,7 +79,12 @@ class PrimeFields(SlideBase):
 
         scene.wait(2)
 
-        self.order256 = MathTex("{{Order}} = 2^{256}", color=PRIMARY_COLOR).next_to(
+        template = TexTemplate()
+        template.add_to_preamble(r"\usepackage{MnSymbol,bm}")
+
+        self.order256 = MathTex(r"{{Order}} \approx 2^{256}",
+            color=PRIMARY_COLOR,
+            tex_template=template).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
         scene.play(TransformMatchingTex(self.order12, self.order256))
 
