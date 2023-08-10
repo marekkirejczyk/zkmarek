@@ -26,6 +26,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
+        apt-file -x search '/MnSymbol.sty$'
         SLIDES=TestSlide script/movie
 
     - uses: actions/upload-artifact@v3
