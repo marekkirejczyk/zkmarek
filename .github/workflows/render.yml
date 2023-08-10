@@ -26,5 +26,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
-        script/movie
+        SLIDES=TestSlide script/movie
+        cat media/Tex/*.log
 

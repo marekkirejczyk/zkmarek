@@ -1,13 +1,17 @@
-from manim import Tex
-from utils import load
+from manim import MathTex, TexTemplate
+
 from zkmarek.video.slides.common.slide_base import SlideBase
+
 
 class TestSlide(SlideBase):
     def __init__(self):
         super().__init__("Test slide")
 
     def animate_in(self, scene):
-        tex_path = "data/cec/add_double.tex"
-        self.add(Tex(load(tex_path), font_size=32))
+        template = TexTemplate()
+        template.add_to_preamble(r"\usepackage{MnSymbol,bm}")
+
+        self.add(MathTex(r"order \approx 2^{256}", font_size=32, tex_template=template))
+
 
 
