@@ -1,8 +1,7 @@
 from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Angle, Create,
                    Dot, FadeOut, Flash, GrowFromPoint, Indicate, MathTex,
                    ReplacementTransform, ShowPassingFlash, SingleStringMathTex,
-                   Succession, TransformMatchingTex, ValueTracker, Write,
-                   linear)
+                   TransformMatchingTex, ValueTracker, Write, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
@@ -272,32 +271,47 @@ class Addition(SlideBase):
         scene.play(FadeOut(self.point_at_infinity))
 
     def animate_doubling(self, scene):
-        self.new_subsection(scene, "Point doubling - move around")
+        self.new_subsection(scene, "Point doubling - move around",
+            sound="data/sound/episode/s8d-1.wav")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
 
-        self.new_subsection(scene, "Point doubling - tangent line")
+        self.new_subsection(scene, "Point doubling - tangent line",
+            sound="data/sound/episode/s8d-2.wav")
+        scene.wait(10)
         line_double = self.line1.copy()
         self.chart.add(line_double)
         scene.play(line_double.animate(run_time=2).scale(1.8))
 
-        self.new_subsection(scene, "Point doubling - math")
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_show_math(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_double.tex")
-        self.new_subsection(scene, "Point doubling - code")
+        scene.wait(1)
+        self.sidebar.math[0][19:31].set_color(SECONDARY_COLOR)
+        scene.wait(1)
+        self.sidebar.math[0][16:19].set_color(SECONDARY_COLOR)
+
+        self.new_subsection(scene, "Point doubling - code",
+            sound="data/sound/episode/s8d-3.wav")
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
-        self.new_subsection(scene, "Point doubling - code v1")
         self.sidebar.animate_replace_code(scene, "data/cec/add_double.py")
-        self.new_subsection(scene, "Point doubling - code v2")
+        self.sidebar.indicate_code(scene, "if self.x == other.x and self.y == other.y:")
+
+        self.new_subsection(scene, "Point doubling - extract doubling",
+            sound="data/sound/episode/s8d-4.wav")
+        scene.wait(3)
+        self.sidebar.indicate_code(scene, "return self.double()")
+        scene.wait(1)
         self.sidebar.animate_replace_code(scene, "data/cec/double.py")
+        self.sidebar.indicate_code(scene, "def double(self):")
+        scene.wait(5)
+        self.sidebar.indicate_code(scene, "slope = (3 * self.x ** 2) / (2 * self.y)")
 
         scene.play(line_double.animate(run_time=2).scale(0.5))
         self.chart.remove(line_double)
-        scene.play(self.p1_x.animate(run_time=3, rate_func=linear).set_value(3.5))
 
     def animate_in(self, scene):
         self.animate_addition_base(scene)
@@ -310,13 +324,11 @@ class Addition(SlideBase):
         self.new_subsection(scene, "Point addition - clean up")
         self.sidebar.animate_out(scene)
         scene.play(
-            Succession(
-                FadeOut(self.p3),
-                FadeOut(self.line2),
-                FadeOut(self.p4),
-                FadeOut(self.line1),
-                FadeOut(self.p2),
-                FadeOut(self.p1),
-                FadeOut(self.chart),
-            )
+            FadeOut(self.p3),
+            FadeOut(self.line2),
+            FadeOut(self.p4),
+            FadeOut(self.line1),
+            FadeOut(self.p2),
+            FadeOut(self.p1),
+            FadeOut(self.chart),
         )
