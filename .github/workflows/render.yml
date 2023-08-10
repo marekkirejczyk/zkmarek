@@ -13,7 +13,7 @@ jobs:
     - name: Install apt dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra texlive-full --fix-missing
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
@@ -26,5 +26,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
-        SLIDES=TestSlide script/movie || cat media/Tex/*.log
+        SLIDES=TestSlide script/movie
 
+    - uses: actions/upload-artifact@v3
+      with:
+        name: upload movie
+        path: path/to/artifact/world.txt
