@@ -37,4 +37,8 @@ jobs:
     - name: Render movie (manim)
       run: |
         script/movie
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Upload movie
+        path: media/videos/main/480p15/EllipticCurves.mp4
 
