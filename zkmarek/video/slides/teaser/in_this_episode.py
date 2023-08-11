@@ -47,11 +47,11 @@ class InThisEpisode(SlideBase):
             Signature()
         ]
         self.sounds = [
-            "data/sound/episode/s3/p1.m4a",
-            "data/sound/episode/s3/p2.m4a",
-            "data/sound/episode/s3/p3.m4a",
-            "data/sound/episode/s3/p4.m4a",
-            "data/sound/episode/s3/p5.m4a",
+            "data/sound/episode/s3-1.m4a",
+            "data/sound/episode/s3-2.m4a",
+            "data/sound/episode/s3-3.m4a",
+            "data/sound/episode/s3-4.m4a",
+            "data/sound/episode/s3-5.m4a",
         ]
 
     def construct(self):
@@ -79,8 +79,10 @@ class InThisEpisode(SlideBase):
             self.add(thumbnail)
 
     def animate_in(self, scene):
+        self.play_sound(scene, "data/sound/episode/s3-0.m4a")
+        scene.wait(1)
         for i, label in enumerate(self.labels):
             self.new_subsection(scene, self.titles[i], sound=self.sounds[i])
             scene.play(Create(self.thumbnails_borders[i]))
             self.thumbnails[i].animate_in(scene)
-            scene.play(Write(label))
+            scene.play(Write(label), run_time=2)

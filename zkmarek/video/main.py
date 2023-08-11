@@ -57,15 +57,17 @@ MAIN_SLIDES = [
     Intro(),
     TitleSlide(
         "Elliptic curves and Digital signature",
-        subtitle="used in Ethereum"),
+        subtitle="used in Ethereum",
+        sound="data/sound/episode/s2.wav"),
     InThisEpisode(),
-    TitleSlide("Elliptic Curves"),
+    TitleSlide("Elliptic Curves", sound="data/sound/episode/s4.wav"),
     EquationSlide(),
     CECOperations(),
     CECNegation(),
     CECAddition(),
 
-    TitleSlide("Prime Fields"),
+    TitleSlide("Prime Fields", wait_time=2,
+        sound="data/sound/episode/s9.wav"),
     PrimeFields(),
 
     TitleSlide("Discrete Elliptic Curves"),
@@ -93,7 +95,7 @@ MAIN_SLIDES = [
     Subscribe()
 ]
 
-SLIDES = TEASER
+SLIDES = MAIN_SLIDES
 
 class EllipticCurves(Scene):
     def construct(self):

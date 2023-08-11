@@ -47,7 +47,6 @@ class SlideBase(VGroup):
         scene.next_section(f"{self.title}: {title}")
         self.do_play_sound(scene, sound)
 
-
     def animate_in(self, scene):
         pass
 

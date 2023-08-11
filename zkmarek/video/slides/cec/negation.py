@@ -1,4 +1,4 @@
-from manim import LEFT
+from manim import LEFT, FadeIn
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
@@ -23,7 +23,53 @@ class Negation(SlideBase):
         self.add(self.p1, self.p2, self.chart, self.sidebar)
 
     def animate_in(self, scene):
-        self.chart.animate_in(scene)
-        self.p1.animate_in(scene)
+        self.new_subsection(scene,
+            "Negation",
+            sound="data/sound/episode/s7-1.wav")
+
+        scene.play(FadeIn(self.chart), FadeIn(self.p1))
+        self.sidebar.animate_show_label(scene)
         self.p2.animate_in(scene)
-        self.sidebar.animate_in(scene, self)
+        self.sidebar.animate_show_math(scene)
+        self.new_subsection(scene, "Code", "data/sound/episode/s7-2.wav")
+        scene.wait(0.5)
+        self.sidebar.animate_show_code(scene)
+        scene.wait(4)
+
+        self.sidebar.indicate_code(scene, "class")
+        scene.wait(0.5)
+
+        self.sidebar.indicate_code(scene, "x: float")
+        self.sidebar.indicate_code(scene, "y: float")
+
+        self.play_sound(scene, "data/sound/episode/s7-3.wav")
+        scene.wait(1)
+
+        self.sidebar.indicate_code(scene, "CECAffine")
+        scene.wait(8)
+
+        self.sidebar.indicate_code(scene, "x: float")
+        self.sidebar.indicate_code(scene, "y: float")
+
+
+        self.play_sound(scene, "data/sound/episode/s7-4.wav")
+        scene.wait(1)
+        self.sidebar.indicate_code(scene, "def __init__(self, x: float, y: float):")
+        scene.wait(1)
+        self.sidebar.indicate_code(scene, "self.x = x")
+        self.sidebar.indicate_code(scene, "self.y = y")
+        scene.wait(1)
+        self.sidebar.indicate_code(scene, "x: float", 1)
+        self.sidebar.indicate_code(scene, "y: float", 1)
+
+        self.play_sound(scene, "data/sound/episode/s7-5.wav")
+        scene.wait(3)
+        self.sidebar.indicate_code(scene, "def __neg__(self):")
+        self.play_sound(scene, "data/sound/episode/s7-6.wav")
+        scene.wait(2)
+        self.sidebar.indicate_code(scene, "CECAffine", 1)
+        scene.wait(2)
+        self.sidebar.indicate_code(scene, "self.x", 1)
+        scene.wait(1.5)
+        self.sidebar.indicate_code(scene, "-self.y")
+

@@ -1,7 +1,7 @@
 from manim import RIGHT, Axes, Create, Dot, MathTex, VGroup, Write
 
 from zkmarek.crypto.cec_affine import CECAffine
-from zkmarek.video.constant import HIGHLIGHT_COLOR
+from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR
 
 
 class DotOnCurve(VGroup):
@@ -38,7 +38,7 @@ class DotOnCurve(VGroup):
         if include_lines:
             self.lines = ax.get_lines_to_point(ax.c2p(p.x, p.y))
             self.add(self.lines)
-        self.label = MathTex(text, font_size=30, color=HIGHLIGHT_COLOR)
+        self.label = MathTex(text, font_size=30, color=PRIMARY_COLOR)
         self.add(self.label)
         self.set_p(p)
         self.set_z_index(2, family=True)
