@@ -1,11 +1,12 @@
 #!/bin/sh
-osascript -e 'quit app "QuickTime Player"'
+osascript -e 'quit app "QuickTime Player"' || echo "QuickTime Player not running"
 
-if [[ -n $1 ]]; then
-    quality_arg=$1
-else
+if [ "$1" == "" ]; then
     quality_arg="-ql"
+else
+    quality_arg=$1
 fi
 
+echo python -m manim -p $quality_arg zkmarek/video/main.py
 python -m manim -p $quality_arg zkmarek/video/main.py
 
