@@ -36,9 +36,10 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
-        script/movie -qh
+        python -m manim -p -qh zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
         name: Upload movie
         path: media/videos/main/1080p60/EllipticCurves.mp4
+        retention-days: 5
 
