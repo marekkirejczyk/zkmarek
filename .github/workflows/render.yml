@@ -12,10 +12,13 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install apt dependencies
       run: |
-        kpsewhich -var-value=TEXMFHOME
-        cat dupa
         sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra texlive-full --fix-missing
+        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+    - name: Install fonts
+      run: |
+        mkdir ~/texmf
+        curl -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
+        unzip ~/texmf/mnsymbol.zip -d ~/texmf
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
@@ -29,7 +32,6 @@ jobs:
     - name: Render movie (manim)
       run: |
         SLIDES=TestSlide script/movie
-
     - uses: actions/upload-artifact@v3
       with:
         name: Upload movie

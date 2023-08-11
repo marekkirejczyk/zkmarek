@@ -9,7 +9,7 @@ class TestSlide(SlideBase):
 
     def animate_in(self, scene):
         template = TexTemplate()
-        template.add_to_preamble(r"\usepackage{MnSymbol,bm}")
+        template.add_to_preamble(r"\usepackage{MnSymbol}")
 
         self.add(MathTex(r"order \approx 2^{256}", font_size=32, tex_template=template))
 
