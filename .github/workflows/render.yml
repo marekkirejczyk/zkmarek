@@ -19,6 +19,9 @@ jobs:
         mkdir ~/texmf
         curl -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
         unzip ~/texmf/mnsymbol.zip -d ~/texmf
+        latex ~/texmf/mnsymbol/tex/MnSymbol.ins
+        cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
+        # kpsewhich -var-value=TEXMFHOME
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
