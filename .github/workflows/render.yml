@@ -22,6 +22,8 @@ jobs:
         cd ~/texmf/mnsymbol/tex && ls && latex MnSymbol.ins
         mkdir -p ~/texmf/tex/latex/MnSymbol/
         cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
+        mkdir /texmf/fonts/tfm/public/
+        cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
         # kpsewhich -var-value=TEXMFHOME
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
