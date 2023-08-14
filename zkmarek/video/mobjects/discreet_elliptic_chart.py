@@ -1,9 +1,11 @@
-from manim import (DARK_GREY, LEFT, YELLOW, Axes, Create, Dot, FadeIn, FadeOut,
-                   Line, Tex, TexTemplate, VGroup)
+from manim import (LEFT, Axes, Create, Dot, FadeIn, FadeOut, Line, Tex,
+                   TexTemplate, VGroup)
 from numpy import ndarray
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
+from zkmarek.video.constant import (BACKGROUND_COLOR, PRIMARY_COLOR,
+                                    SECONDARY_COLOR)
 from zkmarek.video.mobjects.point_at_infinity import PointAtInfinity
 
 
@@ -13,7 +15,7 @@ class DotOnCurve(Dot):
     def __init__(self, ax: Axes, coords: ECAffine):
         super().__init__(
             ax.c2p(float(coords.x.value), float(coords.y.value)),
-            color=YELLOW,
+            color=SECONDARY_COLOR,
             radius=0.05
         )
         self.coords = coords
@@ -34,16 +36,19 @@ class DiscreteEllipticChart(VGroup):
             x_range=[0, curve.p + 1, step],
             y_range=[0, curve.p + 1, step],
             x_length=7,
-            axis_config={"include_numbers": True},
+            axis_config={"include_numbers": True}
         )
+        self.ax.color = PRIMARY_COLOR
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
         self.add(self.ax)
         if include_details:
             field_label = r"$\mathbb{F}_{" + str(curve.p) + "}$"
             self.labels = self.ax.get_axis_labels(
-                Tex(field_label, tex_template=template, font_size=26),
-                Tex(field_label, tex_template=template, font_size=26),
+                Tex(field_label, tex_template=template,
+                    font_size=26, color=PRIMARY_COLOR),
+                Tex(field_label, tex_template=template,
+                    font_size=26, color=PRIMARY_COLOR),
             )
             self.add(self.labels)
         self.set_z_index(1, family=True)
@@ -86,12 +91,12 @@ class DiscreteEllipticChart(VGroup):
         mid_y = self.curve.p / 2
         s = self.ax.c2p(-1, mid_y)
         e = self.ax.c2p(self.curve.p, mid_y)
-        return Line(s, e, color=DARK_GREY, z_index=0)
+        return Line(s, e, color=BACKGROUND_COLOR, z_index=0)
 
     def create_vertical_line(self, x):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, self.curve.p)
-        return Line(s, e, color=DARK_GREY, z_index=0)
+        return Line(s, e, color=BACKGROUND_COLOR, z_index=0)
 
     def animate_add(self, scene, *mobjects, animation_class=FadeIn):
         self.add(*mobjects)
