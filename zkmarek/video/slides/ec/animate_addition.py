@@ -24,7 +24,8 @@ class AnimateAddition:
                 for i, c in enumerate(["A", "B", "-(A+B)", "A+B"])
         ]
 
-    def animate_in(self, scene: Scene, c0: ECAffine, c1: ECAffine, wait_time_between = 1):
+    def animate_in(self, scene: Scene, c0: ECAffine, c1: ECAffine,
+        wait_time_between = 1):
         c = [c0, c1, -(c0 + c1), c0 + c1]
 
         p = list(map(lambda i: self.chart.affine_to_point(c[i]), range(4)))
