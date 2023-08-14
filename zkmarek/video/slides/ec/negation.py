@@ -1,4 +1,4 @@
-from manim import RED, RIGHT, Dot, Indicate, Line, Tex
+from manim import RIGHT, Dot, Indicate, Line, Tex
 
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR
