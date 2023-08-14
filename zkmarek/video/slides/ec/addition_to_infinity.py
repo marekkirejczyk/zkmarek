@@ -39,14 +39,14 @@ class AdditionToInfinity(SlideBase):
             color=DARK_GREY,
             z_index=0,
         )
-        self.labels1 = Tex("A", font_size=24, color=PRIMARY_COLOR).next_to(
-            dots[0], RIGHT)
-        self.labels2 = Tex("-A", font_size=24, color=PRIMARY_COLOR).next_to(
+        self.label1 = Tex("A", font_size=24, color=PRIMARY_COLOR).next_to(
             dots[1], RIGHT)
-        scene.play(FadeIn(self.labels1))
-        scene.play(FadeIn(self.labels2))
-        self.chart.add(self.labels1)
-        self.chart.add(self.labels2)
+        self.label2 = Tex("-A", font_size=24, color=PRIMARY_COLOR).next_to(
+            dots[0], RIGHT)
+        scene.play(FadeIn(self.label1))
+        scene.play(FadeIn(self.label2))
+        self.chart.add(self.label1)
+        self.chart.add(self.label2)
         scene.play(GrowFromPoint(self.line, point=dots[1].get_center(), run_time=1))
 
         self.point_at_infinity.animate_in(scene)
@@ -56,7 +56,7 @@ class AdditionToInfinity(SlideBase):
         self.sidebar.animate_fast_show_math(scene)
         self.sidebar.animate_replace_math(scene, "data/ec/add_inf.tex")
         self.sidebar.math_set_color(0, 16)
-        scene.wait(3)
+        scene.wait(2)
 
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
@@ -66,7 +66,7 @@ class AdditionToInfinity(SlideBase):
             sound="data/sound/episode/s16-2.wav")
         scene.wait(3)
         self.sidebar.animate_replace_code(scene, "data/ec/add_double.py")
-        scene.wait(1)
+        scene.wait(2)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.sidebar), FadeOut(self.chart))
