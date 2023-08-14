@@ -98,16 +98,17 @@ class DiscreteEllipticChart(VGroup):
         e = self.ax.c2p(x, self.curve.p)
         return Line(s, e, color=BACKGROUND_COLOR, z_index=0)
 
-    def animate_add(self, scene, *mobjects, animation_class=FadeIn):
+    def animate_add(self, scene, *mobjects, animation_class=FadeIn,
+        run_time=1):
         self.add(*mobjects)
-        scene.play(animation_class(*mobjects))
+        scene.play(animation_class(*mobjects), run_time=run_time)
 
     def animate_remove(self, scene, *mobject, animation_class=FadeOut):
         scene.play(animation_class(*mobject))
         self.remove(*mobject)
 
-    def animate_align_left(self, scene):
-        scene.play(self.animate.align_on_border(LEFT, buff=0.2))
+    def animate_align_left(self, scene, run_time=1):
+        scene.play(self.animate.align_on_border(LEFT, buff=0.2), run_time=run_time)
 
     def animate_align_center(self, scene):
         scene.play(self.animate.center())

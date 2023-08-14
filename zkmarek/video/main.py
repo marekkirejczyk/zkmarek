@@ -73,6 +73,9 @@ MAIN_SLIDES = [
     TitleSlide("Discrete Elliptic Curves", pre_wait_time=2,
         sound="data/sound/episode/s11.m4a"),
     ECIntroduction(),
+    TitleSlide("Discrete Elliptic Curves Operarions", pre_wait_time=2,
+        sound="data/sound/episode/s13.wav"),
+
     ECNegation(),
     ECAddition(),
     AdditionToInfinity(),
