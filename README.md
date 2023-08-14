@@ -2,7 +2,7 @@
 
 [![Lint and test](https://github.com/marekkirejczyk/elliptic_curves_video/actions/workflows/lint_and_test.yml/badge.svg)](https://github.com/marekkirejczyk/elliptic_curves_video/actions/workflows/lint_and_test.yml)
 
-ZkMarek is an educational project created by [ethmarek](https://twitter.com/ethmarek), as an exercise to learn cryptography, with focus on understanding [Plonk](https://vitalik.ca/general/2019/09/22/plonk.html).
+zkMarek is an educational project created by [zkMarek](https://twitter.com/zkmarek), as an exercise to learn cryptography, with focus on understanding [Plonk](https://vitalik.ca/general/2019/09/22/plonk.html).
 
 
 ZkMarek consists of two sub projects in two respective folders:
