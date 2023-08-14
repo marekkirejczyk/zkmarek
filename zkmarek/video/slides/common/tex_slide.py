@@ -1,4 +1,6 @@
-from manim import DOWN, UP, Tex, Text, Unwrite, Write, TexTemplate
+from manim import (DOWN, UP, Tex, Text, TexTemplate, TransformMatchingShapes,
+                   Unwrite, Write)
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.utils import load
@@ -19,12 +21,21 @@ class TexSlide(SlideBase):
         self.kwargs = kwargs
 
     def construct(self):
-        self.title_text = Text(self.title)
+        self.title_text = Text(self.title, color=PRIMARY_COLOR,
+            font=PRIMARY_FONT)
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage[normalem]{ulem}")
-        self.tex = Tex(load(self.tex_path), tex_template=template, **self.kwargs)
+        self.tex = Tex(load(self.tex_path), tex_template=template,
+            color=PRIMARY_COLOR)
         self.title_text.to_edge(UP)
         self.tex.next_to(self.title_text, DOWN, buff=1)
+
+    def animate_replace_tex(self, scene, path):
+        tex2 = Tex(load(path), color=PRIMARY_COLOR)
+        tex2.next_to(self.title_text, DOWN, buff=1)
+        scene.play(TransformMatchingShapes(self.tex, tex2))
+        scene.remove(self.tex)
+        self.tex = tex2
 
     def animate_in(self, scene):
         scene.play(Write(self.title_text))
