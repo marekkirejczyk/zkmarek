@@ -12,7 +12,6 @@ from slides.ec.introduction import Introduction as ECIntroduction
 from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 
-from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.debug.code_style_slide import \
@@ -22,6 +21,7 @@ from zkmarek.video.slides.debug.font_slide import \
 from zkmarek.video.slides.debug.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
+from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
 from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
@@ -84,7 +84,7 @@ MAIN_SLIDES = [
     TitleSlide("Scalar multiplication", pre_wait_time=2,
         sound="data/sound/episode/s17.m4a"),
     ScalarMultiplication(),
-    CodeSlide("Double and add", "data/ec/double_and_add.py"),
+    DoubleAndAdd(),
 
     TitleSlide("Subgroups"),
     Subgroups(),

@@ -47,12 +47,5 @@ class EthereumTransaction(CodeSlide):
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
 
 
-        # scene.wait(2)
-
-        # for i in range(1,2,3):
-        #     scene.play(Indicate(self.code[i]), run_time=0.5)
-
-
-
     def animate_out(self, scene):
         scene.play(FadeOut(self.code), FadeOut(self.title_text), run_time=0.5)
