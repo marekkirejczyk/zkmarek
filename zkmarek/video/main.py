@@ -13,7 +13,6 @@ from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
-from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.debug.code_style_slide import \
     CodeStyleSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.debug.font_slide import \
@@ -92,7 +91,6 @@ MAIN_SLIDES = [
 
     Operations(),
     TitleSlide("Elliptic Curve Standards",
-        pre_wait_time=1,
         sound="data/sound/episode/s23.m4a"),
     Standards(),
 
