@@ -86,7 +86,7 @@ MAIN_SLIDES = [
     ScalarMultiplication(),
     DoubleAndAdd(),
 
-    TitleSlide("Subgroups"),
+    TitleSlide("Subgroups", sound="data/sound/episode/s20.m4a"),
     Subgroups(),
 
     TitleSlide("Elliptic Curve Standards"),
