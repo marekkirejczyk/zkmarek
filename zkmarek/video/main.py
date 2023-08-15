@@ -91,7 +91,9 @@ MAIN_SLIDES = [
     Subgroups(),
 
     Operations(),
-    TitleSlide("Elliptic Curve Standards"),
+    TitleSlide("Elliptic Curve Standards",
+        pre_wait_time=1,
+        sound="data/sound/episode/s23.m4a"),
     Standards(),
 
     TitleSlide("Signatures"),
