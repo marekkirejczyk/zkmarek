@@ -12,10 +12,10 @@ from zkmarek.video.mobjects.point_at_infinity import PointAtInfinity
 class DotOnCurve(Dot):
     coords: ECAffine
 
-    def __init__(self, ax: Axes, coords: ECAffine):
+    def __init__(self, ax: Axes, coords: ECAffine, color=SECONDARY_COLOR):
         super().__init__(
             ax.c2p(float(coords.x.value), float(coords.y.value)),
-            color=SECONDARY_COLOR,
+            color=color,
             radius=0.05
         )
         self.coords = coords
@@ -25,12 +25,15 @@ class DiscreteEllipticChart(VGroup):
     dots: list[Dot]
     ax: Axes
     point_at_infinity: PointAtInfinity
+    dot_color: str
 
-    def __init__(self, curve=Secp256k1_41, include_details=True,):
+    def __init__(self, curve=Secp256k1_41, include_details=True,
+        dot_color=SECONDARY_COLOR):
         super().__init__()
         self.dots = []
         self.curve = curve
         self.point_at_infinity = None
+        self.dot_color = dot_color
         step = 5 if include_details else 500
         self.ax = Axes(
             x_range=[0, curve.p + 1, step],
@@ -46,17 +49,18 @@ class DiscreteEllipticChart(VGroup):
             field_label = r"$\mathbb{F}_{" + str(curve.p) + "}$"
             self.labels = self.ax.get_axis_labels(
                 Tex(field_label, tex_template=template,
-                    font_size=26, color=PRIMARY_COLOR),
+                    font_size=26, color=dot_color),
                 Tex(field_label, tex_template=template,
-                    font_size=26, color=PRIMARY_COLOR),
+                    font_size=26, color=dot_color),
             )
             self.add(self.labels)
         self.set_z_index(1, family=True)
         self.gen_points()
 
-    def create_point_at_infinity(self, x, y, label="\infty"):
+    def create_point_at_infinity(self, x, y, label="\infty", dot_color=None):
+        color = dot_color if dot_color is not None else self.dot_color
         if self.point_at_infinity is None:
-            self.point_at_infinity = PointAtInfinity(self.ax, x, y, label)
+            self.point_at_infinity = PointAtInfinity(self.ax, x, y, label, color=color)
             self.add(self.point_at_infinity)
         else:
             self.point_at_infinity.move_to(self.ax.c2p(x, y))
@@ -64,7 +68,7 @@ class DiscreteEllipticChart(VGroup):
     def gen_points(self):
         points = ECAffine.generate_points(self.curve)
         for p in points:
-            dot = DotOnCurve(self.ax, p)
+            dot = DotOnCurve(self.ax, p, color=self.dot_color)
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
