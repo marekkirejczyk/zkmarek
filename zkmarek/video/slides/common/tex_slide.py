@@ -11,6 +11,7 @@ class TexSlide(SlideBase):
     tex: Tex
     tex_path: str
     kwargs: dict
+    template: TexTemplate
 
     def __str__(self):
         return f"{self.title} (MATH)"
@@ -23,15 +24,16 @@ class TexSlide(SlideBase):
     def construct(self):
         self.title_text = Text(self.title, color=PRIMARY_COLOR,
             font=PRIMARY_FONT)
-        template = TexTemplate()
-        template.add_to_preamble(r"\usepackage[normalem]{ulem}")
-        self.tex = Tex(load(self.tex_path), tex_template=template,
+        self.template = TexTemplate()
+        self.template.add_to_preamble(r"\usepackage[normalem]{ulem}")
+        self.tex = Tex(load(self.tex_path), tex_template=self.template,
             color=PRIMARY_COLOR)
         self.title_text.to_edge(UP)
         self.tex.next_to(self.title_text, DOWN, buff=1)
 
     def animate_replace_tex(self, scene, path):
-        tex2 = Tex(load(path), color=PRIMARY_COLOR)
+        tex2 = Tex(load(path), tex_template=self.template,
+            color=PRIMARY_COLOR)
         tex2.next_to(self.title_text, DOWN, buff=1)
         scene.play(TransformMatchingShapes(self.tex, tex2))
         scene.remove(self.tex)
