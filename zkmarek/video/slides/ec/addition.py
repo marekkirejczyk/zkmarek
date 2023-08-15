@@ -24,13 +24,32 @@ class Addition(SlideBase):
         )
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "Elliptic Curve Addition",
+            sound="data/sound/episode/s15-0.wav")
         scene.add(self.chart)
-        AnimateAddition.play(scene, self.chart, 5, 1, 10, 0)
-        self.new_subsection(scene, "Overflow the field")
-        anim = AnimateAddition.play(scene, self.chart, 5, 1, 9, 1, animate_out=False)
-        self.new_subsection(scene, "Sidebar")
+
+        self.new_subsection(scene, "Elliptic Curve Addition example",
+            sound="data/sound/episode/s15-1.wav")
+        scene.wait(5)
+        AnimateAddition.play(scene, self.chart, 5, 1, 10, 0,
+            wait_time_between=3)
+
+        self.new_subsection(scene, "Elliptic Curve - Addition overflow the field",
+            sound="data/sound/episode/s15-2.wav")
+
+        anim = AnimateAddition.play(scene, self.chart, 5, 1, 9, 1,
+            animate_out=False)
+
+        self.new_subsection(scene, "Elliptic Curve - Addition math",
+            sound="data/sound/episode/s15-3.wav")
+
         self.chart.animate_align_left(scene)
-        self.sidebar.animate_in(scene, self)
+        self.sidebar.animate_show_label(scene)
+        self.sidebar.animate_show_math(scene)
+        scene.wait(7)
+        self.sidebar.animate_show_code(scene)
+        scene.wait(1)
+
         anim.animate_out(scene)
 
     def animate_out(self, scene):

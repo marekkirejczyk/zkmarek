@@ -48,7 +48,8 @@ class TitleSlide(SlideBase):
     def animate_in(self, scene):
         if self.sound is not None:
             self.play_sound(scene, sound=self.sound)
-        scene.wait(self.pre_wait_time)
+        if self.pre_wait_time > 0:
+            scene.wait(self.pre_wait_time)
         scene.play(Write(self.title_text))
         if self.subtitle_text is not None:
             scene.play(Write(self.subtitle_text))

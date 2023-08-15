@@ -6,7 +6,7 @@ from manim import (DOWN, RIGHT, UP, AddTextLetterByLetter, Code, FadeIn,
                    TransformMatchingShapes, VGroup, VMobject)
 from utils import load
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.utils import find_in_code
 
@@ -84,6 +84,11 @@ class Sidebar(VGroup):
         scene.play(FadeIn(self.label))
         self.add(self.label)
 
+    def animate_fast_show_math(self, scene):
+        scene.play(FadeIn(self.math), FadeIn(self.label))
+        self.add(self.math)
+        self.add(self.label)
+
     def animate_in(self, scene, slide: Optional[SlideBase] = None):
         scene.play(AddTextLetterByLetter(self.label))
         if self.math is not None:
@@ -119,4 +124,8 @@ class Sidebar(VGroup):
     def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(chars[index]), run_time=run_time)
+
+    def math_set_color(self, start: int, end: int, color=SECONDARY_COLOR):
+        self.math[0][start:end].set_color(color)
+
 
