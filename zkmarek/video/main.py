@@ -13,7 +13,6 @@ from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
-from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.debug.code_style_slide import \
     CodeStyleSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.debug.font_slide import \
@@ -22,6 +21,7 @@ from zkmarek.video.slides.debug.test_slide import \
     TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
+from zkmarek.video.slides.ec.operations import Operations
 from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
@@ -74,7 +74,7 @@ MAIN_SLIDES = [
     TitleSlide("Discrete Elliptic Curves", pre_wait_time=2,
         sound="data/sound/episode/s11.m4a"),
     ECIntroduction(),
-    TitleSlide("Discrete Elliptic Curves Operarions", pre_wait_time=2,
+    TitleSlide("Discrete Elliptic Curves Operations", pre_wait_time=2,
         sound="data/sound/episode/s13.wav"),
 
     ECNegation(),
@@ -89,9 +89,10 @@ MAIN_SLIDES = [
     TitleSlide("Subgroups", sound="data/sound/episode/s20.m4a"),
     Subgroups(),
 
-    TitleSlide("Elliptic Curve Standards"),
+    Operations(),
+    TitleSlide("Elliptic Curve Standards",
+        sound="data/sound/episode/s23.m4a"),
     Standards(),
-    TexSlide("Discrete Elliptic Curves operations", "data/ec/operations.tex"),
 
     TitleSlide("Signatures"),
     Signature(),
