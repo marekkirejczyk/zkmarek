@@ -59,25 +59,26 @@ class EthereumTransaction(CodeSlide):
         self.new_subsection(scene, "Ethereum Transaction",
             sound="data/sound/episode/s28-2.wav")
 
-        signature = EquationBoxWithIcons.create(
+        self.signature = EquationBoxWithIcons.create(
             "⎘", "r = R_x \mod n", PRIMARY_COLOR,
             "⎘", "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n", PRIMARY_COLOR
         )
 
         scene.wait(2)
-        r_box = EquationBox("R = (r, ?)")
+        self.r_box = EquationBox("R = (r, ?)")
 
-        VGroup(signature, r_box).arrange(RIGHT, buff=1).next_to(
+        VGroup(self.signature, self.r_box).arrange(RIGHT, buff=1).next_to(
             self.code, DOWN, buff=0.5)
 
-        scene.play(FadeIn(signature))
+        scene.play(FadeIn(self.signature))
         scene.wait(5)
-        scene.play(FadeIn(r_box))
+        scene.play(FadeIn(self.r_box))
 
         self.new_subsection(scene, "Ethereum Transaction",
             sound="data/sound/episode/s28-3.wav")
 
-        scene.wait(28)
+        scene.wait(16)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.code), FadeOut(self.title_text), run_time=0.5)
+        scene.play(FadeOut(self.code), FadeOut(self.title_text),
+            FadeOut(self.signature), FadeOut(self.r_box))
