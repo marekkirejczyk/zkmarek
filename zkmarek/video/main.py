@@ -94,7 +94,8 @@ MAIN_SLIDES = [
         sound="data/sound/episode/s23.m4a"),
     Standards(),
 
-    TitleSlide("Signatures"),
+    TitleSlide("Digital Signature", pre_wait_time=1.5,
+        post_wait_time=3, sound="data/sound/episode/s25.wav"),
     Signature(),
     EthereumTransaction(),
     ECRecoverSlide(),
