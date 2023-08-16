@@ -28,6 +28,8 @@ from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
+from zkmarek.video.slides.teaser.ecrecover import ECRecoverSlideTeaser
+from zkmarek.video.slides.teaser.ethereum_transaction import EthereumTransactionTeaser
 from zkmarek.video.slides.teaser.ecc_title import ECCTitleSlide
 from zkmarek.video.slides.teaser.in_this_episode import InThisEpisode
 from zkmarek.video.slides.intro import Intro
@@ -48,8 +50,8 @@ TEASER = [
     ZKPSTitle(),
     SeasonTeaser(),
     ECCTitleSlide(),
-    ECRecoverSlide(),
-    EthereumTransaction(),
+    ECRecoverSlideTeaser(),
+    EthereumTransactionTeaser(),
     ListSlide(),
     Subscribe()
 ]
