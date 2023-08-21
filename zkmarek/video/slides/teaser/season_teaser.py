@@ -141,11 +141,13 @@ class SeasonTeaser(SlideBase):
         tree = VerkleTree().scale(0.2)
         text = Text("Zero Knowledge Proofs context", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=70)
-        self.add(text, rectangle, self.stack)
+        self.add(rectangle, self.stack)
         self.scale(0.4)
+        text.scale(0.4)
         self.move_to(RIGHT * 3.4)
         tree.next_to(self.stack, RIGHT, buff=0.2)
         text.next_to(rectangle, DOWN, buff=0.4)
         scene.play(FadeIn(self))
-        scene.play(Create(tree))
+        scene.play(Create(tree), FadeIn(text))
+        self.rest = [tree, text]
 
