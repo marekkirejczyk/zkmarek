@@ -1,5 +1,8 @@
-from manim import DOWN, UP, Code, FadeIn, Tex, Text, Indicate, FadeOut
+from manim import (DOWN, UP, Code, FadeIn, FadeOut, Indicate,
+                   ReplacementTransform, Tex, Text)
 
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.mobjects.equation_box import EquationBoxWithIcons
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.utils import find_in_code, load
 
@@ -8,12 +11,14 @@ class ECRecoverSlide(SlideBase):
     title_text: Text
     code: Code
     docs: Tex
+    signature: EquationBoxWithIcons
+    signature2: EquationBoxWithIcons
 
     def __init__(self):
         super().__init__("ECRecover")
 
     def construct(self):
-        self.title_text = Text("ECRecover")
+        self.title_text = Text("ECRecover", color=PRIMARY_COLOR, font=PRIMARY_FONT)
         self.code = Code(
             file_name="data/eth/ecrecover.sol",
             tab_width=2,
@@ -33,18 +38,36 @@ class ECRecoverSlide(SlideBase):
         self.code.next_to(self.title_text, DOWN, buff=0.5)
         self.docs.next_to(self.code, DOWN, buff=0.5)
 
+        self.signature = EquationBoxWithIcons.create(
+            "⎘", "r = R_x \mod n", PRIMARY_COLOR,
+            "⎘", "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n", PRIMARY_COLOR
+        ).next_to(self.docs, DOWN, buff=1)
+
+        self.signature2 = EquationBoxWithIcons.create(
+            "⎘", "r = R_x \mod n", PRIMARY_COLOR,
+            "⎘", "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n", PRIMARY_COLOR,
+            "⎘", "v = ?", PRIMARY_COLOR
+        ).next_to(self.docs, DOWN, buff=1)
+
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/teaser/s5.wav")
+        self.new_subsection(scene, "ECRecover",
+            sound="data/sound/episode/s27.wav")
+
         scene.play(FadeIn(self.title_text))
         scene.play(FadeIn(self.code))
         scene.play(FadeIn(self.docs))
         fragments = ["bytes32 s", "bytes32 r", "uint8 v", ]
 
-        scene.wait(3)
+        scene.wait(2.5)
 
         for fragment in fragments:
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars), run_time=0.5)
+
+        scene.wait(1)
+        scene.play(FadeIn(self.signature))
+        scene.wait(1)
+        scene.play(ReplacementTransform(self.signature, self.signature2))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self), run_time=0.5)
