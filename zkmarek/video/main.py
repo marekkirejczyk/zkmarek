@@ -37,6 +37,7 @@ from zkmarek.video.slides.prime_fields import PrimeFields
 from zkmarek.video.slides.teaser.list import ListSlide
 from zkmarek.video.slides.teaser.season_teaser import SeasonTeaser
 from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
+from zkmarek.video.slides.teaser_reference import TeaserReference
 from zkmarek.video.utils import get_slides_from_names
 
 config.width = 16
@@ -61,7 +62,8 @@ MAIN_SLIDES = [
     TitleSlide(
         "Elliptic curves and Digital signature",
         subtitle="used in Ethereum",
-        sound="data/sound/episode/s2.wav"),
+        sound="data/sound/episode/s2-1.m4a"),
+    TeaserReference(),
     InThisEpisode(),
     TitleSlide("Elliptic Curves", sound="data/sound/episode/s4.wav"),
     EquationSlide(),

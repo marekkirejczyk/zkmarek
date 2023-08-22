@@ -1,5 +1,7 @@
-from manim import DOWN, UP, Code, FadeIn, Tex, Text, Indicate, FadeOut
+from manim import (DOWN, LEFT, UP, Code, FadeIn, FadeOut, Indicate, Rectangle,
+                   Succession, Tex, Text)
 
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.utils import find_in_code, load
 
@@ -45,6 +47,25 @@ class ECRecoverSlideTeaser(SlideBase):
         for fragment in fragments:
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars), run_time=0.5)
+
+    def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
+        text = Text("Learning motivation", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=70).scale(0.4)
+        self.add(rectangle, self.title_text, self.code, self.docs)
+        self.scale(0.4)
+        self.move_to(LEFT * 3.4)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        scene.play(FadeIn(self.title_text), FadeIn(rectangle),
+            FadeIn(self.code), FadeIn(self.docs))
+
+        chars1 = find_in_code(self.code, "bytes32 s")[0]
+        chars2 = find_in_code(self.code, "bytes32 r")[0]
+        scene.play(FadeIn(text),
+            Succession(
+                Indicate(chars1, run_time=0.5),
+                Indicate(chars2, run_time=0.5)))
+        self.add(text)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self), run_time=0.5)

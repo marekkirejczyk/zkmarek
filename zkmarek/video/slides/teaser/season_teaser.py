@@ -88,7 +88,7 @@ class SeasonTeaser(SlideBase):
             scene.play(AddTextLetterByLetter(group[i]))
         return group
 
-    def animate_3(self, scene):
+    def animate_3(self, scene, sc):
         group = VGroup(
             self.label("Verkle Trees"),
             VerkleTree().scale(0.5)).arrange(direction=DOWN).move_to(RIGHT * 3)
@@ -135,3 +135,19 @@ class SeasonTeaser(SlideBase):
                 sound=f"data/sound/teaser/s3-{i+1}.wav")
             scene.play(FadeIn(item))
             self.extras[i] = self.extras[i](scene)
+
+    def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
+        tree = VerkleTree().scale(0.2)
+        text = Text("Zero Knowledge Proofs context", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=70)
+        self.add(rectangle, self.stack)
+        self.scale(0.4)
+        text.scale(0.4)
+        self.move_to(RIGHT * 3.4)
+        tree.next_to(self.stack, RIGHT, buff=0.2)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        scene.play(FadeIn(self))
+        scene.play(Create(tree), FadeIn(text))
+        self.rest = [tree, text]
+
