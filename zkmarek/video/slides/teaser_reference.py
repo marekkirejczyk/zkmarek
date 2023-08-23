@@ -12,7 +12,7 @@ class TeaserReference(SlideBase):
         super().__init__("Teaser Reference")
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "Intro", sound="data/sound/episode/s2-2.m4a")
+        self.new_subsection(scene, "Intro", sound="data/sound/episode/s2-2.wav")
         self.slide1 = ECRecoverSlideTeaser()
         self.slide1.construct()
         self.slide1.animate_miniature(scene)
