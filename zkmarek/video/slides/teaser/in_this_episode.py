@@ -26,18 +26,18 @@ class InThisEpisode(SlideBase):
         self.thumbnails = []
         self.thumbnails_borders = []
         self.titles = [
-            "1. Continuous Elliptic Curves",
-            "2. Prime Fields",
-            "3. Discrete Elliptic Curves",
+            "1. Continuous elliptic curves",
+            "2. Prime fields",
+            "3. Discrete elliptic curves",
             "4. Groups and standards",
-            "5. Digital signature"
+            "5. Digital signature",
         ]
         self.descriptions = [
-            "Mathematical concept of Elliptic Curves ",
+            "Mathematical concept of elliptic curves ",
             "Arythmetics used in cryptography ",
-            "Elliptic Curves used in cryptography ",
+            "Elliptic curves used in cryptography ",
             "Curves used in real-life protocols ",
-            "Digital signature algorithm used in Ethereum"
+            "Digital Signature Algorithm used in Ethereum"
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
@@ -50,8 +50,8 @@ class InThisEpisode(SlideBase):
             "data/sound/episode/s3-1.m4a",
             "data/sound/episode/s3-2.m4a",
             "data/sound/episode/s3-3.m4a",
-            "data/sound/episode/s3-4.m4a",
-            "data/sound/episode/s3-5.m4a",
+            "data/sound/episode/s3-4.wav",
+            "data/sound/episode/s3-5.wav",
         ]
 
     def construct(self):

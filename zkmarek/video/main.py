@@ -54,15 +54,16 @@ TEASER = [
     ECRecoverSlideTeaser(),
     EthereumTransactionTeaser(),
     ListSlide(),
-    Subscribe()
+    Subscribe("data/sound/teaser/s8.wav")
 ]
 
 MAIN_SLIDES = [
     Intro(),
     TitleSlide(
-        "Elliptic curves and Digital signature",
+        "Elliptic curves and Digital Signature Algorithm",
         subtitle="used in Ethereum",
-        sound="data/sound/episode/s2-1.m4a"),
+        post_wait_time=2,
+        sound="data/sound/episode/s2-1.wav"),
     TeaserReference(),
     InThisEpisode(),
     TitleSlide("Elliptic Curves", sound="data/sound/episode/s4.wav"),
@@ -104,7 +105,7 @@ MAIN_SLIDES = [
     ECRecoverSlide(),
     EthereumTransaction(),
 
-    Subscribe()
+    Subscribe("data/sound/episode/s29.wav")
 ]
 
 SLIDES = MAIN_SLIDES
