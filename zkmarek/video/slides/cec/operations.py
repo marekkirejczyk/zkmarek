@@ -1,4 +1,5 @@
-from manim import LEFT, FadeOut, Indicate, ReplacementTransform, Scene, VGroup
+from manim import (LEFT, Create, FadeOut, Indicate, ReplacementTransform,
+                   Scene, VGroup, Write)
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.constant import HIGHLIGHT_COLOR
@@ -26,11 +27,11 @@ class Operations(SlideBase):
         self.sidebar = Sidebar("Operations", tex_path="data/cec/operations.tex")
 
     def animate_in(self, scene: Scene):
+        scene.play(Create(self.chart.ax), Create(self.chart.labels))
         self.new_subsection(scene,
             "Operations",
             sound="data/sound/episode/s6-1a.m4a")
-
-        self.chart.animate_in(scene)
+        scene.play(Write(self.chart.graph))
         scene.wait(1)
         self.p1.animate_in(scene)
         scene.wait(0.5)
