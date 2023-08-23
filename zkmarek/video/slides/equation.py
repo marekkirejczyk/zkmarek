@@ -7,7 +7,7 @@ from .common.slide_base import SlideBase
 
 class EquationSlide(SlideBase):
     def __init__(self) -> None:
-        super().__init__(title="Elliptic Curve equation")
+        super().__init__(title="Elliptic Curve Equation")
 
         self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR)
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b", color=PRIMARY_COLOR)

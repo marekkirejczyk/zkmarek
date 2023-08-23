@@ -45,7 +45,7 @@ class Signature(SlideBase):
             sound="data/sound/episode/s26-1.wav")
         self.fade_in_board(scene)
         scene.wait(4)
-        scene.play(Indicate(self.sender_label))
+        scene.play(Indicate(self.sender_label, color=SECONDARY_COLOR))
         scene.wait(1)
 
         # Data preparation for part 2
@@ -113,7 +113,7 @@ class Signature(SlideBase):
         signature.animate_in(scene)
         scene.wait(0.5)
 
-        scene.play(Indicate(self.receiver_label))
+        scene.play(Indicate(self.receiver_label), color=SECONDARY_COLOR)
         scene.wait(5)
         self.new_subsection(scene, "Signature - secret",
             sound="data/sound/episode/s26-2.wav")
@@ -137,7 +137,7 @@ class Signature(SlideBase):
         scene.wait(2)
         self.new_slide(scene, "shorten")
         scene.play(ReplacementTransform(msg_box2, msg_box3))
-
+        scene.wait(1)
         self.new_subsection(scene, "What is signature",
             sound="data/sound/episode/s26-5.wav")
         scene.wait(3)
@@ -164,6 +164,7 @@ class Signature(SlideBase):
         self.new_subsection(scene, "Explain s",
             sound="data/sound/episode/s26-9.wav")
 
+        scene.wait(1)
         self.new_subsection(scene, "Move game to verifier",
             sound="data/sound/episode/s26-10.wav")
         scene.wait(1)
@@ -268,8 +269,9 @@ class Signature(SlideBase):
             color=PRIMARY_COLOR).scale(0.65).next_to(q_box, DOWN, buff=0.5)
         scene.play(TransformMatchingTex(equation4, equation4b))
 
+        self.new_subsection(scene, "Substitute s",
+            sound="data/sound/episode/s26-14b.wav")
 
-        self.new_slide(scene, "Substitute s")
         scene.play(Circumscribe(equation4b[1]))
         scene.play(Circumscribe(signature5[7]))
 
@@ -297,7 +299,7 @@ class Signature(SlideBase):
         scene.remove(equation5)
 
         self.new_subsection(scene, "Cancel secrete with inverse",
-            sound="data/sound/episode/s26-15.m4a")
+            sound="data/sound/episode/s26-15.wav")
 
         scene.play(Indicate(equation5b[3]))
         scene.play(Indicate(equation5b[1]))
@@ -315,8 +317,9 @@ class Signature(SlideBase):
             FadeOut(strike1),
             FadeOut(strike2))
 
+        self.new_subsection(scene, "Multiply inverse of r",
+            sound="data/sound/episode/s26-15b.m4a")
 
-        self.new_slide(scene, "Multiply inverse of r")
         equation6b = MathTex(
             "Q = (-msg \cdot r^{-1} + ({{msg}} {{ }} + {{r \cdot}} K_{Priv}) {{\cdot r^{-1})}} \cdot G}}", # noqa: E501 # pyright: ignore
             color=PRIMARY_COLOR).scale(0.65).next_to(

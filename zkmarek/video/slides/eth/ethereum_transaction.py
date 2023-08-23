@@ -1,6 +1,9 @@
-from manim import DOWN, RIGHT, FadeIn, FadeOut, Indicate, VGroup
+from manim import (DOWN, RIGHT, UP, FadeIn, FadeOut, Indicate, Tex,
+                   TransformMatchingTex, VGroup, Wait)
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
+from zkmarek.video.mobjects.discreet_elliptic_chart import \
+    DiscreteEllipticChart
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
 from zkmarek.video.slides.common.code_slide import CodeSlide
@@ -71,14 +74,43 @@ class EthereumTransaction(CodeSlide):
             self.code, DOWN, buff=0.5)
 
         scene.play(FadeIn(self.signature))
-        scene.wait(5)
+        scene.play(Indicate(self.signature[1],  color=SECONDARY_COLOR))
+        scene.wait(4)
         scene.play(FadeIn(self.r_box))
 
-        self.new_subsection(scene, "Ethereum Transaction",
+        self.new_subsection(scene, "Why four values",
             sound="data/sound/episode/s28-3.wav")
+        scene.play(FadeOut(self.code), FadeOut(self.title_text))
 
-        scene.wait(16)
+        self.chart = DiscreteEllipticChart(include_details=False)
+        self.chart.scale(0.8).next_to(self.signature, UP, buff=0.5)
+        scene.play(FadeIn(self.chart))
+
+
+        line = self.chart.create_vertical_line(5)
+        scene.play(FadeIn(line), Wait())
+        dots = self.chart.find_dots_by_x(5)
+        label1 = Tex("0", color=PRIMARY_COLOR).scale(0.8).next_to(
+            dots[0], RIGHT, buff=0.2)
+        label2 = Tex("1", color=PRIMARY_COLOR).scale(0.8).next_to(
+            dots[1], RIGHT, buff=0.2)
+        label3 = Tex("27", color=PRIMARY_COLOR).scale(0.8).next_to(
+            dots[0], RIGHT, buff=0.2)
+        label4 = Tex("28", color=PRIMARY_COLOR).scale(0.8).next_to(
+            dots[1], RIGHT, buff=0.2)
+        scene.play(FadeIn(label1), FadeIn(label2))
+
+        self.new_subsection(scene, "27 and 28",
+            sound="data/sound/episode/s28-4.wav")
+
+        scene.play(TransformMatchingTex(label1, label3),
+            TransformMatchingTex(label2, label4))
+
+        self.new_subsection(scene, "Mystery solved",
+            sound="data/sound/episode/s28-5.wav")
+        scene.play(FadeOut(line), FadeOut(label3), FadeOut(label4))
+        scene.play(FadeOut(self.signature), FadeOut(self.r_box))
+        scene.play(FadeOut(self.chart))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.code), FadeOut(self.title_text),
-            FadeOut(self.signature), FadeOut(self.r_box))
+        pass

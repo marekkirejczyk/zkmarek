@@ -36,7 +36,7 @@ class Addition(SlideBase):
 
 
     def __init__(self):
-        super().__init__("Elliptic Curves addition")
+        super().__init__("Elliptic Curves Addition")
 
     def construct(self):
         self.chart = ContinuousEllipticChart(include_details=False)
@@ -165,8 +165,8 @@ class Addition(SlideBase):
             other_angle=True,
             color=SECONDARY_COLOR)
         scene.play(Write(self.angle))
-
-        scene.wait(5.5)
+        scene.play(Indicate(self.angle))
+        scene.wait(4.5)
         math[0][12:24].set_color(HIGHLIGHT_COLOR)
         scene.wait(0.5)
         math[0][24:38].set_color(HIGHLIGHT_COLOR)
@@ -272,9 +272,12 @@ class Addition(SlideBase):
 
     def animate_doubling(self, scene):
         self.new_subsection(scene, "Point doubling - move around",
-            sound="data/sound/episode/s8d-1.wav")
+            sound="data/sound/episode/s8d-1.m4a")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
+        self.new_subsection(scene, "Point doubling - move around",
+            sound="data/sound/episode/s8d-1b.wav")
+
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
 
