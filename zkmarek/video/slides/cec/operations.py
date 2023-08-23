@@ -28,18 +28,23 @@ class Operations(SlideBase):
     def animate_in(self, scene: Scene):
         self.new_subsection(scene,
             "Operations",
-            sound="data/sound/episode/s6-1.wav")
+            sound="data/sound/episode/s6-1a.m4a")
 
         self.chart.animate_in(scene)
+        scene.wait(1)
         self.p1.animate_in(scene)
         scene.wait(0.5)
         scene.play(ReplacementTransform(self.p1, self.p2))
+        scene.wait(0.5)
+        self.new_subsection(scene,
+            "Operations",
+            sound="data/sound/episode/s6-1b.wav")
 
         scene.wait(3)
         scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT),
             run_time=2)
         self.sidebar.animate_show_label(scene)
-        scene.wait(2)
+        scene.wait(1)
 
         self.copy = self.p2.dot.copy()
         scene.play(Indicate(self.copy))
@@ -49,7 +54,7 @@ class Operations(SlideBase):
         self.new_subsection(scene,
             "Operations",
             sound="data/sound/episode/s6-2.wav")
-        scene.wait(3)
+        scene.wait(2.5)
         list = self.sidebar.math
         list[0][0:12].set_color(HIGHLIGHT_COLOR)
         scene.wait(2)
