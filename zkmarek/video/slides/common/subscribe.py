@@ -10,9 +10,11 @@ class Subscribe(SlideBase):
     button_clicked: ImageMobject
     title: Text
     group: Group
+    sound: str
 
-    def __init__(self) -> None:
+    def __init__(self, sound: str) -> None:
         super().__init__("Subscribe")
+        self.sound = sound
 
     def construct(self):
         self.title = Text(
@@ -32,7 +34,7 @@ class Subscribe(SlideBase):
         self.button_clicked.next_to(self.title, DOWN, buff=0.5)
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/teaser/s8.wav")
+        self.play_sound(scene, self.sound)
         scene.play(AddTextLetterByLetter(self.title))
         scene.play(FadeIn(self.button), run_time=0.5)
 

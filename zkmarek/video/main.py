@@ -54,7 +54,7 @@ TEASER = [
     ECRecoverSlideTeaser(),
     EthereumTransactionTeaser(),
     ListSlide(),
-    Subscribe()
+    Subscribe("data/sound/teaser/s8.wav")
 ]
 
 MAIN_SLIDES = [
@@ -104,7 +104,7 @@ MAIN_SLIDES = [
     ECRecoverSlide(),
     EthereumTransaction(),
 
-    Subscribe()
+    Subscribe("data/sound/episode/s29.wav")
 ]
 
 SLIDES = MAIN_SLIDES
