@@ -123,7 +123,8 @@ class Sidebar(VGroup):
 
     def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
             chars = find_in_code(self.code, fragment)
-            scene.play(Indicate(chars[index]), run_time=run_time)
+            scene.play(Indicate(chars[index]), color=SECONDARY_COLOR,
+                run_time=run_time)
 
     def math_set_color(self, start: int, end: int, color=SECONDARY_COLOR):
         self.math[0][start:end].set_color(color)
