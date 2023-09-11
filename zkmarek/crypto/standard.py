@@ -22,6 +22,8 @@ class Standard:
     def generate_secret_key(self) -> int:
         return secrets.randbelow(self.group_order)
 
+    def generate_public_key(self, secret: int) -> ECAffine:
+        return self.generator * secret
 
 Secp256 = Standard(Secp256k1,
     0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798, 0,
