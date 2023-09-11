@@ -1,3 +1,4 @@
+from math import sqrt
 from unittest import TestCase
 
 from zkmarek.crypto.standard import Secp256
@@ -16,3 +17,15 @@ class TestStandard(TestCase):
             0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8,
             generator.y.value
         )
+
+    def test_generate_secret_key(self):
+        for i in range(1000):
+            secrete_key = Secp256.generate_secret_key()
+            sqrt_n = sqrt(Secp256.group_order)
+            self.assertTrue(secrete_key >= sqrt_n)
+            self.assertTrue(secrete_key < Secp256.group_order - sqrt_n)
+
+    def test_generate_secret_keys_are_different(self):
+        self.assertNotEquals(
+            Secp256.generate_secret_key(),
+            Secp256.generate_secret_key())
