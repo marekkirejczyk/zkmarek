@@ -2,7 +2,7 @@ from math import sqrt
 from unittest import TestCase
 
 from zkmarek.crypto.ec_affine import ECAffine
-from zkmarek.crypto.standard import Secp256
+from zkmarek.crypto.standard import Secp256, Standard
 from zkmarek.crypto.weierstrass_curve import Secp256k1
 
 
@@ -19,6 +19,11 @@ class TestStandard(TestCase):
             generator.y.value
         )
 
+    def test_init_invalid_generator(self):
+        with self.assertRaises(ValueError):
+            Standard(Secp256k1, 0, 0,
+                     0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141)
+
     def test_generate_secret_key(self):
         for i in range(1000):
             secrete_key = Secp256.generate_secret_key()
@@ -26,7 +31,7 @@ class TestStandard(TestCase):
             self.assertTrue(secrete_key >= sqrt_n)
             self.assertTrue(secrete_key < Secp256.group_order - sqrt_n)
 
-    def test_generate_secret_keys_are_different(self):
+    def test_generate_secret_keys_unique(self):
         self.assertNotEqual(
             Secp256.generate_secret_key(),
             Secp256.generate_secret_key())
@@ -38,4 +43,3 @@ class TestStandard(TestCase):
             0x45a77f71637e70ccb0a28e09bdf7e0bd6fb55a71194564cdb07473630e326f29,
             Secp256k1)
         self.assertEqual(expected, Secp256.generate_public_key(secret))
-
