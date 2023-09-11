@@ -8,7 +8,12 @@ class Standard:
 
     def __init__(self, curve: WeierstrassCurve, generator_x: int, generator_sgn: int):
         self.curve = curve
-        self.generator = ECAffine.from_x(generator_x, generator_sgn, Secp256k1)
+        generator = ECAffine.from_x(generator_x, generator_sgn, Secp256k1)
+        if generator is None:
+            raise ValueError("Invalid generator")
+        else:
+            self.generator = generator
+
 
 
 Secp256 = Standard(Secp256k1,
