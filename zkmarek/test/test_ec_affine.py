@@ -3,7 +3,7 @@ import unittest
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.field import Field
 from zkmarek.crypto.weierstrass_curve import (Secp256k1_13, Secp256k1_41,
-                                              WeierstrassCurve)
+                                              WeierstrassCurve, Secp256k1)
 from zkmarek.test.constant import TEST_SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
 
 
@@ -28,6 +28,15 @@ class TestECAffine(unittest.TestCase):
 
     def setup(self):
         self.p = self.curve.p
+
+    def test_serialize_uncompressed(self):
+        Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
+        Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
+        point = ECAffine(Gx, Gy, Secp256k1)
+        self.assertEqual(
+            "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798" +
+            "483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8",
+            point.serialize_uncompressed())
 
     def test_init_with_int(self):
         p = ECAffine(7, 8, self.curve)
