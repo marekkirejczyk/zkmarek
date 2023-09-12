@@ -116,6 +116,9 @@ class ECAffine:
             result =  one + two
         return result
 
+    def serialize_uncompressed(self) -> str:
+        return (f'{self.x.value:x}' + f'{self.y.value:x}').upper()
+
     @staticmethod
     def infinity_point(curve: WeierstrassCurve) -> "ECAffine":
         return ECAffine(0, 0, curve)
