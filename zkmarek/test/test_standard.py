@@ -80,3 +80,22 @@ class TestStandard(TestCase):
 
                 self.assertEqual(p.expected_r, r)
                 self.assertEqual(p.expected_s, s)
+
+    def test_verify_signature(self):
+        standard = Secp256
+
+        # test data from https://learnmeabitcoin.com/technical/ecdsa
+        z = 103318048148376957923607078689899464500752411597387986125144636642406244063093
+        r = 108607064596551879580190606910245687803607295064141551927605737287325610911759
+        s = 73791001770378044883749956175832052998232581925633570497458784569540878807131
+        public_key = ECAffine(
+            33886286099813419182054595252042348742146950914608322024530631065951421850289,
+            9529752953487881233694078263953407116222499632359298014255097182349749987176,
+            standard.curve
+        )
+        for r_value, message, result in [
+            (r, "correct", True),
+            (1, "incorrect", False)
+        ]:
+            with self.subTest(f'Test verify method properly process {message} signature'):
+                self.assertEqual(result, standard.verify_sgn(z, r_value, s, public_key))

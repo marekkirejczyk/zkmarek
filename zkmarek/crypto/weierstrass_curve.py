@@ -21,8 +21,10 @@ class WeierstrassCurve:
     def __eq__(self, other: "WeierstrassCurve") -> bool:
         return self.a == other.a and self.b == other.b and self.p == other.p
 
-Secp256k_Order = 2**256 - 2**32 - 2**9 - 2**8 - 2**7 - 2**6 - 2**4 - 1
-Secp256k1 = WeierstrassCurve(0, 7, Secp256k_Order)
+
+Secp256k_prime_field_p = 2**256 - 2**32 - 2**9 - 2**8 - 2**7 - 2**6 - 2**4 - 1
+Secp256k_Order = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
+Secp256k1 = WeierstrassCurve(0, 7, Secp256k_prime_field_p)
 Secp256k1_13 = WeierstrassCurve(0, 7, 13)
 Secp256k1_29 = WeierstrassCurve(0, 7, 29)
 Secp256k1_41 = WeierstrassCurve(0, 7, 41)
