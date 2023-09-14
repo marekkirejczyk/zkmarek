@@ -34,7 +34,25 @@ class Standard:
         s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
         return r, s
 
+    # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_verification_algorithm
+    def verify_sgn(self, z: int, r: int, s: int, public_key: ECAffine) -> bool:
+        if public_key.is_infinity() or not (public_key * self.group_order).is_infinity():
+            return False
 
-Secp256 = Standard(Secp256k1,
+        if r < 1 or r >= self.group_order or s < 1 or s >= self.group_order:
+            return False
+
+        n = self.group_order
+        s_inverse = pow(s, -1, n)
+        u1 = z * s_inverse % n
+        u2 = r * s_inverse % n
+
+        Q = self.generator * u1 + public_key * u2
+        x = Q.x.value % n
+        return x == r
+
+
+Secp256 = Standard(
+    Secp256k1,
     0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798, 0,
     0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141)
