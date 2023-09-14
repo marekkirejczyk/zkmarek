@@ -25,6 +25,16 @@ class Standard:
     def generate_public_key(self, secret: int) -> ECAffine:
         return self.generator * secret
 
+    # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_generation_algorithm
+    def sign_raw(self, secret_key: int, msg_hash: int, k: int):
+        n = self.group_order
+        r: int = (self.generator * k).x.value
+        # r = r % n unnecessary for secp256k1
+        # s = k⁻¹(z + rdₐ) mod n
+        s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
+        return r, s
+
+
 Secp256 = Standard(Secp256k1,
     0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798, 0,
     0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141)
