@@ -1,8 +1,8 @@
 from Crypto.Hash import keccak
 
 from zkmarek.crypto.ec_affine import ECAffine
+from zkmarek.crypto.ethereum import hash_message
 from zkmarek.crypto.standard import Secp256
-
 
 class Wallet:
     secret_key: str
@@ -16,3 +16,12 @@ class Wallet:
         k = keccak.new(digest_bits=256)
         k.update(bytes.fromhex(hash_input))
         return '0x' + k.hexdigest()[-40:]
+
+    def sign(self, msg, seed):
+        hash = hash_message(msg)
+        (r, s) = Secp256.sign_raw(int(self.secret_key, 16),
+            int(hash, 16),
+            int(seed, 16))
+        print("\n r: ", r)
+        print("\n s: ", s)
+        return ""

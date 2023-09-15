@@ -1,3 +1,6 @@
+TEST_SECRET: str = "9de347a715a200cd8e83cecc4277c7fdf2ebd95766720abec8364d879483b69b"
+TEST_MESSAGE: str = "Whatever"
+
 TEST_SMALL_PRIMES = [
     3,
     5,
