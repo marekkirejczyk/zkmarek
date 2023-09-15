@@ -1,4 +1,5 @@
 import secrets
+from typing import Optional
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve, Secp256k1
@@ -26,7 +27,7 @@ class Standard:
         return self.generator * secret
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_generation_algorithm
-    def sign_raw(self, secret_key: int, msg_hash: int, k: int):
+    def sign(self, secret_key: int, msg_hash: int, k: int):
         n = self.group_order
         r: int = (self.generator * k).x.value
         # r = r % n unnecessary for secp256k1
@@ -35,7 +36,7 @@ class Standard:
         return r, s
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_verification_algorithm
-    def verify_sgn(self, z: int, r: int, s: int, public_key: ECAffine) -> bool:
+    def verify(self, z: int, r: int, s: int, public_key: ECAffine) -> bool:
         if public_key.is_infinity() or not (public_key * self.group_order).is_infinity():
             return False
 
@@ -50,6 +51,18 @@ class Standard:
         Q = self.generator * u1 + public_key * u2
         x = Q.x.value % n
         return x == r
+
+    def recover(self, z: int, r: int, s: int, v: int) -> Optional[ECAffine]:
+        n = self.group_order
+        R = ECAffine.from_x(r, v, self.curve)
+        if R is None:
+            return None
+        else:
+            r_inverse = pow(r, -1, n)
+            u1 = -z * r_inverse % n
+            u2 = s * r_inverse % n
+            QA = self.generator * u1 + R * u2
+            return QA
 
 
 Secp256 = Standard(
