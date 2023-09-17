@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from math import sqrt
 from unittest import TestCase
 
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import ec
+
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.standard import Secp256, Standard
 from zkmarek.crypto.weierstrass_curve import Secp256k1
@@ -115,3 +118,14 @@ class TestStandard(TestCase):
         pk1 = standard.recover(z, r, s, 1)
 
         self.assertTrue(expected_public_key in [pk0, pk1])
+
+    def test_sign_with_random_k(self):
+        standard = Secp256
+        for i in range(10):
+            sk: int = standard.generate_secret_key()
+            pk: ECAffine = standard.generate_public_key(sk)
+            message: bytes = b'abc'
+            sig: bytes = standard.sign_with_random_k(sk, message).to_der()
+
+            vk = ec.EllipticCurvePublicNumbers(pk.x.value, pk.y.value, curve=ec.SECP256K1()).public_key()
+            vk.verify(sig, message, ec.ECDSA(hashes.SHA256()))
