@@ -37,7 +37,7 @@ class Standard:
         s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
         return r, s
 
-    def sign_with_random_k(self, secret_key: int, msg: str) -> ECDSASignature:
+    def sign_with_random_k(self, secret_key: int, msg: bytes) -> ECDSASignature:
         msg_hash = hashlib.sha256(msg).digest()
         k = secrets.randbits(256)
         r, s = self.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
