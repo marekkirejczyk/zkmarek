@@ -9,6 +9,7 @@ from zkmarek.video.utils import load
 class TexSlide(SlideBase):
     title_text: Text
     tex: Tex
+    tex_below: Tex
     tex_path: str
     kwargs: dict
     template: TexTemplate
