@@ -1,4 +1,8 @@
+import hashlib
+import secrets
 from dataclasses import dataclass
+
+from zkmarek.crypto.standard import Standard
 
 
 @dataclass(frozen=True)
@@ -6,6 +10,17 @@ class ECDSASignature:
     r: int
     s: int
 
+    @staticmethod
+    def sign(standard: Standard, secret_key: int, msg: bytes) -> 'ECDSASignature':
+        msg_hash = hashlib.sha256(msg).digest()
+        r = 0
+        s = 0
+        while r == 0 or s == 0:
+            k = secrets.randbits(256)
+            r, s = standard.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
+        return ECDSASignature(r, s)
+
+    # https://en.bitcoin.it/wiki/BIP_0062#DER_encoding
     def to_der(self) -> bytes:
 
         def encode_int(n: int) -> bytes:
