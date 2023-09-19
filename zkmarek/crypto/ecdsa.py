@@ -6,6 +6,7 @@ class ECDSASignature:
     r: int
     s: int
 
+    # https://en.bitcoin.it/wiki/BIP_0062#DER_encoding
     def to_der(self) -> bytes:
 
         def encode_int(n: int) -> bytes:
