@@ -38,7 +38,7 @@ class Negation(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Elliptic Curve Negation",
-            sound="data/sound/episode/s14-1.wav")
+            sound="data/sound/episode/s15-1.wav")
         scene.add(self.chart)
         scene.wait(4)
 
@@ -56,13 +56,13 @@ class Negation(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "Elliptic Curve class",
-            sound="data/sound/episode/s14-2.wav")
+            sound="data/sound/episode/s15-2.wav")
         self.sidebar.animate_show_code(scene)
         scene.wait(2)
         self.sidebar.indicate_code(scene, "class ECAffine")
 
         self.new_subsection(scene, "Elliptic Curve coordinates",
-            sound="data/sound/episode/s14-3.wav")
+            sound="data/sound/episode/s15-3.wav")
         self.sidebar.indicate_code(scene, "x: Field")
         self.sidebar.indicate_code(scene, "y: Field")
         scene.wait(1.5)
@@ -70,7 +70,7 @@ class Negation(SlideBase):
         self.sidebar.indicate_code(scene, "Field", 1)
 
         self.new_subsection(scene, "Elliptic Curve negation operator",
-            sound="data/sound/episode/s14-4.wav")
+            sound="data/sound/episode/s15-4.wav")
         scene.wait(3)
         self.sidebar.indicate_code(scene, "__neg__")
         scene.wait(3)

@@ -80,7 +80,7 @@ MAIN_SLIDES = [
         sound="data/sound/episode/s11.m4a"),
     ECIntroduction(),
     TitleSlide("Discrete Elliptic Curves Operations", pre_wait_time=2,
-        sound="data/sound/episode/s13.wav"),
+        sound="data/sound/episode/s14.wav"),
 
     ECNegation(),
     ECAddition(),

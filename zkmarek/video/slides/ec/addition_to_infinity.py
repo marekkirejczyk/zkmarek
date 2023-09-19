@@ -29,7 +29,7 @@ class AdditionToInfinity(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Elliptic Curve - Addition code - point at infinity",
-            sound="data/sound/episode/s16-1.wav")
+            sound="data/sound/episode/s17-1.wav")
 
         scene.add(self.chart)
         dots = self.chart.find_dots_by_x(9)
@@ -63,7 +63,7 @@ class AdditionToInfinity(SlideBase):
         self.sidebar.animate_replace_code(scene, "data/ec/add_inf.py")
 
         self.new_subsection(scene, "Elliptic Curve - Addition code",
-            sound="data/sound/episode/s16-2.wav")
+            sound="data/sound/episode/s17-2.wav")
         scene.wait(3)
         self.sidebar.animate_replace_code(scene, "data/ec/add_double.py")
         scene.wait(2)
