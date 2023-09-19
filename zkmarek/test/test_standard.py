@@ -1,3 +1,4 @@
+import hashlib
 from dataclasses import dataclass
 from math import sqrt
 from unittest import TestCase
@@ -115,3 +116,15 @@ class TestStandard(TestCase):
         pk1 = standard.recover(z, r, s, 1)
 
         self.assertTrue(expected_public_key in [pk0, pk1])
+
+    def test_sign_and_verify(self):
+        standard = Secp256
+        sk: int = standard.generate_secret_key()
+        pk: ECAffine = standard.generate_public_key(sk)
+        message: bytes = b'abc'
+        sig = standard.sign_with_random_k(sk, message)
+
+        msg_hash = hashlib.sha256(message).digest()
+        z = int.from_bytes(msg_hash, 'big')
+        standard = Secp256
+        self.assertTrue(standard.verify(z, sig.r, sig.s, pk))

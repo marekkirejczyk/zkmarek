@@ -38,8 +38,11 @@ class Standard:
 
     def sign_with_random_k(self, secret_key: int, msg: bytes) -> ECDSASignature:
         msg_hash = hashlib.sha256(msg).digest()
-        k = secrets.randbits(256)
-        r, s = self.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
+        r = 0
+        s = 0
+        while r == 0 or s == 0:
+            k = secrets.randbits(256)
+            r, s = self.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
         return ECDSASignature(r, s)
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_verification_algorithm
