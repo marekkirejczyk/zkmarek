@@ -1,9 +1,7 @@
-import hashlib
 import secrets
 from typing import Optional
 
 from zkmarek.crypto.ec_affine import ECAffine
-from zkmarek.crypto.ecdsa import ECDSASignature
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve, Secp256k1
 
 
@@ -35,15 +33,6 @@ class Standard:
         # s = k⁻¹(z + rdₐ) mod n
         s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
         return r, s
-
-    def sign_with_random_k(self, secret_key: int, msg: bytes) -> ECDSASignature:
-        msg_hash = hashlib.sha256(msg).digest()
-        r = 0
-        s = 0
-        while r == 0 or s == 0:
-            k = secrets.randbits(256)
-            r, s = self.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
-        return ECDSASignature(r, s)
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_verification_algorithm
     def verify(self, z: int, r: int, s: int, public_key: ECAffine) -> bool:

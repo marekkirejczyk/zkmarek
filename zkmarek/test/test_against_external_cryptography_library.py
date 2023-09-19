@@ -6,6 +6,7 @@ from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.asymmetric.utils import decode_dss_signature
 
 from zkmarek.crypto.ec_affine import ECAffine
+from zkmarek.crypto.ecdsa import ECDSASignature
 from zkmarek.crypto.standard import Secp256
 
 
@@ -17,7 +18,7 @@ class TestAgainstExternalCryptographyLibrary(unittest.TestCase):
             sk: int = standard.generate_secret_key()
             pk: ECAffine = standard.generate_public_key(sk)
             message: bytes = b'abc'
-            sig: bytes = standard.sign_with_random_k(sk, message).to_der()
+            sig: bytes = ECDSASignature.sign(standard, sk, message).to_der()
 
             vk = ec.EllipticCurvePublicNumbers(pk.x.value, pk.y.value, curve=ec.SECP256K1()).public_key()
             vk.verify(sig, message, ec.ECDSA(hashes.SHA256()))

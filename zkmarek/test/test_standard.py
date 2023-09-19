@@ -4,6 +4,7 @@ from math import sqrt
 from unittest import TestCase
 
 from zkmarek.crypto.ec_affine import ECAffine
+from zkmarek.crypto.ecdsa import ECDSASignature
 from zkmarek.crypto.standard import Secp256, Standard
 from zkmarek.crypto.weierstrass_curve import Secp256k1
 
@@ -122,7 +123,7 @@ class TestStandard(TestCase):
         sk: int = standard.generate_secret_key()
         pk: ECAffine = standard.generate_public_key(sk)
         message: bytes = b'abc'
-        sig = standard.sign_with_random_k(sk, message)
+        sig = ECDSASignature.sign(standard, sk, message)
 
         msg_hash = hashlib.sha256(message).digest()
         z = int.from_bytes(msg_hash, 'big')
