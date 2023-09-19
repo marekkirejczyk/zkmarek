@@ -87,7 +87,7 @@ MAIN_SLIDES = [
     AdditionToInfinity(),
 
     TitleSlide("Scalar multiplication", pre_wait_time=2,
-        sound="data/sound/episode/s17.m4a"),
+        sound="data/sound/episode/s18.m4a"),
     ScalarMultiplication(),
     DoubleAndAdd(),
 
