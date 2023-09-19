@@ -96,7 +96,7 @@ MAIN_SLIDES = [
 
     Operations(),
     TitleSlide("Elliptic Curve Standards",
-        sound="data/sound/episode/s23.m4a"),
+        sound="data/sound/episode/s24.m4a"),
     Standards(),
 
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
