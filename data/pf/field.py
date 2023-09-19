@@ -15,7 +15,6 @@ class Field:
         return Field(self.value + other.value, self.order)
 
     def __sub__(self, other: Field) -> Field:
-
         assert self.order == other.order
         return Field(self.value - other.value, self.order)
 
