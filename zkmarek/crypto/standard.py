@@ -31,8 +31,7 @@ class Standard:
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_generation_algorithm
     def sign(self, secret_key: int, msg_hash: int, k: int):
         n = self.group_order
-        r: int = (self.generator * k).x.value
-        # r = r % n unnecessary for secp256k1
+        r: int = (self.generator * k).x.value % n
         # s = k⁻¹(z + rdₐ) mod n
         s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
         return r, s
