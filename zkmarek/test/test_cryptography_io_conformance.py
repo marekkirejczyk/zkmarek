@@ -9,12 +9,14 @@ from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.ecdsa import ECDSASignature
 from zkmarek.crypto.standard import Secp256
 
+TEST_ROUNDS = 100
 
-class TestAgainstExternalCryptographyLibrary(unittest.TestCase):
 
-    def test_sign_with_random_k_and_verify_by_cryptography_library(self):
+class TestCryptographyIoConformance(unittest.TestCase):
+
+    def test_sign_with_random_k_and_verify(self):
         standard = Secp256
-        for i in range(100):
+        for i in range(TEST_ROUNDS):
             sk: int = standard.generate_secret_key()
             pk: ECAffine = standard.generate_public_key(sk)
             message: bytes = b'abc'
@@ -23,8 +25,8 @@ class TestAgainstExternalCryptographyLibrary(unittest.TestCase):
             vk = ec.EllipticCurvePublicNumbers(pk.x.value, pk.y.value, curve=ec.SECP256K1()).public_key()
             vk.verify(sig, message, ec.ECDSA(hashes.SHA256()))
 
-    def test_verify_with_signature_generated_by_cryptography_library(self):
-        for i in range(100):
+    def test_verify(self):
+        for i in range(TEST_ROUNDS):
             private_key = ec.generate_private_key(ec.SECP256K1())
             public_key = private_key.public_key()
             msg = b'abc'
