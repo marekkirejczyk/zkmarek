@@ -91,7 +91,7 @@ MAIN_SLIDES = [
     ScalarMultiplication(),
     DoubleAndAdd(),
 
-    TitleSlide("Subgroups", sound="data/sound/episode/s20.m4a"),
+    TitleSlide("Subgroups", sound="data/sound/episode/s21.m4a"),
     Subgroups(),
 
     Operations(),
