@@ -105,7 +105,7 @@ MAIN_SLIDES = [
     ECRecoverSlide(),
     EthereumTransaction(),
 
-    Subscribe("data/sound/episode/s29.wav")
+    Subscribe("data/sound/episode/s30.wav")
 ]
 
 SLIDES = MAIN_SLIDES
