@@ -27,12 +27,15 @@ class Standard:
         return self.generator * secret
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_generation_algorithm
-    def sign(self, secret_key: int, msg_hash: int, k: int):
+    def sign(self, secret_key: int, msg_hash: int, k: int) -> tuple[int, int, int]:
         n = self.group_order
-        r: int = (self.generator * k).x.value % n
+        R = (self.generator * k)
+        r: int = R.x.value % n
         # s = k⁻¹(z + rdₐ) mod n
         s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
-        return r, s
+        v = 27 + ((R.y.value % 2) ^ (0 if s * 2 < n else 1))
+        s = s if s * 2 < n else n - s
+        return r, s, v
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_verification_algorithm
     def verify(self, z: int, r: int, s: int, public_key: ECAffine) -> bool:

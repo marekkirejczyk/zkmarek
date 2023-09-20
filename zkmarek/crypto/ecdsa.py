@@ -9,16 +9,18 @@ from zkmarek.crypto.standard import Standard
 class ECDSASignature:
     r: int
     s: int
+    v: int
 
     @staticmethod
     def sign(standard: Standard, secret_key: int, msg: bytes) -> 'ECDSASignature':
         msg_hash = hashlib.sha256(msg).digest()
         r = 0
         s = 0
+        v = 0
         while r == 0 or s == 0:
             k = secrets.randbits(256)
-            r, s = standard.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
-        return ECDSASignature(r, s)
+            r, s, v = standard.sign(secret_key, int.from_bytes(msg_hash, 'big'), k)
+        return ECDSASignature(r, s, v)
 
     # https://en.bitcoin.it/wiki/BIP_0062#DER_encoding
     def to_der(self) -> bytes:
@@ -35,3 +37,6 @@ class ECDSASignature:
         remaining = encode_int(self.r) + encode_int(self.s)
 
         return b'\x30' + len(remaining).to_bytes(1, 'big') + remaining
+
+    def to_hex_encoding(self):
+        return hex(self.r)[2:] + hex(self.s)[2:] + hex(self.v)[2:]

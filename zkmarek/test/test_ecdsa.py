@@ -16,4 +16,4 @@ class TestECDSASignature(TestCase):
              '907ff91022100b449b366639e08e9dd915a57940f7bc715262a7ea790000cd2cbc335a9aed837')
         ]:
             with self.subTest("Test der format"):
-                self.assertEqual(expected_der, ECDSASignature(r, s).to_der().hex())
+                self.assertEqual(expected_der, ECDSASignature(r, s, 0).to_der().hex())
