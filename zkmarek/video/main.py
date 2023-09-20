@@ -100,7 +100,7 @@ MAIN_SLIDES = [
     Standards(),
 
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        post_wait_time=3, sound="data/sound/episode/s25.wav"),
+        post_wait_time=3, sound="data/sound/episode/s26.wav"),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
