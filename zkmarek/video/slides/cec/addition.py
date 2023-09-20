@@ -236,10 +236,9 @@ class Addition(SlideBase):
 
         scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf2.tex")
-        scene.play(TransformMatchingTex(
-            self.point_at_label,
-            MathTex("\mathcal{O}", color=PRIMARY_COLOR).next_to(self.point_at_infinity, RIGHT)
-        ))
+        tex_zero = MathTex("\mathcal{O}", color=PRIMARY_COLOR).next_to(self.point_at_infinity, RIGHT)
+        scene.play(TransformMatchingTex(self.point_at_label, tex_zero))
+        self.point_at_label = tex_zero
         scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf3.tex")
         self.sidebar.math[0][6:11].set_color(SECONDARY_COLOR)
@@ -322,11 +321,11 @@ class Addition(SlideBase):
         self.chart.remove(line_double)
 
     def animate_in(self, scene):
-        # self.animate_addition_base(scene)
-        # self.animate_addition_base_summary(scene)
-        # self.animate_addition_math_and_code(scene)
+        self.animate_addition_base(scene)
+        self.animate_addition_base_summary(scene)
+        self.animate_addition_math_and_code(scene)
         self.animate_infinity_point(scene)
-        # self.animate_doubling(scene)
+        self.animate_doubling(scene)
 
     def animate_out(self, scene):
         self.new_subsection(scene, "Point addition - clean up")
