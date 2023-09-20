@@ -1,7 +1,6 @@
 from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Angle, Create,
                    Dot, FadeOut, Flash, GrowFromPoint, Indicate, MathTex,
-                   ReplacementTransform, ShowPassingFlash, SingleStringMathTex,
-                   TransformMatchingTex, ValueTracker, Write, linear)
+                   ReplacementTransform, ShowPassingFlash, TransformMatchingTex, ValueTracker, Write, linear)
 
 from zkmarek.crypto.cec_affine import CECAffine
 from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
@@ -58,7 +57,7 @@ class Addition(SlideBase):
         )
         self.point_at_infinity = Dot(self.chart.ax.coords_to_point(6, 7),
                                      color=PRIMARY_COLOR)
-        self.point_at_label = SingleStringMathTex("\infty", color=PRIMARY_COLOR)
+        self.point_at_label = MathTex("\infty", color=PRIMARY_COLOR)
         self.line1 = LineThroughDots(self.p4, self.p2)
         self.line1_tmp = LineThroughDots(self.p2, self.p4)
         self.line2 = LineThroughDots(self.p4, self.p3)
@@ -235,8 +234,14 @@ class Addition(SlideBase):
             "Addition - point at infinity - neutral element",
             sound="data/sound/episode/s8c-5.wav")
 
-        scene.wait(12)
+        scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf2.tex")
+        scene.play(TransformMatchingTex(
+            self.point_at_label,
+            MathTex("\mathcal{O}", color=PRIMARY_COLOR).next_to(self.point_at_infinity, RIGHT)
+        ))
+        scene.wait(6)
+        self.sidebar.animate_replace_math(scene, "data/cec/add_inf3.tex")
         self.sidebar.math[0][6:11].set_color(SECONDARY_COLOR)
         scene.wait(3)
         self.sidebar.math[0][11:16].set_color(SECONDARY_COLOR)
@@ -317,11 +322,11 @@ class Addition(SlideBase):
         self.chart.remove(line_double)
 
     def animate_in(self, scene):
-        self.animate_addition_base(scene)
-        self.animate_addition_base_summary(scene)
-        self.animate_addition_math_and_code(scene)
+        # self.animate_addition_base(scene)
+        # self.animate_addition_base_summary(scene)
+        # self.animate_addition_math_and_code(scene)
         self.animate_infinity_point(scene)
-        self.animate_doubling(scene)
+        # self.animate_doubling(scene)
 
     def animate_out(self, scene):
         self.new_subsection(scene, "Point addition - clean up")
