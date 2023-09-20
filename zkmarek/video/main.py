@@ -66,46 +66,46 @@ MAIN_SLIDES = [
         sound="data/sound/episode/s2-1.wav"),
     TeaserReference(),
     InThisEpisode(),
-    TitleSlide("Elliptic Curves", sound="data/sound/episode/s4.wav"),
+    TitleSlide("Elliptic Curves", sound="data/sound/episode/s5.wav"),
     EquationSlide(),
     CECOperations(),
     CECNegation(),
     CECAddition(),
 
     TitleSlide("Prime Fields", post_wait_time=2,
-        sound="data/sound/episode/s9.wav"),
+        sound="data/sound/episode/s10.wav"),
     PrimeFields(),
 
     TitleSlide("Discrete Elliptic Curves", pre_wait_time=2,
-        sound="data/sound/episode/s11.m4a"),
+        sound="data/sound/episode/s12.m4a"),
     ECIntroduction(),
     TitleSlide("Discrete Elliptic Curves Operations", pre_wait_time=2,
-        sound="data/sound/episode/s13.wav"),
+        sound="data/sound/episode/s14.wav"),
 
     ECNegation(),
     ECAddition(),
     AdditionToInfinity(),
 
     TitleSlide("Scalar multiplication", pre_wait_time=2,
-        sound="data/sound/episode/s17.m4a"),
+        sound="data/sound/episode/s18.m4a"),
     ScalarMultiplication(),
     DoubleAndAdd(),
 
-    TitleSlide("Subgroups", sound="data/sound/episode/s20.m4a"),
+    TitleSlide("Subgroups", sound="data/sound/episode/s21.m4a"),
     Subgroups(),
 
     Operations(),
     TitleSlide("Elliptic Curve Standards",
-        sound="data/sound/episode/s23.m4a"),
+        sound="data/sound/episode/s24.m4a"),
     Standards(),
 
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        post_wait_time=3, sound="data/sound/episode/s25.wav"),
+        post_wait_time=3, sound="data/sound/episode/s26.wav"),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
 
-    Subscribe("data/sound/episode/s29.wav")
+    Subscribe("data/sound/episode/s30.wav")
 ]
 
 SLIDES = MAIN_SLIDES

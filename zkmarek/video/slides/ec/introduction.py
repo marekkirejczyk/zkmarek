@@ -49,14 +49,14 @@ class Introduction(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Elliptic Curve",
-            sound="data/sound/episode/s12-0.wav")
+            sound="data/sound/episode/s13-0.wav")
         self.chart.animate_in(scene)
         scene.wait(4)
         scene.play(Circumscribe(self.chart.labels[1], Circle, color=SECONDARY_COLOR),
             Circumscribe(self.chart.labels[0], Circle, color=SECONDARY_COLOR))
 
         self.new_subsection(scene, "Elliptic Curve - Discrete World",
-            sound="data/sound/episode/s12-1.wav")
+            sound="data/sound/episode/s13-1.wav")
 
         scene.wait(1)
         scene.play(ApplyWave(self.chart.ax[0]),
@@ -66,13 +66,13 @@ class Introduction(SlideBase):
         dots = VGroup(*self.chart.dots)
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
         self.new_subsection(scene, "Elliptic Curve - Symmetry",
-            sound="data/sound/episode/s12-2.wav")
+            sound="data/sound/episode/s13-2.wav")
         scene.wait(1)
 
         self.animate_symmetry(scene)
 
         self.new_subsection(scene, "Order of the curve",
-            sound="data/sound/episode/s12-3.wav")
+            sound="data/sound/episode/s13-3.wav")
 
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
         scene.wait(2)
@@ -84,12 +84,12 @@ class Introduction(SlideBase):
         scene.play(FadeOut(brace), FadeOut(label))
 
         self.new_subsection(scene, "Elliptic Curve - Vertical lines ",
-            sound="data/sound/episode/s12-4.wav")
+            sound="data/sound/episode/s13-4.wav")
 
         self.animate_vertical(scene)
 
         self.new_subsection(scene, "Elliptic Curve - point on x axis",
-            sound="data/sound/episode/s12-5.m4a")
+            sound="data/sound/episode/s13-5.m4a")
 
         self.animate_single_point(scene)
 
