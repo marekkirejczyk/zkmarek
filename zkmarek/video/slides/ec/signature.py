@@ -42,7 +42,7 @@ class Signature(SlideBase):
     def animate_in(self, scene):
         # Animation - part 1 - introduce board
         self.new_subsection(scene, "Signature game",
-            sound="data/sound/episode/s26-1.wav")
+            sound="data/sound/episode/s27-1.wav")
         self.fade_in_board(scene)
         scene.wait(4)
         scene.play(Indicate(self.sender_label, color=SECONDARY_COLOR))
@@ -116,7 +116,7 @@ class Signature(SlideBase):
         scene.play(Indicate(self.receiver_label), color=SECONDARY_COLOR)
         scene.wait(5)
         self.new_subsection(scene, "Signature - secret",
-            sound="data/sound/episode/s26-2.wav")
+            sound="data/sound/episode/s27-2.wav")
 
         self.new_slide(scene, "Public")
         scene.play(ReplacementTransform(key_box1, key_box2))
@@ -124,12 +124,12 @@ class Signature(SlideBase):
         scene.play(Indicate(key_box2[1]))
 
         self.new_subsection(scene, "Private key",
-            sound="data/sound/episode/s26-3.wav")
+            sound="data/sound/episode/s27-3.wav")
         scene.wait(1)
         scene.play(Indicate(key_box2[3]))
 
         self.new_subsection(scene, "What is message",
-            sound="data/sound/episode/s26-4.wav")
+            sound="data/sound/episode/s27-4.wav")
         scene.wait(1)
         scene.play(Indicate(msg_box1[1]))
         scene.wait(5)
@@ -139,7 +139,7 @@ class Signature(SlideBase):
         scene.play(ReplacementTransform(msg_box2, msg_box3))
         scene.wait(1)
         self.new_subsection(scene, "What is signature",
-            sound="data/sound/episode/s26-5.wav")
+            sound="data/sound/episode/s27-5.wav")
         scene.wait(3)
         scene.play(ReplacementTransform(signature, signature2))
 
@@ -148,25 +148,25 @@ class Signature(SlideBase):
         scene.play(ReplacementTransform(signature2, signature3))
 
         self.new_subsection(scene, "Introduce r",
-            sound="data/sound/episode/s26-6.wav")
+            sound="data/sound/episode/s27-6.wav")
         scene.play(ReplacementTransform(signature3, signature4))
 
         self.new_subsection(scene, "Introduce s",
-            sound="data/sound/episode/s26-7.wav")
+            sound="data/sound/episode/s27-7.wav")
         scene.wait(2)
         scene.play(ReplacementTransform(signature4, signature5))
 
         self.new_subsection(scene, "Explain s",
-            sound="data/sound/episode/s26-8.wav")
+            sound="data/sound/episode/s27-8.wav")
         scene.wait(1)
         scene.play(Indicate(signature5[7]))
 
         self.new_subsection(scene, "Explain s",
-            sound="data/sound/episode/s26-9.wav")
+            sound="data/sound/episode/s27-9.wav")
 
         scene.wait(1)
         self.new_subsection(scene, "Move game to verifier",
-            sound="data/sound/episode/s26-10.wav")
+            sound="data/sound/episode/s27-10.wav")
         scene.wait(1)
         scene.play(Indicate(self.receiver_label))
         scene.wait(2)
@@ -191,7 +191,7 @@ class Signature(SlideBase):
         scene.play(FadeIn(r_box))
 
         self.new_subsection(scene, "Introduce U1 and U2",
-            sound="data/sound/episode/s26-11.wav")
+            sound="data/sound/episode/s27-11.wav")
         variable_box = EquationBox(
             "{{R}} = (r, {{?}})",
             "u_1 = {{-msg \cdot r^{-1} }}",
@@ -204,7 +204,7 @@ class Signature(SlideBase):
         scene.play(Indicate(variable_box[2]))
 
         self.new_subsection(scene, "Introduce Q",
-            sound="data/sound/episode/s26-12.wav")
+            sound="data/sound/episode/s27-12.wav")
         q_box = EquationBox(
             "Q = u_1 \cdot G + u_2 \cdot {{R}}"
         ).next_to(variable_box, DOWN, buff=0.5)
@@ -218,7 +218,7 @@ class Signature(SlideBase):
         scene.play(ReplacementTransform(q_box, q_box2))
 
         self.new_subsection(scene, "Proof",
-            sound="data/sound/episode/s26-13.wav")
+            sound="data/sound/episode/s27-13.wav")
         equation = MathTex(
             "Q = u_1 \cdot G + u_2 {{\cdot R}}", color=PRIMARY_COLOR
             ).scale(0.65).align_to(q_box2[0], LEFT + DOWN)
@@ -250,7 +250,7 @@ class Signature(SlideBase):
 
 
         self.new_subsection(scene, "Substitute u1 and u2",
-            sound="data/sound/episode/s26-14.m4a")
+            sound="data/sound/episode/s27-14.m4a")
         scene.play(Circumscribe(equation3[1]))
         scene.play(Circumscribe(variable_box[1][1]))
 
@@ -270,7 +270,7 @@ class Signature(SlideBase):
         scene.play(TransformMatchingTex(equation4, equation4b))
 
         self.new_subsection(scene, "Substitute s",
-            sound="data/sound/episode/s26-14b.wav")
+            sound="data/sound/episode/s27-14b.wav")
 
         scene.play(Circumscribe(equation4b[1]))
         scene.play(Circumscribe(signature5[7]))
@@ -299,7 +299,7 @@ class Signature(SlideBase):
         scene.remove(equation5)
 
         self.new_subsection(scene, "Cancel secrete with inverse",
-            sound="data/sound/episode/s26-15.wav")
+            sound="data/sound/episode/s27-15.wav")
 
         scene.play(Indicate(equation5b[3]))
         scene.play(Indicate(equation5b[1]))
@@ -318,7 +318,7 @@ class Signature(SlideBase):
             FadeOut(strike2))
 
         self.new_subsection(scene, "Multiply inverse of r",
-            sound="data/sound/episode/s26-15b.m4a")
+            sound="data/sound/episode/s27-15b.m4a")
 
         equation6b = MathTex(
             "Q = (-msg \cdot r^{-1} + ({{msg}} {{ }} + {{r \cdot}} K_{Priv}) {{\cdot r^{-1})}} \cdot G}}", # noqa: E501 # pyright: ignore
@@ -361,7 +361,7 @@ class Signature(SlideBase):
         scene.play(TransformMatchingTex(equation8, equation9))
 
         self.new_subsection(scene, "Cancel msg*r^-1 with inverse",
-            sound="data/sound/episode/s26-16.wav")
+            sound="data/sound/episode/s27-16.wav")
         strike1 = StrikeLine(equation9[1])
         scene.play(Write(strike1))
 
@@ -378,7 +378,7 @@ class Signature(SlideBase):
             FadeOut(strike2))
 
         self.new_subsection(scene, "Summary",
-            sound="data/sound/episode/s26-17.wav")
+            sound="data/sound/episode/s27-17.wav")
         scene.play(Indicate(equation10))
         scene.play(Indicate(key_box2[3]))
 
