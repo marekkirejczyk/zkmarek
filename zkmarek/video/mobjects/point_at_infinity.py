@@ -12,7 +12,7 @@ class PointAtInfinity(VGroup):
     y: float
     color: str
 
-    def __init__(self, ax: Axes, x: float, y: float, label="\infty",
+    def __init__(self, ax: Axes, x: float, y: float, label="\mathcal{O}",
         color=SECONDARY_COLOR):
         super().__init__()
         self.ax = ax

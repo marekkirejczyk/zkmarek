@@ -63,7 +63,7 @@ class AnimateSubgroups:
         if self.chart.point_at_infinity is None:
             self.chart.create_point_at_infinity(9, 43, "", dot_color=self.target_color)
 
-        infinity_label = f"{subgroup.order()} \cdot G = \infty"
+        infinity_label = f"{subgroup.order()} \cdot G = \mathcal{{O}}"
         scene.play(Circumscribe(self.chart.point_at_infinity.dot, Circle))
         self.animate_dot(scene, self.chart.point_at_infinity.dot, infinity_label)
 

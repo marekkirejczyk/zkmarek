@@ -57,7 +57,7 @@ class DiscreteEllipticChart(VGroup):
         self.set_z_index(1, family=True)
         self.gen_points()
 
-    def create_point_at_infinity(self, x, y, label="\infty", dot_color=None):
+    def create_point_at_infinity(self, x, y, label="\mathcal{O}", dot_color=None):
         color = dot_color if dot_color is not None else self.dot_color
         if self.point_at_infinity is None:
             self.point_at_infinity = PointAtInfinity(self.ax, x, y, label, color=color)
