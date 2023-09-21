@@ -68,8 +68,8 @@ def secp256k1_standard():
         "Secp256k1",
         "y^2 = x^3 + 7",
         "2^{256} - 2^{32} - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1",
-        "02\enspace 79BE667E\enspace F9DCBBAC\enspace ... \enspace D0364141",
-        "FFFFFFFF\enspace FFFFFFFF\enspace ...\enspace BFD25E8C",
+        "02\enspace 79BE667E\enspace F9DCBBAC\enspace ... \enspace 16F81798",
+        "FFFFFFFF\enspace FFFFFFFF\enspace ...\enspace D0364141",
         "h = 1",
     )
 
