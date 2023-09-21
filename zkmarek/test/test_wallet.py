@@ -21,7 +21,7 @@ class TestWallet(unittest.TestCase):
         expected_signature = "41877abc1100a650bbf1076853767b47f93732cdf649bf1c745aa7f2189fe51d58343ef9a986cbc5237955" \
                              "6d466b4f9a6c1790b11d3e01220ec038539437123f1c"
 
-        self.assertEqual(expected_r, sig.r, "Incorrect value r")
-        self.assertEqual(expected_s, sig.s, "Incorrect value s")
-        self.assertEqual(expected_v, sig.v, "Incorrect value v")
+        self.assertEqual(expected_r, sig.r)
+        self.assertEqual(expected_s, sig.s)
+        self.assertEqual(expected_v, sig.v)
         self.assertEqual(expected_signature, sig.to_hex_encoding())
