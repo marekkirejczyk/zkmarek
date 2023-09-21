@@ -28,11 +28,10 @@ class Wallet:
         r, s, v = self.standard.sign(self.secret_key, msg_hash, k)
         return ECDSASignature(r, s, v)
 
-    # This implementation of generating k parameter is a copy-paste from
+    # This implementation of generating k parameter is a copy-paste (with minor adjustments) from
     # https://github.com/ethereum/eth-keys/blob/master/eth_keys/backends/native/ecdsa.py#L93
     @staticmethod
-    def deterministic_generate_k(msg_hash: bytes,
-                                 private_key_bytes: bytes) -> int:
+    def deterministic_generate_k(msg_hash: bytes, private_key_bytes: bytes) -> int:
         digest_fn = hashlib.sha256
 
         v_0 = b'\x01' * 32

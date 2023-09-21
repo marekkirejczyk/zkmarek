@@ -38,5 +38,5 @@ class ECDSASignature:
 
         return b'\x30' + len(remaining).to_bytes(1, 'big') + remaining
 
-    def to_hex_encoding(self):
-        return hex(self.r)[2:] + hex(self.s)[2:] + hex(self.v)[2:]
+    def to_hex_encoding(self) -> str:
+        return f'{self.r:x}{self.s:x}{self.v:x}'
