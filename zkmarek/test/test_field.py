@@ -1,6 +1,6 @@
 import unittest
 
-from zkmarek.crypto.field import Field
+from zkmarek.crypto.field_element import Field
 from zkmarek.crypto.weierstrass_curve import Secp256k_Order
 from zkmarek.test.constant import TEST_PRIMES
 

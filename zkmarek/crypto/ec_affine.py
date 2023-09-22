@@ -2,7 +2,7 @@ from typing import List, Optional, Sequence
 
 from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
 from zkmarek.crypto.bits import bits, bits_lsb
-from zkmarek.crypto.field import Field, FieldLike
+from zkmarek.crypto.field_element import Field, FieldLike
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
 
 

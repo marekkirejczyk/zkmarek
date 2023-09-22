@@ -3,7 +3,7 @@ import unittest
 from zkmarek.crypto.algo.sqrt import (find_non_residue, find_pow2_divisor,
                                       find_two_pow_order, has_sqrt,
                                       tonelli_shanks_sqrt)
-from zkmarek.crypto.field import Field
+from zkmarek.crypto.field_element import Field
 from zkmarek.crypto.weierstrass_curve import Secp256k_Order
 from zkmarek.test.constant import TEST_PRIMES, TEST_PRIMES_WITHOUT_2
 

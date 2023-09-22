@@ -1,7 +1,7 @@
 import unittest
 
 from zkmarek.crypto.ec_affine import ECAffine
-from zkmarek.crypto.field import Field
+from zkmarek.crypto.field_element import Field
 from zkmarek.crypto.weierstrass_curve import (Secp256k1_13, Secp256k1_41,
                                               WeierstrassCurve, Secp256k1)
 from zkmarek.test.constant import TEST_SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
