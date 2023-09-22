@@ -2,19 +2,19 @@ from typing import List, Optional, Sequence
 
 from zkmarek.crypto.algo.sqrt import tonelli_shanks_sqrt
 from zkmarek.crypto.bits import bits, bits_lsb
-from zkmarek.crypto.field_element import Field, FieldLike
+from zkmarek.crypto.field_element import FieldElement, FieldLike
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve
 
 
 class ECAffine:
-    x: Field
-    y: Field
+    x: FieldElement
+    y: FieldElement
     curve: WeierstrassCurve
 
     def __init__(self, x: FieldLike, y: FieldLike, curve: WeierstrassCurve):
         self.curve = curve
-        self.x = Field.create_from(x, curve.p)
-        self.y = Field.create_from(y, curve.p)
+        self.x = FieldElement.create_from(x, curve.p)
+        self.y = FieldElement.create_from(y, curve.p)
         assert self.x.order > 0 and self.x.order == self.y.order
         assert curve.is_at(
             self.x.value, self.y.value
@@ -46,7 +46,7 @@ class ECAffine:
     def __sub__(self, other: "ECAffine") -> "ECAffine":
         return self + (-other)
 
-    def slope(self) -> Optional[Field]:
+    def slope(self) -> Optional[FieldElement]:
         if self.is_infinity() or self.y.value == 0:
             return None
         return ((self.x**2) * 3) / (self.y * 2)
@@ -125,7 +125,7 @@ class ECAffine:
 
     @staticmethod
     def from_x(x: int, sgn: int, curve: WeierstrassCurve) -> "Optional[ECAffine]":
-        fx = Field(x, curve.p)
+        fx = FieldElement(x, curve.p)
         fy = tonelli_shanks_sqrt(fx**3 + fx * curve.a + curve.b)
         if fy is None:
             return None

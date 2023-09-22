@@ -3,7 +3,7 @@ import unittest
 from zkmarek.crypto.algo.sqrt import (find_non_residue, find_pow2_divisor,
                                       find_two_pow_order, has_sqrt,
                                       tonelli_shanks_sqrt)
-from zkmarek.crypto.field_element import Field
+from zkmarek.crypto.field_element import FieldElement
 from zkmarek.crypto.weierstrass_curve import Secp256k_Order
 from zkmarek.test.constant import TEST_PRIMES, TEST_PRIMES_WITHOUT_2
 
@@ -24,7 +24,7 @@ class TestSqrt(unittest.TestCase):
     def test_has_sqrt_big(self):
         p = Secp256k_Order
         for i in [1, 2, 3, 7, 100, 1024, 2**128, 2**254] + list(range(101, 202)):
-            nf = Field(i, p)
+            nf = FieldElement(i, p)
             self.assertEqual(has_sqrt(i, p), tonelli_shanks_sqrt(nf) is not None)
 
 
@@ -54,26 +54,26 @@ class TestSqrt(unittest.TestCase):
             self.assertNotEqual(z.value, 0)
 
     def test_find_two_pow_order_simple(self):
-        nf = Field(9, 41)
+        nf = FieldElement(9, 41)
         self.assertEqual(find_two_pow_order(nf, 41), 2)
 
     def test_find_two_pow_order(self):
         for i in [9, 32, 40]:
-            nf = Field(i, 41)
-            self.assertEqual(nf **(2 ** find_two_pow_order(nf, 41)), Field(1, 41))
+            nf = FieldElement(i, 41)
+            self.assertEqual(nf ** (2 ** find_two_pow_order(nf, 41)), FieldElement(1, 41))
 
     def test_tonelli_shanks_sqrt_none(self):
         for p in TEST_PRIMES:
             for i in range(1, p):
                 expected = naive_find_sqrt(i, p)
                 if expected is None:
-                    result = tonelli_shanks_sqrt(Field(i, p))
+                    result = tonelli_shanks_sqrt(FieldElement(i, p))
                     self.assertIsNone(result)
 
     def test_tonelli_shanks_sqrt_small(self):
         for p in TEST_PRIMES_WITHOUT_2:
             for i in range(1, p):
-                nf = Field(i, p)
+                nf = FieldElement(i, p)
                 if has_sqrt(i, p):
                     r = tonelli_shanks_sqrt(nf)
                     self.assertEqual(r * r, nf)
@@ -81,7 +81,7 @@ class TestSqrt(unittest.TestCase):
     def test_tonelli_shanks_sqrt_big(self):
         p = Secp256k_Order
         for i in [1, 2, 3, 7, 100, 1024, 2**128, 2**254]:
-            nf = Field(i, p)
+            nf = FieldElement(i, p)
             if has_sqrt(i, p):
                 r = tonelli_shanks_sqrt(nf)
                 self.assertEqual(r * r, nf)
