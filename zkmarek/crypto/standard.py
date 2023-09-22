@@ -33,9 +33,20 @@ class Standard:
         r: int = R.x.value % n
         # s = k⁻¹(z + rdₐ) mod n
         s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n
-        v = 27 + ((R.y.value % 2) ^ (0 if s * 2 < n else 1))
-        s = s if s * 2 < n else n - s
-        return r, s, v
+
+        # According to https://ethereum.github.io/yellowpaper/paper.pdf Appendix F
+        # > The value 0 represents an even y value and 1 represents an odd y value.
+        v = R.y.value % 2
+
+        # According to https://eips.ethereum.org/EIPS/eip-2
+        # > All transaction signatures whose s-value is greater than secp256k1n/2 are now considered invalid
+        # So if s > n/2 we need to flip `s` and `v` values
+        if s * 2 >= n:
+            s = n - s
+            v ^= 1
+
+        # 27 is just an arbitrary number that originates in bitcoin-core source code
+        return r, s, 27 + v
 
     # Based on https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_verification_algorithm
     def verify(self, z: int, r: int, s: int, public_key: ECAffine) -> bool:

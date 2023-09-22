@@ -25,3 +25,14 @@ class TestWallet(unittest.TestCase):
         self.assertEqual(expected_s, sig.s)
         self.assertEqual(expected_v, sig.v)
         self.assertEqual(expected_signature, sig.to_hex_encoding())
+
+    def test_correct_v_value_calculation(self):
+        wallet = Wallet(TEST_SECRET_KEY)
+        for test_name, msg, expected_v in [
+            ("y is even, s < n/2", "auzp", 27),
+            ("y is even, s >= n/2", "kemc", 28),
+            ("y is odd, s < n/2", "ebur", 28),
+            ("y is odd, s >= n/2", "nuaf", 27),
+        ]:
+            with self.subTest(test_name):
+                self.assertEqual(expected_v, wallet.sign(msg).v)
