@@ -60,8 +60,8 @@ TEASER = [
 MAIN_SLIDES = [
     Intro(),
     TitleSlide(
-        "Elliptic curves and Digital Signature Algorithm",
-        subtitle="used in Ethereum",
+        "Elliptic curves",
+        subtitle="in Ethereum wallet",
         post_wait_time=2,
         sound="data/sound/episode/s2-1.wav"),
     TeaserReference(),
