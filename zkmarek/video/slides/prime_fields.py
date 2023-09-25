@@ -61,9 +61,13 @@ class PrimeFields(SlideBase):
         scene.wait(1)
         scene.play(Indicate(clock4.markings[23]))
 
+        scene.wait(4)
+        clock5 = Clock(use_zero=True, modulus=13, hour=1)
+        scene.play(ReplacementTransform(clock4, clock5))
+
         scene.wait(5)
 
-        self.order12 = MathTex("{{Order}} = 12", color=PRIMARY_COLOR).next_to(
+        self.order12 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
         scene.play(FadeIn(self.order12))
 
@@ -72,8 +76,8 @@ class PrimeFields(SlideBase):
             sound="data/sound/episode/s11-3.wav")
 
         scene.wait(3)
-        clock5 = Clock(use_zero=True, hour=4, modulus=200)
-        scene.play(ReplacementTransform(clock4, clock5))
+        clock6 = Clock(use_zero=True, hour=4, modulus=200)
+        scene.play(ReplacementTransform(clock5, clock6))
 
         scene.wait(2)
 
@@ -90,11 +94,11 @@ class PrimeFields(SlideBase):
             "Prime fields - modulo 41",
             sound="data/sound/episode/s11-4.wav")
         scene.wait(1)
-        clock6 = Clock(use_zero=True, hour=4, modulus=41)
+        clock7 = Clock(use_zero=True, hour=4, modulus=41)
 
         self.order41 = MathTex("{{Order}} = 41", color=PRIMARY_COLOR).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
-        scene.play(ReplacementTransform(clock5, clock6),
+        scene.play(ReplacementTransform(clock6, clock7),
             TransformMatchingTex(self.order256, self.order41), run_time=2)
 
         scene.wait(4)
@@ -108,7 +112,7 @@ class PrimeFields(SlideBase):
             label_direction=DOWN,
             include_tip=True,
         ).scale(0.6)
-        scene.play(TransformMatchingShapes(clock6, line))
+        scene.play(TransformMatchingShapes(clock7, line))
         scene.play(line.animate.align_on_border(LEFT, buff=0.2))
 
     def animate_sidebar(self, scene):
