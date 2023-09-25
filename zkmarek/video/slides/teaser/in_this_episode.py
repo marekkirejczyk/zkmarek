@@ -6,8 +6,8 @@ from zkmarek.video.mobjects.continuous_elliptic_chart import \
     ContinuousEllipticChart
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
-from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.standard import secp256k1_standard
+from zkmarek.video.mobjects.wallet import Wallet
 
 from ..common.slide_base import SlideBase
 
@@ -37,14 +37,14 @@ class InThisEpisode(SlideBase):
             "Arythmetics used in cryptography ",
             "Elliptic curves used in cryptography ",
             "Curves used in real-life protocols ",
-            "Digital Signature Algorithm used in Ethereum"
+            "Ethereum Wallet"
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
             Clock(hour=1),
             DiscreteEllipticChart(include_details=False),
             secp256k1_standard(),
-            Signature()
+            Wallet("secret key", "address")
         ]
         self.sounds = [
             "data/sound/episode/s4-1.m4a",
@@ -74,7 +74,8 @@ class InThisEpisode(SlideBase):
         self.arrange_in_grid(cols=2, col_alignments="ll", row_alignments="uuuuu")
 
         for i, thumbnail in enumerate(self.thumbnails):
-            thumbnail.scale(0.15)
+            scale = 0.4 if i == 4 else 0.15
+            thumbnail.scale(scale)
             thumbnail.move_to(self.thumbnails_borders[i].get_center())
             self.add(thumbnail)
 
