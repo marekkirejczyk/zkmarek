@@ -1,4 +1,4 @@
-class Field:
+class FieldElement:
     value: int # BigInteger
     order: int # BigInteger
 
@@ -6,21 +6,21 @@ class Field:
         self.value = value % order
         self.order = order
 
-    def __eq__(self, other: Field) -> bool:
+    def __eq__(self, other: FieldElement) -> bool:
         assert self.order == other.order
         return self.value == other.value
 
-    def __add__(self, other: Field) -> Field:
+    def __add__(self, other: FieldElement) -> FieldElement:
         assert self.order == other.order
-        return Field(self.value + other.value, self.order)
+        return FieldElement(self.value + other.value, self.order)
 
-    def __sub__(self, other: Field) -> Field:
+    def __sub__(self, other: FieldElement) -> FieldElement:
         assert self.order == other.order
-        return Field(self.value - other.value, self.order)
+        return FieldElement(self.value - other.value, self.order)
 
-    def __mul__(self, other: Field) -> Field:
+    def __mul__(self, other: FieldElement) -> FieldElement:
         assert self.order == other.order
-        return Field(self.value * other.value, self.order)
+        return FieldElement(self.value * other.value, self.order)
 
-    def inv(self) -> Field:
+    def inv(self) -> FieldElement:
         return ...

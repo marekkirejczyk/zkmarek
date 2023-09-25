@@ -5,7 +5,7 @@ from zkmarek.crypto.weierstrass_curve import Secp256k_Order
 from zkmarek.test.constant import TEST_PRIMES
 
 
-class TestField(unittest.TestCase):
+class TestFieldElement(unittest.TestCase):
     def test_init(self):
         f = FieldElement(1, 13)
         self.assertEqual(f.value, 1)

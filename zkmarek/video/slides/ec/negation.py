@@ -63,11 +63,11 @@ class Negation(SlideBase):
 
         self.new_subsection(scene, "Elliptic Curve coordinates",
             sound="data/sound/episode/s15-3.wav")
-        self.sidebar.indicate_code(scene, "x: Field")
-        self.sidebar.indicate_code(scene, "y: Field")
+        self.sidebar.indicate_code(scene, "x: FieldElement")
+        self.sidebar.indicate_code(scene, "y: FieldElement")
         scene.wait(1.5)
-        self.sidebar.indicate_code(scene, "Field", 0)
-        self.sidebar.indicate_code(scene, "Field", 1)
+        self.sidebar.indicate_code(scene, "FieldElement", 0)
+        self.sidebar.indicate_code(scene, "FieldElement", 1)
 
         self.new_subsection(scene, "Elliptic Curve negation operator",
             sound="data/sound/episode/s15-4.wav")

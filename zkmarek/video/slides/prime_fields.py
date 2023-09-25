@@ -123,7 +123,7 @@ class PrimeFields(SlideBase):
             "Prime fields - class",
             sound="data/sound/episode/s11-7.wav")
 
-        self.sidebar.indicate_code(scene, "class Field", run_time=1)
+        self.sidebar.indicate_code(scene, "class FieldElement", run_time=1)
         scene.wait(2)
         self.sidebar.indicate_code(scene, "value: int", run_time=1)
         scene.wait(1)
