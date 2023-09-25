@@ -1,11 +1,38 @@
 import unittest
 
 from zkmarek.crypto.wallet import Wallet
+from zkmarek.test.test_ethereum import TEST_SECRET_KEY, TEST_MESSAGE
 
 
 class TestWallet(unittest.TestCase):
     def test_generate_ethereum_address(self):
-        secret_key: str = "9de347a715a200cd8e83cecc4277c7fdf2ebd95766720abec8364d879483b69b"
         expected_address = "0xE31cC18f3F3718588E9a878A516C7889AF047171"
-        actual_address = Wallet(secret_key).get_address()
+        actual_address = Wallet(TEST_SECRET_KEY).get_address()
         self.assertEqual(expected_address.lower(), actual_address.lower())
+
+    def test_ethereum_sign_message(self):
+        wallet = Wallet(TEST_SECRET_KEY)
+        sig = wallet.sign(TEST_MESSAGE)
+
+        # Expected test values generated on https://www.myetherwallet.com/wallet/sign
+        expected_r = 0x41877abc1100a650bbf1076853767b47f93732cdf649bf1c745aa7f2189fe51d
+        expected_s = 0x58343ef9a986cbc52379556d466b4f9a6c1790b11d3e01220ec038539437123f
+        expected_v = 28
+        expected_signature = "41877abc1100a650bbf1076853767b47f93732cdf649bf1c745aa7f2189fe51d58343ef9a986cbc5237955" \
+                             "6d466b4f9a6c1790b11d3e01220ec038539437123f1c"
+
+        self.assertEqual(expected_r, sig.r)
+        self.assertEqual(expected_s, sig.s)
+        self.assertEqual(expected_v, sig.v)
+        self.assertEqual(expected_signature, sig.to_hex_encoding())
+
+    def test_correct_v_value_calculation(self):
+        wallet = Wallet(TEST_SECRET_KEY)
+        for test_name, msg, expected_v in [
+            ("y is even, s < n/2", "auzp", 27),
+            ("y is even, s >= n/2", "kemc", 28),
+            ("y is odd, s < n/2", "ebur", 28),
+            ("y is odd, s >= n/2", "nuaf", 27),
+        ]:
+            with self.subTest(test_name):
+                self.assertEqual(expected_v, wallet.sign(msg).v)
