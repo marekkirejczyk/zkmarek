@@ -1,7 +1,6 @@
 class ECAffine:
-    x: Field
-    y: Field
-
+    x: FieldElement
+    y: FieldElement
     ...
 
     def __neg__(self) -> ECAffine:

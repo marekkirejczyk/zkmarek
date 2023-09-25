@@ -115,13 +115,13 @@ class PrimeFields(SlideBase):
         self.new_subsection(scene,
             "Prime fields - code",
             sound="data/sound/episode/s11-6.wav")
-        self.sidebar = Sidebar("Prime Field", code_path="data/pf/field.py")
+        self.sidebar = Sidebar("Prime Field", code_path="data/pf/field_element.py")
         self.sidebar.animate_in(scene)
         self.new_subsection(scene,
             "Prime fields - class",
             sound="data/sound/episode/s11-7.wav")
 
-        self.sidebar.indicate_code(scene, "class Field", run_time=1)
+        self.sidebar.indicate_code(scene, "class FieldElement", run_time=1)
         scene.wait(2)
         self.sidebar.indicate_code(scene, "value: int", run_time=1)
         scene.wait(1)
