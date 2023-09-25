@@ -40,15 +40,13 @@ class PrimeFields(SlideBase):
 
         scene.play(FadeIn(angle))
         scene.wait(1)
-        clock2 = Clock(hour=11)
-        scene.play(ReplacementTransform(clock, clock2))
+        clock.move_hand_by_hours(scene, 2)
         scene.play(FadeOut(angle))
 
         angle2 = FillAngle(deg1=330, deg2=30)
         scene.play(FadeIn(angle2))
-        clock3 = Clock(hour=1)
 
-        scene.play(ReplacementTransform(clock2, clock3))
+        clock.move_hand_by_hours(scene, 2)
         scene.play(FadeOut(angle2))
 
         self.new_subsection(scene,
@@ -57,7 +55,7 @@ class PrimeFields(SlideBase):
 
         clock4 = Clock(use_zero=True, hour=1)
         scene.wait(1)
-        scene.play(ReplacementTransform(clock3, clock4))
+        scene.play(ReplacementTransform(clock, clock4))
         scene.wait(2)
         scene.play(Indicate(clock4.markings[1]))
         scene.wait(1)

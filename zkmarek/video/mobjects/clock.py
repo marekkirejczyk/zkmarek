@@ -2,7 +2,7 @@
 from typing import Optional
 
 import numpy as np
-from manim import DOWN, ORIGIN, UP, Circle, Create, Line, Text, VGroup
+from manim import DOWN, ORIGIN, UP, Circle, Create, Line, Text, VGroup, Rotate, PI
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 
@@ -41,6 +41,8 @@ class Clock(VGroup):
         line.rotate(-np.deg2rad(angle), about_point=ORIGIN)
         return line
 
+    def move_hand_by_hours(self, scene, hours):
+        scene.play(Rotate(self.hour_hand, angle=hours * (-PI / 6), about_point=ORIGIN))
 
     def create_markings(self, n):
         result = VGroup()
