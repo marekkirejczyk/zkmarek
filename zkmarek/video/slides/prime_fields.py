@@ -63,9 +63,13 @@ class PrimeFields(SlideBase):
         scene.wait(1)
         scene.play(Indicate(clock4.markings[23]))
 
+        scene.wait(4)
+        clock5 = Clock(use_zero=True, modulus=13, hour=1)
+        scene.play(ReplacementTransform(clock4, clock5))
+
         scene.wait(5)
 
-        self.order12 = MathTex("{{Order}} = 12", color=PRIMARY_COLOR).next_to(
+        self.order12 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
         scene.play(FadeIn(self.order12))
 
