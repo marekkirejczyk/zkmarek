@@ -1,7 +1,7 @@
 import unittest
 
 from zkmarek.crypto.ec_affine import ECAffine
-from zkmarek.crypto.field import Field
+from zkmarek.crypto.field_element import FieldElement
 from zkmarek.crypto.weierstrass_curve import (Secp256k1_13, Secp256k1_41,
                                               WeierstrassCurve, Secp256k1)
 from zkmarek.test.constant import TEST_SMALL_PRIMES, TEST_PRIMES_WITHOUT_2
@@ -40,20 +40,20 @@ class TestECAffine(unittest.TestCase):
 
     def test_init_with_int(self):
         p = ECAffine(7, 8, self.curve)
-        self.assertEqual(p.x, Field(7, 13))
-        self.assertEqual(p.y, Field(8, 13))
+        self.assertEqual(p.x, FieldElement(7, 13))
+        self.assertEqual(p.y, FieldElement(8, 13))
         p = ECAffine(20, -5, self.curve)
-        self.assertEqual(p.x, Field(7, 13))
-        self.assertEqual(p.y, Field(8, 13))
+        self.assertEqual(p.x, FieldElement(7, 13))
+        self.assertEqual(p.y, FieldElement(8, 13))
 
     def test_init_not_on_curve(self):
         with self.assertRaises(AssertionError):
             ECAffine(7, 7, self.curve)
 
     def test_init_with_field(self):
-        p = ECAffine(Field(7, 13), Field(8, 13), self.curve)
-        self.assertEqual(p.x, Field(7, 13))
-        self.assertEqual(p.y, Field(8, 13))
+        p = ECAffine(FieldElement(7, 13), FieldElement(8, 13), self.curve)
+        self.assertEqual(p.x, FieldElement(7, 13))
+        self.assertEqual(p.y, FieldElement(8, 13))
 
     def test_infinity(self):
         p = ECAffine.infinity_point(self.curve)
