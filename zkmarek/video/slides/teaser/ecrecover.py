@@ -56,15 +56,8 @@ class ECRecoverSlideTeaser(SlideBase):
         self.scale(0.4)
         self.move_to(LEFT * 3.4)
         text.next_to(rectangle, DOWN, buff=0.4)
-        scene.play(FadeIn(self.title_text), FadeIn(rectangle),
+        scene.play(FadeIn(self.title_text), FadeIn(rectangle), FadeIn(text),
             FadeIn(self.code), FadeIn(self.docs))
-
-        chars1 = find_in_code(self.code, "bytes32 s")[0]
-        chars2 = find_in_code(self.code, "bytes32 r")[0]
-        scene.play(FadeIn(text),
-            Succession(
-                Indicate(chars1, run_time=0.5),
-                Indicate(chars2, run_time=0.5)))
         self.add(text)
 
     def animate_out(self, scene):

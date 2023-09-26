@@ -1,6 +1,6 @@
 from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Create,
                    FadeIn, FadeOut, Rectangle, RemoveTextLetterByLetter, Text,
-                   VGroup)
+                   VGroup, Indicate)
 
 from zkmarek.video.constant import (BACKGROUND_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
@@ -147,7 +147,6 @@ class SeasonTeaser(SlideBase):
         self.move_to(RIGHT * 3.4)
         tree.next_to(self.stack, RIGHT, buff=0.2)
         text.next_to(rectangle, DOWN, buff=0.4)
-        scene.play(FadeIn(self))
-        scene.play(Create(tree), FadeIn(text))
+        scene.play(FadeIn(self), Create(tree), FadeIn(text))
         self.rest = [tree, text]
 
