@@ -38,7 +38,7 @@ from zkmarek.video.slides.teaser.list import ListSlide
 from zkmarek.video.slides.teaser.season_teaser import SeasonTeaser
 from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
 from zkmarek.video.slides.teaser_reference import TeaserReference
-from zkmarek.video.utils import get_slides_from_names
+from zkmarek.video.utils import get_slides_from_names, get_deck_name
 
 config.width = 16
 config.height = 9
@@ -121,16 +121,12 @@ DECKS = {
 
 DEFAULT_DECK = "E1"
 
-def get_deck_name():
-    env_name = dict(os.environ).get("DECK")
-    return DEFAULT_DECK if env_name is None else env_name
-
 
 class EllipticCurves(Scene):
     def construct(self):
         register_font('data/brand/Oxanium-Regular.ttf')
 
-        name = get_deck_name()
+        name = get_deck_name(DEFAULT_DECK)
         deck = DECKS[name]
 
         env_slides = dict(os.environ).get("SLIDES")
