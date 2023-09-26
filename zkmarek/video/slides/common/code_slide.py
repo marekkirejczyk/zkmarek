@@ -6,17 +6,19 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 class CodeSlide(SlideBase):
     title_text: Text
+    title: str
     code: Code
     code_path: str
     kwargs: dict
 
     def __init__(self, title, code_path, **kwargs):
         super().__init__(title)
-        self.title_text = Text(title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.code_path = code_path
         self.kwargs = kwargs
+        self.title = title
 
     def construct(self):
+        self.title_text = Text(self.title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.code = Code(
             self.code_path,
             background="window",

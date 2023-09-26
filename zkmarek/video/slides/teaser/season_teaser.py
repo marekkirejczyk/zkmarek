@@ -88,7 +88,7 @@ class SeasonTeaser(SlideBase):
             scene.play(AddTextLetterByLetter(group[i]))
         return group
 
-    def animate_3(self, scene, sc):
+    def animate_3(self, scene):
         group = VGroup(
             self.label("Verkle Trees"),
             VerkleTree().scale(0.5)).arrange(direction=DOWN).move_to(RIGHT * 3)
