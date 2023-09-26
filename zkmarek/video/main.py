@@ -38,7 +38,7 @@ from zkmarek.video.slides.teaser.list import ListSlide
 from zkmarek.video.slides.teaser.season_teaser import SeasonTeaser
 from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
 from zkmarek.video.slides.teaser_reference import TeaserReference
-from zkmarek.video.utils import get_slides_from_names
+from zkmarek.video.utils import get_slides_from_names, get_deck_name
 
 config.width = 16
 config.height = 9
@@ -57,7 +57,7 @@ TEASER = [
     Subscribe("data/sound/teaser/s8.wav")
 ]
 
-MAIN_SLIDES = [
+EPISODE1 = [
     Intro(),
     TitleSlide(
         "Elliptic curves",
@@ -98,24 +98,37 @@ MAIN_SLIDES = [
     TitleSlide("Elliptic Curve Standards",
         sound="data/sound/episode/s24.m4a"),
     Standards(),
+    Subscribe("data/sound/episode/s30.wav")
+]
 
+EPISODE2 = [
+    Intro(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
         post_wait_time=3, sound="data/sound/episode/s26.wav"),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
-
     Subscribe("data/sound/episode/s30.wav")
 ]
 
-SLIDES = MAIN_SLIDES
+DECKS = {
+    "TEASER": TEASER,
+    "E1": EPISODE1,
+    "E2": EPISODE2,
+}
+
+DEFAULT_DECK = "E1"
+
 
 class EllipticCurves(Scene):
     def construct(self):
         register_font('data/brand/Oxanium-Regular.ttf')
-        slides = get_slides_from_names(
-            dict(os.environ).get("SLIDES"), SLIDES, globals()
-        )
-        presentation = Presentation(self, SLIDES, slides)
-        presentation.print_slides()
+
+        name = get_deck_name(DEFAULT_DECK)
+        deck = DECKS[name]
+
+        env_slides = dict(os.environ).get("SLIDES")
+        slides = get_slides_from_names(env_slides, deck, globals())
+        presentation = Presentation(self, deck, slides)
+        presentation.print_slides(name)
         presentation.play()

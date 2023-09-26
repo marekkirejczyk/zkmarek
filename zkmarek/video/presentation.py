@@ -34,14 +34,14 @@ class Presentation:
         slide.animate_out(self.scene)
         self.scene.clear()
 
-    def print_slides(self):
+    def print_slides(self, name: str):
         def index_of(slide, slides):
             try:
                 return slides.index(slide)
             except ValueError:
                 return -1
 
-        print("Rendering slides: ")
+        print(f"Rendering '{name}': ")
         for slide in self.all_slides:
             prefix = "-> " if index_of(slide, self.slides) >= 0 else "   "
             index = index_of(slide, self.all_slides)+1

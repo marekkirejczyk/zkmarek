@@ -38,12 +38,27 @@ Generate and open movie:
 script/movie
 ```
 
-Generate and open single slide:
+Generate and open movie for specific deck:
+```sh
+DECK=TEASER script/movie
+DECK=E1 script/movie
+DECK=E2 script/movie
+```
+
+Default is E1 (Episode 1).
+
+Generate and open movie from specific slides:
 ```sh
 SLIDES=<slide_class_name> script/movie
 SLIDES=<index_of_slide> script/movie
 SLIDES=<list,of,indexes,and,class_names> script/movie
 ```
+
+Generate and open movie from specific slides of specific deck:
+```sh
+DECK=TEASER SLIDES=1 script/movie
+```
+
 
 Generate presentation:
 

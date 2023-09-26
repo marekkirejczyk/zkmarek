@@ -1,3 +1,5 @@
+from os import environ
+
 from typing import List
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -27,6 +29,10 @@ def get_slides_from_names(
         get_slide_by_label(label, all_slides, globals)
         for label in slide_names.split(",")
     ]
+
+def get_deck_name(default_deck):
+    env_name = dict(environ).get("DECK")
+    return default_deck if env_name is None else env_name
 
 # code: Code (arg)
 #   code: Paragraph
