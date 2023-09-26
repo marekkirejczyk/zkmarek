@@ -78,7 +78,7 @@ class Addition(SlideBase):
         self.p3.set_p(new_c)
         self.p4.set_p(-new_c)
 
-        if abs(self.p1.p.x - self.p2.p.x) < 0.4 and self.p1_sgn < 0:
+        if abs(self.p1.p.x - self.p2.p.x) < 1 and self.p1_sgn < 0:
             self.line1.update_start_and_end(self.p1, self.p2)
             self.line1.extend()
         else:
