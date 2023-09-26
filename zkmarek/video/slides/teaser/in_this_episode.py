@@ -39,13 +39,6 @@ class InThisEpisode(SlideBase):
             "Curves used in real-life protocols ",
             "Ethereum Wallet"
         ]
-        self.thumbnails = [
-            ContinuousEllipticChart(include_details=False),
-            Clock(hour=1, modulus=13, use_zero=True),
-            DiscreteEllipticChart(include_details=False),
-            secp256k1_standard(),
-            Wallet("secret key", "address")
-        ]
         self.sounds = [
             "data/sound/episode/s4-1.m4a",
             "data/sound/episode/s4-2.m4a",
@@ -56,6 +49,13 @@ class InThisEpisode(SlideBase):
 
     def construct(self):
         self.labels = []
+        self.thumbnails = [
+            ContinuousEllipticChart(include_details=False),
+            Clock(hour=1, modulus=13, use_zero=True),
+            DiscreteEllipticChart(include_details=False),
+            secp256k1_standard(),
+            Wallet("secret key", "address")
+        ]
         for i in range(0, len(self.titles)):
             title = Text(self.titles[i], font=PRIMARY_FONT, color=PRIMARY_COLOR)
             description = Text(self.descriptions[i], font_size=24,
