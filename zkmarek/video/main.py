@@ -111,8 +111,6 @@ EPISODE2 = [
     Subscribe("data/sound/episode/s30.wav")
 ]
 
-SLIDES = EPISODE1
-
 DECKS = {
     "TEASER": TEASER,
     "E1": EPISODE1,
