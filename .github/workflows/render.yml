@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: texlive/texlive
     steps:
     - uses: actions/checkout@v3
     - name: Install apt dependencies
@@ -40,7 +40,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
-        python -m manim -p -qh zkmarek/video/main.py
+        SLIDES=TestSlide python -m manim -p -qh zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
         name: Upload movie
