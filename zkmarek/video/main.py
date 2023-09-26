@@ -38,6 +38,7 @@ from zkmarek.video.slides.teaser.list import ListSlide
 from zkmarek.video.slides.teaser.season_teaser import SeasonTeaser
 from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
 from zkmarek.video.slides.teaser_reference import TeaserReference
+from zkmarek.video.slides.wallet import WalletSlide
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
 
 config.width = 16
@@ -99,6 +100,7 @@ EPISODE1 = [
         sound="data/sound/episode/s24.m4a"),
     Standards(),
     TitleSlide("Ethereum Wallet"),
+    WalletSlide(),
     Subscribe("data/sound/episode/s30.wav")
 ]
 
