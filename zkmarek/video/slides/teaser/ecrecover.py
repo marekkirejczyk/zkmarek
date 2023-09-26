@@ -1,5 +1,5 @@
 from manim import (DOWN, LEFT, UP, Code, FadeIn, FadeOut, Indicate, Rectangle,
-                   Succession, Tex, Text)
+                   Tex, Text)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase

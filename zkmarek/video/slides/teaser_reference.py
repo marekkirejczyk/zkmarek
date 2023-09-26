@@ -1,5 +1,5 @@
-from manim import (LEFT, RIGHT, UP, Arrow, FadeOut, MoveToTarget, Rectangle,
-                   Text, rate_functions)
+from manim import (LEFT, RIGHT, UP, Arrow, FadeOut, MoveToTarget, Text,
+                   rate_functions)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase

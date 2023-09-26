@@ -1,12 +1,13 @@
 from manim import (DOWN, LEFT, RIGHT, UP, AddTextLetterByLetter, Create,
                    FadeIn, FadeOut, Rectangle, RemoveTextLetterByLetter, Text,
-                   VGroup, Indicate)
+                   VGroup)
 
 from zkmarek.video.constant import (BACKGROUND_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
 from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
+
 
 class Box(VGroup):
     def __init__(self, label):
