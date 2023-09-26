@@ -98,6 +98,7 @@ EPISODE1 = [
     TitleSlide("Elliptic Curve Standards",
         sound="data/sound/episode/s24.m4a"),
     Standards(),
+    TitleSlide("Ethereum Wallet"),
     Subscribe("data/sound/episode/s30.wav")
 ]
 
