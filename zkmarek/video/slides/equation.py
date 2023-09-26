@@ -9,6 +9,7 @@ class EquationSlide(SlideBase):
     def __init__(self) -> None:
         super().__init__(title="Elliptic Curve Equation")
 
+    def animate_in(self, scene):
         self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR)
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b", color=PRIMARY_COLOR)
         self.secp256k1_label = Text(r"Secp256k1 equation", color=PRIMARY_COLOR)
@@ -33,7 +34,6 @@ class EquationSlide(SlideBase):
         self.secp_equation3.next_to(self.secp256k1_label, DOWN)
         self.ab.next_to(self.secp_equation2, DOWN)
 
-    def animate_in(self, scene):
         self.play_sound(scene, "data/sound/episode/s6-1.wav")
         scene.wait(1)
         scene.play(Write(self.weierstrass_form), run_time=2)
