@@ -41,7 +41,7 @@ class InThisEpisode(SlideBase):
         ]
         self.thumbnails = [
             ContinuousEllipticChart(include_details=False),
-            Clock(hour=1),
+            Clock(hour=1, modulus=13, use_zero=True),
             DiscreteEllipticChart(include_details=False),
             secp256k1_standard(),
             Wallet("secret key", "address")
