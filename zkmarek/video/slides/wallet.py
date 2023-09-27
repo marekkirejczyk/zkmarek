@@ -16,7 +16,7 @@ class WalletSlide(SlideBase):
 
     def animate_in(self, scene):
         self.wallet.animate_in(scene)
-        self.wallet.generate_random_secret_key(scene, 7)
+        self.wallet.animate_random_secret_key(scene, 17, 41)
         scene.wait()
         scene.play(ScaleInPlace(self.wallet, 0.5))
         self.wallet.generate_target()
