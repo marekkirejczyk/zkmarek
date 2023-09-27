@@ -19,8 +19,19 @@ class WalletSlide(SlideBase):
         self.wallet = Wallet("private key", "address")
 
     def animate_in(self, scene):
-        self.generate_secret_key(scene)
+        self.animate_secret_key(scene)
+        self.animate_public_key(scene)
 
+    def animate_secret_key(self, scene):
+        self.wallet.animate_in(scene)
+        self.wallet.animate_random_secret_key(scene, 17, 41)
+        scene.wait()
+        scene.play(ScaleInPlace(self.wallet, 0.5))
+        self.wallet.generate_target()
+        self.wallet.target.shift(2 * UP + 5 * RIGHT)
+        scene.play(MoveToTarget(self.wallet))
+
+    def animate_public_key(self, scene):
         self.public_key = Text(r"Public key (pk)", color=PRIMARY_COLOR)
         self.public_key_equation = MathTex(r"{{pk}}", "=", "{{sk}}", "*", "{{G}}", color=PRIMARY_COLOR)
         self.public_key.next_to(self.public_key_equation, UP)
@@ -42,12 +53,3 @@ class WalletSlide(SlideBase):
         self.public_key_equation = new_public_key_equation
         scene.wait()
         scene.play(FadeOut(self.public_key, self.public_key_equation))
-
-    def generate_secret_key(self, scene):
-        self.wallet.animate_in(scene)
-        self.wallet.animate_random_secret_key(scene, 17, 41)
-        scene.wait()
-        scene.play(ScaleInPlace(self.wallet, 0.5))
-        self.wallet.generate_target()
-        self.wallet.target.shift(2 * UP + 5 * RIGHT)
-        scene.play(MoveToTarget(self.wallet))
