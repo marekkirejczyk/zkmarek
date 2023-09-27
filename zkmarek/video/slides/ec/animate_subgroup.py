@@ -39,7 +39,8 @@ class AnimateSubgroups:
         self.labels.append(MathTex(label, font_size=20, color=self.target_color))
         self.labels[-1].next_to(dup_dot, direction=RIGHT, buff=0.15)
         if affine is not None:
-            self.coordinates.append(MathTex(f"= ({affine.x.value}, {affine.y.value})", font_size=20, color=self.target_color))
+            self.coordinates.append(
+                MathTex(f"= ({affine.x.value}, {affine.y.value})", font_size=20, color=self.target_color))
             self.coordinates[-1].next_to(self.labels[-1], direction=RIGHT)
         if split_animation:
             scene.play(Indicate(dup_dot))
