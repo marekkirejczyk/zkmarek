@@ -1,5 +1,5 @@
 from manim import UP, MoveToTarget, RIGHT, Scene, ScaleInPlace, Text, MathTex, Write, FadeOut, \
-    TransformMatchingTex, FadeIn, Circumscribe, Circle, Indicate
+    TransformMatchingTex, FadeIn, Circumscribe, Circle
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
