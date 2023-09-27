@@ -69,12 +69,12 @@ class WalletSlide(SlideBase):
         generator1 = ECAffine(36, 28, self.curve)
         subgroup1 = Subgroup.from_generator(generator1)
         animation1 = AnimateSubgroups(self.chart, runtime_per_step=0.6)
-
         animation1.animate_generator(scene, generator1, split_animation=True)
-        scene.wait(2)
+
+        scene.wait()
         animation1.animate_subgroup_mid(scene, subgroup1, generator1, 2, 18)
 
-        scene.wait(1)
+        scene.wait()
         gen_dot = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
         scene.play(Circumscribe(gen_dot, Circle))
         scene.play(Write(animation1.coordinates[16]))
