@@ -8,6 +8,7 @@ from zkmarek.video.mobjects.signature import Signature
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
 
+
 class Box(VGroup):
     def __init__(self, label):
         super().__init__()
@@ -147,7 +148,6 @@ class SeasonTeaser(SlideBase):
         self.move_to(RIGHT * 3.4)
         tree.next_to(self.stack, RIGHT, buff=0.2)
         text.next_to(rectangle, DOWN, buff=0.4)
-        scene.play(FadeIn(self))
-        scene.play(Create(tree), FadeIn(text))
+        scene.play(FadeIn(self), Create(tree), FadeIn(text))
         self.rest = [tree, text]
 
