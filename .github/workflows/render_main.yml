@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  render_hd:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -42,6 +42,6 @@ jobs:
         python -m manim -p -qk zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
-        name: Upload movie
+        name: Movie HD
         path: media/videos/main/2160p60/EllipticCurves.mp4
         retention-days: 5

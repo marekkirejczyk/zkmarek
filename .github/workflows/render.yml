@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  render_hq:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
         SLIDES=TestSlide python -m manim -p -qh zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
-        name: Upload movie
+        name: Movie HQ
         path: media/videos/main/1080p60/EllipticCurves.mp4
         retention-days: 5
 
