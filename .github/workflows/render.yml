@@ -17,7 +17,7 @@ jobs:
     - name: Install apt dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-base texlive-latex-recommended texlive-pictures texlive-fonts-recommended texlive texlive-plain-generic texlive-latex-extra --fix-missing
+        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-full --fix-missing
     - name: Install fonts
       run: |
         mkdir ~/texmf
