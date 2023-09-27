@@ -1,4 +1,4 @@
-from manim import MathTex, TexTemplate
+from manim import MathTex, TexTemplate, Text, DOWN
 from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -13,7 +13,8 @@ class TestSlide(SlideBase):
         tex = MathTex(r"{{Order}} \approx 2^{256}",
             color=PRIMARY_COLOR,
             tex_template=template)
-
-        self.add(tex)
+        text = Text('1⚿✉⎘2', color=PRIMARY_COLOR)
+        text.next_to(tex, DOWN)
+        self.add(text, tex)
 
 
