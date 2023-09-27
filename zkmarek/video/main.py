@@ -13,6 +13,7 @@ from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
+from zkmarek.video.slides.credits import Credits
 from zkmarek.video.slides.debug.code_style_slide import \
     CodeStyleSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.debug.font_slide import \
@@ -101,7 +102,8 @@ EPISODE1 = [
     Standards(),
     TitleSlide("Ethereum Wallet"),
     WalletSlide(),
-    Subscribe("data/sound/episode/s30.wav")
+    Subscribe("data/sound/episode/s30.wav"),
+    Credits()
 ]
 
 EPISODE2 = [
