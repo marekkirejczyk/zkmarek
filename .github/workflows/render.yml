@@ -9,15 +9,22 @@ on:
 permissions:
   contents: read
 
+
+
+
 jobs:
   render_hq:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Install apt dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-full --fix-missing
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-full
+        version: 1.0
+    # - name: Install apt dependencies
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-full --fix-missing
     - name: Install fonts
       run: |
         mkdir ~/texmf
