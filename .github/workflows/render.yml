@@ -30,7 +30,7 @@ jobs:
         cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
         tree -d ~/texmf
         cd ~
-        mv ~texmf /usr/local/share
+        mv ~/texmf /usr/local/share
         ls /usr/local/share/texmf
         mktexlsr
     - name: Set up Python 3.11
