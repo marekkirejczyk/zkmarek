@@ -77,6 +77,6 @@ class WalletSlide(SlideBase):
         scene.wait()
         public_key_point = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
         scene.play(Circumscribe(public_key_point, Circle))
-        coordinates = MathTex(f"= (39, 9)", font_size=20, color=HIGHLIGHT_COLOR)
+        coordinates = MathTex("= (39, 9)", font_size=20, color=HIGHLIGHT_COLOR)
         coordinates.next_to(public_key_point, RIGHT, buff=0.7)
         scene.play(Write(coordinates))
