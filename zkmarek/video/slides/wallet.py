@@ -20,7 +20,7 @@ class WalletSlide(SlideBase):
     public_key_equation: MathTex
     chart: DiscreteEllipticChart
     curve: WeierstrassCurve = Secp256k1_41
-    public_key_coordinates: MathTex
+    public_key_coordinates: MathTex = MathTex('')
 
     def __init__(self):
         super().__init__("Ethereum Wallet")
@@ -39,7 +39,7 @@ class WalletSlide(SlideBase):
         self.wallet.animate_in(scene)
         self.wallet.animate_random_secret_key(scene, 17, 41)
         scene.wait()
-        scene.play(ScaleInPlace(self.wallet, 0.5))
+        scene.play(ScaleInPlace(self.wallet, 0.33))
         self.wallet.generate_target()
         self.wallet.target.shift(2 * UP + 5 * RIGHT)
         scene.play(MoveToTarget(self.wallet))
@@ -106,3 +106,14 @@ class WalletSlide(SlideBase):
         transform(['{{0be4308d0014b842c2debb81}}', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'], font_size=20)
         transform(['{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
         transform(['0x', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
+
+        self.wallet.generate_target()
+        self.wallet.target.move_to(2 * UP)
+        scene.play(MoveToTarget(self.wallet))
+        scene.play(ScaleInPlace(self.wallet, 3))
+        self.wallet.animate_address_value(scene, '0x7a629f45938a32a2117c186d46b29ef3aa599b4e',
+                                          FadeOut(self.public_key_coordinates))
+
+        self.wallet.generate_target()
+        self.wallet.target.move_to(0)
+        scene.play(MoveToTarget(self.wallet))
