@@ -20,7 +20,7 @@ class WalletSlide(SlideBase):
     public_key_equation: MathTex
     chart: DiscreteEllipticChart
     curve: WeierstrassCurve = Secp256k1_41
-    public_key_coordinates: MathTex = MathTex('')
+    public_key_coordinates: MathTex
 
     def __init__(self):
         super().__init__("Ethereum Wallet")
