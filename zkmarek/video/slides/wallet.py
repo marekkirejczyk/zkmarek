@@ -66,13 +66,13 @@ class WalletSlide(SlideBase):
     def animate_scalar_multiplication(self, scene):
         scene.play(FadeIn(self.chart))
 
-        generator1 = ECAffine(36, 28, self.curve)
-        subgroup1 = Subgroup.from_generator(generator1)
-        animation1 = AnimateSubgroups(self.chart, runtime_per_step=0.6)
-        animation1.animate_generator(scene, generator1, split_animation=True)
+        generator = ECAffine(36, 28, self.curve)
+        subgroup = Subgroup.from_generator(generator)
+        animation = AnimateSubgroups(self.chart, runtime_per_step=0.6)
+        animation.animate_generator(scene, generator, split_animation=True)
 
         scene.wait()
-        animation1.animate_subgroup_mid(scene, subgroup1, generator1, 2, 18)
+        animation.animate_subgroup_mid(scene, subgroup, generator, 2, 18)
 
         scene.wait()
         public_key_point = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
