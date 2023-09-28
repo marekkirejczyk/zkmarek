@@ -9,14 +9,14 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  render_hd:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Install apt dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra texlive-full --fix-missing
     - name: Install fonts
       run: |
         mkdir ~/texmf
@@ -42,6 +42,6 @@ jobs:
         python -m manim -p -qk zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
-        name: Upload movie
+        name: Movie HD
         path: media/videos/main/2160p60/EllipticCurves.mp4
         retention-days: 5
