@@ -34,6 +34,7 @@ class WalletSlide(SlideBase):
         self.animate_public_key(scene)
         self.animate_scalar_multiplication(scene)
         self.animate_generate_ethereum_address(scene)
+        self.animate_big_number_private_key(scene)
 
     def animate_secret_key(self, scene):
         self.wallet.animate_in(scene)
@@ -117,3 +118,10 @@ class WalletSlide(SlideBase):
         self.wallet.generate_target()
         self.wallet.target.move_to(0)
         scene.play(MoveToTarget(self.wallet))
+
+    def animate_big_number_private_key(self, scene):
+        scene.wait()
+        self.wallet.animate_private_key(scene, '0x9de347a715a200cd8e83cecc4277c7fdf2ebd95766720abec8364d879483b69b',
+                                        font_size=9)
+        scene.wait()
+        self.wallet.animate_address_value(scene, '0xe31cc18f3f3718588e9a878a516c7889af047171')
