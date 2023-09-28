@@ -1,5 +1,7 @@
+from typing import List
+
 from manim import UP, MoveToTarget, RIGHT, Scene, ScaleInPlace, Text, MathTex, Write, FadeOut, \
-    TransformMatchingTex, FadeIn, Circumscribe, Circle
+    TransformMatchingTex, FadeIn, Circumscribe, Circle, DEFAULT_FONT_SIZE
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
@@ -18,6 +20,7 @@ class WalletSlide(SlideBase):
     public_key_equation: MathTex
     chart: DiscreteEllipticChart
     curve: WeierstrassCurve = Secp256k1_41
+    public_key_coordinates: MathTex
 
     def __init__(self):
         super().__init__("Ethereum Wallet")
@@ -30,6 +33,7 @@ class WalletSlide(SlideBase):
         self.animate_secret_key(scene)
         self.animate_public_key(scene)
         self.animate_scalar_multiplication(scene)
+        self.animate_generate_ethereum_address(scene)
 
     def animate_secret_key(self, scene):
         self.wallet.animate_in(scene)
@@ -77,6 +81,28 @@ class WalletSlide(SlideBase):
         scene.wait()
         public_key_point = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
         scene.play(Circumscribe(public_key_point, Circle))
-        coordinates = MathTex("= (39, 9)", font_size=20, color=HIGHLIGHT_COLOR)
-        coordinates.next_to(public_key_point, RIGHT, buff=0.7)
-        scene.play(Write(coordinates))
+        self.public_key_coordinates = MathTex("= ", "(", "{{39}}", ",", "{{9}}", ")",
+                                              font_size=20, color=HIGHLIGHT_COLOR)
+        self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
+        scene.play(Write(self.public_key_coordinates))
+
+        scene.wait()
+        animation.animate_out_labels(scene)
+        animation.animate_out_dots(scene)
+        scene.play(FadeOut(self.chart))
+
+    def animate_generate_ethereum_address(self, scene):
+        def transform(into: List[str], font_size=DEFAULT_FONT_SIZE):
+            pkc = MathTex(*into, font_size=font_size)
+            scene.play(TransformMatchingTex(self.public_key_coordinates, pkc), run_time=2)
+            self.public_key_coordinates = pkc
+
+        transform(["(", "{{39}}", ",", "{{9}}", ")"])
+        transform(["(", "{{0x27}}", ",", "{{0x09}}", ")"])
+        transform(["(", '{{27}}', ',', '{{09}}', ')'])
+        transform(['"', '{{27}}', '"+"', '{{09}}', '"'])
+        transform(['"', '{{27}}', '{{09}}', '"'])
+        transform(['keccak256(', '"', '{{27}}', '{{09}}', '"', ')'])
+        transform(['{{0be4308d0014b842c2debb81}}', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'], font_size=20)
+        transform(['{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
+        transform(['0x', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
