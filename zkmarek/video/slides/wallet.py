@@ -4,7 +4,7 @@ from manim import UP, MoveToTarget, RIGHT, Scene, ScaleInPlace, Text, MathTex, W
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve, Secp256k1_41
-from zkmarek.video.constant import PRIMARY_COLOR, BACKGROUND_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, BACKGROUND_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.wallet import Wallet
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -75,6 +75,8 @@ class WalletSlide(SlideBase):
         animation1.animate_subgroup_mid(scene, subgroup1, generator1, 2, 18)
 
         scene.wait()
-        gen_dot = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
-        scene.play(Circumscribe(gen_dot, Circle))
-        scene.play(Write(animation1.coordinates[16]))
+        public_key_point = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
+        scene.play(Circumscribe(public_key_point, Circle))
+        coordinates = MathTex(f"= (39, 9)", font_size=20, color=HIGHLIGHT_COLOR)
+        coordinates.next_to(public_key_point, RIGHT, buff=0.7)
+        scene.play(Write(coordinates))

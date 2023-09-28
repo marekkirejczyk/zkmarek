@@ -1,5 +1,3 @@
-from typing import Optional
-
 from manim import RIGHT, Dot, FadeOut, Indicate, MathTex, Scene, Write, Circle, \
     Circumscribe
 
@@ -21,7 +19,6 @@ class AnimateSubgroups:
         runtime_per_step=0.75):
         self.chart = chart
         self.labels = []
-        self.coordinates = []
         self.runtime_per_step = runtime_per_step
         self.target_color = target_color
         self.duplicates = []
@@ -29,19 +26,15 @@ class AnimateSubgroups:
     def animate_affine(self, scene: Scene, affine: ECAffine, label: str,
         split_animation=False):
         self.animate_dot(scene, self.chart.find_dot_by_affine(affine),
-            label, affine, split_animation=split_animation)
+            label, split_animation=split_animation)
 
-    def animate_dot(self, scene: Scene, dot: Dot, label: str, affine: Optional[ECAffine], split_animation=False):
+    def animate_dot(self, scene: Scene, dot: Dot, label: str, split_animation=False):
         dup_dot = dot.copy()
         scene.add(dup_dot)
         self.duplicates.append(dup_dot)
         dup_dot.set_color(self.target_color)
         self.labels.append(MathTex(label, font_size=20, color=self.target_color))
         self.labels[-1].next_to(dup_dot, direction=RIGHT, buff=0.15)
-        if affine is not None:
-            self.coordinates.append(
-                MathTex(f"= ({affine.x.value}, {affine.y.value})", font_size=20, color=self.target_color))
-            self.coordinates[-1].next_to(self.labels[-1], direction=RIGHT)
         if split_animation:
             scene.play(Indicate(dup_dot))
             scene.wait(1)
@@ -72,7 +65,7 @@ class AnimateSubgroups:
 
         infinity_label = f"{subgroup.order()} \cdot G = \mathcal{{O}}"
         scene.play(Circumscribe(self.chart.point_at_infinity.dot, Circle))
-        self.animate_dot(scene, self.chart.point_at_infinity.dot, infinity_label, None)
+        self.animate_dot(scene, self.chart.point_at_infinity.dot, infinity_label)
 
         gen_dot = self.chart.find_dot_by_affine(generator)
         scene.wait(1)
