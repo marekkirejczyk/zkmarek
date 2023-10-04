@@ -110,7 +110,7 @@ class WalletSlide(SlideBase):
         transform(['{{0be4308d0014b842c2debb81}}', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'], font_size=20)
         self.new_subsection(scene, "Add 0x", sound="data/sound/episode/e1-s27-7.wav")
         transform(['{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
-        scene.wait()
+        scene.wait(3)
         transform(['0x', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
         self.new_subsection(scene, "Add 0x", sound="data/sound/episode/e1-s27-8.wav")
 
