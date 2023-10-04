@@ -126,8 +126,15 @@ class WalletSlide(SlideBase):
         scene.play(MoveToTarget(self.wallet))
 
     def animate_big_number_private_key(self, scene):
-        self.new_subsection(scene, "Big number private key", sound="data/sound/episode/e1-s27-9.wav")
-        scene.wait()
+        self.play_sound(scene, "data/sound/episode/e1-s27-9.wav")
+        self.play_sound(scene, "data/sound/episode/e1-s27-10.wav")
+        self.play_sound(scene, "data/sound/episode/e1-s27-11.wav")
+        self.play_sound(scene, "data/sound/episode/e1-s27-12.wav")
         self.wallet.animate_private_key(scene, '0x9de347a715a200cd....c8364d879483b69b', font_size=14)
-        scene.wait()
+        self.wallet.animate_address_value(scene, '')
+        self.play_sound(scene, "data/sound/episode/e1-s27-13.wav")
+        self.play_sound(scene, "data/sound/episode/e1-s27-14.wav")
         self.wallet.animate_address_value(scene, '0xe31cc18f3f3718588e9a878a516c7889af047171')
+        self.play_sound(scene, "data/sound/episode/e1-s27-15.wav")
+        self.play_sound(scene, "data/sound/episode/e1-s27-16.wav")
+        self.play_sound(scene, "data/sound/episode/e1-s27-17.wav")
