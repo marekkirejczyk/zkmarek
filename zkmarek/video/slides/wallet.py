@@ -37,20 +37,25 @@ class WalletSlide(SlideBase):
         self.animate_big_number_private_key(scene)
 
     def animate_secret_key(self, scene):
+        self.new_subsection(scene, "Secret key", sound="data/sound/episode/e1-s27-1.wav")
         self.wallet.animate_in(scene)
+        self.new_subsection(scene, "Generate random secret", sound="data/sound/episode/e1-s27-2.wav")
+        self.new_subsection(scene, "Store in hex", sound="data/sound/episode/e1-s27-3.wav")
         self.wallet.animate_random_secret_key(scene, 17, 41)
-        scene.wait()
         scene.play(ScaleInPlace(self.wallet, 0.33))
         self.wallet.generate_target()
         self.wallet.target.shift(2 * UP + 5 * RIGHT)
         scene.play(MoveToTarget(self.wallet))
 
     def animate_public_key(self, scene):
+        self.new_subsection(scene, "Public key", sound="data/sound/episode/e1-s27-4.wav")
+        scene.wait()
         self.public_key = Text(r"Public key (pk)", font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.public_key_equation = MathTex(r"{{pk}}", "=", "{{sk}}", "*", "{{G}}", color=PRIMARY_COLOR)
         self.public_key.next_to(self.public_key_equation, UP)
         scene.play(Write(self.public_key), run_time=2)
         scene.play(Write(self.public_key_equation), run_time=2)
+        self.new_subsection(scene, "Public key", sound="data/sound/episode/e1-s27-5.wav")
         scene.wait()
         new_public_key_equation = MathTex(r"{{pk}}", "=", "0x11", "*", "{{G}}", color=PRIMARY_COLOR)
         scene.play(TransformMatchingTex(
@@ -73,13 +78,14 @@ class WalletSlide(SlideBase):
 
         generator = ECAffine(36, 28, self.curve)
         subgroup = Subgroup.from_generator(generator)
-        animation = AnimateSubgroups(self.chart, runtime_per_step=0.6)
+        animation = AnimateSubgroups(self.chart, runtime_per_step=0.4)
         animation.animate_generator(scene, generator, split_animation=True)
 
         scene.wait()
         animation.animate_subgroup_mid(scene, subgroup, generator, 2, 18)
 
         scene.wait()
+        self.new_subsection(scene, "Private key from point", sound="data/sound/episode/e1-s27-6.wav")
         public_key_point = self.chart.find_dot_by_affine(ECAffine(39, 9, self.curve))
         scene.play(Circumscribe(public_key_point, Circle))
         self.public_key_coordinates = MathTex("= ", "(", "{{39}}", ",", "{{9}}", ")",
@@ -87,7 +93,6 @@ class WalletSlide(SlideBase):
         self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
         scene.play(Write(self.public_key_coordinates))
 
-        scene.wait()
         animation.animate_out_labels(scene)
         animation.animate_out_dots(scene)
         scene.play(FadeOut(self.chart))
@@ -95,7 +100,7 @@ class WalletSlide(SlideBase):
     def animate_generate_ethereum_address(self, scene):
         def transform(into: List[str], font_size=DEFAULT_FONT_SIZE):
             pkc = MathTex(*into, font_size=font_size)
-            scene.play(TransformMatchingTex(self.public_key_coordinates, pkc), run_time=2)
+            scene.play(TransformMatchingTex(self.public_key_coordinates, pkc), run_time=1.2)
             self.public_key_coordinates = pkc
 
         transform(["(", "{{39}}", ",", "{{9}}", ")"])
@@ -105,8 +110,11 @@ class WalletSlide(SlideBase):
         transform(['"', '{{27}}', '{{09}}', '"'])
         transform(['keccak256(', '"', '{{27}}', '{{09}}', '"', ')'])
         transform(['{{0be4308d0014b842c2debb81}}', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'], font_size=20)
+        self.new_subsection(scene, "Add 0x", sound="data/sound/episode/e1-s27-7.wav")
         transform(['{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
+        scene.wait()
         transform(['0x', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
+        self.new_subsection(scene, "Add 0x", sound="data/sound/episode/e1-s27-8.wav")
 
         self.wallet.generate_target()
         self.wallet.target.move_to(2 * UP)
@@ -120,6 +128,7 @@ class WalletSlide(SlideBase):
         scene.play(MoveToTarget(self.wallet))
 
     def animate_big_number_private_key(self, scene):
+        self.new_subsection(scene, "Big number private key", sound="data/sound/episode/e1-s27-9.wav")
         scene.wait()
         self.wallet.animate_private_key(scene, '0x9de347a715a200cd8e83cecc4277c7fdf2ebd95766720abec8364d879483b69b',
                                         font_size=9)
