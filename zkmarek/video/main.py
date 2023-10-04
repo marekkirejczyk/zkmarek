@@ -100,7 +100,7 @@ EPISODE1 = [
     TitleSlide("Elliptic Curve Standards",
         sound="data/sound/episode/s24.m4a"),
     Standards(),
-    TitleSlide("Ethereum Wallet"),
+    TitleSlide("Ethereum Wallet", pre_wait_time=3, post_wait_time=2, sound="data/sound/episode/e1-s26.wav"),
     WalletSlide(),
     Subscribe("data/sound/episode/s30.wav"),
     Credits()
