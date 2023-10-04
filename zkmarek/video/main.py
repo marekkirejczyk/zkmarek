@@ -65,55 +65,55 @@ EPISODE1 = [
         "Elliptic curves",
         subtitle="in Ethereum wallet",
         post_wait_time=2,
-        sound="data/sound/episode/s2-1.wav"),
+        sound="data/sound/episode1/s2-1.wav"),
     TeaserReference(),
     InThisEpisode(),
-    TitleSlide("Elliptic Curves", sound="data/sound/episode/s5.wav"),
+    TitleSlide("Elliptic Curves", sound="data/sound/episode1/s5.wav"),
     EquationSlide(),
     CECOperations(),
     CECNegation(),
     CECAddition(),
 
     TitleSlide("Prime Fields", post_wait_time=2,
-        sound="data/sound/episode/s10.wav"),
+        sound="data/sound/episode1/s10.wav"),
     PrimeFields(),
 
     TitleSlide("Discrete Elliptic Curves", pre_wait_time=2,
-        sound="data/sound/episode/s12.m4a"),
+        sound="data/sound/episode1/s12.m4a"),
     ECIntroduction(),
     TitleSlide("Discrete Elliptic Curves Operations", pre_wait_time=2,
-        sound="data/sound/episode/s14.wav"),
+        sound="data/sound/episode1/s14.wav"),
 
     ECNegation(),
     ECAddition(),
     AdditionToInfinity(),
 
     TitleSlide("Scalar multiplication", pre_wait_time=2,
-        sound="data/sound/episode/s18.m4a"),
+        sound="data/sound/episode1/s18.m4a"),
     ScalarMultiplication(),
     DoubleAndAdd(),
 
-    TitleSlide("Subgroups", sound="data/sound/episode/s21.m4a"),
+    TitleSlide("Subgroups", sound="data/sound/episode1/s21.m4a"),
     Subgroups(),
 
     Operations(),
     TitleSlide("Elliptic Curve Standards",
-        sound="data/sound/episode/s24.m4a"),
+        sound="data/sound/episode1/s24.m4a"),
     Standards(),
     TitleSlide("Ethereum Wallet"),
     WalletSlide(),
-    Subscribe("data/sound/episode/s30.wav"),
+    Subscribe("data/sound/episode1/s30.wav"),
     Credits()
 ]
 
 EPISODE2 = [
     Intro(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        post_wait_time=3, sound="data/sound/episode/s26.wav"),
+        post_wait_time=3, sound="data/sound/episode1/s26.wav"),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
-    Subscribe("data/sound/episode/s30.wav")
+    Subscribe("data/sound/episode1/s30.wav")
 ]
 
 DECKS = {

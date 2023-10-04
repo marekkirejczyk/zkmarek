@@ -51,7 +51,7 @@ class ECRecoverSlide(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "ECRecover",
-            sound="data/sound/episode/s28.wav")
+            sound="data/sound/episode1/s28.wav")
 
         scene.play(FadeIn(self.title_text))
         scene.play(FadeIn(self.code))

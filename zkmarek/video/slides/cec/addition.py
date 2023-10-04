@@ -90,7 +90,7 @@ class Addition(SlideBase):
     def animate_addition_base(self, scene):
         self.new_subsection(scene,
             "Two points",
-            sound="data/sound/episode/s9-1.wav")
+            sound="data/sound/episode1/s9-1.wav")
         self.chart.animate_in(scene)
         scene.play(Create(self.p1.dot))
         scene.play(Create(self.p2.dot))
@@ -103,19 +103,19 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Line through points",
-            sound="data/sound/episode/s9-2.wav")
+            sound="data/sound/episode1/s9-2.wav")
         scene.play(GrowFromPoint(self.line1, point=self.p2.to_coord(), run_time=5))
         self.p4_tmp.animate_in(scene)
         scene.add(self.p4_tmp)
 
         self.new_subsection(scene,
             "Addition definition",
-            sound="data/sound/episode/s9-3.wav")
+            sound="data/sound/episode1/s9-3.wav")
         scene.play(AddTextLetterByLetter(self.equation1), run_time=5)
 
         self.new_subsection(scene,
             "Addition formula",
-            sound="data/sound/episode/s9-4.wav")
+            sound="data/sound/episode1/s9-4.wav")
         scene.play(TransformMatchingTex(self.equation1, self.equation2), run_time=2)
         scene.wait(3)
         scene.play(
@@ -125,7 +125,7 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Point reflection",
-            sound="data/sound/episode/s9-5.wav")
+            sound="data/sound/episode1/s9-5.wav")
         scene.play(GrowFromPoint(self.line2, point=self.p4.to_coord(), run_time=3))
         self.p3.animate_in(scene)
         scene.add(self.p3)
@@ -133,7 +133,7 @@ class Addition(SlideBase):
     def animate_addition_base_summary(self, scene):
         self.new_subsection(scene,
             "Addition summary",
-            sound="data/sound/episode/s9-6.wav")
+            sound="data/sound/episode1/s9-6.wav")
 
         self.p1.add_updater(self.update_p1)
         scene.wait(2)
@@ -152,7 +152,7 @@ class Addition(SlideBase):
     def animate_addition_math_and_code(self, scene):
         self.new_subsection(scene,
             "Sidebar addition math",
-            sound="data/sound/episode/s9b-1.wav")
+            sound="data/sound/episode1/s9b-1.wav")
         scene.play(self.chart.animate.align_on_border(LEFT, buff=0.8))
         self.sidebar.animate_show_label(scene)
         self.sidebar.animate_show_math(scene)
@@ -173,7 +173,7 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Sidebar addition code",
-            sound="data/sound/episode/s9b-2.wav")
+            sound="data/sound/episode1/s9b-2.wav")
         math[0][0:38].set_color(PRIMARY_COLOR)
         self.sidebar.animate_show_code(scene)
 
@@ -190,13 +190,13 @@ class Addition(SlideBase):
     def animate_infinity_point(self, scene):
         self.new_subsection(scene,
             "Addition - move around",
-            sound="data/sound/episode/s9c-1.wav")
+            sound="data/sound/episode1/s9c-1.wav")
         scene.wait(1)
         scene.play(Indicate(self.p4.dot))
 
         self.new_subsection(scene,
             "Addition - move around",
-            sound="data/sound/episode/s9c-2.wav")
+            sound="data/sound/episode1/s9c-2.wav")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=6, rate_func=linear).set_value(target_x))
         self.p1_sgn = -1
@@ -213,7 +213,7 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Addition - point at infinity",
-            sound="data/sound/episode/s9c-3.wav")
+            sound="data/sound/episode1/s9c-3.wav")
 
         scene.wait(3)
         scene.play(Create(self.point_at_infinity))
@@ -225,7 +225,7 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Addition - point at infinity - math",
-            sound="data/sound/episode/s9c-4.wav")
+            sound="data/sound/episode1/s9c-4.wav")
 
         self.sidebar.animate_hide_code(scene)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf.tex")
@@ -233,7 +233,7 @@ class Addition(SlideBase):
         self.sidebar.math[0][0:6].set_color(SECONDARY_COLOR)
         self.new_subsection(scene,
             "Addition - point at infinity - neutral element",
-            sound="data/sound/episode/s9c-5.wav")
+            sound="data/sound/episode1/s9c-5.wav")
 
         scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf2.tex")
@@ -247,7 +247,7 @@ class Addition(SlideBase):
         self.sidebar.math[0][11:16].set_color(SECONDARY_COLOR)
         self.new_subsection(scene,
             "Addition - point at infinity - code",
-            sound="data/sound/episode/s9c-6.wav")
+            sound="data/sound/episode1/s9c-6.wav")
 
         scene.wait(2)
         self.sidebar.animate_hide_math(scene)
@@ -255,7 +255,7 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Addition - point at infinity - code",
-            sound="data/sound/episode/s9c-7.wav")
+            sound="data/sound/episode1/s9c-7.wav")
         scene.wait(1)
         self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
 
@@ -277,17 +277,17 @@ class Addition(SlideBase):
 
     def animate_doubling(self, scene):
         self.new_subsection(scene, "Point doubling - move around",
-            sound="data/sound/episode/s9d-1.m4a")
+            sound="data/sound/episode1/s9d-1.m4a")
         target_x = -(7 ** (1.0 / 3))
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(target_x))
         self.new_subsection(scene, "Point doubling - move around",
-            sound="data/sound/episode/s9d-1b.wav")
+            sound="data/sound/episode1/s9d-1b.wav")
 
         self.p1_sgn = 1
         scene.play(self.p1_x.animate(run_time=10, rate_func=linear).set_value(3))
 
         self.new_subsection(scene, "Point doubling - tangent line",
-            sound="data/sound/episode/s9d-2.wav")
+            sound="data/sound/episode1/s9d-2.wav")
         scene.wait(10)
         line_double = self.line1.copy()
         self.chart.add(line_double)
@@ -302,14 +302,14 @@ class Addition(SlideBase):
         self.sidebar.math[0][16:19].set_color(SECONDARY_COLOR)
 
         self.new_subsection(scene, "Point doubling - code",
-            sound="data/sound/episode/s9d-3.wav")
+            sound="data/sound/episode1/s9d-3.wav")
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
         self.sidebar.animate_replace_code(scene, "data/cec/add_double.py")
         self.sidebar.indicate_code(scene, "if self.x == other.x and self.y == other.y:")
 
         self.new_subsection(scene, "Point doubling - extract doubling",
-            sound="data/sound/episode/s9d-4.wav")
+            sound="data/sound/episode1/s9d-4.wav")
         scene.wait(3)
         self.sidebar.indicate_code(scene, "return self.double()")
         scene.wait(1)

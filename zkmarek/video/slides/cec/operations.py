@@ -30,7 +30,7 @@ class Operations(SlideBase):
         scene.play(Create(self.chart.ax), Create(self.chart.labels))
         self.new_subsection(scene,
             "Operations",
-            sound="data/sound/episode/s7-1a.m4a")
+            sound="data/sound/episode1/s7-1a.m4a")
         scene.play(Write(self.chart.graph))
         scene.wait(1)
         self.p1.animate_in(scene)
@@ -39,7 +39,7 @@ class Operations(SlideBase):
         scene.wait(0.5)
         self.new_subsection(scene,
             "Operations",
-            sound="data/sound/episode/s7-1b.wav")
+            sound="data/sound/episode1/s7-1b.wav")
 
         scene.wait(3)
         scene.play(VGroup(self.p2, self.chart).animate.align_on_border(LEFT),
@@ -54,7 +54,7 @@ class Operations(SlideBase):
 
         self.new_subsection(scene,
             "Operations",
-            sound="data/sound/episode/s7-2.wav")
+            sound="data/sound/episode1/s7-2.wav")
         scene.wait(2.5)
         list = self.sidebar.math
         list[0][0:12].set_color(HIGHLIGHT_COLOR)

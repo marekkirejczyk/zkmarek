@@ -18,7 +18,7 @@ class Operations(TexSlide):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s23-1.wav")
+            sound="data/sound/episode1/s23-1.wav")
         scene.play(Write(self.title_text))
         scene.play(FadeIn(self.tex))
         scene.wait(0.8)
@@ -31,18 +31,18 @@ class Operations(TexSlide):
         self.tex[0][38:54].set_color(SECONDARY_COLOR)
 
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s23-2.wav")
+            sound="data/sound/episode1/s23-2.wav")
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s23-3.wav")
+            sound="data/sound/episode1/s23-3.wav")
         tex2 = self.create_tex_below("data/ec/operations2.tex")
         scene.play(FadeIn(tex2))
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s23-4.wav")
+            sound="data/sound/episode1/s23-4.wav")
         scene.wait(5)
         self.tex3 = self.create_tex_below("data/ec/operations3.tex")
         scene.play(TransformMatchingTex(tex2, self.tex3))
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s23-5.wav")
+            sound="data/sound/episode1/s23-5.wav")
         scene.wait(4)
 
     def animate_out(self, scene):

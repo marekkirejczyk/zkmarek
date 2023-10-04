@@ -59,7 +59,7 @@ class DoubleAndAdd(CodeSlide):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Double and add",
-            sound="data/sound/episode/s20-1.wav")
+            sound="data/sound/episode1/s20-1.wav")
         scene.play(Write(self.title_text), run_time=2)
         scene.wait(3)
         scene.play(ApplyWave(self.title_text))
@@ -67,7 +67,7 @@ class DoubleAndAdd(CodeSlide):
             FadeIn(self.label2))
 
         self.new_subsection(scene, "Double and add",
-            sound="data/sound/episode/s20-2.wav")
+            sound="data/sound/episode1/s20-2.wav")
         scene.wait(1)
         scene.play(FadeIn(self.label1))
         for i in reversed(range(8)):
@@ -88,7 +88,7 @@ class DoubleAndAdd(CodeSlide):
 
 
         self.new_subsection(scene, "Double and add",
-            sound="data/sound/episode/s20-3.wav")
+            sound="data/sound/episode1/s20-3.wav")
         scene.wait(3)
         scene.play(TransformMatchingTex(self.equation1, self.equation2))
 

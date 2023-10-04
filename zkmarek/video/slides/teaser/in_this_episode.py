@@ -40,11 +40,11 @@ class InThisEpisode(SlideBase):
             "Ethereum Wallet"
         ]
         self.sounds = [
-            "data/sound/episode/s4-1.m4a",
-            "data/sound/episode/s4-2.m4a",
-            "data/sound/episode/s4-3.m4a",
-            "data/sound/episode/s4-4.wav",
-            "data/sound/episode/s4-5.wav",
+            "data/sound/episode1/s4-1.m4a",
+            "data/sound/episode1/s4-2.m4a",
+            "data/sound/episode1/s4-3.m4a",
+            "data/sound/episode1/s4-4.wav",
+            "data/sound/episode1/s4-5.wav",
         ]
 
     def construct(self):
@@ -80,7 +80,7 @@ class InThisEpisode(SlideBase):
             self.add(thumbnail)
 
     def animate_in(self, scene):
-        self.play_sound(scene, "data/sound/episode/s4-0.m4a")
+        self.play_sound(scene, "data/sound/episode1/s4-0.m4a")
         scene.wait(1)
         for i, label in enumerate(self.labels):
             self.new_subsection(scene, self.titles[i], sound=self.sounds[i])
