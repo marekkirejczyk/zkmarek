@@ -29,7 +29,7 @@ class Standards(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s25-1.wav")
+            sound="data/sound/episode1/s25-1.wav")
 
         secp = []
         for i in range(0, 4):
@@ -41,23 +41,23 @@ class Standards(SlideBase):
         scene.play(Indicate(secp[2].rows[1][0]))
         scene.play(Indicate(secp[2].rows[2][0]))
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s25-2.wav")
+            sound="data/sound/episode1/s25-2.wav")
         scene.wait(1.5)
         scene.play(Indicate(secp[2].rows[1][0][1]))
 
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s25-3.wav")
+            sound="data/sound/episode1/s25-3.wav")
         scene.play(ReplacementTransform(secp[2], secp[3]))
         scene.wait(2)
         scene.play(Indicate(secp[3].rows[3][0]))
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode/s25-4.wav")
+            sound="data/sound/episode1/s25-4.wav")
         scene.play(ReplacementTransform(secp[3], self.secp256k1))
         scene.play(Indicate(self.secp256k1.rows[4][0]))
         scene.wait(8)
         scene.play(Indicate(self.secp256k1.rows[4][0][1]))
         self.new_subsection(scene, "Curve25519",
-            sound="data/sound/episode/s25-5.wav")
+            sound="data/sound/episode1/s25-5.wav")
 
         scene.wait(5)
         scene.play(FadeIn(self.curve25519))
@@ -69,7 +69,7 @@ class Standards(SlideBase):
         scene.wait(2)
         scene.play(Indicate(self.curve25519.rows[4][0]))
         self.new_subsection(scene, "Curve25519",
-            sound="data/sound/episode/s25-6.wav")
+            sound="data/sound/episode1/s25-6.wav")
         scene.wait(13)
 
     def animate_out(self, scene):

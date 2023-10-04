@@ -31,7 +31,7 @@ class TeaserReference(SlideBase):
 
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "Intro", sound="data/sound/episode/s3.wav")
+        self.new_subsection(scene, "Intro", sound="data/sound/episode1/s3.wav")
         self.create_arrow()
         scene.play(MoveToTarget(self.label, rate_func=rate_functions.ease_out_bounce, run_time=1),
             MoveToTarget(self.arrow, rate_func=rate_functions.ease_out_bounce, run_time=1))

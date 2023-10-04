@@ -34,19 +34,19 @@ class EquationSlide(SlideBase):
         self.secp_equation3.next_to(self.secp256k1_label, DOWN)
         self.ab.next_to(self.secp_equation2, DOWN)
 
-        self.play_sound(scene, "data/sound/episode/s6-1.wav")
+        self.play_sound(scene, "data/sound/episode1/s6-1.wav")
         scene.wait(1)
         scene.play(Write(self.weierstrass_form), run_time=2)
 
         self.new_subsection(scene,
             "equation",
-            sound="data/sound/episode/s6-2.wav")
+            sound="data/sound/episode1/s6-2.wav")
 
         scene.play(Write(self.weierstrass_equation), run_time=9)
 
         self.new_subsection(scene,
             "Secp256k1",
-            sound="data/sound/episode/s6-3.wav")
+            sound="data/sound/episode1/s6-3.wav")
 
         scene.play(Write(self.secp256k1_label))
         scene.play(Write(self.secp_equation1))
@@ -58,7 +58,7 @@ class EquationSlide(SlideBase):
         scene.play(TransformMatchingShapes(self.secp_equation2, self.secp_equation3))
         self.new_subsection(scene,
             "Ethereum curve",
-            sound="data/sound/episode/s6-4.wav")
+            sound="data/sound/episode1/s6-4.wav")
         scene.wait(4)
 
 
