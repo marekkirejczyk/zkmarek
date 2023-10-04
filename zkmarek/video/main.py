@@ -109,7 +109,7 @@ EPISODE1 = [
 EPISODE2 = [
     Intro(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        post_wait_time=3, sound="data/sound/episode1/s26.wav"),
+        post_wait_time=3, sound="data/sound/episode2/s26.wav"),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),

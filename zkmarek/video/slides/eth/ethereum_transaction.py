@@ -19,7 +19,7 @@ class EthereumTransaction(CodeSlide):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Ethereum Transaction",
-            sound="data/sound/episode1/s29-1.wav")
+            sound="data/sound/episode2/s29-1.wav")
 
         super().animate_in(scene)
 
@@ -60,7 +60,7 @@ class EthereumTransaction(CodeSlide):
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
 
         self.new_subsection(scene, "Ethereum Transaction",
-            sound="data/sound/episode1/s29-2.wav")
+            sound="data/sound/episode2/s29-2.wav")
 
         self.signature = EquationBoxWithIcons.create(
             "⎘", "r = R_x \mod n", PRIMARY_COLOR,
@@ -79,7 +79,7 @@ class EthereumTransaction(CodeSlide):
         scene.play(FadeIn(self.r_box))
 
         self.new_subsection(scene, "Why four values",
-            sound="data/sound/episode1/s29-3.wav")
+            sound="data/sound/episode2/s29-3.wav")
         scene.play(FadeOut(self.code), FadeOut(self.title_text))
 
         self.chart = DiscreteEllipticChart(include_details=False)
@@ -101,13 +101,13 @@ class EthereumTransaction(CodeSlide):
         scene.play(FadeIn(label1), FadeIn(label2))
 
         self.new_subsection(scene, "27 and 28",
-            sound="data/sound/episode1/s29-4.wav")
+            sound="data/sound/episode2/s29-4.wav")
 
         scene.play(TransformMatchingTex(label1, label3),
             TransformMatchingTex(label2, label4))
 
         self.new_subsection(scene, "Mystery solved",
-            sound="data/sound/episode1/s29-5.wav")
+            sound="data/sound/episode2/s29-5.wav")
         scene.play(FadeOut(line), FadeOut(label3), FadeOut(label4))
         scene.play(FadeOut(self.signature), FadeOut(self.r_box))
         scene.play(FadeOut(self.chart))
