@@ -51,7 +51,7 @@ class WalletSlide(SlideBase):
         self.new_subsection(scene, "Public key", sound="data/sound/episode/e1-s27-4.wav")
         scene.wait()
         self.public_key = Text(r"Public key (pk)", font=PRIMARY_FONT, color=PRIMARY_COLOR)
-        self.public_key_equation = MathTex(r"{{pk}}", "=", "{{sk}}", "*", "{{G}}", color=PRIMARY_COLOR)
+        self.public_key_equation = MathTex(r"{{pk}}", "=", "{{secret\\_key}}", "*", "{{G}}", color=PRIMARY_COLOR)
         self.public_key.next_to(self.public_key_equation, UP)
         scene.play(Write(self.public_key), run_time=2)
         scene.play(Write(self.public_key_equation), run_time=2)
