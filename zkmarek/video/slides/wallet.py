@@ -130,7 +130,6 @@ class WalletSlide(SlideBase):
     def animate_big_number_private_key(self, scene):
         self.new_subsection(scene, "Big number private key", sound="data/sound/episode/e1-s27-9.wav")
         scene.wait()
-        self.wallet.animate_private_key(scene, '0x9de347a715a200cd8e83cecc4277c7fdf2ebd95766720abec8364d879483b69b',
-                                        font_size=9)
+        self.wallet.animate_private_key(scene, '0x9de347a715a200cd....c8364d879483b69b', font_size=14)
         scene.wait()
         self.wallet.animate_address_value(scene, '0xe31cc18f3f3718588e9a878a516c7889af047171')
