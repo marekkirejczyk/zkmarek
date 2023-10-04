@@ -93,9 +93,7 @@ class WalletSlide(SlideBase):
         self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
         scene.play(Write(self.public_key_coordinates))
 
-        animation.animate_out_labels(scene)
-        animation.animate_out_dots(scene)
-        scene.play(FadeOut(self.chart))
+        scene.play(FadeOut(self.chart), FadeOut(*animation.labels), FadeOut(*animation.duplicates))
 
     def animate_generate_ethereum_address(self, scene):
         def transform(into: List[str], font_size=DEFAULT_FONT_SIZE):
