@@ -51,7 +51,7 @@ class PrimeFields(SlideBase):
 
         self.new_subsection(scene,
             "Prime fields - use zero",
-            sound="data/sound/episode1/s11-2.wav")
+            sound="data/sound/episode1/s11-2.m4a")
 
         clock4 = Clock(use_zero=True, hour=1)
         scene.wait(1)
