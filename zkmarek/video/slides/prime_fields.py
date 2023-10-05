@@ -190,8 +190,11 @@ class PrimeFields(SlideBase):
             self.sidebar.indicate_code(scene, e, run_time=0.5)
 
         self.new_subsection(scene,
-            "Prime fields - class",
-            sound="data/sound/episode1/s11-16.wav")
+            "Prime fields - inderting and division",
+            sound="data/sound/episode1/s11-16.m4a")
+        self.new_subsection(scene,
+            "Prime fields - save for another time",
+            sound="data/sound/episode1/s11-17.wav")
         scene.wait(1)
         self.sidebar.indicate_code(scene, "inv(self)", run_time=1)
         scene.wait(7)
