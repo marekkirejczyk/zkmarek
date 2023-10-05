@@ -237,28 +237,30 @@ class Addition(SlideBase):
         self.new_subsection(scene,
             "Addition - point at infinity - neutral element",
             sound="data/sound/episode1/s9c-5.wav")
-        self.new_subsection(scene,
-            "Addition - point at infinity - neutral element",
-            sound="data/sound/episode1/s9c-6.wav")
-        self.new_subsection(scene,
-            "Addition - point at infinity - neutral element",
-            sound="data/sound/episode1/s9c-7.wav")
 
         scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf2.tex")
+        self.sidebar.math[0][6:11].set_color(SECONDARY_COLOR)
+        self.new_subsection(scene,
+                "B + 0 = B",
+                sound="data/sound/episode1/s9c-6.wav")
+        scene.wait(3)
+        self.sidebar.math[0][6:11].set_color(PRIMARY_COLOR)
+        self.sidebar.math[0][11:16].set_color(SECONDARY_COLOR)
+        self.new_subsection(scene,
+                "Represent infinity as 0",
+                sound="data/sound/episode1/s9c-7.wav")
+
         tex_zero = MathTex("\mathcal{O}", color=PRIMARY_COLOR).next_to(self.point_at_infinity, RIGHT)
         scene.play(TransformMatchingTex(self.point_at_label, tex_zero))
         self.point_at_label = tex_zero
-        scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf3.tex")
-        self.sidebar.math[0][6:11].set_color(SECONDARY_COLOR)
-        scene.wait(3)
-        self.sidebar.math[0][11:16].set_color(SECONDARY_COLOR)
-        self.new_subsection(scene,
-            "Addition - point at infinity - code",
-            sound="data/sound/episode1/s9c-8.wav")
+        scene.wait(6)
 
-        scene.wait(2)
+        self.new_subsection(scene,
+                "Addition - let's update the code",
+                sound="data/sound/episode1/s9c-8.wav")
+
         self.sidebar.animate_hide_math(scene)
         self.sidebar.animate_show_code(scene)
 
