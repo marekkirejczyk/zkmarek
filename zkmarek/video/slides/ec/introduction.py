@@ -84,12 +84,12 @@ class Introduction(SlideBase):
         scene.play(FadeOut(brace), FadeOut(label))
 
         self.new_subsection(scene, "Elliptic Curve - Vertical lines ",
-            sound="data/sound/episode1/s13-4.wav")
+            sound="data/sound/episode1/s13-5.wav")
 
         self.animate_vertical(scene)
 
         self.new_subsection(scene, "Elliptic Curve - point on x axis",
-            sound="data/sound/episode1/s13-5.m4a")
+            sound="data/sound/episode1/s13-6.m4a")
 
         self.animate_single_point(scene)
 
