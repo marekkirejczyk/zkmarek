@@ -134,6 +134,9 @@ class Addition(SlideBase):
         self.new_subsection(scene,
             "Addition summary",
             sound="data/sound/episode1/s9-6.wav")
+        self.new_subsection(scene,
+            "Addition summary",
+            sound="data/sound/episode1/s9-7.wav")
 
         self.p1.add_updater(self.update_p1)
         scene.wait(2)
@@ -234,6 +237,12 @@ class Addition(SlideBase):
         self.new_subsection(scene,
             "Addition - point at infinity - neutral element",
             sound="data/sound/episode1/s9c-5.wav")
+        self.new_subsection(scene,
+            "Addition - point at infinity - neutral element",
+            sound="data/sound/episode1/s9c-6.wav")
+        self.new_subsection(scene,
+            "Addition - point at infinity - neutral element",
+            sound="data/sound/episode1/s9c-7.wav")
 
         scene.wait(6)
         self.sidebar.animate_replace_math(scene, "data/cec/add_inf2.tex")
@@ -247,7 +256,7 @@ class Addition(SlideBase):
         self.sidebar.math[0][11:16].set_color(SECONDARY_COLOR)
         self.new_subsection(scene,
             "Addition - point at infinity - code",
-            sound="data/sound/episode1/s9c-6.wav")
+            sound="data/sound/episode1/s9c-8.wav")
 
         scene.wait(2)
         self.sidebar.animate_hide_math(scene)
@@ -255,7 +264,7 @@ class Addition(SlideBase):
 
         self.new_subsection(scene,
             "Addition - point at infinity - code",
-            sound="data/sound/episode1/s9c-7.wav")
+            sound="data/sound/episode1/s9c-9.wav")
         scene.wait(1)
         self.sidebar.animate_replace_code(scene, "data/cec/add_inf.py")
 
