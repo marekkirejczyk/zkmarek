@@ -73,11 +73,12 @@ class Introduction(SlideBase):
 
         self.new_subsection(scene, "Order of the curve",
             sound="data/sound/episode1/s13-3.wav")
+        self.new_subsection(scene, "Order of the curve",
+            sound="data/sound/episode1/s13-4.wav")
 
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
-        scene.wait(2)
         brace = Brace(dots, direction=RIGHT, z_index=3, color=SECONDARY_COLOR)
-        label = Tex("41", color=SECONDARY_COLOR)
+        label = Tex("42", color=SECONDARY_COLOR)
         brace.put_at_tip(label)
         scene.play(FadeIn(brace), FadeIn(label))
         scene.wait(3)
