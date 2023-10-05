@@ -15,7 +15,7 @@ from .common.slide_base import SlideBase
 class PrimeFields(SlideBase):
     clock: Optional[Clock] = None
     sidebar: Sidebar
-    order12: MathTex
+    order13: MathTex
     order256: MathTex
     order41: MathTex
 
@@ -61,15 +61,21 @@ class PrimeFields(SlideBase):
         scene.wait(1)
         scene.play(Indicate(clock4.markings[23]))
 
-        scene.wait(4)
+        scene.wait(3)
+        self.new_subsection(scene,
+            "Prime fields - use 13",
+            sound="data/sound/episode1/s11-3.wav")
         clock5 = Clock(use_zero=True, modulus=13, hour=1)
         scene.play(ReplacementTransform(clock4, clock5))
 
         scene.wait(5)
 
-        self.order12 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
+        self.new_subsection(scene,
+            "Prime fields - Order 13",
+            sound="data/sound/episode1/s11-4.wav")
+        self.order13 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
-        scene.play(FadeIn(self.order12))
+        scene.play(FadeIn(self.order13))
 
         self.new_subsection(scene,
             "Prime fields - modulo 200",
@@ -88,7 +94,7 @@ class PrimeFields(SlideBase):
             color=PRIMARY_COLOR,
             tex_template=template).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
-        scene.play(TransformMatchingTex(self.order12, self.order256))
+        scene.play(TransformMatchingTex(self.order13, self.order256))
 
         self.new_subsection(scene,
             "Prime fields - modulo 41",
