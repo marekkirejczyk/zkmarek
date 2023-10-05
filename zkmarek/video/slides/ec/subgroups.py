@@ -23,7 +23,7 @@ class Subgroups(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Subgroups",
-            sound="data/sound/episode1/s22-1.m4a")
+            sound="data/sound/episode1/s22-1.wav")
 
         scene.play(FadeIn(self.chart))
 
