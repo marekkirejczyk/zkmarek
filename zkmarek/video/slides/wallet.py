@@ -6,7 +6,7 @@ from manim import UP, MoveToTarget, RIGHT, Scene, ScaleInPlace, Text, MathTex, W
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve, Secp256k1_41
-from zkmarek.video.constant import PRIMARY_COLOR, BACKGROUND_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, BACKGROUND_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.wallet import Wallet
 from zkmarek.video.slides.common.slide_base import SlideBase
