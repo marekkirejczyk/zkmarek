@@ -22,7 +22,7 @@ class LineThroughDots(Line):
         self.p1 = p1
         self.p2 = p2
 
-    def extend_to(self, y_bound=10):
+    def extend_to(self, y_bound=20):
         a = (self.p1.p.x - self.p2.p.x) / (self.p1.p.y - self.p2.p.y)
         b = self.p1.p.x - a * self.p1.p.y
         y = y_bound
