@@ -27,7 +27,7 @@ class WalletSlide(SlideBase):
 
     def construct(self):
         self.wallet = Wallet("private key", "address")
-        self.chart = DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR).scale(0.5).shift(1 * DOWN + 3 * LEFT)
+        self.chart = DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR).scale(0.5).shift(1 * DOWN + 4 * LEFT)
 
     def animate_in(self, scene):
         self.animate_secret_key(scene)
@@ -69,7 +69,6 @@ class WalletSlide(SlideBase):
             new_public_key_equation
         ))
         self.public_key_equation = new_public_key_equation
-        # scene.wait()
 
     def animate_scalar_multiplication(self, scene):
         scene.play(FadeIn(self.chart))
@@ -92,27 +91,24 @@ class WalletSlide(SlideBase):
         scene.play(FadeOut(self.chart), FadeOut(*animation.labels), FadeOut(*animation.duplicates))
 
         new_public_key_equation = MathTex(r"{{pk}}", "=", "(", "{{39}}", ",", "{{9}}", ")", color=PRIMARY_COLOR)
-        scene.play(
-            TransformMatchingTex(Group(self.public_key_equation, self.public_key_coordinates), new_public_key_equation))
+        scene.play(TransformMatchingTex(Group(self.public_key_equation, self.public_key_coordinates),
+                                        new_public_key_equation), run_time=0.5)
         self.public_key_coordinates = new_public_key_equation
 
     def animate_generate_ethereum_address(self, scene):
-        def transform(into: List[str], font_size=DEFAULT_FONT_SIZE):
+        def transform(into: List[str], font_size: int = DEFAULT_FONT_SIZE, run_time: float = 1):
             pkc = MathTex(*into, font_size=font_size, color=PRIMARY_COLOR)
-            scene.play(TransformMatchingTex(self.public_key_coordinates, pkc), run_time=1.2)
+            scene.play(TransformMatchingTex(self.public_key_coordinates, pkc), run_time=run_time)
             self.public_key_coordinates = pkc
 
         scene.play(FadeOut(self.public_key))
-        transform(["(", "{{39}}", ",", "{{9}}", ")"])
-        transform(["(", "{{0x27}}", ",", "{{0x09}}", ")"])
-        transform(["(", '{{27}}', ',', '{{09}}', ')'])
-        transform(['"', '{{27}}', '"+"', '{{09}}', '"'])
-        transform(['"', '{{27}}', '{{09}}', '"'])
-        transform(['keccak256(', '"', '{{27}}', '{{09}}', '"', ')'])
+        transform(["(", "{{39}}", ",", "{{9}}", ")"], run_time=0.5)
+        transform(["(", "{{0x}}", "{{27}}", ",", "{{0x}}", "{{09}}", ")"])
+        transform(['keccak256(', '"', '{{27}}', '{{09}}', '"', ')'], run_time=2)
         transform(['{{0be4308d0014b842c2debb81}}', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'], font_size=20)
-        self.new_subsection(scene, "Add 0x", sound="data/sound/episode1/s27-7.wav")
         transform(['{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
-        scene.wait(3)
+        self.new_subsection(scene, "Add 0x", sound="data/sound/episode1/s27-7.wav")
+        scene.wait(4)
         transform(['0x', '{{7a629f45938a32a2117c186d46b29ef3aa599b4e}}'])
         self.new_subsection(scene, "Add 0x", sound="data/sound/episode1/s27-8.wav")
 
