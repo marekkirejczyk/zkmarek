@@ -35,7 +35,7 @@ class Intro(SlideBase):
                 run_time=2.25),
             MoveToTarget(self.logo, rate_func=rate_functions.ease_out_bounce),
                 run_time=2.25)
-        scene.wait(3)
+        scene.wait(4.5)
 
     def animate_out(self, scene):
         self.marek.generate_target()
