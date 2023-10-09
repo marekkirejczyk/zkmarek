@@ -44,5 +44,5 @@ class Credits(SlideBase):
         self.add_credit("License: #2663")
         self.group.generate_target()
         self.group.shift(5 * DOWN)
-        self.group.target.shift(17 * UP)
-        scene.play(MoveToTarget(self.group, run_time=13, rate_func=rate_functions.linear))
+        self.group.target.shift(16 * UP)
+        scene.play(MoveToTarget(self.group, run_time=32, rate_func=rate_functions.linear))
