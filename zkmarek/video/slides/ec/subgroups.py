@@ -35,7 +35,7 @@ class Subgroups(SlideBase):
         scene.wait(2)
         animation1.animate_subgroup_mid(scene, subgroup1, generator1, 2, 5)
         self.new_subsection(scene, "Subgroups",
-            sound="data/sound/episode1/s22-2.wav")
+            sound="data/sound/episode1/s22-2.m4a")
 
         animation1.animate_subgroup_end(scene, subgroup1, generator1, 5)
         animation1.animate_out_labels(scene)
@@ -43,9 +43,6 @@ class Subgroups(SlideBase):
         generator2 = ECAffine(1, 34, self.curve)
         generator3 = ECAffine(1, 7, self.curve)
         subgroup2 = Subgroup.from_generator(generator2)
-
-        self.play_next(scene, "data/sound/episode1/s22-3.wav")
-        self.play_next(scene, "data/sound/episode1/s22-4.m4a")
 
         animation2 = AnimateSubgroups(self.chart, target_color=SECONDARY_COLOR)
         animation2.animate_subgroup(scene, subgroup2, generator2)

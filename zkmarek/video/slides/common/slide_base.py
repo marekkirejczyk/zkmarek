@@ -3,9 +3,8 @@ from manim import VGroup, FadeOut
 from pydub import AudioSegment
 
 class SlideBase(VGroup):
-    title: str = ""
+    title: str
     start_time: Optional[float]
-    end_time: float = 0
     current_sound: Optional[str]
 
     def __init__(self, title:str, **kwargs) -> None:
@@ -38,12 +37,6 @@ class SlideBase(VGroup):
             self.start_time = scene.renderer.time
             self.current_sound = sound
             scene.add_sound(sound)
-
-    def play_next(self, scene, sound: str):
-        now: int = scene.renderer.time
-        offset: float = max(0., self.end_time - now)
-        self.end_time = now + offset + get_sound_length(sound)
-        scene.add_sound(sound, time_offset=offset)
 
     def play_sound(self, scene, sound):
         self.wait_for_sound(scene)
