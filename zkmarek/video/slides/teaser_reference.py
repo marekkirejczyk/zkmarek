@@ -1,5 +1,5 @@
-from manim import (LEFT, RIGHT, UP, Arrow, FadeOut, MoveToTarget, Text,
-                   rate_functions)
+from manim import (LEFT, RIGHT, UP, ApplyWave, Arrow, FadeOut, MoveToTarget,
+                   Text, VGroup, rate_functions)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -44,6 +44,8 @@ class TeaserReference(SlideBase):
         self.slide2.construct()
         self.slide2.animate_miniature(scene)
         scene.wait(1)
+        scene.play(ApplyWave(VGroup(self.label, self.arrow)), run_time=2)
+
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.slide1), FadeOut(self.slide2), FadeOut(self.label), FadeOut(self.arrow),
