@@ -55,7 +55,7 @@ class Wallet(VGroup):
         for key in [str(randint(0, rand_max)) for i in range(rounds)] + [str(final_value), hex(final_value)]:
             last = key.startswith('0x')
             if last:
-                scene.wait()
+                scene.wait(1.5)
             self.animate_private_key(scene, key, 1 if last else 0.1)
 
     def animate_private_key(self, scene, key, run_time: float = 1, font_size=24):
