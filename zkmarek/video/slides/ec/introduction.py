@@ -5,6 +5,7 @@ from zkmarek.crypto.weierstrass_curve import Secp256k1_41, WeierstrassCurve
 from zkmarek.video.constant import HIGHLIGHT_COLOR, SECONDARY_COLOR
 from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
+from zkmarek.video.mobjects.point_at_infinity import PointAtInfinity
 from zkmarek.video.mobjects.sidebar import Sidebar
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -13,6 +14,7 @@ class Introduction(SlideBase):
     curve: WeierstrassCurve
     chart: DiscreteEllipticChart
     sidebar: Sidebar
+    point_at_infinity: PointAtInfinity
 
     def __init__(self):
         super().__init__("Discrete elliptic curves chart")
@@ -21,6 +23,7 @@ class Introduction(SlideBase):
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve)
         self.chart.center()
+        self.point_at_infinity = PointAtInfinity(self.chart.ax, 9, 43)
 
     def animate_symmetry(self, scene):
         line = self.chart.create_horizontal_line()
@@ -77,12 +80,13 @@ class Introduction(SlideBase):
             sound="data/sound/episode1/s13-4.wav")
 
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
-        brace = Brace(dots, direction=RIGHT, z_index=3, color=SECONDARY_COLOR)
+        brace = Brace(VGroup(dots, self.point_at_infinity), direction=RIGHT, z_index=3, color=SECONDARY_COLOR)
         label = Tex("42", color=SECONDARY_COLOR)
         brace.put_at_tip(label)
-        scene.play(FadeIn(brace), FadeIn(label))
+        scene.play(FadeIn(brace), FadeIn(label), FadeIn(self.point_at_infinity.dot))
+        scene.play(Circumscribe(self.point_at_infinity.dot, Circle))
         scene.wait(3)
-        scene.play(FadeOut(brace), FadeOut(label))
+        scene.play(FadeOut(brace), FadeOut(label), FadeOut(self.point_at_infinity.dot))
 
         self.new_subsection(scene, "Elliptic Curve - Vertical lines ",
             sound="data/sound/episode1/s13-5.wav")
