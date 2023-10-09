@@ -64,7 +64,6 @@ EPISODE1 = [
     TitleSlide(
         "Elliptic curves",
         subtitle="in Ethereum wallet",
-        post_wait_time=2,
         sound="data/sound/episode1/s2-1.wav"),
     TeaserReference(),
     InThisEpisode(),
@@ -74,7 +73,7 @@ EPISODE1 = [
     CECNegation(),
     CECAddition(),
 
-    TitleSlide("Prime Fields", post_wait_time=2,
+    TitleSlide("Prime Fields",
         sound="data/sound/episode1/s10.wav"),
     PrimeFields(),
 
@@ -100,7 +99,7 @@ EPISODE1 = [
     TitleSlide("Elliptic Curve Standards",
         sound="data/sound/episode1/s24.m4a"),
     Standards(),
-    TitleSlide("Ethereum Wallet", pre_wait_time=3, post_wait_time=2, sound="data/sound/episode1/s26.wav"),
+    TitleSlide("Ethereum Wallet", pre_wait_time=3, sound="data/sound/episode1/s26.wav"),
     WalletSlide(),
     Subscribe("data/sound/episode1/s30.wav"),
     Credits()
@@ -109,7 +108,7 @@ EPISODE1 = [
 EPISODE2 = [
     Intro(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        post_wait_time=3, sound="data/sound/episode2/s26.wav"),
+        sound="data/sound/episode2/s26.wav"),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
