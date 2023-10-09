@@ -75,6 +75,7 @@ class PrimeFields(SlideBase):
             sound="data/sound/episode1/s11-4.wav")
         self.order13 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
+        scene.wait(2)
         scene.play(FadeIn(self.order13))
 
         self.new_subsection(scene,
@@ -120,6 +121,7 @@ class PrimeFields(SlideBase):
         ).scale(0.6)
         scene.play(TransformMatchingShapes(clock7, line))
         scene.play(line.animate.align_on_border(LEFT, buff=0.2))
+        scene.wait(2)
 
     def animate_sidebar(self, scene):
         self.new_subsection(scene,
@@ -190,12 +192,10 @@ class PrimeFields(SlideBase):
             self.sidebar.indicate_code(scene, e, run_time=0.5)
 
         self.new_subsection(scene,
-            "Prime fields - inderting and division",
+            "Prime fields - inverting and division",
             sound="data/sound/episode1/s11-16.m4a")
+        self.sidebar.indicate_code(scene, "inv(self)", run_time=1)
         self.new_subsection(scene,
             "Prime fields - save for another time",
             sound="data/sound/episode1/s11-17.wav")
         scene.wait(1)
-        self.sidebar.indicate_code(scene, "inv(self)", run_time=1)
-        scene.wait(7)
-        self.sidebar.indicate_code(scene, "...", run_time=1)
