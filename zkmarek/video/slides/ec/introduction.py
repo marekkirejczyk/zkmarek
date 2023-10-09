@@ -88,13 +88,16 @@ class Introduction(SlideBase):
         scene.wait(3)
         scene.play(FadeOut(brace), FadeOut(label), FadeOut(self.point_at_infinity.dot))
 
-        self.new_subsection(scene, "Elliptic Curve - Vertical lines ",
+        self.new_subsection(scene, "Prime field vs. elliptic curve group order",
             sound="data/sound/episode1/s13-5.wav")
+
+        self.new_subsection(scene, "Elliptic Curve - Vertical lines ",
+            sound="data/sound/episode1/s13-6.wav")
 
         self.animate_vertical(scene)
 
         self.new_subsection(scene, "Elliptic Curve - point on x axis",
-            sound="data/sound/episode1/s13-6.m4a")
+            sound="data/sound/episode1/s13-7.m4a")
 
         self.animate_single_point(scene)
 
