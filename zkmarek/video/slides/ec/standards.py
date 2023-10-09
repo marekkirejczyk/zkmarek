@@ -29,13 +29,13 @@ class Standards(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Operations",
-            sound="data/sound/episode1/s25-1.wav")
+            sound="data/sound/episode1/s25-1.m4a")
 
         secp = []
         for i in range(0, 4):
             secp.append(self.secp256k1.copy_with_rows(i+1))
         scene.play(FadeIn(self.label), FadeIn(secp[0]))
-        scene.wait(8)
+        scene.wait(6.5)
         scene.play(ReplacementTransform(secp[0], secp[2]))
         scene.play(Indicate(secp[2].rows[0][0][1] ))
         scene.play(Indicate(secp[2].rows[1][0]))
