@@ -15,7 +15,7 @@ from .common.slide_base import SlideBase
 class PrimeFields(SlideBase):
     clock: Optional[Clock] = None
     sidebar: Sidebar
-    order12: MathTex
+    order13: MathTex
     order256: MathTex
     order41: MathTex
 
@@ -51,7 +51,7 @@ class PrimeFields(SlideBase):
 
         self.new_subsection(scene,
             "Prime fields - use zero",
-            sound="data/sound/episode1/s11-2.wav")
+            sound="data/sound/episode1/s11-2.m4a")
 
         clock4 = Clock(use_zero=True, hour=1)
         scene.wait(1)
@@ -61,19 +61,25 @@ class PrimeFields(SlideBase):
         scene.wait(1)
         scene.play(Indicate(clock4.markings[23]))
 
-        scene.wait(4)
+        scene.wait(3)
+        self.new_subsection(scene,
+            "Prime fields - use 13",
+            sound="data/sound/episode1/s11-3.wav")
         clock5 = Clock(use_zero=True, modulus=13, hour=1)
         scene.play(ReplacementTransform(clock4, clock5))
 
         scene.wait(5)
 
-        self.order12 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
+        self.new_subsection(scene,
+            "Prime fields - Order 13",
+            sound="data/sound/episode1/s11-4.wav")
+        self.order13 = MathTex("{{Order}} = 13", color=PRIMARY_COLOR).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
-        scene.play(FadeIn(self.order12))
+        scene.play(FadeIn(self.order13))
 
         self.new_subsection(scene,
             "Prime fields - modulo 200",
-            sound="data/sound/episode1/s11-3.wav")
+            sound="data/sound/episode1/s11-5.wav")
 
         scene.wait(3)
         clock6 = Clock(use_zero=True, hour=4, modulus=200)
@@ -88,11 +94,11 @@ class PrimeFields(SlideBase):
             color=PRIMARY_COLOR,
             tex_template=template).next_to(
             clock.get_center(), direction=DOWN, buff=0.2)
-        scene.play(TransformMatchingTex(self.order12, self.order256))
+        scene.play(TransformMatchingTex(self.order13, self.order256))
 
         self.new_subsection(scene,
             "Prime fields - modulo 41",
-            sound="data/sound/episode1/s11-4.wav")
+            sound="data/sound/episode1/s11-6.wav")
         scene.wait(1)
         clock7 = Clock(use_zero=True, hour=4, modulus=41)
 
@@ -118,12 +124,12 @@ class PrimeFields(SlideBase):
     def animate_sidebar(self, scene):
         self.new_subsection(scene,
             "Prime fields - code",
-            sound="data/sound/episode1/s11-6.wav")
+            sound="data/sound/episode1/s11-8.wav")
         self.sidebar = Sidebar("Prime Field", code_path="data/pf/field_element.py")
         self.sidebar.animate_in(scene)
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-7.wav")
+            sound="data/sound/episode1/s11-9.wav")
 
         self.sidebar.indicate_code(scene, "class FieldElement", run_time=1)
         scene.wait(2)
@@ -133,14 +139,14 @@ class PrimeFields(SlideBase):
 
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-8.wav")
+            sound="data/sound/episode1/s11-10.wav")
         scene.wait(2)
         self.sidebar.indicate_code(scene, "# BigInteger", 0, run_time=1)
         self.sidebar.indicate_code(scene, "# BigInteger", 1, run_time=1)
 
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-9.wav")
+            sound="data/sound/episode1/s11-11.wav")
         self.sidebar.indicate_code(scene, "__init__", run_time=1)
         scene.wait(1)
         self.sidebar.indicate_code(scene, "value: int", 1, run_time=1)
@@ -151,7 +157,7 @@ class PrimeFields(SlideBase):
 
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-10.wav")
+            sound="data/sound/episode1/s11-12.wav")
 
         scene.wait(2)
         for e in ["__eq__", "__add__", "__sub__", "__mul__"]:
@@ -159,7 +165,7 @@ class PrimeFields(SlideBase):
 
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-11.wav")
+            sound="data/sound/episode1/s11-13.wav")
         scene.wait(1)
         for i in range(0, 4):
             self.sidebar.indicate_code(scene,
@@ -168,13 +174,13 @@ class PrimeFields(SlideBase):
 
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-12.wav")
+            sound="data/sound/episode1/s11-14.wav")
         scene.wait(3)
         self.sidebar.indicate_code(scene, "self.value == other.value", run_time=1)
 
         self.new_subsection(scene,
             "Prime fields - class",
-            sound="data/sound/episode1/s11-13.wav")
+            sound="data/sound/episode1/s11-15.wav")
 
         for e in ["__add__", "__sub__", "__mul__"]:
             self.sidebar.indicate_code(scene, e, run_time=1)
@@ -184,8 +190,11 @@ class PrimeFields(SlideBase):
             self.sidebar.indicate_code(scene, e, run_time=0.5)
 
         self.new_subsection(scene,
-            "Prime fields - class",
-            sound="data/sound/episode1/s11-14.wav")
+            "Prime fields - inderting and division",
+            sound="data/sound/episode1/s11-16.m4a")
+        self.new_subsection(scene,
+            "Prime fields - save for another time",
+            sound="data/sound/episode1/s11-17.wav")
         scene.wait(1)
         self.sidebar.indicate_code(scene, "inv(self)", run_time=1)
         scene.wait(7)
