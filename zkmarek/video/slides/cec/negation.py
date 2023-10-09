@@ -35,9 +35,9 @@ class Negation(SlideBase):
 
         scene.wait(1)
         scene.play(Indicate(self.sidebar.math[1]), color=SECONDARY_COLOR)
-        scene.wait(1)
+        scene.wait(1.5)
         scene.play(Indicate(self.sidebar.math[3]), color=SECONDARY_COLOR)
-
+        scene.wait(2)
         self.new_subsection(scene, "Code", "data/sound/episode1/s8-2.wav")
         scene.wait(0.5)
         self.sidebar.animate_show_code(scene)
