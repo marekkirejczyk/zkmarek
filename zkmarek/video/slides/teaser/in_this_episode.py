@@ -74,8 +74,7 @@ class InThisEpisode(SlideBase):
         self.arrange_in_grid(cols=2, col_alignments="ll", row_alignments="uuuuu")
 
         for i, thumbnail in enumerate(self.thumbnails):
-            scale = 0.4 if i == 4 else 0.15
-            thumbnail.scale(scale)
+            thumbnail.scale(0.15)
             thumbnail.move_to(self.thumbnails_borders[i].get_center())
             self.add(thumbnail)
 
