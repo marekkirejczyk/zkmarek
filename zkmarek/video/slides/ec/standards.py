@@ -28,7 +28,7 @@ class Standards(SlideBase):
         self.group.next_to(self.label, DOWN)
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "Operations",
+        self.new_subsection(scene, "Secp256k1",
             sound="data/sound/episode1/s25-1.m4a")
 
         secp = []
@@ -40,17 +40,17 @@ class Standards(SlideBase):
         scene.play(Indicate(secp[2].rows[0][0][1] ))
         scene.play(Indicate(secp[2].rows[1][0]))
         scene.play(Indicate(secp[2].rows[2][0]))
-        self.new_subsection(scene, "Operations",
+        self.new_subsection(scene, "Order of p",
             sound="data/sound/episode1/s25-2.wav")
         scene.wait(1.5)
         scene.play(Indicate(secp[2].rows[1][0][1]))
 
-        self.new_subsection(scene, "Operations",
-            sound="data/sound/episode1/s25-3.wav")
+        self.new_subsection(scene, "Order of G",
+            sound="data/sound/episode1/s25-3.m4a")
         scene.play(ReplacementTransform(secp[2], secp[3]))
         scene.wait(2)
         scene.play(Indicate(secp[3].rows[3][0]))
-        self.new_subsection(scene, "Operations",
+        self.new_subsection(scene, "Cofactor",
             sound="data/sound/episode1/s25-4.wav")
         scene.play(ReplacementTransform(secp[3], self.secp256k1))
         scene.play(Indicate(self.secp256k1.rows[4][0]))
