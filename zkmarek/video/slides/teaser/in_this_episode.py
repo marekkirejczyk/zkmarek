@@ -30,14 +30,14 @@ class InThisEpisode(SlideBase):
             "2. Prime fields",
             "3. Discrete elliptic curves",
             "4. Groups and standards",
-            "5. Digital signature",
+            "5. Ethereum Wallet",
         ]
         self.descriptions = [
             "Mathematical concept of elliptic curves ",
             "Arythmetics used in cryptography ",
             "Elliptic curves used in cryptography ",
             "Curves used in real-life protocols ",
-            "Ethereum Wallet"
+            "Private key and address"
         ]
         self.sounds = [
             "data/sound/episode1/s4-1.m4a",
