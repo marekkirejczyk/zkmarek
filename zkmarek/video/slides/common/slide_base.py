@@ -3,7 +3,7 @@ from manim import VGroup, FadeOut
 from pydub import AudioSegment
 
 class SlideBase(VGroup):
-    title: str = ""
+    title: str
     start_time: Optional[float]
     current_sound: Optional[str]
 
