@@ -39,7 +39,7 @@ class TeaserReference(SlideBase):
         self.slide1 = ECRecoverSlideTeaser()
         self.slide1.construct()
         self.slide1.animate_miniature(scene)
-
+        scene.wait(0.5)
         self.slide2 = SeasonTeaser()
         self.slide2.construct()
         self.slide2.animate_miniature(scene)
