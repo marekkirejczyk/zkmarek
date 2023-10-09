@@ -1,12 +1,12 @@
 from typing import List
 
 from manim import UP, MoveToTarget, RIGHT, Scene, ScaleInPlace, Text, MathTex, Write, FadeOut, \
-    TransformMatchingTex, FadeIn, Circumscribe, Circle, DEFAULT_FONT_SIZE, LEFT, DOWN, Group
+    TransformMatchingTex, FadeIn, Circumscribe, Circle, DEFAULT_FONT_SIZE, LEFT, DOWN, Group, Indicate
 
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.crypto.weierstrass_curve import WeierstrassCurve, Secp256k1_41
-from zkmarek.video.constant import PRIMARY_COLOR, BACKGROUND_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, BACKGROUND_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.wallet import Wallet
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -123,15 +123,28 @@ class WalletSlide(SlideBase):
         self.wallet.target.move_to(0)
         scene.play(MoveToTarget(self.wallet))
 
-    def animate_big_number_private_key(self, scene):
+    def animate_big_number_private_key(self, scene: Scene):
         self.play_sound(scene, "data/sound/episode1/s27-9.wav")
+        scene.wait(1)
+        scene.play(Indicate(self.wallet.secret_key_value))
         self.play_sound(scene, "data/sound/episode1/s27-10.wav")
         self.play_sound(scene, "data/sound/episode1/s27-11.wav")
+        secp256k1 = Text("Secp256k1", font=PRIMARY_FONT, color=PRIMARY_COLOR)
+        secp256k1.move_to(2.5 * UP)
+        scene.play(FadeIn(secp256k1))
         self.play_sound(scene, "data/sound/episode1/s27-12.wav")
+        scene.play(FadeOut(secp256k1))
         self.wallet.animate_private_key(scene, '0x9de347a715a200cd....c8364d879483b69b', font_size=14)
         self.wallet.animate_address_value(scene, '')
         self.play_sound(scene, "data/sound/episode1/s27-13.wav")
+        scene.wait(2)
+        self.wallet.animate_address_value(scene, '0x9de347a715a200cd....c8364d879483b69b')
+        scene.wait(1.5)
+        self.wallet.animate_address_value(scene, '0x9de347a715a200cd....c8364d879483b69b * G')
+        scene.wait(2)
+        self.wallet.animate_address_value(scene, '(0xc4a0c0a9...7484e855, 0x32b5524f...fb56c074)')
         self.play_sound(scene, "data/sound/episode1/s27-14.wav")
+        scene.wait(2)
         self.wallet.animate_address_value(scene, '0xe31cc18f3f3718588e9a878a516c7889af047171')
         self.play_sound(scene, "data/sound/episode1/s27-15.wav")
         self.play_sound(scene, "data/sound/episode1/s27-16.wav")
