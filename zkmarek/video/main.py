@@ -101,7 +101,7 @@ EPISODE1 = [
     Standards(),
     TitleSlide("Ethereum Wallet", pre_wait_time=3, sound="data/sound/episode1/s26.wav"),
     WalletSlide(),
-    Subscribe("data/sound/episode1/s30.wav"),
+    Subscribe("data/sound/episode1/s28.wav"),
     Credits()
 ]
 
