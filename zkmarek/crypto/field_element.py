@@ -12,7 +12,7 @@ class FieldElement:
         self.value = value % order
         self.order = order
 
-    def __eq__(self, other: "FieldElement") -> bool:
+    def __eq__(self, other: "FieldElement") -> bool: # type: ignore
         assert self.order == other.order
         return self.value == other.value
 

@@ -40,7 +40,7 @@ class CECAffine:
             y = slope * (self.x - x) - self.y
             return CECAffine(x, y)
 
-    def __eq__(self, __value: "CECAffine") -> bool:
+    def __eq__(self, __value: "CECAffine") -> bool: # type: ignore
         return self.x == __value.x and self.y == __value.y
 
     def __repr__(self):

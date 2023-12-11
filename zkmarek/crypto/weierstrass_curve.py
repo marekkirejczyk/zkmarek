@@ -18,7 +18,7 @@ class WeierstrassCurve:
     def is_infinity(self, x: int, y: int) -> bool:
         return x == 0 and y == 0
 
-    def __eq__(self, other: "WeierstrassCurve") -> bool:
+    def __eq__(self, other: "WeierstrassCurve") -> bool: # type: ignore
         return self.a == other.a and self.b == other.b and self.p == other.p
 
 
