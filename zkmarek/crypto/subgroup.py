@@ -21,7 +21,7 @@ class Subgroup:
         return f"Subgroup(order={n}\n generator={self.generator}\n" \
                f"allgen=[{all_gen}]\n points=[{points}])"
 
-    def __eq__(self, other: "Subgroup") -> bool:
+    def __eq__(self, other: "Subgroup") -> bool: # type: ignore
         return set(self.points) == set(other.points)
 
     def order(self) -> int:

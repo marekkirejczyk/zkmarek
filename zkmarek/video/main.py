@@ -107,12 +107,16 @@ EPISODE1 = [
 
 EPISODE2 = [
     Intro(),
+    #PreviouslyOn(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
         sound="data/sound/episode2/s26.wav"),
+    #Functions(),
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
-    Subscribe("data/sound/episode1/s30.wav")
+    #SchnorrSignature()
+    #Trick(),
+    Subscribe("data/sound/episode1/s28.wav")
 ]
 
 DECKS = {
@@ -121,7 +125,7 @@ DECKS = {
     "E2": EPISODE2,
 }
 
-DEFAULT_DECK = "E1"
+DEFAULT_DECK = "E2"
 
 
 class EllipticCurves(Scene):

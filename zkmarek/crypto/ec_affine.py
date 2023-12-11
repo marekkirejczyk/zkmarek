@@ -23,7 +23,7 @@ class ECAffine:
     def __neg__(self) -> "ECAffine":
         return ECAffine(self.x, -self.y, self.curve)
 
-    def __eq__(self, other: "ECAffine") -> bool:
+    def __eq__(self, other: "ECAffine") -> bool: # type: ignore
         assert self.curve == other.curve
         return self.x == other.x and self.y == other.y
 
