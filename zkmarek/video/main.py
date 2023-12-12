@@ -103,20 +103,20 @@ EPISODE1 = [
 ]
 
 EPISODE2 = [
-    Intro(),
+    # Intro(),
     #PreviouslyOn(),
-    TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        sound="data/sound/episode2/s26.wav"),
+    # TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
+    #     sound="data/sound/episode2/s26.wav"),
     #Functions(),
     DigitalSignatureInterface(),
-    Signature(),
-    ECRecoverSlide(),
-    CodeSlide("ECDSA sign", "data/ec/signature.py"),
-    CodeSlide("ecrecover", "data/ec/recover.py"),
-    EthereumTransaction(),
-    SchnorrSlide(),
-    #Trick(),
-    Subscribe("data/sound/episode1/s28.wav")
+    # Signature(),
+    # ECRecoverSlide(),
+    # CodeSlide("ECDSA sign", "data/ec/signature.py"),
+    # CodeSlide("ecrecover", "data/ec/recover.py"),
+    # EthereumTransaction(),
+    # SchnorrSlide(),
+    # #Trick(),
+    # Subscribe("data/sound/episode1/s28.wav")
 ]
 
 DECKS = {
