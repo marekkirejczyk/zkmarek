@@ -14,6 +14,7 @@ from slides.equation import EquationSlide
 from zkmarek.video.slides.common.code_slide import CodeSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
+from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.credits import Credits
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.digital_signature_interface import DigitalSignatureInterface
@@ -103,20 +104,21 @@ EPISODE1 = [
 ]
 
 EPISODE2 = [
-    # Intro(),
+    Intro(),
     #PreviouslyOn(),
-    # TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-    #     sound="data/sound/episode2/s26.wav"),
+    TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
+        sound="data/sound/episode2/s26.wav"),
     #Functions(),
     DigitalSignatureInterface(),
-    # Signature(),
-    # ECRecoverSlide(),
-    # CodeSlide("ECDSA sign", "data/ec/signature.py"),
-    # CodeSlide("ecrecover", "data/ec/recover.py"),
-    # EthereumTransaction(),
-    # SchnorrSlide(),
-    # #Trick(),
-    # Subscribe("data/sound/episode1/s28.wav")
+    Signature(),
+    ECRecoverSlide(),
+    CodeSlide("ECDSA sign", "data/ec/signature.py"),
+    CodeSlide("ecrecover", "data/ec/recover.py"),
+    EthereumTransaction(),
+    SchnorrSlide(),
+    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
+    TexSlide("Sources", "data/schnorr/sources.tex"),
+    Subscribe("data/sound/episode1/s28.wav")
 ]
 
 DECKS = {
