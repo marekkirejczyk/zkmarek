@@ -110,6 +110,7 @@ EPISODE2 = [
     #Functions(),
     DigitalSignatureInterface(),
     Signature(),
+    TexSlide("Deterministic signature", "data/ec/deterministic_signature.tex"),
     ECRecoverSlide(),
     CodeSlide("ECDSA sign", "data/ec/signature.py"),
     CodeSlide("ecrecover", "data/ec/recover.py"),
