@@ -1,5 +1,4 @@
-def generate_key_pair(security_param, randomness) ->
-    (secret_key, public_key)
+def generate_key_pair() -> (secret_key, public_key)
 
 
 def sing(message, secret_key) -> signature
