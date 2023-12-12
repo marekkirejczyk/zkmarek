@@ -11,15 +11,10 @@ from slides.ec.addition import Addition as ECAddition
 from slides.ec.introduction import Introduction as ECIntroduction
 from slides.ec.negation import Negation as ECNegation
 from slides.equation import EquationSlide
+from zkmarek.video.slides.common.code_slide import CodeSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.credits import Credits
-from zkmarek.video.slides.debug.code_style_slide import \
-    CodeStyleSlide  # noqa: F401 # pyright: ignore
-from zkmarek.video.slides.debug.font_slide import \
-    FontSlide  # noqa: F401 # pyright: ignore
-from zkmarek.video.slides.debug.test_slide import \
-    TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
 from zkmarek.video.slides.ec.operations import Operations
@@ -114,6 +109,8 @@ EPISODE2 = [
     #Functions(),
     Signature(),
     ECRecoverSlide(),
+    CodeSlide("ECDSA sign", "data/ec/signature.py"),
+    CodeSlide("ecrecover", "data/ec/recover.py"),
     EthereumTransaction(),
     SchnorrSlide(),
     #Trick(),
