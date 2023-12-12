@@ -16,6 +16,7 @@ from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.credits import Credits
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
+from zkmarek.video.slides.ec.digital_signature_interface import DigitalSignatureInterface
 from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
 from zkmarek.video.slides.ec.operations import Operations
 from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
@@ -107,6 +108,7 @@ EPISODE2 = [
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
         sound="data/sound/episode2/s26.wav"),
     #Functions(),
+    DigitalSignatureInterface(),
     Signature(),
     ECRecoverSlide(),
     CodeSlide("ECDSA sign", "data/ec/signature.py"),

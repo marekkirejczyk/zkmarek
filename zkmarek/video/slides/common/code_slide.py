@@ -19,16 +19,21 @@ class CodeSlide(SlideBase):
 
     def construct(self):
         self.title_text = Text(self.title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
+        code_params = {
+            "background": "window",
+            "insert_line_no": True,
+            "font": "Monospace",
+            "font_size": 18,
+            "margin": 0.2,
+            "style": "fruity",
+            "line_no_buff": 0.2,
+        }
+
+        code_params.update(self.kwargs)
+
         self.code = Code(
             self.code_path,
-            background="window",
-            insert_line_no=True,
-            font="Monospace",
-            font_size=18,
-            margin=0.2,
-            style="fruity",
-            line_no_buff=0.2,
-            **self.kwargs
+            **code_params
         )
         self.title_text.to_edge(UP, buff=1)
         self.code.next_to(self.title_text, DOWN, buff=0.5)
