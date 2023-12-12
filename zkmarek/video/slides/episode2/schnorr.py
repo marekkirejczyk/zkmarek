@@ -1,4 +1,4 @@
-from manim import Text, DashedLine, LEFT, RIGHT, UP, DOWN, FadeIn, Create
+from manim import Text, DashedLine, DOWN, FadeIn
 from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
 
