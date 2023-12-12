@@ -106,8 +106,7 @@ EPISODE1 = [
 EPISODE2 = [
     Intro(),
     #PreviouslyOn(),
-    TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5,
-        sound="data/sound/episode2/s26.wav"),
+    TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5),
     #Functions(),
     DigitalSignatureInterface(),
     Signature(),
