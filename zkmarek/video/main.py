@@ -41,6 +41,7 @@ from zkmarek.video.slides.teaser.zkps_title import ZKPSTitle
 from zkmarek.video.slides.teaser_reference import TeaserReference
 from zkmarek.video.slides.wallet import WalletSlide
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
+from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
 
 config.width = 16
 config.height = 9
@@ -114,7 +115,7 @@ EPISODE2 = [
     Signature(),
     ECRecoverSlide(),
     EthereumTransaction(),
-    #SchnorrSignature()
+    SchnorrSlide(),
     #Trick(),
     Subscribe("data/sound/episode1/s28.wav")
 ]
