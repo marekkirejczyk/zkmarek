@@ -113,7 +113,7 @@ EPISODE2 = [
     CodeSlide("ecrecover", "data/ec/recover.py"),
     EthereumTransaction(),
     SchnorrSlide(),
-    #Trick(),
+    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     Subscribe("data/sound/episode1/s28.wav")
 ]
 

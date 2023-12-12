@@ -1,4 +1,4 @@
-from manim import (DOWN, LEFT, RIGHT, UP, Create, DashedLine, FadeIn, FadeOut,
+from manim import (DOWN, DashedLine, FadeIn, FadeOut,
                    ReplacementTransform, Text)
 
 from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
