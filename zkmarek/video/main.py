@@ -14,6 +14,7 @@ from slides.equation import EquationSlide
 from zkmarek.video.slides.common.code_slide import CodeSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
+from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.credits import Credits
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
@@ -114,6 +115,7 @@ EPISODE2 = [
     EthereumTransaction(),
     SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
+    TexSlide("Sources", "data/schnorr/sources.tex"),
     Subscribe("data/sound/episode1/s28.wav")
 ]
 
