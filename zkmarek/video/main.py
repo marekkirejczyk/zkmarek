@@ -25,6 +25,7 @@ from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
 from zkmarek.video.slides.ec.operations import Operations
 from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
+from zkmarek.video.slides.ec.signature_impl import SignatureImplementation
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
@@ -112,6 +113,7 @@ EPISODE2 = [
         sound="data/sound/episode2/s26.wav"),
     #Functions(),
     Signature(),
+    SignatureImplementation(),
     ECRecoverSlide(),
     EthereumTransaction(),
     #SchnorrSignature()
