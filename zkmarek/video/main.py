@@ -14,18 +14,13 @@ from slides.equation import EquationSlide
 
 from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.credits import Credits
-from zkmarek.video.slides.debug.code_style_slide import \
-    CodeStyleSlide  # noqa: F401 # pyright: ignore
-from zkmarek.video.slides.debug.font_slide import \
-    FontSlide  # noqa: F401 # pyright: ignore
-from zkmarek.video.slides.debug.test_slide import \
-    TestSlide  # noqa: F401 # pyright: ignore
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
 from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
 from zkmarek.video.slides.ec.operations import Operations
+from zkmarek.video.slides.ec.recover_implementation import RecoverImplementation
 from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
-from zkmarek.video.slides.ec.signature_impl import SignatureImplementation
+from zkmarek.video.slides.ec.signature_implementation import SignatureImplementation
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
@@ -115,6 +110,7 @@ EPISODE2 = [
     Signature(),
     SignatureImplementation(),
     ECRecoverSlide(),
+    RecoverImplementation(),
     EthereumTransaction(),
     #SchnorrSignature()
     #Trick(),
