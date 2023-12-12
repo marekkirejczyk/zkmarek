@@ -1,5 +1,5 @@
 from manim import (DOWN, DashedLine, FadeIn, FadeOut,
-                   ReplacementTransform, Text, TransformMatchingTex, ReplacementTransform)
+                   ReplacementTransform, Text)
 
 from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
