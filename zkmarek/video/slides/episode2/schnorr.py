@@ -1,10 +1,10 @@
-from manim import Text, DashedLine, DOWN, FadeIn
+from manim import DOWN, LEFT, RIGHT, UP, Create, DashedLine, FadeIn, Text
+
 from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
                                     PRIMARY_FONT, SECONDARY_COLOR)
-
-from zkmarek.video.slides.common.split_slide import SplitSlide
 from zkmarek.video.mobjects.equation_box import (EquationBox,
                                                  EquationBoxWithIcons)
+from zkmarek.video.slides.common.split_slide import SplitSlide
 
 PUB_COLOR = HIGHLIGHT_COLOR
 PRIV_COLOR = SECONDARY_COLOR
