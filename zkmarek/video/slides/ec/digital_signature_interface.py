@@ -16,8 +16,10 @@ class DigitalSignatureInterface(CodeSlide):
     def animate_in(self, scene):
         super().animate_in(scene)
         self.replace_code(scene, "data/ec/signature_interface2.py")
-        scene.wait(2)
+        scene.wait(1)
         self.replace_code(scene, "data/ec/signature_interface3.py")
+        scene.wait(1)
+        self.replace_code(scene, "data/ec/signature_interface4.py")
 
     def replace_code(self, scene, path: str):
         code = self._get_code(path)
