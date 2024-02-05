@@ -24,6 +24,7 @@ from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
+from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
@@ -126,7 +127,8 @@ EPISODE3 = [
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
-    TrustedSetup()
+    TrustedSetup(),
+    Ceremony()
 ]
 
 DECKS = {
@@ -136,7 +138,7 @@ DECKS = {
     "E3": EPISODE3,
 }
 
-DEFAULT_DECK = "E2"
+DEFAULT_DECK = "E3"
 
 
 class EllipticCurves(Scene):
