@@ -24,6 +24,10 @@ from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
+from zkmarek.video.slides.episode3.ceremony import Ceremony
+from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
+from zkmarek.video.slides.episode3.pairing import Pairing
+from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
 from zkmarek.video.slides.teaser.ecrecover import ECRecoverSlideTeaser
@@ -120,13 +124,23 @@ EPISODE2 = [
     Subscribe("data/sound/episode1/s28.wav")
 ]
 
+EPISODE3 = [
+    TitleSlide("Pairing"),
+    Pairing(),
+    TitleSlide("Trusted setup"),
+    TrustedSetup(),
+    Ceremony(),
+    CeremonyVerification(),
+]
+
 DECKS = {
     "TEASER": TEASER,
     "E1": EPISODE1,
     "E2": EPISODE2,
+    "E3": EPISODE3,
 }
 
-DEFAULT_DECK = "E2"
+DEFAULT_DECK = "E3"
 
 
 class EllipticCurves(Scene):
