@@ -22,8 +22,8 @@ class Pairing(SlideBase):
         bilinearity_tex = r"e([a]P, [b]Q) = e(P, [b]Q)^a = e([a]P, Q)^b = e(P, Q)^{ab} = e([b]P, [a]Q)"
         self.bilinearity_ext = MathTex(bilinearity_tex, font_size=40, color=SECONDARY_COLOR)
         self.non_degeneracy_label = MathTex(r"Non-degeneracy", font_size=40, color=SECONDARY_COLOR)
-        nd_text = r"\forall a \in G_1, \forall b \in G_2, \left( (a, b \neq \mathcal{O})"
-        nd_text += "\Rightarrow e(a, b) \neq 1_{G_T} \right)"
+        nd_text = r"\forall{a \in G_1}, \forall{b \in G_2} (a, b \neq \mathcal{O}"
+        nd_text += r" \Rightarrow e(a, b) \neq 1_{G_T}) "
         self.non_degeneracy = MathTex(nd_text, font_size=40, color=SECONDARY_COLOR)
         self.computability_label = MathTex(r"Computability", font_size=40, color=SECONDARY_COLOR)
 
