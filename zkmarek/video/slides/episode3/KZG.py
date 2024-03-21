@@ -1,11 +1,12 @@
 
-from manim import (DOWN, LEFT, RIGHT, UP, MathTex, FadeIn, FadeOut)
+from manim import DOWN, LEFT, RIGHT, UP, FadeIn, FadeOut, MathTex
 
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
-                                    SECONDARY_COLOR)
+from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.episode3.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode3.discreete_polynomial_chart import \
+    DiscreetePolynomialChart
+
 
 def poly(x):
     return x*x*x - x*x*2 + x*3 + 4

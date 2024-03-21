@@ -1,9 +1,12 @@
+
 from manim import (DOWN, UP, Brace, FadeIn, FadeOut, MathTex, Text,
-                   TransformMatchingTex, Unwrite, Write)
+                   Unwrite, Write)
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from typing import List
+from zkmarek.video.slides.episode3.morphin_math_text import MorphinMathText
+
+
 class Pairing(SlideBase):
     definition_label: MathTex
     definition: MathTex
@@ -15,7 +18,7 @@ class Pairing(SlideBase):
     brace3_label: Text
     bilinearity_label: MathTex
     bilinearity: MathTex
-    bilinearity_ext: List[MathTex]
+    bilinearity_morph: MorphinMathText
     non_degeneracy_label: MathTex
     non_degeneracy: MathTex
 
@@ -40,7 +43,7 @@ class Pairing(SlideBase):
 
         self.bilinearity_label = MathTex(r"Bilinearity", font_size=40, color=SECONDARY_COLOR)
         self.bilinearity = MathTex(r"e(P + P', Q) = e(P, Q) \cdot e(P', Q)", font_size=40, color=SECONDARY_COLOR)
-        bilinearity_tex = [
+        self.bilinearity_morph = MorphinMathText([
             r"{{e(aP, bQ)}}",
             r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
             r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}}",
@@ -48,13 +51,12 @@ class Pairing(SlideBase):
             r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}}",
             r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{a}}P, {{b}}Q){{^{}}}",
             r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{ }}P, {{ }}Q){{^{ab}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
-        ]
-        self.bilinearity_ext = []
-        for tex in bilinearity_tex:
-            math_tex = MathTex(tex, font_size=40, color=SECONDARY_COLOR)
-            self.bilinearity_ext.append(math_tex)
+            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
+              " = e({{ }}P, {{ }}Q){{^{ab}}}",
+            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
+              " = e({{b}}P, {{a}}Q){{ }}",
+            r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
+        ])
 
         self.non_degeneracy_label = MathTex(r"Non-degeneracy", font_size=40, color=SECONDARY_COLOR)
         nd_text = r"\forall{a \in G_1}, \forall{b \in G_2} (a, b \neq \mathcal{O}"
@@ -66,8 +68,6 @@ class Pairing(SlideBase):
         self.definition.next_to(self.definition_label, DOWN)
         self.bilinearity_label.next_to(self.definition, DOWN, buff=0.8)
         self.bilinearity.next_to(self.bilinearity_label, DOWN)
-        for ext in self.bilinearity_ext:
-            ext.next_to(self.bilinearity, DOWN)
         self.non_degeneracy_label.next_to(self.bilinearity, DOWN, buff=0.6)
         self.non_degeneracy.next_to(self.non_degeneracy_label, DOWN)
         self.computability_label.next_to(self.non_degeneracy, DOWN, buff=0.6)
@@ -90,11 +90,9 @@ class Pairing(SlideBase):
 
         scene.play(Write(self.bilinearity_label))
         scene.play(Write(self.bilinearity))
-        scene.play(Write(self.bilinearity_ext[0]))
-        for i in range(0, len(self.bilinearity_ext) - 1):
-            scene.play(TransformMatchingTex(self.bilinearity_ext[i], self.bilinearity_ext[i+1]))
+        self.bilinearity_morph.animate_in(scene)
         scene.play(Unwrite(self.bilinearity))
-        scene.play(self.bilinearity_ext[-1].animate.next_to(self.bilinearity_label, DOWN))
+        scene.play(self.bilinearity_morph.texs[-1].animate.next_to(self.bilinearity_label, DOWN))
 
         scene.play(Write(self.non_degeneracy_label))
         scene.play(Write(self.non_degeneracy))
