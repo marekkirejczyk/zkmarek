@@ -5,32 +5,45 @@ from zkmarek.video.mobjects.tex_array import TexArray
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
-SETUP_1 = [
+SETUP_G1_1 = [
     r"{{ \tau^1 }} \cdot {{ G_1 }}",
     r"{{ \tau^2 }} \cdot {{ G_1 }}",
     r"..." ,
     r"{{ \tau^n }} \cdot {{ G_1 }}"]
 
-SETUP_1_SIMPLER = [
+SETUP_G1_2 = [
     r"{{ \tau^1 }} {{ G_1 }}",
     r"{{ \tau^2 }} {{ G_1 }}",
     r"...",
     r"{{ \tau^n }} {{ G_1 }}"
 ]
 
-SETUP_2 = [
+SETUP_G1_3 = [
+    r"P_0",
+    r"P_1",
+    r"...",
+    r"P_{N-1}"
+]
+
+SETUP_G2_1 = [
     r"\tau^1 G_2",
     r"\tau^2 G_2",
     r"...",
     r"\tau^n G_2"
 ]
 
+SETUP_G2_2 = [
+    r"Q_0",
+    r"Q_1",
+    r"...",
+    r"Q_{N-1}"
+]
+
 class TrustedSetup(SlideBase):
     title_label: Text
     tau: Tex
-    vector: MathTex
-    vector_simpler: MathTex
-    vector2: MathTex
+    vector_g1: MathTex
+    vector_g2: MathTex
     strike: Line
 
     def __init__(self):
@@ -40,12 +53,12 @@ class TrustedSetup(SlideBase):
         self.title_label = Text("Trusted setup", font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.tau = Tex(r"$\tau$ - random secret shared number in $\mathbb{F}_p$", color=SECONDARY_COLOR)
 
-        self.vector = TexArray(SETUP_1)
-        self.vector2 = TexArray(SETUP_2)
+        self.vector_g1 = TexArray(SETUP_G1_1)
+        self.vector_g2 = TexArray(SETUP_G2_1)
         self.title_label.to_edge(UP)
         self.tau.next_to(self.title_label, DOWN, buff=0.8)
-        self.vector.next_to(self.tau, DOWN, buff=0.6)
-        self.vector2.next_to(self.vector, DOWN)
+        self.vector_g1.next_to(self.tau, DOWN, buff=0.6)
+        self.vector_g2.next_to(self.vector_g1, DOWN)
         self.strike = Line(
             start=self.tau.get_critical_point(LEFT),
             end=self.tau.get_critical_point(RIGHT), color=SECONDARY_COLOR)
@@ -53,8 +66,10 @@ class TrustedSetup(SlideBase):
     def animate_in(self, scene):
         scene.play(Write(self.title_label))
         scene.play(Write(self.tau))
-        scene.play(Write(self.vector))
-        self.vector.animate_transform_matching_shapes(scene, SETUP_1_SIMPLER)
-        scene.play(Write(self.vector2))
+        scene.play(Write(self.vector_g1))
+        self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_2)
+        scene.play(Write(self.vector_g2))
         scene.play(Write(self.strike))
+        self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
+        self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
 
