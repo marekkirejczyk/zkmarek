@@ -24,8 +24,10 @@ from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
+from zkmarek.video.slides.episode3.KZG import KZG
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
+from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
 from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
@@ -131,6 +133,9 @@ EPISODE3 = [
     TrustedSetup(),
     Ceremony(),
     CeremonyVerification(),
+    CeremonyVerification2(),
+    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    KZG()
 ]
 
 DECKS = {
