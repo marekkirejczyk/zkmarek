@@ -17,7 +17,9 @@ from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.video.slides.credits import Credits
 from zkmarek.video.slides.ec.addition_to_infinity import AdditionToInfinity
-from zkmarek.video.slides.ec.digital_signature_interface import DigitalSignatureInterface
+from zkmarek.video.slides.ec.digital_signature_interface import (
+    DigitalSignatureInterface,
+)
 from zkmarek.video.slides.ec.double_and_add import DoubleAndAdd
 from zkmarek.video.slides.ec.operations import Operations
 from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
@@ -46,21 +48,21 @@ from zkmarek.video.slides.wallet import WalletSlide
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
 from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
 from zkmarek.video.slides.episode2.PreviouslyOn import PreviouslyOn
+from zkmarek.video.slides.episode2.Intro import Intro as Intro_ep2
+
 config.width = 16
 config.height = 9
 
 TEASER = [
     Intro(),
-    TitleSlide(
-        "Episode 1",
-        subtitle="Teaser"),
+    TitleSlide("Episode 1", subtitle="Teaser"),
     ZKPSTitle(),
     SeasonTeaser(),
     ECCTitleSlide(),
     ECRecoverSlideTeaser(),
     EthereumTransactionTeaser(),
     ListSlide(),
-    Subscribe("data/sound/teaser/s8.wav")
+    Subscribe("data/sound/teaser/s8.wav"),
 ]
 
 EPISODE1 = [
@@ -68,7 +70,8 @@ EPISODE1 = [
     TitleSlide(
         "Elliptic curves",
         subtitle="in Ethereum wallet",
-        sound="data/sound/episode1/s2-1.wav"),
+        sound="data/sound/episode1/s2-1.wav",
+    ),
     TeaserReference(),
     InThisEpisode(),
     TitleSlide("Elliptic Curves", sound="data/sound/episode1/s5.wav"),
@@ -76,41 +79,38 @@ EPISODE1 = [
     CECOperations(),
     CECNegation(),
     CECAddition(),
-
-    TitleSlide("Prime Fields",
-        sound="data/sound/episode1/s10.wav"),
+    TitleSlide("Prime Fields", sound="data/sound/episode1/s10.wav"),
     PrimeFields(),
-
-    TitleSlide("Discrete Elliptic Curves", pre_wait_time=2,
-        sound="data/sound/episode1/s12.m4a"),
+    TitleSlide(
+        "Discrete Elliptic Curves", pre_wait_time=2, sound="data/sound/episode1/s12.m4a"
+    ),
     ECIntroduction(),
-    TitleSlide("Discrete Elliptic Curves Operations", pre_wait_time=2,
-        sound="data/sound/episode1/s14.wav"),
-
+    TitleSlide(
+        "Discrete Elliptic Curves Operations",
+        pre_wait_time=2,
+        sound="data/sound/episode1/s14.wav",
+    ),
     ECNegation(),
     ECAddition(),
     AdditionToInfinity(),
-
-    TitleSlide("Scalar multiplication", pre_wait_time=2,
-        sound="data/sound/episode1/s18.m4a"),
+    TitleSlide(
+        "Scalar multiplication", pre_wait_time=2, sound="data/sound/episode1/s18.m4a"
+    ),
     ScalarMultiplication(),
     DoubleAndAdd(),
-
     TitleSlide("Subgroups", sound="data/sound/episode1/s21.m4a"),
     Subgroups(),
-
     Operations(),
-    TitleSlide("Elliptic Curve Standards",
-        sound="data/sound/episode1/s24.m4a"),
+    TitleSlide("Elliptic Curve Standards", sound="data/sound/episode1/s24.m4a"),
     Standards(),
     TitleSlide("Ethereum Wallet", pre_wait_time=3, sound="data/sound/episode1/s26.wav"),
     WalletSlide(),
     Subscribe("data/sound/episode1/s28.wav"),
-    Credits()
+    Credits(),
 ]
 
 EPISODE2 = [
-    Intro(),
+    Intro_ep2("data/sound/episode2/intro.mp3"),
     PreviouslyOn(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5),
     DigitalSignatureInterface(),
@@ -120,11 +120,11 @@ EPISODE2 = [
     EthereumTransaction(),
     CodeSlide("ECDSA sign", "data/ec/signature.py"),
     CodeSlide("ecrecover", "data/ec/recover.py"),
-    Subscribe("data/sound/episode1/s28.wav")
+    Subscribe("data/sound/episode1/s28.wav"),
 ]
 
 EPISODE3 = [
-SchnorrSlide(),
+    SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     TexSlide("Sources", "data/schnorr/sources.tex"),
 ]
@@ -138,7 +138,7 @@ EPISODE4 = [
     CeremonyVerification(),
     CeremonyVerification2(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    KZG()
+    KZG(),
 ]
 
 DECKS = {
@@ -153,7 +153,7 @@ DEFAULT_DECK = "E2"
 
 class EllipticCurves(Scene):
     def construct(self):
-        register_font('data/brand/Oxanium-Regular.ttf')
+        register_font("data/brand/Oxanium-Regular.ttf")
 
         name = get_deck_name(DEFAULT_DECK)
         deck = DECKS[name]

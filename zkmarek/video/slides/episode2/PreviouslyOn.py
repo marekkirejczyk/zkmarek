@@ -12,8 +12,6 @@ from manim import (
     Circumscribe,
     Circle,
     Tex,
-    ReplacementTransform,
-    SurroundingRectangle,
     Transform,
     MoveToTarget,
 )
@@ -52,15 +50,15 @@ class PreviouslyOn(SlideBase):
         self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
         self.chart.center()
 
+        self.sidebar2 = Sidebar(title="", tex_path="data/ec/operations/addition.tex")
         self.sidebar = Sidebar(
-            title="Operations:", tex_path="data/ec/operations/addition.tex"
+            title="Operations", tex_path="data/ec/operations/negation.tex"
         )
-        self.sidebar2 = Sidebar(title="", tex_path="data/ec/operations/negation.tex")
         self.sidebar3 = Sidebar(
             title="",
             tex_path="data/ec/operations/scalar_multiplication.tex",
         )
-        self.sidebar4 = Sidebar(title="inverse", tex_path="data/ec/operations2.tex")
+        self.sidebar4 = Sidebar(title="", tex_path="data/ec/operations2.tex")
         self.wallet = Wallet("private key", "address")
         self.chart_wallet = (
             DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR)
@@ -75,20 +73,25 @@ class PreviouslyOn(SlideBase):
         transformed_title = Tex("Previously on zkMarek")
         transformed_title.to_corner(UP + LEFT)
         scene.play(Transform(title, transformed_title))
-        scene.wait(2)
+        # scene.wait(2)
+
+        # animating weierstrass eqn
 
         # positions - weierstrass eqn
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
-
-        # animating weierstrass eqn
+        self.chart.animate_align_left(scene)
         self.new_subsection(
             scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
         )
-        self.chart.animate_align_left(scene)
-        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        scene.wait(3)
-        scene.play(Write(self.weierstrass_equation.to_edge(RIGHT)), run_time=1)
         scene.wait(2)
+        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
+        scene.wait(2.5)
+        scene.play(
+            Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
+            run_time=1,
+        )
+        scene.wait(3)
+        # in a specific time - highlight points on a curve
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         # positions operations
@@ -103,29 +106,32 @@ class PreviouslyOn(SlideBase):
         scene.play(FadeIn(self.sidebar), run_time=0.5)
         scene.play(FadeIn(self.sidebar2), run_time=0.5)
         scene.play(FadeIn(self.sidebar3), run_time=0.5)
-        # adjust time to what is showing and do highlighted text when mentioned (negating, adding and multiplying)
-        scene.wait(2)
-        framebox1 = SurroundingRectangle(self.sidebar, buff=0.1)
-        framebox2 = SurroundingRectangle(self.sidebar2, buff=0.1)
-        framebox3 = SurroundingRectangle(self.sidebar3, buff=0.1)
-        framebox4 = SurroundingRectangle(self.sidebar4, buff=0.1)
-        scene.play(ReplacementTransform(framebox1, framebox2), run_time=3)
-        scene.play(ReplacementTransform(framebox2, framebox3), run_time=3)
 
+        scene.wait(2)
+        self.sidebar.set_color(HIGHLIGHT_COLOR)
+        scene.wait(1.5)
+        self.sidebar2.set_color(HIGHLIGHT_COLOR)
+        scene.wait(1.5)
+        self.sidebar3.set_color(HIGHLIGHT_COLOR)
+        scene.wait(2.5)
         self.new_subsection(
             scene, "inverse", sound="data/sound/episode2/ec_prev_on3.mp3"
         )
-        scene.play(Write(self.sidebar4), run_time=1)
-        scene.play(ReplacementTransform(framebox3, framebox4), run_time=2)
+        scene.play(Write(self.sidebar4), run_time=2)
+        scene.wait(2)
+        self.sidebar4.set_color(HIGHLIGHT_COLOR)
+        scene.wait(6)
+
         # animating out
         scene.play(FadeOut(self.sidebar), run_time=0.5)
         scene.play(FadeOut(self.sidebar2), run_time=0.5)
         scene.play(FadeOut(self.sidebar3), run_time=0.5)
         scene.play(FadeOut(self.sidebar4), run_time=0.5)
-        scene.play(FadeOut(framebox4), run_time=0.5)
-        scene.play(FadeOut(self.chart))
+        scene.wait(3)
+        scene.play(FadeOut(self.chart), run_time=1)
 
-        #     # wallet
+        # wallet
+
         self.animate_secret_key(scene)
 
         self.animate_scalar_multiplication(scene)
@@ -140,7 +146,7 @@ class PreviouslyOn(SlideBase):
         )
         self.wallet.animate_in(scene)
 
-        scene.wait()
+        scene.wait(2)
         self.wallet.animate_random_secret_key(scene, 17, 41)
         self.transformed_wallet = self.wallet
         self.transformed_wallet.to_corner(RIGHT)
@@ -155,17 +161,17 @@ class PreviouslyOn(SlideBase):
         animation.animate_generator(scene, generator)
         animation.animate_subgroup_mid(scene, subgroup, generator, 2, 18)
 
-        scene.wait()
         public_key_point = self.chart_wallet.find_dot_by_affine(
             ECAffine(39, 9, self.curve)
         )
         scene.play(Circumscribe(public_key_point, Circle))
+        scene.wait(1)
         self.public_key_coordinates = MathTex(
             "=", "(", "{{39}}", ",", "{{9}}", ")", font_size=20, color=HIGHLIGHT_COLOR
         )
         self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
         scene.play(Write(self.public_key_coordinates))
-
+        scene.wait(2)
         scene.play(
             FadeOut(self.chart_wallet),
             FadeOut(*animation.labels),
@@ -185,3 +191,4 @@ class PreviouslyOn(SlideBase):
         self.wallet.generate_target()
         self.wallet.target.move_to(0)
         scene.play(MoveToTarget(self.wallet))
+        scene.wait(3)
