@@ -61,9 +61,9 @@ class PreviouslyOn(SlideBase):
             tex_path="data/ec/operations/scalar_multiplication.tex",
         )
         self.wallet = Wallet("private key", "address")
- 
+
     def animate_in(self, scene):
-        self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_p0.mp3")
+        self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_prev_on0.mp3")
         title = Tex("Previously on zkMarek")
         scene.play(FadeIn(title))
         transformed_title = Tex("Previously on zkMarek")
@@ -77,10 +77,12 @@ class PreviouslyOn(SlideBase):
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
 
         # animating weierstrass eqn
-        self.new_subsection(scene, "equation", sound="data/sound/episode2/ec_p1.mp3")
+        self.new_subsection(
+            scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
+        )
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        scene.wait(2)
+        scene.wait(3)
         scene.play(Write(self.weierstrass_equation.to_edge(RIGHT)))
         # scene.play(Write(self.weierstrass_equation), run_time=2)
         scene.wait(2)
