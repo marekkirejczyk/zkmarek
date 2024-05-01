@@ -118,7 +118,7 @@ class PreviouslyOn(SlideBase):
 
     def animate_secret_key(self, scene):
         self.new_subsection(
-            scene, "Secret key", sound="data/sound/episode2/ec_prev_on3"
+            scene, "Secret key", sound="data/sound/episode2/ec_prev_on3.mp3"
         )
         self.wallet.animate_in(scene)
         self.new_subsection(
