@@ -73,7 +73,7 @@ class PreviouslyOn(SlideBase):
         transformed_title = Tex("Previously on zkMarek")
         transformed_title.to_corner(UP + LEFT)
         scene.play(Transform(title, transformed_title))
-        scene.wait(1)
+        # scene.wait(1)
 
         # animating weierstrass eqn
 
@@ -120,23 +120,23 @@ class PreviouslyOn(SlideBase):
         scene.play(Write(self.sidebar4), run_time=2)
         scene.wait(2)
         self.sidebar4.set_color(HIGHLIGHT_COLOR)
-        scene.wait(6)
+        scene.wait(2)
 
         # animating out
         scene.play(FadeOut(self.sidebar), run_time=0.5)
         scene.play(FadeOut(self.sidebar2), run_time=0.5)
         scene.play(FadeOut(self.sidebar3), run_time=0.5)
         scene.play(FadeOut(self.sidebar4), run_time=0.5)
-        scene.wait(3)
+        scene.wait(4)
         scene.play(FadeOut(self.chart), run_time=1)
 
         # wallet
 
-        self.animate_secret_key(scene)
+        # self.animate_secret_key(scene)
 
-        self.animate_scalar_multiplication(scene)
+        # self.animate_scalar_multiplication(scene)
 
-        self.animate_generate_ethereum_address(scene)
+        # self.animate_generate_ethereum_address(scene)
 
         scene.play(FadeOut(title))
 
