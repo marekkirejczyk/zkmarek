@@ -72,8 +72,6 @@ class PreviouslyOn(SlideBase):
         scene.wait(2)
 
         # positions - weierstrass eqn
-        # self.weierstrass_form.next_to(self.chart, RIGHT * 2)
-        # self.secp256k1_label.next_to(self.chart, RIGHT * 2)
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
 
         # animating weierstrass eqn
@@ -89,28 +87,26 @@ class PreviouslyOn(SlideBase):
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         # positions operations
-        #     self.sidebar2.next_to(self.sidebar, DOWN * 1)
-        #     self.sidebar3.next_to(self.sidebar2, DOWN * 1)
+        self.sidebar2.next_to(self.sidebar, DOWN * 1)
+        self.sidebar3.next_to(self.sidebar2, DOWN * 1)
 
-        #     # animating operations on eliptic curves
-        #     self.new_subsection(scene, "Operations", sound="data/sound/episode2/ec_p2.mp3")
-        #     scene.play(FadeIn(self.sidebar), run_time=0.5)
-        #     scene.play(FadeIn(self.sidebar2), run_time=0.5)
-        #     scene.play(FadeIn(self.sidebar3), run_time=0.5)
-
-        #     # adjust time to what is showing and do highlighted text when mentioned (negating, adding and multiplying)
-        #     scene.wait(2)
-        #     framebox1 = SurroundingRectangle(self.sidebar, buff=0.1)
-        #     framebox2 = SurroundingRectangle(self.sidebar2, buff=0.1)
-        #     framebox3 = SurroundingRectangle(self.sidebar3, buff=0.1)
-        #     scene.play(ReplacementTransform(framebox1, framebox2), run_time=3)
-        #     scene.play(ReplacementTransform(framebox2, framebox3), run_time=3)
-
-        #     # animating out
-        #     scene.play(FadeOut(self.sidebar), run_time=0.5)
-        #     scene.play(FadeOut(self.sidebar2), run_time=0.5)
-        #     scene.play(FadeOut(self.sidebar3), run_time=0.5)
-        #     scene.play(FadeOut(framebox3), run_time = 0.5)
+        # animating operations on eliptic curves
+        self.new_subsection(scene, "Operations", sound="data/sound/episode2/ec_p2.mp3")
+        scene.play(FadeIn(self.sidebar), run_time=0.5)
+        scene.play(FadeIn(self.sidebar2), run_time=0.5)
+        scene.play(FadeIn(self.sidebar3), run_time=0.5)
+        # adjust time to what is showing and do highlighted text when mentioned (negating, adding and multiplying)
+        scene.wait(2)
+        framebox1 = SurroundingRectangle(self.sidebar, buff=0.1)
+        framebox2 = SurroundingRectangle(self.sidebar2, buff=0.1)
+        framebox3 = SurroundingRectangle(self.sidebar3, buff=0.1)
+        scene.play(ReplacementTransform(framebox1, framebox2), run_time=3)
+        scene.play(ReplacementTransform(framebox2, framebox3), run_time=3)
+        # animating out
+        scene.play(FadeOut(self.sidebar), run_time=0.5)
+        scene.play(FadeOut(self.sidebar2), run_time=0.5)
+        scene.play(FadeOut(self.sidebar3), run_time=0.5)
+        scene.play(FadeOut(framebox3), run_time=0.5)
         scene.play(FadeOut(self.chart))
 
     #     # wallet
