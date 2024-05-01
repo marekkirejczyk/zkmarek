@@ -17,23 +17,17 @@ from manim import (
     Transform,
     MoveToTarget,
 )
-from typing import List
 
-from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
     BACKGROUND_COLOR,
-    PRIMARY_FONT,
     HIGHLIGHT_COLOR,
 )
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.wallet import Wallet
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41
-from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
-from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.utils import load
 from zkmarek.video.slides.ec.animate_subgroup import AnimateSubgroups
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
