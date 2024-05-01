@@ -49,7 +49,7 @@ class PreviouslyOn(SlideBase):
         self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR)
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b", color=PRIMARY_COLOR)
         self.secp256k1_label = Text(r"Secp256k1 equation", color=PRIMARY_COLOR)
-        self.chart = DiscreteEllipticChart(self.curve)
+        self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
         self.chart.center()
 
         self.sidebar = Sidebar(
@@ -87,8 +87,7 @@ class PreviouslyOn(SlideBase):
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
         scene.wait(3)
-        scene.play(Write(self.weierstrass_equation.to_edge(RIGHT)))
-        # scene.play(Write(self.weierstrass_equation), run_time=2)
+        scene.play(Write(self.weierstrass_equation.to_edge(RIGHT)), run_time=1)
         scene.wait(2)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
@@ -126,7 +125,7 @@ class PreviouslyOn(SlideBase):
         scene.play(FadeOut(framebox4), run_time=0.5)
         scene.play(FadeOut(self.chart))
 
-        # wallet
+        #     # wallet
         self.animate_secret_key(scene)
 
         self.animate_scalar_multiplication(scene)
