@@ -91,7 +91,9 @@ class PreviouslyOn(SlideBase):
         self.sidebar3.next_to(self.sidebar2, DOWN * 1)
 
         # animating operations on eliptic curves
-        self.new_subsection(scene, "Operations", sound="data/sound/episode2/ec_p2.mp3")
+        self.new_subsection(
+            scene, "Operations", sound="data/sound/episode2/ec_prev_on2.mp3"
+        )
         scene.play(FadeIn(self.sidebar), run_time=0.5)
         scene.play(FadeIn(self.sidebar2), run_time=0.5)
         scene.play(FadeIn(self.sidebar3), run_time=0.5)
@@ -109,20 +111,18 @@ class PreviouslyOn(SlideBase):
         scene.play(FadeOut(framebox3), run_time=0.5)
         scene.play(FadeOut(self.chart))
 
-    #     # wallet
+        # wallet
+        self.animate_secret_key(scene)
 
-    #     self.animate_secret_key(scene)
+        scene.play(FadeOut(title))
 
-    #     scene.play(FadeOut(title))
-
-    # def animate_secret_key(self, scene):
-    #     self.new_subsection(
-    #         scene, "Secret key"
-    #     )  # , sound="data/sound/episode1/s27-1.wav")
-    #     self.wallet.animate_in(scene)
-    #     self.new_subsection(
-    #         scene,
-    #         "Generate random secret",  # sound="data/sound/episode1/s27-2.m4a"
-    #     )
-    #     scene.wait()
-    #     self.wallet.animate_random_secret_key(scene, 17, 41)
+    def animate_secret_key(self, scene):
+        self.new_subsection(
+            scene, "Secret key", sound="data/sound/episode2/ec_prev_on3"
+        )
+        self.wallet.animate_in(scene)
+        self.new_subsection(
+            scene, "Generate random secret", sound="data/sound/episode2/ec_prev_on4.mp3"
+        )
+        scene.wait()
+        self.wallet.animate_random_secret_key(scene, 17, 41)
