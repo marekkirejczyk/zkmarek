@@ -45,7 +45,7 @@ from zkmarek.video.slides.teaser_reference import TeaserReference
 from zkmarek.video.slides.wallet import WalletSlide
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
 from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
-
+from zkmarek.video.slides.episode2.PreviouslyOn import PreviouslyOn
 config.width = 16
 config.height = 9
 
@@ -111,7 +111,7 @@ EPISODE1 = [
 
 EPISODE2 = [
     Intro(),
-    #PreviouslyOn(),
+    PreviouslyOn(),
     TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5),
     DigitalSignatureInterface(),
     Signature(),
@@ -120,13 +120,16 @@ EPISODE2 = [
     EthereumTransaction(),
     CodeSlide("ECDSA sign", "data/ec/signature.py"),
     CodeSlide("ecrecover", "data/ec/recover.py"),
-    SchnorrSlide(),
-    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
-    TexSlide("Sources", "data/schnorr/sources.tex"),
     Subscribe("data/sound/episode1/s28.wav")
 ]
 
 EPISODE3 = [
+SchnorrSlide(),
+    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
+    TexSlide("Sources", "data/schnorr/sources.tex"),
+]
+
+EPISODE4 = [
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
@@ -145,7 +148,7 @@ DECKS = {
     "E3": EPISODE3,
 }
 
-DEFAULT_DECK = "E3"
+DEFAULT_DECK = "E2"
 
 
 class EllipticCurves(Scene):
