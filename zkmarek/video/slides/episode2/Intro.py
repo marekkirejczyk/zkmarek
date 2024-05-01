@@ -13,13 +13,13 @@ from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
-class Intro(SlideBase):
+class Intro_ep2(SlideBase):
     marek: Text
     logo: ImageMobject
     sound: str
 
     def __init__(self, sound: str):
-        super().__init__("Intro")
+        super().__init__("Intro_ep2")
         self.sound = sound
 
     def construct(self):

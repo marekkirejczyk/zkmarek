@@ -2,12 +2,13 @@ from typing import Optional
 from manim import VGroup, FadeOut
 from pydub import AudioSegment
 
+
 class SlideBase(VGroup):
     title: str
     start_time: Optional[float]
     current_sound: Optional[str]
 
-    def __init__(self, title:str, **kwargs) -> None:
+    def __init__(self, title: str, **kwargs) -> None:
         super().__init__(**kwargs)
         self.title = title
         self.start_time = None
@@ -58,6 +59,5 @@ class SlideBase(VGroup):
         self.wait_for_sound(scene)
 
 
-
 def get_sound_length(path):
-    return len(AudioSegment.from_file(path))/1000
+    return len(AudioSegment.from_file(path)) / 1000

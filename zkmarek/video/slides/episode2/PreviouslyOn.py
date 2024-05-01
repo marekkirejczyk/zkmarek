@@ -73,7 +73,7 @@ class PreviouslyOn(SlideBase):
         transformed_title = Tex("Previously on zkMarek")
         transformed_title.to_corner(UP + LEFT)
         scene.play(Transform(title, transformed_title))
-        # scene.wait(2)
+        scene.wait(1)
 
         # animating weierstrass eqn
 
