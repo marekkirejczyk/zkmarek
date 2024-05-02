@@ -90,7 +90,7 @@ class PreviouslyOn(SlideBase):
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
         )
-        scene.wait(3)
+        scene.wait(2.5)
         # in a specific time - highlight points on a curve
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
@@ -128,15 +128,17 @@ class PreviouslyOn(SlideBase):
         scene.play(FadeOut(self.sidebar3), run_time=0.5)
         scene.play(FadeOut(self.sidebar4), run_time=0.5)
         scene.wait(4)
-        scene.play(FadeOut(self.chart), run_time=1)
+        scene.play(FadeOut(self.chart), run_time=1.5)
 
         # wallet
 
-        # self.animate_secret_key(scene)
+        self.animate_secret_key(scene)
 
-        # self.animate_scalar_multiplication(scene)
+        self.animate_scalar_multiplication(scene)
 
-        # self.animate_generate_ethereum_address(scene)
+        self.animate_generate_ethereum_address(scene)
+
+        self.big_numbers_private_key(scene)
 
         scene.play(FadeOut(title))
 
@@ -146,7 +148,7 @@ class PreviouslyOn(SlideBase):
         )
         self.wallet.animate_in(scene)
 
-        scene.wait(2)
+        # scene.wait(2)
         self.wallet.animate_random_secret_key(scene, 17, 41)
         self.transformed_wallet = self.wallet
         self.transformed_wallet.to_corner(RIGHT)
@@ -165,13 +167,13 @@ class PreviouslyOn(SlideBase):
             ECAffine(39, 9, self.curve)
         )
         scene.play(Circumscribe(public_key_point, Circle))
-        scene.wait(1)
-        self.public_key_coordinates = MathTex(
-            "=", "(", "{{39}}", ",", "{{9}}", ")", font_size=20, color=HIGHLIGHT_COLOR
-        )
-        self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
-        scene.play(Write(self.public_key_coordinates))
-        scene.wait(2)
+        # scene.wait(1)
+        # self.public_key_coordinates = MathTex(
+        #     "=", "(", "{{39}}", ",", "{{9}}", ")", font_size=20, color=HIGHLIGHT_COLOR
+        # )
+        # self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
+        # scene.play(Write(self.public_key_coordinates))
+        # scene.wait(2)
         scene.play(
             FadeOut(self.chart_wallet),
             FadeOut(*animation.labels),
@@ -185,10 +187,19 @@ class PreviouslyOn(SlideBase):
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
-            FadeOut(self.public_key_coordinates),
+            # FadeOut(self.public_key_coordinates),
         )
 
         self.wallet.generate_target()
         self.wallet.target.move_to(0)
         scene.play(MoveToTarget(self.wallet))
-        scene.wait(3)
+        scene.wait(1)
+
+    def big_numbers_private_key(self, scene):
+        self.wallet.animate_private_key(
+            scene, "0x9de347a715a200cd....c8364d879483b69b", font_size=14
+        )
+        # scene.wait(2)
+        self.wallet.animate_address_value(
+            scene, "0xe31cc18f3f3718588e9a878a516c7889af047171"
+        )
