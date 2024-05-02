@@ -76,6 +76,13 @@ There is a useful calc script, which allows to perform miscellaneous calculation
 script/calc -h
 ```
 
+### Clean projects
+Remove all artifacts:
+
+```sh
+script/clean
+```
+
 ### Music license
 
 Thannoid - Bodytonic
