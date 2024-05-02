@@ -51,8 +51,9 @@ from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
 config.width = 16
 config.height = 9
 
+
 TEASER = [
-    Intro(),
+    Intro("data/sound/teaser/s1.wav"),
     TitleSlide("Episode 1", subtitle="Teaser"),
     ZKPSTitle(),
     SeasonTeaser(),
@@ -64,7 +65,7 @@ TEASER = [
 ]
 
 EPISODE1 = [
-    Intro(sound="data/sound/episode1/s1.wav"),
+    Intro("data/sound/episode1/s1.wav"),
     TitleSlide(
         "Elliptic curves",
         subtitle="in Ethereum wallet",

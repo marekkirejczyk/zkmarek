@@ -16,10 +16,9 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 class Intro(SlideBase):
     marek: Text
     logo: ImageMobject
-    sound: str
 
     def __init__(self, sound: str):
-        super().__init__("Intro")
+        super().__init__(title="Intro")
         self.sound = sound
 
     def construct(self):
@@ -30,7 +29,7 @@ class Intro(SlideBase):
         self.group.move_to(ORIGIN)
 
     def animate_in(self, scene):
-        self.play_sound(scene, sound=self.sound)
+        self.new_subsection(scene, "Title", self.sound)
         self.logo.generate_target()
         self.marek.generate_target()
         self.logo.shift(8 * LEFT)
