@@ -68,11 +68,9 @@ class PreviouslyOn(TexSlide):
         self.chart.center()
 
         self.wallet = Wallet("private key", "address")
-        self.chart_wallet = (
-            DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR)
-            .scale(0.5)
-            .shift(1 * DOWN + 4 * LEFT)
-        )
+        self.chart_wallet = DiscreteEllipticChart(
+            self.curve, dot_color=BACKGROUND_COLOR
+        ).scale(0.7)
 
         self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_prev_on0.mp3")
         scene.play(Write(self.title_text.center()))
@@ -86,15 +84,15 @@ class PreviouslyOn(TexSlide):
         )
         scene.wait(3)
         scene.play(Indicate(self.chart), run_time=2, color=HIGHLIGHT_COLOR)
-        scene.wait(2.5)
+        scene.wait(1.5)
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        scene.wait(1.5)
+        scene.wait(0.5)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
         )
-        scene.wait(3)
+        scene.wait(4)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
@@ -119,15 +117,13 @@ class PreviouslyOn(TexSlide):
             "zkmarek/video/slides/episode2/TeX files/sout_inv_operations.tex"
         )
         scene.play(Write(tex2))
-        scene.wait(2)
+        scene.wait(3.5)
         scene.play(ReplacementTransform(tex2, tex3))
-        scene.wait(6)
+        scene.wait(4.5)
         scene.play(Indicate(self.chart, color=HIGHLIGHT_COLOR))
         scene.play(Unwrite(self.tex))
         scene.play(Unwrite(tex3))
         scene.play(FadeOut(self.chart), run_time=1.5)
-
-        # wallet
 
         self.animate_secret_key(scene)
 
@@ -145,11 +141,10 @@ class PreviouslyOn(TexSlide):
         )
         self.wallet.animate_in(scene)
 
-        # scene.wait(2)
         self.wallet.animate_random_secret_key(scene, 17, 41)
-        self.transformed_wallet = self.wallet
-        self.transformed_wallet.to_corner(RIGHT)
-        scene.play(Transform(self.wallet, self.transformed_wallet))
+        self.wallet.generate_target()
+        self.wallet.shift(UP * 2 + 2 * RIGHT).scale(0.5)
+        # scene.play(MoveToTarget(self.wallet))
 
     def animate_scalar_multiplication(self, scene):
         scene.play(FadeIn(self.chart_wallet))
@@ -173,22 +168,18 @@ class PreviouslyOn(TexSlide):
     def animate_generate_ethereum_address(self, scene):
 
         self.wallet.generate_target()
-        scene.play(MoveToTarget(self.wallet))
+        self.wallet.shift(DOWN * 2 + 2 * LEFT).scale(2)
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
         )
 
-        self.wallet.generate_target()
-        self.wallet.target.move_to(0)
-        scene.play(MoveToTarget(self.wallet))
         scene.wait(1)
 
     def big_numbers_private_key(self, scene):
         self.wallet.animate_private_key(
             scene, "0x9de347a715a200cd....c8364d879483b69b", font_size=14
         )
-        # scene.wait(2)
         self.wallet.animate_address_value(
             scene, "0xe31cc18f3f3718588e9a878a516c7889af047171"
         )
