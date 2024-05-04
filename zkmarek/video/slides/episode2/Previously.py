@@ -15,7 +15,6 @@ from manim import (
     MoveToTarget,
     Unwrite,
     ReplacementTransform,
-    TexTemplate,
     Indicate,
 )
 
@@ -57,8 +56,6 @@ class PreviouslyOn(TexSlide):
         return tex
 
     def animate_in(self, scene):
-        template = TexTemplate()
-        template.add_to_preamble(r"\usepackage{cancel}")
         self.curve = Secp256k1_41
         self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR)
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b", color=PRIMARY_COLOR)
@@ -66,9 +63,11 @@ class PreviouslyOn(TexSlide):
         self.chart.center()
 
         self.wallet = Wallet("private key", "address")
-        self.chart_wallet = DiscreteEllipticChart(
-            self.curve, dot_color=BACKGROUND_COLOR
-        ).scale(0.7)
+        self.chart_wallet = (
+            DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR)
+            .scale(0.7)
+            .shift(LEFT * 0.5)
+        )
 
         self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_prev_on0.mp3")
         scene.play(Write(self.title_text.center()))
@@ -76,38 +75,38 @@ class PreviouslyOn(TexSlide):
         self.title_text.target.shift(3 * LEFT + 3 * UP)
         scene.play(MoveToTarget(self.title_text))
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
+
         scene.play(FadeIn(self.chart))
         self.new_subsection(
             scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
         )
-        scene.wait(3)
+        scene.wait(2.5)
         scene.play(Indicate(self.chart), run_time=2, color=HIGHLIGHT_COLOR)
-        scene.wait(1.5)
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        scene.wait(0.5)
+        scene.wait(0.2)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
         )
-        scene.wait(4)
+        scene.wait(2)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
             scene, "Operations", sound="data/sound/episode2/ec_prev_on2.mp3"
         )
         scene.play(Write(self.tex.shift(RIGHT * 3)))
-        scene.wait(2)
+        scene.wait(1.5)
         self.tex[0][0:14].set_color(HIGHLIGHT_COLOR)
         scene.wait(1.5)
         self.tex[0][14:27].set_color(HIGHLIGHT_COLOR)
         scene.wait(1.5)
         self.tex[0][27:52].set_color(HIGHLIGHT_COLOR)
-        scene.wait(5)
+        scene.wait(2.5)
+
         self.new_subsection(
             scene, "inverse", sound="data/sound/episode2/ec_prev_on3.mp3"
         )
-
         tex2 = self.create_tex_below(
             "zkmarek/video/slides/episode2/TeX files/inv_operations.tex"
         )
@@ -140,9 +139,7 @@ class PreviouslyOn(TexSlide):
         self.wallet.animate_in(scene)
 
         self.wallet.animate_random_secret_key(scene, 17, 41)
-        self.wallet.generate_target()
-        self.wallet.shift(UP * 2 + 2 * RIGHT).scale(0.5)
-        # scene.play(MoveToTarget(self.wallet))
+        scene.play(self.wallet.animate.shift(UP * 2 + RIGHT * 3).scale(0.5), run_time=1)
 
     def animate_scalar_multiplication(self, scene):
         scene.play(FadeIn(self.chart_wallet))
@@ -165,8 +162,8 @@ class PreviouslyOn(TexSlide):
 
     def animate_generate_ethereum_address(self, scene):
 
-        self.wallet.generate_target()
-        self.wallet.shift(DOWN * 2 + 2 * LEFT).scale(2)
+        scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
+
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
