@@ -12,7 +12,6 @@ from manim import (
     Circumscribe,
     Circle,
     Tex,
-    Transform,
     MoveToTarget,
     Unwrite,
     ReplacementTransform,
@@ -29,7 +28,6 @@ from zkmarek.video.constant import (
 from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.wallet import Wallet
 
-# from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 from zkmarek.video.mobjects.sidebar import Sidebar
