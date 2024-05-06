@@ -76,11 +76,11 @@ class PreviouslyOn(TexSlide):
         scene.play(MoveToTarget(self.title_text))
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
 
-        scene.play(FadeIn(self.chart))
         self.new_subsection(
             scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
         )
-        scene.wait(2.5)
+        scene.play(Write(self.chart))
+        scene.wait(1.5)
         scene.play(Indicate(self.chart), run_time=2, color=HIGHLIGHT_COLOR)
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
@@ -89,7 +89,7 @@ class PreviouslyOn(TexSlide):
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
         )
-        scene.wait(2)
+        scene.wait(0.25)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
@@ -178,3 +178,4 @@ class PreviouslyOn(TexSlide):
         self.wallet.animate_address_value(
             scene, "0xe31cc18f3f3718588e9a878a516c7889af047171"
         )
+        scene.play(FadeOut(self.wallet))
