@@ -46,7 +46,7 @@ class PreviouslyOn(TexSlide):
     def __init__(self) -> None:
         super().__init__(
             "Previously on zkMarek",
-            "zkmarek/video/slides/episode2/TeX files/operations.tex",
+            "zkmarek/video/slides/episode2/TeX_files/operations.tex",
         )
 
     def create_tex_below(self, path) -> Tex:
@@ -108,10 +108,10 @@ class PreviouslyOn(TexSlide):
             scene, "inverse", sound="data/sound/episode2/ec_prev_on3.mp3"
         )
         tex2 = self.create_tex_below(
-            "zkmarek/video/slides/episode2/TeX files/inv_operations.tex"
+            "zkmarek/video/slides/episode2/TeX_files/inv_operations.tex"
         )
         tex3 = self.create_tex_below(
-            "zkmarek/video/slides/episode2/TeX files/sout_inv_operations.tex"
+            "zkmarek/video/slides/episode2/TeX_files/sout_inv_operations.tex"
         )
         scene.play(Write(tex2))
         scene.wait(3.5)
