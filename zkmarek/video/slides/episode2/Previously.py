@@ -84,12 +84,12 @@ class PreviouslyOn(TexSlide):
         scene.play(Indicate(self.chart), run_time=2, color=HIGHLIGHT_COLOR)
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        scene.wait(0.2)
+        # scene.wait(0.2)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
         )
-        scene.wait(0.25)
+        scene.wait(0.2)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
