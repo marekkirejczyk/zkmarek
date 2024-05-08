@@ -18,7 +18,7 @@ from manim import (
     Indicate,
     Dot,
 )
-
+from random import randint
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
     SECONDARY_COLOR,
@@ -99,7 +99,6 @@ class PreviouslyOn(TexSlide):
 
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        scene.wait(0.2)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
@@ -131,9 +130,9 @@ class PreviouslyOn(TexSlide):
         ).scale(0.8)
         scene.wait(1.2)
         scene.play(Indicate(self.tex[0][27:52]))
-        scene.wait(3)
-        scene.play(Write(tex2))
         scene.wait(2)
+        scene.play(Write(tex2))
+        scene.wait(0.8)
         scene.play(ReplacementTransform(tex2, tex3))
         scene.wait(2)
         scene.play(
@@ -147,7 +146,7 @@ class PreviouslyOn(TexSlide):
             secp.append(self.secp256k1.copy_with_rows(i + 1))
         self.label_standards.move_to(UP * 2)
         scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
-        scene.wait(2)
+        scene.wait(4)
         scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[2][0]), color=SECONDARY_COLOR)
@@ -159,8 +158,6 @@ class PreviouslyOn(TexSlide):
         self.animate_scalar_multiplication(scene)
 
         self.animate_generate_ethereum_address(scene)
-
-        self.big_numbers_private_key(scene)
 
         scene.play(Unwrite(self.title_text))
 
@@ -181,7 +178,16 @@ class PreviouslyOn(TexSlide):
         )
         self.wallet.animate_in(scene)
 
-        self.wallet.animate_random_secret_key(scene, 17, 41)
+        rounds = 20
+        rand_max = 41
+        final_value = 17
+        for key in [str(randint(0, rand_max)) for i in range(rounds)] + [
+            str(final_value),
+        ]:
+            last = key.startswith("0x")
+            if last:
+                scene.wait(2.5)
+            self.wallet.animate_private_key(scene, key, 1 if last else 0.1)
         scene.play(self.wallet.animate.shift(UP * 2 + RIGHT * 3).scale(0.5), run_time=1)
 
     def animate_scalar_multiplication(self, scene):
@@ -191,7 +197,7 @@ class PreviouslyOn(TexSlide):
         subgroup = Subgroup.from_generator(generator)
         animation = AnimateSubgroups(self.chart_wallet, runtime_per_step=0.05)
         animation.animate_generator(scene, generator)
-        scene.wait(1.5)
+        scene.wait(3.5)
         animation.animate_subgroup_mid(scene, subgroup, generator, 2, 18)
 
         public_key_point = self.chart_wallet.find_dot_by_affine(
@@ -207,7 +213,12 @@ class PreviouslyOn(TexSlide):
     def animate_generate_ethereum_address(self, scene):
 
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
-
+        self.wallet.animate_address_value(scene, "keccak256(2709)")
+        scene.wait(0.5)
+        self.wallet.animate_address_value(
+            scene,
+            "0be4308d0014b842c2debb817a629f45938a32a2117c186d46b29ef3aa599b4e",
+        )
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",

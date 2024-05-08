@@ -110,8 +110,13 @@ EPISODE1 = [
 ]
 
 EPISODE2 = [
+    Intro("data/sound/episode2/intro.mp3"),
     PreviouslyOn(),
-    TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5),
+    TitleSlide(
+        "Digital Signature Algorithm",
+        pre_wait_time=1.5,
+        sound="data/sound/episode2/dig_sign_s3_p0.mp3",
+    ),
     DigitalSignatureInterface(),
     Signature(),
     TexSlide("Deterministic signature", "data/ec/deterministic_signature.tex"),
