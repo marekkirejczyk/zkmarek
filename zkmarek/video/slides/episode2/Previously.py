@@ -94,12 +94,9 @@ class PreviouslyOn(TexSlide):
         )
         self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart))
-        scene.wait(2)
+        # scene.wait(2)
         scene.play(Indicate(self.chart), color=HIGHLIGHT_COLOR)
 
-        scene.wait(1)
-
-        scene.wait(1)
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
         scene.wait(0.2)
@@ -132,17 +129,18 @@ class PreviouslyOn(TexSlide):
         tex3 = self.create_tex_below(
             "zkmarek/video/slides/episode2/tex/sout_inv_operations.tex"
         ).scale(0.8)
+        scene.wait(1.2)
         scene.play(Indicate(self.tex[0][27:52]))
-        scene.wait(2)
+        scene.wait(3)
         scene.play(Write(tex2))
-        scene.wait(1.5)
+        scene.wait(2)
         scene.play(ReplacementTransform(tex2, tex3))
         scene.wait(2)
         scene.play(
             FadeOut(self.chart),
             FadeOut(self.tex),
             FadeOut(tex3),
-            run_time=1,
+            run_time=2,
         )
         secp = []
         for i in range(0, 4):
