@@ -16,6 +16,7 @@ from manim import (
     Unwrite,
     ReplacementTransform,
     Indicate,
+    Dot,
 )
 
 from zkmarek.video.constant import (
@@ -24,7 +25,9 @@ from zkmarek.video.constant import (
     BACKGROUND_COLOR,
     HIGHLIGHT_COLOR,
 )
-from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
+from zkmarek.video.mobjects.discreet_elliptic_chart import (
+    DiscreteEllipticChart,
+)
 from zkmarek.video.mobjects.wallet import Wallet
 
 from zkmarek.video.slides.common.tex_slide import TexSlide
@@ -34,6 +37,9 @@ from zkmarek.video.slides.ec.animate_subgroup import AnimateSubgroups
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.video.utils import load
+from zkmarek.video.mobjects.standard import (
+    secp256k1_standard,
+)
 
 
 class PreviouslyOn(TexSlide):
@@ -42,12 +48,16 @@ class PreviouslyOn(TexSlide):
     wallet: Wallet
     scene: Scene
     public_key: Text
+    dots: list[Dot]
+    dot_color: str
+    duplicates: list[Dot]
 
     def __init__(self) -> None:
         super().__init__(
             "Previously on zkMarek",
             "zkmarek/video/slides/episode2/tex/operations.tex",
         )
+        self.duplicates = []
 
     def create_tex_below(self, path) -> Tex:
         tex = Tex(load(path), tex_template=self.template, color=SECONDARY_COLOR)
@@ -57,11 +67,14 @@ class PreviouslyOn(TexSlide):
 
     def animate_in(self, scene):
         self.curve = Secp256k1_41
-        self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR)
+        self.weierstrass_form = Text(r"Weierstrass form", color=PRIMARY_COLOR).scale(
+            0.8
+        )
         self.weierstrass_equation = MathTex(r"y^2 = x^3 + ax + b", color=PRIMARY_COLOR)
+        self.labels = []
         self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
-        self.chart.center()
-
+        self.secp256k1 = secp256k1_standard()
+        self.label_standards = Text(r"Standards", color=HIGHLIGHT_COLOR).scale(0.8)
         self.wallet = Wallet("private key", "address")
         self.chart_wallet = (
             DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR)
@@ -72,19 +85,24 @@ class PreviouslyOn(TexSlide):
         self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_prev_on0.mp3")
         scene.play(Write(self.title_text.center()))
         self.title_text.generate_target()
-        self.title_text.target.shift(3 * LEFT + 3 * UP)
+        self.title_text.target.to_edge(UP)
         scene.play(MoveToTarget(self.title_text))
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
 
         self.new_subsection(
             scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
         )
+        self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart))
-        scene.wait(1.5)
-        scene.play(Indicate(self.chart), run_time=2, color=HIGHLIGHT_COLOR)
+        scene.wait(2)
+        scene.play(Indicate(self.chart), color=HIGHLIGHT_COLOR)
+
+        scene.wait(1)
+
+        scene.wait(1)
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
-        # scene.wait(0.2)
+        scene.wait(0.2)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=1,
@@ -95,6 +113,7 @@ class PreviouslyOn(TexSlide):
         self.new_subsection(
             scene, "Operations", sound="data/sound/episode2/ec_prev_on2.mp3"
         )
+        self.tex.scale(0.8)
         scene.play(Write(self.tex.shift(RIGHT * 3)))
         scene.wait(1.5)
         self.tex[0][0:14].set_color(HIGHLIGHT_COLOR)
@@ -106,21 +125,36 @@ class PreviouslyOn(TexSlide):
 
         self.new_subsection(
             scene, "inverse", sound="data/sound/episode2/ec_prev_on3.mp3"
-        )
+        )  # animate scalar multiplication when talked about it OR show log later (on however discrete operation)
         tex2 = self.create_tex_below(
             "zkmarek/video/slides/episode2/tex/inv_operations.tex"
-        )
+        ).scale(0.8)
         tex3 = self.create_tex_below(
             "zkmarek/video/slides/episode2/tex/sout_inv_operations.tex"
-        )
+        ).scale(0.8)
+        scene.play(Indicate(self.tex[0][27:52]))
+        scene.wait(2)
         scene.play(Write(tex2))
-        scene.wait(3.5)
+        scene.wait(1.5)
         scene.play(ReplacementTransform(tex2, tex3))
-        scene.wait(4.5)
-        scene.play(Indicate(self.chart, color=HIGHLIGHT_COLOR))
-        scene.play(Unwrite(self.tex))
-        scene.play(Unwrite(tex3))
-        scene.play(FadeOut(self.chart), run_time=1.5)
+        scene.wait(2)
+        scene.play(
+            FadeOut(self.chart),
+            FadeOut(self.tex),
+            FadeOut(tex3),
+            run_time=1,
+        )
+        secp = []
+        for i in range(0, 4):
+            secp.append(self.secp256k1.copy_with_rows(i + 1))
+        self.label_standards.move_to(UP * 2)
+        scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
+        scene.wait(2)
+        scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
+        scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
+        scene.play(Indicate(secp[2].rows[2][0]), color=SECONDARY_COLOR)
+
+        scene.play(FadeOut(secp[2]), FadeOut(self.label_standards))
 
         self.animate_secret_key(scene)
 
@@ -131,6 +165,17 @@ class PreviouslyOn(TexSlide):
         self.big_numbers_private_key(scene)
 
         scene.play(Unwrite(self.title_text))
+
+    def animate_dot(self, scene: Scene, dot: Dot, split_animation=False):
+        target_color = SECONDARY_COLOR
+        dup_dot = dot.copy()
+        scene.add(dup_dot)
+        self.duplicates.append(dup_dot)
+        dup_dot.set_color(target_color)
+        if split_animation:
+            scene.play(Indicate(dup_dot))
+        else:
+            scene.play(Indicate(dup_dot), run_time=0.5)
 
     def animate_secret_key(self, scene):
         self.new_subsection(
@@ -146,8 +191,9 @@ class PreviouslyOn(TexSlide):
 
         generator = ECAffine(36, 28, self.curve)
         subgroup = Subgroup.from_generator(generator)
-        animation = AnimateSubgroups(self.chart_wallet, runtime_per_step=0.1)
+        animation = AnimateSubgroups(self.chart_wallet, runtime_per_step=0.05)
         animation.animate_generator(scene, generator)
+        scene.wait(1.5)
         animation.animate_subgroup_mid(scene, subgroup, generator, 2, 18)
 
         public_key_point = self.chart_wallet.find_dot_by_affine(
