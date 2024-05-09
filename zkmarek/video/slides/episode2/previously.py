@@ -17,6 +17,8 @@ from manim import (
     ReplacementTransform,
     Indicate,
     Dot,
+    VGroup,
+    ApplyWave,
 )
 from random import randint
 from zkmarek.video.constant import (
@@ -92,7 +94,11 @@ class PreviouslyOn(TexSlide):
         self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart))
-        scene.play(Indicate(self.chart), color=HIGHLIGHT_COLOR)
+        scene.play(
+            ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
+        )
+        dots = VGroup(*self.chart.dots)
+        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
 
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
@@ -116,34 +122,38 @@ class PreviouslyOn(TexSlide):
         self.tex[0][27:52].set_color(HIGHLIGHT_COLOR)
         scene.wait(2.5)
 
-        self.new_subsection(
-            scene, "inverse", sound="data/sound/episode2/slide2-3.mp3"
-        )  # animate scalar multiplication when talked about it OR show log later (on however discrete operation)
-        tex2 = self.create_tex_below(
-            "zkmarek/video/slides/episode2/tex/inv_operations.tex"
-        ).scale(0.8)
-        tex3 = self.create_tex_below(
-            "zkmarek/video/slides/episode2/tex/sout_inv_operations.tex"
-        ).scale(0.8)
+        self.new_subsection(scene, "inverse", sound="data/sound/episode2/slide2-3.mp3")
+        self.tex2 = (
+            self.create_tex_below(
+                "zkmarek/video/slides/episode2/tex/inv_operations.tex"
+            )
+            .scale(0.8)
+            .shift(LEFT * 0.5)
+        )
+        self.tex3 = (
+            self.create_tex_below(
+                "zkmarek/video/slides/episode2/tex/sout_inv_operations.tex"
+            )
+            .scale(0.8)
+            .shift(LEFT * 0.5)
+        )
         scene.wait(1.2)
         scene.play(Indicate(self.tex[0][27:52]))
         scene.wait(2)
-        scene.play(Write(tex2))
+        scene.play(Write(self.tex2))
         scene.wait(0.8)
-        scene.play(ReplacementTransform(tex2, tex3))
+        scene.play(ReplacementTransform(self.tex2, self.tex3))
         scene.wait(2)
-        scene.play(
-            FadeOut(self.chart),
-            FadeOut(self.tex),
-            FadeOut(tex3),
-            run_time=2,
-        )
+
+    def animate_out(self, scene):
+        scene.play(Unwrite(self.tex3), Unwrite(self.tex), Unwrite(self.chart))
+
         secp = []
-        for i in range(0, 4):
+        for i in range(0, 3):
             secp.append(self.secp256k1.copy_with_rows(i + 1))
         self.label_standards.move_to(UP * 2)
         scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
-        scene.wait(4)
+        scene.wait(4.5)
         scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[2][0]), color=SECONDARY_COLOR)
