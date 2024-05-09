@@ -93,17 +93,18 @@ class PreviouslyOn(TexSlide):
         self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart))
+        scene.wait(0.2)
+        dots = VGroup(*self.chart.dots)
         scene.play(
             ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
         )
-        dots = VGroup(*self.chart.dots)
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
 
         self.chart.animate_align_left(scene)
-        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
+        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)), run_time=0.5)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
-            run_time=1,
+            run_time=0.7,
         )
         scene.wait(0.2)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
@@ -217,3 +218,4 @@ class PreviouslyOn(TexSlide):
         )
 
         scene.wait(1)
+        scene.play(FadeOut(self.wallet))
