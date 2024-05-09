@@ -64,7 +64,6 @@ class PreviouslyOn(TexSlide):
     def create_tex_below(self, path) -> Tex:
         tex = Tex(load(path), tex_template=self.template, color=SECONDARY_COLOR)
         tex.next_to(self.tex, DOWN, buff=0.5)
-        # tex.align_to(self.chart, RIGHT)
         return tex
 
     def animate_in(self, scene):
@@ -209,24 +208,12 @@ class PreviouslyOn(TexSlide):
     def animate_generate_ethereum_address(self, scene):
 
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
+        self.wallet.animate_address_value(scene, "(0x27,0x09)")
         self.wallet.animate_address_value(scene, "keccak256(2709)")
         scene.wait(0.5)
-        self.wallet.animate_address_value(
-            scene,
-            "0be4308d0014b842c2debb817a629f45938a32a2117c186d46b29ef3aa599b4e",
-        )
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
         )
 
         scene.wait(1)
-
-    def big_numbers_private_key(self, scene):
-        self.wallet.animate_private_key(
-            scene, "0x9de347a715a200cd....c8364d879483b69b", font_size=14
-        )
-        self.wallet.animate_address_value(
-            scene, "0xe31cc18f3f3718588e9a878a516c7889af047171"
-        )
-        scene.play(FadeOut(self.wallet))
