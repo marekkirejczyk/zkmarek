@@ -47,7 +47,7 @@ from zkmarek.video.slides.teaser_reference import TeaserReference
 from zkmarek.video.slides.wallet import WalletSlide
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
 from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
-from zkmarek.video.slides.episode2.Previously import PreviouslyOn
+from zkmarek.video.slides.episode2.previously import PreviouslyOn
 
 config.width = 16
 config.height = 9
@@ -110,12 +110,12 @@ EPISODE1 = [
 ]
 
 EPISODE2 = [
-    Intro("data/sound/episode2/intro.mp3"),
+    Intro("data/sound/episode2/slide1-0.mp3"),
     PreviouslyOn(),
     TitleSlide(
         "Digital Signature Algorithm",
         pre_wait_time=1.5,
-        sound="data/sound/episode2/dig_sign_s3_p0.mp3",
+        sound="data/sound/episode2/slide3-0.mp3",
     ),
     DigitalSignatureInterface(),
     Signature(),

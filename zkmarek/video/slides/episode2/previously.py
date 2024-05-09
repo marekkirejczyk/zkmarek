@@ -62,7 +62,7 @@ class PreviouslyOn(TexSlide):
     def create_tex_below(self, path) -> Tex:
         tex = Tex(load(path), tex_template=self.template, color=SECONDARY_COLOR)
         tex.next_to(self.tex, DOWN, buff=0.5)
-        tex.align_to(self.tex, LEFT)
+        # tex.align_to(self.chart, RIGHT)
         return tex
 
     def animate_in(self, scene):
@@ -82,19 +82,16 @@ class PreviouslyOn(TexSlide):
             .shift(LEFT * 0.5)
         )
 
-        self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_prev_on0.mp3")
+        self.new_subsection(scene, "intro", sound="data/sound/episode2/slide2-0.mp3")
         scene.play(Write(self.title_text.center()))
         self.title_text.generate_target()
         self.title_text.target.to_edge(UP)
         scene.play(MoveToTarget(self.title_text))
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
 
-        self.new_subsection(
-            scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
-        )
+        self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart))
-        # scene.wait(2)
         scene.play(Indicate(self.chart), color=HIGHLIGHT_COLOR)
 
         self.chart.animate_align_left(scene)
@@ -107,7 +104,7 @@ class PreviouslyOn(TexSlide):
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
-            scene, "Operations", sound="data/sound/episode2/ec_prev_on2.mp3"
+            scene, "Operations", sound="data/sound/episode2/slide2-2.mp3"
         )
         self.tex.scale(0.8)
         scene.play(Write(self.tex.shift(RIGHT * 3)))
@@ -120,7 +117,7 @@ class PreviouslyOn(TexSlide):
         scene.wait(2.5)
 
         self.new_subsection(
-            scene, "inverse", sound="data/sound/episode2/ec_prev_on3.mp3"
+            scene, "inverse", sound="data/sound/episode2/slide2-3.mp3"
         )  # animate scalar multiplication when talked about it OR show log later (on however discrete operation)
         tex2 = self.create_tex_below(
             "zkmarek/video/slides/episode2/tex/inv_operations.tex"
@@ -161,20 +158,9 @@ class PreviouslyOn(TexSlide):
 
         scene.play(Unwrite(self.title_text))
 
-    def animate_dot(self, scene: Scene, dot: Dot, split_animation=False):
-        target_color = SECONDARY_COLOR
-        dup_dot = dot.copy()
-        scene.add(dup_dot)
-        self.duplicates.append(dup_dot)
-        dup_dot.set_color(target_color)
-        if split_animation:
-            scene.play(Indicate(dup_dot))
-        else:
-            scene.play(Indicate(dup_dot), run_time=0.5)
-
     def animate_secret_key(self, scene):
         self.new_subsection(
-            scene, "Generate random secret", sound="data/sound/episode2/ec_prev_on4.mp3"
+            scene, "Generate random secret", sound="data/sound/episode2/slide2-4.mp3"
         )
         self.wallet.animate_in(scene)
 
