@@ -50,7 +50,7 @@ from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
 from zkmarek.video.slides.episode2.previously import PreviouslyOn
 from zkmarek.video.slides.episode2.support import Sponsored
 from zkmarek.video.slides.episode2.credits import Credits as Credits2
-from zkmarek.video.slides.episode2.deterministic import TexSlide as Deterministic
+from zkmarek.video.slides.episode2.deterministic import Deterministic
 
 config.width = 16
 config.height = 9
@@ -124,7 +124,7 @@ EPISODE2 = [
     DigitalSignatureInterface(),
     Signature(),
     # TexSlide("Deterministic signature", "data/ec/deterministic_signature.tex"),
-    Deterministic("Deterministic signature", "data/ec/deterministic_signature.tex"),
+    Deterministic(),
     ECRecoverSlide(),
     EthereumTransaction(),
     CodeSlide("ECDSA sign", "data/ec/signature.py"),

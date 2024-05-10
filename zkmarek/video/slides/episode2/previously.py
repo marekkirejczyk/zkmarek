@@ -59,7 +59,6 @@ class PreviouslyOn(TexSlide):
             "Previously on zkMarek",
             "zkmarek/video/slides/episode2/tex/operations.tex",
         )
-        self.duplicates = []
 
     def create_tex_below(self, path) -> Tex:
         tex = Tex(load(path), tex_template=self.template, color=SECONDARY_COLOR)
