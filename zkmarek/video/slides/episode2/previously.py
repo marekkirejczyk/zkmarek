@@ -95,11 +95,10 @@ class PreviouslyOn(TexSlide):
         scene.play(Write(self.chart))
         scene.wait(0.2)
         dots = VGroup(*self.chart.dots)
+        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
         scene.play(
             ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
         )
-        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
-
         self.chart.animate_align_left(scene)
         scene.play(Write(self.weierstrass_form.to_edge(RIGHT)), run_time=0.5)
         scene.play(

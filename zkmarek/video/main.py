@@ -49,6 +49,8 @@ from zkmarek.video.utils import get_slides_from_names, get_deck_name
 from zkmarek.video.slides.episode2.schnorr import SchnorrSlide
 from zkmarek.video.slides.episode2.previously import PreviouslyOn
 from zkmarek.video.slides.episode2.support import Sponsored
+from zkmarek.video.slides.episode2.credits import Credits as Credits2
+from zkmarek.video.slides.episode2.deterministic import TexSlide as Deterministic
 
 config.width = 16
 config.height = 9
@@ -117,16 +119,18 @@ EPISODE2 = [
     TitleSlide(
         "Digital Signature Algorithm",
         pre_wait_time=1.5,
-        sound="data/sound/episode2/slide3-0.mp3",
+        sound="data/sound/episode2/slide4-0.mp3",
     ),
     DigitalSignatureInterface(),
     Signature(),
-    TexSlide("Deterministic signature", "data/ec/deterministic_signature.tex"),
+    # TexSlide("Deterministic signature", "data/ec/deterministic_signature.tex"),
+    Deterministic("Deterministic signature", "data/ec/deterministic_signature.tex"),
     ECRecoverSlide(),
     EthereumTransaction(),
     CodeSlide("ECDSA sign", "data/ec/signature.py"),
     CodeSlide("ecrecover", "data/ec/recover.py"),
     Subscribe("data/sound/episode1/s28.wav"),
+    Credits2(),
 ]
 
 EPISODE3 = [
