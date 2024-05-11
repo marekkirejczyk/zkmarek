@@ -3,8 +3,6 @@ from manim import ReplacementTransform, Code, DOWN, Indicate, FadeOut
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
 
-# from zkmarek.video.slides.common.code_slide import code_pa
-
 
 class DigitalSignatureInterface(CodeSlide):
     def __init__(self):
@@ -17,21 +15,13 @@ class DigitalSignatureInterface(CodeSlide):
         )
 
     def animate_in(self, scene):
-        code_params = {
-            "background": "window",
-            "insert_line_no": True,
-            "font": "Monospace",
-            "font_size": 18,
-            "margin": 0.2,
-            "style": "fruity",
-            "line_no_buff": 0.2,
-        }
-
-        code_params.update(self.kwargs)
+        self.new_subsection(scene, "intro", "data/sound/episode2/slide4-1.mp3")
         super().animate_in(scene)
+
         self.new_subsection(
             scene, "sign and verify", "data/sound/episode2/slide5-0.mp3"
         )
+        scene.wait(4)
         fragments = ["sign(", "verify"]
         for fragment in fragments:
             part = find_in_code(self.code, fragment)
@@ -56,12 +46,12 @@ class DigitalSignatureInterface(CodeSlide):
         self.replace_code(scene, "data/ec/signature_interface2.py")
         scene.wait(4)
         self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
-        scene.wait(1)
-        recover = ["recover", "(message, signature)"]
-        code_recover = self._get_code("data/ec/signature_interface2.py", font_size=24)
-        for fragment in recover:
-            part = find_in_code(code_recover, fragment)
-            scene.play(Indicate(*part), run_time=1)
+        scene.wait(5)
+        # recover = ["recover", "(message, signature)"]
+        # code_recover = Code("data/ec/signature_interface2.py")
+        # for fragment in recover:
+        #     part = find_in_code(code_recover, fragment)
+        #     scene.play(Indicate(*part), run_time=1)
 
         scene.wait(3)
         self.replace_code(scene, "data/ec/signature_interface3.py")
@@ -75,7 +65,6 @@ class DigitalSignatureInterface(CodeSlide):
         self.code = code
         if path == "data/ec/signature_interface4.py":
             scene.play(FadeOut(code))
-            # scene.play(FadeOut(self.title))
 
     @staticmethod
     def _get_code(path: str, font_size: int):
