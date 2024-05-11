@@ -1,4 +1,5 @@
-from manim import ReplacementTransform, Code, DOWN, Indicate, FadeOut
+from manim import ReplacementTransform, Code, DOWN, Indicate, FadeOut, Scene
+from zkmarek.video.constant import SECONDARY_COLOR
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
@@ -21,39 +22,33 @@ class DigitalSignatureInterface(CodeSlide):
         self.new_subsection(
             scene, "sign and verify", "data/sound/episode2/slide5-0.mp3"
         )
-        scene.wait(4)
-        fragments = ["sign(", "verify"]
+        scene.wait(3.8)
+        fragments = ["sign", "verify"]
         for fragment in fragments:
-            part = find_in_code(self.code, fragment)
-            scene.play(Indicate(*part), run_time=1)
-        scene.wait(2)
+            self.indicate_code(scene, fragment, 0, run_time=0.5)
 
         self.play_sound(scene, "data/sound/episode2/slide5-1.mp3")
-        scene.wait(1)
-        sign = ["n(message", " secret_key)"]
-        for fragment in sign:
-            part = find_in_code(self.code, fragment)
-            scene.play(Indicate(*part), run_time=1)
+        scene.wait(0.8)
+        sign = ["message", "secret_key", "signature"]
+        self.indicate_code(scene, sign[0], 0, run_time=0.5)
+        self.indicate_code(scene, sign[1], 1, run_time=0.5)
+        self.indicate_code(scene, sign[2], 0, run_time=0.5)
 
         self.play_sound(scene, "data/sound/episode2/slide5-2.mp3")
-        verify = ["signature,", "e, public_key", "bool"]
-        for fragment in verify:
-            part = find_in_code(self.code, fragment)
-            scene.play(Indicate(*part), run_time=1)
+        verify = ["signature", "public_key", "bool"]
+        self.indicate_code(scene, verify[0], 1, run_time=1)
+        self.indicate_code(scene, verify[1], 1, run_time=1)
+        self.indicate_code(scene, verify[2], 0, run_time=1)
         scene.wait(2)
+
         self.play_sound(scene, "data/sound/episode2/slide5-3.mp3")
         scene.wait(4)
         self.replace_code(scene, "data/ec/signature_interface2.py")
         scene.wait(4)
-        self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
-        scene.wait(5)
-        # recover = ["recover", "(message, signature)"]
-        # code_recover = Code("data/ec/signature_interface2.py")
-        # for fragment in recover:
-        #     part = find_in_code(code_recover, fragment)
-        #     scene.play(Indicate(*part), run_time=1)
 
-        scene.wait(3)
+        self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
+        scene.wait(8)
+
         self.replace_code(scene, "data/ec/signature_interface3.py")
         scene.wait(1)
         self.replace_code(scene, "data/ec/signature_interface4.py", font_size=18)
@@ -65,6 +60,10 @@ class DigitalSignatureInterface(CodeSlide):
         self.code = code
         if path == "data/ec/signature_interface4.py":
             scene.play(FadeOut(code))
+
+    def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
+        chars = find_in_code(self.code, fragment)
+        scene.play(Indicate(chars[index]), color=SECONDARY_COLOR, run_time=run_time)
 
     @staticmethod
     def _get_code(path: str, font_size: int):

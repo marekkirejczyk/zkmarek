@@ -59,10 +59,11 @@ class Deterministic(SlideBase):
         scene.play(Write(self.tex[0][17:57]))
         self.play_sound(scene, "data/sound/episode2/slide8-3.mp3")
         scene.play(Write(self.tex[0][57:101]))
-        scene.wait(4)
+        scene.wait(3)
         scene.play(Indicate(self.tex[0][71:75]), color=HIGHLIGHT_COLOR)
-        scene.wait(2)
+        scene.wait(5)
         scene.play(Write(self.tex[0][101:]))
+        scene.wait(3)
 
     def animate_out(self, scene):
         scene.play(Unwrite(self.title_text))
