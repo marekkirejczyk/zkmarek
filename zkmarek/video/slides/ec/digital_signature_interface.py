@@ -1,7 +1,7 @@
 from manim import ReplacementTransform, Code, DOWN, Indicate, FadeOut
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
-from zkmarek.video.utils import find_in_code, load
+from zkmarek.video.utils import find_in_code
 
 # from zkmarek.video.slides.common.code_slide import code_pa
 
