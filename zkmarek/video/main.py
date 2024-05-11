@@ -123,7 +123,6 @@ EPISODE2 = [
     ),
     DigitalSignatureInterface(),
     Signature(),
-    # TexSlide("Deterministic signature", "data/ec/deterministic_signature.tex"),
     Deterministic(),
     ECRecoverSlide(),
     EthereumTransaction(),
