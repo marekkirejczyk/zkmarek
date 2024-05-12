@@ -58,8 +58,6 @@ class DigitalSignatureInterface(CodeSlide):
         code.next_to(self.title_text, DOWN, buff=0.5)
         scene.play(ReplacementTransform(self.code, code))
         self.code = code
-        if path == "data/ec/signature_interface4.py":
-            scene.play(FadeOut(code))
 
     def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
         chars = find_in_code(self.code, fragment)
