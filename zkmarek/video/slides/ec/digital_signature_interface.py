@@ -1,4 +1,4 @@
-from manim import ReplacementTransform, Code, DOWN, Indicate, FadeOut, Scene
+from manim import ReplacementTransform, Code, DOWN, Indicate, Scene
 from zkmarek.video.constant import SECONDARY_COLOR
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
