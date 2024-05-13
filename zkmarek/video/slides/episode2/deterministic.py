@@ -63,7 +63,7 @@ class Deterministic(SlideBase):
         scene.play(Indicate(self.tex[0][71:75]), color=HIGHLIGHT_COLOR, run_time=1)
         scene.play(Indicate(self.tex[0][76:86]), color=HIGHLIGHT_COLOR, run_time=1)
         scene.play(Indicate(self.tex[0][92:99]), color=HIGHLIGHT_COLOR, run_time=1)
-        scene.wait(8.5)
+        scene.wait(9)  # longer pause
         self.play_sound(scene, "data/sound/episode2/slide8-4.mp3")
         scene.play(Write(self.tex[0][101:128]), run_time=0.5)
         scene.wait(2.5)

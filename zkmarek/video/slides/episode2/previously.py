@@ -91,8 +91,8 @@ class PreviouslyOn(TexSlide):
 
         self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
-        scene.play(Write(self.chart))
-        scene.wait(0.2)
+        scene.play(Write(self.chart), run_time=1)
+        scene.wait(1.75)
         dots = VGroup(*self.chart.dots)
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
         scene.play(
@@ -104,7 +104,7 @@ class PreviouslyOn(TexSlide):
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
             run_time=0.7,
         )
-        scene.wait(0.2)
+        scene.wait(1.5)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
@@ -141,7 +141,7 @@ class PreviouslyOn(TexSlide):
         scene.play(Write(self.tex2))
         scene.wait(0.8)
         scene.play(ReplacementTransform(self.tex2, self.tex3))
-        scene.wait(2)
+        scene.wait(0.7)
 
     def animate_out(self, scene):
         scene.play(Unwrite(self.tex3), Unwrite(self.tex), Unwrite(self.chart))
@@ -151,6 +151,8 @@ class PreviouslyOn(TexSlide):
             secp.append(self.secp256k1.copy_with_rows(i + 1))
         self.label_standards.move_to(UP * 2)
         scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
+        scene.play(Indicate(secp[2].rows[0][0][0]), color=SECONDARY_COLOR)
+
         scene.wait(4.5)
         scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
@@ -208,12 +210,13 @@ class PreviouslyOn(TexSlide):
 
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
         self.wallet.animate_address_value(scene, "(0x27,0x09)")
+        scene.wait(1)
         self.wallet.animate_address_value(scene, "keccak256(2709)")
-        scene.wait(0.5)
+        scene.wait(1.5)
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
         )
 
-        scene.wait(1)
+        scene.wait(1.5)
         scene.play(FadeOut(self.wallet))

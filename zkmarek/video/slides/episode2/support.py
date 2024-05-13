@@ -19,7 +19,7 @@ from zkmarek.video.slides.common.tex_slide import SlideBase
 class Sponsored(SlideBase):
 
     def __init__(self) -> None:
-        super().__init__(title="This video is sponsored by")
+        super().__init__(title="This video is supported by: and sponsored by")
 
     def construct(self):
         self.vlayer = ImageMobject(
