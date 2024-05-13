@@ -17,6 +17,8 @@ from manim import (
     ReplacementTransform,
     Indicate,
     Dot,
+    VGroup,
+    ApplyWave,
 )
 from random import randint
 from zkmarek.video.constant import (
@@ -57,12 +59,10 @@ class PreviouslyOn(TexSlide):
             "Previously on zkMarek",
             "zkmarek/video/slides/episode2/tex/operations.tex",
         )
-        self.duplicates = []
 
     def create_tex_below(self, path) -> Tex:
         tex = Tex(load(path), tex_template=self.template, color=SECONDARY_COLOR)
         tex.next_to(self.tex, DOWN, buff=0.5)
-        tex.align_to(self.tex, LEFT)
         return tex
 
     def animate_in(self, scene):
@@ -82,32 +82,33 @@ class PreviouslyOn(TexSlide):
             .shift(LEFT * 0.5)
         )
 
-        self.new_subsection(scene, "intro", sound="data/sound/episode2/ec_prev_on0.mp3")
+        self.new_subsection(scene, "intro", sound="data/sound/episode2/slide2-0.mp3")
         scene.play(Write(self.title_text.center()))
         self.title_text.generate_target()
         self.title_text.target.to_edge(UP)
         scene.play(MoveToTarget(self.title_text))
         self.weierstrass_form.next_to(self.weierstrass_equation, UP)
 
-        self.new_subsection(
-            scene, "equation", sound="data/sound/episode2/ec_prev_on1.mp3"
-        )
+        self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart))
-        # scene.wait(2)
-        scene.play(Indicate(self.chart), color=HIGHLIGHT_COLOR)
-
+        scene.wait(0.2)
+        dots = VGroup(*self.chart.dots)
+        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
+        scene.play(
+            ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
+        )
         self.chart.animate_align_left(scene)
-        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)))
+        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)), run_time=0.5)
         scene.play(
             Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
-            run_time=1,
+            run_time=0.7,
         )
         scene.wait(0.2)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
-            scene, "Operations", sound="data/sound/episode2/ec_prev_on2.mp3"
+            scene, "Operations", sound="data/sound/episode2/slide2-2.mp3"
         )
         self.tex.scale(0.8)
         scene.play(Write(self.tex.shift(RIGHT * 3)))
@@ -119,34 +120,38 @@ class PreviouslyOn(TexSlide):
         self.tex[0][27:52].set_color(HIGHLIGHT_COLOR)
         scene.wait(2.5)
 
-        self.new_subsection(
-            scene, "inverse", sound="data/sound/episode2/ec_prev_on3.mp3"
-        )  # animate scalar multiplication when talked about it OR show log later (on however discrete operation)
-        tex2 = self.create_tex_below(
-            "zkmarek/video/slides/episode2/tex/inv_operations.tex"
-        ).scale(0.8)
-        tex3 = self.create_tex_below(
-            "zkmarek/video/slides/episode2/tex/sout_inv_operations.tex"
-        ).scale(0.8)
+        self.new_subsection(scene, "inverse", sound="data/sound/episode2/slide2-3.mp3")
+        self.tex2 = (
+            self.create_tex_below(
+                "zkmarek/video/slides/episode2/tex/inv_operations.tex"
+            )
+            .scale(0.8)
+            .shift(LEFT * 0.5)
+        )
+        self.tex3 = (
+            self.create_tex_below(
+                "zkmarek/video/slides/episode2/tex/sout_inv_operations.tex"
+            )
+            .scale(0.8)
+            .shift(LEFT * 0.5)
+        )
         scene.wait(1.2)
         scene.play(Indicate(self.tex[0][27:52]))
         scene.wait(2)
-        scene.play(Write(tex2))
+        scene.play(Write(self.tex2))
         scene.wait(0.8)
-        scene.play(ReplacementTransform(tex2, tex3))
+        scene.play(ReplacementTransform(self.tex2, self.tex3))
         scene.wait(2)
-        scene.play(
-            FadeOut(self.chart),
-            FadeOut(self.tex),
-            FadeOut(tex3),
-            run_time=2,
-        )
+
+    def animate_out(self, scene):
+        scene.play(Unwrite(self.tex3), Unwrite(self.tex), Unwrite(self.chart))
+
         secp = []
-        for i in range(0, 4):
+        for i in range(0, 3):
             secp.append(self.secp256k1.copy_with_rows(i + 1))
         self.label_standards.move_to(UP * 2)
         scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
-        scene.wait(4)
+        scene.wait(4.5)
         scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[2][0]), color=SECONDARY_COLOR)
@@ -161,20 +166,9 @@ class PreviouslyOn(TexSlide):
 
         scene.play(Unwrite(self.title_text))
 
-    def animate_dot(self, scene: Scene, dot: Dot, split_animation=False):
-        target_color = SECONDARY_COLOR
-        dup_dot = dot.copy()
-        scene.add(dup_dot)
-        self.duplicates.append(dup_dot)
-        dup_dot.set_color(target_color)
-        if split_animation:
-            scene.play(Indicate(dup_dot))
-        else:
-            scene.play(Indicate(dup_dot), run_time=0.5)
-
     def animate_secret_key(self, scene):
         self.new_subsection(
-            scene, "Generate random secret", sound="data/sound/episode2/ec_prev_on4.mp3"
+            scene, "Generate random secret", sound="data/sound/episode2/slide2-4.mp3"
         )
         self.wallet.animate_in(scene)
 
@@ -213,24 +207,13 @@ class PreviouslyOn(TexSlide):
     def animate_generate_ethereum_address(self, scene):
 
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
+        self.wallet.animate_address_value(scene, "(0x27,0x09)")
         self.wallet.animate_address_value(scene, "keccak256(2709)")
         scene.wait(0.5)
-        self.wallet.animate_address_value(
-            scene,
-            "0be4308d0014b842c2debb817a629f45938a32a2117c186d46b29ef3aa599b4e",
-        )
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
         )
 
         scene.wait(1)
-
-    def big_numbers_private_key(self, scene):
-        self.wallet.animate_private_key(
-            scene, "0x9de347a715a200cd....c8364d879483b69b", font_size=14
-        )
-        self.wallet.animate_address_value(
-            scene, "0xe31cc18f3f3718588e9a878a516c7889af047171"
-        )
         scene.play(FadeOut(self.wallet))
