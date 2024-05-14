@@ -2,7 +2,6 @@ from manim import (
     UP,
     FadeOut,
     FadeIn,
-    Indicate,
     ImageMobject,
     Text,
     ReplacementTransform,
