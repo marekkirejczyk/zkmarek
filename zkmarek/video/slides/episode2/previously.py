@@ -92,19 +92,18 @@ class PreviouslyOn(TexSlide):
         self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
         scene.play(Write(self.chart), run_time=1)
-        scene.wait(1.75)
+        scene.wait(0.75)
         dots = VGroup(*self.chart.dots)
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
         scene.play(
             ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
         )
         self.chart.animate_align_left(scene)
-        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)), run_time=0.5)
         scene.play(
-            Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
-            run_time=0.7,
+            FadeIn(self.weierstrass_form.to_edge(RIGHT)),
+            FadeIn(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
         )
-        scene.wait(1.5)
+        scene.wait(1)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
@@ -212,7 +211,8 @@ class PreviouslyOn(TexSlide):
         self.wallet.animate_address_value(scene, "(0x27,0x09)")
         scene.wait(1)
         self.wallet.animate_address_value(scene, "keccak256(2709)")
-        scene.wait(1.5)
+        scene.wait(1.7)
+        self.play_sound(scene, "data/sound/episode2/slide4-5.mp3")
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",

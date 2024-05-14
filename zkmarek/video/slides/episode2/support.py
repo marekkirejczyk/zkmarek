@@ -7,6 +7,7 @@ from manim import (
     Indicate,
     ImageMobject,
     Text,
+    ReplacementTransform,
 )
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
@@ -29,22 +30,27 @@ class Sponsored(SlideBase):
             "zkmarek/video/slides/episode2/sponsors/ecosystem_support_program.png"
         )
         self.title = Text(
-            "This video is sponsored by",
+            "This video is supported by",
             font=PRIMARY_FONT,
             color=PRIMARY_COLOR,
         ).to_edge(UP)
+        self.title_replace = Text(
+            "and sponsored by", font=PRIMARY_FONT, color=PRIMARY_COLOR
+        )
 
     def animate_in(self, scene):
         self.new_subsection(scene, "thanks to", "data/sound/episode2/slide3-0.mp3")
         scene.play(FadeIn(self.title))
         scene.play(
-            FadeIn(self.vlayer.move_to(RIGHT * 2).scale(1.3)),
-            FadeIn(self.ecosystem.scale(0.35).shift(LEFT * 2)),
+            # FadeIn(self.vlayer.move_to(RIGHT * 2).scale(1.3)),
+            FadeIn(self.ecosystem)  # .scale(0.35).shift(LEFT * 2)),
         )
         scene.play(Indicate(self.ecosystem))
         scene.wait(1)
-        scene.play(Indicate(self.vlayer))
+        scene.play(
+            ReplacementTransform(self.ecosystem, self.vlayer), Indicate(self.vlayer)
+        )
         scene.wait(3)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.vlayer), FadeOut(self.ecosystem), FadeOut(self.title))
+        scene.play(FadeOut(self.vlayer), FadeOut(self.title_replace))
