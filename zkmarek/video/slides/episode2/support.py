@@ -23,30 +23,28 @@ class Sponsored(SlideBase):
     def construct(self):
         self.vlayer = ImageMobject(
             "zkmarek/video/slides/episode2/sponsors/Logo_304_color_on_dark.png"
-        )
+        ).scale(1.3)
         self.ecosystem = ImageMobject(
             "zkmarek/video/slides/episode2/sponsors/ecosystem_support_program.png"
-        )
+        ).scale(0.3)
         self.title = Text(
             "This video is supported by",
             font=PRIMARY_FONT,
             color=PRIMARY_COLOR,
         ).to_edge(UP)
         self.title_replace = Text(
-            "and sponsored by", font=PRIMARY_FONT, color=PRIMARY_COLOR
-        )
+            "... and sponsored by", font=PRIMARY_FONT, color=PRIMARY_COLOR
+        ).to_edge(UP)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "thanks to", "data/sound/episode2/slide3-0.mp3")
         scene.play(FadeIn(self.title))
+        scene.play(FadeIn(self.ecosystem))
+        scene.wait(2)
         scene.play(
-            # FadeIn(self.vlayer.move_to(RIGHT * 2).scale(1.3)),
-            FadeIn(self.ecosystem)  # .scale(0.35).shift(LEFT * 2)),
-        )
-        scene.play(Indicate(self.ecosystem))
-        scene.wait(1)
-        scene.play(
-            ReplacementTransform(self.ecosystem, self.vlayer), Indicate(self.vlayer)
+            ReplacementTransform(self.title, self.title_replace),
+            FadeOut(self.ecosystem),
+            FadeIn(self.vlayer),
         )
         scene.wait(3)
 
