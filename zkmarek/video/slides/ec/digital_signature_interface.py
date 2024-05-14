@@ -50,10 +50,10 @@ class DigitalSignatureInterface(CodeSlide):
         scene.wait(7)
         self.replace_code(scene, code_recover)
         scene.wait(3)
+        recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
         self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
         scene.wait(2.3)
-        recover = ["recover", "message", "signature", "public_key"]
         # self.indicate_code(scene, recover[0], 0, run_time=0.7)
         self.indicate_code(scene, recover[1], 2, run_time=0.7)
         self.indicate_code(scene, recover[2], 2, run_time=0.75)
@@ -111,9 +111,9 @@ class DigitalSignatureInterface(CodeSlide):
         # self.indicate_code(scene, ec_recover[2], 2, run_time=1)
         # self.indicate_code(scene, ec_recover[3], 2, run_time=1)
 
-        v_value = ["v: ?"]
-        for i in v_value:
-            self.indicate_code(scene, v_value[0], i, run_time=0.35)
+        # v_value = ["v: ?"]
+        # for i in v_value:
+        #     self.indicate_code(scene, v_value[0], i, run_time=0.35)
 
     def replace_code(self, scene, code):
         # code = self._get_code(path, font_size)
