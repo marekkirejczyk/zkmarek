@@ -152,11 +152,11 @@ class PreviouslyOn(TexSlide):
         scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
         scene.play(Indicate(secp[2].rows[0][0][0]), color=SECONDARY_COLOR)
 
-        scene.wait(4.5)
+        scene.wait(4.7)
         scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[2][0]), color=SECONDARY_COLOR)
-
+        scene.wait(0.6)
         scene.play(FadeOut(secp[2]), FadeOut(self.label_standards))
 
         self.animate_secret_key(scene)
