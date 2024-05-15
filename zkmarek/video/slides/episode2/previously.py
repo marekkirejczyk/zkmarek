@@ -210,9 +210,10 @@ class PreviouslyOn(TexSlide):
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
         self.wallet.animate_address_value(scene, "(0x27,0x09)")
         scene.wait(1)
+        self.play_sound(scene, "data/sound/episode2/slide2-5.mp3")
         self.wallet.animate_address_value(scene, "keccak256(2709)")
         scene.wait(1.7)
-        self.play_sound(scene, "data/sound/episode2/slide2-5.mp3")
+        self.play_sound(scene, "data/sound/episode2/slide2-6.mp3")
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",

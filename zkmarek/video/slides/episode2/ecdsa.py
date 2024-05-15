@@ -1,7 +1,8 @@
-from manim import DOWN, UP, Code, FadeOut, Text, Write
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from manim import DOWN, UP, Code, FadeOut, Text, Write, Scene, Indicate
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.utils import find_in_code
 
 
 class ECDSA(SlideBase):
@@ -42,9 +43,45 @@ class ECDSA(SlideBase):
         self.new_subsection(scene, "ECDSA sign", "data/sound/episode2/slide11-0.mp3")
         scene.play(Write(self.title_text))
         scene.play(Write(self.code))
+        scene.wait(3.9)
+        sign = ["secret_key: int", "msg_hash: int", "k: int", "tuple[int, int, int]"]
+        for part in sign:
+            self.indicate_code(scene, part, 0, run_time=1)
 
         self.new_subsection(scene, "r, s, v", "data/sound/episode2/slide11-1.mp3")
+
+        values = [
+            "r: int = R.x.value % n",
+            "s = (pow(k, -1, n) * (msg_hash + (r * int(hex(secret_key), 16)))) % n",
+            "v = R.y.value % 2",
+        ]
+        self.indicate_code(scene, values[0], 0, run_time=0.7)
+        self.indicate_code(scene, values[1], 0, run_time=0.7)
+        scene.wait(3)
+        self.indicate(scene, values[2], 0, run_time=0.7)
+        flipping = ["s = n - s", "s * 2 >= n:"]
+        self.indicate_code(scene, flipping[0], 0, run_time=0.7)
+        scene.wait(1)
+        self.indicate(scene, flipping[1], 0, run_time=0.7)
+        scene.wait(3)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.code))
         scene.play(FadeOut(self.title_text))
+
+    def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
+        chars = find_in_code(self.code, fragment)
+        scene.play(Indicate(chars[index]), color=SECONDARY_COLOR, run_time=run_time)
+
+    @staticmethod
+    def _get_code(path: str, font_size: int):
+        return Code(
+            path,
+            font_size=font_size,
+            background="rectangle",
+            insert_line_no=False,
+            font="Monospace",
+            margin=0.2,
+            style="fruity",
+            line_no_buff=0.2,
+        )

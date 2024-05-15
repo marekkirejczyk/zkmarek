@@ -49,12 +49,11 @@ class DigitalSignatureInterface(CodeSlide):
         self.play_sound(scene, "data/sound/episode2/slide5-3.mp3")
         scene.wait(7)
         self.replace_code(scene, code_recover)
-        scene.wait(3)
+        scene.wait(2.5)
         recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
         self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
         scene.wait(2.3)
-        # self.indicate_code(scene, recover[0], 0, run_time=0.7)
         self.indicate_code(scene, recover[1], 2, run_time=0.7)
         self.indicate_code(scene, recover[2], 2, run_time=0.75)
         scene.wait(1)
@@ -100,23 +99,14 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, ec_verify[4], 0, run_time=1.8)
 
         self.new_subsection(scene, "v value", "data/sound/episode2/slide5-8.mp3")
-        # ec_recover = [
-        #     "ec_recover",
-        #     "message: Scalar",
-        #     "signature: (r: Scalar, s: Scalar, v: ?)",
-        #     "public_key: ECPoint",
-        # ]
-        # self.indicate_code(scene, ec_recover[0], 0, run_time=1)
-        # self.indicate_code(scene, ec_recover[1], 2, run_time=1)
-        # self.indicate_code(scene, ec_recover[2], 2, run_time=1)
-        # self.indicate_code(scene, ec_recover[3], 2, run_time=1)
 
-        # v_value = ["v: ?"]
-        # for i in v_value:
-        #     self.indicate_code(scene, v_value[0], i, run_time=0.35)
+        v_value = ["v: ?"]
+        for i in range(0, 3):
+            self.indicate_code(scene, v_value[0], i, run_time=0.35)
+
+        scene.wait(1.5)
 
     def replace_code(self, scene, code):
-        # code = self._get_code(path, font_size)
         code.next_to(self.title_text, DOWN, buff=0.5)
         scene.play(ReplacementTransform(self.code, code))
         self.code = code
