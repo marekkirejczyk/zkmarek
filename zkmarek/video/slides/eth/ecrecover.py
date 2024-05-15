@@ -81,7 +81,7 @@ class ECRecoverSlide(SlideBase):
             "uint8 v",
         ]
 
-        scene.wait(2.5)
+        scene.wait(1.5)
 
         for fragment in fragments:
             chars = find_in_code(self.code, fragment)

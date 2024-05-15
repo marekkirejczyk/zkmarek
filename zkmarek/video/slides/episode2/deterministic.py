@@ -5,7 +5,7 @@ from manim import (
     Text,
     TexTemplate,
     TransformMatchingShapes,
-    Unwrite,
+    FadeOut,
     Write,
     Indicate,
     FadeIn,
@@ -76,5 +76,4 @@ class Deterministic(SlideBase):
         scene.wait(3)
 
     def animate_out(self, scene):
-        scene.play(Unwrite(self.title_text))
-        scene.play(Unwrite(self.tex))
+        scene.play(FadeOut(self.tex), FadeOut(self.title_text))
