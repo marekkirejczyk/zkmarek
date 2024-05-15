@@ -199,7 +199,13 @@ class PreviouslyOn(TexSlide):
             ECAffine(39, 9, self.curve)
         )
         scene.play(Circumscribe(public_key_point, Circle))
+        self.public_key_coordinates = MathTex(
+            "=(39,9)", font_size=20, color=HIGHLIGHT_COLOR
+        )
+        self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
+        scene.play(Write(self.public_key_coordinates))
         scene.play(
+            FadeOut(Unwrite(self.public_key_coordinates)),
             FadeOut(self.chart_wallet),
             FadeOut(*animation.labels),
             FadeOut(*animation.duplicates),
@@ -208,12 +214,18 @@ class PreviouslyOn(TexSlide):
     def animate_generate_ethereum_address(self, scene):
 
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
-        self.wallet.animate_address_value(scene, "(0x27,0x09)")
+        self.wallet.animate_address_value(scene, "(39, 9)")
+        self.wallet.animate_address_value(scene, "(0x27, 0x09)")
         scene.wait(1)
         self.play_sound(scene, "data/sound/episode2/slide2-5.mp3")
         self.wallet.animate_address_value(scene, "keccak256(2709)")
-        scene.wait(1.7)
+        scene.wait(1)
         self.play_sound(scene, "data/sound/episode2/slide2-6.mp3")
+        self.wallet.animate_address_value(
+            scene,
+            "0be4308d0014b842c2debb817a629f45938a32a2117c186d46b29ef3aa599b4e",
+        )
+        scene.wait(0.2)
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",

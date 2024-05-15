@@ -44,10 +44,13 @@ class ECDSA(SlideBase):
         scene.play(Write(self.title_text))
         scene.play(Write(self.code))
         scene.wait(3.9)
-        sign = ["secret_key: int", "msg_hash: int", "k: int", "tuple[int, int, int]"]
+        sign = ["secret_key: int", "msg_hash: int", "k: int"]
         for part in sign:
             self.indicate_code(scene, part, 0, run_time=1)
-
+            scene.wait(0.5)
+        scene.wait(2.2)
+        tuple_sign = ["tuple[int, int, int]"]
+        self.indicate_code(scene, tuple_sign[0], 0, run_time=1)
         self.new_subsection(scene, "r, s, v", "data/sound/episode2/slide11-1.mp3")
 
         values = [
@@ -57,7 +60,7 @@ class ECDSA(SlideBase):
         ]
         self.indicate_code(scene, values[0], 0, run_time=0.7)
         self.indicate_code(scene, values[1], 0, run_time=0.7)
-        scene.wait(3)
+        scene.wait(5)
         self.indicate_code(scene, values[2], 0, run_time=0.7)
         flipping = ["s = n - s", "s * 2 >= n:"]
         self.indicate_code(scene, flipping[0], 0, run_time=0.7)

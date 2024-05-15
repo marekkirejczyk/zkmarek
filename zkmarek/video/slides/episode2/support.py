@@ -39,7 +39,7 @@ class Sponsored(SlideBase):
         self.new_subsection(scene, "thanks to", "data/sound/episode2/slide3-0.mp3")
         scene.play(FadeIn(self.title))
         scene.play(FadeIn(self.ecosystem))
-        scene.wait(1.7)
+        scene.wait(1.5)
         scene.play(
             ReplacementTransform(self.title, self.title_replace),
             FadeOut(self.ecosystem),

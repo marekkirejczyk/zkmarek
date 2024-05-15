@@ -68,6 +68,7 @@ class ECDSARec(SlideBase):
         self.new_subsection(scene, "generate k", "data/sound/episode2/slide11-4.mp3")
 
         self.new_subsection(scene, "ending", "data/sound/episode2/slide11-5.mp3")
+        scene.wait(3.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.code))
