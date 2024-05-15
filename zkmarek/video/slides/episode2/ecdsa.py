@@ -62,7 +62,7 @@ class ECDSA(SlideBase):
         flipping = ["s = n - s", "s * 2 >= n:"]
         self.indicate_code(scene, flipping[0], 0, run_time=0.7)
         scene.wait(1)
-        self.indicate(scene, flipping[1], 0, run_time=0.7)
+        self.indicate_code(scene, flipping[1], 0, run_time=0.7)
         scene.wait(3)
 
     def animate_out(self, scene):
