@@ -205,7 +205,7 @@ class PreviouslyOn(TexSlide):
         self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
         scene.play(Write(self.public_key_coordinates))
         scene.play(
-            FadeOut(Unwrite(self.public_key_coordinates)),
+            FadeOut(self.public_key_coordinates),
             FadeOut(self.chart_wallet),
             FadeOut(*animation.labels),
             FadeOut(*animation.duplicates),
