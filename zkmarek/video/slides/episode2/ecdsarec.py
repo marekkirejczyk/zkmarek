@@ -43,6 +43,7 @@ class ECDSARec(SlideBase):
         scene.play(Write(self.title_text))
         scene.play(Write(self.code))
         self.new_subsection(scene, "ECDSA recover", "data/sound/episode2/slide11-2.mp3")
+        scene.wait(2)
         recover = ["message: int", "r: int", "s: int", "v: int"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
         scene.wait(1.2)
@@ -58,6 +59,7 @@ class ECDSARec(SlideBase):
             "r_inverse = pow(r, -1, n)",
             "u1 = -message * r_inverse % n",
             "u2 = s * r_inverse % n",
+            "v",
         ]
         self.indicate_code(scene, eliptic[0], 0, run_time=0.7)
         scene.wait(1.8)
@@ -65,6 +67,7 @@ class ECDSARec(SlideBase):
         scene.wait(1.5)
         self.indicate_code(scene, eliptic[2], 0, run_time=0.7)
         self.indicate_code(scene, eliptic[3], 0, run_time=0.7)
+        self.indicate_code(scene, eliptic[4], 0, run_time=0.7)
         self.new_subsection(scene, "generate k", "data/sound/episode2/slide11-4.mp3")
 
         self.new_subsection(scene, "ending", "data/sound/episode2/slide11-5.mp3")

@@ -44,10 +44,10 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, generate[1], 0, run_time=0.7)
         scene.wait(4)
         self.play_sound(scene, "data/sound/episode2/slide5-2.mp3")
-        scene.wait(0.8)
+        scene.wait(0.5)
         sign = ["message", "secret_key", "signature"]
-        self.indicate_code(scene, sign[0], 0, run_time=0.7)
-        self.indicate_code(scene, sign[1], 1, run_time=0.7)
+        self.indicate_code(scene, sign[0], 0, run_time=0.75)
+        self.indicate_code(scene, sign[1], 1, run_time=0.75)
         self.indicate_code(scene, sign[2], 0, run_time=0.7)
 
         self.play_sound(scene, "data/sound/episode2/slide5-3.mp3")
@@ -62,7 +62,7 @@ class DigitalSignatureInterface(CodeSlide):
         self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
         scene.wait(7)
         self.replace_code(scene, code_recover)
-        scene.wait(2.5)
+        scene.wait(2)
         recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
         self.play_sound(scene, "data/sound/episode2/slide5-5.mp3")
