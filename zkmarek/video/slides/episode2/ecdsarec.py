@@ -56,18 +56,21 @@ class ECDSARec(SlideBase):
         scene.wait(3.1)
         eliptic = [
             "ECAffine.from_x(r, v, curve)",
-            "r_inverse = pow(r, -1, n)",
+            "r,",
             "u1 = -message * r_inverse % n",
             "u2 = s * r_inverse % n",
-            "v",
+            "v,",
+            "Q = generator * u1 + R * u2",
         ]
         self.indicate_code(scene, eliptic[0], 0, run_time=0.7)
         scene.wait(1.8)
         self.indicate_code(scene, eliptic[1], 0, run_time=0.7)
-        scene.wait(1.5)
+        scene.wait(3.7)
+        self.indicate_code(scene, eliptic[4], 0, run_time=0.7)
+        scene.wait(4)
         self.indicate_code(scene, eliptic[2], 0, run_time=0.7)
         self.indicate_code(scene, eliptic[3], 0, run_time=0.7)
-        self.indicate_code(scene, eliptic[4], 0, run_time=0.7)
+        self.indicate_code(scene, eliptic[5], 0, run_time=0.9)
         self.new_subsection(scene, "generate k", "data/sound/episode2/slide11-4.mp3")
 
         self.new_subsection(scene, "ending", "data/sound/episode2/slide11-5.mp3")
