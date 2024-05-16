@@ -1,5 +1,4 @@
 from manim import (
-    ReplacementTransform,
     Code,
     DOWN,
     Indicate,
