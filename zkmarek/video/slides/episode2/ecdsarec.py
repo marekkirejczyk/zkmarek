@@ -40,9 +40,9 @@ class ECDSARec(SlideBase):
         return f"{self.title} (CODE)"
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "ECDSA recover", "data/sound/episode2/slide11-2.mp3")
         scene.play(Write(self.title_text))
         scene.play(Write(self.code))
+        self.new_subsection(scene, "ECDSA recover", "data/sound/episode2/slide11-2.mp3")
         recover = ["message: int", "r: int", "s: int", "v: int"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
         scene.wait(1.2)
@@ -54,7 +54,7 @@ class ECDSARec(SlideBase):
         self.new_subsection(scene, "ecrecover", "data/sound/episode2/slide11-3.mp3")
         scene.wait(3.1)
         eliptic = [
-            "ECAffine",
+            "ECAffine.from_x(r, v, curve)",
             "r_inverse = pow(r, -1, n)",
             "u1 = -message * r_inverse % n",
             "u2 = s * r_inverse % n",
