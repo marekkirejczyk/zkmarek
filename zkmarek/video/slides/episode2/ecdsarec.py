@@ -59,7 +59,7 @@ class ECDSARec(SlideBase):
             "u1 = -message * r_inverse % n",
             "u2 = s * r_inverse % n",
         ]
-        self.indicate_code(scene, eliptic[0], 1, run_time=0.7)
+        self.indicate_code(scene, eliptic[0], 0, run_time=0.7)
         scene.wait(1.8)
         self.indicate_code(scene, eliptic[1], 0, run_time=0.7)
         scene.wait(1.5)
