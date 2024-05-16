@@ -5,7 +5,7 @@ from manim import (
     Text,
     TexTemplate,
     TransformMatchingShapes,
-    Unwrite,
+    FadeOut,
     Write,
     Indicate,
     FadeIn,
@@ -63,18 +63,17 @@ class Deterministic(SlideBase):
         scene.play(Indicate(self.tex[0][71:75]), color=HIGHLIGHT_COLOR, run_time=1)
         scene.play(Indicate(self.tex[0][76:86]), color=HIGHLIGHT_COLOR, run_time=1)
         scene.play(Indicate(self.tex[0][92:99]), color=HIGHLIGHT_COLOR, run_time=1)
-        scene.wait(8.5)
+        scene.wait(9)  # longer pause
         self.play_sound(scene, "data/sound/episode2/slide8-4.mp3")
-        scene.play(Write(self.tex[0][101:128]), run_time=0.5)
+        scene.play(Write(self.tex[0][101:130]), run_time=0.5)
         scene.wait(2.5)
         scene.play(Indicate(self.tex[0][102:103]), color=HIGHLIGHT_COLOR, run_time=0.5)
-        scene.play(Indicate(self.tex[0][106:109]), color=HIGHLIGHT_COLOR, run_time=0.5)
+        scene.play(Indicate(self.tex[0][106:111]), color=HIGHLIGHT_COLOR, run_time=0.5)
         scene.wait(2)
         self.play_sound(scene, "data/sound/episode2/slide8-5.mp3")
         scene.wait(4)
-        scene.play(Write(self.tex[0][128:]))
+        scene.play(Write(self.tex[0][130:]))
         scene.wait(3)
 
     def animate_out(self, scene):
-        scene.play(Unwrite(self.title_text))
-        scene.play(Unwrite(self.tex))
+        scene.play(FadeOut(self.tex), FadeOut(self.title_text))

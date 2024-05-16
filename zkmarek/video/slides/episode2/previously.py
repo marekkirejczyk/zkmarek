@@ -91,20 +91,19 @@ class PreviouslyOn(TexSlide):
 
         self.new_subsection(scene, "equation", sound="data/sound/episode2/slide2-1.mp3")
         self.chart.next_to(self.title_text.target, DOWN)
-        scene.play(Write(self.chart))
-        scene.wait(0.2)
+        scene.play(Write(self.chart), run_time=1)
+        scene.wait(0.75)
         dots = VGroup(*self.chart.dots)
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
         scene.play(
             ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
         )
         self.chart.animate_align_left(scene)
-        scene.play(Write(self.weierstrass_form.to_edge(RIGHT)), run_time=0.5)
         scene.play(
-            Write(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
-            run_time=0.7,
+            FadeIn(self.weierstrass_form.to_edge(RIGHT)),
+            FadeIn(self.weierstrass_equation.next_to(self.weierstrass_form, DOWN)),
         )
-        scene.wait(0.2)
+        scene.wait(1)
         scene.play(FadeOut(self.weierstrass_form), FadeOut(self.weierstrass_equation))
 
         self.new_subsection(
@@ -141,7 +140,7 @@ class PreviouslyOn(TexSlide):
         scene.play(Write(self.tex2))
         scene.wait(0.8)
         scene.play(ReplacementTransform(self.tex2, self.tex3))
-        scene.wait(2)
+        scene.wait(0.7)
 
     def animate_out(self, scene):
         scene.play(Unwrite(self.tex3), Unwrite(self.tex), Unwrite(self.chart))
@@ -151,11 +150,13 @@ class PreviouslyOn(TexSlide):
             secp.append(self.secp256k1.copy_with_rows(i + 1))
         self.label_standards.move_to(UP * 2)
         scene.play(FadeIn(self.label_standards), FadeIn(secp[2]))
-        scene.wait(4.5)
+        scene.play(Indicate(secp[2].rows[0][0][0]), color=SECONDARY_COLOR)
+
+        scene.wait(4.7)
         scene.play(Indicate(secp[2].rows[0][0][1]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[1][0]), color=SECONDARY_COLOR)
         scene.play(Indicate(secp[2].rows[2][0]), color=SECONDARY_COLOR)
-
+        scene.wait(0.6)
         scene.play(FadeOut(secp[2]), FadeOut(self.label_standards))
 
         self.animate_secret_key(scene)
@@ -198,7 +199,13 @@ class PreviouslyOn(TexSlide):
             ECAffine(39, 9, self.curve)
         )
         scene.play(Circumscribe(public_key_point, Circle))
+        self.public_key_coordinates = MathTex(
+            "=(39,9)", font_size=20, color=HIGHLIGHT_COLOR
+        )
+        self.public_key_coordinates.next_to(public_key_point, RIGHT, buff=0.7)
+        scene.play(Write(self.public_key_coordinates))
         scene.play(
+            FadeOut(self.public_key_coordinates),
             FadeOut(self.chart_wallet),
             FadeOut(*animation.labels),
             FadeOut(*animation.duplicates),
@@ -207,13 +214,22 @@ class PreviouslyOn(TexSlide):
     def animate_generate_ethereum_address(self, scene):
 
         scene.play(self.wallet.animate.shift(DOWN * 2 + LEFT * 3).scale(2), run_time=1)
-        self.wallet.animate_address_value(scene, "(0x27,0x09)")
+        self.wallet.animate_address_value(scene, "(39, 9)")
+        self.wallet.animate_address_value(scene, "(0x27, 0x09)")
+        scene.wait(1)
+        self.play_sound(scene, "data/sound/episode2/slide2-5.mp3")
         self.wallet.animate_address_value(scene, "keccak256(2709)")
-        scene.wait(0.5)
+        scene.wait(0.7)
+        self.play_sound(scene, "data/sound/episode2/slide2-6.mp3")
+        self.wallet.animate_address_value(
+            scene,
+            "0be4308d0014b842c2debb817a629f45938a32a2117c186d46b29ef3aa599b4e",
+        )
+        scene.wait(0.2)
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
         )
 
-        scene.wait(1)
+        scene.wait(1.5)
         scene.play(FadeOut(self.wallet))

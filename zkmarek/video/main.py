@@ -51,6 +51,9 @@ from zkmarek.video.slides.episode2.previously import PreviouslyOn
 from zkmarek.video.slides.episode2.support import Sponsored
 from zkmarek.video.slides.episode2.credits import Credits as Credits2
 from zkmarek.video.slides.episode2.deterministic import Deterministic
+from zkmarek.video.slides.episode2.ecdsa import ECDSA
+from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
+
 
 config.width = 16
 config.height = 9
@@ -126,8 +129,8 @@ EPISODE2 = [
     Deterministic(),
     ECRecoverSlide(),
     EthereumTransaction(),
-    CodeSlide("ECDSA sign", "data/ec/signature.py"),
-    CodeSlide("ecrecover", "data/ec/recover.py"),
+    ECDSA("ECDSA sign", "data/ec/signature.py"),
+    ECDSARec("ecrecover", "data/ec/recover.py"),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
 ]

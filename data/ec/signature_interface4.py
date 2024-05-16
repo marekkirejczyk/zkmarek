@@ -1,7 +1,7 @@
 def generate_key_pair() -> (secret_key: Scalar, public_key: ECPoint)
 
 
-def ec_sing(
+def ec_sign(
         message: Scalar,
         secret_key: Scalar
 ) -> signature: (r: Scalar, s: Scalar, v: ?)
