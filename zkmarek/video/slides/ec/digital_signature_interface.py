@@ -3,7 +3,7 @@ from manim import (
     DOWN,
     Indicate,
     Scene,
-    TransformMatchingShapes,
+    ReplacementTransform,
 )
 from zkmarek.video.constant import SECONDARY_COLOR
 
@@ -121,7 +121,7 @@ class DigitalSignatureInterface(CodeSlide):
 
     def replace_code(self, scene, code):
         code.next_to(self.title_text, DOWN, buff=0.5)
-        scene.play(TransformMatchingShapes(self.code, code))
+        scene.play(ReplacementTransform(self.code, code), run_time=1.5)
         self.code = code
 
     def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):

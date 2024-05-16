@@ -67,7 +67,7 @@ class ECDSA(SlideBase):
         scene.wait(1)
         self.indicate_code(scene, flipping[1], 0, run_time=0.7)
         scene.wait(2)
-        returns = ["r,", "s," "27 + v"]
+        returns = ["r,", "s,", "27 + v"]
         self.indicate_code(scene, returns[0], 0, run_time=0.5)
         self.indicate_code(scene, returns[1], 0, run_time=0.5)
         self.indicate_code(scene, returns[2], 0, run_time=0.5)
