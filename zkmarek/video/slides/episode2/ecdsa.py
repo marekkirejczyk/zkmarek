@@ -48,7 +48,7 @@ class ECDSA(SlideBase):
         for part in sign:
             self.indicate_code(scene, part, 0, run_time=1)
             scene.wait(0.5)
-        scene.wait(2.2)
+        scene.wait(1.7)
         tuple_sign = ["tuple[int, int, int]"]
         self.indicate_code(scene, tuple_sign[0], 0, run_time=1)
         self.new_subsection(scene, "r, s, v", "data/sound/episode2/slide11-1.mp3")
@@ -66,7 +66,12 @@ class ECDSA(SlideBase):
         self.indicate_code(scene, flipping[0], 0, run_time=0.7)
         scene.wait(1)
         self.indicate_code(scene, flipping[1], 0, run_time=0.7)
-        scene.wait(3)
+        scene.wait(4.2)
+        returns = ["r,", "s,", "27 + v"]
+        self.indicate_code(scene, returns[0], 0, run_time=0.5)
+        self.indicate_code(scene, returns[1], 0, run_time=0.5)
+        self.indicate_code(scene, returns[2], 0, run_time=0.5)
+        scene.wait(0.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.code))

@@ -7,5 +7,5 @@ def recover(message: int, r: int, s: int, v: int) -> Optional[ECAffine]:
         r_inverse = pow(r, -1, n)
         u1 = -message * r_inverse % n
         u2 = s * r_inverse % n
-        QA = generator * u1 + R * u2
-        return QA
+        Q = generator * u1 + R * u2
+        return Q

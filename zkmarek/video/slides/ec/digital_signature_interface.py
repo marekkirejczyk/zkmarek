@@ -1,4 +1,10 @@
-from manim import ReplacementTransform, Code, DOWN, Indicate, Scene
+from manim import (
+    Code,
+    DOWN,
+    Indicate,
+    Scene,
+    ReplacementTransform,
+)
 from zkmarek.video.constant import SECONDARY_COLOR
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
@@ -27,32 +33,39 @@ class DigitalSignatureInterface(CodeSlide):
             scene, "sign and verify", "data/sound/episode2/slide5-0.mp3"
         )
         scene.wait(3.8)
-        fragments = ["generate", "sign", "verify"]
+        fragments = ["generate_key_pair", "sign", "verify"]
         for fragment in fragments:
             self.indicate_code(scene, fragment, 0, run_time=0.5)
 
-        self.play_sound(scene, "data/sound/episode2/slide5-1.mp3")
-        scene.wait(0.8)
+        generate = ["secret_key", "public_key"]
+        self.new_subsection(scene, "generate", "data/sound/episode2/slide5-1.mp3")
+        scene.wait(1)
+        self.indicate_code(scene, generate[0], 0, run_time=0.7)
+        self.indicate_code(scene, generate[1], 0, run_time=0.7)
+        scene.wait(4)
+        self.play_sound(scene, "data/sound/episode2/slide5-2.mp3")
+        scene.wait(0.5)
         sign = ["message", "secret_key", "signature"]
-        self.indicate_code(scene, sign[0], 0, run_time=0.7)
-        self.indicate_code(scene, sign[1], 1, run_time=0.7)
+        self.indicate_code(scene, sign[0], 0, run_time=0.75)
+        self.indicate_code(scene, sign[1], 1, run_time=0.75)
         self.indicate_code(scene, sign[2], 0, run_time=0.7)
 
-        self.play_sound(scene, "data/sound/episode2/slide5-2.mp3")
-        verify = ["signature", "public_key", "bool"]
+        self.play_sound(scene, "data/sound/episode2/slide5-3.mp3")
+        verify = ["message", "signature", "public_key", "bool"]
         scene.wait(0.2)
         self.indicate_code(scene, verify[0], 1, run_time=0.9)
         self.indicate_code(scene, verify[1], 1, run_time=0.9)
-        self.indicate_code(scene, verify[2], 0, run_time=0.9)
+        self.indicate_code(scene, verify[2], 1, run_time=0.9)
+        self.indicate_code(scene, verify[3], 0, run_time=0.9)
         scene.wait(2)
 
-        self.play_sound(scene, "data/sound/episode2/slide5-3.mp3")
+        self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
         scene.wait(7)
         self.replace_code(scene, code_recover)
-        scene.wait(2.5)
+        scene.wait(2)
         recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
-        self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
+        self.play_sound(scene, "data/sound/episode2/slide5-5.mp3")
         scene.wait(2.3)
         self.indicate_code(scene, recover[1], 2, run_time=0.7)
         self.indicate_code(scene, recover[2], 2, run_time=0.75)
@@ -61,7 +74,7 @@ class DigitalSignatureInterface(CodeSlide):
         scene.wait(4)
 
         self.replace_code(scene, code_ec)
-        self.new_subsection(scene, "prefix ec", "data/sound/episode2/slide5-5.mp3")
+        self.new_subsection(scene, "prefix ec", "data/sound/episode2/slide5-6.mp3")
         scene.wait(5)
         prefix_ec = ["ec_"]
         self.indicate_code(scene, prefix_ec[0], 0, run_time=0.5)
@@ -69,7 +82,7 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, prefix_ec[0], 2, run_time=0.5)
         self.replace_code(scene, code_ec_more)
 
-        self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-6.mp3")
+        self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-7.mp3")
         scene.wait(2.9)
         ec_sign = [
             "ec_sign",
@@ -84,7 +97,7 @@ class DigitalSignatureInterface(CodeSlide):
         scene.wait(0.5)
         self.indicate_code(scene, ec_sign[3], 0, run_time=1)
 
-        self.new_subsection(scene, "ec_verify", "data/sound/episode2/slide5-7.mp3")
+        self.new_subsection(scene, "ec_verify", "data/sound/episode2/slide5-8.mp3")
         ec_verify = [
             "ec_verify",
             "message: Scalar",
@@ -98,7 +111,7 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, ec_verify[3], 1, run_time=1.1)
         self.indicate_code(scene, ec_verify[4], 0, run_time=1.8)
 
-        self.new_subsection(scene, "v value", "data/sound/episode2/slide5-8.mp3")
+        self.new_subsection(scene, "v value", "data/sound/episode2/slide5-9.mp3")
 
         v_value = ["v: ?"]
         for i in range(0, 3):
@@ -108,7 +121,7 @@ class DigitalSignatureInterface(CodeSlide):
 
     def replace_code(self, scene, code):
         code.next_to(self.title_text, DOWN, buff=0.5)
-        scene.play(ReplacementTransform(self.code, code))
+        scene.play(ReplacementTransform(self.code, code), run_time=1.5)
         self.code = code
 
     def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):

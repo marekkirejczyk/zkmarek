@@ -130,7 +130,7 @@ EPISODE2 = [
     ECRecoverSlide(),
     EthereumTransaction(),
     ECDSA("ECDSA sign", "data/ec/signature.py"),
-    ECDSARec("ecrecover", "data/ec/recover.py"),
+    ECDSARec("ECDSA Recover", "data/ec/recover.py"),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
 ]
