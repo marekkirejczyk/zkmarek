@@ -29,6 +29,7 @@ class Intro(SlideBase):
         self.group.move_to(ORIGIN)
 
     def animate_in(self, scene):
+        self.play_music(scene, "data/sound/episode2/background.mp3")
         self.new_subsection(scene, "Title", self.sound)
         self.logo.generate_target()
         self.marek.generate_target()
