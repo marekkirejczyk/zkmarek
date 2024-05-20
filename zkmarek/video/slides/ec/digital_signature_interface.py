@@ -66,7 +66,7 @@ class DigitalSignatureInterface(CodeSlide):
         recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
         self.play_sound(scene, "data/sound/episode2/slide5-5.mp3")
-        scene.wait(2.3)
+        scene.wait(2.8)
         self.indicate_code(scene, recover[1], 2, run_time=0.7)
         self.indicate_code(scene, recover[2], 2, run_time=0.75)
         scene.wait(1)

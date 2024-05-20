@@ -32,6 +32,7 @@ from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerifica
 from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
 from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
+from zkmarek.video.slides.episode3.kzgwelcome import KZGwelcome
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
 from zkmarek.video.slides.teaser.ecrecover import ECRecoverSlideTeaser
@@ -142,6 +143,8 @@ EPISODE3 = [
 ]
 
 EPISODE4 = [
+    Intro("data/sound/episode2/slide1-0.mp3"),
+    Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
@@ -150,7 +153,10 @@ EPISODE4 = [
     CeremonyVerification(),
     CeremonyVerification2(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    KZGwelcome(),
     KZG(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    Credits2(),
 ]
 
 DECKS = {
@@ -158,9 +164,10 @@ DECKS = {
     "E1": EPISODE1,
     "E2": EPISODE2,
     "E3": EPISODE3,
+    "E4": EPISODE4,
 }
 
-DEFAULT_DECK = "E2"
+DEFAULT_DECK = "E4"
 
 
 class EllipticCurves(Scene):
