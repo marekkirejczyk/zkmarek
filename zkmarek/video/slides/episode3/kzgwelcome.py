@@ -1,4 +1,21 @@
-from manim import *
+from manim import (
+    Text,
+    MathTex,
+    Rectangle,
+    LEFT,
+    RIGHT,
+    Line,
+    DOWN,
+    UL,
+    UR,
+    FadeIn,
+    FadeOut,
+    Write,
+    UP,
+    Create,
+    ReplacementTransform,
+    Indicate,
+)
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import (
