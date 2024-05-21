@@ -4,11 +4,25 @@ from manim import (
     Indicate,
     Scene,
     ReplacementTransform,
+    UP,
+    RIGHT,
+    LEFT,
+    ApplyWave,
+    VGroup,
+    FadeIn,
+    FadeOut,
 )
-from zkmarek.video.constant import SECONDARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, HIGHLIGHT_COLOR
 
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
+from zkmarek.video.mobjects.standard import (
+    secp256k1_standard,
+)
+from zkmarek.video.mobjects.discreet_elliptic_chart import (
+    DiscreteEllipticChart,
+)
+from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 
 
 class DigitalSignatureInterface(CodeSlide):
@@ -25,7 +39,9 @@ class DigitalSignatureInterface(CodeSlide):
         code_recover = self._get_code("data/ec/signature_interface2.py", 24)
         code_ec = self._get_code("data/ec/signature_interface3.py", 24)
         code_ec_more = self._get_code("data/ec/signature_interface4.py", 18)
-
+        self.curve = Secp256k1_41
+        self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
+        self.secp256k1 = secp256k1_standard()
         self.new_subsection(scene, "intro", "data/sound/episode2/slide4-1.mp3")
         super().animate_in(scene)
 
@@ -84,34 +100,33 @@ class DigitalSignatureInterface(CodeSlide):
 
         self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-7.mp3")
         scene.wait(2.9)
-        ec_sign = [
-            "ec_sign",
-            "message: Scalar",
-            "secret_key: Scalar",
-            "signature: (r: Scalar, s: Scalar, v: ?)",
-        ]
-        self.indicate_code(scene, ec_sign[0], 0, run_time=1)
-        scene.wait(0.5)
-        self.indicate_code(scene, ec_sign[1], 0, run_time=0.5)
-        self.indicate_code(scene, ec_sign[2], 1, run_time=0.5)
-        scene.wait(0.5)
-        self.indicate_code(scene, ec_sign[3], 0, run_time=1)
-
-        self.new_subsection(scene, "ec_verify", "data/sound/episode2/slide5-8.mp3")
-        ec_verify = [
-            "ec_verify",
-            "message: Scalar",
-            "signature: (r: Scalar, s: Scalar, v: ?)",
-            "public_key: ECPoint",
-            "bool",
-        ]
-        self.indicate_code(scene, ec_verify[0], 0, run_time=1)
-        self.indicate_code(scene, ec_verify[1], 1, run_time=0.75)
-        self.indicate_code(scene, ec_verify[2], 1, run_time=1.15)
-        self.indicate_code(scene, ec_verify[3], 1, run_time=1.1)
-        self.indicate_code(scene, ec_verify[4], 0, run_time=1.8)
-
-        self.new_subsection(scene, "v value", "data/sound/episode2/slide5-9.mp3")
+        secret = ["secret_key"]
+        self.indicate_code(scene, secret[0], 0, run_time=0.7)
+        self.indicate_code(scene, secret[0], 1, run_time=0.7)
+        self.new_subsection(scene, "Scalar", "data/sound/episode2/slide5-8.mp3")
+        scene.play(code_ec_more.animate.shift(RIGHT * 3).scale(0.2))
+        scene.play(FadeIn(self.chart.scale(0.85).next_to(code_ec_more, LEFT)))
+        dots = VGroup(*self.chart.dots)
+        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
+        scene.play(
+            ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
+        )
+        scene.wait(8)
+        scene.play(FadeOut(self.chart))
+        scene.play(code_ec_more.animate.shift(LEFT * 3).scale(5))
+        self.new_subsection(scene, "public", "data/sound/episode2/slide5-9.mp3")
+        public = ["public_key: ECPoint"]
+        self.indicate_code(scene, public[0], 0, run_time=1)
+        self.indicate_code(scene, public[0], 1, run_time=0.75)
+        self.indicate_code(scene, public[0], 2, run_time=0.75)
+        scene.wait(2)
+        self.new_subsection(scene, "message", "data/sound/episode2/slide5-10.mp3")
+        message = ["message: Scalar"]
+        self.indicate_code(scene, message[0], 0, run_time=0.5)
+        self.indicate_code(scene, message[0], 1, run_time=0.5)
+        self.indicate_code(scene, message[0], 2, run_time=0.5)
+        scene.wait(3)
+        self.new_subsection(scene, "v value", "data/sound/episode2/slide5-11.mp3")
 
         v_value = ["v: ?"]
         for i in range(0, 3):
