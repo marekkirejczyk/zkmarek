@@ -59,6 +59,7 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, generate[0], 0, run_time=0.7)
         self.indicate_code(scene, generate[1], 0, run_time=0.7)
         scene.wait(4)
+
         self.play_sound(scene, "data/sound/episode2/slide5-2.mp3")
         scene.wait(0.5)
         sign = ["message", "secret_key", "signature"]
@@ -81,15 +82,16 @@ class DigitalSignatureInterface(CodeSlide):
         scene.wait(2)
         recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
+
         self.play_sound(scene, "data/sound/episode2/slide5-5.mp3")
-        scene.wait(2.8)
+        scene.wait(2.5)
         self.indicate_code(scene, recover[1], 2, run_time=0.7)
         self.indicate_code(scene, recover[2], 2, run_time=0.75)
         scene.wait(1)
         self.indicate_code(scene, recover[3], 2, run_time=0.7)
         scene.wait(4)
-
         self.replace_code(scene, code_ec)
+
         self.new_subsection(scene, "prefix ec", "data/sound/episode2/slide5-6.mp3")
         scene.wait(5)
         prefix_ec = ["ec_"]
@@ -99,38 +101,48 @@ class DigitalSignatureInterface(CodeSlide):
         self.replace_code(scene, code_ec_more)
 
         self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-7.mp3")
-        scene.wait(2.9)
-        secret = ["secret_key"]
+        scene.wait(1)
+        secret = ["secret_key: Scalar"]
         self.indicate_code(scene, secret[0], 0, run_time=0.7)
         self.indicate_code(scene, secret[0], 1, run_time=0.7)
-        self.new_subsection(scene, "Scalar", "data/sound/episode2/slide5-8.mp3")
         scene.play(code_ec_more.animate.shift(RIGHT * 3).scale(0.2))
         scene.play(FadeIn(self.chart.scale(0.85).next_to(code_ec_more, LEFT)))
         dots = VGroup(*self.chart.dots)
-        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05))
+
+        self.new_subsection(scene, "Scalar", "data/sound/episode2/slide5-8.mp3")
+        scene.wait(7)
+        scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05), run_time=1.5)
+        scene.wait(3.5)
         scene.play(
             ApplyWave(self.chart.ax[0]), ApplyWave(self.chart.ax[1]), DIRECTION=UP
         )
-        scene.wait(8)
-        scene.play(FadeOut(self.chart))
-        scene.play(code_ec_more.animate.shift(LEFT * 3).scale(5))
+        scene.wait(7)
+        scene.play(FadeOut(self.chart), run_time=0.7)
+        scene.play(code_ec_more.animate.shift(LEFT * 3).scale(5), run_time=1)
+
         self.new_subsection(scene, "public", "data/sound/episode2/slide5-9.mp3")
         public = ["public_key: ECPoint"]
-        self.indicate_code(scene, public[0], 0, run_time=1)
-        self.indicate_code(scene, public[0], 1, run_time=0.75)
-        self.indicate_code(scene, public[0], 2, run_time=0.75)
+        self.indicate_code(scene, public[0], 0, run_time=0.5)
+        self.indicate_code(scene, public[0], 1, run_time=0.5)
+        self.indicate_code(scene, public[0], 2, run_time=0.5)
         scene.wait(2)
+
         self.new_subsection(scene, "message", "data/sound/episode2/slide5-10.mp3")
         message = ["message: Scalar"]
         self.indicate_code(scene, message[0], 0, run_time=0.5)
         self.indicate_code(scene, message[0], 1, run_time=0.5)
         self.indicate_code(scene, message[0], 2, run_time=0.5)
         scene.wait(3)
-        self.new_subsection(scene, "v value", "data/sound/episode2/slide5-11.mp3")
 
-        v_value = ["v: ?"]
+        self.new_subsection(scene, "v value", "data/sound/episode2/slide5-11.mp3")
+        signature_values = ["r: Scalar", "s: Scalar", "v: ?"]
         for i in range(0, 3):
-            self.indicate_code(scene, v_value[0], i, run_time=0.35)
+            self.indicate_code(scene, signature_values[0], i, run_time=0.3)
+        for i in range(0, 3):
+            self.indicate_code(scene, signature_values[1], i, run_time=0.3)
+        scene.wait(0.5)
+        for i in range(0, 3):
+            self.indicate_code(scene, signature_values[2], i, run_time=0.35)
 
         scene.wait(1.5)
 
