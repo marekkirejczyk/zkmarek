@@ -227,8 +227,8 @@ class Signature(SlideBase):
         )
         variable_box = EquationBox(
             "{{R}} = (r, {{?}})",
-            "u_1 = {{-msg \cdot r^{-1} }}",
-            "u_2 = {{s \cdot r^{-1} }}",
+            "u_1 = {{-msg \cdot r^{-1} \mod n }}",
+            "u_2 = {{s \cdot r^{-1} \mod n }}",
         ).next_to(ver_signature, DOWN, buff=0.5)
         scene.play(ReplacementTransform(r_box, variable_box))
         scene.wait(1)
