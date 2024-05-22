@@ -117,8 +117,8 @@ EPISODE1 = [
 
 EPISODE2 = [
     Intro("data/sound/episode2/slide1-0.mp3"),
-    PreviouslyOn(),
     Sponsored(),
+    PreviouslyOn(),
     TitleSlide(
         "Digital Signature Algorithm",
         pre_wait_time=1.5,

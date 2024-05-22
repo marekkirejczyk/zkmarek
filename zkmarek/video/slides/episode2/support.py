@@ -17,7 +17,7 @@ from zkmarek.video.slides.common.tex_slide import SlideBase
 class Sponsored(SlideBase):
 
     def __init__(self) -> None:
-        super().__init__(title="This video is supported by: and sponsored by")
+        super().__init__(title="This video is supported by: and brought to you by")
 
     def construct(self):
         self.vlayer = ImageMobject(
@@ -32,7 +32,7 @@ class Sponsored(SlideBase):
             color=PRIMARY_COLOR,
         ).to_edge(UP)
         self.title_replace = Text(
-            "... and sponsored by", font=PRIMARY_FONT, color=PRIMARY_COLOR
+            "... and is brought to you by", font=PRIMARY_FONT, color=PRIMARY_COLOR
         ).to_edge(UP)
 
     def animate_in(self, scene):
