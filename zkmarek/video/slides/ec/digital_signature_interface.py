@@ -101,16 +101,16 @@ class DigitalSignatureInterface(CodeSlide):
         self.replace_code(scene, code_ec_more)
 
         self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-7.mp3")
-        scene.wait(1)
+
+        self.new_subsection(scene, "Scalar", "data/sound/episode2/slide5-8.mp3")
         secret = ["secret_key: Scalar"]
         self.indicate_code(scene, secret[0], 0, run_time=0.7)
         self.indicate_code(scene, secret[0], 1, run_time=0.7)
-        scene.play(code_ec_more.animate.shift(RIGHT * 3).scale(0.2))
+        scene.play(code_ec_more.animate.shift(RIGHT * 3).scale(0.2), run_time=1)
         scene.play(FadeIn(self.chart.scale(0.85).next_to(code_ec_more, LEFT)))
         dots = VGroup(*self.chart.dots)
 
-        self.new_subsection(scene, "Scalar", "data/sound/episode2/slide5-8.mp3")
-        scene.wait(7)
+        scene.wait(4.4)
         scene.play(Indicate(dots, color=HIGHLIGHT_COLOR, scale=1.05), run_time=1.5)
         scene.wait(3.5)
         scene.play(
