@@ -32,7 +32,6 @@ from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerifica
 from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
 from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
-from zkmarek.video.slides.episode3.kzgwelcome import KZGwelcome
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
 from zkmarek.video.slides.teaser.ecrecover import ECRecoverSlideTeaser
@@ -153,7 +152,6 @@ EPISODE4 = [
     CeremonyVerification(),
     CeremonyVerification2(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    KZGwelcome(),
     KZG(),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
