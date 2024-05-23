@@ -1,9 +1,7 @@
-from manim import (Axes, Dot, GrowFromPoint, Line,
-                   MathTex, Tex, TexTemplate, VGroup)
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup
 
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import (HIGHLIGHT_COLOR, PRIMARY_COLOR,
-                                    SECONDARY_COLOR)
+from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
 
 
 class DiscreetePolynomialChart(VGroup):
@@ -20,7 +18,7 @@ class DiscreetePolynomialChart(VGroup):
             x_range=[0, p, 10],
             y_range=[0, p, 10],
             x_length=7,
-            axis_config={"include_numbers": True}
+            axis_config={"include_numbers": True},
         )
         self.ax.color = PRIMARY_COLOR
         self.add(self.ax)
@@ -29,10 +27,8 @@ class DiscreetePolynomialChart(VGroup):
         template.add_to_preamble(r"\usepackage{amsfonts}")
         field_label = r"$\mathbb{F}_{" + str(self.p) + "}$"
         self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template,
-                font_size=26, color=PRIMARY_COLOR),
-            Tex(field_label, tex_template=template,
-                font_size=26, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=26, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=26, color=PRIMARY_COLOR),
         )
         self.add(self.labels)
 
@@ -44,7 +40,6 @@ class DiscreetePolynomialChart(VGroup):
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
-
 
     def add_xaxis_label(self, x, label):
         label = MathTex(label, color=PRIMARY_COLOR)
@@ -64,8 +59,9 @@ class DiscreetePolynomialChart(VGroup):
             x = FieldElement(i, self.p)
             y = self.f(x)
             yy = y.value - y_shift
-            a = d.animate.move_to(self.ax.c2p(x.value, yy))
-            animations.append(a)
+            if yy > 0:
+                a = d.animate.move_to(self.ax.c2p(x.value, yy))
+                animations.append(a)
         scene.play(*animations)
 
     def animate_shift_dots_wrap_fix(self, scene, y_shift):

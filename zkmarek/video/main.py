@@ -27,6 +27,7 @@ from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.episode3.KZG import KZG
+from zkmarek.video.slides.episode3.verkle import Verkle
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
 from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
@@ -153,6 +154,7 @@ EPISODE4 = [
     CeremonyVerification2(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     KZG(),
+    Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
 ]
@@ -165,7 +167,7 @@ DECKS = {
     "E4": EPISODE4,
 }
 
-DEFAULT_DECK = "E2"
+DEFAULT_DECK = "E4"
 
 
 class EllipticCurves(Scene):
