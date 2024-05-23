@@ -41,3 +41,6 @@ class Credits(SlideBase):
         scene.play(
             MoveToTarget(self.group, run_time=32, rate_func=rate_functions.linear)
         )
+
+    def animate_out(self, scene):
+        self.stop_music(scene)

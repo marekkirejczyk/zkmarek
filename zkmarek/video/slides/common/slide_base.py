@@ -13,6 +13,7 @@ class SlideBase(VGroup):
         self.title = title
         self.start_time = None
         self.current_sound = None
+        self.sound_id = None
 
     def __str__(self):
         return self.title
@@ -21,7 +22,13 @@ class SlideBase(VGroup):
         pass
 
     def play_music(self, scene, sound):
-        scene.add_sound(sound)
+        self.sound_id = scene.add_sound(sound)
+        return self.sound_id
+
+    def stop_music(self, scene):
+        if self.sound_id:
+            scene.remove_sound(self.sound_id)
+            self.sound_id = None
 
     def wait_for_sound(self, scene):
         if self.current_sound is not None:
