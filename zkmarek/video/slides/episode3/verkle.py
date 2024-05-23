@@ -6,8 +6,6 @@ from manim import (
     RIGHT,
     Line,
     DOWN,
-    UL,
-    UR,
     FadeIn,
     FadeOut,
     Write,
@@ -21,7 +19,6 @@ from manim import (
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
-    PRIMARY_FONT,
     SECONDARY_COLOR,
     HIGHLIGHT_COLOR,
 )
