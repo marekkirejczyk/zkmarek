@@ -76,6 +76,7 @@ class KZG(SlideBase):
         self.chart.gen_points()
         scene.play(FadeIn(self.chart))
         scene.play(FadeIn(self.polynomial))
+        scene.play(FadeIn(self.equation))
 
         self.chart.add_xaxis_label(self.tau.value, r"\tau")
         line_tau = self.chart.animate_create_vertical_line(
@@ -90,7 +91,6 @@ class KZG(SlideBase):
             scene, self.z.value, self.y.value
         )
         self.play_sound(scene, "data/sound/episode4/slide11-1.mp3")
-        scene.play(FadeIn(self.equation))
         self.chart.add(line_tau_y)
 
         self.chart.animate_shift_dots(scene, self.y.value)
