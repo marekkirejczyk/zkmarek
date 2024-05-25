@@ -59,7 +59,7 @@ class DiscreetePolynomialChart(VGroup):
             x = FieldElement(i, self.p)
             y = self.f(x)
             yy = y.value - y_shift
-            if yy > 0:
+            if yy >= 0:
                 a = d.animate.move_to(self.ax.c2p(x.value, yy))
                 animations.append(a)
         scene.play(*animations)

@@ -22,13 +22,7 @@ class SlideBase(VGroup):
         pass
 
     def play_music(self, scene, sound):
-        self.sound_id = scene.add_sound(sound)
-        return self.sound_id
-
-    def stop_music(self, scene):
-        if self.sound_id:
-            scene.remove_sound(self.sound_id)
-            self.sound_id = None
+        scene.add_sound(sound)
 
     def wait_for_sound(self, scene):
         if self.current_sound is not None:

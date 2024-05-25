@@ -27,6 +27,7 @@ from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
 from zkmarek.video.slides.episode3.KZG import KZG
+from zkmarek.video.slides.episode3.PCS import PolynomialCommitment
 from zkmarek.video.slides.episode3.verkle import Verkle
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
@@ -153,6 +154,7 @@ EPISODE4 = [
     CeremonyVerification(),
     CeremonyVerification2(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    PolynomialCommitment(),
     KZG(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
