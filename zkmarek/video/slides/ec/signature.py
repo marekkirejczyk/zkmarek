@@ -483,7 +483,6 @@ class Signature(SlideBase):
             scene,
             "Cancel msg*r^-1 with inverse",
             sound="data/sound/episode2/s27-16.mp3",
-            sound="data/sound/episode2/s27-16.wav",
         )
         strike1 = StrikeLine(equation9[1])
         scene.play(Write(strike1))
