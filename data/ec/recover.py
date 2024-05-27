@@ -1,4 +1,4 @@
-def recover(message: int, r: int, s: int, v: int) -> Optional[ECAffine]:
+def ec_recover(message: int, r: int, s: int, v: int) -> Optional[ECAffine]:
     n = group_order
     R = ECAffine.from_x(r, v, curve)
     if R is None:

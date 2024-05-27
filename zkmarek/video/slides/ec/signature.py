@@ -113,6 +113,9 @@ class Signature(SlideBase):
             "⚂",
             "R = secret \cdot G",
             PRIMARY_COLOR,
+            "⎔",
+            "n = group\ order",
+            PUB_COLOR,
             "⚂",
             "n = group\ order",
             PRIMARY_COLOR,
@@ -136,6 +139,9 @@ class Signature(SlideBase):
             PUB_COLOR,
             "⎘",
             "s = {{ (msg + r \cdot K_{Priv}) \cdot secret^{-1} }} \mod n",
+            PUB_COLOR,
+            "⎘",
+            "n = group\ order",
             PUB_COLOR,
         ).next_to(msg_box3, DOWN, buff=0.5)
 
@@ -233,8 +239,8 @@ class Signature(SlideBase):
         )
         variable_box = EquationBox(
             "{{R}} = (r, {{?}})",
-            "u_1 = {{-msg \cdot r^{-1} }}",
-            "u_2 = {{s \cdot r^{-1} }}",
+            "u_1 = {{-msg \cdot r^{-1} \mod n }}",
+            "u_2 = {{s \cdot r^{-1} \mod n }}",
         ).next_to(ver_signature, DOWN, buff=0.5)
         scene.play(ReplacementTransform(r_box, variable_box))
         scene.wait(1)
@@ -476,7 +482,7 @@ class Signature(SlideBase):
         self.new_subsection(
             scene,
             "Cancel msg*r^-1 with inverse",
-            sound="data/sound/episode2/s27-16.wav",
+            sound="data/sound/episode2/s27-16.mp3",
         )
         strike1 = StrikeLine(equation9[1])
         scene.play(Write(strike1))

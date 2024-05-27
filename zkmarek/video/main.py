@@ -142,6 +142,8 @@ EPISODE3 = [
 ]
 
 EPISODE4 = [
+    Intro("data/sound/episode2/slide1-0.mp3"),
+    Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
@@ -151,6 +153,8 @@ EPISODE4 = [
     CeremonyVerification2(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     KZG(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    Credits2(),
 ]
 
 DECKS = {
@@ -158,6 +162,7 @@ DECKS = {
     "E1": EPISODE1,
     "E2": EPISODE2,
     "E3": EPISODE3,
+    "E4": EPISODE4,
 }
 
 DEFAULT_DECK = "E2"

@@ -87,10 +87,10 @@ class ECRecoverSlide(SlideBase):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars), run_time=0.5)
 
-        scene.wait(1)
         scene.play(FadeIn(self.signature))
-        scene.wait(1)
+        scene.wait(1.7)
         scene.play(ReplacementTransform(self.signature, self.signature2))
+        scene.wait(2)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self), run_time=0.5)
