@@ -116,6 +116,9 @@ class Signature(SlideBase):
             "⎔",
             "n = group\ order",
             PUB_COLOR,
+            "⚂",
+            "n = group\ order",
+            PRIMARY_COLOR,
             "⎘",
             "r = R_x \mod n",
             PUB_COLOR,
@@ -127,6 +130,9 @@ class Signature(SlideBase):
             PRIV_COLOR,
             "⚂",
             "R = {{secret \cdot G}}",
+            PRIMARY_COLOR,
+            "⚂",
+            "n = group\ order",
             PRIMARY_COLOR,
             "⎘",
             "r = R_x \mod n",
@@ -477,6 +483,7 @@ class Signature(SlideBase):
             scene,
             "Cancel msg*r^-1 with inverse",
             sound="data/sound/episode2/s27-16.mp3",
+            sound="data/sound/episode2/s27-16.wav",
         )
         strike1 = StrikeLine(equation9[1])
         scene.play(Write(strike1))
