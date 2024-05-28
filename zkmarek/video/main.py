@@ -55,6 +55,7 @@ from zkmarek.video.slides.episode2.credits import Credits as Credits2
 from zkmarek.video.slides.episode2.deterministic import Deterministic
 from zkmarek.video.slides.episode2.ecdsa import ECDSA
 from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
+from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
 
 
 config.width = 16
@@ -137,13 +138,14 @@ EPISODE2 = [
     Credits2(),
 ]
 
-EPISODE3 = [
-    SchnorrSlide(),
-    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
-    TexSlide("Sources", "data/schnorr/sources.tex"),
+TEASER2 = [
+    Intro("data/sound/episode2/slide1-0.mp3"),
+    Sponsored(),
+    ETHteaser(),
+    Subscribe("data/sound/episode1/s28.wav"),
 ]
 
-EPISODE4 = [
+EPISODE3 = [
     Intro("data/sound/episode2/slide1-0.mp3"),
     Sponsored(),
     TitleSlide("Pairing"),
@@ -161,15 +163,30 @@ EPISODE4 = [
     Credits2(),
 ]
 
+EPISODE4 = [
+    Intro("data/sound/episode2/slide1-0.mp3"),
+    Sponsored(),
+    Verkle(),
+    Subscribe("data/sound/episode1/s28.wav"),
+]
+
+EPISODE5 = [
+    SchnorrSlide(),
+    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
+    TexSlide("Sources", "data/schnorr/sources.tex"),
+]
+
 DECKS = {
     "TEASER": TEASER,
     "E1": EPISODE1,
+    "TEASER2": TEASER2,
     "E2": EPISODE2,
     "E3": EPISODE3,
     "E4": EPISODE4,
+    "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "E4"
+DEFAULT_DECK = "TEASER2"
 
 
 class EllipticCurves(Scene):
