@@ -6,7 +6,7 @@ from manim import (
 )
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
-from zkmarek.video.mobjects.equation_box import EquationBox, EquationBoxWithIcons
+from zkmarek.video.mobjects.equation_box import EquationBoxWithIcons
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
 
