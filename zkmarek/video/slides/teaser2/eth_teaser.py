@@ -1,18 +1,12 @@
 from manim import (
     DOWN,
     RIGHT,
-    UP,
     FadeIn,
-    FadeOut,
     Indicate,
-    Tex,
-    TransformMatchingTex,
     VGroup,
-    Wait,
 )
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
-from zkmarek.video.mobjects.discreet_elliptic_chart import DiscreteEllipticChart
 from zkmarek.video.mobjects.equation_box import EquationBox, EquationBoxWithIcons
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
