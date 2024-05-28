@@ -61,10 +61,6 @@ class EthereumTransaction(CodeSlide):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
 
-        self.new_subsection(
-            scene, "Ethereum Transaction", sound="data/sound/episode2/s29-2.wav"
-        )
-
         self.signature = EquationBoxWithIcons.create(
             "⎘",
             "r = R_x \mod n",
@@ -73,18 +69,11 @@ class EthereumTransaction(CodeSlide):
             "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n",
             PRIMARY_COLOR,
         )
-
         scene.wait(2)
-        self.r_box = EquationBox("R = (r, ?)")
-
-        VGroup(self.signature, self.r_box).arrange(RIGHT, buff=1).next_to(
-            self.code, DOWN, buff=0.5
-        )
+        self.signature.arrange(RIGHT, buff=1).next_to(self.code, DOWN, buff=0.5)
 
         scene.play(FadeIn(self.signature))
         scene.play(Indicate(self.signature[1], color=SECONDARY_COLOR))
-        scene.wait(4)
-        scene.play(FadeIn(self.r_box))
 
     def animate_out(self, scene):
         pass
