@@ -3,7 +3,6 @@ from manim import (
     RIGHT,
     FadeIn,
     Indicate,
-    VGroup,
 )
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
