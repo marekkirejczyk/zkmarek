@@ -74,8 +74,9 @@ class EthereumTransaction(CodeSlide):
         for fragment in fragments3:
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
+        scene.wait(5.5)
 
     def animate_out(self, scene):
         scene.play(
-            FadeOut(self.signature), FadeOut(self.code), FadeOut(self.title_text)
+            FadeOut(self.signature2), FadeOut(self.code), FadeOut(self.title_text)
         )
