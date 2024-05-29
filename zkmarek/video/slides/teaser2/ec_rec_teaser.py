@@ -5,7 +5,6 @@ from manim import (
     FadeIn,
     FadeOut,
     Indicate,
-    ReplacementTransform,
     Tex,
     Text,
     Scene,
