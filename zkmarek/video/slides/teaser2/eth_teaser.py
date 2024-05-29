@@ -64,7 +64,7 @@ class EthereumTransaction(CodeSlide):
         self.signature.next_to(self.code, DOWN, buff=0.5)
         self.signature2.next_to(self.code, DOWN, buff=0.5)
         scene.play(FadeIn(self.signature), run_time=0.7)
-        scene.wait(1)
+        scene.wait(2.5)
         scene.play(ReplacementTransform(self.signature, self.signature2), run_time=0.7)
 
         self.new_subsection(scene, "rsv values", "data/sound/teaser2/slide1-2.mp3")
@@ -73,8 +73,8 @@ class EthereumTransaction(CodeSlide):
         fragments3 = [" 0", " 1", " 27", " 28"]
         for fragment in fragments3:
             chars = find_in_code(self.code, fragment)
-            scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
-        scene.wait(5.5)
+            scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.7))
+        scene.wait(6.5)
 
     def animate_out(self, scene):
         scene.play(
