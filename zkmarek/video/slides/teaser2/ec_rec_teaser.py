@@ -8,9 +8,10 @@ from manim import (
     ReplacementTransform,
     Tex,
     Text,
+    Scene,
 )
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.equation_box import EquationBoxWithIcons
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.utils import find_in_code, load
@@ -50,9 +51,6 @@ class ECRecoverSlide(SlideBase):
             "⎘",
             "r = R_x \mod n",
             PRIMARY_COLOR,
-            "⎘",
-            "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n",
-            PRIMARY_COLOR,
         ).next_to(self.docs, DOWN, buff=1)
 
         self.signature2 = EquationBoxWithIcons.create(
@@ -62,34 +60,24 @@ class ECRecoverSlide(SlideBase):
             "⎘",
             "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n",
             PRIMARY_COLOR,
-            "⎘",
-            "v = ?",
-            PRIMARY_COLOR,
         ).next_to(self.docs, DOWN, buff=1)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "ECRecover", sound="data/sound/teaser2/slide1-0.mp3")
 
-        scene.play(FadeIn(self.title_text))
-        scene.play(FadeIn(self.code))
-        scene.play(FadeIn(self.docs))
-        fragments = [
-            "bytes32 s",
-            "bytes32 r",
-            "uint8 v",
-        ]
+        scene.play(FadeIn(self.title_text), run_time=0.5)
+        scene.play(FadeIn(self.code), run_time=0.5)
+        scene.play(FadeIn(self.docs), run_time=0.5)
 
-        scene.wait(1.5)
+        scene.wait(5.5)
 
-        for fragment in fragments:
-            chars = find_in_code(self.code, fragment)
-            scene.play(Indicate(*chars), run_time=0.5)
-
-        scene.play(FadeIn(self.signature))
-        scene.wait(1.7)
-        scene.play(ReplacementTransform(self.signature, self.signature2))
-        scene.wait(2)
+        self.indicate_code(scene, "ecrecover")
+        scene.wait(4.3)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self), run_time=0.5)
         self.wait_for_sound(scene)
+
+    def indicate_code(self, scene: Scene, fragment: str, index=0, run_time=0.5):
+        chars = find_in_code(self.code, fragment)
+        scene.play(Indicate(chars[index]), color=SECONDARY_COLOR, run_time=run_time)

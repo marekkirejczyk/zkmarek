@@ -56,6 +56,7 @@ from zkmarek.video.slides.episode2.deterministic import Deterministic
 from zkmarek.video.slides.episode2.ecdsa import ECDSA
 from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
 from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
+from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
 
 
 config.width = 16
@@ -118,6 +119,14 @@ EPISODE1 = [
     Credits(),
 ]
 
+TEASER2 = [
+    Intro("data/sound/episode2/slide1-0.mp3"),
+    Sponsored(),
+    ECRteaser(),
+    ETHteaser(),
+    Subscribe("data/sound/episode1/s28.wav"),
+]
+
 EPISODE2 = [
     Intro("data/sound/episode2/slide1-0.mp3"),
     Sponsored(),
@@ -136,13 +145,6 @@ EPISODE2 = [
     ECDSARec("ECDSA Recover", "data/ec/recover.py"),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
-]
-
-TEASER2 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
-    Sponsored(),
-    ETHteaser(),
-    Subscribe("data/sound/episode1/s28.wav"),
 ]
 
 EPISODE3 = [
