@@ -14,7 +14,7 @@ class EthereumTransaction(CodeSlide):
 
     def animate_in(self, scene):
 
-        super().animate_in(scene)
+        scene.play(FadeIn(self.title_text), FadeIn(self.code), run_time=0.7)
         self.new_subsection(
             scene, "Ethereum Transaction", sound="data/sound/teaser2/slide1-1.mp3"
         )
@@ -35,7 +35,7 @@ class EthereumTransaction(CodeSlide):
 
         scene.play(*indications)
 
-        scene.wait(4)
+        scene.wait(6.5)
 
         fragments2 = [
             '"s": "0x4a94e0265f31fd90dc414433d5acdaf28d3ebf0a7657841c4edc7564808b078b"',
@@ -47,8 +47,7 @@ class EthereumTransaction(CodeSlide):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.4))
 
-        scene.wait(4.5)
-        self.new_subsection(scene, "rsv values", "data/sound/teaser2/slide1-2.mp3")
+        scene.wait(0.5)
         self.signature = EquationBoxWithIcons.create(
             "⎘",
             "r = R_x \mod n",
@@ -65,14 +64,18 @@ class EthereumTransaction(CodeSlide):
         self.signature.next_to(self.code, DOWN, buff=0.5)
         self.signature2.next_to(self.code, DOWN, buff=0.5)
         scene.play(FadeIn(self.signature), run_time=0.7)
+        scene.wait(1)
         scene.play(ReplacementTransform(self.signature, self.signature2), run_time=0.7)
 
-        scene.wait(2)
+        self.new_subsection(scene, "rsv values", "data/sound/teaser2/slide1-2.mp3")
+
+        scene.wait(3.5)
         fragments3 = [" 0", " 1", " 27", " 28"]
         for fragment in fragments3:
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.5))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.signature))
-        scene.play(FadeOut(self.code), FadeOut(self.title_text))
+        scene.play(
+            FadeOut(self.signature), FadeOut(self.code), FadeOut(self.title_text)
+        )
