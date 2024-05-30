@@ -46,21 +46,6 @@ class ECRecoverSlide(SlideBase):
         self.code.next_to(self.title_text, DOWN, buff=0.5)
         self.docs.next_to(self.code, DOWN, buff=0.5)
 
-        self.signature = EquationBoxWithIcons.create(
-            "⎘",
-            "r = R_x \mod n",
-            PRIMARY_COLOR,
-        ).next_to(self.docs, DOWN, buff=1)
-
-        self.signature2 = EquationBoxWithIcons.create(
-            "⎘",
-            "r = R_x \mod n",
-            PRIMARY_COLOR,
-            "⎘",
-            "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n",
-            PRIMARY_COLOR,
-        ).next_to(self.docs, DOWN, buff=1)
-
     def animate_in(self, scene):
         self.new_subsection(scene, "ECRecover", sound="data/sound/teaser2/slide1-0.mp3")
 
@@ -69,9 +54,21 @@ class ECRecoverSlide(SlideBase):
         scene.play(FadeIn(self.docs), run_time=0.5)
 
         scene.wait(5.5)
-
+        self.new_subsection(scene, "rsv values", "data/sound/teaser2/slide1-1.mp3")
         self.indicate_code(scene, "ecrecover")
-        scene.wait(4.3)
+        fragments = [
+            "bytes32 s",
+            "bytes32 r",
+            "uint8 v",
+        ]
+
+        scene.wait(1.75)
+
+        for fragment in fragments:
+            chars = find_in_code(self.code, fragment)
+            scene.play(Indicate(*chars), run_time=0.4)
+
+        scene.wait(3)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self), run_time=0.5)

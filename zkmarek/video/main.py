@@ -57,6 +57,7 @@ from zkmarek.video.slides.episode2.ecdsa import ECDSA
 from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
 from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
 from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
+from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 
 
 config.width = 16
@@ -120,11 +121,11 @@ EPISODE1 = [
 ]
 
 TEASER2 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
-    Sponsored(),
+    Intro("data/sound/teaser2/slide0-0.mp3"),
+    SponsoredTeaser(),
     ECRteaser(),
     ETHteaser(),
-    Subscribe("data/sound/episode1/s28.wav"),
+    Subscribe("data/sound/teaser2/slide2-0.mp3"),
 ]
 
 EPISODE2 = [
@@ -148,7 +149,7 @@ EPISODE2 = [
 ]
 
 EPISODE3 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
+    Intro("data/sound/teaser2/slide0-0.mp3"),
     Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),

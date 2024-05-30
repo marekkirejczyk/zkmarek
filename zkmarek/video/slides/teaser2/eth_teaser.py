@@ -1,7 +1,6 @@
-from manim import DOWN, ReplacementTransform, FadeIn, Indicate, FadeOut
+from manim import FadeIn, Indicate, FadeOut
 
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
-from zkmarek.video.mobjects.equation_box import EquationBoxWithIcons
+from zkmarek.video.constant import SECONDARY_COLOR
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
 
@@ -16,7 +15,7 @@ class EthereumTransaction(CodeSlide):
 
         scene.play(FadeIn(self.title_text), FadeIn(self.code), run_time=0.7)
         self.new_subsection(
-            scene, "Ethereum Transaction", sound="data/sound/teaser2/slide1-1.mp3"
+            scene, "Ethereum Transaction", sound="data/sound/teaser2/slide1-2.mp3"
         )
         fragments1 = [
             '"from"',
@@ -27,7 +26,7 @@ class EthereumTransaction(CodeSlide):
             '"hash"',
             "...",
         ]
-
+        scene.wait(2.5)
         indications = []
         for fragment in fragments1:
             chars = find_in_code(self.code, fragment)
@@ -35,8 +34,7 @@ class EthereumTransaction(CodeSlide):
 
         scene.play(*indications)
 
-        scene.wait(6.5)
-
+        scene.wait(2)
         fragments2 = [
             '"s": "0x4a94e0265f31fd90dc414433d5acdaf28d3ebf0a7657841c4edc7564808b078b"',
             '"r": "0xa99c1ac8787f592251ae67055afaeab9ade2e36eea47a2db213aa5f76f00ba49"',
@@ -47,36 +45,12 @@ class EthereumTransaction(CodeSlide):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.4))
 
-        scene.wait(0.5)
-        self.signature = EquationBoxWithIcons.create(
-            "⎘",
-            "r = R_x \mod n",
-            PRIMARY_COLOR,
-        )
-        self.signature2 = EquationBoxWithIcons.create(
-            "⎘",
-            "r = R_x \mod n",
-            PRIMARY_COLOR,
-            "⎘",
-            "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n",
-            PRIMARY_COLOR,
-        )
-        self.signature.next_to(self.code, DOWN, buff=0.5)
-        self.signature2.next_to(self.code, DOWN, buff=0.5)
-        scene.play(FadeIn(self.signature), run_time=0.7)
-        scene.wait(2.5)
-        scene.play(ReplacementTransform(self.signature, self.signature2), run_time=0.7)
+        scene.wait(5)
 
-        self.new_subsection(scene, "rsv values", "data/sound/teaser2/slide1-2.mp3")
-
-        scene.wait(3.5)
         fragments3 = [" 0", " 1", " 27", " 28"]
         for fragment in fragments3:
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.7))
-        scene.wait(6.5)
 
     def animate_out(self, scene):
-        scene.play(
-            FadeOut(self.signature2), FadeOut(self.code), FadeOut(self.title_text)
-        )
+        scene.play(FadeOut(self.code), FadeOut(self.title_text))
