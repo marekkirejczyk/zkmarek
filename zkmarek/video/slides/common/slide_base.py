@@ -13,6 +13,7 @@ class SlideBase(VGroup):
         self.title = title
         self.start_time = None
         self.current_sound = None
+        self.sound_id = None
 
     def __str__(self):
         return self.title
