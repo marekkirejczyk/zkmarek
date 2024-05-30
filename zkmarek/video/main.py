@@ -65,7 +65,10 @@ config.height = 9
 
 
 TEASER = [
-    Intro("data/sound/teaser/s1.wav"),
+    Intro(
+        sound="data/sound/teaser/s1.wav",
+        background_sound="data/sound/teaser/background.mp3",
+    ),
     TitleSlide("Episode 1", subtitle="Teaser"),
     ZKPSTitle(),
     SeasonTeaser(),
@@ -77,7 +80,10 @@ TEASER = [
 ]
 
 EPISODE1 = [
-    Intro("data/sound/episode1/s1.wav"),
+    Intro(
+        sound="data/sound/episode1/s1.wav",
+        background_sound="data/sound/episode1/background.m4a",
+    ),
     TitleSlide(
         "Elliptic curves",
         subtitle="in Ethereum wallet",
@@ -121,7 +127,10 @@ EPISODE1 = [
 ]
 
 TEASER2 = [
-    Intro("data/sound/teaser2/slide0-0.mp3"),
+    Intro(
+        sound="data/sound/teaser2/slide0-0.mp3",
+        background_sound="data/sound/teaser2/backgroundt.mp3",
+    ),
     SponsoredTeaser(),
     ECRteaser(),
     ETHteaser(),
@@ -129,7 +138,10 @@ TEASER2 = [
 ]
 
 EPISODE2 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
+    Intro(
+        sound="data/sound/episode2/slide1-0.mp3",
+        background_sound="data/sound/episode2/background.mp3",
+    ),
     Sponsored(),
     PreviouslyOn(),
     TitleSlide(
@@ -149,7 +161,7 @@ EPISODE2 = [
 ]
 
 EPISODE3 = [
-    Intro("data/sound/teaser2/slide0-0.mp3"),
+    # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
     Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
@@ -167,7 +179,7 @@ EPISODE3 = [
 ]
 
 EPISODE4 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
+    # Intro("data/sound/episode2/slide1-0.mp3"),
     Sponsored(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),

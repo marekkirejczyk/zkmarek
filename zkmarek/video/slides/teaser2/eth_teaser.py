@@ -26,7 +26,7 @@ class EthereumTransaction(CodeSlide):
             '"hash"',
             "...",
         ]
-        scene.wait(2.5)
+        scene.wait(1.5)
         indications = []
         for fragment in fragments1:
             chars = find_in_code(self.code, fragment)
@@ -45,7 +45,7 @@ class EthereumTransaction(CodeSlide):
             chars = find_in_code(self.code, fragment)
             scene.play(Indicate(*chars, color=SECONDARY_COLOR, run_time=0.4))
 
-        scene.wait(5)
+        scene.wait(4.5)
 
         fragments3 = [" 0", " 1", " 27", " 28"]
         for fragment in fragments3:
