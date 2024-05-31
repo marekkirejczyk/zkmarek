@@ -36,9 +36,9 @@ class DigitalSignatureInterface(CodeSlide):
         )
 
     def animate_in(self, scene):
-        code_recover = self._get_code("data/ec/signature_interface2.py", 24)
-        code_ec = self._get_code("data/ec/signature_interface3.py", 24)
-        code_ec_more = self._get_code("data/ec/signature_interface4.py", 18)
+        self.code_recover = self._get_code("data/ec/signature_interface2.py", 24)
+        self.code_ec = self._get_code("data/ec/signature_interface3.py", 24)
+        self.code_ec_more = self._get_code("data/ec/signature_interface4.py", 18)
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
         self.secp256k1 = secp256k1_standard()
@@ -78,7 +78,7 @@ class DigitalSignatureInterface(CodeSlide):
 
         self.play_sound(scene, "data/sound/episode2/slide5-4.mp3")
         scene.wait(7)
-        self.replace_code(scene, code_recover)
+        self.replace_code(scene, self.code_recover)
         scene.wait(2)
         recover = ["recover", "message", "signature", "public_key"]
         self.indicate_code(scene, recover[0], 0, run_time=0.7)
@@ -90,7 +90,7 @@ class DigitalSignatureInterface(CodeSlide):
         scene.wait(1)
         self.indicate_code(scene, recover[3], 2, run_time=0.7)
         scene.wait(4)
-        self.replace_code(scene, code_ec)
+        self.replace_code(scene, self.code_ec)
 
         self.new_subsection(scene, "prefix ec", "data/sound/episode2/slide5-6.mp3")
         scene.wait(5)
@@ -98,7 +98,7 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, prefix_ec[0], 0, run_time=0.5)
         self.indicate_code(scene, prefix_ec[0], 1, run_time=0.5)
         self.indicate_code(scene, prefix_ec[0], 2, run_time=0.5)
-        self.replace_code(scene, code_ec_more)
+        self.replace_code(scene, self.code_ec_more)
 
         self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-7.mp3")
 
@@ -106,8 +106,8 @@ class DigitalSignatureInterface(CodeSlide):
         secret = ["secret_key: Scalar"]
         self.indicate_code(scene, secret[0], 0, run_time=0.7)
         self.indicate_code(scene, secret[0], 1, run_time=0.7)
-        scene.play(code_ec_more.animate.shift(RIGHT * 3).scale(0.2), run_time=1)
-        scene.play(FadeIn(self.chart.scale(0.85).next_to(code_ec_more, LEFT)))
+        scene.play(self.code_ec_more.animate.shift(RIGHT * 3).scale(0.2), run_time=1)
+        scene.play(FadeIn(self.chart.scale(0.85).next_to(self.code_ec_more, LEFT)))
         dots = VGroup(*self.chart.dots)
 
         scene.wait(4.4)
@@ -118,7 +118,7 @@ class DigitalSignatureInterface(CodeSlide):
         )
         scene.wait(7)
         scene.play(FadeOut(self.chart), run_time=0.7)
-        scene.play(code_ec_more.animate.shift(LEFT * 3).scale(5), run_time=1)
+        scene.play(self.code_ec_more.animate.shift(LEFT * 3).scale(5), run_time=1)
 
         self.new_subsection(scene, "public", "data/sound/episode2/slide5-9.mp3")
         public = ["public_key: ECPoint"]
@@ -145,6 +145,9 @@ class DigitalSignatureInterface(CodeSlide):
             self.indicate_code(scene, signature_values[2], i, run_time=0.35)
 
         scene.wait(1.5)
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.code_ec_more), FadeOut(self.title_text))
 
     def replace_code(self, scene, code):
         code.next_to(self.title_text, DOWN, buff=0.5)

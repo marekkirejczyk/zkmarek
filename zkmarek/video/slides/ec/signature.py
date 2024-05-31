@@ -113,7 +113,7 @@ class Signature(SlideBase):
             "⚂",
             "R = secret \cdot G",
             PRIMARY_COLOR,
-            "⎔",
+            "⚂",
             "n = group\ order",
             PUB_COLOR,
             "⎘",
@@ -133,9 +133,6 @@ class Signature(SlideBase):
             PUB_COLOR,
             "⎘",
             "s = {{ (msg + r \cdot K_{Priv}) \cdot secret^{-1} }} \mod n",
-            PUB_COLOR,
-            "⎘",
-            "n = group\ order",
             PUB_COLOR,
         ).next_to(msg_box3, DOWN, buff=0.5)
 
