@@ -162,14 +162,14 @@ EPISODE2 = [
 ]
 
 TEASER3 = [
-    Sponsored(),
+    # Sponsored(),
     SignatureMath(),
     Intuition(),
 ]
 
 EPISODE3 = [
     # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
-    Sponsored(),
+    # Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
@@ -187,7 +187,7 @@ EPISODE3 = [
 
 EPISODE4 = [
     # Intro("data/sound/episode2/slide1-0.mp3"),
-    Sponsored(),
+    # Sponsored(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
 ]
