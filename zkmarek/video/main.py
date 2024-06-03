@@ -58,7 +58,8 @@ from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
 from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
 from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
-
+from zkmarek.video.slides.teaser3.signature import SignatureMath
+from zkmarek.video.slides.teaser3.intuition import Intuition
 
 config.width = 16
 config.height = 9
@@ -160,6 +161,12 @@ EPISODE2 = [
     Credits2(),
 ]
 
+TEASER3 = [
+    Sponsored(),
+    SignatureMath(),
+    Intuition(),
+]
+
 EPISODE3 = [
     # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
     Sponsored(),
@@ -194,14 +201,15 @@ EPISODE5 = [
 DECKS = {
     "TEASER": TEASER,
     "E1": EPISODE1,
-    "TEASER2": TEASER2,
+    "T2": TEASER2,
     "E2": EPISODE2,
+    "T3": TEASER3,
     "E3": EPISODE3,
     "E4": EPISODE4,
     "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "TEASER2"
+DEFAULT_DECK = "T3"
 
 
 class EllipticCurves(Scene):
