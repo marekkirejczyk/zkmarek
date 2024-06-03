@@ -53,7 +53,7 @@ class Signature(SlideBase):
         scene.play(FadeIn(self.sender_label), FadeIn(self.receiver_label))
         self.h_line = DashedLine(
             scene.camera.frame_height / 2 * UP,
-            scene.camera.frame_height / 2 * DOWN,
+            scene.camera.frame_height / 4 * DOWN,
             color=PRIMARY_COLOR,
         )
         scene.play(Create(self.h_line))
@@ -119,7 +119,7 @@ class Signature(SlideBase):
             "⎘",
             "r = R_x \mod n",
             PUB_COLOR,
-        ).next_to(msg_box3, DOWN, buff=0.5)
+        ).next_to(msg_box3, DOWN, buff=0.2)
 
         signature5 = EquationBoxWithIcons.create(
             "⚂",
@@ -134,7 +134,7 @@ class Signature(SlideBase):
             "⎘",
             "s = {{ (msg + r \cdot K_{Priv}) \cdot secret^{-1} }} \mod n",
             PUB_COLOR,
-        ).next_to(msg_box3, DOWN, buff=0.5)
+        ).next_to(msg_box3, DOWN, buff=0.2)
 
         # Animation - part 2 - introduce signatory artifacts
         self.new_slide(scene, "Introduce keys")
@@ -218,11 +218,11 @@ class Signature(SlideBase):
             "s = (msg + r \cdot K_{Priv}) \cdot secret^{-1} \mod n",
             PUB_COLOR,
         ).align_to(signature5, DOWN)
-        scene.play(ver_signature.animate.next_to(ver_msg_box, DOWN, buff=0.5))
+        scene.play(ver_signature.animate.next_to(ver_msg_box, DOWN, buff=0.2))
 
         scene.wait(2)
         self.new_slide(scene, "Recover R")
-        r_box = EquationBox("R = (r, ?)").next_to(ver_signature, DOWN, buff=0.5)
+        r_box = EquationBox("R = (r, ?)").next_to(ver_signature, DOWN, buff=0.2)
         scene.play(FadeIn(r_box))
 
         self.new_subsection(
@@ -232,7 +232,7 @@ class Signature(SlideBase):
             "{{R}} = (r, {{?}})",
             "u_1 = {{-msg \cdot r^{-1} \mod n }}",
             "u_2 = {{s \cdot r^{-1} \mod n }}",
-        ).next_to(ver_signature, DOWN, buff=0.5)
+        ).next_to(ver_signature, DOWN, buff=0.2)
         scene.play(ReplacementTransform(r_box, variable_box))
         scene.wait(1)
         scene.play(Indicate(variable_box[1]))
@@ -243,7 +243,7 @@ class Signature(SlideBase):
             scene, "Introduce Q", sound="data/sound/episode2/s27-12.wav"
         )
         q_box = EquationBox("Q = u_1 \cdot G + u_2 \cdot {{R}}").next_to(
-            variable_box, DOWN, buff=0.5
+            variable_box, DOWN, buff=0.2
         )
         scene.play(FadeIn(q_box))
         scene.wait(6)
@@ -251,7 +251,7 @@ class Signature(SlideBase):
         self.new_slide(scene, "Equal to public key")
         q_box2 = EquationBox(
             "Q = u_1 \cdot G + u_2 \cdot {{R}} \stackrel{?}{=} K_{Pub}"
-        ).next_to(variable_box, DOWN, buff=0.5)
+        ).next_to(variable_box, DOWN, buff=0.2)
         scene.play(ReplacementTransform(q_box, q_box2))
 
         self.new_subsection(scene, "Proof", sound="data/sound/episode2/s27-13.wav")
@@ -261,7 +261,7 @@ class Signature(SlideBase):
             .align_to(q_box2[0], LEFT + DOWN)
         )
         scene.wait(1)
-        scene.play(equation.animate.next_to(q_box, DOWN, buff=0.5))
+        scene.play(equation.animate.next_to(q_box, DOWN, buff=0.2))
 
         scene.wait(1)
         self.new_slide(scene, "Expand R")
@@ -273,7 +273,7 @@ class Signature(SlideBase):
                 "Q = u_1 \cdot G + u_2 \cdot {{secret \cdot G}}", color=PRIMARY_COLOR
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
         )
         scene.play(
             TransformMatchingTex(VGroup(equation, signature5[3].copy()), equation2)
@@ -285,7 +285,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
         )
         scene.play(TransformMatchingTex(equation2, equation2b))
 
@@ -297,7 +297,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
         )
         scene.play(TransformMatchingTex(equation2b, equation3))
 
@@ -316,7 +316,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
         )
         scene.play(
             TransformMatchingTex(
@@ -331,7 +331,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
         )
         scene.play(TransformMatchingTex(equation4, equation4b))
 
@@ -348,12 +348,12 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
 
         h_line2 = DashedLine(
-            scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 3 * DOWN
+            scene.camera.frame_height / 2 * UP, scene.camera.frame_height / 4 * DOWN
         )
 
         scene.play(
@@ -367,7 +367,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
 
@@ -392,7 +392,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
         scene.play(
@@ -411,7 +411,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
 
@@ -427,7 +427,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
 
@@ -440,7 +440,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
         scene.add(equation7b)
@@ -452,7 +452,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
 
@@ -464,7 +464,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
             .align_on_border(RIGHT)
         )
 
@@ -487,7 +487,7 @@ class Signature(SlideBase):
                 color=PRIMARY_COLOR,
             )
             .scale(0.65)
-            .next_to(q_box, DOWN, buff=0.5)
+            .next_to(q_box, DOWN, buff=0.2)
         )
 
         scene.play(

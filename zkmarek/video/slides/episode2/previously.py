@@ -56,7 +56,7 @@ class PreviouslyOn(TexSlide):
 
     def __init__(self) -> None:
         super().__init__(
-            "Previously on zkMarek",
+            "Previously on ZKMarek",
             "zkmarek/video/slides/episode2/tex/operations.tex",
         )
 
