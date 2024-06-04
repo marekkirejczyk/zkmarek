@@ -4,7 +4,7 @@ from manim import (
     MathTex,
     UP,
     DOWN,
-    TransformMatchingTex,
+    ReplacementTransform,
     Text,
     Indicate,
     Write,
@@ -79,7 +79,7 @@ class SignatureMath(SlideBase):
         )
         scene.wait(0.1)
         scene.play(
-            TransformMatchingTex(self.equation2, self.equation4),
+            ReplacementTransform(self.equation2, self.equation4),
         )
         scene.wait(1)
         scene.play(
@@ -88,7 +88,7 @@ class SignatureMath(SlideBase):
         )
         scene.wait(0.1)
         scene.play(
-            TransformMatchingTex(self.equation4, self.equation5),
+            ReplacementTransform(self.equation4, self.equation5),
         )
         self.new_subsection(scene, "intuition", "data/sound/teaser3/slide1-2.mp3")
         scene.wait(1)
@@ -97,7 +97,7 @@ class SignatureMath(SlideBase):
         scene.play(
             Unwrite(self.strike1),
             Unwrite(self.strike2),
-            TransformMatchingTex(self.equation5, self.equation8),
+            ReplacementTransform(self.equation5, self.equation8),
             run_time=0.5,
         )
         scene.wait(1)
@@ -105,11 +105,11 @@ class SignatureMath(SlideBase):
         scene.play(
             Unwrite(self.strike3),
             Unwrite(self.strike4),
-            TransformMatchingTex(self.equation8, self.equation10),
+            ReplacementTransform(self.equation8, self.equation10),
             run_time=0.5,
         )
         scene.wait(1)
-        scene.play(TransformMatchingTex(self.equation10, self.equation13), run_time=0.5)
+        scene.play(ReplacementTransform(self.equation10, self.equation13), run_time=0.5)
 
     def animate_out(self, scene):
         scene.play(

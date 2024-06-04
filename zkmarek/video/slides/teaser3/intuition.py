@@ -5,7 +5,6 @@ from manim import (
     MathTex,
     LEFT,
     RIGHT,
-    Arrow,
     DOWN,
     UP,
     Create,
@@ -13,6 +12,9 @@ from manim import (
     Unwrite,
     VGroup,
     Indicate,
+    ImageMobject,
+    ReplacementTransform,
+    PI,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -24,7 +26,7 @@ class Intuition(SlideBase):
         super().__init__(title="Intuition")
 
     def construct(self):
-        self.line = Line(LEFT * 6, RIGHT * 6)
+        self.line = Line(LEFT * 6, RIGHT * 5)
 
         self.u1 = (
             MathTex(r"u_1 = -{{msg}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR)
@@ -44,25 +46,27 @@ class Intuition(SlideBase):
             .scale(0.8)
         )
         self.u2_enc = (
-            MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
+            MathTex(r"u_2 \cdot R", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .scale(0.8)
         )
-        self.arrow = Arrow(
-            start=self.line.get_end() + UP * 0.5,
-            end=self.line.get_end() + DOWN * 2,
-            color=SECONDARY_COLOR,
+        self.arrow = (
+            ImageMobject("zkmarek/video/slides/teaser3/arrow_right.png")
+            .next_to(self.line, RIGHT)
+            .scale(3.5)
         )
         self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT)
-        self.arrow2 = Arrow(
-            start=self.line.get_start() + DOWN, end=self.line.get_start() + UP * 2
-        )
+        self.arrow2 = (
+            ImageMobject("zkmarek/video/slides/teaser3/arrow_left.png")
+            .next_to(self.line, LEFT)
+            .scale(3.5)
+        ).rotate(2 * PI / 3)
         self.label2 = MathTex(r"\times G").next_to(self.arrow2, LEFT)
         self.cross_line = Line(
             start=self.arrow2.get_start() + LEFT,
             end=self.arrow2.get_end() + RIGHT,
             color="red",
-        )
+        ).scale(0.5)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
@@ -96,7 +100,7 @@ class Intuition(SlideBase):
         plus_down = (
             MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
         )
-        scene.play(Write(plus_up), Write(plus_down))
+        scene.play(Write(plus_up))
         sum_up = (
             MathTex("99150", color=PRIMARY_COLOR)
             .next_to(self.line, UP)
@@ -108,19 +112,23 @@ class Intuition(SlideBase):
             .shift(RIGHT * 4)
         )
         equal_sign_up = (
-            MathTex("=", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 2)
+            MathTex("=", color=PRIMARY_COLOR)
+            .next_to(self.line, UP * 1.5)
+            .shift(RIGHT * 2)
         )
         equal_sign_down = (
             MathTex("=", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
+            .next_to(self.line, DOWN * 1.5)
             .shift(RIGHT * 2)
         )
+        scene.wait(1)
         scene.play(
             Write(sum_up),
             Write(equal_sign_up),
         )
         self.new_subsection(scene, "addition", "data/sound/teaser3/slide2-2.mp3")
-        scene.play(Write(equal_sign_down), Write(sum_down))
+        scene.wait(2)
+        scene.play(Write(plus_down), Write(equal_sign_down), Write(sum_down))
         scene.wait(2)
         numbers = VGroup(
             number1,
@@ -139,25 +147,6 @@ class Intuition(SlideBase):
         )
         self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-3.mp3")
         scene.play(Write(self.u1), Write(self.u2))
-        self.new_subsection(scene, "s, r, mess hash", "data/sound/teaser3/slide2-4.mp3")
-        scene.play(Indicate(self.u2[1], color=HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.u1[1], color=HIGHLIGHT_COLOR))
-        scene.play(
-            Indicate(self.u1[3], color=HIGHLIGHT_COLOR),
-            Indicate(self.u2[3], color=HIGHLIGHT_COLOR),
-        )
-
-        scene.wait(1)
-        self.new_subsection(scene, "encrypted", "data/sound/teaser3/slide2-5.mp3")
-        scene.play(Write(self.u1_enc), Write(self.u2_enc))
-        scene.wait(1)
-        plus_up = (
-            MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
-        )
-        plus_down = (
-            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
-        )
-        scene.play(Write(plus_up), Write(plus_down))
         public_key = (
             MathTex(r"K_{\mathrm{Priv}}\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
@@ -168,39 +157,88 @@ class Intuition(SlideBase):
             .next_to(self.line, UP)
             .shift(RIGHT * 4)
         )
+        plus_down = (
+            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
+        )
         equal_sign_up = (
-            MathTex("=", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 2)
+            MathTex("=", color=PRIMARY_COLOR)
+            .next_to(self.line, UP * 1.5)
+            .shift(RIGHT * 2)
         )
         equal_sign_down = (
             MathTex("=", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
+            .next_to(self.line, DOWN * 1.5)
             .shift(RIGHT * 2)
         )
+        scene.wait(5)
         scene.play(
-            Write(equal_sign_up),
+            Write(self.u1_enc),
+            Write(self.u2_enc),
+            Write(plus_down),
             Write(equal_sign_down),
             Write(public_key),
+        )
+        self.new_subsection(scene, "s, r, mess hash", "data/sound/teaser3/slide2-4.mp3")
+        scene.wait(3.2)
+        scene.play(Indicate(self.u2[1], color=HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.u1[1], color=HIGHLIGHT_COLOR))
+        scene.play(
+            Indicate(self.u1[3], color=HIGHLIGHT_COLOR),
+            Indicate(self.u2[3], color=HIGHLIGHT_COLOR),
+        )
+
+        self.new_subsection(scene, "encrypted", "data/sound/teaser3/slide2-5.mp3")
+        scene.wait(1)
+        self.u2_enc2 = (
+            MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
+            .next_to(self.line, DOWN)
+            .scale(0.8)
+        )
+        scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
+        plus_up = (
+            MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
+        )
+
+        scene.play(
+            Write(equal_sign_up),
             Write(sum_u),
         )
         self.new_subsection(scene, "private key", "data/sound/teaser3/slide2-6.mp3")
+        multiplication_down = (
+            MathTex(r"\stackrel{?}{\times}").next_to(self.line, DOWN).shift(LEFT * 2)
+        )
+        multiplication_up = (
+            MathTex(r"\stackrel{?}{\times}")
+            .next_to(self.line, UP * 1.5)
+            .shift(LEFT * 2)
+        )
+        scene.play(
+            Unwrite(sum_u),
+            Unwrite(public_key),
+            Unwrite(equal_sign_down),
+            Unwrite(equal_sign_up),
+        )
+        scene.wait(2.8)
+        scene.play(
+            ReplacementTransform(plus_up, multiplication_up),
+            ReplacementTransform(plus_down, multiplication_down),
+        )
         self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-7.mp3")
         all_u = VGroup(
-            equal_sign_down,
-            equal_sign_up,
-            plus_down,
-            plus_up,
-            sum_u,
-            public_key,
+            multiplication_down,
+            multiplication_up,
             self.u1,
             self.u2,
             self.u1_enc,
-            self.u2_enc,
-            self.arrow,
+            self.u2_enc2,
             self.label,
         )
         self.new_subsection(scene, "next episode", "data/sound/teaser3/slide2-8.mp3")
         scene.wait(4)
-        scene.play(Unwrite(all_u))
+        scene.play(
+            Unwrite(all_u),
+            FadeOut(self.arrow),
+        )
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.line))
