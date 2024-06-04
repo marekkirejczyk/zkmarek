@@ -26,6 +26,7 @@ from zkmarek.video.constant import (
     SECONDARY_COLOR,
     BACKGROUND_COLOR,
     HIGHLIGHT_COLOR,
+    PRIMARY_FONT,
 )
 from zkmarek.video.mobjects.discreet_elliptic_chart import (
     DiscreteEllipticChart,
@@ -56,7 +57,7 @@ class PreviouslyOn(TexSlide):
 
     def __init__(self) -> None:
         super().__init__(
-            "Previously on zkMarek",
+            "Previously on ZKMarek",
             "zkmarek/video/slides/episode2/tex/operations.tex",
         )
 
@@ -74,7 +75,9 @@ class PreviouslyOn(TexSlide):
         self.labels = []
         self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
         self.secp256k1 = secp256k1_standard()
-        self.label_standards = Text(r"Standards", color=HIGHLIGHT_COLOR).scale(0.8)
+        self.label_standards = Text(
+            r"Standards", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT
+        ).scale(0.8)
         self.wallet = Wallet("private key", "address")
         self.chart_wallet = (
             DiscreteEllipticChart(self.curve, dot_color=BACKGROUND_COLOR)
@@ -219,13 +222,11 @@ class PreviouslyOn(TexSlide):
         scene.wait(1)
         self.play_sound(scene, "data/sound/episode2/slide2-5.mp3")
         self.wallet.animate_address_value(scene, "keccak256(2709)")
-        scene.wait(0.7)
-        self.play_sound(scene, "data/sound/episode2/slide2-6.mp3")
+        scene.wait(0.3)
         self.wallet.animate_address_value(
             scene,
             "0be4308d0014b842c2debb817a629f45938a32a2117c186d46b29ef3aa599b4e",
         )
-        scene.wait(0.2)
         self.wallet.animate_address_value(
             scene,
             "0x7a629f45938a32a2117c186d46b29ef3aa599b4e",
