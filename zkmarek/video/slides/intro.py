@@ -17,9 +17,10 @@ class Intro(SlideBase):
     marek: Text
     logo: ImageMobject
 
-    def __init__(self, sound: str):
+    def __init__(self, sound: str, background_sound: str):
         super().__init__(title="Intro")
         self.sound = sound
+        self.background = background_sound
 
     def construct(self):
         self.logo = ImageMobject("data/brand/logo.png").scale(1.5)
@@ -29,7 +30,7 @@ class Intro(SlideBase):
         self.group.move_to(ORIGIN)
 
     def animate_in(self, scene):
-        self.play_music(scene, "data/sound/episode2/background.mp3")
+        self.play_music(scene, self.background)
         self.new_subsection(scene, "Title", self.sound)
         self.logo.generate_target()
         self.marek.generate_target()
@@ -42,7 +43,7 @@ class Intro(SlideBase):
             MoveToTarget(self.logo, rate_func=rate_functions.ease_out_bounce),
             run_time=2.25,
         )
-        scene.wait(4.5)
+        scene.wait(3.5)
 
     def animate_out(self, scene):
         self.marek.generate_target()

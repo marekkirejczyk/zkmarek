@@ -55,6 +55,9 @@ from zkmarek.video.slides.episode2.credits import Credits as Credits2
 from zkmarek.video.slides.episode2.deterministic import Deterministic
 from zkmarek.video.slides.episode2.ecdsa import ECDSA
 from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
+from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
+from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
+from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 
 
 config.width = 16
@@ -62,7 +65,10 @@ config.height = 9
 
 
 TEASER = [
-    Intro("data/sound/teaser/s1.wav"),
+    Intro(
+        sound="data/sound/teaser/s1.wav",
+        background_sound="data/sound/teaser/background.mp3",
+    ),
     TitleSlide("Episode 1", subtitle="Teaser"),
     ZKPSTitle(),
     SeasonTeaser(),
@@ -74,7 +80,10 @@ TEASER = [
 ]
 
 EPISODE1 = [
-    Intro("data/sound/episode1/s1.wav"),
+    Intro(
+        sound="data/sound/episode1/s1.wav",
+        background_sound="data/sound/episode1/background.m4a",
+    ),
     TitleSlide(
         "Elliptic curves",
         subtitle="in Ethereum wallet",
@@ -117,8 +126,22 @@ EPISODE1 = [
     Credits(),
 ]
 
+TEASER2 = [
+    Intro(
+        sound="data/sound/teaser2/slide0-0.mp3",
+        background_sound="data/sound/teaser2/backgroundt.mp3",
+    ),
+    SponsoredTeaser(),
+    ECRteaser(),
+    ETHteaser(),
+    Subscribe("data/sound/teaser2/slide2-0.mp3"),
+]
+
 EPISODE2 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
+    Intro(
+        sound="data/sound/episode2/slide1-0.mp3",
+        background_sound="data/sound/episode2/background.mp3",
+    ),
     Sponsored(),
     PreviouslyOn(),
     TitleSlide(
@@ -138,13 +161,7 @@ EPISODE2 = [
 ]
 
 EPISODE3 = [
-    SchnorrSlide(),
-    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
-    TexSlide("Sources", "data/schnorr/sources.tex"),
-]
-
-EPISODE4 = [
-    Intro("data/sound/episode2/slide1-0.mp3"),
+    # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
     Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
@@ -161,15 +178,30 @@ EPISODE4 = [
     Credits2(),
 ]
 
+EPISODE4 = [
+    # Intro("data/sound/episode2/slide1-0.mp3"),
+    Sponsored(),
+    Verkle(),
+    Subscribe("data/sound/episode1/s28.wav"),
+]
+
+EPISODE5 = [
+    SchnorrSlide(),
+    CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
+    TexSlide("Sources", "data/schnorr/sources.tex"),
+]
+
 DECKS = {
     "TEASER": TEASER,
     "E1": EPISODE1,
+    "TEASER2": TEASER2,
     "E2": EPISODE2,
     "E3": EPISODE3,
     "E4": EPISODE4,
+    "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "E4"
+DEFAULT_DECK = "TEASER2"
 
 
 class EllipticCurves(Scene):
