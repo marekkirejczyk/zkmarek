@@ -15,17 +15,32 @@ from manim import (
     ImageMobject,
     ReplacementTransform,
     PI,
+    Text,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import (
+    PRIMARY_COLOR,
+    SECONDARY_COLOR,
+    HIGHLIGHT_COLOR,
+    PRIMARY_FONT,
+)
 
 
 class Intuition(SlideBase):
     def __init__(self) -> None:
-        super().__init__(title="Intuition")
+        super().__init__(title="Understanding the digital signature")
 
     def construct(self):
+        self.title = (
+            Text(
+                "Understanding the digital signature",
+                color=PRIMARY_COLOR,
+                font=PRIMARY_FONT,
+            )
+            .to_edge(UP)
+            .scale(0.8)
+        )
         self.line = Line(LEFT * 6, RIGHT * 5)
 
         self.u1 = (
@@ -70,7 +85,7 @@ class Intuition(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
-        scene.play(FadeIn(self.line), run_time=0.7)
+        scene.play(FadeIn(self.line), FadeIn(self.title), run_time=0.7)
         number1 = (
             MathTex("17624", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
         )
@@ -80,11 +95,11 @@ class Intuition(SlideBase):
         scene.wait(1)
         scene.play(FadeIn(self.arrow), FadeIn(self.label), run_time=0.5)
         number_encrypted = (
-            MathTex(r"17624\times G", color=SECONDARY_COLOR)
+            MathTex(r"17624\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(LEFT * 4)
         )
-        number_encrypted2 = MathTex(r"81526\times G", color=SECONDARY_COLOR).next_to(
+        number_encrypted2 = MathTex(r"81526\cdot G", color=SECONDARY_COLOR).next_to(
             self.line, DOWN
         )
         scene.play(Write(number_encrypted), Write(number_encrypted2))
@@ -107,7 +122,7 @@ class Intuition(SlideBase):
             .shift(RIGHT * 4)
         )
         sum_down = (
-            MathTex(r"99150\times G", color=SECONDARY_COLOR)
+            MathTex(r"99150\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
         )
@@ -200,6 +215,7 @@ class Intuition(SlideBase):
         )
 
         scene.play(
+            Write(plus_up),
             Write(equal_sign_up),
             Write(sum_u),
         )
@@ -218,12 +234,13 @@ class Intuition(SlideBase):
             Unwrite(equal_sign_down),
             Unwrite(equal_sign_up),
         )
-        scene.wait(2.8)
+        scene.wait(2)
         scene.play(
             ReplacementTransform(plus_up, multiplication_up),
             ReplacementTransform(plus_down, multiplication_down),
         )
         self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-7.mp3")
+        self.pairings_animation(scene)
         all_u = VGroup(
             multiplication_down,
             multiplication_up,
@@ -241,4 +258,19 @@ class Intuition(SlideBase):
         )
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.line))
+        scene.play(FadeOut(self.line), FadeOut(self.title))
+
+    def pairings_animation(self, scene):
+        self.pairing = (
+            Text("Pairings:", color=PRIMARY_COLOR, font=PRIMARY_FONT)
+            .next_to(self.u1_enc, DOWN * 4)
+            .scale(0.8)
+        )
+        self.operation = (
+            MathTex(r"e: G_1 \times G_2 \rightarrow G_T")
+            .next_to(self.pairing, RIGHT)
+            .scale(0.8)
+        )
+        scene.play(Write(self.pairing), Write(self.operation))
+        scene.wait(6)
+        scene.play(Unwrite(self.pairing), Unwrite(self.operation))
