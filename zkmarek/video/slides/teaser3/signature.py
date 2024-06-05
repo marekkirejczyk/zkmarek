@@ -3,18 +3,13 @@ from manim import (
     FadeOut,
     MathTex,
     UP,
-    RIGHT,
     LEFT,
     DOWN,
-    # ReplacementTransform,
     Text,
     VGroup,
     Indicate,
     Write,
     Unwrite,
-    Arrow,
-    MoveToTarget,
-    rate_functions,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -32,27 +27,9 @@ class SignatureMath(SlideBase):
     def __init__(self) -> None:
         super().__init__("Signature reminder")
 
-    def create_arrow(self):
-        self.arrow = Arrow(start=RIGHT, end=RIGHT * 3, color=HIGHLIGHT_COLOR)
-        self.arrow.align_on_border(UP, buff=0.1)
-        self.arrow.shift(RIGHT * 3)
-        self.arrow.generate_target()
-
-        self.label = Text(
-            "Click here for episode 2",
-            font_size=24,
-            color=HIGHLIGHT_COLOR,
-            font=PRIMARY_FONT,
-        )
-        self.label.next_to(self.arrow, LEFT)
-        self.label.generate_target()
-
-        self.arrow.shift(9 * LEFT)
-        self.label.shift(9 * LEFT)
-
     def construct(self):
         self.title = Text(
-            "Previously on ZK Marek", font=PRIMARY_FONT, color=PRIMARY_COLOR
+            "Digital signature", font=PRIMARY_FONT, color=PRIMARY_COLOR
         ).to_edge(UP)
 
         self.signature_box = EquationBox(
@@ -114,31 +91,17 @@ class SignatureMath(SlideBase):
         )
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "Intro", "data/sound/teaser3/slide1-0.mp3")
-        scene.play(FadeIn(self.title))
-        self.create_arrow()
+        self.new_subsection(scene, "Intro", "data/sound/teaser3/slide1-4.mp3")
         scene.play(
-            MoveToTarget(
-                self.label, rate_func=rate_functions.ease_out_bounce, run_time=1
-            ),
-            MoveToTarget(
-                self.arrow, rate_func=rate_functions.ease_out_bounce, run_time=1
-            ),
+            FadeIn(self.title),
+            FadeIn(self.equation2),
+            FadeIn(self.signature_box),
+            run_time=0.5,
         )
-
-        scene.play(FadeIn(self.equation2), FadeIn(self.signature_box))
-        scene.wait(1.2)
-        self.new_subsection(scene, "canceling out", "data/sound/teaser3/slide1-1.mp3")
-        scene.play(
-            Indicate(self.signature_box[1], color=HIGHLIGHT_COLOR),
-            Indicate(self.signature_box[2], color=PRIMARY_COLOR),
-            Indicate(self.equation2[1], color=HIGHLIGHT_COLOR),
-            Indicate(self.equation2[3], color=PRIMARY_COLOR),
-        )
+        scene.wait(5.7)
+        scene.play(Indicate(self.equation2[1], color=PRIMARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.equation2[3], color=PRIMARY_COLOR), run_time=0.5)
         scene.wait(0.1)
-        # scene.play(
-        #     ReplacementTransform(self.equation2, self.equation4),
-        # )
         scene.play(Write(self.equation4))
         scene.wait(1)
         scene.play(
@@ -146,18 +109,15 @@ class SignatureMath(SlideBase):
             Indicate(self.equation4[1], color=HIGHLIGHT_COLOR),
         )
         scene.wait(0.1)
-        # scene.play(
-        #     ReplacementTransform(self.equation4, self.equation5),
-        # )
+
         scene.play(Write(self.equation5))
-        self.new_subsection(scene, "intuition", "data/sound/teaser3/slide1-2.mp3")
         scene.wait(1)
+        self.play_sound(scene, "data/sound/teaser3/slide1-5.mp3")
         scene.play(Write(self.strike1), Write(self.strike2))
         scene.wait(0.1)
         scene.play(
             Unwrite(self.strike1),
             Unwrite(self.strike2),
-            # ReplacementTransform(self.equation5, self.equation8),
             Write(self.equation8),
             run_time=0.5,
         )
@@ -166,13 +126,12 @@ class SignatureMath(SlideBase):
         scene.play(
             Unwrite(self.strike3),
             Unwrite(self.strike4),
-            # ReplacementTransform(self.equation8, self.equation10),
             Write(self.equation10),
             run_time=0.5,
         )
         scene.wait(1)
-        # scene.play(ReplacementTransform(self.equation10, self.equation13), run_time=0.5)
         scene.play(Write(self.equation13))
+        scene.wait(5)
 
     def animate_out(self, scene):
         self.equations = VGroup(
@@ -188,6 +147,4 @@ class SignatureMath(SlideBase):
             FadeOut(self.title),
             FadeOut(self.equation13),
             FadeOut(self.signature_box),
-            FadeOut(self.arrow),
-            FadeOut(self.label),
         )
