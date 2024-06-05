@@ -48,5 +48,5 @@ class Episode2Reference(SlideBase):
         scene.wait(2)
         scene.play(Indicate(self.verifier), color=SECONDARY_COLOR)
         scene.play(Indicate(self.msg_box1), color=SECONDARY_COLOR)
-        scene.play(ReplacementTransform(self.msg_box2))
+        scene.play(ReplacementTransform(self.msg_box1, self.msg_box2))
         scene.play(FadeIn(self.signature))
