@@ -60,6 +60,7 @@ from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteas
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.signature import SignatureMath
 from zkmarek.video.slides.teaser3.intuition import Intuition
+from zkmarek.video.slides.teaser3.previously import Episode2Reference
 
 config.width = 16
 config.height = 9
@@ -163,6 +164,7 @@ EPISODE2 = [
 
 TEASER3 = [
     # Sponsored(),
+    Episode2Reference(),
     SignatureMath(),
     Intuition(),
 ]
