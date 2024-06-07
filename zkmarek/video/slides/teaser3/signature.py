@@ -91,7 +91,7 @@ class SignatureMath(SlideBase):
         )
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "Intro", "data/sound/teaser3/slide1-4.mp3")
+        self.new_subsection(scene, "Intro", "data/sound/teaser3/slide1-5.mp3")
         scene.play(
             FadeIn(self.title),
             FadeIn(self.equation2),
@@ -112,7 +112,7 @@ class SignatureMath(SlideBase):
 
         scene.play(Write(self.equation5))
         scene.wait(1)
-        self.play_sound(scene, "data/sound/teaser3/slide1-5.mp3")
+        self.play_sound(scene, "data/sound/teaser3/slide1-6.mp3")
         scene.play(Write(self.strike1), Write(self.strike2))
         scene.wait(0.1)
         scene.play(

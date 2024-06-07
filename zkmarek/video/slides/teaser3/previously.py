@@ -6,7 +6,6 @@ from manim import (
     LEFT,
     RIGHT,
     Indicate,
-    ReplacementTransform,
     Write,
 )
 
@@ -39,29 +38,53 @@ class Episode2Reference(SlideBase):
         self.msg_box = EquationBoxWithIcons.create(
             "✉", 'msg =hash("...")', HIGHLIGHT_COLOR
         ).shift(UP)
-        self.key_box2 = EquationBoxWithIcons.create(
-            "⚿",
-            "K_{Priv} = random()",
-            SECONDARY_COLOR,
-            "⚿",
-            "K_{Pub} = {{K_{Priv} \cdot G}}",
-            SECONDARY_COLOR,
-        ).next_to(self.signatory, DOWN, buff=0.5)
+        self.key_box2 = (
+            EquationBoxWithIcons.create(
+                "⚿",
+                "K_{Priv} = random()",
+                PRIMARY_COLOR,
+                "⚿",
+                "K_{Pub} = {{K_{Priv} \cdot G}}",
+                PRIMARY_COLOR,
+            )
+            .next_to(self.signatory, DOWN, buff=0.5)
+            .scale(0.8)
+        )
 
-        self.signature = EquationBoxWithIcons.create(
-            "⚂",
-            "R = {{secret \cdot G}}",
-            PRIMARY_COLOR,
-            "⎘",
-            "{{r = R_x \mod n}}",
-            PRIMARY_COLOR,
-            "⎘",
-            "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
-            PRIMARY_COLOR,
-            "⚂",
-            "{{secret = random()}}",
-            PRIMARY_COLOR,
-        ).next_to(self.msg_box, DOWN, buff=0.5)
+        self.key_box = (
+            EquationBoxWithIcons.create(
+                "⚿",
+                "K_{Pub} = {{K_{Priv} \cdot G}}",
+                SECONDARY_COLOR,
+                "⎘",
+                "{{r = R_x \mod n}}",
+                SECONDARY_COLOR,
+                "⎘",
+                "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
+                SECONDARY_COLOR,
+            )
+            .next_to(self.verifier, DOWN, buff=0.5)
+            .scale(0.8)
+        )
+
+        self.signature = (
+            EquationBoxWithIcons.create(
+                "⚂",
+                "R = {{secret \cdot G}}",
+                PRIMARY_COLOR,
+                "⎘",
+                "{{r = R_x \mod n}}",
+                PRIMARY_COLOR,
+                "⎘",
+                "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
+                PRIMARY_COLOR,
+                "⚂",
+                "{{secret = random()}}",
+                PRIMARY_COLOR,
+            )
+            .next_to(self.key_box2, DOWN, buff=1)
+            .scale(0.8)
+        )
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -82,15 +105,30 @@ class Episode2Reference(SlideBase):
         scene.play(Indicate(self.signatory, color=SECONDARY_COLOR), run_time=0.5)
 
         self.new_subsection(scene, "signature", "data/sound/teaser3/slide1-2.mp3")
-        scene.play(FadeIn(self.signature), run_time=0.5)
+        scene.play(FadeIn(self.signature), FadeIn(self.key_box), run_time=0.5)
         scene.wait(2.8)
-        scene.play(Indicate(self.signature[3], color=HIGHLIGHT_COLOR), run_time=0.5)
-        scene.play(Indicate(self.signature[5]), color=HIGHLIGHT_COLOR, run_time=0.5)
+        scene.play(Indicate(self.key_box[1], color=HIGHLIGHT_COLOR), run_time=0.5)
+        scene.play(Indicate(self.key_box[3], color=HIGHLIGHT_COLOR), run_time=0.5)
+        scene.play(Indicate(self.key_box[5], color=HIGHLIGHT_COLOR), run_time=0.5)
 
-        self.new_subsection(
-            scene, "explaining r and s", "data/sound/teaser3/slide1-3.mp3"
-        )
+        self.new_subsection(scene, "signature", "data/sound/teaser3/slide1-3.mp3")
+
+        scene.play(Indicate(self.signature[3], color=SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.signature[5]), color=SECONDARY_COLOR, run_time=0.5)
+
         scene.wait(0.5)
         scene.play(Indicate(self.signature[3], color=HIGHLIGHT_COLOR), run_time=0.5)
         scene.wait(1)
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.5)
+
+        self.new_subsection(
+            scene, "summary the action of signature", "data/sound/teaser3/slide1-4.mp3"
+        )
+        scene.wait(3)
+        scene.play(Indicate(self.signature, color=SECONDARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.key_box2[1], color=SECONDARY_COLOR), run_time=0.5)
+        scene.wait(7)
+        scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=0.7)
+        scene.wait(3)
+        scene.play(Indicate(self.key_box[1], color=PRIMARY_COLOR), run_time=0.5)
+        scene.wait(3)
