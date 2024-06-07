@@ -1,13 +1,4 @@
-from manim import (
-    FadeIn,
-    Text,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    Indicate,
-    Write,
-)
+from manim import FadeIn, Text, UP, DOWN, LEFT, RIGHT, Indicate, Write, FadeOut
 
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
@@ -56,6 +47,13 @@ class Episode2Reference(SlideBase):
                 "⚿",
                 "K_{Pub} = {{K_{Priv} \cdot G}}",
                 SECONDARY_COLOR,
+            )
+            .next_to(self.verifier, DOWN, buff=0.8)
+            .scale(0.8)
+        )
+
+        self.signature_verifier = (
+            EquationBoxWithIcons.create(
                 "⎘",
                 "{{r = R_x \mod n}}",
                 SECONDARY_COLOR,
@@ -63,10 +61,10 @@ class Episode2Reference(SlideBase):
                 "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
                 SECONDARY_COLOR,
             )
-            .next_to(self.verifier, DOWN, buff=0.5)
+            .next_to(self.key_box, DOWN, buff=1)
             .scale(0.8)
+            .shift(DOWN)
         )
-
         self.signature = (
             EquationBoxWithIcons.create(
                 "⚂",
@@ -96,8 +94,8 @@ class Episode2Reference(SlideBase):
             run_time=1.5,
         )
         self.new_subsection(scene, "recall", "data/sound/teaser3/slide1-1.mp3")
-        scene.play(Write(self.msg_box), Write(self.key_box2), run_time=0.1)
-        scene.wait(4)
+        scene.play(Write(self.msg_box), run_time=0.1)
+        scene.wait(4.5)
         scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=0.5)
         scene.wait(0.5)
         scene.play(Indicate(self.msg_box, color=SECONDARY_COLOR), run_time=0.5)
@@ -105,30 +103,62 @@ class Episode2Reference(SlideBase):
         scene.play(Indicate(self.signatory, color=SECONDARY_COLOR), run_time=0.5)
 
         self.new_subsection(scene, "signature", "data/sound/teaser3/slide1-2.mp3")
-        scene.play(FadeIn(self.signature), FadeIn(self.key_box), run_time=0.5)
-        scene.wait(2.8)
-        scene.play(Indicate(self.key_box[1], color=HIGHLIGHT_COLOR), run_time=0.5)
-        scene.play(Indicate(self.key_box[3], color=HIGHLIGHT_COLOR), run_time=0.5)
-        scene.play(Indicate(self.key_box[5], color=HIGHLIGHT_COLOR), run_time=0.5)
+        scene.play(
+            FadeIn(self.signature),
+            FadeIn(self.key_box),
+            FadeIn(self.signature_verifier),
+            Write(self.key_box2),
+            run_time=0.7,
+        )
+        scene.wait(3)
+        scene.play(Indicate(self.key_box[1], color=HIGHLIGHT_COLOR), run_time=1)
+        scene.wait(3.5)
+        scene.play(Indicate(self.msg_box, color=SECONDARY_COLOR), run_time=0.7)
+        scene.wait(0.5)
+        scene.play(
+            Indicate(self.signature_verifier[1], color=HIGHLIGHT_COLOR), run_time=0.5
+        )
+        scene.play(
+            Indicate(self.signature_verifier[3], color=HIGHLIGHT_COLOR), run_time=0.5
+        )
 
         self.new_subsection(scene, "signature", "data/sound/teaser3/slide1-3.mp3")
-
+        scene.wait(2.7)
         scene.play(Indicate(self.signature[3], color=SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.signature[5]), color=SECONDARY_COLOR, run_time=0.5)
 
-        scene.wait(0.5)
-        scene.play(Indicate(self.signature[3], color=HIGHLIGHT_COLOR), run_time=0.5)
-        scene.wait(1)
-        scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.5)
-
+        scene.wait(1.8)
+        scene.play(Indicate(self.signature[3], color=SECONDARY_COLOR), run_time=0.5)
+        scene.wait(1.8)
+        scene.play(Indicate(self.signature[1], color=SECONDARY_COLOR), run_time=0.5)
+        scene.wait(4.3)
+        scene.play(Indicate(self.signature[5], color=SECONDARY_COLOR), run_time=1)
         self.new_subsection(
             scene, "summary the action of signature", "data/sound/teaser3/slide1-4.mp3"
         )
         scene.wait(3)
-        scene.play(Indicate(self.signature, color=SECONDARY_COLOR), run_time=0.7)
+        # scene.play(Indicate(self.signature, color=SECONDARY_COLOR), run_time=0.7)
         scene.play(Indicate(self.key_box2[1], color=SECONDARY_COLOR), run_time=0.5)
         scene.wait(7)
         scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=0.7)
         scene.wait(3)
-        scene.play(Indicate(self.key_box[1], color=PRIMARY_COLOR), run_time=0.5)
+        scene.play(
+            Indicate(self.signature_verifier[1], color=PRIMARY_COLOR),
+            Indicate(self.signature_verifier[3], color=PRIMARY_COLOR),
+            run_time=1,
+        )
         scene.wait(3)
+        scene.play(Indicate(self.key_box2[1], color=SECONDARY_COLOR))
+
+        scene.wait(4)
+
+    def animate_out(self, scene):
+        scene.play(
+            FadeOut(self.signature),
+            FadeOut(self.signature_verifier),
+            FadeOut(self.key_box),
+            FadeOut(self.key_box2),
+            FadeOut(self.msg_box),
+            FadeOut(self.verifier),
+            FadeOut(self.signatory),
+        )
