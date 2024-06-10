@@ -95,7 +95,7 @@ class Episode2Reference(SlideBase):
         )
         self.new_subsection(scene, "recall", "data/sound/teaser3/slide1-1.mp3")
         scene.play(Write(self.msg_box), run_time=0.1)
-        scene.wait(4.5)
+        scene.wait(4)
         scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=0.5)
         scene.wait(0.5)
         scene.play(Indicate(self.msg_box, color=SECONDARY_COLOR), run_time=0.5)
@@ -112,9 +112,9 @@ class Episode2Reference(SlideBase):
         )
         scene.wait(3)
         scene.play(Indicate(self.key_box[1], color=HIGHLIGHT_COLOR), run_time=1)
-        scene.wait(3.5)
+        scene.wait(3)
         scene.play(Indicate(self.msg_box, color=SECONDARY_COLOR), run_time=0.7)
-        scene.wait(0.5)
+        scene.wait(2)
         scene.play(
             Indicate(self.signature_verifier[1], color=HIGHLIGHT_COLOR), run_time=0.5
         )
@@ -122,14 +122,14 @@ class Episode2Reference(SlideBase):
             Indicate(self.signature_verifier[3], color=HIGHLIGHT_COLOR), run_time=0.5
         )
 
-        self.new_subsection(scene, "signature", "data/sound/teaser3/slide1-3.mp3")
+        self.new_subsection(scene, "r s", "data/sound/teaser3/slide1-3.mp3")
         scene.wait(2.7)
         scene.play(Indicate(self.signature[3], color=SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.signature[5]), color=SECONDARY_COLOR, run_time=0.5)
 
         scene.wait(1.8)
         scene.play(Indicate(self.signature[3], color=SECONDARY_COLOR), run_time=0.5)
-        scene.wait(1.8)
+        scene.wait(1.3)
         scene.play(Indicate(self.signature[1], color=SECONDARY_COLOR), run_time=0.5)
         scene.wait(4.3)
         scene.play(Indicate(self.signature[5], color=SECONDARY_COLOR), run_time=1)
@@ -137,7 +137,7 @@ class Episode2Reference(SlideBase):
             scene, "summary the action of signature", "data/sound/teaser3/slide1-4.mp3"
         )
         scene.wait(3)
-        # scene.play(Indicate(self.signature, color=SECONDARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.signature, color=SECONDARY_COLOR), run_time=0.7)
         scene.play(Indicate(self.key_box2[1], color=SECONDARY_COLOR), run_time=0.5)
         scene.wait(7)
         scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=0.7)

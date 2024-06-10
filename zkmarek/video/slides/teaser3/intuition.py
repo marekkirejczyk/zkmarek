@@ -16,6 +16,7 @@ from manim import (
     ReplacementTransform,
     PI,
     Text,
+    CurvedArrow,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -65,23 +66,20 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN)
             .scale(0.8)
         )
-        self.arrow = (
-            ImageMobject("zkmarek/video/slides/teaser3/arrow_right.png")
-            .next_to(self.line, RIGHT)
-            .scale(3.5)
-        )
+
+        self.arrow = CurvedArrow(
+            self.line.get_end() + UP, self.line.get_end() + DOWN
+        ).scale([-1, 1, 1])
         self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT)
-        self.arrow2 = (
-            ImageMobject("zkmarek/video/slides/teaser3/arrow_left.png")
-            .next_to(self.line, LEFT)
-            .scale(3.5)
-        ).rotate(2 * PI / 3)
+        self.arrow2 = CurvedArrow(
+            self.line.get_start() + UP, self.line.get_start() + DOWN
+        ).scale([1, 1, 1])
         self.label2 = MathTex(r"\times G").next_to(self.arrow2, LEFT)
         self.cross_line = Line(
-            start=self.arrow2.get_start() + LEFT,
+            start=self.arrow2.get_start() + LEFT * 2,
             end=self.arrow2.get_end() + RIGHT,
             color="red",
-        ).scale(0.5)
+        ).scale(0.4)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
@@ -272,5 +270,4 @@ class Intuition(SlideBase):
             .scale(0.8)
         )
         scene.play(Write(self.pairing), Write(self.operation))
-        scene.wait(6)
-        scene.play(Unwrite(self.pairing), Unwrite(self.operation))
+        scene.wait(2)
