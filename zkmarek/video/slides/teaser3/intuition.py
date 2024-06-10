@@ -12,9 +12,7 @@ from manim import (
     Unwrite,
     VGroup,
     Indicate,
-    ImageMobject,
     ReplacementTransform,
-    PI,
     Text,
     CurvedArrow,
 )
