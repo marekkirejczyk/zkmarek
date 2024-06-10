@@ -8,6 +8,7 @@ from manim import (
     DOWN,
     UP,
     Create,
+    PI,
     Write,
     Unwrite,
     VGroup,
@@ -15,6 +16,7 @@ from manim import (
     ReplacementTransform,
     Text,
     CurvedArrow,
+    MoveToTarget,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -24,6 +26,7 @@ from zkmarek.video.constant import (
     HIGHLIGHT_COLOR,
     PRIMARY_FONT,
 )
+from zkmarek.video.mobjects.equation_box import EquationBoxWithIcons
 
 
 class Intuition(SlideBase):
@@ -69,15 +72,28 @@ class Intuition(SlideBase):
             self.line.get_end() + UP, self.line.get_end() + DOWN
         ).scale([-1, 1, 1])
         self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT)
-        self.arrow2 = CurvedArrow(
-            self.line.get_start() + UP, self.line.get_start() + DOWN
-        ).scale([1, 1, 1])
-        self.label2 = MathTex(r"\times G").next_to(self.arrow2, LEFT)
+        self.arrow2 = (
+            CurvedArrow(self.line.get_start() + UP, self.line.get_start() + DOWN)
+            .rotate(PI)
+            .scale([-1, 1, 1])
+        )
+        self.label2 = MathTex(r"\times G").next_to(self.arrow2, RIGHT)
         self.cross_line = Line(
             start=self.arrow2.get_start() + LEFT * 2,
             end=self.arrow2.get_end() + RIGHT,
             color="red",
         ).scale(0.4)
+        self.signature = EquationBoxWithIcons.create(
+            "⎘",
+            "{{r = R_x \mod n}}",
+            SECONDARY_COLOR,
+            "⎘",
+            "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
+            SECONDARY_COLOR,
+            "⎘",
+            '{{msg = hash("...")}}',
+            SECONDARY_COLOR,
+        ).to_edge(DOWN + LEFT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
@@ -99,10 +115,10 @@ class Intuition(SlideBase):
             self.line, DOWN
         )
         scene.play(Write(number_encrypted), Write(number_encrypted2))
-        scene.play(FadeIn(self.arrow2))
+        scene.play(FadeIn(self.arrow2), FadeIn(self.label2))
         scene.play(Create(self.cross_line))
         scene.wait(0.5)
-        scene.play(FadeOut(self.arrow2), FadeOut(self.cross_line))
+        scene.play(FadeOut(self.arrow2), FadeOut(self.cross_line), FadeOut(self.label2))
 
         self.new_subsection(scene, "", "data/sound/teaser3/slide2-1.mp3")
         plus_up = (
@@ -137,7 +153,6 @@ class Intuition(SlideBase):
             Write(sum_up),
             Write(equal_sign_up),
         )
-        self.new_subsection(scene, "addition", "data/sound/teaser3/slide2-2.mp3")
         scene.wait(2)
         scene.play(Write(plus_down), Write(equal_sign_down), Write(sum_down))
         scene.wait(2)
@@ -156,7 +171,7 @@ class Intuition(SlideBase):
             Unwrite(equal_sign_down),
             Unwrite(equal_sign_up),
         )
-        self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-3.mp3")
+        self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-2.mp3")
         scene.play(Write(self.u1), Write(self.u2))
         public_key = (
             MathTex(r"K_{\mathrm{Priv}}\cdot G", color=SECONDARY_COLOR)
@@ -188,8 +203,8 @@ class Intuition(SlideBase):
             Write(plus_down),
             Write(equal_sign_down),
             Write(public_key),
+            FadeIn(self.signature),
         )
-        self.new_subsection(scene, "s, r, mess hash", "data/sound/teaser3/slide2-4.mp3")
         scene.wait(3.2)
         scene.play(Indicate(self.u2[1], color=HIGHLIGHT_COLOR))
         scene.play(Indicate(self.u1[1], color=HIGHLIGHT_COLOR))
@@ -197,8 +212,10 @@ class Intuition(SlideBase):
             Indicate(self.u1[3], color=HIGHLIGHT_COLOR),
             Indicate(self.u2[3], color=HIGHLIGHT_COLOR),
         )
-
-        self.new_subsection(scene, "encrypted", "data/sound/teaser3/slide2-5.mp3")
+        scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.5)
+        scene.play(Indicate(self.signature[5], color=HIGHLIGHT_COLOR), run_Time=0.7)
+        scene.play(Indicate(self.signature[3], color=HIGHLIGHT_COLOR), run_time=0.7)
+        self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.wait(1)
         self.u2_enc2 = (
             MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
@@ -215,46 +232,46 @@ class Intuition(SlideBase):
             Write(equal_sign_up),
             Write(sum_u),
         )
-        self.new_subsection(scene, "private key", "data/sound/teaser3/slide2-6.mp3")
-        multiplication_down = (
-            MathTex(r"\stackrel{?}{\times}").next_to(self.line, DOWN).shift(LEFT * 2)
-        )
-        multiplication_up = (
-            MathTex(r"\stackrel{?}{\times}")
-            .next_to(self.line, UP * 1.5)
-            .shift(LEFT * 2)
-        )
-        scene.play(
-            Unwrite(sum_u),
-            Unwrite(public_key),
-            Unwrite(equal_sign_down),
-            Unwrite(equal_sign_up),
-        )
-        scene.wait(2)
-        scene.play(
-            ReplacementTransform(plus_up, multiplication_up),
-            ReplacementTransform(plus_down, multiplication_down),
-        )
-        self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-7.mp3")
-        self.pairings_animation(scene)
-        all_u = VGroup(
-            multiplication_down,
-            multiplication_up,
+        scene.wait(5)
+        scene.play(Indicate(public_key), run_time=0.7)
+
+        self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-4.mp3")
+        addition = VGroup(
             self.u1,
             self.u2,
             self.u1_enc,
             self.u2_enc2,
-            self.label,
+            self.signature,
+            plus_down,
+            plus_up,
+            equal_sign_down,
+            equal_sign_up,
+            sum_u,
+            public_key,
         )
-        self.new_subsection(scene, "next episode", "data/sound/teaser3/slide2-8.mp3")
-        scene.wait(4)
+        self.line_multiplication = Line(LEFT * 6, RIGHT * 5).set_color(SECONDARY_COLOR)
+        scene.play(Unwrite(addition), run_time=1.5)
         scene.play(
-            Unwrite(all_u),
-            FadeOut(self.arrow),
+            ReplacementTransform(self.line, self.line_multiplication), run_time=0.7
         )
 
+        self.multiplication_down = (
+            Text("?").next_to(self.line, DOWN).shift(LEFT * 2).scale(1.5)
+        )
+        self.multiplication_up = (
+            MathTex(r"\stackrel{?}{\times}")
+            .next_to(self.line, UP * 1.5)
+            .shift(LEFT * 2)
+        )
+        scene.wait(2)
+        scene.play(
+            Write(self.multiplication_up),
+            Write(self.multiplication_down),
+        )
+        self.pairings_animation(scene)
+
     def animate_out(self, scene):
-        scene.play(FadeOut(self.line), FadeOut(self.title))
+        scene.play(FadeOut(self.title))
 
     def pairings_animation(self, scene):
         self.pairing = (
@@ -267,5 +284,36 @@ class Intuition(SlideBase):
             .next_to(self.pairing, RIGHT)
             .scale(0.8)
         )
-        scene.play(Write(self.pairing), Write(self.operation))
+        component1 = MathTex(r"P\in G_1").next_to(self.operation, DOWN)
+        component2 = MathTex(r"Q\in G_2").next_to(component1, DOWN)
+        pairing_label = MathTex("e()").next_to(self.arrow, RIGHT)
+        scene.play(
+            Write(self.pairing),
+            Write(self.operation),
+            Write(component1),
+            Write(component2),
+            ReplacementTransform(self.label, pairing_label),
+            run_time=1,
+        )
         scene.wait(2)
+        component1.generate_target()
+        component1.target.next_to(self.line_multiplication, UP).shift(LEFT * 4)
+        component2.generate_target()
+        component2.target.next_to(self.line_multiplication, UP)
+        scene.play(MoveToTarget(component1), MoveToTarget(component2), run_time=0.8)
+        result = MathTex("e(P,Q)").next_to(self.line_multiplication, DOWN)
+        scene.play(ReplacementTransform(self.multiplication_down, result), run_time=0.7)
+
+        scene.wait(7)
+        pairings = VGroup(
+            self.pairing,
+            self.operation,
+            component1,
+            component2,
+            result,
+            self.line_multiplication,
+            self.arrow,
+            pairing_label,
+            self.multiplication_up,
+        )
+        scene.play(FadeOut(pairings))
