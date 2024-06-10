@@ -138,7 +138,7 @@ class Episode2Reference(SlideBase):
         )
         scene.wait(2.5)
         scene.play(Indicate(self.signature, color=SECONDARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.key_box2[1], color=SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.key_box2[3], color=SECONDARY_COLOR), run_time=0.5)
         scene.wait(7)
         scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=0.7)
         scene.wait(3)

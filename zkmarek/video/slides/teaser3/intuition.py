@@ -218,8 +218,8 @@ class Intuition(SlideBase):
         )
         scene.play(
             Indicate(self.signature[1], color=HIGHLIGHT_COLOR),
-            Indicate(self.u1[2], color=HIGHLIGHT_COLOR),
-            Indicate(self.u2[2], color=HIGHLIGHT_COLOR),
+            Indicate(self.u1[3], color=SECONDARY_COLOR),
+            Indicate(self.u2[3], color=SECONDARY_COLOR),
             run_time=0.7,
         )
         self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
@@ -242,7 +242,11 @@ class Intuition(SlideBase):
         scene.wait(10)
         scene.play(Indicate(public_key), run_time=0.7)
         scene.wait(5)
-        priv_pub = MathTex(r"K_{\mathrm{Pub}}")
+        priv_pub = (
+            MathTex(r"K_{\mathrm{Pub}}", color=SECONDARY_COLOR)
+            .next_to(self.line, DOWN)
+            .shift(RIGHT * 4)
+        )
         scene.play(ReplacementTransform(public_key, priv_pub))
 
         self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-4.mp3")
@@ -269,9 +273,7 @@ class Intuition(SlideBase):
             Text("?").next_to(self.line, DOWN).shift(LEFT * 2).scale(1.5)
         )
         self.multiplication_up = (
-            MathTex(r"\stackrel{?}{\times}")
-            .next_to(self.line, UP * 1.5)
-            .shift(LEFT * 2)
+            MathTex(r"\times").next_to(self.line, UP * 1.5).shift(LEFT * 2)
         )
         scene.wait(2)
         scene.play(
@@ -279,6 +281,7 @@ class Intuition(SlideBase):
             Write(self.multiplication_down),
         )
         self.pairings_animation(scene)
+        scene.wait(5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title))
@@ -296,7 +299,7 @@ class Intuition(SlideBase):
         )
         component1 = MathTex(r"P\in G_1").next_to(self.operation, DOWN)
         component2 = MathTex(r"Q\in G_2").next_to(component1, DOWN)
-        pairing_label = MathTex("e()").next_to(self.arrow, RIGHT)
+        pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(self.arrow, RIGHT)
         scene.play(
             Write(self.pairing),
             Write(self.operation),
@@ -311,7 +314,9 @@ class Intuition(SlideBase):
         component2.generate_target()
         component2.target.next_to(self.line_multiplication, UP)
         scene.play(MoveToTarget(component1), MoveToTarget(component2), run_time=0.8)
-        result = MathTex("e(P,Q)").next_to(self.line_multiplication, DOWN)
+        result = (
+            MathTex("e(P,Q)").next_to(self.line_multiplication, DOWN).shift(LEFT * 2)
+        )
         scene.play(ReplacementTransform(self.multiplication_down, result), run_time=0.7)
 
         scene.wait(7)
