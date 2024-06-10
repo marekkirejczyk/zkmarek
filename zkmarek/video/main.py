@@ -211,7 +211,7 @@ DECKS = {
     "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "T3"
+DEFAULT_DECK = "E2"
 
 
 class EllipticCurves(Scene):
