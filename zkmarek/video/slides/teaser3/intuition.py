@@ -115,10 +115,10 @@ class Intuition(SlideBase):
             self.line, DOWN
         )
         scene.play(Write(number_encrypted), Write(number_encrypted2))
-        scene.play(FadeIn(self.arrow2), FadeIn(self.label2))
+        scene.play(FadeIn(self.arrow2))
         scene.play(Create(self.cross_line))
         scene.wait(0.5)
-        scene.play(FadeOut(self.arrow2), FadeOut(self.cross_line), FadeOut(self.label2))
+        scene.play(FadeOut(self.arrow2), FadeOut(self.cross_line))
 
         self.new_subsection(scene, "", "data/sound/teaser3/slide2-1.mp3")
         plus_up = (
@@ -205,16 +205,23 @@ class Intuition(SlideBase):
             Write(public_key),
             FadeIn(self.signature),
         )
-        scene.wait(3.2)
-        scene.play(Indicate(self.u2[1], color=HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.u1[1], color=HIGHLIGHT_COLOR))
+        scene.wait(5.8)
         scene.play(
-            Indicate(self.u1[3], color=HIGHLIGHT_COLOR),
-            Indicate(self.u2[3], color=HIGHLIGHT_COLOR),
+            Indicate(self.signature[3], color=HIGHLIGHT_COLOR),
+            Indicate(self.u2[1], color=SECONDARY_COLOR),
+            run_time=0.5,
         )
-        scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.5)
-        scene.play(Indicate(self.signature[5], color=HIGHLIGHT_COLOR), run_Time=0.7)
-        scene.play(Indicate(self.signature[3], color=HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(
+            Indicate(self.signature[5], color=HIGHLIGHT_COLOR),
+            Indicate(self.u1[1], color=SECONDARY_COLOR),
+            run_Time=0.7,
+        )
+        scene.play(
+            Indicate(self.signature[1], color=HIGHLIGHT_COLOR),
+            Indicate(self.u1[2], color=HIGHLIGHT_COLOR),
+            Indicate(self.u2[2], color=HIGHLIGHT_COLOR),
+            run_time=0.7,
+        )
         self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.wait(1)
         self.u2_enc2 = (
@@ -232,8 +239,11 @@ class Intuition(SlideBase):
             Write(equal_sign_up),
             Write(sum_u),
         )
-        scene.wait(5)
+        scene.wait(10)
         scene.play(Indicate(public_key), run_time=0.7)
+        scene.wait(5)
+        priv_pub = MathTex(r"K_{\mathrm{Pub}}")
+        scene.play(ReplacementTransform(public_key, priv_pub))
 
         self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-4.mp3")
         addition = VGroup(
@@ -247,7 +257,7 @@ class Intuition(SlideBase):
             equal_sign_down,
             equal_sign_up,
             sum_u,
-            public_key,
+            priv_pub,
         )
         self.line_multiplication = Line(LEFT * 6, RIGHT * 5).set_color(SECONDARY_COLOR)
         scene.play(Unwrite(addition), run_time=1.5)
