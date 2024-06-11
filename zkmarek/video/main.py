@@ -182,9 +182,8 @@ EPISODE3 = [
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     PolynomialCommitment(),
     KZG(),
-    Verkle(),
-    Subscribe("data/sound/episode1/s28.wav"),
-    Credits2(),
+    # Subscribe("data/sound/episode1/s28.wav"),
+    # Credits2(),
 ]
 
 EPISODE4 = [
@@ -211,7 +210,7 @@ DECKS = {
     "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "T3"
+DEFAULT_DECK = "E3"
 
 
 class EllipticCurves(Scene):
