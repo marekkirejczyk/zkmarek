@@ -68,15 +68,19 @@ class Intuition(SlideBase):
             .scale(0.8)
         )
 
-        self.arrow = CurvedArrow(
-            self.line.get_end() + UP, self.line.get_end() + DOWN
-        ).scale([-1, 1, 1])
+        self.arrow = (
+            CurvedArrow(self.line.get_end() + UP, self.line.get_end() + DOWN)
+            .scale([-1, 1, 1])
+            .scale(0.7)
+            .shift(RIGHT * 0.3)
+        )
         self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT)
         self.arrow2 = (
             CurvedArrow(self.line.get_start() + UP, self.line.get_start() + DOWN)
             .rotate(PI)
             .scale([-1, 1, 1])
-            .shift(0.5 * RIGHT)
+            .shift(0.3 * RIGHT)
+            .scale(0.7)
         )
         self.label2 = MathTex(r"\div G").next_to(self.arrow2, LEFT)
         self.cross_line = Line(
@@ -103,14 +107,19 @@ class Intuition(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
-        scene.play(FadeIn(self.line), FadeIn(self.title), run_time=0.7)
+        scene.play(FadeIn(self.line), FadeIn(self.title), run_time=0.5)
         number1 = (
             MathTex("17624", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
         )
         number2 = MathTex("81526", color=PRIMARY_COLOR).next_to(self.line, UP)
 
-        scene.play(FadeIn(number1), FadeIn(number2))
-        scene.play(FadeIn(self.arrow), FadeIn(self.label), run_time=0.3)
+        scene.play(
+            FadeIn(number1),
+            FadeIn(number2),
+            FadeIn(self.arrow),
+            FadeIn(self.label),
+            run_time=0.3,
+        )
         number_encrypted = (
             MathTex(r"17624\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
@@ -214,22 +223,26 @@ class Intuition(SlideBase):
             Write(public_key),
             FadeIn(self.signature),
         )
-        scene.wait(0.1)
+        scene.play(
+            Write(plus_up),
+            Write(equal_sign_up),
+            Write(sum_u),
+        )
         scene.play(
             Indicate(self.signature[5], color=HIGHLIGHT_COLOR),
-            Indicate(self.u2[1], color=SECONDARY_COLOR),
+            Indicate(self.u1[1], color=SECONDARY_COLOR),
             run_time=0.7,
         )
-        scene.wait(0.2)
+        scene.wait(1)
         scene.play(
             Indicate(self.signature[1], color=HIGHLIGHT_COLOR),
-            Indicate(self.u1[1], color=SECONDARY_COLOR),
+            Indicate(self.u1[3], color=SECONDARY_COLOR),
+            Indicate(self.u2[3], color=SECONDARY_COLOR),
             run_Time=0.7,
         )
         scene.play(
             Indicate(self.signature[3], color=HIGHLIGHT_COLOR),
-            Indicate(self.u1[3], color=SECONDARY_COLOR),
-            Indicate(self.u2[3], color=SECONDARY_COLOR),
+            Indicate(self.u2[1], color=SECONDARY_COLOR),
             run_time=0.7,
         )
         scene.wait(3)
@@ -247,12 +260,7 @@ class Intuition(SlideBase):
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
 
-        scene.play(
-            Write(plus_up),
-            Write(equal_sign_up),
-            Write(sum_u),
-        )
-        scene.wait(10)
+        scene.wait(10.5)
         priv_pub = (
             MathTex(r"K_{\mathrm{Pub}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
@@ -281,11 +289,11 @@ class Intuition(SlideBase):
         number2 = MathTex("81526", color=PRIMARY_COLOR).next_to(self.line, UP)
         number_encrypted = (
             MathTex(r"17624\cdot G", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
+            .next_to(self.line, DOWN * 2)
             .shift(LEFT * 4)
         )
         number_encrypted2 = MathTex(r"81526\cdot G", color=SECONDARY_COLOR).next_to(
-            self.line, DOWN
+            self.line, DOWN * 2
         )
         sum_up = (
             MathTex("99150", color=PRIMARY_COLOR)
@@ -345,10 +353,20 @@ class Intuition(SlideBase):
         )
         self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-5.mp3")
         self.pairings_animation(scene)
-        scene.wait(5)
+        scene.play(
+            FadeOut(number_encrypted),
+            FadeOut(number_encrypted2),
+            FadeOut(sum_down),
+            FadeOut(number1),
+            FadeOut(number2),
+            FadeOut(sum_up),
+            FadeOut(plus_down),
+            FadeOut(plus_down),
+            FadeOut(equal_sign_up),
+        )
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title))
+        scene.play(FadeOut(self.title), FadeOut(self.line), FadeOut(self.label))
 
     def pairings_animation(self, scene):
         self.pairing = (
@@ -361,10 +379,15 @@ class Intuition(SlideBase):
             .next_to(self.pairing, RIGHT)
             .scale(0.8)
         )
-        arrow_pairing = CurvedArrow(
-            self.line_multiplication.get_end() + UP,
-            self.line_multiplication.get_end() + DOWN,
-        ).scale([-1, 1, 1])
+        arrow_pairing = (
+            CurvedArrow(
+                self.line_multiplication.get_end() + UP,
+                self.line_multiplication.get_end() + DOWN,
+            )
+            .scale([-1, 1, 1])
+            .scale(0.7)
+            .shift(RIGHT * 0.3)
+        )
         pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(arrow_pairing, RIGHT)
         scene.play(
             Write(self.pairing),
@@ -381,7 +404,7 @@ class Intuition(SlideBase):
         )
         scene.play(ReplacementTransform(self.multiplication_down, result))
 
-        scene.wait(7)
+        scene.wait(10)
         pairings = VGroup(
             self.pairing,
             self.operation,
