@@ -233,7 +233,7 @@ class Intuition(SlideBase):
             run_time=0.7,
         )
         scene.wait(3)
-        scene.play(Indicate(self.u2_enc[2]))
+        scene.play(Indicate(self.u2_enc[1]))
         self.u2_enc2 = (
             MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
