@@ -163,9 +163,14 @@ EPISODE2 = [
 ]
 
 TEASER3 = [
-    # Sponsored(),
-    Episode2Reference(),
-    SignatureMath(),
+    Intro(
+        sound="data/sound/teaser2/slide0-0.mp3",
+        background_sound="data/sound/teaser2/backgroundt.mp3",
+    ),
+    Sponsored(),
+    TitleSlide(
+        "Intuition behind digital signature", sound="data/sound/teaser3/slide3.mp3"
+    ),
     Intuition(),
 ]
 

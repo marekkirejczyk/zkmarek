@@ -120,7 +120,7 @@ class Intuition(SlideBase):
         scene.wait(0.5)
         scene.play(FadeOut(self.arrow2), FadeOut(self.cross_line))
 
-        self.new_subsection(scene, "", "data/sound/teaser3/slide2-1.mp3")
+        self.new_subsection(scene, "addition", "data/sound/teaser3/slide2-1.mp3")
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
@@ -249,37 +249,90 @@ class Intuition(SlideBase):
         )
         scene.play(ReplacementTransform(public_key, priv_pub))
 
-        self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-4.mp3")
+        self.new_subsection(
+            scene, "add and multiply", "data/sound/teaser3/slide2-4.mp3"
+        )
         addition = VGroup(
             self.u1,
             self.u2,
             self.u1_enc,
             self.u2_enc2,
             self.signature,
-            plus_down,
-            plus_up,
-            equal_sign_down,
-            equal_sign_up,
             sum_u,
             priv_pub,
         )
+
+        scene.wait(2)
+        number1 = (
+            MathTex("17624", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
+        )
+        number2 = MathTex("81526", color=PRIMARY_COLOR).next_to(self.line, UP)
+        number_encrypted = (
+            MathTex(r"17624\cdot G", color=SECONDARY_COLOR)
+            .next_to(self.line, DOWN)
+            .shift(LEFT * 4)
+        )
+        number_encrypted2 = MathTex(r"81526\cdot G", color=SECONDARY_COLOR).next_to(
+            self.line, DOWN
+        )
+        sum_up = (
+            MathTex("99150", color=PRIMARY_COLOR)
+            .next_to(self.line, UP)
+            .shift(RIGHT * 4)
+        )
+        sum_down = (
+            MathTex(r"99150\cdot G", color=SECONDARY_COLOR)
+            .next_to(self.line, DOWN)
+            .shift(RIGHT * 4)
+        )
+        numbers = VGroup(
+            number1,
+            number2,
+            number_encrypted,
+            number_encrypted2,
+            plus_up,
+            plus_down,
+            equal_sign_down,
+            equal_sign_up,
+            sum_up,
+            sum_down,
+        )
+        addition = VGroup(
+            self.line,
+            self.label,
+            self.arrow,
+            number1,
+            number2,
+            plus_up,
+            plus_down,
+            equal_sign_down,
+            equal_sign_up,
+            number_encrypted,
+            number_encrypted2,
+            sum_up,
+            sum_down,
+        )
+        scene.play(Write(numbers), run_time=0.7)
+        addition.generate_target()
+        addition.target.move_to(UP)
+        scene.play(MoveToTarget(addition), run_time=1)
         self.line_multiplication = Line(LEFT * 6, RIGHT * 5).set_color(SECONDARY_COLOR)
         scene.play(Unwrite(addition), run_time=1.5)
-        scene.play(
-            ReplacementTransform(self.line, self.line_multiplication), run_time=0.7
-        )
 
         self.multiplication_down = (
-            Text("?").next_to(self.line, DOWN).shift(LEFT * 2).scale(1.5)
+            Text("?").next_to(self.line_multiplication, DOWN).shift(LEFT * 2).scale(1.5)
         )
         self.multiplication_up = (
-            MathTex(r"\times").next_to(self.line, UP * 1.5).shift(LEFT * 2)
+            MathTex(r"\times")
+            .next_to(self.line_multiplication, UP * 1.5)
+            .shift(LEFT * 2)
         )
-        scene.wait(2)
+        scene.play(FadeIn(self.line_multiplication), run_time=0.7)
         scene.play(
             Write(self.multiplication_up),
             Write(self.multiplication_down),
         )
+        self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-5.mp3")
         self.pairings_animation(scene)
         scene.wait(5)
 
@@ -297,35 +350,30 @@ class Intuition(SlideBase):
             .next_to(self.pairing, RIGHT)
             .scale(0.8)
         )
-        component1 = MathTex(r"P\in G_1").next_to(self.operation, DOWN)
-        component2 = MathTex(r"Q\in G_2").next_to(component1, DOWN)
-        pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(self.arrow, RIGHT)
+        arrow_pairing = CurvedArrow(
+            self.line_multiplication.get_end() + UP,
+            self.line_multiplication.get_end() + DOWN,
+        ).scale([-1, 1, 1])
+        pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(arrow_pairing, RIGHT)
         scene.play(
             Write(self.pairing),
             Write(self.operation),
-            Write(component1),
-            Write(component2),
-            ReplacementTransform(self.label, pairing_label),
             run_time=1,
         )
+
+        scene.play(Write(arrow_pairing), Write(pairing_label), run_time=0.7)
         scene.wait(2)
-        component1.generate_target()
-        component1.target.next_to(self.line_multiplication, UP).shift(LEFT * 4)
-        component2.generate_target()
-        component2.target.next_to(self.line_multiplication, UP)
-        scene.play(MoveToTarget(component1), MoveToTarget(component2), run_time=0.8)
         result = (
-            MathTex("e(P,Q)").next_to(self.line_multiplication, DOWN).shift(LEFT * 2)
+            MathTex(r"e(17624\cdot G, 81526\cdot G)", color=SECONDARY_COLOR)
+            .shift(LEFT * 2)
+            .scale(1.5)
         )
-        scene.play(ReplacementTransform(self.multiplication_down, result), run_time=0.7)
+        scene.play(ReplacementTransform(self.multiplication_down, result))
 
         scene.wait(7)
         pairings = VGroup(
             self.pairing,
             self.operation,
-            component1,
-            component2,
-            result,
             self.line_multiplication,
             self.arrow,
             pairing_label,
