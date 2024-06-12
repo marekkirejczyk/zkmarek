@@ -58,9 +58,7 @@ from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
 from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
 from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
-from zkmarek.video.slides.teaser3.signature import SignatureMath
 from zkmarek.video.slides.teaser3.intuition import Intuition
-from zkmarek.video.slides.teaser3.previously import Episode2Reference
 
 config.width = 16
 config.height = 9
