@@ -234,17 +234,20 @@ class Intuition(SlideBase):
             run_time=0.7,
         )
         scene.wait(1)
+        self.new_subsection(scene, "r", "data/sound/teaser3/slide2-r.mp3")
         scene.play(
             Indicate(self.signature[1], color=HIGHLIGHT_COLOR),
             Indicate(self.u1[3], color=SECONDARY_COLOR),
             Indicate(self.u2[3], color=SECONDARY_COLOR),
             run_Time=0.7,
         )
+        self.new_subsection(scene, "and s", "data/sound/teaser3/slide2-s.mp3")
         scene.play(
             Indicate(self.signature[3], color=HIGHLIGHT_COLOR),
             Indicate(self.u2[1], color=SECONDARY_COLOR),
             run_time=0.7,
         )
+        self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.wait(3)
         scene.play(Indicate(self.u2_enc[1]))
         self.u2_enc2 = (
@@ -254,7 +257,6 @@ class Intuition(SlideBase):
         )
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
 
-        self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.wait(1)
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)

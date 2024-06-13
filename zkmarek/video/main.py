@@ -170,6 +170,7 @@ TEASER3 = [
         "Intuition behind digital signature",
         sound="data/sound/teaser3/slide3.mp3",
         pre_wait_time=1.5,
+        wait_time=3,
     ),
     Intuition(),
 ]

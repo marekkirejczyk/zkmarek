@@ -36,7 +36,7 @@ class Sponsored(SlideBase):
         ).to_edge(UP)
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "thanks to", "data/sound/episode2/slide3-0.mp3")
+        self.new_subsection(scene, "thanks to", "data/sound/teaser3/slide0-1.mp3")
         scene.play(FadeIn(self.title))
         scene.play(FadeIn(self.ecosystem))
         scene.wait(1.5)
