@@ -239,7 +239,7 @@ class Intuition(SlideBase):
             run_time=0.7,
         )
         self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
-        scene.wait(0.5)
+        scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.play(Indicate(self.u2_enc[1]))
         self.u2_enc2 = (
             MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
@@ -253,6 +253,8 @@ class Intuition(SlideBase):
             .shift(RIGHT * 4)
         )
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
+        scene.wait(7)
+        scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
         scene.wait(10)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(2)
@@ -274,7 +276,7 @@ class Intuition(SlideBase):
         number1 = (
             MathTex("176", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
         )
-        number2 = MathTex("815", color=PRIMARY_COLOR).next_to(self.line, UP)
+        number2 = MathTex(r"815", color=PRIMARY_COLOR).next_to(self.line, UP)
         number_encrypted = (
             MathTex(r"176\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
@@ -284,7 +286,7 @@ class Intuition(SlideBase):
             self.line, DOWN
         )
         sum_up = (
-            MathTex("991", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 4)
+            MathTex(r"991", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 4)
         )
         sum_down = (
             MathTex(r"991\cdot G", color=SECONDARY_COLOR)
@@ -322,15 +324,15 @@ class Intuition(SlideBase):
         addition.generate_target()
         addition.target.move_to(UP * 1.5)
         scene.play(MoveToTarget(addition), run_time=1)
-        self.line_multiplication = Line(LEFT * 6, RIGHT * 5).set_color(SECONDARY_COLOR)
+        self.line_multiplication = (
+            Line(LEFT * 7, RIGHT * 4).set_color(SECONDARY_COLOR).move_to(DOWN * 2)
+        )
 
         self.multiplication_down = (
             Text("?").next_to(self.line_multiplication, DOWN).shift(LEFT * 2).scale(1.5)
         )
         self.multiplication_up = (
-            MathTex(r"\times")
-            .next_to(self.line_multiplication, UP * 1.5)
-            .shift(LEFT * 2)
+            MathTex(r"\times").next_to(self.line_multiplication, UP).shift(LEFT * 2)
         )
         scene.play(FadeIn(self.line_multiplication), run_time=0.7)
         scene.play(
@@ -340,11 +342,14 @@ class Intuition(SlideBase):
         number_enc_multi = (
             number_encrypted.copy()
             .next_to(self.line_multiplication, UP)
-            .move_to(LEFT * 4)
+            .move_to(LEFT * 4 + DOWN * 2)
+            .set_color(HIGHLIGHT_COLOR)
         )
 
-        number_enc_multi2 = number_encrypted.copy().next_to(
-            self.line_multiplication, UP
+        number_enc_multi2 = (
+            number_encrypted2.copy()
+            .next_to(self.line_multiplication, UP)
+            .set_color(HIGHLIGHT_COLOR)
         )
         scene.play(Write(number_enc_multi), Write(number_enc_multi2))
         self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-5.mp3")
@@ -377,7 +382,12 @@ class Intuition(SlideBase):
             .shift(RIGHT * 0.3)
         )
         pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(arrow_pairing, RIGHT)
-
+        result_up = (
+            MathTex(r"= \quad 14256 \cdot G", color=HIGHLIGHT_COLOR)
+            .next_to(self.line_multiplication, UP)
+            .move_to(3 * RIGHT)
+        )
+        scene.play(FadeIn(result_up))
         scene.play(Write(arrow_pairing), Write(pairing_label), run_time=0.7)
         scene.wait(2)
         result = (
@@ -386,9 +396,9 @@ class Intuition(SlideBase):
             .shift(LEFT * 2)
         )
         result_of_result = (
-            MathTex(r"= \quad e(14256 \cdot G, G)")
+            MathTex(r"= \quad e(14256 \cdot G, G)", color=SECONDARY_COLOR)
             .next_to(self.line_multiplication, DOWN)
-            .move_to(RIGHT * 4)
+            .move_to(RIGHT * 3)
         )
         scene.play(ReplacementTransform(self.multiplication_down, result))
         scene.wait(3)
@@ -400,5 +410,7 @@ class Intuition(SlideBase):
             pairing_label,
             self.multiplication_up,
             result,
+            result_up,
+            result_of_result,
         )
         scene.play(FadeOut(pairings))
