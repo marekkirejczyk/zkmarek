@@ -193,11 +193,6 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
         )
-        sum_u = (
-            MathTex("u_1 + u_2", color=PRIMARY_COLOR)
-            .next_to(self.line, UP)
-            .shift(RIGHT * 4)
-        )
         plus_down = (
             MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
         )
@@ -215,11 +210,7 @@ class Intuition(SlideBase):
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
-        scene.play(
-            Write(plus_up),
-            Write(equal_sign_up),
-            Write(sum_u),
-        )
+        scene.wait(0.3)
         scene.play(
             Indicate(self.u1[1], color=SECONDARY_COLOR),
             run_time=0.7,
@@ -267,7 +258,6 @@ class Intuition(SlideBase):
             self.u1_enc,
             self.u2_enc2,
             self.signature,
-            sum_u,
             priv_pub,
         )
 
@@ -298,8 +288,6 @@ class Intuition(SlideBase):
             number2,
             number_encrypted,
             number_encrypted2,
-            plus_up,
-            plus_down,
             equal_sign_down,
             equal_sign_up,
             sum_up,
@@ -325,7 +313,9 @@ class Intuition(SlideBase):
         addition.target.move_to(UP * 1.5)
         scene.play(MoveToTarget(addition), run_time=1)
         self.line_multiplication = (
-            Line(LEFT * 7, RIGHT * 4).set_color(SECONDARY_COLOR).move_to(DOWN * 2)
+            Line(LEFT * 6, RIGHT * 5)
+            .set_color(SECONDARY_COLOR)
+            .move_to(DOWN * 2 + LEFT * 0.5)
         )
 
         self.multiplication_down = (
@@ -342,7 +332,7 @@ class Intuition(SlideBase):
         number_enc_multi = (
             number_encrypted.copy()
             .next_to(self.line_multiplication, UP)
-            .move_to(LEFT * 4 + DOWN * 2)
+            .shift(4 * LEFT)
             .set_color(HIGHLIGHT_COLOR)
         )
 
@@ -383,9 +373,9 @@ class Intuition(SlideBase):
         )
         pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(arrow_pairing, RIGHT)
         result_up = (
-            MathTex(r"= \quad 14256 \cdot G", color=HIGHLIGHT_COLOR)
+            MathTex(r"?= 14256 \cdot G \cdot G", color=HIGHLIGHT_COLOR)
             .next_to(self.line_multiplication, UP)
-            .move_to(3 * RIGHT)
+            .shift(3 * RIGHT)
         )
         scene.play(FadeIn(result_up))
         scene.play(Write(arrow_pairing), Write(pairing_label), run_time=0.7)
@@ -396,9 +386,9 @@ class Intuition(SlideBase):
             .shift(LEFT * 2)
         )
         result_of_result = (
-            MathTex(r"= \quad e(14256 \cdot G, G)", color=SECONDARY_COLOR)
+            MathTex(r"= e(14256 \cdot G, G)", color=SECONDARY_COLOR)
             .next_to(self.line_multiplication, DOWN)
-            .move_to(RIGHT * 3)
+            .shift(RIGHT * 3)
         )
         scene.play(ReplacementTransform(self.multiplication_down, result))
         scene.wait(3)
