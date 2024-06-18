@@ -354,6 +354,7 @@ class Intuition(SlideBase):
             FadeOut(plus_down),
             FadeOut(plus_down),
             FadeOut(equal_sign_up),
+            FadeOut(equal_sign_down),
             FadeOut(number_enc_multi2),
             FadeOut(number_enc_multi),
         )
