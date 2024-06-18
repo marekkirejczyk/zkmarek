@@ -43,9 +43,9 @@ class DigitalSignatureInterface(CodeSlide):
         code_ec = self._get_code("data/ec/signature_interface3.py", 24).next_to(
             self.title_text, DOWN, buff=0.5
         )
-        code_ec_more = self._get_code("data/ec/signature_interface4.py", 18).next_to(
-            self.title_text, DOWN, buff=0.5
-        )
+        self.code_ec_more = self._get_code(
+            "data/ec/signature_interface4.py", 18
+        ).next_to(self.title_text, DOWN, buff=0.5)
         self.curve = Secp256k1_41
         self.chart = DiscreteEllipticChart(self.curve).scale(0.8)
         self.secp256k1 = secp256k1_standard()
@@ -105,16 +105,16 @@ class DigitalSignatureInterface(CodeSlide):
         self.indicate_code(scene, code_ec, prefix_ec[0], 0, run_time=0.5)
         self.indicate_code(scene, code_ec, prefix_ec[0], 1, run_time=0.5)
         self.indicate_code(scene, code_ec, prefix_ec[0], 2, run_time=0.5)
-        scene.play(ReplacementTransform(code_ec, code_ec_more), run_time=1.5)
+        scene.play(ReplacementTransform(code_ec, self.code_ec_more), run_time=1.5)
 
         self.new_subsection(scene, "ec_sign", "data/sound/episode2/slide5-7.mp3")
 
         self.new_subsection(scene, "Scalar", "data/sound/episode2/slide5-8.mp3")
         secret = ["secret_key: Scalar"]
-        self.indicate_code(scene, code_ec_more, secret[0], 0, run_time=0.7)
-        self.indicate_code(scene, code_ec_more, secret[0], 1, run_time=0.7)
-        scene.play(code_ec_more.animate.shift(RIGHT * 3).scale(0.2), run_time=1)
-        scene.play(FadeIn(self.chart.scale(0.85).next_to(code_ec_more, LEFT)))
+        self.indicate_code(scene, self.code_ec_more, secret[0], 0, run_time=0.7)
+        self.indicate_code(scene, self.code_ec_more, secret[0], 1, run_time=0.7)
+        scene.play(self.code_ec_more.animate.shift(RIGHT * 3).scale(0.2), run_time=1)
+        scene.play(FadeIn(self.chart.scale(0.85).next_to(self.code_ec_more, LEFT)))
         dots = VGroup(*self.chart.dots)
 
         scene.wait(4.4)
@@ -125,39 +125,42 @@ class DigitalSignatureInterface(CodeSlide):
         )
         scene.wait(7)
         scene.play(FadeOut(self.chart), run_time=0.7)
-        scene.play(code_ec_more.animate.shift(LEFT * 3).scale(5), run_time=1)
+        scene.play(self.code_ec_more.animate.shift(LEFT * 3).scale(5), run_time=1)
 
         self.new_subsection(scene, "public", "data/sound/episode2/slide5-9.mp3")
         public = ["public_key: ECPoint"]
-        self.indicate_code(scene, code_ec_more, public[0], 0, run_time=0.5)
-        self.indicate_code(scene, code_ec_more, public[0], 1, run_time=0.5)
-        self.indicate_code(scene, code_ec_more, public[0], 2, run_time=0.5)
+        self.indicate_code(scene, self.code_ec_more, public[0], 0, run_time=0.5)
+        self.indicate_code(scene, self.code_ec_more, public[0], 1, run_time=0.5)
+        self.indicate_code(scene, self.code_ec_more, public[0], 2, run_time=0.5)
         scene.wait(2)
 
         self.new_subsection(scene, "message", "data/sound/episode2/slide5-10.mp3")
         message = ["message: Scalar"]
-        self.indicate_code(scene, code_ec_more, message[0], 0, run_time=0.5)
-        self.indicate_code(scene, code_ec_more, message[0], 1, run_time=0.5)
-        self.indicate_code(scene, code_ec_more, message[0], 2, run_time=0.5)
+        self.indicate_code(scene, self.code_ec_more, message[0], 0, run_time=0.5)
+        self.indicate_code(scene, self.code_ec_more, message[0], 1, run_time=0.5)
+        self.indicate_code(scene, self.code_ec_more, message[0], 2, run_time=0.5)
         scene.wait(3)
 
         self.new_subsection(scene, "v value", "data/sound/episode2/slide5-11.mp3")
         signature_values = ["r: Scalar", "s: Scalar", "v: ?"]
         for i in range(0, 3):
             self.indicate_code(
-                scene, code_ec_more, signature_values[0], i, run_time=0.3
+                scene, self.code_ec_more, signature_values[0], i, run_time=0.3
             )
         for i in range(0, 3):
             self.indicate_code(
-                scene, code_ec_more, signature_values[1], i, run_time=0.3
+                scene, self.code_ec_more, signature_values[1], i, run_time=0.3
             )
         scene.wait(0.5)
         for i in range(0, 3):
             self.indicate_code(
-                scene, code_ec_more, signature_values[2], i, run_time=0.35
+                scene, self.code_ec_more, signature_values[2], i, run_time=0.35
             )
 
         scene.wait(1.5)
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.code_ec_more), FadeOut(self.title_text))
 
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=0.5):
         chars = find_in_code(code, fragment)
