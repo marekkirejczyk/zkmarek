@@ -86,7 +86,9 @@ class EllipticCurveProjection(SlideBase):
             )
             self.plane_curve_negative.set_color(YELLOW)
 
-        self.plane = NumberPlane(x_range=[-10, 10, 1], y_range=[-10, 10, 1], color=RED)
+        self.plane = NumberPlane(
+            x_range=[-10, 10, 1], y_range=[-10, 10, 1], color=SECONDARY_COLOR
+        )
         self.plane.prepare_for_nonlinear_transform()
 
     def animate_in(self, scene):
