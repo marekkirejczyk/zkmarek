@@ -16,6 +16,7 @@ from manim import (
     RIGHT,
     UP,
     DOWN,
+    Indicate,
 )
 
 import numpy as np
@@ -51,7 +52,7 @@ class EllipticCurveProjection(SlideBase):
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
-            axis_config={"include_numbers": True},
+            axis_config={"include_numbers": False},
         )
         self.labels = self.ax.get_axis_labels(
             Text("x", color=SECONDARY_COLOR),
@@ -95,19 +96,21 @@ class EllipticCurveProjection(SlideBase):
         self.new_subsection(
             scene, "what is point at inifnity?", "data/sound/short1/slide1-0.mp3"
         )
+        scene.play(FadeIn(self.title.to_edge(UP)))
+        self.create_plane_and_curves()
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
         self.new_subsection(
             scene, "x and y coordinates", "data/sound/short1/slide1-1.mp3"
         )
-        self.create_plane_and_curves()
-        scene.add(
-            self.plane,
-            self.ax,
-            self.labels,
-            self.plane_curve_positive,
-            self.plane_curve_negative,
+
+        scene.play(
+            FadeIn(self.ax),
+            FadeIn(self.labels),
+            FadeIn(self.plane_curve_positive),
+            FadeIn(self.plane_curve_negative),
         )
 
+        scene.play(Indicate(self.labels))
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
         )
@@ -121,7 +124,15 @@ class EllipticCurveProjection(SlideBase):
         )
         scene.play(FadeIn(self.equation))
         self.equations = MathTex(r"x=X/Z, \quad y=Y/Z").next_to(self.equation, DOWN)
-        scene.play(FadeIn(self.equations))
+        scene.play(
+            FadeIn(self.equations),
+            FadeOut(self.ax),
+            FadeOut(self.labels),
+            FadeOut(self.plane_curve_positive),
+            FadeOut(
+                self.plane_curve_negative,
+            ),
+        )
         t_values = np.linspace(-5, 5, 10000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
