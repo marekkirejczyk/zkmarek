@@ -91,7 +91,7 @@ class EllipticCurveProjection(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(
-            scene, "what is point at inifnity?", "data/sound/short1/sldie1-0.mp3"
+            scene, "what is point at inifnity?", "data/sound/short1/slide1-0.mp3"
         )
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
         self.new_subsection(
