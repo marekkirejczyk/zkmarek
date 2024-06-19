@@ -21,7 +21,7 @@ from manim import (
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import SECONDARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 
 
 class EllipticCurveProjection(SlideBase):
@@ -46,6 +46,9 @@ class EllipticCurveProjection(SlideBase):
         return np.array([xs, ys, -zs])
 
     def construct(self):
+        self.title = Text(
+            "Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT
+        ).to_edge(UP)
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(BLUE, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.5)
