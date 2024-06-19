@@ -55,7 +55,7 @@ class EllipticCurveProjection(SlideBase):
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
-            axis_config={"include_numbers": False},
+            axis_config={"include_numbers": True},
         )
         self.labels = self.ax.get_axis_labels(
             Text("x", color=SECONDARY_COLOR),
