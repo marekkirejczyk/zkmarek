@@ -9,20 +9,23 @@ from manim import (
     Transform,
     FadeIn,
     FadeOut,
+    DEGREES,
+    Axes,
+    Text,
+    MathTex,
+    RIGHT,
+    UP,
+    DOWN,
 )
+
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.constant import SECONDARY_COLOR
 
 
 class EllipticCurveProjection(SlideBase):
-
     def __init__(self):
         super().__init__("Stereographic projection of elliptic curve")
-
-    def construct(self):
-        self.sphere = Sphere(radius=3, resolution=(50, 50))
-        self.sphere.set_fill(BLUE, opacity=0.1)
-        self.sphere.set_stroke(WHITE, opacity=0.5)
 
     def elliptic_curve_points(self, t):
         a, b = -1, 1
@@ -41,9 +44,82 @@ class EllipticCurveProjection(SlideBase):
         zs = -radius * (radius**2 - x**2 - y**2) / denom
         return np.array([xs, ys, -zs])
 
-    def animate_in(self, scene):
-        # scene.set_camera_orientation(phi=75 * DEGREES, theta=-45 * DEGREES)
+    def construct(self):
+        self.sphere = Sphere(radius=3, resolution=(50, 50))
+        self.sphere.set_fill(BLUE, opacity=0.1)
+        self.sphere.set_stroke(WHITE, opacity=0.5)
+        self.ax = Axes(
+            x_range=[-10, 10, 1],
+            y_range=[-10, 10, 1],
+            axis_config={"include_numbers": True},
+        )
+        self.labels = self.ax.get_axis_labels(
+            Text("x", color=SECONDARY_COLOR),
+            Text("y", color=SECONDARY_COLOR),
+        )
 
+    def create_plane_and_curves(self):
+        t_values = np.linspace(-5, 5, 10000)
+        self.plane_curve_points_positive = []
+        self.plane_curve_points_negative = []
+        for t in t_values:
+            point = self.elliptic_curve_points(t)
+            if point is not None:
+                self.plane_curve_points_positive.append(
+                    np.array([point[0], point[1], 0])
+                )
+                self.plane_curve_points_negative.append(
+                    np.array([point[0], -point[1], 0])
+                )
+
+        self.plane_curve_positive = VMobject()
+        if self.plane_curve_points_positive:
+            self.plane_curve_positive.set_points_as_corners(
+                self.plane_curve_points_positive
+            )
+            self.plane_curve_positive.set_color(YELLOW)
+
+        self.plane_curve_negative = VMobject()
+        if self.plane_curve_points_negative:
+            self.plane_curve_negative.set_points_as_corners(
+                self.plane_curve_points_negative
+            )
+            self.plane_curve_negative.set_color(YELLOW)
+
+        self.plane = NumberPlane(x_range=[-10, 10, 1], y_range=[-10, 10, 1], color=RED)
+        self.plane.prepare_for_nonlinear_transform()
+
+    def animate_in(self, scene):
+        self.new_subsection(
+            scene, "what is point at inifnity?", "data/sound/short1/sldie1-0.mp3"
+        )
+        scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
+        self.new_subsection(
+            scene, "x and y coordinates", "data/sound/short1/slide1-1.mp3"
+        )
+        self.create_plane_and_curves()
+        scene.add(
+            self.plane,
+            self.ax,
+            self.labels,
+            self.plane_curve_positive,
+            self.plane_curve_negative,
+        )
+
+        self.new_subsection(
+            scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
+        )
+        new_coordinates = MathTex(r"X, Y, Z").to_edge(RIGHT + UP)
+        scene.wait(4)
+        scene.play(FadeIn(new_coordinates))
+        self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
+        scene.wait(2)
+        self.equation = MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3").next_to(
+            new_coordinates, DOWN
+        )
+        scene.play(FadeIn(self.equation))
+        self.equations = MathTex(r"x=X/Z, \quad y=Y/Z").next_to(self.equation, DOWN)
+        scene.play(FadeIn(self.equations))
         t_values = np.linspace(-5, 5, 10000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
@@ -78,12 +154,17 @@ class EllipticCurveProjection(SlideBase):
         self.animate_wrapping(scene)
         scene.add(self.sphere)
         scene.play(FadeOut(self.plane))
-
+        self.new_subsection(scene, "data/sound/short1/slide1-4.mp3")
+        scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
         scene.wait(5)
         scene.stop_ambient_camera_rotation()
-
-        scene.wait(2)
+        self.new_subsection(scene, "data/sound/short1/slide1-5.mp3")
+        scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
+        scene.begin_ambient_camera_rotation(rate=0.1)
+        scene.wait(5)
+        self.new_subsection(scene, "data/sound/short1/slide1-6.mp3")
+        scene.stop_ambient_camera_rotation()
 
     def animate_wrapping(self, scene):
         animations = []
