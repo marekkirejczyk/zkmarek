@@ -1,16 +1,14 @@
-from manim import Scene
+# from manim import ThreeDScene
 from manim_editor import PresentationSectionType
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Presentation:
-    scene: Scene
+    # scene: ThreeDScene
     slides: list[SlideBase]
     all_slides: list[SlideBase]
 
-    def __init__(
-        self, scene: Scene, all_slides: list[SlideBase], slides: list[SlideBase]
-    ):
+    def __init__(self, scene, all_slides: list[SlideBase], slides: list[SlideBase]):
         self.scene = scene
         self.slides = slides
         self.all_slides = all_slides
@@ -44,5 +42,5 @@ class Presentation:
         print(f"Rendering '{name}': ")
         for slide in self.all_slides:
             prefix = "-> " if index_of(slide, self.slides) >= 0 else "   "
-            index = index_of(slide, self.all_slides)+1
+            index = index_of(slide, self.all_slides) + 1
             print(f"{prefix}{index:2}. {slide}")

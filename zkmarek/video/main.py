@@ -1,6 +1,6 @@
 import os
 
-from manim import Scene, config
+from manim import Scene, config, ThreeDScene
 from manimpango import register_font
 from presentation import Presentation
 from slides.cec.addition import Addition as CECAddition
@@ -60,6 +60,7 @@ from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteas
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.signature import SignatureMath
 from zkmarek.video.slides.teaser3.intuition import Intuition
+from zkmarek.video.slides.short import EllipticCurveProjection
 
 config.width = 16
 config.height = 9
@@ -161,6 +162,8 @@ EPISODE2 = [
     Credits2(),
 ]
 
+SHORT1 = [EllipticCurveProjection()]
+
 TEASER3 = [
     Sponsored(),
     SignatureMath(),
@@ -207,20 +210,38 @@ DECKS = {
     "E3": EPISODE3,
     "E4": EPISODE4,
     "E5": EPISODE5,
+    "SHORT1": SHORT1,
 }
 
-DEFAULT_DECK = "E2"
+DEFAULT_DECK = "SHORT1"
 
 
-class EllipticCurves(Scene):
-    def construct(self):
-        register_font("data/brand/Oxanium-Regular.ttf")
+if DEFAULT_DECK == "SHORT1":
 
-        name = get_deck_name(DEFAULT_DECK)
-        deck = DECKS[name]
+    class EllipticCurves3D(ThreeDScene):
+        def construct(self):
+            register_font("data/brand/Oxanium-Regular.ttf")
 
-        env_slides = dict(os.environ).get("SLIDES")
-        slides = get_slides_from_names(env_slides, deck, globals())
-        presentation = Presentation(self, deck, slides)
-        presentation.print_slides(name)
-        presentation.play()
+            name = get_deck_name(DEFAULT_DECK)
+            deck = DECKS[name]
+
+            env_slides = dict(os.environ).get("SLIDES")
+            slides = get_slides_from_names(env_slides, deck, globals())
+            presentation = Presentation(self, deck, slides)
+            presentation.print_slides(name)
+            presentation.play()
+
+else:
+
+    class EllipticCurves(Scene):
+        def construct(self):
+            register_font("data/brand/Oxanium-Regular.ttf")
+
+            name = get_deck_name(DEFAULT_DECK)
+            deck = DECKS[name]
+
+            env_slides = dict(os.environ).get("SLIDES")
+            slides = get_slides_from_names(env_slides, deck, globals())
+            presentation = Presentation(self, deck, slides)
+            presentation.print_slides(name)
+            presentation.play()
