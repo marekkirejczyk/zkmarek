@@ -1,14 +1,16 @@
-# from manim import ThreeDScene
+from manim import ThreeDScene
 from manim_editor import PresentationSectionType
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 class Presentation:
-    # scene: ThreeDScene
+    scene: ThreeDScene
     slides: list[SlideBase]
     all_slides: list[SlideBase]
 
-    def __init__(self, scene, all_slides: list[SlideBase], slides: list[SlideBase]):
+    def __init__(
+        self, scene: ThreeDScene, all_slides: list[SlideBase], slides: list[SlideBase]
+    ):
         self.scene = scene
         self.slides = slides
         self.all_slides = all_slides
