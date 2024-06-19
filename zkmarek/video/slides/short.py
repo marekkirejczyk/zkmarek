@@ -7,7 +7,6 @@ from manim import (
     NumberPlane,
     RED,
     Transform,
-    DEGREES,
     FadeIn,
     FadeOut,
 )
