@@ -218,7 +218,7 @@ DEFAULT_DECK = "SHORT1"
 
 if DEFAULT_DECK == "SHORT1":
 
-    class EllipticCurves3D(ThreeDScene):
+    class EllipticCurves(ThreeDScene):
         def construct(self):
             register_font("data/brand/Oxanium-Regular.ttf")
 
