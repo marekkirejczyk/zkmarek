@@ -16,6 +16,9 @@ from manim import (
     DOWN,
     RIGHT,
     Indicate,
+    Dot,
+    Circle,
+    RED,
 )
 
 import numpy as np
@@ -60,12 +63,16 @@ class EllipticCurveProjection(SlideBase):
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
-            axis_config={"include_numbers": True},
+            axis_config={"include_numbers": False},
         )
         self.labels = self.ax.get_axis_labels(
             Text("x", color=SECONDARY_COLOR),
             Text("y", color=SECONDARY_COLOR),
         )
+        self.equatorial_plane = Circle(radius=3, color=RED).rotate(
+            90 * DEGREES, axis=RIGHT
+        )
+        self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-5, 5, 10000)
@@ -107,6 +114,7 @@ class EllipticCurveProjection(SlideBase):
         scene.add_fixed_in_frame_mobjects(self.title)
         self.title.to_edge(UP)
         scene.play(FadeIn(self.title))
+        scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
         self.create_plane_and_curves()
 
         scene.play(
@@ -115,7 +123,7 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.plane_curve_positive),
             FadeIn(self.plane_curve_negative),
         )
-        scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
+
         self.new_subsection(
             scene, "x and y coordinates", "data/sound/short1/slide1-1.mp3"
         )
@@ -144,14 +152,16 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.equations),
         )
 
-        # scene.add(self.sphere)
-        # scene.play(FadeOut(self.plane))
         self.new_subsection(scene, "data/sound/short1/slide1-4.mp3")
+        scene.add(self.sphere)
+        scene.play(FadeOut(self.ax), FadeOut(self.labels))
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
         # scene.wait(5)
         scene.stop_ambient_camera_rotation()
         self.new_subsection(scene, "data/sound/short1/slide1-5.mp3")
+        scene.add(self.equatorial_plane, self.south_pole)
+
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
         # scene.wait(5)
