@@ -118,10 +118,10 @@ class EllipticCurveProjection(SlideBase):
             scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
         )
         new_coordinates = MathTex(r"X, Y, Z").to_edge(RIGHT + UP)
-        scene.wait(4)
+        # scene.wait(4)
         scene.play(FadeIn(new_coordinates))
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
-        scene.wait(2)
+        # scene.wait(2)
         self.equation = MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3").next_to(
             new_coordinates, DOWN
         )
@@ -173,12 +173,12 @@ class EllipticCurveProjection(SlideBase):
         self.new_subsection(scene, "data/sound/short1/slide1-4.mp3")
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
-        scene.wait(5)
+        # scene.wait(5)
         scene.stop_ambient_camera_rotation()
         self.new_subsection(scene, "data/sound/short1/slide1-5.mp3")
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
-        scene.wait(5)
+        # scene.wait(5)
         self.new_subsection(scene, "data/sound/short1/slide1-6.mp3")
         scene.stop_ambient_camera_rotation()
 
