@@ -86,15 +86,6 @@ class EllipticCurveProjection(SlideBase):
         )
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
 
-        self.sphere_ec = VGroup(
-            self.sphere,
-            self.equatorial_plane,
-            self.south_pole,
-            self.plane_curve_positive,
-            self.plane_curve_negative,
-        )
-        self.sphere_ec.scale(0.8)
-
     def create_plane_and_curves(self):
         t_values = np.linspace(-5, 5, 10000)
         self.plane_curve_points_positive = []
@@ -127,6 +118,14 @@ class EllipticCurveProjection(SlideBase):
             x_range=[-10, 10, 1], y_range=[-10, 10, 1], color=SECONDARY_COLOR
         )
         self.plane.prepare_for_nonlinear_transform()
+        self.sphere_ec = VGroup(
+            self.sphere,
+            self.equatorial_plane,
+            self.south_pole,
+            self.plane_curve_positive,
+            self.plane_curve_negative,
+        )
+        self.sphere_ec.scale(0.8)
 
     def animate_in(self, scene):
         self.new_subsection(
