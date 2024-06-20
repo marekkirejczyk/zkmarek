@@ -20,9 +20,8 @@ from manim import (
     Dot,
     Circle,
     RED,
-    MoveToTarget,
     VGroup,
-    # ReplacementTransform,
+    ReplacementTransform,
 )
 
 import numpy as np
@@ -56,7 +55,7 @@ class EllipticCurveProjection(SlideBase):
             Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT)
         ).to_edge(UP)
         self.new_coordinates = (
-            (MathTex(r"X, Y, Z", color=SECONDARY_COLOR)).to_edge(UP).shift(RIGHT)
+            (MathTex(r"X, Y, Z", color=SECONDARY_COLOR)).to_edge(UP).shift(RIGHT * 3)
         )
         self.equation = (
             (MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR))
@@ -72,8 +71,8 @@ class EllipticCurveProjection(SlideBase):
             .next_to(self.equation, DOWN)
         )
 
-        self.sphere = Sphere(radius=3, resolution=(50, 50))
-        self.sphere.set_fill(BLUE, opacity=0.1)
+        self.sphere = Sphere(radius=3, resolution=(50, 50)).scale(0.8)
+        self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.5)
         self.ax = Axes(
             x_range=[-10, 10, 1],
@@ -151,17 +150,12 @@ class EllipticCurveProjection(SlideBase):
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
 
         self.animate_wrapping(scene)
-        self.sphere_ec = VGroup(self.plane, self.new_line)
-        self.sphere_ec.generate_target()
-        self.sphere_ec.target.move_to(LEFT * 2).scale(0.7)
+        scene.play(
+            ReplacementTransform(self.plane, self.sphere),
+            FadeIn(self.sphere_curve_negative.scale(0.8)),
+            FadeIn(self.sphere_curve_positive.scale(0.8)),
+        )
         scene.add_fixed_in_frame_mobjects(self.new_coordinates)
-
-        if self.plane is not None:
-            self.plane.generate_target()
-            self.plane.target.move_to(LEFT * 2).scale(0.7)
-            scene.play(MoveToTarget(self.plane))
-        else:
-            raise ValueError("Plane is not properly instantiated")
 
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
         # scene.wait(2)
@@ -173,13 +167,10 @@ class EllipticCurveProjection(SlideBase):
         )
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide1-4.mp3")
-        scene.play(
-            FadeOut(self.plane), FadeIn(self.sphere)
-        )  # Replacement Transform was beautiful - but I dont know if longer render
+
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
-        scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
+        scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=4)
         scene.begin_ambient_camera_rotation(rate=0.1)
-        self.new_subsection(scene, "denser numbers", "data/sound/short1/slide1-5.mp3")
         scene.stop_ambient_camera_rotation()
         scene.add(self.equatorial_plane, self.south_pole)
 
@@ -187,6 +178,7 @@ class EllipticCurveProjection(SlideBase):
         scene.begin_ambient_camera_rotation(rate=0.1)
         # scene.wait(5)
         self.new_subsection(scene, "conclusion", "data/sound/short1/slide1-6.mp3")
+        scene.move_camera(phi=30 * DEGREES, theta=60 * DEGREES, run_time=4)
         scene.stop_ambient_camera_rotation()
 
     def animate_wrapping(self, scene):
@@ -224,8 +216,6 @@ class EllipticCurveProjection(SlideBase):
             animations.append(Transform(line, self.new_line.set_color("blue")))
 
         scene.play(*animations, run_time=5)
-
-        scene.play(FadeIn(self.plane))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.equation), FadeOut(self.equations))
