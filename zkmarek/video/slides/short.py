@@ -21,6 +21,7 @@ from manim import (
     Circle,
     RED,
     MoveToTarget,
+    VGroup,
     # ReplacementTransform,
 )
 
@@ -60,8 +61,13 @@ class EllipticCurveProjection(SlideBase):
         self.equation = (
             MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR)
         ).next_to(self.new_coordinates, DOWN)
-        self.equations = (MathTex(r"x=X/Z, \quad y=Y/Z", SECONDARY_COLOR)).next_to(
-            self.equation, DOWN
+        self.equations = (
+            VGroup(
+                MathTex(r"x=\frac{X}{Z}", color=SECONDARY_COLOR),
+                MathTex(r"y=\frac{Y}{Z}", color=SECONDARY_COLOR),
+            )
+            .arrange(DOWN)
+            .next_to(self.equation, DOWN)
         )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
@@ -73,8 +79,8 @@ class EllipticCurveProjection(SlideBase):
             axis_config={"include_numbers": False},
         )
         self.labels = self.ax.get_axis_labels(
-            Text("x", color=SECONDARY_COLOR),
-            Text("y", color=SECONDARY_COLOR),
+            MathTex("x", color=SECONDARY_COLOR),
+            MathTex("y", color=SECONDARY_COLOR),
         )
         self.equatorial_plane = Circle(radius=3, color=RED).rotate(
             90 * DEGREES, axis=RIGHT
