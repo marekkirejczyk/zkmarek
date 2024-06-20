@@ -48,10 +48,10 @@ class EllipticCurveProjection(SlideBase):
         self.title = (
             Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT)
         ).to_edge(UP)
+        self.new_coordinates = (MathTex(r"X, Y, Z")).to_edge(UP + RIGHT)
         self.equation = (MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3")).next_to(
             self.new_coordinates, DOWN
         )
-        self.new_coordinates = (MathTex(r"X, Y, Z")).to_edge(UP + RIGHT)
         self.equations = (MathTex(r"x=X/Z, \quad y=Y/Z")).next_to(self.equation, DOWN)
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
