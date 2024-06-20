@@ -19,6 +19,7 @@ from manim import (
     Dot,
     Circle,
     RED,
+    ReplacementTransform,
 )
 
 import numpy as np
@@ -134,29 +135,30 @@ class EllipticCurveProjection(SlideBase):
         )
         # scene.wait(4)
         self.animate_wrapping(scene)
+        scene.play(FadeOut(self.ax), FadeOut(self.labels))
         scene.add_fixed_in_frame_mobjects(self.new_coordinates)
 
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
         # scene.wait(2)
         scene.add_fixed_in_frame_mobjects(self.equation)
-        scene.play(
-            FadeOut(self.ax),
-            FadeOut(self.labels),
-            FadeOut(self.plane_curve_positive),
-            FadeOut(
-                self.plane_curve_negative,
-            ),
-        )
+        # scene.play(
+        #     FadeOut(self.ax),
+        #     FadeOut(self.labels),
+        #     FadeOut(self.plane_curve_positive),
+        #     FadeOut(
+        #         self.plane_curve_negative,
+        #     ),
+        # )
         scene.add_fixed_in_frame_mobjects(self.equations)
         scene.play(
             FadeIn(self.equations),
         )
 
         self.new_subsection(scene, "data/sound/short1/slide1-4.mp3")
-        scene.add(self.sphere)
+        scene.play(ReplacementTransform(self.plane, self.sphere))
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
-        scene.begin_ambient_camera_rotation(rate=0.1)
+        # scene.begin_ambient_camera_rotation(rate=0.1)
         # scene.wait(5)
         scene.stop_ambient_camera_rotation()
         self.new_subsection(scene, "data/sound/short1/slide1-5.mp3")
