@@ -155,7 +155,14 @@ class EllipticCurveProjection(SlideBase):
         self.sphere_ec.generate_target()
         self.sphere_ec.target.move_to(LEFT * 2).scale(0.7)
         scene.add_fixed_in_frame_mobjects(self.new_coordinates)
-        scene.play(MoveToTarget(self.plane))
+
+        if self.plane is not None:
+            self.plane.generate_target()
+            self.plane.target.move_to(LEFT * 2).scale(0.7)
+            scene.play(MoveToTarget(self.plane))
+        else:
+            raise ValueError("Plane is not properly instantiated")
+
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
         # scene.wait(2)
         scene.add_fixed_in_frame_mobjects(self.equation)
