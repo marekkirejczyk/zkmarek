@@ -59,8 +59,10 @@ class EllipticCurveProjection(SlideBase):
             (MathTex(r"X, Y, Z", color=SECONDARY_COLOR)).to_edge(UP).shift(RIGHT)
         )
         self.equation = (
-            MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR)
-        ).next_to(self.new_coordinates, DOWN)
+            (MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR))
+            .next_to(self.new_coordinates, DOWN)
+            .scale(0.7)
+        )
         self.equations = (
             VGroup(
                 MathTex(r"x=\frac{X}{Z}", color=SECONDARY_COLOR),
@@ -149,8 +151,9 @@ class EllipticCurveProjection(SlideBase):
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
 
         self.animate_wrapping(scene)
-        self.plane.generate_target()
-        self.plane.target.to_edge(LEFT)
+        self.sphere_ec = VGroup(self.plane, self.new_line)
+        self.sphere_ec.generate_target()
+        self.sphere_ec.target.move_to(LEFT * 2).scale(0.7)
         scene.add_fixed_in_frame_mobjects(self.new_coordinates)
         scene.play(MoveToTarget(self.plane))
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
@@ -168,10 +171,9 @@ class EllipticCurveProjection(SlideBase):
         )  # Replacement Transform was beautiful - but I dont know if longer render
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
-        # scene.begin_ambient_camera_rotation(rate=0.1)
-        # scene.wait(5)
-        scene.stop_ambient_camera_rotation()
+        scene.begin_ambient_camera_rotation(rate=0.1)
         self.new_subsection(scene, "denser numbers", "data/sound/short1/slide1-5.mp3")
+        scene.stop_ambient_camera_rotation()
         scene.add(self.equatorial_plane, self.south_pole)
 
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
@@ -192,23 +194,27 @@ class EllipticCurveProjection(SlideBase):
             for p in self.plane_curve_points_negative
         ]
 
-        sphere_curve_positive = (
+        self.sphere_curve_positive = (
             VMobject().set_points_smoothly(new_points_positive).set_color(YELLOW)
         )
-        sphere_curve_negative = (
+        self.sphere_curve_negative = (
             VMobject().set_points_smoothly(new_points_negative).set_color(YELLOW)
         )
 
-        animations.append(Transform(self.plane_curve_positive, sphere_curve_positive))
-        animations.append(Transform(self.plane_curve_negative, sphere_curve_negative))
+        animations.append(
+            Transform(self.plane_curve_positive, self.sphere_curve_positive)
+        )
+        animations.append(
+            Transform(self.plane_curve_negative, self.sphere_curve_negative)
+        )
 
         for line in self.plane.family_members_with_points():
             line_points = line.points
             new_line_points = [
                 self.stereographic_projection(p[0], p[1]) for p in line_points
             ]
-            new_line = VMobject().set_points_smoothly(new_line_points)
-            animations.append(Transform(line, new_line.set_color("blue")))
+            self.new_line = VMobject().set_points_smoothly(new_line_points)
+            animations.append(Transform(line, self.new_line.set_color("blue")))
 
         scene.play(*animations, run_time=5)
 
