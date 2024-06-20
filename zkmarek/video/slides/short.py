@@ -215,3 +215,6 @@ class EllipticCurveProjection(SlideBase):
         scene.play(*animations, run_time=5)
 
         scene.play(FadeIn(self.plane))
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.equation), FadeOut(self.equations))
