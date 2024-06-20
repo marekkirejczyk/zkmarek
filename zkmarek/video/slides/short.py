@@ -135,7 +135,7 @@ class EllipticCurveProjection(SlideBase):
         self.title.to_edge(UP)
         scene.play(FadeIn(self.title))
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
-        self.create_plane_and_curves(scene)
+        self.create_plane_and_curves()
         scene.play(
             FadeIn(self.ax),
             FadeIn(self.labels),
