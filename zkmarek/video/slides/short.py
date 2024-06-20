@@ -1,6 +1,5 @@
 from manim import (
     Sphere,
-    BLUE,
     WHITE,
     VMobject,
     YELLOW,
@@ -15,7 +14,6 @@ from manim import (
     UP,
     DOWN,
     RIGHT,
-    LEFT,
     Indicate,
     Dot,
     Circle,
@@ -55,10 +53,10 @@ class EllipticCurveProjection(SlideBase):
             Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT)
         ).to_edge(UP)
         self.new_coordinates = (
-            (MathTex(r"X, Y, Z", color=SECONDARY_COLOR)).to_edge(UP).shift(RIGHT * 3)
+            MathTex(r"X, Y, Z", color=SECONDARY_COLOR).to_edge(UP).shift(RIGHT * 5)
         )
         self.equation = (
-            (MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR))
+            MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR)
             .next_to(self.new_coordinates, DOWN)
             .scale(0.7)
         )
@@ -71,7 +69,7 @@ class EllipticCurveProjection(SlideBase):
             .next_to(self.equation, DOWN)
         )
 
-        self.sphere = Sphere(radius=3, resolution=(50, 50)).scale(0.8)
+        self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.5)
         self.ax = Axes(
@@ -87,6 +85,15 @@ class EllipticCurveProjection(SlideBase):
             90 * DEGREES, axis=RIGHT
         )
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
+
+        self.sphere_ec = VGroup(
+            self.sphere,
+            self.equatorial_plane,
+            self.south_pole,
+            self.plane_curve_positive,
+            self.plane_curve_negative,
+        )
+        self.sphere_ec.scale(0.8)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-5, 5, 10000)
@@ -123,14 +130,13 @@ class EllipticCurveProjection(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(
-            scene, "what is point at inifnity?", "data/sound/short1/slide1-0.mp3"
+            scene, "what is point at infinity?", "data/sound/short1/slide1-0.mp3"
         )
         scene.add_fixed_in_frame_mobjects(self.title)
         self.title.to_edge(UP)
         scene.play(FadeIn(self.title))
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
-        self.create_plane_and_curves()
-
+        self.create_plane_and_curves(scene)
         scene.play(
             FadeIn(self.ax),
             FadeIn(self.labels),
@@ -141,34 +147,21 @@ class EllipticCurveProjection(SlideBase):
         self.new_subsection(
             scene, "x and y coordinates", "data/sound/short1/slide1-1.mp3"
         )
-
         scene.play(Indicate(self.labels))
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
         )
-        # scene.wait(4)
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
-
         self.animate_wrapping(scene)
-        scene.play(
-            ReplacementTransform(self.plane, self.sphere),
-            FadeIn(self.sphere_curve_negative.scale(0.8)),
-            FadeIn(self.sphere_curve_positive.scale(0.8)),
-        )
+        scene.play(ReplacementTransform(self.plane, self.sphere_ec))
         scene.add_fixed_in_frame_mobjects(self.new_coordinates)
 
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
-        # scene.wait(2)
         scene.add_fixed_in_frame_mobjects(self.equation)
-
         scene.add_fixed_in_frame_mobjects(self.equations)
-        scene.play(
-            FadeIn(self.equations),
-        )
+        scene.play(FadeIn(self.equations))
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide1-4.mp3")
-
-        scene.play(FadeOut(self.ax), FadeOut(self.labels))
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=4)
         scene.begin_ambient_camera_rotation(rate=0.1)
         scene.stop_ambient_camera_rotation()
@@ -176,7 +169,6 @@ class EllipticCurveProjection(SlideBase):
 
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
-        # scene.wait(5)
         self.new_subsection(scene, "conclusion", "data/sound/short1/slide1-6.mp3")
         scene.move_camera(phi=30 * DEGREES, theta=60 * DEGREES, run_time=4)
         scene.stop_ambient_camera_rotation()
