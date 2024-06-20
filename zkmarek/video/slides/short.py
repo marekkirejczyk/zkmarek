@@ -15,11 +15,13 @@ from manim import (
     UP,
     DOWN,
     RIGHT,
+    LEFT,
     Indicate,
     Dot,
     Circle,
     RED,
-    ReplacementTransform,
+    MoveToTarget,
+    # ReplacementTransform,
 )
 
 import numpy as np
@@ -52,11 +54,15 @@ class EllipticCurveProjection(SlideBase):
         self.title = (
             Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT)
         ).to_edge(UP)
-        self.new_coordinates = (MathTex(r"X, Y, Z")).to_edge(UP + RIGHT)
-        self.equation = (MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3")).next_to(
-            self.new_coordinates, DOWN
+        self.new_coordinates = (
+            (MathTex(r"X, Y, Z", color=SECONDARY_COLOR)).to_edge(UP).shift(RIGHT)
         )
-        self.equations = (MathTex(r"x=X/Z, \quad y=Y/Z")).next_to(self.equation, DOWN)
+        self.equation = (
+            MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR)
+        ).next_to(self.new_coordinates, DOWN)
+        self.equations = (MathTex(r"x=X/Z, \quad y=Y/Z", SECONDARY_COLOR)).next_to(
+            self.equation, DOWN
+        )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(BLUE, opacity=0.1)
@@ -134,40 +140,38 @@ class EllipticCurveProjection(SlideBase):
             scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
         )
         # scene.wait(4)
-        self.animate_wrapping(scene)
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
-        scene.add_fixed_in_frame_mobjects(self.new_coordinates)
 
+        self.animate_wrapping(scene)
+        self.plane.generate_target()
+        self.plane.target.to_edge(LEFT)
+        scene.add_fixed_in_frame_mobjects(self.new_coordinates)
+        scene.play(MoveToTarget(self.plane))
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
         # scene.wait(2)
         scene.add_fixed_in_frame_mobjects(self.equation)
-        # scene.play(
-        #     FadeOut(self.ax),
-        #     FadeOut(self.labels),
-        #     FadeOut(self.plane_curve_positive),
-        #     FadeOut(
-        #         self.plane_curve_negative,
-        #     ),
-        # )
+
         scene.add_fixed_in_frame_mobjects(self.equations)
         scene.play(
             FadeIn(self.equations),
         )
 
-        self.new_subsection(scene, "data/sound/short1/slide1-4.mp3")
-        scene.play(ReplacementTransform(self.plane, self.sphere))
+        self.new_subsection(scene, "south pole", "data/sound/short1/slide1-4.mp3")
+        scene.play(
+            FadeOut(self.plane), FadeIn(self.sphere)
+        )  # Replacement Transform was beautiful - but I dont know if longer render
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=2)
         # scene.begin_ambient_camera_rotation(rate=0.1)
         # scene.wait(5)
         scene.stop_ambient_camera_rotation()
-        self.new_subsection(scene, "data/sound/short1/slide1-5.mp3")
+        self.new_subsection(scene, "denser numbers", "data/sound/short1/slide1-5.mp3")
         scene.add(self.equatorial_plane, self.south_pole)
 
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
         # scene.wait(5)
-        self.new_subsection(scene, "data/sound/short1/slide1-6.mp3")
+        self.new_subsection(scene, "conclusion", "data/sound/short1/slide1-6.mp3")
         scene.stop_ambient_camera_rotation()
 
     def animate_wrapping(self, scene):
