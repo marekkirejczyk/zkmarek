@@ -60,7 +60,8 @@ from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteas
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.signature import SignatureMath
 from zkmarek.video.slides.teaser3.intuition import Intuition
-from zkmarek.video.slides.short import EllipticCurveProjection
+from zkmarek.video.slides.short1.short import EllipticCurveProjection
+from zkmarek.video.slides.short1.challange import Challange
 
 config.width = 16
 config.height = 9
@@ -162,7 +163,7 @@ EPISODE2 = [
     Credits2(),
 ]
 
-SHORT1 = [EllipticCurveProjection()]
+SHORT1 = [Challange(), EllipticCurveProjection()]
 
 TEASER3 = [
     Sponsored(),

@@ -1,0 +1,23 @@
+from manim import FadeIn, ImageMobject, Text, FadeOut, UP
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.slides.common.slide_base import SlideBase
+
+
+class Challange(SlideBase):
+    def __init__(self):
+        super().__init__("Challange acceppted!")
+
+    def construct(self):
+        self.title = Text(
+            "Challange accpeted!", color=PRIMARY_COLOR, font=PRIMARY_FONT
+        ).to_edge(UP)
+
+        self.image = ImageMobject("data/shorts/warpcast.png").scale(2.3)
+
+    def animate_in(self, scene):
+        self.new_subsection(scene, "challange", "data/sound/short1/slide1-0.mp3")
+        scene.play(FadeIn(self.title), FadeIn(self.image), run_time=0.7)
+        scene.wait(3.5)
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.title), FadeOut(self.image), run_time=0.5)

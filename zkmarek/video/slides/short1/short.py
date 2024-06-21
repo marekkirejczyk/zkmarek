@@ -12,21 +12,17 @@ from manim import (
     Text,
     MathTex,
     UP,
-    DOWN,
     RIGHT,
     LEFT,
-    Indicate,
     Dot,
     Circle,
     VGroup,
     ReplacementTransform,
-    Write,
 )
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
-from zkmarek.video.mobjects.sidebar import Sidebar
 
 
 class EllipticCurveProjection(SlideBase):
@@ -56,22 +52,6 @@ class EllipticCurveProjection(SlideBase):
             .to_edge(UP)
             .scale(0.8)
         )
-        self.new_coordinates = (
-            MathTex(r"X, Y, Z", color=SECONDARY_COLOR).to_edge(UP).shift(RIGHT * 4.5)
-        )
-        self.equation = (
-            MathTex(r"{{Z}}\cdot Y^2=X^3+aX\cdot {{Z^2}}+b{{Z^3}}", color=PRIMARY_COLOR)
-            .next_to(self.new_coordinates, DOWN)
-            .scale(0.7)
-        )
-        self.equations = (
-            VGroup(
-                MathTex(r"x=\frac{X}{Z}", color=SECONDARY_COLOR),
-                MathTex(r"y=\frac{Y}{Z}", color=SECONDARY_COLOR),
-            )
-            .arrange(DOWN)
-            .next_to(self.equation, DOWN)
-        )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
@@ -97,38 +77,11 @@ class EllipticCurveProjection(SlideBase):
         ).next_to(self.south_pole, RIGHT)
 
         self.north_pole_label = Text(
-            "0", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
+            "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
         ).next_to(self.north_pole, RIGHT)
 
-        self.sidebar = Sidebar(
-            "Operations", tex_path="zkmarek/video/slides/episode2/tex/operations.tex"
-        )
-        self.equation1 = (
-            MathTex(r"Z=0", color=PRIMARY_COLOR)
-            .shift(4.5 * LEFT)
-            .to_edge(UP)
-            .scale(0.7)
-        )
-        self.equation2 = (
-            MathTex(
-                r"{{0\cdot Y^2}}=X^3+{{aX\cdot 0^2}}+{{b\cdot0^3}}", color=PRIMARY_COLOR
-            )
-            .next_to(self.equation1, DOWN)
-            .scale(0.7)
-        )
-        self.equation3 = (
-            MathTex(r"0=X^3", color=PRIMARY_COLOR)
-            .next_to(self.equation1, DOWN)
-            .scale(0.7)
-        )
-        self.equation4 = (
-            MathTex(r"[X,Y,Z]=[0,1,0]", color=PRIMARY_COLOR)
-            .next_to(self.equation3, DOWN)
-            .scale(0.7)
-        )
-
     def create_plane_and_curves(self):
-        t_values = np.linspace(-5, 5, 10000)
+        t_values = np.linspace(-5, 5, 100)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -167,7 +120,7 @@ class EllipticCurveProjection(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(
-            scene, "what is point at infinity?", "data/sound/short1/slide1-0.mp3"
+            scene, "what is point at infinity?", "data/sound/short1/slide2-0.mp3"
         )
         scene.add_fixed_in_frame_mobjects(self.title)
         self.title.to_edge(UP)
@@ -180,58 +133,38 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.plane_curve_positive),
             FadeIn(self.plane_curve_negative),
         )
-        scene.add_fixed_in_frame_mobjects(self.sidebar)
-        scene.play(Write(self.sidebar))
         self.new_subsection(
-            scene, "x and y coordinates", "data/sound/short1/slide1-1.mp3"
-        )
-        scene.play(FadeOut(self.sidebar))
-        scene.wait(2.2)
-        scene.play(Indicate(self.labels))
-        self.new_subsection(
-            scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
+            scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
         self.animate_wrapping(scene)
+        self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
         scene.play(ReplacementTransform(self.plane, self.sphere_ec))
-        scene.add_fixed_in_frame_mobjects(self.new_coordinates)
-        scene.move_camera(phi=90 * DEGREES, theta=-60 * DEGREES, run_time=4)
+
+        scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
+
+        scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
-        self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
-        scene.wait(3)
-        scene.add_fixed_in_frame_mobjects(self.equation)
-        scene.add_fixed_in_frame_mobjects(self.equations)
-        scene.play(FadeIn(self.equations), Write(self.equation))
-        scene.play(
-            Indicate(self.equation[0]),
-        )
-        scene.play(
-            Indicate(self.equation[2]),
-        )
-        scene.play(
-            Indicate(self.equation[4]),
-        )
-        scene.add_fixed_in_frame_mobjects(self.equation2)
-        scene.play(Write(self.equation1))
-        scene.add_fixed_in_frame_mobjects(self.equation2)
-        scene.add_fixed_in_frame_mobjects(self.equation3)
-        scene.play(ReplacementTransform(self.equation2, self.equation3))
-        scene.add_fixed_in_frame_mobjects(self.equation4)
-        self.new_subsection(scene, "south pole", "data/sound/short1/slide1-4.mp3")
-        scene.play(
-            FadeOut(self.equation1), FadeOut(self.equation3), FadeOut(self.equation4)
-        )
-        scene.stop_ambient_camera_rotation()
-        scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=4)
-        scene.begin_ambient_camera_rotation(rate=0.1)
+
+        self.x_values = [1, 5, 15]
+        for x in self.x_values:
+            point = self.elliptic_curve_points(x)
+            if point is not None:
+                projected_point = self.stereographic_projection(point[0], point[1])
+                dot = Dot(point=projected_point, color=YELLOW)
+                label = MathTex(
+                    f"({point[0]:.1f},{point[1]:.1f})", color=WHITE
+                ).next_to(dot, RIGHT)
+                scene.add(dot, label)
+
+        scene.move_camera(phi=0 * DEGREES, theta=180 * DEGREES, run_time=5)
+
         scene.add(self.equatorial_plane, self.south_pole, self.south_pole)
         scene.stop_ambient_camera_rotation()
+        scene.play(FadeIn(self.equatorial_plane), FadeIn(self.equator_label))
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
         scene.play(FadeIn(self.south_pole), FadeIn(self.south_pole_label))
-        scene.wait(2)
-        scene.play(FadeIn(self.equatorial_plane), FadeIn(self.equator_label))
-        self.new_subsection(scene, "conclusion", "data/sound/short1/slide1-6.mp3")
         scene.move_camera(phi=30 * DEGREES, theta=60 * DEGREES, run_time=4)
         scene.stop_ambient_camera_rotation()
 
@@ -273,9 +206,6 @@ class EllipticCurveProjection(SlideBase):
 
     def animate_out(self, scene):
         scene.play(
-            FadeOut(self.equation),
-            FadeOut(self.equations),
-            FadeOut(self.new_coordinates),
             FadeOut(self.south_pole),
             FadeOut(self.south_pole_label),
             FadeOut(self.equatorial_plane),
