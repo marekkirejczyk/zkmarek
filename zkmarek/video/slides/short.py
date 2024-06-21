@@ -57,10 +57,10 @@ class EllipticCurveProjection(SlideBase):
             .scale(0.8)
         )
         self.new_coordinates = (
-            MathTex(r"X, Y, Z", color=SECONDARY_COLOR).to_edge(UP).shift(RIGHT * 5)
+            MathTex(r"X, Y, Z", color=SECONDARY_COLOR).to_edge(UP).shift(RIGHT * 4.5)
         )
         self.equation = (
-            MathTex(r"Z\cdot Y^2=X^3+aX\cdot Z^2+bZ^3", color=PRIMARY_COLOR)
+            MathTex(r"{{Z}}\cdot Y^2=X^3+aX\cdot {{Z^2}}+b{{Z^3}}", color=PRIMARY_COLOR)
             .next_to(self.new_coordinates, DOWN)
             .scale(0.7)
         )
@@ -90,13 +90,41 @@ class EllipticCurveProjection(SlideBase):
             self.equatorial_plane, LEFT
         )
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
+        self.north_pole = Dot(point=[0, 0, 3], color=YELLOW)
 
         self.south_pole_label = Text(
             "point at infinity", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
         ).next_to(self.south_pole, RIGHT)
 
+        self.north_pole_label = Text(
+            "0", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
+        ).next_to(self.north_pole, RIGHT)
+
         self.sidebar = Sidebar(
             "Operations", tex_path="zkmarek/video/slides/episode2/tex/operations.tex"
+        )
+        self.equation1 = (
+            MathTex(r"Z=0", color=PRIMARY_COLOR)
+            .shift(4.5 * LEFT)
+            .to_edge(UP)
+            .scale(0.7)
+        )
+        self.equation2 = (
+            MathTex(
+                r"{{0\cdot Y^2}}=X^3+{{aX\cdot 0^2}}+{{b\cdot0^3}}", color=PRIMARY_COLOR
+            )
+            .next_to(self.equation1, DOWN)
+            .scale(0.7)
+        )
+        self.equation3 = (
+            MathTex(r"0=X^3", color=PRIMARY_COLOR)
+            .next_to(self.equation1, DOWN)
+            .scale(0.7)
+        )
+        self.equation4 = (
+            MathTex(r"[X,Y,Z]=[0,1,0]", color=PRIMARY_COLOR)
+            .next_to(self.equation3, DOWN)
+            .scale(0.7)
         )
 
     def create_plane_and_curves(self):
@@ -174,8 +202,25 @@ class EllipticCurveProjection(SlideBase):
         scene.add_fixed_in_frame_mobjects(self.equation)
         scene.add_fixed_in_frame_mobjects(self.equations)
         scene.play(FadeIn(self.equations), Write(self.equation))
-
+        scene.play(
+            Indicate(self.equation[0]),
+        )
+        scene.play(
+            Indicate(self.equation[2]),
+        )
+        scene.play(
+            Indicate(self.equation[4]),
+        )
+        scene.add_fixed_in_frame_mobjects(self.equation2)
+        scene.play(Write(self.equation1))
+        scene.add_fixed_in_frame_mobjects(self.equation2)
+        scene.add_fixed_in_frame_mobjects(self.equation3)
+        scene.play(ReplacementTransform(self.equation2, self.equation3))
+        scene.add_fixed_in_frame_mobjects(self.equation4)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide1-4.mp3")
+        scene.play(
+            FadeOut(self.equation1), FadeOut(self.equation3), FadeOut(self.equation4)
+        )
         scene.stop_ambient_camera_rotation()
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=4)
         scene.begin_ambient_camera_rotation(rate=0.1)
