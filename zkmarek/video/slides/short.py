@@ -14,6 +14,7 @@ from manim import (
     UP,
     DOWN,
     RIGHT,
+    LEFT,
     Indicate,
     Dot,
     Circle,
@@ -85,6 +86,9 @@ class EllipticCurveProjection(SlideBase):
             MathTex("y", color=SECONDARY_COLOR),
         )
         self.equatorial_plane = Circle(radius=3, color=SECONDARY_COLOR)
+        self.equator_label = MathTex(
+            "1", color=SECONDARY_COLOR, font=PRIMARY_FONT
+        ).next_to(self.equatorial_plane, LEFT)
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
 
         self.south_pole_label = Text(
@@ -129,8 +133,6 @@ class EllipticCurveProjection(SlideBase):
         self.plane.prepare_for_nonlinear_transform()
         self.sphere_ec = VGroup(
             self.sphere,
-            self.equatorial_plane,
-            self.south_pole,
             self.plane_curve_positive,
             self.plane_curve_negative,
         )
@@ -150,11 +152,13 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.plane_curve_positive),
             FadeIn(self.plane_curve_negative),
         )
+        scene.add_fixed_in_frame_mobjects(self.sidebar)
         scene.play(Write(self.sidebar))
         self.new_subsection(
             scene, "x and y coordinates", "data/sound/short1/slide1-1.mp3"
         )
         scene.play(FadeOut(self.sidebar))
+        scene.wait(2.2)
         scene.play(Indicate(self.labels))
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide1-2.mp3"
@@ -163,20 +167,25 @@ class EllipticCurveProjection(SlideBase):
         self.animate_wrapping(scene)
         scene.play(ReplacementTransform(self.plane, self.sphere_ec))
         scene.add_fixed_in_frame_mobjects(self.new_coordinates)
-
+        scene.move_camera(phi=90 * DEGREES, theta=-60 * DEGREES, run_time=4)
+        scene.begin_ambient_camera_rotation(rate=0.1)
         self.new_subsection(scene, "equation", "data/sound/short1/slide1-3.mp3")
+        scene.wait(3)
         scene.add_fixed_in_frame_mobjects(self.equation)
         scene.add_fixed_in_frame_mobjects(self.equations)
-        scene.play(FadeIn(self.equations))
+        scene.play(FadeIn(self.equations), Write(self.equation))
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide1-4.mp3")
+        scene.stop_ambient_camera_rotation()
         scene.move_camera(phi=75 * DEGREES, theta=-45 * DEGREES, run_time=4)
         scene.begin_ambient_camera_rotation(rate=0.1)
-        scene.stop_ambient_camera_rotation()
         scene.add(self.equatorial_plane, self.south_pole, self.south_pole)
-
+        scene.stop_ambient_camera_rotation()
         scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
+        scene.play(FadeIn(self.south_pole), FadeIn(self.south_pole_label))
+        scene.wait(2)
+        scene.play(FadeIn(self.equatorial_plane), FadeIn(self.equator_label))
         self.new_subsection(scene, "conclusion", "data/sound/short1/slide1-6.mp3")
         scene.move_camera(phi=30 * DEGREES, theta=60 * DEGREES, run_time=4)
         scene.stop_ambient_camera_rotation()
@@ -225,4 +234,5 @@ class EllipticCurveProjection(SlideBase):
             FadeOut(self.south_pole),
             FadeOut(self.south_pole_label),
             FadeOut(self.equatorial_plane),
+            FadeOut(self.equator_label),
         )
