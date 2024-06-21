@@ -86,9 +86,9 @@ class EllipticCurveProjection(SlideBase):
             MathTex("y", color=SECONDARY_COLOR),
         )
         self.equatorial_plane = Circle(radius=3, color=SECONDARY_COLOR)
-        self.equator_label = MathTex(
-            "1", color=SECONDARY_COLOR, font=PRIMARY_FONT
-        ).next_to(self.equatorial_plane, LEFT)
+        self.equator_label = MathTex("1", color=SECONDARY_COLOR).next_to(
+            self.equatorial_plane, LEFT
+        )
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
 
         self.south_pole_label = Text(
