@@ -158,8 +158,11 @@ class EllipticCurveProjection(SlideBase):
             if point is not None:
                 projected_point = self.stereographic_projection(point[0], point[1])
                 dot = Dot(point=projected_point, color=colors[i])
-                label = MathTex(
-                    f"({point[0]:.1f},{point[1]:.1f})", color=colors[i]
+                label = Text(
+                    f"({point[0]:.1f},{point[1]:.1f})",
+                    color=colors[i],
+                    font=PRIMARY_FONT,
+                    font_size=20,
                 ).next_to(dot, RIGHT)
                 scene.add(dot, label)
 
@@ -198,9 +201,9 @@ class EllipticCurveProjection(SlideBase):
         animations.append(
             Transform(self.plane_curve_negative, self.sphere_curve_negative)
         )
-        scene.play(FadeIn(self.plane.family_members_with_points()))
         for line in self.plane.family_members_with_points():
             line_points = line.points
+            scene.play(FadeIn(line_points), run_time=0.05)
             new_line_points = [
                 self.stereographic_projection(p[0], p[1]) for p in line_points
             ]
