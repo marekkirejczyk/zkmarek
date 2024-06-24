@@ -59,7 +59,7 @@ class EllipticCurveProjection(SlideBase):
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
-        self.sphere.set_stroke(WHITE, opacity=1)
+        self.sphere.set_stroke(WHITE, opacity=0.6)
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
@@ -84,7 +84,7 @@ class EllipticCurveProjection(SlideBase):
                 font=SECONDARY_COLOR,
             )
             .next_to(self.south_pole, RIGHT)
-            .rotate(180 * DEGREES, axis=[0, 0, 1])
+            .rotate(axis=[1, 0, 0], phi=np.pi)
         )
 
         self.north_pole_label = Text(
@@ -149,7 +149,7 @@ class EllipticCurveProjection(SlideBase):
         )
         self.animate_wrapping(scene)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.1)
+        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.5)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
@@ -172,15 +172,15 @@ class EllipticCurveProjection(SlideBase):
                 label.rotate(-scene.camera.get_phi() - 90 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
 
-        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=2)
-        scene.stop_ambient_camera_rotation()
         scene.play(
             FadeIn(self.equatorial_plane),
             FadeIn(self.south_pole),
             FadeIn(self.south_pole_label),
             FadeIn(self.equator_label),
         )
-        scene.wait(3)
+        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        scene.wait(1.5)
+        scene.stop_ambient_camera_rotation()
 
     def animate_wrapping(self, scene):
         animations = []
