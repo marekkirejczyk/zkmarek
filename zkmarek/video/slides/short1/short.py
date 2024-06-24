@@ -166,14 +166,15 @@ class EllipticCurveProjection(SlideBase):
                 ).next_to(dot, RIGHT)
                 scene.add(dot, label)
 
-        scene.move_camera(phi=-20 * DEGREES, theta=-180 * DEGREES, run_time=3)
+        scene.move_camera(phi=-20 * DEGREES, theta=-90 * DEGREES, run_time=2)
 
-        scene.add(
-            self.equatorial_plane,
-            self.south_pole,
-            self.south_pole_label,
-            self.equator_label,
+        scene.play(
+            FadeIn(self.equatorial_plane),
+            FadeIn(self.south_pole),
+            FadeIn(self.south_pole_label),
+            FadeIn(self.equator_label),
         )
+        scene.wait(3)
         scene.stop_ambient_camera_rotation()
 
     def animate_wrapping(self, scene):
