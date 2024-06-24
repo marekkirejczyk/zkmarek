@@ -58,8 +58,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
-        self.sphere.set_fill(PRIMARY_COLOR, opacity=0.05)
-        self.sphere.set_stroke(WHITE, opacity=0.8)
+        self.sphere.set_stroke(PRIMARY_COLOR, opacity=0.8)
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
@@ -76,9 +75,16 @@ class EllipticCurveProjection(SlideBase):
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
         self.north_pole = Dot(point=[0, 0, 3], color=YELLOW)
 
-        self.south_pole_label = Text(
-            "point at infinity", color=PRIMARY_COLOR, font_size=20, font=SECONDARY_COLOR
-        ).next_to(self.south_pole, RIGHT)
+        self.south_pole_label = (
+            Text(
+                "point at infinity",
+                color=PRIMARY_COLOR,
+                font_size=20,
+                font=SECONDARY_COLOR,
+            )
+            .next_to(self.south_pole, RIGHT)
+            .rotate(180 * DEGREES, axis=[0, 0, 1])
+        )
 
         self.north_pole_label = Text(
             "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
@@ -143,7 +149,7 @@ class EllipticCurveProjection(SlideBase):
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
         self.animate_wrapping(scene)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(Transform(self.plane, self.sphere_ec))
+        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.01)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
@@ -163,6 +169,7 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
+                label.rotate(180 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
         scene.stop_ambient_camera_rotation()
         scene.move_camera(phi=170 * DEGREES, theta=30 * DEGREES, run_time=2)
