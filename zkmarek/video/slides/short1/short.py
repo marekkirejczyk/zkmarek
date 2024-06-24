@@ -17,7 +17,6 @@ from manim import (
     Dot,
     Circle,
     VGroup,
-    ReplacementTransform,
 )
 
 import numpy as np
@@ -78,8 +77,8 @@ class EllipticCurveProjection(SlideBase):
         self.north_pole = Dot(point=[0, 0, 3], color=YELLOW)
 
         self.south_pole_label = Text(
-            "point at infinity", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
-        ).next_to(self.south_pole, LEFT)
+            "point at infinity", color=PRIMARY_COLOR, font_size=20, font=SECONDARY_COLOR
+        ).next_to(self.south_pole, RIGHT)
 
         self.north_pole_label = Text(
             "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
@@ -144,14 +143,14 @@ class EllipticCurveProjection(SlideBase):
         scene.play(FadeOut(self.ax), FadeOut(self.labels))
         self.animate_wrapping(scene)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(ReplacementTransform(self.plane, self.sphere_ec))
+        scene.play(Transform(self.plane, self.sphere_ec))
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.x_values = [1, 5, 15]
+        self.x_values = [1, 5, 9]
         for i in range(len(self.x_values)):
             colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
             point = self.elliptic_curve_points(self.x_values[i])
@@ -162,7 +161,7 @@ class EllipticCurveProjection(SlideBase):
                     f"({point[0]:.1f},{point[1]:.1f})",
                     color=colors[i],
                     font=PRIMARY_FONT,
-                    font_size=20,
+                    font_size=15,
                 ).next_to(dot, RIGHT)
                 scene.add(dot, label)
         scene.stop_ambient_camera_rotation()
