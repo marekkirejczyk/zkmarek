@@ -84,7 +84,7 @@ class EllipticCurveProjection(SlideBase):
                 font=SECONDARY_COLOR,
             )
             .next_to(self.south_pole, RIGHT)
-            .rotate(180 * DEGREES, axis=[-1, 0, 1])
+            .rotate(180 * DEGREES, axis=[0, 0, 1])
         )
 
         self.north_pole_label = Text(
@@ -170,7 +170,7 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                label.rotate(180 * DEGREES, axis=[-1, 0, 1])
+                label.rotate(-scene.camera.get_phi() - 90 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
 
         scene.move_camera(phi=190 * DEGREES, theta=60 * DEGREES, run_time=2)
