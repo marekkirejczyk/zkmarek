@@ -59,7 +59,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
-        self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
+        self.sphere.set_fill(PRIMARY_COLOR)
         self.sphere.set_stroke(WHITE, opacity=0.5)
         self.ax = Axes(
             x_range=[-10, 10, 1],
