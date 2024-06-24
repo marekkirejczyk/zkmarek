@@ -2,6 +2,7 @@ from manim import (
     Sphere,
     VMobject,
     YELLOW,
+    WHITE,
     NumberPlane,
     Transform,
     FadeIn,
@@ -57,8 +58,8 @@ class EllipticCurveProjection(SlideBase):
         )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
-        self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
-        self.sphere.set_stroke(PRIMARY_COLOR, opacity=0.1)
+        self.sphere.set_fill(PRIMARY_COLOR, opacity=0.3)
+        self.sphere.set_stroke(WHITE, opacity=0.8)
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
@@ -83,7 +84,7 @@ class EllipticCurveProjection(SlideBase):
                 font=SECONDARY_COLOR,
             )
             .next_to(self.south_pole, RIGHT)
-            .rotate(180 * DEGREES, axis=[0, 0, 1])
+            .rotate(180 * DEGREES, axis=[0, -1, 1])
         )
 
         self.north_pole_label = Text(
@@ -169,7 +170,7 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                label.rotate(180 * DEGREES, axis=[0, 0, 1])
+                label.rotate(180 * DEGREES, axis=[0, -1, 1])
                 scene.add(dot, label)
 
         scene.move_camera(phi=190 * DEGREES, theta=60 * DEGREES, run_time=2)
@@ -207,15 +208,17 @@ class EllipticCurveProjection(SlideBase):
         animations.append(
             Transform(self.plane_curve_negative, self.sphere_curve_negative)
         )
+        fade_in_animations = []
         for line in self.plane.family_members_with_points():
             line_points = line.points
-            # scene.play(FadeIn(line_points), run_time=0.05)
             new_line_points = [
                 self.stereographic_projection(p[0], p[1]) for p in line_points
             ]
             self.new_line = VMobject().set_points_smoothly(new_line_points)
+            fade_in_animations.append(FadeIn(line, run_time=0.1))
             animations.append(Transform(line, self.new_line.set_color("blue")))
 
+        scene.play(*fade_in_animations)
         scene.play(*animations, run_time=4)
 
     def animate_out(self, scene):
