@@ -85,6 +85,7 @@ class EllipticCurveProjection(SlideBase):
             )
             .next_to(self.south_pole, RIGHT)
             .rotate(angle=180 * DEGREES, axis=[1, 0, 0])
+            .rotate(angle=180 * DEGREES, axis=[0, 0, 1])
         )
 
         self.north_pole_label = Text(
