@@ -79,7 +79,7 @@ class EllipticCurveProjection(SlideBase):
 
         self.south_pole_label = Text(
             "point at infinity", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
-        ).next_to(self.south_pole, RIGHT)
+        ).next_to(self.south_pole, LEFT)
 
         self.north_pole_label = Text(
             "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
@@ -166,7 +166,7 @@ class EllipticCurveProjection(SlideBase):
                 ).next_to(dot, RIGHT)
                 scene.add(dot, label)
         scene.stop_ambient_camera_rotation()
-        scene.move_camera(phi=-180 * DEGREES, theta=20 * DEGREES, run_time=2)
+        scene.move_camera(phi=170 * DEGREES, theta=30 * DEGREES, run_time=2)
 
         scene.play(
             FadeIn(self.equatorial_plane),
