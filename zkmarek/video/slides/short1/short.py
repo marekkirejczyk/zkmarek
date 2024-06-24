@@ -166,7 +166,7 @@ class EllipticCurveProjection(SlideBase):
                 ).next_to(dot, RIGHT)
                 scene.add(dot, label)
         scene.stop_ambient_camera_rotation()
-        scene.move_camera(phi=-90 * DEGREES, theta=45 * DEGREES, run_time=2)
+        scene.move_camera(phi=-180 * DEGREES, theta=20 * DEGREES, run_time=2)
 
         scene.play(
             FadeIn(self.equatorial_plane),
