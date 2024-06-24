@@ -84,7 +84,7 @@ class EllipticCurveProjection(SlideBase):
                 font=SECONDARY_COLOR,
             )
             .next_to(self.south_pole, RIGHT)
-            .rotate(axis=[1, 0, 0], phi=np.pi)
+            .rotate(angle=180 * DEGREES, axis=[1, 0, 0])
         )
 
         self.north_pole_label = Text(
@@ -137,19 +137,20 @@ class EllipticCurveProjection(SlideBase):
         self.title.to_edge(UP)
         scene.play(FadeIn(self.title))
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
-        self.create_plane_and_curves()
-        scene.play(
-            FadeIn(self.ax),
-            FadeIn(self.labels),
-            FadeIn(self.plane_curve_positive),
-            FadeIn(self.plane_curve_negative),
-        )
-        self.new_subsection(
-            scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
-        )
-        self.animate_wrapping(scene)
+        # self.create_plane_and_curves()
+        # scene.play(
+        #     FadeIn(self.ax),
+        #     FadeIn(self.labels),
+        #     FadeIn(self.plane_curve_positive),
+        #     FadeIn(self.plane_curve_negative),
+        # )
+        # self.new_subsection(
+        #     scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
+        # )
+        # self.animate_wrapping(scene)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.5)
+        # scene.play(Transform(self.plane, self.sphere_ec), run_time=0.5)
+        scene.add(self.sphere)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
