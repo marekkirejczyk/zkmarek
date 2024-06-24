@@ -138,27 +138,26 @@ class EllipticCurveProjection(SlideBase):
         self.title.to_edge(UP)
         scene.play(FadeIn(self.title))
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
-        # self.create_plane_and_curves()
-        # scene.play(
-        #     FadeIn(self.ax),
-        #     FadeIn(self.labels),
-        #     FadeIn(self.plane_curve_positive),
-        #     FadeIn(self.plane_curve_negative),
-        # )
-        # self.new_subsection(
-        #     scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
-        # )
-        # self.animate_wrapping(scene)
+        self.create_plane_and_curves()
+        scene.play(
+            FadeIn(self.ax),
+            FadeIn(self.labels),
+            FadeIn(self.plane_curve_positive),
+            FadeIn(self.plane_curve_negative),
+        )
+        self.new_subsection(
+            scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
+        )
+        self.animate_wrapping(scene)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        # scene.play(Transform(self.plane, self.sphere_ec), run_time=0.5)
-        scene.add(self.sphere)
+        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.5)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.x_values = [1, 5, 9]
+        self.x_values = [-1, -5, -9]
         for i in range(len(self.x_values)):
             colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
             point = self.elliptic_curve_points(self.x_values[i])
@@ -180,7 +179,7 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.south_pole_label),
             FadeIn(self.equator_label),
         )
-        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=-150 * DEGREES, theta=45 * DEGREES, run_time=3.5)
         scene.wait(1.5)
         scene.stop_ambient_camera_rotation()
 
