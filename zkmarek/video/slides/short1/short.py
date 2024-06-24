@@ -1,6 +1,5 @@
 from manim import (
     Sphere,
-    WHITE,
     VMobject,
     YELLOW,
     NumberPlane,
@@ -58,7 +57,8 @@ class EllipticCurveProjection(SlideBase):
         )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
-        self.sphere.set_stroke(PRIMARY_COLOR, opacity=0.8)
+        self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
+        self.sphere.set_stroke(PRIMARY_COLOR, opacity=0.1)
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
@@ -171,9 +171,9 @@ class EllipticCurveProjection(SlideBase):
                 ).next_to(dot, RIGHT)
                 label.rotate(180 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
-        scene.stop_ambient_camera_rotation()
-        scene.move_camera(phi=170 * DEGREES, theta=30 * DEGREES, run_time=2)
 
+        scene.move_camera(phi=190 * DEGREES, theta=60 * DEGREES, run_time=2)
+        scene.stop_ambient_camera_rotation()
         scene.play(
             FadeIn(self.equatorial_plane),
             FadeIn(self.south_pole),
