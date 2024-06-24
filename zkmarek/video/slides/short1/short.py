@@ -22,7 +22,12 @@ from manim import (
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import (
+    SECONDARY_COLOR,
+    PRIMARY_COLOR,
+    PRIMARY_FONT,
+    HIGHLIGHT_COLOR,
+)
 
 
 class EllipticCurveProjection(SlideBase):
@@ -66,9 +71,9 @@ class EllipticCurveProjection(SlideBase):
             MathTex("y", color=SECONDARY_COLOR),
         )
         self.equatorial_plane = Circle(radius=3, color=SECONDARY_COLOR)
-        self.equator_label = MathTex("1", color=SECONDARY_COLOR).next_to(
-            self.equatorial_plane, LEFT
-        )
+        self.equator_label = Text(
+            "1", color=SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT
+        ).next_to(self.equatorial_plane, LEFT)
         self.south_pole = Dot(point=[0, 0, -3], color=YELLOW)
         self.north_pole = Dot(point=[0, 0, 3], color=YELLOW)
 
@@ -147,25 +152,25 @@ class EllipticCurveProjection(SlideBase):
         scene.begin_ambient_camera_rotation(rate=0.1)
 
         self.x_values = [1, 5, 15]
-        for x in self.x_values:
-            point = self.elliptic_curve_points(x)
+        for i in range(len(self.x_values)):
+            colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
+            point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
                 projected_point = self.stereographic_projection(point[0], point[1])
-                dot = Dot(point=projected_point, color=YELLOW)
+                dot = Dot(point=projected_point, color=colors[i])
                 label = MathTex(
-                    f"({point[0]:.1f},{point[1]:.1f})", color=WHITE
+                    f"({point[0]:.1f},{point[1]:.1f})", color=colors[i]
                 ).next_to(dot, RIGHT)
                 scene.add(dot, label)
 
-        scene.move_camera(phi=0 * DEGREES, theta=180 * DEGREES, run_time=5)
+        scene.move_camera(phi=-20 * DEGREES, theta=-180 * DEGREES, run_time=3)
 
-        scene.add(self.equatorial_plane, self.south_pole, self.south_pole)
-        scene.stop_ambient_camera_rotation()
-        scene.play(FadeIn(self.equatorial_plane), FadeIn(self.equator_label))
-        scene.move_camera(phi=45 * DEGREES, theta=90 * DEGREES, run_time=2)
-        scene.begin_ambient_camera_rotation(rate=0.1)
-        scene.play(FadeIn(self.south_pole), FadeIn(self.south_pole_label))
-        scene.move_camera(phi=30 * DEGREES, theta=60 * DEGREES, run_time=4)
+        scene.add(
+            self.equatorial_plane,
+            self.south_pole,
+            self.south_pole_label,
+            self.equator_label,
+        )
         scene.stop_ambient_camera_rotation()
 
     def animate_wrapping(self, scene):
@@ -193,7 +198,7 @@ class EllipticCurveProjection(SlideBase):
         animations.append(
             Transform(self.plane_curve_negative, self.sphere_curve_negative)
         )
-
+        scene.play(FadeIn(self.plane.family_members_with_points()))
         for line in self.plane.family_members_with_points():
             line_points = line.points
             new_line_points = [
@@ -202,7 +207,7 @@ class EllipticCurveProjection(SlideBase):
             self.new_line = VMobject().set_points_smoothly(new_line_points)
             animations.append(Transform(line, self.new_line.set_color("blue")))
 
-        scene.play(*animations, run_time=5)
+        scene.play(*animations, run_time=4)
 
     def animate_out(self, scene):
         scene.play(
