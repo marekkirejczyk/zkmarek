@@ -59,7 +59,7 @@ class EllipticCurveProjection(SlideBase):
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
-        self.sphere.set_stroke(WHITE, opacity=0.5)
+        self.sphere.set_stroke(WHITE, opacity=1)
         self.ax = Axes(
             x_range=[-10, 10, 1],
             y_range=[-10, 10, 1],
@@ -147,10 +147,9 @@ class EllipticCurveProjection(SlideBase):
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
-        scene.play(FadeOut(self.ax), FadeOut(self.labels))
         self.animate_wrapping(scene)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.01)
+        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.1)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
@@ -173,7 +172,7 @@ class EllipticCurveProjection(SlideBase):
                 label.rotate(-scene.camera.get_phi() - 90 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
 
-        scene.move_camera(phi=190 * DEGREES, theta=60 * DEGREES, run_time=2)
+        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=2)
         scene.stop_ambient_camera_rotation()
         scene.play(
             FadeIn(self.equatorial_plane),
@@ -208,6 +207,7 @@ class EllipticCurveProjection(SlideBase):
         animations.append(
             Transform(self.plane_curve_negative, self.sphere_curve_negative)
         )
+        scene.play(FadeOut(self.ax), FadeOut(self.labels))
         fade_in_animations = []
         for line in self.plane.family_members_with_points():
             line_points = line.points
