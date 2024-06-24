@@ -203,7 +203,7 @@ class EllipticCurveProjection(SlideBase):
         )
         for line in self.plane.family_members_with_points():
             line_points = line.points
-            scene.play(FadeIn(line_points), run_time=0.05)
+            # scene.play(FadeIn(line_points), run_time=0.05)
             new_line_points = [
                 self.stereographic_projection(p[0], p[1]) for p in line_points
             ]
