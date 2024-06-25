@@ -93,7 +93,7 @@ class EllipticCurveProjection(SlideBase):
         ).next_to(self.north_pole, RIGHT)
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-5, 5, 10000)
+        t_values = np.linspace(-10, 10, 10000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -157,7 +157,7 @@ class EllipticCurveProjection(SlideBase):
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.x_values = [1, 5, 10]
+        self.x_values = [1, 2, 4]
         for i in range(len(self.x_values)):
             colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
             point = self.elliptic_curve_points(self.x_values[i])
