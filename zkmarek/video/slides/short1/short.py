@@ -11,7 +11,6 @@ from manim import (
     Axes,
     Text,
     MathTex,
-    UP,
     RIGHT,
     LEFT,
     Dot,
