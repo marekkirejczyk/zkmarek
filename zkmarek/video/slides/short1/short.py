@@ -51,11 +51,11 @@ class EllipticCurveProjection(SlideBase):
         return np.array([xs, ys, -zs])
 
     def construct(self):
-        self.title = (
-            (Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT))
-            .to_edge(UP)
-            .scale(0.8)
-        )
+        # self.title = (
+        #     (Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT))
+        #     .to_edge(UP)
+        #     .scale(0.8)
+        # )
 
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
@@ -93,7 +93,7 @@ class EllipticCurveProjection(SlideBase):
         ).next_to(self.north_pole, RIGHT)
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-5, 5, 100)
+        t_values = np.linspace(-5, 5, 10000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -134,9 +134,9 @@ class EllipticCurveProjection(SlideBase):
         self.new_subsection(
             scene, "what is point at infinity?", "data/sound/short1/slide2-0.mp3"
         )
-        scene.add_fixed_in_frame_mobjects(self.title)
-        self.title.to_edge(UP)
-        scene.play(FadeIn(self.title))
+        # scene.add_fixed_in_frame_mobjects(self.title)
+        # self.title.to_edge(UP)
+        # scene.play(FadeIn(self.title))
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
         self.create_plane_and_curves()
         scene.play(
@@ -157,7 +157,7 @@ class EllipticCurveProjection(SlideBase):
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.x_values = [-1, -5, -9]
+        self.x_values = [1, 5, 10]
         for i in range(len(self.x_values)):
             colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
             point = self.elliptic_curve_points(self.x_values[i])
