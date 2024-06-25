@@ -165,7 +165,16 @@ class EllipticCurveProjection(SlideBase):
 
         self.x_values = [0.1, 0.2, 0.6, 1, 2, 4]
         for i in range(len(self.x_values)):
-            colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
+            colors = np.array(
+                [
+                    SECONDARY_COLOR,
+                    HIGHLIGHT_COLOR,
+                    PRIMARY_COLOR,
+                    SECONDARY_COLOR,
+                    HIGHLIGHT_COLOR,
+                    PRIMARY_COLOR,
+                ]
+            )
             point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
                 projected_point = self.stereographic_projection(point[0], point[1])
