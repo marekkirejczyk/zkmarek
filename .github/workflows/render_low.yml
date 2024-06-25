@@ -1,0 +1,35 @@
+name: Render movie
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+
+permissions:
+  contents: read
+
+jobs:
+  render_lq:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    - name: Install pip dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install manim-editor #Temporary, install here as it
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Render movie (manim)
+      run: |
+        python -m manim -p -qh zkmarek/video/main.py
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Movie LQ
+        path: media/videos/main/480p15/EllipticCurves.mp4
+        retention-days: 5
+

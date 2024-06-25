@@ -16,10 +16,14 @@ from manim import (
     Dot,
     Circle,
     VGroup,
+    Create,
+    Flash,
+    FadeTransform,
 )
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.constant import (
     SECONDARY_COLOR,
     PRIMARY_COLOR,
@@ -29,6 +33,8 @@ from zkmarek.video.constant import (
 
 
 class EllipticCurveProjection(SlideBase):
+    point_at_infinity: DotOnCurve
+
     def __init__(self):
         super().__init__("Stereographic projection of elliptic curve")
 
@@ -55,7 +61,6 @@ class EllipticCurveProjection(SlideBase):
         #     .to_edge(UP)
         #     .scale(0.8)
         # )
-
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.6)
@@ -90,6 +95,7 @@ class EllipticCurveProjection(SlideBase):
         self.north_pole_label = Text(
             "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
         ).next_to(self.north_pole, RIGHT)
+        self.point_at_infinity = Dot(self.ax.coords_to_point(6, 7), color=PRIMARY_COLOR)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-10, 10, 10000)
@@ -133,9 +139,6 @@ class EllipticCurveProjection(SlideBase):
         self.new_subsection(
             scene, "what is point at infinity?", "data/sound/short1/slide2-0.mp3"
         )
-        # scene.add_fixed_in_frame_mobjects(self.title)
-        # self.title.to_edge(UP)
-        # scene.play(FadeIn(self.title))
         scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
         self.create_plane_and_curves()
         scene.play(
@@ -144,19 +147,23 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.plane_curve_positive),
             FadeIn(self.plane_curve_negative),
         )
+        scene.play(Create(self.point_at_infinity))
+        scene.play(Flash(self.point_at_infinity))
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
+        scene.play(FadeOut(self.point_at_infinity))
         self.animate_wrapping(scene)
-        self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(Transform(self.plane, self.sphere_ec), run_time=0.5)
+        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.x_values = [1, 2, 4]
+        self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
+
+        self.x_values = [0.1, 0.2, 0.6, 1, 2, 4]
         for i in range(len(self.x_values)):
             colors = np.array([SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR])
             point = self.elliptic_curve_points(self.x_values[i])
@@ -171,6 +178,7 @@ class EllipticCurveProjection(SlideBase):
                 ).next_to(dot, RIGHT)
                 label.rotate(-scene.camera.get_phi() - 90 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
+        scene.move_camera(phi=-60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
 
         scene.play(
             FadeIn(self.equatorial_plane),
