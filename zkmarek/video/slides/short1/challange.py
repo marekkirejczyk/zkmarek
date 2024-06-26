@@ -17,7 +17,7 @@ class Challange(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "challange", "data/sound/short1/slide1-0.mp3")
         scene.play(FadeIn(self.title), FadeIn(self.image), run_time=0.7)
-        scene.wait(4.5)
+        scene.wait(6)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title), FadeOut(self.image), run_time=0.5)

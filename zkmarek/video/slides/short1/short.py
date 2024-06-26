@@ -154,7 +154,12 @@ class EllipticCurveProjection(SlideBase):
         scene.add(dot)
         scene.play(MoveAlongPath(dot, self.path), run_time=3)
         scene.play(MoveAlongPath(dot, self.path1), run_time=2)
+        position_index = len(self.path_arr) // 2
+        position = self.path_arr[position_index]
+
         dot1 = Text("?", font_size=15, font=PRIMARY_FONT, color=PRIMARY_COLOR)
+        dot1.move_to(position)
+
         scene.play(FadeTransform(dot, dot1))
 
         self.new_subsection(
@@ -171,7 +176,7 @@ class EllipticCurveProjection(SlideBase):
 
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
 
-        self.x_values = [0.01, 0.06, 0.1]
+        self.x_values = [0.01, 0.9, 0.7]
         colors = np.array(
             [
                 SECONDARY_COLOR,
@@ -189,13 +194,13 @@ class EllipticCurveProjection(SlideBase):
                     f"({point[0]:.1f},{point[1]:.1f})",
                     color=colors[i],
                     font=PRIMARY_FONT,
-                    font_size=15,
+                    font_size=18,
                 ).next_to(dot, RIGHT)
-                # label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
+                label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
                 scene.add(dot, label)
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
-        self.x_values = [1, 2, 4]
+        self.x_values = [2, 4, 9]
         scene.play(
             FadeIn(self.equatorial_plane),
             FadeIn(self.equator_label),
@@ -212,7 +217,7 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                # label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
+                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0])
                 scene.add(dot, label)
 
         scene.play(
