@@ -154,10 +154,10 @@ class EllipticCurveProjection(SlideBase):
         scene.add(dot)
         scene.play(MoveAlongPath(dot, self.path), run_time=3)
         scene.play(MoveAlongPath(dot, self.path1), run_time=2)
-        position_index = len(self.path_arr) // 2
+        position_index = len(self.path1_arr)
         position = self.path_arr[position_index]
 
-        dot1 = Text("?", font_size=15, font=PRIMARY_FONT, color=PRIMARY_COLOR)
+        dot1 = Text("?", font_size=35, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         dot1.move_to(position)
 
         scene.play(FadeTransform(dot, dot1))
@@ -171,7 +171,7 @@ class EllipticCurveProjection(SlideBase):
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
-        scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
+        scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
@@ -196,7 +196,9 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
+                label.rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
+                    scene.camera.get_phi(), axis=[1, 0, 0]
+                )
                 scene.add(dot, label)
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
@@ -217,7 +219,9 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0])
+                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
+                    scene.camera.get_phi(), axis=[0, 0, 1]
+                )
                 scene.add(dot, label)
 
         scene.play(
@@ -265,7 +269,7 @@ class EllipticCurveProjection(SlideBase):
             animations.append(Transform(line, self.new_line.set_color(PRIMARY_COLOR)))
 
         scene.play(*fade_in_animations)
-        scene.play(*animations, run_time=5)
+        scene.play(*animations, run_time=4)
 
     def animate_out(self, scene):
         scene.play(
