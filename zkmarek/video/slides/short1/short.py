@@ -18,7 +18,6 @@ from manim import (
     VGroup,
     FadeTransform,
     MoveAlongPath,
-    ChangeSpeed,
 )
 
 import numpy as np
@@ -166,15 +165,21 @@ class EllipticCurveProjection(SlideBase):
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
-        speeds = [1.5, 0.5, 1.2, 0.8, 1.1, 0.6, 1.3, 0.9, 1.0, 0.7, 1.4]
-        animations = [
-            ChangeSpeed(
-                MoveAlongPath(dot, chaotic_path, run_time=5),
-                speed_func=lambda t: speeds[int(t * (len(speeds) - 1))],
-            )
-        ]
+        def custom_rate_func(t):
+            if t < 0.2:
+                return t * 0.5
+            elif t < 0.4:
+                return 0.1 + (t - 0.2) * 2.5
+            elif t < 0.6:
+                return 0.6 + (t - 0.4) * 0.5
+            elif t < 0.8:
+                return 0.7 + (t - 0.6) * 1.5
+            else:
+                return 1.0 - (t - 0.8) * 0.5
 
-        scene.play(*animations)
+        scene.play(
+            MoveAlongPath(dot, chaotic_path, run_time=5, rate_func=custom_rate_func)
+        )
 
         position_index = len(self.path1_arr) // 2
         position = self.path_arr[position_index]
