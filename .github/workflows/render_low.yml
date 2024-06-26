@@ -18,6 +18,16 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+    - name: Install fonts
+      run: |
+        mkdir ~/texmf
+        curl -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
+        unzip ~/texmf/mnsymbol.zip -d ~/texmf
+        cd ~/texmf/mnsymbol/tex && ls && latex MnSymbol.ins
+        mkdir -p ~/texmf/tex/latex/MnSymbol/
+        cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
+        mkdir -p ~/texmf/fonts/tfm/public/MnSymbol
+        cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
@@ -34,6 +44,6 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: Movie LQ
-        path: media/videos/main/480p15/EllipticCurves.mp4
+        path: media/videos/main/1080p60/EllipticCurves.mp4
         retention-days: 5
 
