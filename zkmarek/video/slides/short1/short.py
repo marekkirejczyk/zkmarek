@@ -152,8 +152,19 @@ class EllipticCurveProjection(SlideBase):
 
         dot = Dot(color=PRIMARY_COLOR)
         scene.add(dot)
-        scene.play(MoveAlongPath(dot, self.path), run_time=3)
-        scene.play(MoveAlongPath(dot, self.path1), run_time=2)
+
+        chaotic_path = VMobject()
+        chaotic_points = []
+        num_points = 30
+        for i in range(num_points):
+            x = np.random.uniform(-10, 10)
+            y = np.random.uniform(-10, 10)
+            z = np.random.uniform(-5, 5) if np.random.rand() > 0.7 else 0
+            chaotic_points.append([x, y, z])
+        chaotic_path.set_points_as_corners(chaotic_points)
+
+        scene.play(MoveAlongPath(dot, chaotic_path, run_time=5))
+
         position_index = len(self.path1_arr) // 2
         position = self.path_arr[position_index]
 
