@@ -154,7 +154,7 @@ class EllipticCurveProjection(SlideBase):
         scene.add(dot)
         scene.play(MoveAlongPath(dot, self.path), run_time=3)
         scene.play(MoveAlongPath(dot, self.path1), run_time=2)
-        position_index = len(self.path1_arr)
+        position_index = len(self.path1_arr) // 2
         position = self.path_arr[position_index]
 
         dot1 = Text("?", font_size=35, font=PRIMARY_FONT, color=PRIMARY_COLOR)
