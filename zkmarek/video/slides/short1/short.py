@@ -13,6 +13,7 @@ from manim import (
     MathTex,
     RIGHT,
     LEFT,
+    UP,
     Dot,
     Circle,
     VGroup,
@@ -127,17 +128,6 @@ class EllipticCurveProjection(SlideBase):
             self.plane_curve_positive,
             self.plane_curve_negative,
         )
-        self.path = VMobject()
-        self.path_arr = np.array(
-            [p for p in self.plane_curve_points_positive if np.abs(p[1]) < 3]
-        )
-        self.path.set_points_smoothly(self.path_arr)
-
-        self.path1 = VMobject()
-        self.path1_arr = np.array(
-            [p for p in self.plane_curve_points_negative if np.abs(p[1]) < 3]
-        )
-        self.path1.set_points_smoothly(self.path1_arr)
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -169,23 +159,20 @@ class EllipticCurveProjection(SlideBase):
             if t < 0.2:
                 return t * 0.5
             elif t < 0.4:
-                return 0.1 + (t - 0.2) * 2.5
+                return 0.1 + (t - 0.2) * 1.5
             elif t < 0.6:
-                return 0.6 + (t - 0.4) * 0.5
+                return 0.6 + (t - 0.4) * 1
             elif t < 0.8:
-                return 0.7 + (t - 0.6) * 1.5
+                return 0.7 + (t - 0.6) * 0.5
             else:
-                return 1.0 - (t - 0.8) * 0.5
+                return 1.0 - (t - 0.8) * 0.05
 
         scene.play(
             MoveAlongPath(dot, chaotic_path, run_time=5, rate_func=custom_rate_func)
         )
 
-        position_index = len(self.path1_arr) // 2
-        position = self.path_arr[position_index]
-
         dot1 = Text("?", font_size=35, font=PRIMARY_FONT, color=PRIMARY_COLOR)
-        dot1.move_to(position)
+        dot1.move_to(UP + LEFT)
 
         scene.play(FadeTransform(dot, dot1))
 
@@ -223,7 +210,9 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(angle=60 * DEGREES, axis=[0, 1, 0])
+                label.rotate(
+                    scene.camera.get_phi() + 60 * DEGREES, axis=[1, 0, 0]
+                ).rotate(scene.camera.get_phi(), axis=[0, 0, 1])
                 scene.add(dot, label)
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
@@ -243,8 +232,9 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(angle=60 * DEGREES, axis=[0, 1, 0])
-                scene.add(dot, label)
+                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
+                    scene.camera.get_phi(), axis=[0, 0, 1]
+                )
 
         scene.play(
             FadeIn(self.south_pole),
