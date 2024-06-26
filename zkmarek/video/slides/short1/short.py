@@ -16,8 +16,6 @@ from manim import (
     Dot,
     Circle,
     VGroup,
-    Create,
-    Flash,
     FadeTransform,
     VMobject,
     MoveAlongPath,
@@ -130,6 +128,10 @@ class EllipticCurveProjection(SlideBase):
         )
         self.path = VMobject()
         self.path.set_points_smoothly(np.array(self.plane_curve_points_positive))
+        self.path1 = VMobject()
+        self.path1.set_points_smoothly(
+            np.array(reversed(self.plane_curve_points_negative))
+        )
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -146,12 +148,15 @@ class EllipticCurveProjection(SlideBase):
 
         dot = Dot(color=PRIMARY_COLOR)
         scene.add(dot)
-        scene.play(MoveAlongPath(dot, self.path), run_time=4)
+        scene.play(MoveAlongPath(dot, self.path), run_time=3)
+        scene.play(MoveAlongPath(dot, self.path1), run_time=2)
+        dot1 = Text("?", font_size=15, font=PRIMARY_FONT, color=PRIMARY_COLOR)
+        scene.play(FadeTransform(dot, dot1))
 
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
-        scene.play(FadeOut(dot))
+        scene.play(FadeOut(dot1))
         self.animate_wrapping(scene)
         scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
 
@@ -160,20 +165,17 @@ class EllipticCurveProjection(SlideBase):
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=2)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.new_subsection(scene, "south pole", "data/sound/short1/slide2-2.mp3")
+        self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
 
-        self.x_values = [0.1, 0.2, 0.6, 1, 2, 4]
+        self.x_values = [0.1, 0.2, 0.6]
+        colors = np.array(
+            [
+                SECONDARY_COLOR,
+                HIGHLIGHT_COLOR,
+                PRIMARY_COLOR,
+            ]
+        )
         for i in range(len(self.x_values)):
-            colors = np.array(
-                [
-                    SECONDARY_COLOR,
-                    HIGHLIGHT_COLOR,
-                    PRIMARY_COLOR,
-                    SECONDARY_COLOR,
-                    HIGHLIGHT_COLOR,
-                    PRIMARY_COLOR,
-                ]
-            )
             point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
                 projected_point = self.stereographic_projection(point[0], point[1])
@@ -184,9 +186,25 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                label.rotate(-scene.camera.get_phi() - 90 * DEGREES, axis=[0, 0, 1])
+                label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
                 scene.add(dot, label)
         scene.move_camera(phi=60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
+        self.x_values = [1, 2, 4]
+        for i in range(len(self.x_values)):
+            point = self.elliptic_curve_points(self.x_values[i])
+            if point is not None:
+                projected_point = self.stereographic_projection(point[0], point[1])
+                dot = Dot(point=projected_point, color=colors[i])
+                label = Text(
+                    f"({point[0]:.1f},{point[1]:.1f})",
+                    color=colors[i],
+                    font=PRIMARY_FONT,
+                    font_size=15,
+                ).next_to(dot, RIGHT)
+                label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
+                scene.add(dot, label)
+        scene.move_camera(phi=100 * DEGREES, theta=45 * DEGREES, run_time=3.5)
 
         scene.play(
             FadeIn(self.equatorial_plane),
@@ -235,7 +253,7 @@ class EllipticCurveProjection(SlideBase):
             animations.append(Transform(line, self.new_line.set_color(PRIMARY_COLOR)))
 
         scene.play(*fade_in_animations)
-        scene.play(*animations, run_time=4)
+        scene.play(*animations, run_time=5)
 
     def animate_out(self, scene):
         scene.play(
