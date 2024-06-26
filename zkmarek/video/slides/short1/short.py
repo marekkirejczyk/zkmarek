@@ -18,6 +18,7 @@ from manim import (
     VGroup,
     FadeTransform,
     MoveAlongPath,
+    ChangeSpeed,
 )
 
 import numpy as np
@@ -84,9 +85,11 @@ class EllipticCurveProjection(SlideBase):
             .rotate(angle=180 * DEGREES, axis=[0, 0, 1])
         )
 
-        self.north_pole_label = Text(
-            "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
-        ).next_to(self.north_pole, RIGHT)
+        self.north_pole_label = (
+            Text("(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT)
+            .next_to(self.north_pole, RIGHT)
+            .rotate(angle=180 * DEGREES, axis=[0, 0, 1])
+        )
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-10, 10, 10000)
@@ -163,7 +166,15 @@ class EllipticCurveProjection(SlideBase):
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
-        scene.play(MoveAlongPath(dot, chaotic_path, run_time=5))
+        speeds = [1.5, 0.5, 1.2, 0.8, 1.1, 0.6, 1.3, 0.9, 1.0, 0.7, 1.4]
+        animations = [
+            ChangeSpeed(
+                MoveAlongPath(dot, chaotic_path, run_time=5),
+                speed_func=lambda t: speeds[int(t * (len(speeds) - 1))],
+            )
+        ]
+
+        scene.play(*animations)
 
         position_index = len(self.path1_arr) // 2
         position = self.path_arr[position_index]
@@ -207,16 +218,13 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
-                    scene.camera.get_phi(), axis=[1, 0, 0]
-                )
+                label.rotate(angle=60 * DEGREES, axis=[0, 1, 0])
                 scene.add(dot, label)
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
         self.x_values = [2, 4, 9]
         scene.play(
             FadeIn(self.equatorial_plane),
-            FadeIn(self.equator_label),
         )
         scene.move_camera(phi=100 * DEGREES, theta=45 * DEGREES, run_time=3.5)
         for i in range(len(self.x_values)):
@@ -228,11 +236,9 @@ class EllipticCurveProjection(SlideBase):
                     f"({point[0]:.1f},{point[1]:.1f})",
                     color=colors[i],
                     font=PRIMARY_FONT,
-                    font_size=15,
+                    font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
-                    scene.camera.get_phi(), axis=[0, 0, 1]
-                )
+                label.rotate(angle=60 * DEGREES, axis=[0, 1, 0])
                 scene.add(dot, label)
 
         scene.play(
