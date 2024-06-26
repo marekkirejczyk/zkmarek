@@ -129,9 +129,7 @@ class EllipticCurveProjection(SlideBase):
         self.path = VMobject()
         self.path.set_points_smoothly(np.array(self.plane_curve_points_positive))
         self.path1 = VMobject()
-        self.path1.set_points_smoothly(
-            np.array(reversed(self.plane_curve_points_negative))
-        )
+        self.path1.set_points_smoothly(np.array(self.plane_curve_points_negative))
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -189,6 +187,7 @@ class EllipticCurveProjection(SlideBase):
                 label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
                 scene.add(dot, label)
         scene.move_camera(phi=60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
         self.x_values = [1, 2, 4]
         for i in range(len(self.x_values)):
