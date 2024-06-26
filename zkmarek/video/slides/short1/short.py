@@ -17,7 +17,6 @@ from manim import (
     Circle,
     VGroup,
     FadeTransform,
-    VMobject,
     MoveAlongPath,
 )
 
@@ -128,18 +127,15 @@ class EllipticCurveProjection(SlideBase):
         )
         self.path = VMobject()
         self.path_arr = np.array(
-            self.plane_curve_points_positive[
-                np.abs(self.plane_curve_points_positive) < 3
-            ]
+            [p for p in self.plane_curve_points_positive if np.abs(p[1]) < 3]
         )
-        self.path.set_points_smoothly(np.array(self.path_arr))
+        self.path.set_points_smoothly(self.path_arr)
+
         self.path1 = VMobject()
         self.path1_arr = np.array(
-            self.plane_curve_points_negative[
-                np.abs(self.plane_curve_points_negative) < 3
-            ]
+            [p for p in self.plane_curve_points_negative if np.abs(p[1]) < 3]
         )
-        self.path1.set_points_smoothly(np.array(self.plane_curve_points_negative))
+        self.path1.set_points_smoothly(self.path1_arr)
 
     def animate_in(self, scene):
         self.new_subsection(
