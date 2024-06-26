@@ -159,7 +159,7 @@ class EllipticCurveProjection(SlideBase):
             if t < 0.2:
                 return t * 0.5
             elif t < 0.4:
-                return 0.1 + (t - 0.2) * 1.5
+                return 0.1 + (t - 0.2) * 1.51
             elif t < 0.6:
                 return 0.6 + (t - 0.4) * 1
             elif t < 0.8:
