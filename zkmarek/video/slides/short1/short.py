@@ -127,8 +127,18 @@ class EllipticCurveProjection(SlideBase):
             self.plane_curve_negative,
         )
         self.path = VMobject()
-        self.path.set_points_smoothly(np.array(self.plane_curve_points_positive))
+        self.path_arr = np.array(
+            self.plane_curve_points_positive[
+                np.abs(self.plane_curve_points_positive) < 3
+            ]
+        )
+        self.path.set_points_smoothly(np.array(self.path_arr))
         self.path1 = VMobject()
+        self.path1_arr = np.array(
+            self.plane_curve_points_negative[
+                np.abs(self.plane_curve_points_negative) < 3
+            ]
+        )
         self.path1.set_points_smoothly(np.array(self.plane_curve_points_negative))
 
     def animate_in(self, scene):
@@ -165,7 +175,7 @@ class EllipticCurveProjection(SlideBase):
 
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
 
-        self.x_values = [0.1, 0.2, 0.6]
+        self.x_values = [0.01, 0.06, 0.1]
         colors = np.array(
             [
                 SECONDARY_COLOR,
@@ -173,6 +183,7 @@ class EllipticCurveProjection(SlideBase):
                 PRIMARY_COLOR,
             ]
         )
+        scene.move_camera(phi=60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
         for i in range(len(self.x_values)):
             point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
@@ -184,12 +195,16 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
+                # label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
                 scene.add(dot, label)
-        scene.move_camera(phi=60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
         self.x_values = [1, 2, 4]
+        scene.play(
+            FadeIn(self.equatorial_plane),
+            FadeIn(self.equator_label),
+        )
+        scene.move_camera(phi=100 * DEGREES, theta=45 * DEGREES, run_time=3.5)
         for i in range(len(self.x_values)):
             point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
@@ -201,17 +216,14 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=15,
                 ).next_to(dot, RIGHT)
-                label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
+                # label.rotate(-scene.camera.get_phi(), axis=[0, 0, 1])
                 scene.add(dot, label)
-        scene.move_camera(phi=100 * DEGREES, theta=45 * DEGREES, run_time=3.5)
 
         scene.play(
-            FadeIn(self.equatorial_plane),
             FadeIn(self.south_pole),
             FadeIn(self.south_pole_label),
-            FadeIn(self.equator_label),
         )
-        scene.move_camera(phi=-150 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
         scene.wait(1.5)
         scene.stop_ambient_camera_rotation()
 
