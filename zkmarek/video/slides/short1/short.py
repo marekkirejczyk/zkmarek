@@ -19,11 +19,12 @@ from manim import (
     Create,
     Flash,
     FadeTransform,
+    VMobject,
+    MoveAlongPath,
 )
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.constant import (
     SECONDARY_COLOR,
     PRIMARY_COLOR,
@@ -33,7 +34,6 @@ from zkmarek.video.constant import (
 
 
 class EllipticCurveProjection(SlideBase):
-    point_at_infinity: DotOnCurve
 
     def __init__(self):
         super().__init__("Stereographic projection of elliptic curve")
@@ -56,11 +56,6 @@ class EllipticCurveProjection(SlideBase):
         return np.array([xs, ys, -zs])
 
     def construct(self):
-        # self.title = (
-        #     (Text("Point at infinity", color=PRIMARY_COLOR, font=PRIMARY_FONT))
-        #     .to_edge(UP)
-        #     .scale(0.8)
-        # )
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.6)
@@ -95,7 +90,6 @@ class EllipticCurveProjection(SlideBase):
         self.north_pole_label = Text(
             "(0,0)", color=PRIMARY_COLOR, font_size=20, font=PRIMARY_FONT
         ).next_to(self.north_pole, RIGHT)
-        self.point_at_infinity = Dot(self.ax.coords_to_point(6, 7), color=PRIMARY_COLOR)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-10, 10, 10000)
@@ -134,6 +128,8 @@ class EllipticCurveProjection(SlideBase):
             self.plane_curve_positive,
             self.plane_curve_negative,
         )
+        self.path = VMobject()
+        self.path.set_points_smoothly(np.array(self.plane_curve_points_positive))
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -147,12 +143,15 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.plane_curve_positive),
             FadeIn(self.plane_curve_negative),
         )
-        scene.play(Create(self.point_at_infinity))
-        scene.play(Flash(self.point_at_infinity))
+
+        dot = Dot(color=PRIMARY_COLOR)
+        scene.add(dot)
+        scene.play(MoveAlongPath(dot, self.path), run_time=4)
+
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
-        scene.play(FadeOut(self.point_at_infinity))
+        scene.play(FadeOut(dot))
         self.animate_wrapping(scene)
         scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
 
@@ -187,7 +186,7 @@ class EllipticCurveProjection(SlideBase):
                 ).next_to(dot, RIGHT)
                 label.rotate(-scene.camera.get_phi() - 90 * DEGREES, axis=[0, 0, 1])
                 scene.add(dot, label)
-        scene.move_camera(phi=-60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
 
         scene.play(
             FadeIn(self.equatorial_plane),
