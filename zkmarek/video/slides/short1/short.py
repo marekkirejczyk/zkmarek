@@ -92,7 +92,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-20, 20, 100)
+        t_values = np.linspace(-40, 40, 100000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -151,7 +151,7 @@ class EllipticCurveProjection(SlideBase):
         for i in range(num_points):
             x = np.random.uniform(-4, 4)
             y = np.random.uniform(-4, 4)
-            z = np.random.uniform(-3, 3) if np.random.rand() > 0.5 else 0
+            z = np.random.uniform(-3, 3) if np.random.rand() > 0.4 else 0
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
