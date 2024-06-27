@@ -94,7 +94,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-20, 20, 1000)
+        t_values = np.linspace(-15, 15, 10000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -122,7 +122,7 @@ class EllipticCurveProjection(SlideBase):
             self.plane_curve_negative.set_color(YELLOW)
 
         self.plane = NumberPlane(
-            x_range=[-20, 20, 1], y_range=[-20, 20, 1], color=SECONDARY_COLOR
+            x_range=[-15, 15, 1], y_range=[-15, 15, 1], color=SECONDARY_COLOR
         )
         self.plane.prepare_for_nonlinear_transform()
         self.sphere_ec = VGroup(
