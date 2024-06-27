@@ -149,9 +149,9 @@ class EllipticCurveProjection(SlideBase):
         chaotic_points = []
         num_points = 30
         for i in range(num_points):
-            x = np.random.uniform(-4, 4)
-            y = np.random.uniform(-4, 4)
-            z = np.random.uniform(-3, 3) if np.random.rand() > 0.3 else 0
+            x = np.random.uniform(-2, 2)
+            y = np.random.uniform(-2, 2)
+            z = np.random.uniform(-2, 2) if np.random.rand() > 0.5 else 0.3
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
@@ -199,9 +199,7 @@ class EllipticCurveProjection(SlideBase):
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
-
-        scene.move_camera(phi=60 * DEGREES, theta=85 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=3.5)
 
         x_axis_line = (
             VMobject()
@@ -218,6 +216,7 @@ class EllipticCurveProjection(SlideBase):
             .set_color(HIGHLIGHT2_COLOR)
         )
         scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
+        self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
 
         points_north_hemisphere = [(0, 0.1), (0, 0.4), (0.5, 0)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
@@ -225,11 +224,11 @@ class EllipticCurveProjection(SlideBase):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=color)
             label = Text(
-                f"({x},{y})",
+                f"({x/3},{y/3})",
                 color=color,
                 font=PRIMARY_FONT,
                 font_size=18,
-            ).next_to(dot, RIGHT)
+            ).next_to(dot, RIGHT * 3)
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
             ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
@@ -252,7 +251,7 @@ class EllipticCurveProjection(SlideBase):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
             label = Text(
-                f"({x},{y})",
+                f"({x/3},{y/3})",
                 color=PRIMARY_COLOR,
                 font=PRIMARY_FONT,
                 font_size=18,
