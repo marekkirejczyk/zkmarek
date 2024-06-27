@@ -93,7 +93,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-20, 20, 100)
+        t_values = np.linspace(-20, 20, 1000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -145,15 +145,17 @@ class EllipticCurveProjection(SlideBase):
 
         dot = Dot(color=PRIMARY_COLOR)
 
-        chaotic_path = VMobject()
-        chaotic_points = []
-        num_points = 30
+        spiral_path = VMobject()
+        spiral_points = []
+        num_points = 100
         for i in range(num_points):
-            x = np.random.uniform(-2, 2)
-            y = np.random.uniform(-2, 2)
-            z = np.random.uniform(-2, 2) if np.random.rand() > 0.5 else 0.3
-            chaotic_points.append([x, y, z])
-        chaotic_path.set_points_as_corners(chaotic_points)
+            angle = i * DEGREES * 36 / num_points
+            radius = 0.1 * i
+            x = radius * np.cos(angle)
+            y = radius * np.sin(angle)
+            z = i * 0.01
+            spiral_points.append([x, y, z])
+        spiral_path.set_points_as_corners(spiral_points)
 
         def custom_rate_func(t):
             if t < 0.2:
@@ -177,7 +179,7 @@ class EllipticCurveProjection(SlideBase):
         scene.add(dot, label)
 
         scene.play(
-            MoveAlongPath(dot, chaotic_path, run_time=5, rate_func=custom_rate_func)
+            MoveAlongPath(dot, spiral_path, run_time=5, rate_func=custom_rate_func)
         )
 
         dot1 = Text("?", font_size=50, font=PRIMARY_FONT, color=PRIMARY_COLOR).rotate(
@@ -192,14 +194,14 @@ class EllipticCurveProjection(SlideBase):
         )
         scene.play(FadeOut(dot1))
         self.animate_wrapping(scene)
-        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
+        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.25)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=1.5)
+        scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=1)
 
         x_axis_line = (
             VMobject()
@@ -215,9 +217,8 @@ class EllipticCurveProjection(SlideBase):
             )
             .set_color(HIGHLIGHT2_COLOR)
         )
-        scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
-
+        scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
         points_north_hemisphere = [(0, 0.6), (0, 1), (2, 0)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
         for (x, y), color in zip(points_north_hemisphere, colors):
@@ -228,7 +229,7 @@ class EllipticCurveProjection(SlideBase):
                 color=color,
                 font=PRIMARY_FONT,
                 font_size=18,
-            ).next_to(dot, RIGHT * 3)
+            ).next_to(dot, RIGHT * 2)
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
             ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
@@ -303,7 +304,7 @@ class EllipticCurveProjection(SlideBase):
             animations.append(Transform(line, self.new_line.set_color(PRIMARY_COLOR)))
 
         scene.play(*fade_in_animations)
-        scene.play(*animations, run_time=4)
+        scene.play(*animations, run_time=3.5)
 
     def animate_out(self, scene):
         scene.play(
