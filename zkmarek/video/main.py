@@ -58,7 +58,6 @@ from zkmarek.video.slides.episode2.ecdsarec import ECDSARec
 from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHteaser
 from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
-from zkmarek.video.slides.teaser3.signature import SignatureMath
 from zkmarek.video.slides.teaser3.intuition import Intuition
 
 config.width = 16
@@ -162,14 +161,23 @@ EPISODE2 = [
 ]
 
 TEASER3 = [
+    Intro(
+        sound="data/sound/teaser3/slide0-0.mp3",
+        background_sound="data/sound/teaser2/backgroundt.mp3",
+    ),
     Sponsored(),
-    SignatureMath(),
+    TitleSlide(
+        "Intuition behind digital signature",
+        sound="data/sound/teaser3/slide3.mp3",
+        pre_wait_time=1.5,
+        wait_time=3,
+    ),
     Intuition(),
 ]
 
 EPISODE3 = [
     # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
-    Sponsored(),
+    # Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
@@ -187,7 +195,7 @@ EPISODE3 = [
 
 EPISODE4 = [
     # Intro("data/sound/episode2/slide1-0.mp3"),
-    Sponsored(),
+    # Sponsored(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
 ]
@@ -209,7 +217,7 @@ DECKS = {
     "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "E2"
+DEFAULT_DECK = "T3"
 
 
 class EllipticCurves(Scene):
