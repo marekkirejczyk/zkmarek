@@ -199,7 +199,7 @@ class EllipticCurveProjection(SlideBase):
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
         scene.begin_ambient_camera_rotation(rate=0.1)
 
-        scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=1.5)
 
         x_axis_line = (
             VMobject()
@@ -218,7 +218,7 @@ class EllipticCurveProjection(SlideBase):
         scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
 
-        points_north_hemisphere = [(0, 0.1), (0, 0.4), (0.5, 0)]
+        points_north_hemisphere = [(0, 0.6), (0, 1), (2, 0)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
         for (x, y), color in zip(points_north_hemisphere, colors):
             projected_point = self.stereographic_projection(x, y)
@@ -239,7 +239,7 @@ class EllipticCurveProjection(SlideBase):
         scene.play(
             FadeIn(self.equatorial_plane),
         )
-        scene.move_camera(phi=100 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=130 * DEGREES, theta=30 * DEGREES, run_time=3.5)
 
         scene.play(
             FadeIn(self.south_pole),
@@ -247,7 +247,7 @@ class EllipticCurveProjection(SlideBase):
             FadeOut(self.equatorial_plane),
         )
 
-        points_south_hemisphere = [(5, 0), (4, 0), (6, 0)]
+        points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
         for x, y in points_south_hemisphere:
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
@@ -307,8 +307,6 @@ class EllipticCurveProjection(SlideBase):
 
     def animate_out(self, scene):
         scene.play(
-            FadeOut(self.south_pole),
-            FadeOut(self.south_pole_label),
-            FadeOut(self.equatorial_plane),
-            FadeOut(self.equator_label),
+            FadeOut(self.north_pole),
+            FadeOut(self.north_pole_label),
         )
