@@ -149,9 +149,9 @@ class EllipticCurveProjection(SlideBase):
         chaotic_points = []
         num_points = 30
         for i in range(num_points):
-            x = np.random.uniform(-10, 10)
-            y = np.random.uniform(-10, 10)
-            z = np.random.uniform(-5, 5) if np.random.rand() > 0.7 else 0
+            x = np.random.uniform(-4, 4)
+            y = np.random.uniform(-4, 4)
+            z = np.random.uniform(-3, 3) if np.random.rand() > 0.5 else 0
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
@@ -180,9 +180,8 @@ class EllipticCurveProjection(SlideBase):
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
         scene.play(FadeOut(dot1))
-        # self.animate_wrapping(scene)
-        # scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
-        scene.add(self.sphere_ec)
+        self.animate_wrapping(scene)
+        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
@@ -212,7 +211,7 @@ class EllipticCurveProjection(SlideBase):
                     font_size=18,
                 ).next_to(dot, RIGHT)
                 label.rotate(
-                    scene.camera.get_phi() + 60 * DEGREES, axis=[1, 0, 0]
+                    scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]
                 ).rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
                     angle=180 * DEGREES, axis=[0, 0, 1]
                 )
@@ -235,9 +234,9 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
-                    angle=180 * DEGREES, axis=[1, 0, 0]
-                ),
+                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
+                    scene.camera.get_phi(), axis=[0, 0, 1]
+                )
                 scene.add(dot, label)
 
         scene.play(
