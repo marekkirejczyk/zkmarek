@@ -159,11 +159,11 @@ class EllipticCurveProjection(SlideBase):
             if t < 0.2:
                 return t * 0.5
             elif t < 0.4:
-                return 0.1 + (t - 0.2) * 1
+                return 0.1 + (t - 0.2) * 0.5
             elif t < 0.6:
-                return 0.6 + (t - 0.4) * 0.8
+                return 0.6 + (t - 0.4) * 0.4
             elif t < 0.8:
-                return 0.7 + (t - 0.6) * 0.5
+                return 0.7 + (t - 0.6) * 0.2
             else:
                 return 1.0 - (t - 0.8) * 0.05
 
@@ -198,7 +198,7 @@ class EllipticCurveProjection(SlideBase):
                 PRIMARY_COLOR,
             ]
         )
-        scene.move_camera(phi=60 * DEGREES, theta=100 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=60 * DEGREES, theta=85 * DEGREES, run_time=3.5)
         for i in range(len(self.x_values)):
             point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
@@ -213,7 +213,7 @@ class EllipticCurveProjection(SlideBase):
                 label.rotate(
                     scene.camera.get_phi() + 60 * DEGREES, axis=[1, 0, 0]
                 ).rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
-                    angle=180 * DEGREES, axis=[1, 0, 0]
+                    angle=180 * DEGREES, axis=[0, 0, 1]
                 )
                 scene.add(dot, label)
 
@@ -234,9 +234,9 @@ class EllipticCurveProjection(SlideBase):
                     font=PRIMARY_FONT,
                     font_size=18,
                 ).next_to(dot, RIGHT)
-                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
-                    scene.camera.get_phi(), axis=[0, 0, 1]
-                ).rotate(angle=180 * DEGREES, axis=[1, 0, 0]),
+                label.rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
+                    angle=180 * DEGREES, axis=[1, 0, 0]
+                ),
                 scene.add(dot, label)
 
         scene.play(
