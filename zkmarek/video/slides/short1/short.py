@@ -148,10 +148,10 @@ class EllipticCurveProjection(SlideBase):
 
         spiral_path = VMobject()
         spiral_points = []
-        num_points = 1000
+        num_points = 100
         for i in range(num_points):
             angle = i * DEGREES * 36 / num_points
-            radius = 0.1 * i
+            radius = 0.05 * i
             x = radius * np.cos(angle)
             y = radius * np.sin(angle)
             z = i * 0.01
