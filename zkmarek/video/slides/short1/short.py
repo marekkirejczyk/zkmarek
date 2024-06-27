@@ -180,8 +180,9 @@ class EllipticCurveProjection(SlideBase):
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
         )
         scene.play(FadeOut(dot1))
-        self.animate_wrapping(scene)
-        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
+        # self.animate_wrapping(scene)
+        # scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.5)
+        scene.add(self.sphere_ec)
 
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
