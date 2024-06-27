@@ -16,7 +16,7 @@ class SlideBase(VGroup):
         self.sound_id = None
 
     def __str__(self):
-        return str(self.title)
+        return self.title
 
     def construct(self):
         pass
