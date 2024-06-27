@@ -28,6 +28,7 @@ from zkmarek.video.constant import (
     PRIMARY_COLOR,
     PRIMARY_FONT,
     HIGHLIGHT_COLOR,
+    HIGHLIGHT2_COLOR,
 )
 
 
@@ -51,7 +52,7 @@ class EllipticCurveProjection(SlideBase):
         xs = 2 * radius**2 * x / denom
         ys = 2 * radius**2 * y / denom
         zs = -radius * (radius**2 - x**2 - y**2) / denom
-        return np.array([xs, ys, zs])
+        return np.array([xs, ys, -zs])
 
     def construct(self):
         self.sphere = Sphere(radius=3, resolution=(50, 50))
@@ -150,7 +151,7 @@ class EllipticCurveProjection(SlideBase):
         for i in range(num_points):
             x = np.random.uniform(-4, 4)
             y = np.random.uniform(-4, 4)
-            z = np.random.uniform(-3, 3) if np.random.rand() > 0.4 else 0
+            z = np.random.uniform(-3, 3) if np.random.rand() > 0.3 else 0
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
@@ -158,18 +159,18 @@ class EllipticCurveProjection(SlideBase):
             if t < 0.2:
                 return t * 0.5
             elif t < 0.4:
-                return 0.1 + (t - 0.2) * 0.5
+                return 0.1 + (t - 0.2) * 0.3
             elif t < 0.6:
-                return 0.6 + (t - 0.4) * 0.4
+                return 0.6 + (t - 0.4) * 0.2
             elif t < 0.8:
-                return 0.7 + (t - 0.6) * 0.2
+                return 0.7 + (t - 0.6) * 0.1
             else:
-                return 1.0 - (t - 0.8) * 0.05
+                return 1.0 - (t - 0.8) * 0.01
 
         dot = Dot(color=PRIMARY_COLOR)
         label = Text(
             "point at infinity", font_size=20, color=PRIMARY_COLOR, font=PRIMARY_FONT
-        )
+        ).rotate(80 * DEGREES)
 
         label.add_updater(lambda m: m.next_to(dot, UP))
 
@@ -184,7 +185,7 @@ class EllipticCurveProjection(SlideBase):
         )
         dot1.move_to(UP * 3 + RIGHT * 4)
 
-        scene.play(FadeTransform(dot, dot1))
+        scene.play(FadeTransform(dot, dot1), FadeOut(label))
 
         self.new_subsection(
             scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
@@ -207,14 +208,14 @@ class EllipticCurveProjection(SlideBase):
             .set_points_as_corners(
                 [self.stereographic_projection(x, 0) for x in np.linspace(-10, 10, 100)]
             )
-            .set_color(SECONDARY_COLOR)
+            .set_color(HIGHLIGHT2_COLOR)
         )
         y_axis_line = (
             VMobject()
             .set_points_as_corners(
                 [self.stereographic_projection(0, y) for y in np.linspace(-10, 10, 100)]
             )
-            .set_color(SECONDARY_COLOR)
+            .set_color(HIGHLIGHT2_COLOR)
         )
         scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
 
@@ -246,7 +247,7 @@ class EllipticCurveProjection(SlideBase):
             FadeIn(self.south_pole_label),
         )
 
-        points_south_hemisphere = [(5, 0), (3, 0), (8, 0)]
+        points_south_hemisphere = [(5, 0), (4, 0), (6, 0)]
         for x, y in points_south_hemisphere:
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
