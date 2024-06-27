@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  render_hq:
+  render_lq:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
         python -m manim -p -qh zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
-        name: Movie HQ
+        name: Movie LQ
         path: media/videos/main/1080p60/EllipticCurves.mp4
         retention-days: 5
 

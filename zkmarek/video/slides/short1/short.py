@@ -92,7 +92,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-40, 40, 10000)
+        t_values = np.linspace(-20, 20, 100)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -120,7 +120,7 @@ class EllipticCurveProjection(SlideBase):
             self.plane_curve_negative.set_color(YELLOW)
 
         self.plane = NumberPlane(
-            x_range=[-40, 40, 1], y_range=[-40, 40, 1], color=SECONDARY_COLOR
+            x_range=[-20, 20, 1], y_range=[-20, 20, 1], color=SECONDARY_COLOR
         )
         self.plane.prepare_for_nonlinear_transform()
         self.sphere_ec = VGroup(
@@ -190,59 +190,67 @@ class EllipticCurveProjection(SlideBase):
 
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
 
-        self.x_values = [0.01, 0.9, 0.7]
-        colors = np.array(
-            [
-                SECONDARY_COLOR,
-                HIGHLIGHT_COLOR,
-                PRIMARY_COLOR,
-            ]
-        )
         scene.move_camera(phi=60 * DEGREES, theta=85 * DEGREES, run_time=3.5)
-        for i in range(len(self.x_values)):
-            point = self.elliptic_curve_points(self.x_values[i])
-            if point is not None:
-                projected_point = self.stereographic_projection(point[0], point[1])
-                dot = Dot(point=projected_point, color=colors[i])
-                label = Text(
-                    f"({point[0]:.1f},{point[1]:.1f})",
-                    color=colors[i],
-                    font=PRIMARY_FONT,
-                    font_size=18,
-                ).next_to(dot, RIGHT)
-                label.rotate(
-                    scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]
-                ).rotate(scene.camera.get_phi(), axis=[0, 0, 1]).rotate(
-                    angle=180 * DEGREES, axis=[0, 0, 1]
-                )
-                scene.add(dot, label)
+
+        x_axis_line = (
+            VMobject()
+            .set_points_as_corners(
+                [self.stereographic_projection(x, 0) for x in np.linspace(-3, 3, 100)]
+            )
+            .set_color(SECONDARY_COLOR)
+        )
+        y_axis_line = (
+            VMobject()
+            .set_points_as_corners(
+                [self.stereographic_projection(0, y) for y in np.linspace(-3, 3, 100)]
+            )
+            .set_color(SECONDARY_COLOR)
+        )
+        scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
+
+        points_north_hemisphere = [(0, 0.1), (0, 0.4), (0.5, 0)]
+        colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
+        for (x, y), color in zip(points_north_hemisphere, colors):
+            projected_point = self.stereographic_projection(x, y)
+            dot = Dot(point=projected_point, color=color)
+            label = Text(
+                f"({x},{y})",
+                color=color,
+                font=PRIMARY_FONT,
+                font_size=18,
+            ).next_to(dot, RIGHT)
+            label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
+                scene.camera.get_phi(), axis=[0, 0, 1]
+            ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
+            scene.add(dot, label)
 
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
-        self.x_values = [2, 4, 9]
+
         scene.play(
             FadeIn(self.equatorial_plane),
         )
         scene.move_camera(phi=100 * DEGREES, theta=45 * DEGREES, run_time=3.5)
-        for i in range(len(self.x_values)):
-            point = self.elliptic_curve_points(self.x_values[i])
-            if point is not None:
-                projected_point = self.stereographic_projection(point[0], point[1])
-                dot = Dot(point=projected_point, color=colors[i])
-                label = Text(
-                    f"({point[0]:.1f},{point[1]:.1f})",
-                    color=colors[i],
-                    font=PRIMARY_FONT,
-                    font_size=18,
-                ).next_to(dot, RIGHT)
-                label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
-                    scene.camera.get_phi(), axis=[0, 0, 1]
-                )
-                scene.add(dot, label)
 
         scene.play(
             FadeIn(self.south_pole),
             FadeIn(self.south_pole_label),
         )
+
+        points_south_hemisphere = [(5, 0), (3, 0), (8, 0)]
+        for x, y in points_south_hemisphere:
+            projected_point = self.stereographic_projection(x, y)
+            dot = Dot(point=projected_point, color=PRIMARY_COLOR)
+            label = Text(
+                f"({x},{y})",
+                color=PRIMARY_COLOR,
+                font=PRIMARY_FONT,
+                font_size=18,
+            ).next_to(dot, RIGHT)
+            label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
+                scene.camera.get_phi(), axis=[0, 0, 1]
+            ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
+            scene.add(dot, label)
+
         scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
         scene.wait(1.5)
         scene.stop_ambient_camera_rotation()
