@@ -224,7 +224,7 @@ class EllipticCurveProjection(SlideBase):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=color)
             label = Text(
-                f"({x/3},{y/3})",
+                f"({x/3:.1f},{y/3:.1f})",
                 color=color,
                 font=PRIMARY_FONT,
                 font_size=18,
@@ -244,6 +244,7 @@ class EllipticCurveProjection(SlideBase):
         scene.play(
             FadeIn(self.south_pole),
             FadeIn(self.south_pole_label),
+            FadeOut(self.equatorial_plane),
         )
 
         points_south_hemisphere = [(5, 0), (4, 0), (6, 0)]
@@ -251,14 +252,14 @@ class EllipticCurveProjection(SlideBase):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
             label = Text(
-                f"({x/3},{y/3})",
+                f"({x/3:.1f},{y/3:.1f})",
                 color=PRIMARY_COLOR,
                 font=PRIMARY_FONT,
                 font_size=18,
             ).next_to(dot, RIGHT)
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
-            ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
+            )
             scene.add(dot, label)
 
         scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
