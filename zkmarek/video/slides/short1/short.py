@@ -164,13 +164,13 @@ class EllipticCurveProjection(SlideBase):
         ).rotate(80 * DEGREES)
 
         label.add_updater(lambda m: m.next_to(dot, UP))
-
+        scene.wait(2.7)
         scene.add(dot, label)
 
-        scene.play(MoveAlongPath(dot, spiral_path, run_time=5, rate_func=linear))
+        scene.play(MoveAlongPath(dot, spiral_path, run_time=2.3, rate_func=linear))
 
         dot1 = Text("?", font_size=50, font=PRIMARY_FONT, color=PRIMARY_COLOR).rotate(
-            60 * DEGREES
+            90 * DEGREES
         )
         dot1.move_to(UP * 3 + RIGHT * 4)
 
@@ -216,7 +216,7 @@ class EllipticCurveProjection(SlideBase):
                 color=color,
                 font=PRIMARY_FONT,
                 font_size=18,
-            ).next_to(dot, RIGHT * 2)
+            ).next_to(dot, RIGHT * 2.5)
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
             ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
