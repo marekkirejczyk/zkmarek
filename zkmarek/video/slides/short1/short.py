@@ -13,7 +13,7 @@ from manim import (
     MathTex,
     RIGHT,
     LEFT,
-    UP,
+    DOWN,
     Dot,
     Circle,
     VGroup,
@@ -92,7 +92,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-10, 10, 10000)
+        t_values = np.linspace(-20, 20, 100)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -159,9 +159,9 @@ class EllipticCurveProjection(SlideBase):
             if t < 0.2:
                 return t * 0.5
             elif t < 0.4:
-                return 0.1 + (t - 0.2) * 1.51
+                return 0.1 + (t - 0.2) * 1.2
             elif t < 0.6:
-                return 0.6 + (t - 0.4) * 1
+                return 0.6 + (t - 0.4) * 0.8
             elif t < 0.8:
                 return 0.7 + (t - 0.6) * 0.5
             else:
@@ -172,7 +172,7 @@ class EllipticCurveProjection(SlideBase):
         )
 
         dot1 = Text("?", font_size=35, font=PRIMARY_FONT, color=PRIMARY_COLOR)
-        dot1.move_to(UP + LEFT)
+        dot1.move_to(DOWN + LEFT * 4)
 
         scene.play(FadeTransform(dot, dot1))
 
@@ -198,7 +198,7 @@ class EllipticCurveProjection(SlideBase):
                 PRIMARY_COLOR,
             ]
         )
-        scene.move_camera(phi=60 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        scene.move_camera(phi=60 * DEGREES, theta=100 * DEGREES, run_time=3.5)
         for i in range(len(self.x_values)):
             point = self.elliptic_curve_points(self.x_values[i])
             if point is not None:
@@ -235,6 +235,7 @@ class EllipticCurveProjection(SlideBase):
                 label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
                     scene.camera.get_phi(), axis=[0, 0, 1]
                 )
+                scene.add(dot, label)
 
         scene.play(
             FadeIn(self.south_pole),
