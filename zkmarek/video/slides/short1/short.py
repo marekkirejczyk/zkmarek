@@ -156,14 +156,14 @@ class EllipticCurveProjection(SlideBase):
             chaotic_points.append([x, y, z])
         chaotic_path.set_points_as_corners(chaotic_points)
 
-        speeds = [1, 0.8, 0.7, 0.5, 0.8, 0.6, 0.3, 0.25, 0.1, 0.11, 0.05]
+        speeds = [1.5, 0.5, 1.2, 0.8, 1.1, 0.6, 1.3, 0.9, 1.0, 0.7, 1.4]
 
         def speed_func(t):
             return speeds[int(t * (len(speeds) - 1))]
 
         scene.play(
             ChangeSpeed(
-                MoveAlongPath(dot, chaotic_path, run_time=5), speed_func=speed_func
+                MoveAlongPath(dot, chaotic_path, run_time=5), rate_func=speed_func
             )
         )
 
