@@ -19,6 +19,7 @@ from manim import (
     VGroup,
     FadeTransform,
     MoveAlongPath,
+    linear,
 )
 
 import numpy as np
@@ -150,24 +151,12 @@ class EllipticCurveProjection(SlideBase):
         num_points = 100
         for i in range(num_points):
             angle = i * DEGREES * 36 / num_points
-            radius = 0.1 * i
+            radius = 0.01 * i
             x = radius * np.cos(angle)
             y = radius * np.sin(angle)
             z = i * 0.01
             spiral_points.append([x, y, z])
         spiral_path.set_points_as_corners(spiral_points)
-
-        def custom_rate_func(t):
-            if t < 0.2:
-                return t * 0.5
-            elif t < 0.4:
-                return 0.1 + (t - 0.2) * 0.3
-            elif t < 0.6:
-                return 0.6 + (t - 0.4) * 0.2
-            elif t < 0.8:
-                return 0.7 + (t - 0.6) * 0.1
-            else:
-                return 1.0 - (t - 0.8) * 0.01
 
         dot = Dot(color=PRIMARY_COLOR)
         label = Text(
@@ -178,9 +167,7 @@ class EllipticCurveProjection(SlideBase):
 
         scene.add(dot, label)
 
-        scene.play(
-            MoveAlongPath(dot, spiral_path, run_time=5, rate_func=custom_rate_func)
-        )
+        scene.play(MoveAlongPath(dot, spiral_path, run_time=5, rate_func=linear))
 
         dot1 = Text("?", font_size=50, font=PRIMARY_FONT, color=PRIMARY_COLOR).rotate(
             60 * DEGREES
