@@ -13,7 +13,7 @@ from manim import (
     MathTex,
     RIGHT,
     LEFT,
-    DOWN,
+    UP,
     Dot,
     Circle,
     VGroup,
@@ -51,7 +51,7 @@ class EllipticCurveProjection(SlideBase):
         xs = 2 * radius**2 * x / denom
         ys = 2 * radius**2 * y / denom
         zs = -radius * (radius**2 - x**2 - y**2) / denom
-        return np.array([xs, ys, -zs])
+        return np.array([xs, ys, zs])
 
     def construct(self):
         self.sphere = Sphere(radius=3, resolution=(50, 50))
@@ -167,12 +167,23 @@ class EllipticCurveProjection(SlideBase):
             else:
                 return 1.0 - (t - 0.8) * 0.05
 
-        scene.play(
+        dot = Dot(color=PRIMARY_COLOR)
+        label = Text(
+            "point at infinity", font_size=20, color=PRIMARY_COLOR, font=PRIMARY_FONT
+        )
+
+        label.add_updater(lambda m: m.next_to(dot, UP))
+
+        self.add(dot, label)
+
+        self.play(
             MoveAlongPath(dot, chaotic_path, run_time=5, rate_func=custom_rate_func)
         )
 
-        dot1 = Text("?", font_size=35, font=PRIMARY_FONT, color=PRIMARY_COLOR)
-        dot1.move_to(DOWN + LEFT * 4)
+        dot1 = Text("?", font_size=50, font=PRIMARY_FONT, color=PRIMARY_COLOR).rotate(
+            60 * DEGREES
+        )
+        dot1.move_to(UP * 3 + RIGHT * 4)
 
         scene.play(FadeTransform(dot, dot1))
 
@@ -195,14 +206,14 @@ class EllipticCurveProjection(SlideBase):
         x_axis_line = (
             VMobject()
             .set_points_as_corners(
-                [self.stereographic_projection(x, 0) for x in np.linspace(-3, 3, 100)]
+                [self.stereographic_projection(x, 0) for x in np.linspace(-10, 10, 100)]
             )
             .set_color(SECONDARY_COLOR)
         )
         y_axis_line = (
             VMobject()
             .set_points_as_corners(
-                [self.stereographic_projection(0, y) for y in np.linspace(-3, 3, 100)]
+                [self.stereographic_projection(0, y) for y in np.linspace(-10, 10, 100)]
             )
             .set_color(SECONDARY_COLOR)
         )
