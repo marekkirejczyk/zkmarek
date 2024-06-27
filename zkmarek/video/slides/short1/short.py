@@ -19,7 +19,6 @@ from manim import (
     VGroup,
     FadeTransform,
     MoveAlongPath,
-    ChangeSpeed,
 )
 
 import numpy as np
@@ -236,9 +235,8 @@ class EllipticCurveProjection(SlideBase):
                     font_size=18,
                 ).next_to(dot, RIGHT)
                 label.rotate(scene.camera.get_phi(), axis=[1, 0, 0]).rotate(
-                    scene.camera.get_phi(),
-                    axis=[0, 0, 1].rotate(angle=180 * DEGREES, axis=[1, 0, 0]),
-                )
+                    scene.camera.get_phi(), axis=[0, 0, 1]
+                ).rotate(angle=180 * DEGREES, axis=[1, 0, 0]),
                 scene.add(dot, label)
 
         scene.play(
