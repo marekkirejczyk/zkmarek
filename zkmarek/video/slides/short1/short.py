@@ -143,7 +143,6 @@ class EllipticCurveProjection(SlideBase):
         )
 
         dot = Dot(color=PRIMARY_COLOR)
-        scene.add(dot)
 
         chaotic_path = VMobject()
         chaotic_points = []
@@ -174,9 +173,9 @@ class EllipticCurveProjection(SlideBase):
 
         label.add_updater(lambda m: m.next_to(dot, UP))
 
-        self.add(dot, label)
+        scene.add(dot, label)
 
-        self.play(
+        scene.play(
             MoveAlongPath(dot, chaotic_path, run_time=5, rate_func=custom_rate_func)
         )
 
