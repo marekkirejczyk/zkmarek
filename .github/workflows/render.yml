@@ -40,7 +40,7 @@ jobs:
         python -m manim -p -ql zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
-        name: Movie HQ
+        name: Movie LQ
         path: media/videos/main/480p15/EllipticCurves.mp4
         retention-days: 5
 
