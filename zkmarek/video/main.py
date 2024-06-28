@@ -189,22 +189,25 @@ EPISODE3 = [
     Ceremony(),
     CeremonyVerification(),
     CeremonyVerification2(),
-    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    PolynomialCommitment(),
-    KZG(),
-    Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
 ]
 
 EPISODE4 = [
+    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    PolynomialCommitment(),
+    KZG(),
+    Verkle(),
+]
+
+EPISODE5 = [
     # Intro("data/sound/episode2/slide1-0.mp3"),
     Sponsored(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
 ]
 
-EPISODE5 = [
+EPISODE6 = [
     SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     TexSlide("Sources", "data/schnorr/sources.tex"),
@@ -219,10 +222,11 @@ DECKS = {
     "E3": EPISODE3,
     "E4": EPISODE4,
     "E5": EPISODE5,
+    "E6": EPISODE6,
     "SHORT1": SHORT1,
 }
 
-DEFAULT_DECK = "SHORT1"
+DEFAULT_DECK = "E3"
 
 
 if DEFAULT_DECK == "SHORT1":

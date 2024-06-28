@@ -1,6 +1,17 @@
-
-from manim import (DOWN, UP, Brace, FadeIn, FadeOut, MathTex, Text,
-                   Unwrite, Write)
+from manim import (
+    DOWN,
+    UP,
+    RIGHT,
+    Brace,
+    FadeIn,
+    FadeOut,
+    MathTex,
+    Text,
+    Unwrite,
+    Write,
+    VGroup,
+    MoveToTarget,
+)
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -27,42 +38,62 @@ class Pairing(SlideBase):
 
     def construct(self):
         self.definition_label = MathTex(r"Pairing", font_size=50, color=PRIMARY_COLOR)
-        self.definition = MathTex(r"e: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
+        self.definition = MathTex(
+            r"e: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}",
+            font_size=70,
+            color=PRIMARY_COLOR,
+        )
         self.brace1 = Brace(self.definition[1], DOWN, color=PRIMARY_COLOR)
         self.brace2 = Brace(self.definition[3], DOWN, color=PRIMARY_COLOR)
         self.brace3 = Brace(self.definition[5], DOWN, color=PRIMARY_COLOR)
         self.brace1.shift(UP * 2.5)
         self.brace2.shift(UP * 2.5)
         self.brace3.shift(UP * 2.5)
-        self.brace1_label = Text(r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR)
+        self.brace1_label = Text(
+            r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR
+        )
         self.brace1.put_at_tip(self.brace1_label)
-        self.brace2_label = Text(r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR)
+        self.brace2_label = Text(
+            r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR
+        )
         self.brace2.put_at_tip(self.brace2_label)
         self.brace3_label = Text(r"Prime field", font_size=30, color=PRIMARY_COLOR)
         self.brace3.put_at_tip(self.brace3_label)
 
-        self.bilinearity_label = MathTex(r"Bilinearity", font_size=40, color=SECONDARY_COLOR)
-        self.bilinearity = MathTex(r"e(P + P', Q) = e(P, Q) \cdot e(P', Q)", font_size=40, color=SECONDARY_COLOR)
-        self.bilinearity_morph = MorphinMathText([
-            r"{{e(aP, bQ)}}",
-            r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{b}}Q){{ }}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{a}}P, {{b}}Q){{^{}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
-              " = e({{ }}P, {{ }}Q){{^{ab}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
-              " = e({{b}}P, {{a}}Q){{ }}",
-            r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
-        ])
+        self.bilinearity_label = MathTex(
+            r"Bilinearity", font_size=40, color=SECONDARY_COLOR
+        )
+        self.bilinearity = MathTex(
+            r"e(P + P', Q) = e(P, Q) \cdot e(P', Q)",
+            font_size=40,
+            color=SECONDARY_COLOR,
+        )
+        self.bilinearity_morph = MorphinMathText(
+            [
+                r"{{e(aP, bQ)}}",
+                r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{b}}Q){{ }}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{a}}P, {{b}}Q){{^{}}}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
+                " = e({{ }}P, {{ }}Q){{^{ab}}}",
+                r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
+                " = e({{b}}P, {{a}}Q){{ }}",
+                r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}",
+            ]
+        )
 
-        self.non_degeneracy_label = MathTex(r"Non-degeneracy", font_size=40, color=SECONDARY_COLOR)
+        self.non_degeneracy_label = MathTex(
+            r"Non-degeneracy", font_size=40, color=SECONDARY_COLOR
+        )
         nd_text = r"\forall{a \in G_1}, \forall{b \in G_2} (a, b \neq \mathcal{O}"
         nd_text += r" \Rightarrow e(a, b) \neq 1_{G_T}) "
         self.non_degeneracy = MathTex(nd_text, font_size=40, color=SECONDARY_COLOR)
-        self.computability_label = MathTex(r"Computability", font_size=40, color=SECONDARY_COLOR)
+        self.computability_label = MathTex(
+            r"Computability", font_size=40, color=SECONDARY_COLOR
+        )
 
         self.definition_label.to_edge(UP)
         self.definition.next_to(self.definition_label, DOWN)
@@ -92,7 +123,23 @@ class Pairing(SlideBase):
         scene.play(Write(self.bilinearity))
         self.bilinearity_morph.animate_in(scene)
         scene.play(Unwrite(self.bilinearity))
-        scene.play(self.bilinearity_morph.texs[-1].animate.next_to(self.bilinearity_label, DOWN))
+        scene.play(
+            self.bilinearity_morph.texs[-1].animate.next_to(
+                self.bilinearity_label, DOWN
+            )
+        )
+
+        self.bilin_def = VGroup(
+            self.definition,
+            self.definition_label,
+            self.bilinearity_label,
+            self.bilinearity_morph,
+        )
+
+        self.bilin_def.generate_target()
+        self.bilin_def.target.scale(0.3).to_edge(UP + RIGHT)
+
+        scene.play(MoveToTarget(self.bilin_def))
 
         scene.play(Write(self.non_degeneracy_label))
         scene.play(Write(self.non_degeneracy))
