@@ -67,8 +67,6 @@ class EllipticCurveProjection(SlideBase):
     def construct(self):
         config.frame_height = 16
         config.frame_width = 9
-        # config.pixel_height = 1080
-        # config.pixel_width = 1920
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.6)
