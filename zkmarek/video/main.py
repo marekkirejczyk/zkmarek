@@ -62,6 +62,9 @@ from zkmarek.video.slides.teaser3.intuition import Intuition
 from zkmarek.video.slides.short1.short import EllipticCurveProjection
 from zkmarek.video.slides.short1.challange import Challange
 
+config.pixel_width = 1080
+config.pixel_height = 1920
+config.frame_width = 8
 
 TEASER = [
     Intro(
@@ -226,8 +229,6 @@ if DEFAULT_DECK == "SHORT1":
 
     class EllipticCurves(ThreeDScene):
         def construct(self):
-            config.frame_height = 1920
-            config.frame_width = 1080
             register_font("data/brand/Oxanium-Regular.ttf")
 
             name = get_deck_name(DEFAULT_DECK)
@@ -240,8 +241,6 @@ if DEFAULT_DECK == "SHORT1":
             presentation.play()
 
 else:
-    config.width = 16
-    config.height = 9
 
     class EllipticCurves(Scene):
         def construct(self):
