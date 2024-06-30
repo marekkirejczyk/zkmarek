@@ -14,13 +14,22 @@ from manim import (
     RIGHT,
     LEFT,
     UP,
+    DOWN,
+    ImageMobject,
     Dot,
     Circle,
     VGroup,
     FadeTransform,
     MoveAlongPath,
     linear,
+    config,
 )
+
+config.frame_height = 1920
+config.frame_width = 1080
+config.pixel_height = 1920
+config.pixel_width = 1080
+
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -92,6 +101,13 @@ class EllipticCurveProjection(SlideBase):
             .next_to(self.north_pole, RIGHT)
             .rotate(angle=180 * DEGREES, axis=[0, 0, 1])
         )
+
+        self.button = ImageMobject("data/subscribe/normal.png").scale(0.4)
+        self.button_clicked = ImageMobject(
+            "data/subscribe/clicked.png", z_index=1
+        ).scale(0.4)
+        self.button.to_edge(DOWN + LEFT, buff=0.5)
+        self.button_clicked.next_to(self.button, DOWN, buff=0.5)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-15, 15, 10000)
@@ -294,6 +310,13 @@ class EllipticCurveProjection(SlideBase):
         scene.play(*animations, run_time=3.5)
 
     def animate_out(self, scene):
+        scene.play(FadeIn(self.button), run_time=0.5)
+
+        # Source of sound under Creative Commons 0 License.
+        # https://freesound.org/people/joebro10/sounds/219318/
+        scene.add_sound("data/sound/click.wav", gain=20)
+        scene.play(FadeIn(self.button_clicked), run_time=0.2)
+        scene.play(FadeOut(self.button_clicked), run_time=0.2)
         scene.play(
             FadeOut(self.north_pole),
             FadeOut(self.north_pole_label),
