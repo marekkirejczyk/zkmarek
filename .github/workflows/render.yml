@@ -37,7 +37,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim) 
       run: |
-        python -m manim -v WARNING -ql -r 1080x1920 --disable_caching zkmarek/video/main.py
+        python -m manim -v WARNING -r 1080x1920 --disable_caching zkmarek/video/main.py
 
 
     - uses: actions/upload-artifact@v3
