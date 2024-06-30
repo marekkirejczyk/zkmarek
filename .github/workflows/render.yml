@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 jobs:
-  render_lq:
+  render_hq:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,8 +17,10 @@ jobs:
         sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
     - name: Install fonts
       run: |
-        mkdir ~/texmf
-        curl -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
+        mkdir -p ~/texmf
+        for i in {1..5}; do
+          curl -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip && break || sleep 15
+        done
         unzip ~/texmf/mnsymbol.zip -d ~/texmf
         cd ~/texmf/mnsymbol/tex && ls && latex MnSymbol.ins
         mkdir -p ~/texmf/tex/latex/MnSymbol/
@@ -35,14 +37,11 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install manim-editor # Temporary, install here as it
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Render movie (manim) 
+    - name: Render movie (manim)
       run: |
         python -m manim -p --disable_caching zkmarek/video/main.py
-
-
     - uses: actions/upload-artifact@v3
       with:
         name: Movie LQ
-        path: media/videos/main/**/EllipticCurves.mp4
+        path: media/videos/main/480p15/EllipticCurves.mp4
         retention-days: 5
-
