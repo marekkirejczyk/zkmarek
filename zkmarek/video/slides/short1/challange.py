@@ -1,4 +1,4 @@
-from manim import FadeIn, ImageMobject, Text, FadeOut, UP, config
+from manim import FadeIn, ImageMobject, Text, FadeOut, UP
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
