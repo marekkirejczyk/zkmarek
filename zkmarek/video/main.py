@@ -62,9 +62,8 @@ from zkmarek.video.slides.teaser3.intuition import Intuition
 from zkmarek.video.slides.short1.short import EllipticCurveProjection
 from zkmarek.video.slides.short1.challange import Challange
 
-config.width = 16
-config.height = 9
-
+config.width = 1080
+config.height = 1920
 
 TEASER = [
     Intro(
