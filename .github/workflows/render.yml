@@ -37,12 +37,12 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim) 
       run: |
-        python -m manim -v WARNING -r 1080x1920 --disable_caching zkmarek/video/main.py
+        python -m manim -p --disable_caching zkmarek/video/main.py
 
 
     - uses: actions/upload-artifact@v3
       with:
         name: Movie LQ
-        path: media/videos/main/480p15/EllipticCurves.mp4
+        path: media/videos/main/**/EllipticCurves.mp4
         retention-days: 5
 

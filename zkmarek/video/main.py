@@ -1,6 +1,6 @@
 import os
 
-from manim import Scene, config, ThreeDScene
+from manim import Scene, ThreeDScene
 from manimpango import register_font
 from presentation import Presentation
 from slides.cec.addition import Addition as CECAddition
@@ -62,9 +62,6 @@ from zkmarek.video.slides.teaser3.intuition import Intuition
 from zkmarek.video.slides.short1.short import EllipticCurveProjection
 from zkmarek.video.slides.short1.challange import Challange
 
-config.pixel_width = 1080
-config.pixel_height = 1920
-config.frame_width = 8
 
 TEASER = [
     Intro(
