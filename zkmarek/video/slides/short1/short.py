@@ -65,8 +65,8 @@ class EllipticCurveProjection(SlideBase):
         return np.array([xs, ys, -zs])
 
     def construct(self):
-        config.frame_height = 9
-        config.frame_width = 16
+        config.frame_height = 16
+        config.frame_width = 9
         # config.pixel_height = 1080
         # config.pixel_width = 1920
         self.sphere = Sphere(radius=3, resolution=(50, 50))
