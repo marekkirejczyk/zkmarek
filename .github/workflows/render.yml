@@ -37,7 +37,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
-        python -m manim -p -r 1080x1920 zkmarek/video/main.py
+        python -m manim -p -ql zkmarek/video/main.py
     - uses: actions/upload-artifact@v3
       with:
         name: Movie LQ
