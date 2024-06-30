@@ -16,7 +16,10 @@ class Challange(SlideBase):
         self.title = Text(
             "Challenge accepted!", color=PRIMARY_COLOR, font=PRIMARY_FONT
         ).to_edge(UP)
-
+        config.frame_height = 1080
+        config.frame_width = 1920
+        config.pixel_height = 1080
+        config.pixel_width = 1920
         self.image = ImageMobject("data/shorts/warpcast.png").scale(2.3)
 
     def animate_in(self, scene):
