@@ -226,8 +226,8 @@ if DEFAULT_DECK == "SHORT1":
 
     class EllipticCurves(ThreeDScene):
         def construct(self):
-            config.frame_height = 16
-            config.frame_width = 9
+            config.frame_height = 1920
+            config.frame_width = 1080
             register_font("data/brand/Oxanium-Regular.ttf")
 
             name = get_deck_name(DEFAULT_DECK)
