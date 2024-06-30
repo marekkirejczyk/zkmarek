@@ -25,11 +25,6 @@ from manim import (
     config,
 )
 
-config.frame_height = 1920
-config.frame_width = 1080
-config.pixel_height = 1920
-config.pixel_width = 1080
-
 
 import numpy as np
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -40,6 +35,11 @@ from zkmarek.video.constant import (
     HIGHLIGHT_COLOR,
     HIGHLIGHT2_COLOR,
 )
+
+config.frame_height = 1920
+config.frame_width = 1080
+config.pixel_height = 1920
+config.pixel_width = 1080
 
 
 class EllipticCurveProjection(SlideBase):
@@ -310,13 +310,13 @@ class EllipticCurveProjection(SlideBase):
         scene.play(*animations, run_time=3.5)
 
     def animate_out(self, scene):
-        scene.play(FadeIn(self.button), run_time=0.5)
+        # scene.play(FadeIn(self.button), run_time=0.5)
 
         # Source of sound under Creative Commons 0 License.
         # https://freesound.org/people/joebro10/sounds/219318/
-        scene.add_sound("data/sound/click.wav", gain=20)
-        scene.play(FadeIn(self.button_clicked), run_time=0.2)
-        scene.play(FadeOut(self.button_clicked), run_time=0.2)
+        # # scene.add_sound("data/sound/click.wav", gain=20)
+        # scene.play(FadeIn(self.button_clicked), run_time=0.2)
+        # scene.play(FadeOut(self.button_clicked), run_time=0.2)
         scene.play(
             FadeOut(self.north_pole),
             FadeOut(self.north_pole_label),
