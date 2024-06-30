@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 jobs:
-  render_hq:
+  render_lq:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
