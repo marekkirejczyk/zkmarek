@@ -22,7 +22,6 @@ from manim import (
     FadeTransform,
     MoveAlongPath,
     linear,
-    config,
 )
 
 
@@ -35,11 +34,6 @@ from zkmarek.video.constant import (
     HIGHLIGHT_COLOR,
     HIGHLIGHT2_COLOR,
 )
-
-# config.frame_height = 1920
-# config.frame_width = 1080
-# config.pixel_height = 1920
-# config.pixel_width = 1080
 
 
 class EllipticCurveProjection(SlideBase):
