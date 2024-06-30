@@ -2,11 +2,6 @@ from manim import FadeIn, ImageMobject, Text, FadeOut, UP, config
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
-# config.frame_height = 1920
-# config.frame_width = 1080
-# config.pixel_height = 1920
-# config.pixel_width = 1080
-
 
 class Challange(SlideBase):
     def __init__(self):
@@ -16,8 +11,8 @@ class Challange(SlideBase):
         self.title = Text(
             "Challenge accepted!", color=PRIMARY_COLOR, font=PRIMARY_FONT
         ).to_edge(UP)
-        config.frame_height = 1080
-        config.frame_width = 1920
+        config.frame_height = 9
+        config.frame_width = 16
         # config.pixel_height = 1080
         # config.pixel_width = 1920
         self.image = ImageMobject("data/shorts/warpcast.png").scale(2.3)

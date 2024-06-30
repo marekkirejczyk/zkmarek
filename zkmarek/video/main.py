@@ -223,8 +223,8 @@ DEFAULT_DECK = "SHORT1"
 
 
 if DEFAULT_DECK == "SHORT1":
-    config.frame_height = 1080
-    config.frame_width = 1920
+    config.frame_height = 9
+    config.frame_width = 16
 
     class EllipticCurves(ThreeDScene):
         def construct(self):
