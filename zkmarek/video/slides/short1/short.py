@@ -101,8 +101,8 @@ class EllipticCurveProjection(SlideBase):
         self.button_clicked = ImageMobject(
             "data/subscribe/clicked.png", z_index=1
         ).scale(0.4)
-        self.button.to_edge(DOWN + LEFT, buff=0.5)
-        self.button_clicked.to_edge(DOWN * 3 + LEFT, buff=0.5)
+        self.button.shift(DOWN * 5 + LEFT * 2)
+        self.button_clicked.shift(DOWN * 5 + LEFT * 2)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-15, 15, 10000)
@@ -195,10 +195,15 @@ class EllipticCurveProjection(SlideBase):
         scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.25)
         scene.play(FadeIn(self.sphere_ec))
         self.fixed_axes = ThreeDAxes(
-            x_range=[-10, 10, 1],
+            x_range=[-20, 20, 1],
             y_range=[-10, 10, 1],
             z_range=[-10, 10, 1],
             axis_config={"include_numbers": False, "color": WHITE},
+        )
+        self.labels_3d = self.fixed_axes.get_axis_labels(
+            MathTex("x", color=SECONDARY_COLOR),
+            MathTex("y", color=SECONDARY_COLOR),
+            MathTex("z", color=SECONDARY_COLOR),
         )
         scene.add(self.fixed_axes)
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
