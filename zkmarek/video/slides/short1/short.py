@@ -101,7 +101,7 @@ class EllipticCurveProjection(SlideBase):
             "data/subscribe/clicked.png", z_index=1
         ).scale(0.4)
         self.button.to_edge(DOWN + LEFT, buff=0.5)
-        self.button_clicked.next_to(self.button, DOWN, buff=0.5)
+        self.button_clicked.to_edge(DOWN * 3 + LEFT, buff=0.5)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-15, 15, 10000)
@@ -142,127 +142,135 @@ class EllipticCurveProjection(SlideBase):
         )
 
     def animate_in(self, scene):
-        self.new_subsection(
-            scene, "what is point at infinity?", "data/sound/short1/slide2-0.mp3"
-        )
-        scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
+        # self.new_subsection(
+        #     scene, "what is point at infinity?", "data/sound/short1/slide2-0.mp3"
+        # )
+        # scene.set_camera_orientation(phi=60 * DEGREES, theta=30 * DEGREES)
         self.create_plane_and_curves()
-        scene.play(
-            FadeIn(self.ax),
-            FadeIn(self.labels),
-            FadeIn(self.plane_curve_positive),
-            FadeIn(self.plane_curve_negative),
-        )
+        # scene.play(
+        #     FadeIn(self.ax),
+        #     FadeIn(self.labels),
+        #     FadeIn(self.plane_curve_positive),
+        #     FadeIn(self.plane_curve_negative),
+        # )
 
-        dot = Dot(color=PRIMARY_COLOR)
+        # dot = Dot(color=PRIMARY_COLOR)
 
-        spiral_path = VMobject()
-        spiral_points = []
-        num_points = 100
-        for i in range(num_points):
-            angle = i * DEGREES * 36 / num_points
-            radius = 0.05 * i
-            x = radius * np.cos(angle)
-            y = radius * np.sin(angle)
-            z = i * 0.01
-            spiral_points.append([x, y, z])
-        spiral_path.set_points_as_corners(spiral_points)
+        # spiral_path = VMobject()
+        # spiral_points = []
+        # num_points = 100
+        # for i in range(num_points):
+        #     angle = i * DEGREES * 36 / num_points
+        #     radius = 0.05 * i
+        #     x = radius * np.cos(angle)
+        #     y = radius * np.sin(angle)
+        #     z = i * 0.01
+        #     spiral_points.append([x, y, z])
+        # spiral_path.set_points_as_corners(spiral_points)
 
-        dot = Dot(color=PRIMARY_COLOR)
-        label = Text(
-            "point at infinity", font_size=20, color=PRIMARY_COLOR, font=PRIMARY_FONT
-        ).rotate(80 * DEGREES)
+        # dot = Dot(color=PRIMARY_COLOR)
+        # label = Text(
+        #     "point at infinity", font_size=20, color=PRIMARY_COLOR, font=PRIMARY_FONT
+        # ).rotate(80 * DEGREES)
 
-        label.add_updater(lambda m: m.next_to(dot, UP))
-        scene.wait(2.7)
-        scene.add(dot, label)
+        # label.add_updater(lambda m: m.next_to(dot, UP))
+        # scene.wait(2.7)
+        # scene.add(dot, label)
 
-        scene.play(MoveAlongPath(dot, spiral_path, run_time=2.3, rate_func=linear))
+        # scene.play(MoveAlongPath(dot, spiral_path, run_time=2.3, rate_func=linear))
 
-        dot1 = Text("?", font_size=50, font=PRIMARY_FONT, color=PRIMARY_COLOR).rotate(
-            90 * DEGREES
-        )
-        dot1.move_to(UP * 3 + RIGHT * 4)
+        # dot1 = Text("?", font_size=50, font=PRIMARY_FONT, color=PRIMARY_COLOR).rotate(
+        #     90 * DEGREES
+        # )
+        # dot1.move_to(UP * 3 + RIGHT * 4)
 
-        scene.play(FadeTransform(dot, dot1), FadeOut(label))
+        # scene.play(FadeTransform(dot, dot1), FadeOut(label))
 
-        self.new_subsection(
-            scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
-        )
-        scene.play(FadeOut(dot1))
-        self.animate_wrapping(scene)
-        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.25)
+        # self.new_subsection(
+        #     scene, "projective coordinates", "data/sound/short1/slide2-1.mp3"
+        # )
+        # scene.play(FadeOut(dot1))
+        # self.animate_wrapping(scene)
+        # scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.25)
+        scene.play(FadeIn(self.sphere_ec))
+        # scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
-        scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
+        # scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
+        # scene.begin_ambient_camera_rotation(rate=0.1)
 
-        scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
-        scene.begin_ambient_camera_rotation(rate=0.1)
+        # scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=1)
 
-        scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=1)
+        # x_axis_line = (
+        #     VMobject()
+        #     .set_points_as_corners(
+        #         [self.stereographic_projection(x, 0) for x in np.linspace(-10, 10, 100)]
+        #     )
+        #     .set_color(HIGHLIGHT2_COLOR)
+        # )
+        # y_axis_line = (
+        #     VMobject()
+        #     .set_points_as_corners(
+        #         [self.stereographic_projection(0, y) for y in np.linspace(-10, 10, 100)]
+        #     )
+        #     .set_color(HIGHLIGHT2_COLOR)
+        # )
+        # self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
+        # scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
+        # points_north_hemisphere = [(0, 0.6), (0, 1), (2, 0)]
+        # colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
+        # for (x, y), color in zip(points_north_hemisphere, colors):
+        #     projected_point = self.stereographic_projection(x, y)
+        #     dot = Dot(point=projected_point, color=color)
+        #     label = Text(
+        #         f"({x/3:.1f},{y/3:.1f})",
+        #         color=color,
+        #         font=PRIMARY_FONT,
+        #         font_size=18,
+        #     ).next_to(dot, RIGHT * 2.5)
+        #     label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
+        #         scene.camera.get_phi(), axis=[0, 0, 1]
+        #     ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
+        #     scene.add(dot, label)
 
-        x_axis_line = (
-            VMobject()
-            .set_points_as_corners(
-                [self.stereographic_projection(x, 0) for x in np.linspace(-10, 10, 100)]
-            )
-            .set_color(HIGHLIGHT2_COLOR)
-        )
-        y_axis_line = (
-            VMobject()
-            .set_points_as_corners(
-                [self.stereographic_projection(0, y) for y in np.linspace(-10, 10, 100)]
-            )
-            .set_color(HIGHLIGHT2_COLOR)
-        )
-        self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
-        points_north_hemisphere = [(0, 0.6), (0, 1), (2, 0)]
-        colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
-        for (x, y), color in zip(points_north_hemisphere, colors):
-            projected_point = self.stereographic_projection(x, y)
-            dot = Dot(point=projected_point, color=color)
-            label = Text(
-                f"({x/3:.1f},{y/3:.1f})",
-                color=color,
-                font=PRIMARY_FONT,
-                font_size=18,
-            ).next_to(dot, RIGHT * 2.5)
-            label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
-                scene.camera.get_phi(), axis=[0, 0, 1]
-            ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
-            scene.add(dot, label)
+        # self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
 
-        self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
+        # scene.play(
+        #     FadeIn(self.equatorial_plane),
+        # )
+        # scene.move_camera(phi=130 * DEGREES, theta=30 * DEGREES, run_time=3.5)
 
-        scene.play(
-            FadeIn(self.equatorial_plane),
-        )
-        scene.move_camera(phi=130 * DEGREES, theta=30 * DEGREES, run_time=3.5)
+        # scene.play(
+        #     FadeIn(self.south_pole),
+        #     FadeIn(self.south_pole_label),
+        #     FadeOut(self.equatorial_plane),
+        # )
 
-        scene.play(
-            FadeIn(self.south_pole),
-            FadeIn(self.south_pole_label),
-            FadeOut(self.equatorial_plane),
-        )
+        # points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
+        # for x, y in points_south_hemisphere:
+        #     projected_point = self.stereographic_projection(x, y)
+        #     dot = Dot(point=projected_point, color=PRIMARY_COLOR)
+        #     label = Text(
+        #         f"({x/3:.1f},{y/3:.1f})",
+        #         color=PRIMARY_COLOR,
+        #         font=PRIMARY_FONT,
+        #         font_size=18,
+        #     ).next_to(dot, RIGHT)
+        #     label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
+        #         scene.camera.get_phi(), axis=[0, 0, 1]
+        #     )
+        #     scene.add(dot, label)
 
-        points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
-        for x, y in points_south_hemisphere:
-            projected_point = self.stereographic_projection(x, y)
-            dot = Dot(point=projected_point, color=PRIMARY_COLOR)
-            label = Text(
-                f"({x/3:.1f},{y/3:.1f})",
-                color=PRIMARY_COLOR,
-                font=PRIMARY_FONT,
-                font_size=18,
-            ).next_to(dot, RIGHT)
-            label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
-                scene.camera.get_phi(), axis=[0, 0, 1]
-            )
-            scene.add(dot, label)
+        # scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
+        # scene.wait(1.5)
+        # scene.stop_ambient_camera_rotation()
+        scene.add_fixed_in_frame_mobjects(self.button, self.button_clicked)
+        scene.play(FadeIn(self.button), run_time=0.5)
 
-        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
-        scene.wait(1.5)
-        scene.stop_ambient_camera_rotation()
+        # Source of sound under Creative Commons 0 License.
+        # https://freesound.org/people/joebro10/sounds/219318/
+        scene.add_sound("data/sound/click.wav", gain=20)
+        scene.play(FadeIn(self.button_clicked), run_time=0.2)
+        scene.play(FadeOut(self.button_clicked), run_time=0.2)
 
     def animate_wrapping(self, scene):
         animations = []
@@ -304,14 +312,8 @@ class EllipticCurveProjection(SlideBase):
         scene.play(*animations, run_time=3.5)
 
     def animate_out(self, scene):
-        # scene.play(FadeIn(self.button), run_time=0.5)
-
-        # Source of sound under Creative Commons 0 License.
-        # https://freesound.org/people/joebro10/sounds/219318/
-        # # scene.add_sound("data/sound/click.wav", gain=20)
-        # scene.play(FadeIn(self.button_clicked), run_time=0.2)
-        # scene.play(FadeOut(self.button_clicked), run_time=0.2)
-        scene.play(
-            FadeOut(self.north_pole),
-            FadeOut(self.north_pole_label),
-        )
+        # scene.play(
+        #     FadeOut(self.north_pole),
+        #     FadeOut(self.north_pole_label),
+        # )
+        scene.play(FadeOut(self.sphere_ec))
