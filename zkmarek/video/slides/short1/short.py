@@ -105,7 +105,7 @@ class EllipticCurveProjection(SlideBase):
         self.button_clicked.shift(DOWN * 5 + LEFT * 2)
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-15, 15, 100000)
+        t_values = np.linspace(-15, 15, 5000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
