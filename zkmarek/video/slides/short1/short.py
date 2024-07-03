@@ -263,8 +263,8 @@ class EllipticCurveProjection(SlideBase):
         )
 
         points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
-        self.dots = []
-        self.labels_dots = []
+        self.dots = VMobject()
+        self.labels_dots = VMobject()
         for x, y in points_south_hemisphere:
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
