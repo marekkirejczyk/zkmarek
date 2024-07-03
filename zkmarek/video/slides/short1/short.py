@@ -195,13 +195,12 @@ class EllipticCurveProjection(SlideBase):
         self.animate_wrapping(scene)
         scene.play(
             FadeTransform(self.plane, self.sphere_ec),
-            FadeIn(self.sphere_ec),
-            run_time=0.25,
+            run_time=0.2,
         )
         self.fixed_axes = ThreeDAxes(
             x_range=[-20, 20, 1],
-            y_range=[-10, 10, 1],
-            z_range=[-10, 10, 1],
+            y_range=[-20, 20, 1],
+            z_range=[-20, 20, 1],
             axis_config={"include_numbers": False, "color": WHITE},
         )
         self.labels_3d = self.fixed_axes.get_axis_labels(
@@ -220,21 +219,27 @@ class EllipticCurveProjection(SlideBase):
         self.x_axis_line = (
             VMobject()
             .set_points_as_corners(
-                [self.stereographic_projection(x, 0) for x in np.linspace(-10, 10, 100)]
+                [
+                    self.stereographic_projection(x, 0)
+                    for x in np.linspace(-10, 10, 1000)
+                ]
             )
             .set_color(HIGHLIGHT2_COLOR)
         )
         self.y_axis_line = (
             VMobject()
             .set_points_as_corners(
-                [self.stereographic_projection(0, y) for y in np.linspace(-10, 10, 100)]
+                [
+                    self.stereographic_projection(0, y)
+                    for y in np.linspace(-10, 10, 1000)
+                ]
             )
             .set_color(HIGHLIGHT2_COLOR)
         )
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
         scene.play(FadeIn(self.x_axis_line), FadeIn(self.y_axis_line))
 
-        points_north_hemisphere = [(0, 0.6), (0, 1), (-2, 0)]
+        points_north_hemisphere = [(0, 0.6), (0, 1), (0, 2)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
         dots_south = VGroup()
         labels_south = VGroup()
@@ -243,10 +248,10 @@ class EllipticCurveProjection(SlideBase):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=color)
             label = Text(f"({x/3:.1f},{y/3:.1f})", color=color, font_size=18)
-            label.next_to(dot, RIGHT)
+            label.next_to(dot, RIGHT).shift(RIGHT)
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
-            )
+            ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
             dots_south.add(dot)
             labels_south.add(label)
 
@@ -287,14 +292,6 @@ class EllipticCurveProjection(SlideBase):
         scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=4.5)
         scene.wait(3.5)
         scene.stop_ambient_camera_rotation()
-        scene.add_fixed_in_frame_mobjects(self.button, self.button_clicked)
-        scene.play(FadeIn(self.button), run_time=0.5)
-
-        # Source of sound under Creative Commons 0 License.
-        # https://freesound.org/people/joebro10/sounds/219318/
-        scene.add_sound("data/sound/click.wav", gain=20)
-        scene.play(FadeIn(self.button_clicked), run_time=0.2)
-        scene.play(FadeOut(self.button_clicked), run_time=0.2)
         scene.remove(dots_north, labels_north, dots_south, labels_south)
         scene.play(
             FadeOut(self.sphere_ec),
@@ -306,8 +303,16 @@ class EllipticCurveProjection(SlideBase):
             FadeOut(self.labels_3d),
             FadeOut(self.y_axis_line),
             FadeOut(self.x_axis_line),
-            FadeIn(self.logo),
         )
+        scene.add_fixed_in_frame_mobjects(self.button, self.button_clicked)
+        scene.add_fixed_in_frame_mobjects(self.logo)
+        scene.play(FadeIn(self.button), run_time=0.5)
+
+        # Source of sound under Creative Commons 0 License.
+        # https://freesound.org/people/joebro10/sounds/219318/
+        scene.add_sound("data/sound/click.wav", gain=20)
+        scene.play(FadeIn(self.button_clicked), run_time=0.2)
+        scene.play(FadeOut(self.button_clicked), run_time=0.2)
 
     def animate_wrapping(self, scene):
         animations = []
