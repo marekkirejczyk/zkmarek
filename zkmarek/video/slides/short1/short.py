@@ -236,24 +236,22 @@ class EllipticCurveProjection(SlideBase):
 
         points_north_hemisphere = [(0, 0.6), (0, 1), (-2, 0)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
-        dots_south = []
-        labels_south = []
+        dots_south = VGroup()
+        labels_south = VGroup()
+
         for (x, y), color in zip(points_north_hemisphere, colors):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=color)
-            label = Text(
-                f"({x/3:.1f},{y/3:.1f})",
-                color=color,
-                font=PRIMARY_FONT,
-                font_size=18,
-            ).next_to(dot, RIGHT * 2.5)
+            label = Text(f"({x/3:.1f},{y/3:.1f})", color=color, font_size=18)
+            label.next_to(dot, RIGHT)
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
-            ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
-            dots_south.append(dot)
-            labels_south.append(label)
+            )
+            dots_south.add(dot)
+            labels_south.add(label)
 
         scene.add(dots_south, labels_south)
+
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
 
         scene.play(
@@ -268,8 +266,8 @@ class EllipticCurveProjection(SlideBase):
         )
 
         points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
-        dots_north = []
-        labels_north = []
+        dots_north = VGroup()
+        labels_north = VGroup()
         for x, y in points_south_hemisphere:
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
@@ -282,8 +280,8 @@ class EllipticCurveProjection(SlideBase):
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
             )
-            dots_north.append(dot)
-            labels_north.append(label)
+            dots_north.add(dot)
+            labels_north.add(label)
         scene.add(dots_north, labels_north)
 
         scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=4.5)
