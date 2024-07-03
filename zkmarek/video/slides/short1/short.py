@@ -233,8 +233,11 @@ class EllipticCurveProjection(SlideBase):
         )
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
         scene.play(FadeIn(self.x_axis_line), FadeIn(self.y_axis_line))
+
         points_north_hemisphere = [(0, 0.6), (0, 1), (-2, 0)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
+        dots_south = []
+        labels_south = []
         for (x, y), color in zip(points_north_hemisphere, colors):
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=color)
@@ -247,8 +250,10 @@ class EllipticCurveProjection(SlideBase):
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
             ).rotate(angle=180 * DEGREES, axis=[0, 0, 1])
-            scene.add(dot, label)
+            dots_south.append(dot)
+            labels_south.append(label)
 
+        scene.add(dots_south, labels_south)
         self.new_subsection(scene, "south pole", "data/sound/short1/slide2-3.mp3")
 
         scene.play(
@@ -263,8 +268,8 @@ class EllipticCurveProjection(SlideBase):
         )
 
         points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
-        self.dots = VMobject()
-        self.labels_dots = VMobject()
+        dots_north = []
+        labels_north = []
         for x, y in points_south_hemisphere:
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
@@ -277,9 +282,9 @@ class EllipticCurveProjection(SlideBase):
             label.rotate(scene.camera.get_phi() + 10 * DEGREES, axis=[1, 0, 0]).rotate(
                 scene.camera.get_phi(), axis=[0, 0, 1]
             )
-            scene.add(dot, label)
-            self.dots.append(dot)
-            self.labels_dots.append(label)
+            dots_north.append(dot)
+            labels_north.append(label)
+        scene.add(dots_north, labels_north)
 
         scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=4.5)
         scene.wait(3.5)
@@ -292,10 +297,9 @@ class EllipticCurveProjection(SlideBase):
         scene.add_sound("data/sound/click.wav", gain=20)
         scene.play(FadeIn(self.button_clicked), run_time=0.2)
         scene.play(FadeOut(self.button_clicked), run_time=0.2)
+        scene.remove(dots_north, labels_north, dots_south, labels_south)
         scene.play(
             FadeOut(self.sphere_ec),
-            FadeOut(self.dots),
-            FadeOut(self.labels_dots),
             FadeOut(self.south_pole_label),
             FadeOut(self.south_pole),
             FadeOut(self.north_pole),
