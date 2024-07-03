@@ -60,6 +60,7 @@ class EllipticCurveProjection(SlideBase):
         return np.array([xs, ys, -zs])
 
     def construct(self):
+        self.logo = ImageMobject("data/brand/logo.png").scale(1.5)
         self.sphere = Sphere(radius=3, resolution=(50, 50))
         self.sphere.set_fill(PRIMARY_COLOR, opacity=0.1)
         self.sphere.set_stroke(WHITE, opacity=0.6)
@@ -101,8 +102,8 @@ class EllipticCurveProjection(SlideBase):
         self.button_clicked = ImageMobject(
             "data/subscribe/clicked.png", z_index=1
         ).scale(0.4)
-        self.button.shift(DOWN * 5 + LEFT * 2)
-        self.button_clicked.shift(DOWN * 5 + LEFT * 2)
+        self.button.shift(DOWN * 5)
+        self.button_clicked.shift(DOWN * 5)
 
     def create_plane_and_curves(self):
         t_values = np.linspace(-12, 12, 10000)
@@ -192,8 +193,11 @@ class EllipticCurveProjection(SlideBase):
         )
         scene.play(FadeOut(dot1))
         self.animate_wrapping(scene)
-        scene.play(FadeTransform(self.plane, self.sphere_ec), run_time=0.25)
-        scene.play(FadeIn(self.sphere_ec))
+        scene.play(
+            FadeTransform(self.plane, self.sphere_ec),
+            FadeIn(self.sphere_ec),
+            run_time=0.25,
+        )
         self.fixed_axes = ThreeDAxes(
             x_range=[-20, 20, 1],
             y_range=[-10, 10, 1],
@@ -205,7 +209,7 @@ class EllipticCurveProjection(SlideBase):
             MathTex("y", color=SECONDARY_COLOR),
             MathTex("z", color=SECONDARY_COLOR),
         )
-        scene.add(self.fixed_axes)
+        scene.add(self.fixed_axes, self.labels_3d)
         scene.play(FadeIn(self.north_pole), FadeIn(self.north_pole_label))
 
         scene.move_camera(phi=15 * DEGREES, theta=90 * DEGREES, run_time=1)
@@ -213,14 +217,14 @@ class EllipticCurveProjection(SlideBase):
 
         scene.move_camera(phi=60 * DEGREES, theta=110 * DEGREES, run_time=1)
 
-        x_axis_line = (
+        self.x_axis_line = (
             VMobject()
             .set_points_as_corners(
                 [self.stereographic_projection(x, 0) for x in np.linspace(-10, 10, 100)]
             )
             .set_color(HIGHLIGHT2_COLOR)
         )
-        y_axis_line = (
+        self.y_axis_line = (
             VMobject()
             .set_points_as_corners(
                 [self.stereographic_projection(0, y) for y in np.linspace(-10, 10, 100)]
@@ -228,8 +232,8 @@ class EllipticCurveProjection(SlideBase):
             .set_color(HIGHLIGHT2_COLOR)
         )
         self.new_subsection(scene, "north pole", "data/sound/short1/slide2-2.mp3")
-        scene.play(FadeIn(x_axis_line), FadeIn(y_axis_line))
-        points_north_hemisphere = [(0, 0.6), (0, 1), (2, 0)]
+        scene.play(FadeIn(self.x_axis_line), FadeIn(self.y_axis_line))
+        points_north_hemisphere = [(0, 0.6), (0, 1), (-2, 0)]
         colors = [SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_COLOR]
         for (x, y), color in zip(points_north_hemisphere, colors):
             projected_point = self.stereographic_projection(x, y)
@@ -259,6 +263,8 @@ class EllipticCurveProjection(SlideBase):
         )
 
         points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
+        self.dots = []
+        self.labels_dots = []
         for x, y in points_south_hemisphere:
             projected_point = self.stereographic_projection(x, y)
             dot = Dot(point=projected_point, color=PRIMARY_COLOR)
@@ -272,9 +278,11 @@ class EllipticCurveProjection(SlideBase):
                 scene.camera.get_phi(), axis=[0, 0, 1]
             )
             scene.add(dot, label)
+            self.dots.append(dot)
+            self.labels_dots.append(label)
 
-        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=3.5)
-        scene.wait(1.5)
+        scene.move_camera(phi=210 * DEGREES, theta=45 * DEGREES, run_time=4.5)
+        scene.wait(3.5)
         scene.stop_ambient_camera_rotation()
         scene.add_fixed_in_frame_mobjects(self.button, self.button_clicked)
         scene.play(FadeIn(self.button), run_time=0.5)
@@ -284,6 +292,20 @@ class EllipticCurveProjection(SlideBase):
         scene.add_sound("data/sound/click.wav", gain=20)
         scene.play(FadeIn(self.button_clicked), run_time=0.2)
         scene.play(FadeOut(self.button_clicked), run_time=0.2)
+        scene.play(
+            FadeOut(self.sphere_ec),
+            FadeOut(self.dots),
+            FadeOut(self.labels_dots),
+            FadeOut(self.south_pole_label),
+            FadeOut(self.south_pole),
+            FadeOut(self.north_pole),
+            FadeOut(self.north_pole_label),
+            FadeOut(self.fixed_axes),
+            FadeOut(self.labels_3d),
+            FadeOut(self.y_axis_line),
+            FadeOut(self.x_axis_line),
+            FadeIn(self.logo),
+        )
 
     def animate_wrapping(self, scene):
         animations = []
@@ -325,8 +347,5 @@ class EllipticCurveProjection(SlideBase):
         scene.play(*animations, run_time=3.5)
 
     def animate_out(self, scene):
-        scene.play(
-            FadeOut(self.north_pole),
-            FadeOut(self.north_pole_label),
-        )
-        scene.play(FadeOut(self.sphere_ec))
+
+        scene.play(FadeOut(self.logo))
