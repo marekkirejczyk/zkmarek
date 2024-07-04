@@ -106,7 +106,7 @@ class EllipticCurveProjection(SlideBase):
         self.button_clicked.shift(DOWN * 5)
 
     def create_plane_and_curves(self):
-        t_values = np.linspace(-11, 11, 7500)
+        t_values = np.linspace(-11, 11, 10000)
         self.plane_curve_points_positive = []
         self.plane_curve_points_negative = []
         for t in t_values:
@@ -270,7 +270,7 @@ class EllipticCurveProjection(SlideBase):
             FadeOut(self.equatorial_plane),
         )
 
-        points_south_hemisphere = [(5, 0), (4, 0), (0, 7)]
+        points_south_hemisphere = [(5, 0), (4, 0), (7, 0)]
         dots_north = VGroup()
         labels_north = VGroup()
         for x, y in points_south_hemisphere:
