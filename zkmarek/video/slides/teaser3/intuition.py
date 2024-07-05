@@ -82,7 +82,7 @@ class Intuition(SlideBase):
             .shift(0.3 * RIGHT)
             .scale(0.7)
         )
-        self.label2 = MathTex(r"\div G").next_to(self.arrow2, LEFT)
+        self.label2 = MathTex(r"\log _G").next_to(self.arrow2, LEFT)
         self.cross_line = Line(
             start=self.arrow2.get_start() + LEFT * 2,
             end=self.arrow2.get_end() + RIGHT * 0.8,

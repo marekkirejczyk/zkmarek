@@ -173,6 +173,8 @@ TEASER3 = [
         wait_time=3,
     ),
     Intuition(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    Credits2(),
 ]
 
 EPISODE3 = [
