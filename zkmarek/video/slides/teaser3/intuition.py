@@ -57,7 +57,7 @@ class Intuition(SlideBase):
             )
         ).scale(0.8)
         self.u1_enc = (
-            MathTex(r"u_1 \cdot G", color=SECONDARY_COLOR)
+            MathTex(r"u_1 \cdot {{G}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(LEFT * 4)
             .scale(0.8)
@@ -187,7 +187,10 @@ class Intuition(SlideBase):
             Unwrite(equal_sign_up),
         )
         self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-2.mp3")
-        scene.play(Write(self.u1), Write(self.u2))
+        scene.play(Write(self.u1), Write(self.u2), run_time=1)
+        scene.wait(3.3)
+        scene.play(Indicate(self.u1), run_time= 0.5)
+        scene.play(Indicate(self.u2), run_time = 0.5)
         public_key = (
             MathTex(r"K_{\mathrm{Priv}}\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
@@ -210,7 +213,7 @@ class Intuition(SlideBase):
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
-        scene.wait(0.3)
+        scene.wait(1)
         scene.play(
             Indicate(self.u1[1], color=SECONDARY_COLOR),
             run_time=0.7,
@@ -231,22 +234,25 @@ class Intuition(SlideBase):
         )
         self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
-        scene.play(Indicate(self.u2_enc[1]))
+        scene.wait(1.2)
+        scene.play(Indicate(self.u1_enc[0], color = HIGHLIGHT_COLOR))
+        scene.wait(4.3)
+        scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         self.u2_enc2 = (
             MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .scale(0.8)
         )
-        scene.wait(14)
         priv_pub = (
             MathTex(r"K_{\mathrm{Pub}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
         )
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
-        scene.wait(7)
+        scene.wait(13)
+        scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
-        scene.wait(10)
+        scene.wait(14)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(2)
         self.new_subsection(
