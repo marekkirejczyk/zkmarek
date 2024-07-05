@@ -43,7 +43,7 @@ class Intuition(SlideBase):
             .to_edge(UP)
             .scale(0.8)
         )
-        self.line = Line(LEFT * 6, RIGHT * 5)
+        self.line = Line(LEFT * 4.5, RIGHT * 5)
 
         self.u1 = (
             MathTex(r"u_1 = -{{msg}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR)
@@ -189,8 +189,8 @@ class Intuition(SlideBase):
         self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-2.mp3")
         scene.play(Write(self.u1), Write(self.u2), run_time=1)
         scene.wait(3.3)
-        scene.play(Indicate(self.u1), run_time= 0.5)
-        scene.play(Indicate(self.u2), run_time = 0.5)
+        scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), run_time= 0.5)
+        scene.play(Indicate(self.u2, color = HIGHLIGHT_COLOR), run_time = 0.5)
         public_key = (
             MathTex(r"K_{\mathrm{Priv}}\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
@@ -209,11 +209,10 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN * 1.5)
             .shift(RIGHT * 2)
         )
-        scene.wait(4.2)
+        scene.wait(0.7)
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
-        scene.wait(1)
         scene.play(
             Indicate(self.u1[1], color=SECONDARY_COLOR),
             run_time=0.7,
@@ -235,7 +234,7 @@ class Intuition(SlideBase):
         self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.wait(1.2)
-        scene.play(Indicate(self.u1_enc[0], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR))
         scene.wait(4.3)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         self.u2_enc2 = (
@@ -248,8 +247,9 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
         )
+        scene.wait(2)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
-        scene.wait(13)
+        scene.wait(19)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
         scene.wait(14)
