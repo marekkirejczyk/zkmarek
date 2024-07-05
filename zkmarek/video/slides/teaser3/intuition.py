@@ -250,14 +250,14 @@ class Intuition(SlideBase):
         scene.wait(2)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
         scene.wait(7.2)
-        scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.5)
-        scene.wait(3.6)
+        scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(3.3)
         scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.5)
-        scene.wait(7.2)
+        scene.wait(7)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
-        scene.wait(9)
-        scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.5)
+        scene.wait(10)
+        scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(2)
         self.new_subsection(
@@ -368,6 +368,10 @@ class Intuition(SlideBase):
             FadeOut(equal_sign_down),
             FadeOut(number_enc_multi2),
             FadeOut(number_enc_multi),
+            FadeOut(self.pairings),
+            FadeOut(self.label),
+            FadeOut(self.line),
+            FadeOut(plus_up),
         )
 
     def animate_out(self, scene):
@@ -406,7 +410,7 @@ class Intuition(SlideBase):
         scene.wait(3)
         scene.play(FadeIn(result_of_result))
         scene.wait(5)
-        pairings = VGroup(
+        self.pairings = VGroup(
             self.line_multiplication,
             self.arrow,
             pairing_label,
@@ -414,5 +418,5 @@ class Intuition(SlideBase):
             result,
             result_up,
             result_of_result,
+            arrow_pairing,
         )
-        scene.play(FadeOut(pairings))
