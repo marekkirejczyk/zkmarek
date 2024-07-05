@@ -43,7 +43,7 @@ class Intuition(SlideBase):
             .to_edge(UP)
             .scale(0.8)
         )
-        self.line = Line(LEFT * 4.5, RIGHT * 5)
+        self.line = Line(LEFT * 5, RIGHT * 5)
 
         self.u1 = (
             MathTex(r"u_1 = -{{msg}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR)
@@ -72,7 +72,7 @@ class Intuition(SlideBase):
             CurvedArrow(self.line.get_end() + UP, self.line.get_end() + DOWN)
             .scale([-1, 1, 1])
             .scale(0.7)
-            .shift(RIGHT * 0.3)
+            .shift(RIGHT * 0.7)
         )
         self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT)
         self.arrow2 = (
@@ -209,7 +209,7 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN * 1.5)
             .shift(RIGHT * 2)
         )
-        scene.wait(0.7)
+        scene.wait(0.9)
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
@@ -238,7 +238,7 @@ class Intuition(SlideBase):
         scene.wait(4.3)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         self.u2_enc2 = (
-            MathTex(r"u_2 \cdot secret \cdot G", color=SECONDARY_COLOR)
+            MathTex(r"{{u_2 \cdot secret}} \cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .scale(0.8)
         )
@@ -249,10 +249,15 @@ class Intuition(SlideBase):
         )
         scene.wait(2)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
-        scene.wait(19)
+        scene.wait(7.2)
+        scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.5)
+        scene.wait(3.6)
+        scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.5)
+        scene.wait(7.2)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
-        scene.wait(14)
+        scene.wait(9)
+        scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(2)
         self.new_subsection(
