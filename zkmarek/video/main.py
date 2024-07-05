@@ -59,6 +59,7 @@ from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHte
 from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.intuition import Intuition
+from zkmarek.video.slides.teaser3.credits import Credits as CreditsT3
 
 config.width = 16
 config.height = 9
@@ -174,7 +175,7 @@ TEASER3 = [
     ),
     Intuition(),
     Subscribe("data/sound/episode1/s28.wav"),
-    Credits2(),
+    CreditsT3(),
 ]
 
 EPISODE3 = [

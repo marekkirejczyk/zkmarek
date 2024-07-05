@@ -234,7 +234,7 @@ class Intuition(SlideBase):
         self.new_subsection(scene, "secret", "data/sound/teaser3/slide2-3.mp3")
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.wait(1.2)
-        scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR), Indicate(self.label, color = HIGHLIGHT_COLOR))
         scene.wait(4.3)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         self.u2_enc2 = (
@@ -252,8 +252,8 @@ class Intuition(SlideBase):
         scene.wait(7.2)
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.3)
-        scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.5)
-        scene.wait(7)
+        scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(6.7)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
         scene.wait(10)
@@ -375,7 +375,7 @@ class Intuition(SlideBase):
         )
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title), FadeOut(self.line), FadeOut(self.label))
+        scene.play(FadeOut(self.title))
 
     def pairings_animation(self, scene):
         arrow_pairing = (
