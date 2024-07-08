@@ -270,6 +270,8 @@ class Intuition(SlideBase):
             self.u2_enc2,
             self.signature,
             priv_pub,
+            plus_down,
+            equal_sign_down
         )
 
         scene.wait(2)
