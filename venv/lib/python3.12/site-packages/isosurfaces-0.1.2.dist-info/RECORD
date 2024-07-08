@@ -1,0 +1,17 @@
+isosurfaces-0.1.2.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+isosurfaces-0.1.2.dist-info/LICENSE,sha256=2ZZ2CkuFHAOfGc6_vr4AszLdaXd8bTveUDkgHJzNNOY,1069
+isosurfaces-0.1.2.dist-info/METADATA,sha256=6dgvSDTZninmT7X3KS5eOmrEbjE86Jf7zyK2Z_6uIIA,3332
+isosurfaces-0.1.2.dist-info/RECORD,,
+isosurfaces-0.1.2.dist-info/WHEEL,sha256=G16H4A3IeoQmnOrYV4ueZGKSjhipXx8zc8nu9FGlvMA,92
+isosurfaces-0.1.2.dist-info/top_level.txt,sha256=VY2gsiQTqVNAIFha-GrP8vWfnqx9mBtI6jLY_q25vQ8,12
+isosurfaces/__init__.py,sha256=Usg9Le1fA2C2WXRgXaOgqIm_SMuAS5z0q_crWvgKUI8,144
+isosurfaces/__pycache__/__init__.cpython-312.pyc,,
+isosurfaces/__pycache__/cell.cpython-312.pyc,,
+isosurfaces/__pycache__/isoline.cpython-312.pyc,,
+isosurfaces/__pycache__/isosurface.cpython-312.pyc,,
+isosurfaces/__pycache__/point.cpython-312.pyc,,
+isosurfaces/cell.py,sha256=HraONByUh8nItJWYy2W1MNunhxjDVB-7a1PCwBf5Q78,5448
+isosurfaces/isoline.py,sha256=7-0Ly_3JMRE8tic1gDeBTVWLkFeA1HGn4ijp0ylgIbU,10855
+isosurfaces/isosurface.py,sha256=8x0Zdcq0O3gBYtbgUgjtlxL8P3IxaFQ086JvJoDg-4c,4527
+isosurfaces/point.py,sha256=BZ_XZPBoTjYAVCm0tQ8bN_ZA-5JLvloLJ_iyyzfD--E,2039
+isosurfaces/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
