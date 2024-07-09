@@ -192,7 +192,7 @@ class Intuition(SlideBase):
             Unwrite(equal_sign_up),
         )
         self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-2.mp3")
-        scene.play(Write(self.u1), Write(self.u2), FadeOut(self.lock), FadeOut(self.lock), run_time=1)
+        scene.play(Write(self.u1), Write(self.u2), FadeOut(self.lock), FadeOut(self.lock_open), run_time=1)
         scene.wait(3.3)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), run_time= 0.5)
         scene.play(Indicate(self.u2, color = HIGHLIGHT_COLOR), run_time = 0.5)
