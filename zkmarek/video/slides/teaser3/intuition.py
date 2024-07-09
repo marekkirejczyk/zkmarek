@@ -265,9 +265,9 @@ class Intuition(SlideBase):
         scene.wait(6.7)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
-        scene.wait(5)
+        scene.wait(4.5)
         scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(4.2)
+        scene.wait(4.7)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(2)
         self.new_subsection(
