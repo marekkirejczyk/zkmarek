@@ -17,6 +17,7 @@ from manim import (
     Text,
     CurvedArrow,
     MoveToTarget,
+    ImageMobject,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -101,6 +102,9 @@ class Intuition(SlideBase):
             "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
             SECONDARY_COLOR,
         ).to_edge(DOWN + LEFT)
+        self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(LEFT).shift(3*UP+RIGHT*2)
+        self.lock_open = ImageMobject("zkmarek/video/slides/teaser3/Lock Open@2x.png").to_edge(RIGHT).shift(3*DOWN+LEFT*2)
+
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
@@ -127,7 +131,8 @@ class Intuition(SlideBase):
         )
         scene.wait(2.2)
         scene.play(FadeIn(number_encrypted), FadeIn(number_encrypted2))
-        scene.wait(1)
+        scene.play(FadeIn(self.lock), run_time = 0.5)
+        scene.play(FadeIn(self.lock_open), run_time=0.5)
         scene.play(FadeIn(self.arrow2), FadeIn(self.label2))
         scene.play(Create(self.cross_line), Create(self.cross_line2))
         scene.play(
@@ -187,7 +192,7 @@ class Intuition(SlideBase):
             Unwrite(equal_sign_up),
         )
         self.new_subsection(scene, "u1 and u2", "data/sound/teaser3/slide2-2.mp3")
-        scene.play(Write(self.u1), Write(self.u2), run_time=1)
+        scene.play(Write(self.u1), Write(self.u2), FadeOut(self.lock), FadeOut(self.lock), run_time=1)
         scene.wait(3.3)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), run_time= 0.5)
         scene.play(Indicate(self.u2, color = HIGHLIGHT_COLOR), run_time = 0.5)
