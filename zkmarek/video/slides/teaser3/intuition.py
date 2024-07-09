@@ -102,8 +102,8 @@ class Intuition(SlideBase):
             "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
             SECONDARY_COLOR,
         ).to_edge(DOWN + LEFT)
-        self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(LEFT).shift(3*UP+RIGHT*2)
-        self.lock_open = ImageMobject("zkmarek/video/slides/teaser3/Lock Open@2x.png").to_edge(RIGHT).shift(3*DOWN+LEFT*2)
+        self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(LEFT).shift(3*UP+RIGHT).scale(1/2.5)
+        self.lock_open = ImageMobject("zkmarek/video/slides/teaser3/Lock Open@2x.png").to_edge(RIGHT).shift(3*DOWN+LEFT).scale(1/2.5)
 
 
     def animate_in(self, scene):
