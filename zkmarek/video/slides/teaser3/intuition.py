@@ -347,6 +347,8 @@ class Intuition(SlideBase):
         self.multiplication_up = (
             MathTex(r"\times").next_to(self.line_multiplication, UP).shift(LEFT * 2)
         )
+
+        self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-4_2.mp3")
         scene.play(FadeIn(self.line_multiplication), run_time=0.7)
         scene.play(
             Write(self.multiplication_up),
@@ -365,7 +367,6 @@ class Intuition(SlideBase):
             .set_color(HIGHLIGHT_COLOR)
         )
         scene.play(Write(number_enc_multi), Write(number_enc_multi2))
-        self.new_subsection(scene, "pairings", "data/sound/teaser3/slide2-5.mp3")
         self.pairings_animation(scene)
         scene.play(
             FadeOut(number_encrypted),
@@ -401,7 +402,7 @@ class Intuition(SlideBase):
         )
         pairing_label = MathTex(r"e(\cdot, \cdot)").next_to(arrow_pairing, RIGHT)
         result_up = (
-            MathTex(r"?= 14256 \cdot G \cdot G", color=HIGHLIGHT_COLOR)
+            MathTex(r"?= 14256 \cdot G", color=HIGHLIGHT_COLOR)
             .next_to(self.line_multiplication, UP)
             .shift(3 * RIGHT)
         )
