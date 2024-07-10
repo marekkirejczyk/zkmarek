@@ -52,7 +52,7 @@ class Pairing(SlideBase):
         self.definition = MathTex(r"{{e}}: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
         self.brace1 = Brace(self.definition[2], DOWN, color=PRIMARY_COLOR)
         self.brace2 = Brace(self.definition[4], DOWN, color=PRIMARY_COLOR)
-        self.brace3 = Brace(self.definition[4], DOWN, color=PRIMARY_COLOR)
+        self.brace3 = Brace(self.definition[6], DOWN, color=PRIMARY_COLOR)
         self.brace1.shift(UP * 2.5)
         self.brace2.shift(UP * 2.5)
         self.brace3.shift(UP * 2.5)
@@ -173,7 +173,7 @@ class Pairing(SlideBase):
         y1 = MathTex(r"y=5", color=HIGHLIGHT_COLOR).next_to(self.x, DOWN)
         self.y = MathTex(r"y=2+3", color=HIGHLIGHT_COLOR).next_to(self.x, DOWN)
         scene.play(Write(self.example_operaton), run_time=0.7)
-        scene.wait(5)
+        scene.wait(7)
         scene.play(Write(self.x), Write(y1), run_time=0.7)
         scene.wait(5)
         scene.play(ReplacementTransform(y1, self.y))
@@ -182,47 +182,26 @@ class Pairing(SlideBase):
             "⎘",
             "{{e(4,2+3)}}",
             SECONDARY_COLOR,
-        ).next_to(self.example_operaton, DOWN, buff=1)
+        ).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         pairing_bilin2 = EquationBoxWithIcons.create(  
             "⎘",
-            "{{e(4,2+3)}}",
-            SECONDARY_COLOR,         
-            "⎘",
-            "{{e(4, 2)\cdot e(4,3)}}",
-            SECONDARY_COLOR,).next_to(self.example_operaton, DOWN, buff=1)
+            "{{e(4,2+3)}} = {{e(4, 2)\cdot e(4,3)}}",
+            SECONDARY_COLOR).next_to(self.example_operaton, DOWN, buff=1)
         pairing_bilin3 = EquationBoxWithIcons.create(  
              "⎘",
-            "{{e(4,2+3)}}",
+            "{{e(4,2+3)}} = {{e(4, 2)\cdot e(4,3)}} = {{2^{4\cdot 2}\cdot2^{4\cdot 3}}}",
             SECONDARY_COLOR,         
-            "⎘",
-            "{{e(4, 2)\cdot e(4,3)}}",
-            SECONDARY_COLOR,
-            "⎘",
-            "{{2^{4\cdot 2}\cdot2^{4\cdot 3}}}",
-            SECONDARY_COLOR,
-            ).next_to(self.example_operaton, DOWN, buff=1)
+            ).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         
         pairing_bilin3 = EquationBoxWithIcons.create(  
              "⎘",
-            "{{e(4,2+3)}}",
-            SECONDARY_COLOR,         
-            "⎘",
-            "{{e(4, 2)\cdot e(4,3)}}",
-            SECONDARY_COLOR,
-            "⎘",
-            "{{2^{4\cdot 2}\cdot2^{4\cdot 3}}}",
-            SECONDARY_COLOR,
-            "⎘",
-            "{{2^{20}}}",
-            SECONDARY_COLOR,).next_to(self.example_operaton, DOWN, buff=1)
+            "{{e(4,2+3)}} = {{e(4, 2)\cdot e(4,3)}} = {{2^{4\cdot 2}\cdot2^{4\cdot 3}}} = {{2^{20}}}",
+            SECONDARY_COLOR).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         
         pairing_bilin4 = EquationBoxWithIcons.create(  
              "⎘",
-            "{{e(4,2+3)}}",
-            SECONDARY_COLOR,         
-            "⎘",
-            "{{2^{20}}}",
-            SECONDARY_COLOR,).next_to(self.example_operaton, DOWN, buff=1)
+            "{{e(4,2+3)}} = {{2^{20}}}",
+            SECONDARY_COLOR).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         scene.play(Write(pairing_bilin1), run_time=0.7)
         scene.wait(2)
         scene.play(ReplacementTransform(pairing_bilin1, pairing_bilin2), run_time=0.7)
@@ -232,56 +211,48 @@ class Pairing(SlideBase):
         scene.play(ReplacementTransform(pairing_bilin3, pairing_bilin4), run_time=0.7)
         scene.wait(2)
 
-        pairing_bilin4.generate_target()
-        pairing_bilin4.target.to_edge(RIGHT)
-        scene.play(MoveToTarget(pairing_bilin4))
-
         self.new_subsection(
             scene, "finishing example", "data/sound/episode3/slide2-3.mp3"
         )
         pairing_bilin5 = EquationBoxWithIcons.create(
+             "⎘",
+            "{{e(4,2+3)}} = {{2^{20}}}",
+            SECONDARY_COLOR,
             "⎘",
             "{{e(4,5)}}",
             SECONDARY_COLOR,
-        ).next_to(self.example_operaton, DOWN, buff=1)
+        ).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         pairing_bilin6 = EquationBoxWithIcons.create(
-            "⎘",
-            "{{e(4,5)}}",
+             "⎘",
+            "{{e(4,2+3)}} = {{2^{20}}}",
             SECONDARY_COLOR,
             "⎘",
-            "{{2^{4\cdot 5}}}",
+            "{{e(4,5)}} = {{2^{4\cdot 5}}}",
             SECONDARY_COLOR,
-        ).next_to(self.example_operaton, DOWN, buff=1)
+        ).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         pairing_bilin7 = EquationBoxWithIcons.create(
-            "⎘",
-            "{{e(4,5)}}",
+             "⎘",
+            "{{e(4,2+3)}} = {{2^{20}}}",
             SECONDARY_COLOR,
             "⎘",
-            "{{2^{4\cdot 5}}}",
+            "{{e(4,5)}} = {{2^{4\cdot 5}}} = {{2^{20}}}",
             SECONDARY_COLOR,
-            "⎘",
-            "{{2^{20}}}",
-            SECONDARY_COLOR,
-        ).next_to(self.example_operaton, DOWN, buff=1)
+        ).next_to(self.example_operaton, DOWN, buff=1).scale(1.2)
         scene.wait(2)
-        scene.play(Write(pairing_bilin5), run_time=0.7)
+        scene.play(ReplacementTransform(pairing_bilin4,pairing_bilin5), run_time=0.7)
         scene.wait(2)
         scene.play(ReplacementTransform(pairing_bilin5, pairing_bilin6), run_time=0.7)
         scene.wait(2)
         scene.play(ReplacementTransform(pairing_bilin6, pairing_bilin7), run_time=0.7)
         scene.wait(2)
-        pairing_bilin7.generate_target()
-        pairing_bilin7.target.shift(LEFT*1.5)
-        pairing_bilin4.generate_target()
-        pairing_bilin4.target.shift(LEFT*3)
         self.other_things.generate_target()
-        self.other_things.target.shift(RIGHT*4).scale(1/0.4)
-        scene.play(MoveToTarget(self.other_things), MoveToTarget(pairing_bilin4), MoveToTarget(pairing_bilin7))
+        self.other_things.target.shift(RIGHT*4.5).scale(1/0.4)
+        scene.play(MoveToTarget(self.other_things))
         scene.play(
             Unwrite(self.example_operaton),
             Unwrite(self.x),
             Unwrite(self.y),
-            FadeOut(pairing_bilin7), FadeOut(pairing_bilin4)
+            FadeOut(pairing_bilin7)
 
         )
 
