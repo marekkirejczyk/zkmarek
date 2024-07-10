@@ -48,10 +48,10 @@ class Pairing(SlideBase):
 
     def construct(self):
         self.definition_label = Text("Pairing", font_size=50, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.definition = MathTex(r"{{e}}: G_1  \times G_2 \rightarrow G_T", font_size=70, color=PRIMARY_COLOR)
-        self.brace1 = Brace(self.definition[1], DOWN, color=PRIMARY_COLOR)
-        self.brace2 = Brace(self.definition[3], DOWN, color=PRIMARY_COLOR)
-        self.brace3 = Brace(self.definition[5], DOWN, color=PRIMARY_COLOR)
+        self.definition = MathTex(r"{{e}}: {{G_1}]  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
+        self.brace1 = Brace(self.definition[2], DOWN, color=PRIMARY_COLOR)
+        self.brace2 = Brace(self.definition[4], DOWN, color=PRIMARY_COLOR)
+        self.brace3 = Brace(self.definition[6], DOWN, color=PRIMARY_COLOR)
         self.brace1.shift(UP * 2.5)
         self.brace2.shift(UP * 2.5)
         self.brace3.shift(UP * 2.5)
@@ -109,9 +109,9 @@ class Pairing(SlideBase):
         scene.play(FadeIn(self.brace2_label))
         scene.play(FadeOut(self.brace2), FadeOut(self.brace2_label))
 
-        scene.play(FadeIn(self.brace3))#, Indicate(self.definition[1], color = HIGHLIGHT_COLOR))
-        scene.play(FadeIn(self.brace3_label))#, Indicate(self.definition[1], color = HIGHLIGHT_COLOR))
-        scene.play(FadeOut(self.brace3), FadeOut(self.brace3_label))#, Indicate(self.definition[3], color = HIGHLIGHT_COLOR))
+        scene.play(FadeIn(self.brace3), Indicate(self.definition[2], color = HIGHLIGHT_COLOR))
+        scene.play(FadeIn(self.brace3_label), Indicate(self.definition[3], color = HIGHLIGHT_COLOR))
+        scene.play(FadeOut(self.brace3), FadeOut(self.brace3_label), Indicate(self.definition[5], color = HIGHLIGHT_COLOR))
         scene.wait(2.7)
         scene.play(Indicate(self.definition[0], color = HIGHLIGHT_COLOR))
 
