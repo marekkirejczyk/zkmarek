@@ -110,7 +110,7 @@ class Pairing(SlideBase):
         scene.play(FadeIn(self.brace3_label))
         scene.play(FadeOut(self.brace3), FadeOut(self.brace3_label))
 
-        self.new_subsection(scene, "bilinear definition", "data/soumd/episode3/slide2-1.mp3")
+        self.new_subsection(scene, "bilinear definition", "data/sound/episode3/slide2-1.mp3")
         scene.play(Write(self.bilinearity_label))
         scene.play(Write(self.bilinearity))
 
