@@ -132,10 +132,7 @@ class Pairing(SlideBase):
             scene, "bilinearity example", "data/sound/episode3/slide2-2.mp3"
         )
         self.example_bilinearity(scene)
-        self.new_subsection(
-            scene, "finishing example", "data/sound/episode3/slide2-3.mp3"
-        )
-        self.example_bilinearity2(scene)
+
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-4.mp3")
         self.bilinearity_morph.animate_in(scene)
         scene.play(Unwrite(self.bilinearity))
@@ -201,8 +198,9 @@ class Pairing(SlideBase):
             Unwrite(pairing_bilin[7:11]),
             Unwrite(self.example_operaton),
         )
-
-    def example_bilinearity2(self, scene):
+        self.new_subsection(
+            scene, "finishing example", "data/sound/episode3/slide2-3.mp3"
+        )
         pairing_bilin2 = EquationBoxWithIcons.create(
             "⎘",
             "{{e(4,5)}}",
