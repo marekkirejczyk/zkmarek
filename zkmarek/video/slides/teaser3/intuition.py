@@ -42,42 +42,42 @@ class Intuition(SlideBase):
                 font=PRIMARY_FONT,
             )
             .to_edge(UP)
-            .scale(0.8)
+            .scale(0.9)
         )
-        self.line = Line(LEFT * 5, RIGHT * 5)
-
+        self.line1 = Line(LEFT * 5, RIGHT * 5)
+        self.line = Line(LEFT * 6.5, RIGHT * 5)
         self.u1 = (
             MathTex(r"u_1 = -{{msg}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR)
-            .next_to(self.line, UP)
+            .next_to(self.line1, UP)
             .shift(LEFT * 4)
             .scale(1.2)
         )
         self.u2 = (
             MathTex(r"u_2 = {{s}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR).next_to(
-                self.line, UP
+                self.line1, UP
             ).shift(RIGHT*0.5)
         ).scale(1.2)
         self.u1_enc = (
             MathTex(r"u_1 \cdot {{G}}", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
-            .shift(LEFT * 4)
+            .next_to(self.line1, DOWN)
+            .shift(LEFT * 4.5)
             .scale(1.2)
         )
         self.u2_enc = (
             MathTex(r"u_2 \cdot {{R}}", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
-            .scale(1.2).shift(RIGHT*0.5)
+            .next_to(self.line1, DOWN)
+            .scale(1.2)
         )
 
         self.arrow = (
-            CurvedArrow(self.line.get_end() + UP, self.line.get_end() + DOWN)
+            CurvedArrow(self.line1.get_end() + UP, self.line1.get_end() + DOWN)
             .scale([-1, 1, 1])
             .scale(0.7)
             .shift(RIGHT * 0.7)
         )
         self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT).scale(1.2)
         self.arrow2 = (
-            CurvedArrow(self.line.get_start() + UP, self.line.get_start() + DOWN)
+            CurvedArrow(self.line1.get_start() + UP, self.line1.get_start() + DOWN)
             .rotate(PI)
             .scale([-1, 1, 1])
             .scale(0.7)
@@ -107,11 +107,11 @@ class Intuition(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
-        scene.play(FadeIn(self.line), FadeIn(self.title), run_time=0.7)
+        scene.play(FadeIn(self.line1), FadeIn(self.title), run_time=0.7)
         number1 = (
-            MathTex("176", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4).scale(1.2)
+            MathTex("176", color=PRIMARY_COLOR).next_to(self.line1, UP).shift(LEFT * 4).scale(1.2)
         )
-        number2 = MathTex("815", color=PRIMARY_COLOR).next_to(self.line, UP).scale(1.2)
+        number2 = MathTex("815", color=PRIMARY_COLOR).next_to(self.line1, UP).scale(1.2)
 
         scene.play(
             FadeIn(number1),
@@ -122,11 +122,11 @@ class Intuition(SlideBase):
         )
         number_encrypted = (
             MathTex(r"176\cdot G", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
+            .next_to(self.line1, DOWN)
             .shift(LEFT * 4).scale(1.2)
         )
         number_encrypted2 = MathTex(r"815\cdot G", color=SECONDARY_COLOR).next_to(
-            self.line, DOWN
+            self.line1, DOWN
         ).scale(1.2)
         scene.wait(1)
         scene.play(Indicate(self.label, color = SECONDARY_COLOR), run_time=0.7)
@@ -146,34 +146,35 @@ class Intuition(SlideBase):
 
         self.new_subsection(scene, "addition", "data/sound/teaser3/slide2-1.mp3")
         plus_up = (
-            MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
+            MathTex("+", color=PRIMARY_COLOR).next_to(self.line1, UP).shift(LEFT * 2)
         )
         plus_down = (
-            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
+            MathTex("+", color=SECONDARY_COLOR).next_to(self.line1, DOWN).shift(LEFT * 2)
         )
         scene.play(Write(plus_up))
         sum_up = (
-            MathTex("991", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 4)
+            MathTex("991", color=PRIMARY_COLOR).next_to(self.line1, UP).shift(RIGHT * 4)
         ).scale(1.2)
         sum_down = (
             MathTex(r"991\cdot G", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN)
+            .next_to(self.line1, DOWN)
             .shift(RIGHT * 4)
         ).scale(1.2)
         equal_sign_up = (
             MathTex("=", color=PRIMARY_COLOR)
-            .next_to(self.line, UP * 1.5)
+            .next_to(self.line1, UP * 1.5)
             .shift(RIGHT * 2)
         )
         equal_sign_down = (
             MathTex("=", color=SECONDARY_COLOR)
-            .next_to(self.line, DOWN * 1.5)
+            .next_to(self.line1, DOWN * 1.5)
             .shift(RIGHT * 2)
         )
         scene.wait(1)
         scene.play(
             Write(sum_up),
             Write(equal_sign_up),
+            ReplacementTransform(self.line1, self.line)
         )
         scene.wait(2)
         scene.play(Write(plus_down), Write(equal_sign_down), Write(sum_down))
@@ -204,7 +205,7 @@ class Intuition(SlideBase):
             .shift(RIGHT * 4)
         ).scale(1.2)
         plus_down = (
-            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
+            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2.5)
         )
         equal_sign_up = (
             MathTex("=", color=PRIMARY_COLOR)
@@ -214,7 +215,7 @@ class Intuition(SlideBase):
         equal_sign_down = (
             MathTex("=", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN * 1.5)
-            .shift(RIGHT * 2.5)
+            .shift(RIGHT * 2)
         )
         scene.wait(1.6)
         plus_up = (
@@ -359,13 +360,13 @@ class Intuition(SlideBase):
             number_encrypted.copy()
             .next_to(self.line_multiplication, UP)
             .shift(4 * LEFT)
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(HIGHLIGHT_COLOR).scale(0.88)
         )
 
         number_enc_multi2 = (
             number_encrypted2.copy()
             .next_to(self.line_multiplication, UP)
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(HIGHLIGHT_COLOR).scale(0.88)
         )
         scene.play(Write(number_enc_multi), Write(number_enc_multi2))
         self.pairings_animation(scene)
