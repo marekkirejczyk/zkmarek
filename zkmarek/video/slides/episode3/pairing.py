@@ -48,7 +48,7 @@ class Pairing(SlideBase):
 
     def construct(self):
         self.definition_label = Text("Pairing", font_size=50, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.definition = MathTex(r"{{e}}: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
+        self.definition = MathTex(r"{{e}}: G_1  \times G_2 \rightarrow G_T", font_size=70, color=PRIMARY_COLOR)
         self.brace1 = Brace(self.definition[1], DOWN, color=PRIMARY_COLOR)
         self.brace2 = Brace(self.definition[3], DOWN, color=PRIMARY_COLOR)
         self.brace3 = Brace(self.definition[5], DOWN, color=PRIMARY_COLOR)
@@ -135,7 +135,7 @@ class Pairing(SlideBase):
         self.new_subsection(
             scene, "finishing example", "data/sound/episode3/slide2-3.mp3"
         )
-        # self.example_bilinearity2(scene)
+        self.example_bilinearity2(scene)
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-4.mp3")
         self.bilinearity_morph.animate_in(scene)
         scene.play(Unwrite(self.bilinearity))
