@@ -249,7 +249,7 @@ class Intuition(SlideBase):
         self.u2_enc2 = (
             MathTex(r"{{u_2 \cdot secret}} \cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .scale(1.2).shift(RIGHT*0.5)
+            .scale(1.2)
         )
         priv_pub = (
             MathTex(r"K_{\mathrm{Pub}}", color=SECONDARY_COLOR)
@@ -299,12 +299,12 @@ class Intuition(SlideBase):
         ).scale(1.2)
         sum_up = (
             MathTex(r"991", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 4)
-        )
+        ).scale(1.2)
         sum_down = (
             MathTex(r"991\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
-        )
+        ).scale(1.2)
         numbers = VGroup(
             number1,
             number2,
