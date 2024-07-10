@@ -50,23 +50,23 @@ class Intuition(SlideBase):
             MathTex(r"u_1 = -{{msg}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR)
             .next_to(self.line, UP)
             .shift(LEFT * 4)
-            .scale(0.8)
+            .scale(1.2)
         )
         self.u2 = (
             MathTex(r"u_2 = {{s}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR).next_to(
                 self.line, UP
             )
-        ).scale(0.8)
+        ).scale(1.2)
         self.u1_enc = (
             MathTex(r"u_1 \cdot {{G}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(LEFT * 4)
-            .scale(0.8)
+            .scale(1.2)
         )
         self.u2_enc = (
             MathTex(r"u_2 \cdot {{R}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .scale(0.8)
+            .scale(1.2)
         )
 
         self.arrow = (
@@ -75,7 +75,7 @@ class Intuition(SlideBase):
             .scale(0.7)
             .shift(RIGHT * 0.7)
         )
-        self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT)
+        self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT).scale(1.2)
         self.arrow2 = (
             CurvedArrow(self.line.get_start() + UP, self.line.get_start() + DOWN)
             .rotate(PI)
@@ -83,7 +83,7 @@ class Intuition(SlideBase):
             .shift(0.3 * RIGHT)
             .scale(0.7)
         )
-        self.label2 = MathTex(r"\log _G").next_to(self.arrow2, LEFT)
+        self.label2 = MathTex(r"\log _G").next_to(self.arrow2, LEFT).scale(1.2)
         self.cross_line = Line(
             start=self.arrow2.get_start() + LEFT * 2,
             end=self.arrow2.get_end() + RIGHT * 0.8,
@@ -101,7 +101,7 @@ class Intuition(SlideBase):
             "⎘",
             "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
             SECONDARY_COLOR,
-        ).to_edge(DOWN + LEFT)
+        ).to_edge(DOWN + LEFT).scale(1.2)
         self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(RIGHT).shift(2*DOWN+LEFT).scale(1/2.5)
         self.lock_open = ImageMobject("zkmarek/video/slides/teaser3/Lock Open@2x.png").to_edge(LEFT).shift(2*UP+RIGHT).scale(1/2.5)
 
@@ -110,9 +110,9 @@ class Intuition(SlideBase):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
         scene.play(FadeIn(self.line), FadeIn(self.title), run_time=0.7)
         number1 = (
-            MathTex("176", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
+            MathTex("176", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4).scale(1.2)
         )
-        number2 = MathTex("815", color=PRIMARY_COLOR).next_to(self.line, UP)
+        number2 = MathTex("815", color=PRIMARY_COLOR).next_to(self.line, UP).scale(1.2)
 
         scene.play(
             FadeIn(number1),
@@ -124,11 +124,11 @@ class Intuition(SlideBase):
         number_encrypted = (
             MathTex(r"176\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .shift(LEFT * 4)
+            .shift(LEFT * 4).scale(1.2)
         )
         number_encrypted2 = MathTex(r"815\cdot G", color=SECONDARY_COLOR).next_to(
             self.line, DOWN
-        )
+        ).scale(1.2)
         scene.wait(1)
         scene.play(Indicate(self.label, color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(1.5)
@@ -155,12 +155,12 @@ class Intuition(SlideBase):
         scene.play(Write(plus_up))
         sum_up = (
             MathTex("991", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 4)
-        )
+        ).scale(1.2)
         sum_down = (
             MathTex(r"991\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
-        )
+        ).scale(1.2)
         equal_sign_up = (
             MathTex("=", color=PRIMARY_COLOR)
             .next_to(self.line, UP * 1.5)
@@ -203,7 +203,7 @@ class Intuition(SlideBase):
             MathTex(r"K_{\mathrm{Priv}}\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
-        )
+        ).scale(1.2)
         plus_down = (
             MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2)
         )
@@ -249,7 +249,7 @@ class Intuition(SlideBase):
         self.u2_enc2 = (
             MathTex(r"{{u_2 \cdot secret}} \cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .scale(0.8)
+            .scale(1.2)
         )
         priv_pub = (
             MathTex(r"K_{\mathrm{Pub}}", color=SECONDARY_COLOR)
@@ -287,16 +287,16 @@ class Intuition(SlideBase):
         scene.play(FadeOut(addition))
         number1 = (
             MathTex("176", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
-        )
-        number2 = MathTex(r"815", color=PRIMARY_COLOR).next_to(self.line, UP)
+        ).scale(1.2)
+        number2 = MathTex(r"815", color=PRIMARY_COLOR).next_to(self.line, UP).scale(1.2)
         number_encrypted = (
             MathTex(r"176\cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
             .shift(LEFT * 4)
-        )
+        ).scale(1.2)
         number_encrypted2 = MathTex(r"815\cdot G", color=SECONDARY_COLOR).next_to(
             self.line, DOWN
-        )
+        ).scale(1.2)
         sum_up = (
             MathTex(r"991", color=PRIMARY_COLOR).next_to(self.line, UP).shift(RIGHT * 4)
         )
