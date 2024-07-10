@@ -232,7 +232,8 @@ class Pairing(SlideBase):
         scene.wait(2)
         scene.play(Unwrite(pairing_bilin2), Unwrite(self.x), Unwrite(self.y))
         self.other_things.generate_target()
-        self.other_things.target.get_center().scale(1)
+        self.other_things.target.get_center()
+        self.other_things.scale(1)
         scene.play(MoveToTarget(self.other_things))
 
 
