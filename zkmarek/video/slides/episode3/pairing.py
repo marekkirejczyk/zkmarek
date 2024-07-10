@@ -56,13 +56,13 @@ class Pairing(SlideBase):
         # self.brace2.shift(UP * 2.5)
         # self.brace3.shift(UP * 2.5)
         self.brace1_label = Text(r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.brace1.put_at_tip(self.brace1_label)
+        # self.brace1.put_at_tip(self.brace1_label)
         self.brace2_label = Text(r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.brace2.put_at_tip(self.brace2_label)
+        # self.brace2.put_at_tip(self.brace2_label)
         self.brace3_label = Text(r"Prime field", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.brace3.put_at_tip(self.brace3_label)
+        # self.brace3.put_at_tip(self.brace3_label)
         self.chart = DiscreetePolynomialChart(41, poly).scale(0.85)
-        self.chart.to_edge(DOWN).scale(0.45)
+        self.chart.to_edge(DOWN).scale(0.4)
         self.bilinearity_label = Text("Bilinearity", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         self.bilinearity = MathTex(r"e({{P}} + {{P'}}, Q) = {{e(P, Q)}} \cdot {{e(P', Q)}}", font_size=40, color=SECONDARY_COLOR)
         self.bilinearity_morph = MorphinMathText([
@@ -101,17 +101,23 @@ class Pairing(SlideBase):
         scene.play(Write(self.definition_label))
         scene.play(Write(self.definition))
 
-        scene.play(FadeIn(self.brace1))
+        # scene.play(FadeIn(self.brace1))
         scene.play(FadeIn(self.brace1_label))
-        scene.play(FadeOut(self.brace1), FadeOut(self.brace1_label))
+        scene.play(
+            # FadeOut(self.brace1), 
+            FadeOut(self.brace1_label))
 
-        scene.play(FadeIn(self.brace2))
+        # scene.play(FadeIn(self.brace2))
         scene.play(FadeIn(self.brace2_label))
-        scene.play(FadeOut(self.brace2), FadeOut(self.brace2_label))
+        scene.play(
+            # FadeOut(self.brace2),
+                    FadeOut(self.brace2_label))
 
-        scene.play(FadeIn(self.brace3))#, Indicate(self.definition[2], color = HIGHLIGHT_COLOR))
+        # scene.play(FadeIn(self.brace3))#, Indicate(self.definition[2], color = HIGHLIGHT_COLOR))
         scene.play(FadeIn(self.brace3_label))#, Indicate(self.definition[3], color = HIGHLIGHT_COLOR))
-        scene.play(FadeOut(self.brace3), FadeOut(self.brace3_label))#, Indicate(self.definition[5], color = HIGHLIGHT_COLOR))
+        scene.play(
+            # FadeOut(self.brace3),
+              FadeOut(self.brace3_label))#, Indicate(self.definition[5], color = HIGHLIGHT_COLOR))
         scene.wait(2.7)
         scene.play(Indicate(self.definition[0], color = HIGHLIGHT_COLOR))
 
