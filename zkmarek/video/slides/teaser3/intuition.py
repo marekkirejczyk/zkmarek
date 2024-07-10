@@ -205,7 +205,7 @@ class Intuition(SlideBase):
             .shift(RIGHT * 4)
         ).scale(1.2)
         plus_down = (
-            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2.5)
+            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2.2)
         )
         equal_sign_up = (
             MathTex("=", color=PRIMARY_COLOR)
@@ -215,7 +215,7 @@ class Intuition(SlideBase):
         equal_sign_down = (
             MathTex("=", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN * 1.5)
-            .shift(RIGHT * 2)
+            .shift(RIGHT * 2.3)
         )
         scene.wait(1.6)
         plus_up = (
