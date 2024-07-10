@@ -35,7 +35,7 @@ class TitleSlide(SlideBase):
     def create_arrow(self):
         self.arrow = Arrow(start=LEFT, end=RIGHT, color=PRIMARY_COLOR)
         self.arrow.align_on_border(UP, buff=0.1)
-        self.arrow.shift(RIGHT * 1)
+        self.arrow.shift(RIGHT * 3)
         self.arrow.generate_target()
 
         self.label = Text("Click here for teaser", font_size=24, color=PRIMARY_COLOR, font=PRIMARY_FONT)

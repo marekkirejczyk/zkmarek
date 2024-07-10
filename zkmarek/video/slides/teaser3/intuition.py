@@ -55,7 +55,7 @@ class Intuition(SlideBase):
         self.u2 = (
             MathTex(r"u_2 = {{s}} \cdot {{r^{-1}}}", color=PRIMARY_COLOR).next_to(
                 self.line, UP
-            )
+            ).shift(RIGHT*0.5)
         ).scale(1.2)
         self.u1_enc = (
             MathTex(r"u_1 \cdot {{G}}", color=SECONDARY_COLOR)
@@ -66,7 +66,7 @@ class Intuition(SlideBase):
         self.u2_enc = (
             MathTex(r"u_2 \cdot {{R}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .scale(1.2)
+            .scale(1.2).shift(RIGHT*0.5)
         )
 
         self.arrow = (
@@ -80,7 +80,6 @@ class Intuition(SlideBase):
             CurvedArrow(self.line.get_start() + UP, self.line.get_start() + DOWN)
             .rotate(PI)
             .scale([-1, 1, 1])
-            .shift(0.3 * RIGHT)
             .scale(0.7)
         )
         self.label2 = MathTex(r"\log _G").next_to(self.arrow2, LEFT).scale(1.2)
@@ -101,7 +100,7 @@ class Intuition(SlideBase):
             "⎘",
             "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
             SECONDARY_COLOR,
-        ).to_edge(DOWN + LEFT).scale(1.2)
+        ).to_edge(DOWN + LEFT)
         self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(RIGHT).shift(2*DOWN+LEFT).scale(1/2.5)
         self.lock_open = ImageMobject("zkmarek/video/slides/teaser3/Lock Open@2x.png").to_edge(LEFT).shift(2*UP+RIGHT).scale(1/2.5)
 
@@ -215,7 +214,7 @@ class Intuition(SlideBase):
         equal_sign_down = (
             MathTex("=", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN * 1.5)
-            .shift(RIGHT * 2)
+            .shift(RIGHT * 2.5)
         )
         scene.wait(1.6)
         plus_up = (
@@ -249,12 +248,12 @@ class Intuition(SlideBase):
         self.u2_enc2 = (
             MathTex(r"{{u_2 \cdot secret}} \cdot G", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .scale(1.2)
+            .scale(1.2).shift(RIGHT*0.5)
         )
         priv_pub = (
             MathTex(r"K_{\mathrm{Pub}}", color=SECONDARY_COLOR)
             .next_to(self.line, DOWN)
-            .shift(RIGHT * 4)
+            .shift(RIGHT * 4).scale(1.2)
         )
         scene.wait(1.9)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
