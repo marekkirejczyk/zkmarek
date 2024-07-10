@@ -262,14 +262,13 @@ class Intuition(SlideBase):
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.3)
         scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(1.8)
+        scene.wait(3)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.wait(4)
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
-        scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(4.7)
+        scene.wait(5.5)
         scene.play(ReplacementTransform(public_key, priv_pub))
-        scene.wait(2)
+        scene.wait(3.5)
         self.new_subsection(
             scene, "add and multiply", "data/sound/teaser3/slide2-4.mp3"
         )
@@ -331,8 +330,8 @@ class Intuition(SlideBase):
             sum_up,
             sum_down,
         )
-        scene.play(Write(numbers), run_time=0.7)
-        scene.wait(1.5)
+        scene.play(Write(numbers), run_time=1.2)
+        scene.wait(2)
         addition.generate_target()
         addition.target.move_to(UP * 1.5)
         scene.play(MoveToTarget(addition), run_time=1)
