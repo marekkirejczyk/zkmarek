@@ -165,7 +165,7 @@ class Pairing(SlideBase):
         scene.play(MoveToTarget(self.other_things))
 
         self.example_operaton = (
-            MathTex(r"e(x,y)=2^xy", color=HIGHLIGHT_COLOR)
+            MathTex(r"e(x,y)=2^{xy}", color=HIGHLIGHT_COLOR)
             .next_to(self.definition_label, DOWN)
         )
         self.x = MathTex(r"x=4", color=HIGHLIGHT_COLOR).to_edge(RIGHT+UP)
@@ -230,6 +230,7 @@ class Pairing(SlideBase):
         scene.wait(2)
         scene.play(ReplacementTransform(pairing_bilin3, pairing_bilin4), run_time=0.7)
         scene.wait(2)
+
         pairing_bilin4.generate_target()
         pairing_bilin4.target.to_edge(RIGHT)
         scene.play(MoveToTarget(pairing_bilin4))
@@ -275,7 +276,7 @@ class Pairing(SlideBase):
         self.other_things.generate_target()
         self.other_things.target.get_center()
         self.other_things.scale(1)
-        scene.play(MoveToTarget(self.other_things))
+        scene.play(MoveToTarget(self.other_things), MoveToTarget(pairing_bilin4), MoveToTarget(pairing_bilin7))
         scene.play(
             Unwrite(self.example_operaton),
 
