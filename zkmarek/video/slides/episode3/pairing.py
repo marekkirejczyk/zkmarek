@@ -51,7 +51,7 @@ class Pairing(SlideBase):
         self.definition_label = Text("Pairing", font_size=50, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.definition = MathTex(r"{{e}}: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
         self.brace1 = Brace(self.definition[2], DOWN, color=PRIMARY_COLOR)
-        self.brace2 = Brace(self.definition[3], DOWN, color=PRIMARY_COLOR)
+        self.brace2 = Brace(self.definition[4], DOWN, color=PRIMARY_COLOR)
         self.brace3 = Brace(self.definition[4], DOWN, color=PRIMARY_COLOR)
         self.brace1.shift(UP * 2.5)
         self.brace2.shift(UP * 2.5)
@@ -114,11 +114,11 @@ class Pairing(SlideBase):
             FadeOut(self.brace2),
                     FadeOut(self.brace2_label))
 
-        scene.play(FadeIn(self.brace3), Indicate(self.definition[2], color = HIGHLIGHT_COLOR))
-        scene.play(FadeIn(self.brace3_label), Indicate(self.definition[3], color = HIGHLIGHT_COLOR))
+        scene.play(FadeIn(self.brace3))
+        scene.play(FadeIn(self.brace3_label))
         scene.play(
-            # FadeOut(self.brace3),
-              FadeOut(self.brace3_label), Indicate(self.definition[5], color = HIGHLIGHT_COLOR))
+            FadeOut(self.brace3),
+              FadeOut(self.brace3_label))
         scene.wait(2.7)
         scene.play(Indicate(self.definition[0], color = HIGHLIGHT_COLOR))
 
@@ -126,12 +126,13 @@ class Pairing(SlideBase):
         scene.play(Write(self.bilinearity_label))
         scene.play(Write(self.bilinearity))
         scene.wait(2)
-        scene.play(Indicate(self.bilinearity[0], color = PRIMARY_COLOR))
         scene.play(Indicate(self.bilinearity[1], color = PRIMARY_COLOR))
-        scene.wait(2.5)
-        scene.play(Indicate(self.bilinearity[2], color = PRIMARY_COLOR))
         scene.play(Indicate(self.bilinearity[3], color = PRIMARY_COLOR))
+        scene.wait(2.5)
+        scene.play(Indicate(self.bilinearity[7], color = PRIMARY_COLOR))
+        scene.play(Indicate(self.bilinearity[9], color = PRIMARY_COLOR))
         scene.wait(5.3)
+        self.chart.gen_points()
         scene.play(FadeIn(self.chart))
         scene.wait(2)
         scene.play(FadeOut(self.chart))
@@ -161,14 +162,14 @@ class Pairing(SlideBase):
     def example_bilinearity(self, scene):
         self.other_things = VGroup(self.bilinearity, self.bilinearity_label, self.definition)
         self.other_things.generate_target()
-        self.other_things.target.to_edge(LEFT).scale(0.4)
+        self.other_things.target.shift(LEFT*4.5).scale(0.4)
         scene.play(MoveToTarget(self.other_things))
 
         self.example_operaton = (
             MathTex(r"e(x,y)=2^{xy}", color=HIGHLIGHT_COLOR)
             .next_to(self.definition_label, DOWN)
         )
-        self.x = MathTex(r"x=4", color=HIGHLIGHT_COLOR).to_edge(RIGHT+UP)
+        self.x = MathTex(r"x=4", color=HIGHLIGHT_COLOR).to_edge(RIGHT+UP).shift(LEFT)
         y1 = MathTex(r"y=5", color=HIGHLIGHT_COLOR).next_to(self.x, DOWN)
         self.y = MathTex(r"y=2+3", color=HIGHLIGHT_COLOR).next_to(self.x, DOWN)
         scene.play(Write(self.example_operaton), run_time=0.7)
@@ -274,11 +275,13 @@ class Pairing(SlideBase):
         pairing_bilin4.generate_target()
         pairing_bilin4.target.shift(LEFT*3)
         self.other_things.generate_target()
-        self.other_things.target.get_center()
-        self.other_things.scale(1)
+        self.other_things.target.shift(RIGHT*4).scale(1/0.4)
         scene.play(MoveToTarget(self.other_things), MoveToTarget(pairing_bilin4), MoveToTarget(pairing_bilin7))
         scene.play(
             Unwrite(self.example_operaton),
+            Unwrite(self.x),
+            Unwrite(self.y),
+            FadeOut(pairing_bilin7), FadeOut(pairing_bilin4)
 
         )
 
