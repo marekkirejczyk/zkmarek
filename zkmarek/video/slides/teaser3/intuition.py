@@ -217,7 +217,7 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN * 1.5)
             .shift(RIGHT * 2)
         )
-        scene.wait(0.9)
+        scene.wait(1.6)
         plus_up = (
             MathTex("+", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 2)
         )
@@ -243,7 +243,7 @@ class Intuition(SlideBase):
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.wait(1.2)
         scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR), Indicate(self.label, color = HIGHLIGHT_COLOR))
-        scene.wait(4.3)
+        scene.wait(4.6)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.label, color = HIGHLIGHT_COLOR), run_time=0.7)
         self.u2_enc2 = (
@@ -268,7 +268,7 @@ class Intuition(SlideBase):
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
         scene.wait(5.5)
         scene.play(ReplacementTransform(public_key, priv_pub))
-        scene.wait(3.5)
+        scene.wait(5.2)
         self.new_subsection(
             scene, "add and multiply", "data/sound/teaser3/slide2-4.mp3"
         )
@@ -283,7 +283,7 @@ class Intuition(SlideBase):
             equal_sign_down
         )
 
-        scene.wait(2)
+        scene.wait(1)
         scene.play(FadeOut(addition))
         number1 = (
             MathTex("176", color=PRIMARY_COLOR).next_to(self.line, UP).shift(LEFT * 4)
@@ -331,7 +331,7 @@ class Intuition(SlideBase):
             sum_down,
         )
         scene.play(Write(numbers), run_time=1.2)
-        scene.wait(2)
+        scene.wait(3.3)
         addition.generate_target()
         addition.target.move_to(UP * 1.5)
         scene.play(MoveToTarget(addition), run_time=1)

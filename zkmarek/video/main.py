@@ -164,7 +164,7 @@ EPISODE2 = [
 TEASER3 = [
     Intro(
         sound="data/sound/teaser3/slide0-0.mp3",
-        background_sound="data/sound/teaser2/backgroundt.mp3",
+        background_sound="data/sound/teaser3/background.mp3",
     ),
     Sponsored(),
     TitleSlide(
