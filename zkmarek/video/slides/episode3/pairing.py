@@ -49,9 +49,9 @@ class Pairing(SlideBase):
     def construct(self):
         self.definition_label = Text("Pairing", font_size=50, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.definition = MathTex(r"{{e}}: {{G_1}]  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
-        self.brace1 = Brace(self.definition[1], DOWN, color=PRIMARY_COLOR)
+        self.brace1 = Brace(self.definition[2], DOWN, color=PRIMARY_COLOR)
         self.brace2 = Brace(self.definition[3], DOWN, color=PRIMARY_COLOR)
-        self.brace3 = Brace(self.definition[5], DOWN, color=PRIMARY_COLOR)
+        self.brace3 = Brace(self.definition[4], DOWN, color=PRIMARY_COLOR)
         self.brace1.shift(UP * 2.5)
         self.brace2.shift(UP * 2.5)
         self.brace3.shift(UP * 2.5)
