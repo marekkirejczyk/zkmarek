@@ -243,7 +243,7 @@ class Intuition(SlideBase):
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.wait(1.2)
         scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR), Indicate(self.label, color = HIGHLIGHT_COLOR))
-        scene.wait(4.6)
+        scene.wait(4)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.label, color = HIGHLIGHT_COLOR), run_time=0.7)
         self.u2_enc2 = (
@@ -256,7 +256,7 @@ class Intuition(SlideBase):
             .next_to(self.line, DOWN)
             .shift(RIGHT * 4)
         )
-        scene.wait(1.3)
+        scene.wait(1.9)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
         scene.wait(6)
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
@@ -268,7 +268,7 @@ class Intuition(SlideBase):
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
         scene.wait(5.5)
         scene.play(ReplacementTransform(public_key, priv_pub))
-        scene.wait(5.2)
+        scene.wait(5.8)
         self.new_subsection(
             scene, "add and multiply", "data/sound/teaser3/slide2-4.mp3"
         )
@@ -314,6 +314,8 @@ class Intuition(SlideBase):
             equal_sign_up,
             sum_up,
             sum_down,
+            plus_up,
+            plus_down,
         )
         addition = VGroup(
             self.line,
@@ -421,7 +423,7 @@ class Intuition(SlideBase):
         )
         scene.play(ReplacementTransform(self.multiplication_down, result))
         scene.play(FadeIn(result_of_result))
-        scene.wait(8)
+        scene.wait(13)
         self.pairings = VGroup(
             self.line_multiplication,
             self.arrow,
