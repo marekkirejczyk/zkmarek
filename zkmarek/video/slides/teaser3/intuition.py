@@ -205,7 +205,7 @@ class Intuition(SlideBase):
             .shift(RIGHT * 4)
         ).scale(1.2)
         plus_down = (
-            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2.2)
+            MathTex("+", color=SECONDARY_COLOR).next_to(self.line, DOWN).shift(LEFT * 2.15)
         )
         equal_sign_up = (
             MathTex("=", color=PRIMARY_COLOR)
