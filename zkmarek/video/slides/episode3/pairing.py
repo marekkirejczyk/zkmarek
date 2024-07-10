@@ -2,7 +2,6 @@ from manim import (
     DOWN,
     UP,
     LEFT,
-    RIGHT,
     Brace,
     FadeIn,
     FadeOut,
@@ -136,7 +135,7 @@ class Pairing(SlideBase):
         self.new_subsection(
             scene, "finishing example", "data/sound/episode3/slide2-3.mp3"
         )
-        self.example_bilinearity2(scene)
+        # self.example_bilinearity2(scene)
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-4.mp3")
         self.bilinearity_morph.animate_in(scene)
         scene.play(Unwrite(self.bilinearity))
@@ -209,7 +208,7 @@ class Pairing(SlideBase):
             "{{e(4,5)}}",
             SECONDARY_COLOR,
             "⎘",
-            "{{2^{4*5}}}",
+            "{{2^{4\cdot 5}}}",
             SECONDARY_COLOR,
             "⎘",
             "{{2^{20}}}",
