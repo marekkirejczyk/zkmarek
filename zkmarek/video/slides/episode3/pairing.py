@@ -153,9 +153,8 @@ class Pairing(SlideBase):
         scene.play(
             self.bilinearity_morph.texs[-1].animate.next_to(
                 self.bilinearity_label, DOWN
-            )
+            ), Unwrite(self.bilinearity)
         )
-        scene.play(Unwrite(self.bilinearity))
         scene.play(Write(self.multiplying), Write(self.multiplying_brace), Write(self.multiplying_brace_label))
         scene.wait(3)
         scene.play(Unwrite(self.multiplying), Unwrite(self.multiplying_brace), Unwrite(self.multiplying_brace_label))
@@ -208,11 +207,11 @@ class Pairing(SlideBase):
             "{{e(4,2+3)}} = {{2^{20}}}",
             SECONDARY_COLOR).shift(DOWN).scale(1.2)
         scene.play(Write(pairing_bilin1), run_time=0.7)
-        scene.wait(0.2)
+        scene.wait(0.6)
         scene.play(ReplacementTransform(pairing_bilin1, pairing_bilin2), run_time=0.7)
-        scene.wait(0.2)
+        scene.wait(0.6)
         scene.play(ReplacementTransform(pairing_bilin2, pairing_bilin3), run_time=0.7)
-        scene.wait(0.2)
+        scene.wait(0.6)
         scene.play(ReplacementTransform(pairing_bilin3, pairing_bilin4), run_time=0.7)
 
         self.new_subsection(

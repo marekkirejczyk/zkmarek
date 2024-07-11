@@ -26,14 +26,14 @@ from zkmarek.video.slides.ec.scalar_mulitplication import ScalarMultiplication
 from zkmarek.video.slides.ec.signature import Signature
 from zkmarek.video.slides.ec.standards import Standards
 from zkmarek.video.slides.ec.subgroups import Subgroups
-# from zkmarek.video.slides.episode3.KZG import KZG
-# from zkmarek.video.slides.episode3.PCS import PolynomialCommitment
+from zkmarek.video.slides.episode3.KZG import KZG
+from zkmarek.video.slides.episode3.PCS import PolynomialCommitment
 from zkmarek.video.slides.episode3.verkle import Verkle
-# from zkmarek.video.slides.episode3.ceremony import Ceremony
-# from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
-# from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
+from zkmarek.video.slides.episode3.ceremony import Ceremony
+from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
+from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
 from zkmarek.video.slides.episode3.pairing import Pairing
-# from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
+from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
 from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
 from zkmarek.video.slides.teaser.ecrecover import ECRecoverSlideTeaser
@@ -179,21 +179,21 @@ TEASER3 = [
 ]
 
 EPISODE3 = [
-    # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
-    # Sponsored(),
-    # TitleSlide("Pairing"),
+    Intro(sound="data/sound/teaser2/slide0-0.mp3"),
+    Sponsored(),
+    TitleSlide("Pairing"),
     Pairing(),
-    # TitleSlide("Trusted setup"),
-    # TrustedSetup(),
-    # Ceremony(),
-    # CeremonyVerification(),
-    # CeremonyVerification2(),
-    # TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    # PolynomialCommitment(),
-    # KZG(),
-    # Verkle(),
-    # Subscribe("data/sound/episode1/s28.wav"),
-    # Credits2(),
+    TitleSlide("Trusted setup"),
+    TrustedSetup(),
+    Ceremony(),
+    CeremonyVerification(),
+    CeremonyVerification2(),
+    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    PolynomialCommitment(),
+    KZG(),
+    Verkle(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    Credits2(),
 ]
 
 EPISODE4 = [
