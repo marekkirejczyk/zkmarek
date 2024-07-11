@@ -179,8 +179,8 @@ TEASER3 = [
 ]
 
 EPISODE3 = [
-    Intro(sound="data/sound/teaser2/slide0-0.mp3"),
-    Sponsored(),
+    # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
+    # Sponsored(),
     TitleSlide("Pairing"),
     Pairing(),
     TitleSlide("Trusted setup"),
