@@ -159,12 +159,12 @@ class Pairing(SlideBase):
         scene.play(Unwrite(self.bilinearity))
         scene.play(Write(self.multiplying), Write(self.multiplying_brace), Write(self.multiplying_brace_label))
         scene.wait(3)
-        scene.playt(Unwrite(self.multiplying), Unwrite(self.multiplying_brace), Unwrite(self.multiplying_brace_label))
+        scene.play(Unwrite(self.multiplying), Unwrite(self.multiplying_brace), Unwrite(self.multiplying_brace_label))
 
         self.new_subsection(scene, "non degeneracy", "data/sound/episode3/slide2-6.mp3")
         scene.play(Write(self.non_degeneracy_label))
         scene.play(Write(self.non_degeneracy))
-        
+
         self.new_subsection(scene, "computability", "data/sound/episode3/slide2-7.mp3")
         scene.play(Write(self.computability_label))
 
