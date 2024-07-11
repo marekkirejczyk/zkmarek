@@ -62,8 +62,8 @@ class Pairing(SlideBase):
         self.brace2.put_at_tip(self.brace2_label)
         self.brace3_label = Text(r"Prime field", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace3.put_at_tip(self.brace3_label)
-        self.chart = DiscreetePolynomialChart(41, poly).scale(0.85)
-        self.chart.to_edge(DOWN).scale(0.4)
+        self.chart = DiscreetePolynomialChart(41, poly).scale(0.55)
+        self.chart.to_edge(DOWN+RIGHT)
         self.bilinearity_label = Text("Bilinearity", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         self.bilinearity = MathTex(r"e({{P}} + {{P'}}, Q) = {{e(P, Q)}} \cdot {{e(P', Q)}}", font_size=40, color=SECONDARY_COLOR)
         self.bilinearity_morph = MorphinMathText([
@@ -80,7 +80,10 @@ class Pairing(SlideBase):
               " = e({{b}}P, {{a}}Q){{ }}",
             r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
         ])
-
+        self.multiplying = MathTex(r"a\cdot P = {{P+P+P \cdots}}", color = HIGHLIGHT_COLOR, font_size =40).next_to(self.bilinearity, DOWN*2)
+        self.multiplying_brace = Brace(self.multiplying[1], DOWN, color = PRIMARY_COLOR)
+        self.multiplying_brace_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.multiplying_brace.put_at_tip(self.multiplying_brace_label)
         self.non_degeneracy_label = Text("Non-degeneracy", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         nd_text = r"\forall{a \in G_1}, \forall{b \in G_2} (a, b \neq \mathcal{O}"
         nd_text += r" \Rightarrow e(a, b) \neq 1_{G_T}) "
@@ -121,6 +124,12 @@ class Pairing(SlideBase):
               FadeOut(self.brace3_label))
         scene.wait(2.7)
         scene.play(Indicate(self.definition[0], color = HIGHLIGHT_COLOR))
+        self.other_things = VGroup(self.bilinearity, self.bilinearity_label, self.definition)
+        self.other_things.generate_target()
+        self.other_things.target.shift(LEFT*4.5).scale(0.4)
+        scene.play(MoveToTarget(self.other_things))
+        self.chart.gen_points()
+        scene.play(FadeIn(self.chart))
 
         self.new_subsection(scene, "bilinear definition", "data/sound/episode3/slide2-1.mp3")
         scene.play(Write(self.bilinearity_label))
@@ -131,11 +140,7 @@ class Pairing(SlideBase):
         scene.wait(2.5)
         scene.play(Indicate(self.bilinearity[5], color = PRIMARY_COLOR))
         scene.play(Indicate(self.bilinearity[7], color = PRIMARY_COLOR))
-        scene.wait(5.3)
-        self.chart.gen_points()
-        scene.play(FadeIn(self.chart))
-        scene.wait(2)
-        scene.play(FadeOut(self.chart))
+        scene.wait(3.5)
         self.new_subsection(
             scene, "bilinearity example", "data/sound/episode3/slide2-2.mp3"
         )
@@ -143,28 +148,29 @@ class Pairing(SlideBase):
 
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-4.mp3")
         self.bilinearity_morph.animate_in(scene)
-        scene.play(Unwrite(self.bilinearity))
         self.new_subsection(
             scene, "explaining the multiplying", "data/sound/episode3/slide2-5.mp3"
         )
         scene.play(
             self.bilinearity_morph.texs[-1].animate.next_to(
                 self.bilinearity_label, DOWN
-            )
+            ).shift(DOWN)
         )
+        scene.play(Unwrite(self.bilinearity))
+        scene.play(Write(self.multiplying), Write(self.multiplying_brace), Write(self.multiplying_brace_label))
+        scene.wait(3)
+        scene.playt(Unwrite(self.multiplying), Unwrite(self.multiplying_brace), Unwrite(self.multiplying_brace_label))
 
         self.new_subsection(scene, "non degeneracy", "data/sound/episode3/slide2-6.mp3")
         scene.play(Write(self.non_degeneracy_label))
         scene.play(Write(self.non_degeneracy))
+        
         self.new_subsection(scene, "computability", "data/sound/episode3/slide2-7.mp3")
         scene.play(Write(self.computability_label))
 
     def example_bilinearity(self, scene):
-        self.other_things = VGroup(self.bilinearity, self.bilinearity_label, self.definition)
-        self.other_things.generate_target()
-        self.other_things.target.shift(LEFT*4.5).scale(0.4)
-        scene.play(MoveToTarget(self.other_things))
-
+        scene.wait(2)
+        scene.play(FadeOut(self.chart))
         self.example_operaton = (
             MathTex(r"e(x,y)=2^{xy}", color=HIGHLIGHT_COLOR)
             .next_to(self.definition_label, DOWN)
@@ -172,44 +178,45 @@ class Pairing(SlideBase):
         self.x = MathTex(r"x=4", color=HIGHLIGHT_COLOR).to_edge(RIGHT+UP).shift(LEFT)
         y1 = MathTex(r"y=5", color=HIGHLIGHT_COLOR).next_to(self.x, DOWN)
         self.y = MathTex(r"y=2+3", color=HIGHLIGHT_COLOR).next_to(self.x, DOWN)
+        scene.wait(2)
         scene.play(Write(self.example_operaton), run_time=0.7)
         scene.wait(9)
         scene.play(Write(self.x), Write(y1), run_time=0.7)
         scene.wait(3)
         scene.play(ReplacementTransform(y1, self.y))
-        scene.wait(1)
+        # scene.wait(1)
         pairing_bilin1 = EquationBoxWithIcons.create(
             "⎘",
             "{{e(4,2+3)}}",
             SECONDARY_COLOR,
-        ).shift(DOWN).scale(1.2)
+        ).shift(DOWN*2).scale(1.2)
         pairing_bilin2 = EquationBoxWithIcons.create(  
             "⎘",
             "{{e(4,2+3)}} = {{e(4, 2)\cdot e(4,3)}}",
-            SECONDARY_COLOR).shift(DOWN).scale(1.2)
+            SECONDARY_COLOR).shift(DOWN*2).scale(1.2)
         pairing_bilin3 = EquationBoxWithIcons.create(  
              "⎘",
             "{{e(4,2+3)}} = {{e(4, 2)\cdot e(4,3)}} = {{2^{4\cdot 2}\cdot2^{4\cdot 3}}}",
             SECONDARY_COLOR,         
-            ).shift(DOWN).scale(1.2)
+            ).shift(DOWN*2).scale(1.2)
         
         pairing_bilin3 = EquationBoxWithIcons.create(  
              "⎘",
             "{{e(4,2+3)}} = {{e(4, 2)\cdot e(4,3)}} = {{2^{4\cdot 2}\cdot2^{4\cdot 3}}} = {{2^{20}}}",
-            SECONDARY_COLOR).scale(1.2).shift(DOWN)
+            SECONDARY_COLOR).scale(1.2).shift(DOWN*2)
         
         pairing_bilin4 = EquationBoxWithIcons.create(  
              "⎘",
             "{{e(4,2+3)}} = {{2^{20}}}",
             SECONDARY_COLOR).shift(DOWN).scale(1.2)
         scene.play(Write(pairing_bilin1), run_time=0.7)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(ReplacementTransform(pairing_bilin1, pairing_bilin2), run_time=0.7)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(ReplacementTransform(pairing_bilin2, pairing_bilin3), run_time=0.7)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(ReplacementTransform(pairing_bilin3, pairing_bilin4), run_time=0.7)
-        scene.wait(1)
+        scene.wait(0.5)
 
         self.new_subsection(
             scene, "finishing example", "data/sound/episode3/slide2-3.mp3"
@@ -229,7 +236,7 @@ class Pairing(SlideBase):
             "⎘",
             "{{e(4,5)}} = {{2^{4\cdot 5}}}",
             SECONDARY_COLOR,
-        ).shift(DOWN).scale(1.2)
+        ).shift(DOWN*2).scale(1.2)
         pairing_bilin7 = EquationBoxWithIcons.create(
              "⎘",
             "{{e(4,2+3)}} = {{2^{20}}}",
@@ -237,7 +244,7 @@ class Pairing(SlideBase):
             "⎘",
             "{{e(4,5)}} = {{2^{4\cdot 5}}} = {{2^{20}}}",
             SECONDARY_COLOR,
-        ).shift(DOWN).scale(1.2)
+        ).shift(DOWN*2).scale(1.2)
         scene.play(ReplacementTransform(pairing_bilin4,pairing_bilin5), run_time=0.7)
         scene.wait(1)
         scene.play(ReplacementTransform(pairing_bilin5, pairing_bilin6), run_time=0.7)
