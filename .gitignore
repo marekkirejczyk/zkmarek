@@ -9,3 +9,4 @@ noarch
 todo.md
 .ruff_cache
 .idea/*
+venv
