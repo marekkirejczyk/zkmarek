@@ -18,7 +18,6 @@ from manim import (
     CurvedArrow,
     MoveToTarget,
     ImageMobject,
-    AddTextLetterByLetter
 )
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -388,7 +387,7 @@ class Intuition(SlideBase):
             FadeOut(self.line),
             FadeOut(plus_up),
         )
-        self.animate_3(scene)
+        self.animate_tree(scene)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title))
@@ -437,12 +436,8 @@ class Intuition(SlideBase):
         )
 
 
-    def animate_3(self, scene):
-        group = VGroup(
-            self.label("Verkle Trees"),
-            VerkleTree().scale(0.5)).arrange(direction=DOWN).move_to(RIGHT * 3)
-        scene.wait(1)
-        scene.play(AddTextLetterByLetter(group[0]), run_time=2)
-        scene.play(Create(group[1]), run_time=3)
+    def animate_tree(self, scene):
+        tree = VerkleTree().scale(0.6)
+        scene.play(Create(tree))
         scene.wait(2)
-        return group
+        scene.play(FadeOut(tree))
