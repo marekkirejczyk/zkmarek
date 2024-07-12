@@ -59,6 +59,8 @@ from zkmarek.video.slides.teaser2.eth_teaser import EthereumTransaction as ETHte
 from zkmarek.video.slides.teaser2.ec_rec_teaser import ECRecoverSlide as ECRteaser
 from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.intuition import Intuition
+from zkmarek.video.slides.teaser3.credits import Credits as CreditsT3
+from zkmarek.video.slides.teaser3.e2_reference import TitleSlide as E2Reference
 
 config.width = 16
 config.height = 9
@@ -163,16 +165,17 @@ EPISODE2 = [
 TEASER3 = [
     Intro(
         sound="data/sound/teaser3/slide0-0.mp3",
-        background_sound="data/sound/teaser2/backgroundt.mp3",
+        background_sound="data/sound/teaser3/background.mp3",
     ),
     Sponsored(),
-    TitleSlide(
+    E2Reference(
         "Intuition behind digital signature",
         sound="data/sound/teaser3/slide3.mp3",
         pre_wait_time=1.5,
-        wait_time=3,
     ),
     Intuition(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    CreditsT3(),
 ]
 
 EPISODE3 = [

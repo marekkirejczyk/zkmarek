@@ -18,10 +18,12 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+    - name: Update CA certificates
+      run: sudo apt-get install --reinstall ca-certificates
     - name: Install fonts
       run: |
         mkdir ~/texmf
-        curl -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
+        curl -k -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
         unzip ~/texmf/mnsymbol.zip -d ~/texmf
         cd ~/texmf/mnsymbol/tex && ls && latex MnSymbol.ins
         mkdir -p ~/texmf/tex/latex/MnSymbol/
@@ -44,6 +46,5 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: Movie HQ
-        path: media/videos/main/1080p60/EllipticCurves.mp4
+        path: media/videos/main/**/EllipticCurves.mp4
         retention-days: 5
-
