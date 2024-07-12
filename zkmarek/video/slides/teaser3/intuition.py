@@ -18,8 +18,9 @@ from manim import (
     CurvedArrow,
     MoveToTarget,
     ImageMobject,
+    AddTextLetterByLetter
 )
-
+from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
@@ -75,7 +76,7 @@ class Intuition(SlideBase):
             .scale(0.7)
             .shift(RIGHT * 0.7)
         )
-        self.label = MathTex(r"\times G").next_to(self.arrow, RIGHT).scale(1.2)
+        self.label = MathTex(r"\cdot G").next_to(self.arrow, RIGHT).scale(1.2)
         self.arrow2 = (
             CurvedArrow(self.line1.get_start() + UP, self.line1.get_start() + DOWN)
             .rotate(PI)
@@ -102,8 +103,6 @@ class Intuition(SlideBase):
             SECONDARY_COLOR,
         ).to_edge(DOWN + LEFT)
         self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(RIGHT).shift(2*DOWN+LEFT).scale(1/2.5)
-        self.lock_open = ImageMobject("zkmarek/video/slides/teaser3/Lock Open@2x.png").to_edge(LEFT).shift(2*UP+RIGHT).scale(1/2.5)
-
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
@@ -132,8 +131,7 @@ class Intuition(SlideBase):
         scene.play(Indicate(self.label, color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(1.5)
         scene.play(FadeIn(number_encrypted), FadeIn(number_encrypted2))
-        scene.play(FadeIn(self.lock), run_time = 0.5)
-        scene.play(FadeIn(self.lock_open), run_time=0.5)
+        scene.play(FadeIn(self.lock), run_time = 0.1)
         scene.play(FadeIn(self.arrow2), FadeIn(self.label2))
         scene.play(Create(self.cross_line), Create(self.cross_line2))
         scene.play(
@@ -141,7 +139,7 @@ class Intuition(SlideBase):
             FadeOut(self.cross_line),
             FadeOut(self.cross_line2),
             FadeOut(self.label2),
-            FadeOut(self.lock), FadeOut(self.lock_open),
+            FadeOut(self.lock),
         )
 
         self.new_subsection(scene, "addition", "data/sound/teaser3/slide2-1.mp3")
@@ -266,7 +264,9 @@ class Intuition(SlideBase):
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.wait(4)
         scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
-        scene.wait(5.5)
+        scene.wait(3)
+        scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.wait(2)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(5.8)
         self.new_subsection(
@@ -388,6 +388,7 @@ class Intuition(SlideBase):
             FadeOut(self.line),
             FadeOut(plus_up),
         )
+        self.animate_3(scene)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title))
@@ -423,7 +424,7 @@ class Intuition(SlideBase):
         )
         scene.play(ReplacementTransform(self.multiplication_down, result))
         scene.play(FadeIn(result_of_result))
-        scene.wait(13)
+        scene.wait(4)
         self.pairings = VGroup(
             self.line_multiplication,
             self.arrow,
@@ -434,3 +435,14 @@ class Intuition(SlideBase):
             result_of_result,
             arrow_pairing,
         )
+
+
+    def animate_3(self, scene):
+        group = VGroup(
+            self.label("Verkle Trees"),
+            VerkleTree().scale(0.5)).arrange(direction=DOWN).move_to(RIGHT * 3)
+        scene.wait(1)
+        scene.play(AddTextLetterByLetter(group[0]), run_time=2)
+        scene.play(Create(group[1]), run_time=3)
+        scene.wait(2)
+        return group

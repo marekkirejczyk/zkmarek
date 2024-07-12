@@ -38,7 +38,7 @@ class TitleSlide(SlideBase):
         self.arrow.shift(RIGHT * 3)
         self.arrow.generate_target()
 
-        self.label = Text("Click here for teaser", font_size=24, color=PRIMARY_COLOR, font=PRIMARY_FONT)
+        self.label = Text("Click here for episode 2", font_size=24, color=PRIMARY_COLOR, font=PRIMARY_FONT)
         self.label.next_to(self.arrow, LEFT)
         self.label.generate_target()
 
