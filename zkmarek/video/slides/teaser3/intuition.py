@@ -270,7 +270,7 @@ class Intuition(SlideBase):
         scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.wait(5)
         scene.play(ReplacementTransform(public_key, priv_pub))
-        scene.wait(3.8)
+        scene.wait(2)
         self.new_subsection(
             scene, "add and multiply", "data/sound/teaser3/slide2-4.mp3"
         )
@@ -443,7 +443,7 @@ class Intuition(SlideBase):
     def animate_tree(self, scene):
         tree = VerkleTree().scale(0.8).shift(UP)
         scene.play(Create(tree))
-        scene.wait(4)
+        scene.wait(3)
         scene.play(FadeOut(tree))
 
     def animtion_commitment(self, scene):
@@ -459,4 +459,5 @@ class Intuition(SlideBase):
         
         scene.play(GrowArrow(arrow1))
         
-        scene.wait(3)
+        scene.wait(2)
+        scene.play(FadeOut(arrow1, commitment, committer, committer_label, verifier, verifier_label))
