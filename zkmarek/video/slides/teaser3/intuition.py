@@ -240,7 +240,7 @@ class Intuition(SlideBase):
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.wait(1.2)
         scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR), Indicate(self.label, color = HIGHLIGHT_COLOR))
-        scene.wait(4)
+        scene.wait(5.45)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.label, color = HIGHLIGHT_COLOR), run_time=0.7)
         self.u2_enc2 = (
@@ -255,17 +255,18 @@ class Intuition(SlideBase):
         )
         scene.wait(1.9)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
-        scene.wait(6)
+        scene.wait(4)
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.3)
         scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
-        scene.wait(4)
-        scene.play(FadeIn(public_key), FadeIn(plus_down), FadeIn(equal_sign_down))
         scene.wait(3)
+        scene.play(FadeIn(plus_down))
+        scene.play(FadeIn(public_key), FadeIn(equal_sign_down))
+        scene.wait(4)
         scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.wait(2)
+        scene.wait(3)
         scene.play(ReplacementTransform(public_key, priv_pub))
         scene.wait(5.8)
         self.new_subsection(
@@ -422,8 +423,8 @@ class Intuition(SlideBase):
             .shift(RIGHT * 3)
         )
         scene.play(ReplacementTransform(self.multiplication_down, result))
-        scene.play(FadeIn(result_of_result))
-        scene.wait(4)
+        scene.play(FadeIn(result_of_result), Indicate(pairing_label, color = SECONDARY_COLOR))
+        scene.wait(3.5)
         self.pairings = VGroup(
             self.line_multiplication,
             self.arrow,
@@ -437,7 +438,7 @@ class Intuition(SlideBase):
 
 
     def animate_tree(self, scene):
-        tree = VerkleTree().scale(0.6)
+        tree = VerkleTree().scale(0.8)
         scene.play(Create(tree))
-        scene.wait(2)
+        scene.wait(5)
         scene.play(FadeOut(tree))
