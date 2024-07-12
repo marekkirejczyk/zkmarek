@@ -18,6 +18,7 @@ from manim import (
     CurvedArrow,
     MoveToTarget,
     ImageMobject,
+    Arrow, GrowArrow,
 )
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -240,7 +241,7 @@ class Intuition(SlideBase):
         scene.play(FadeIn(self.u1_enc), FadeIn(self.u2_enc))
         scene.wait(1.2)
         scene.play(Indicate(self.u1_enc[1], color = HIGHLIGHT_COLOR), Indicate(self.label, color = HIGHLIGHT_COLOR))
-        scene.wait(5.45)
+        scene.wait(2.75)
         scene.play(Indicate(self.u2_enc[1], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.label, color = HIGHLIGHT_COLOR), run_time=0.7)
         self.u2_enc2 = (
@@ -255,9 +256,9 @@ class Intuition(SlideBase):
         )
         scene.wait(1.9)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
-        scene.wait(4)
+        scene.wait(2.8)
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(3.3)
+        scene.wait(3.6)
         scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
@@ -389,6 +390,7 @@ class Intuition(SlideBase):
             FadeOut(plus_up),
         )
         self.animate_tree(scene)
+        self.animtion_commitment(scene)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title))
@@ -442,3 +444,18 @@ class Intuition(SlideBase):
         scene.play(Create(tree))
         scene.wait(5)
         scene.play(FadeOut(tree))
+
+    def animtion_commitment(self, scene):
+        committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*2).scale(0.5)
+        verifier = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(RIGHT * 2).scale(0.5)
+        committer_label = Text("Committer").next_to(committer, DOWN)
+        verifier_label = Text("Verifier").next_to(verifier, DOWN)
+        commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.4)
+        
+        scene.play(FadeIn(committer, committer_label, verifier, verifier_label, commitment))
+        
+        arrow1 = Arrow(committer.get_right(), verifier.get_left()).shift(DOWN)
+        
+        scene.play(GrowArrow(arrow1))
+        
+        scene.wait(2)
