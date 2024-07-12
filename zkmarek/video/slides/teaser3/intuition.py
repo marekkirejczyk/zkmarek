@@ -256,20 +256,21 @@ class Intuition(SlideBase):
         )
         scene.wait(1.9)
         scene.play(ReplacementTransform(self.u2_enc, self.u2_enc2))
-        scene.wait(2.8)
+        scene.wait(4.8)
         scene.play(Indicate(self.signature[1], color=HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.6)
         scene.play(Indicate(self.u2_enc2[0], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(3)
+        scene.wait(3.5)
         scene.play(Indicate(self.u1, color = HIGHLIGHT_COLOR), Indicate(self.u2, color = HIGHLIGHT_COLOR))
         scene.wait(3)
         scene.play(FadeIn(plus_down))
+        scene.wait(1)
         scene.play(FadeIn(public_key), FadeIn(equal_sign_down))
-        scene.wait(4)
+        scene.wait(4.5)
         scene.play(Indicate(public_key, color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.wait(3)
+        scene.wait(5)
         scene.play(ReplacementTransform(public_key, priv_pub))
-        scene.wait(5.8)
+        scene.wait(3.8)
         self.new_subsection(
             scene, "add and multiply", "data/sound/teaser3/slide2-4.mp3"
         )
@@ -389,8 +390,8 @@ class Intuition(SlideBase):
             FadeOut(self.line),
             FadeOut(plus_up),
         )
-        self.animate_tree(scene)
         self.animtion_commitment(scene)
+        self.animate_tree(scene)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title))
@@ -440,22 +441,22 @@ class Intuition(SlideBase):
 
 
     def animate_tree(self, scene):
-        tree = VerkleTree().scale(0.8)
+        tree = VerkleTree().scale(0.8).shift(UP)
         scene.play(Create(tree))
-        scene.wait(5)
+        scene.wait(4)
         scene.play(FadeOut(tree))
 
     def animtion_commitment(self, scene):
-        committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*2).scale(0.5)
-        verifier = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(RIGHT * 2).scale(0.5)
-        committer_label = Text("Committer").next_to(committer, DOWN)
-        verifier_label = Text("Verifier").next_to(verifier, DOWN)
-        commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.4)
+        committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*3).scale(0.5)
+        verifier = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(RIGHT * 3).scale(0.5)
+        committer_label = Text("Committer", font = PRIMARY_COLOR, font_size=40, color = PRIMARY_COLOR).next_to(committer, DOWN)
+        verifier_label = Text("Verifier", font = PRIMARY_COLOR, font_size=40, color = PRIMARY_COLOR).next_to(verifier, DOWN)
+        commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.5)
         
         scene.play(FadeIn(committer, committer_label, verifier, verifier_label, commitment))
         
-        arrow1 = Arrow(committer.get_right(), verifier.get_left()).shift(DOWN)
+        arrow1 = Arrow(committer.get_right(), verifier.get_left(), color = HIGHLIGHT_COLOR).shift(DOWN)
         
         scene.play(GrowArrow(arrow1))
         
-        scene.wait(2)
+        scene.wait(3)
