@@ -1,8 +1,8 @@
 from typing import List
 
-from manim import MathTex, Scene, TransformMatchingTex, Unwrite, VGroup, Write
+from manim import MathTex, Scene, TransformMatchingTex, Unwrite, VGroup, Write, Indicate
 
-from zkmarek.video.constant import SECONDARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
 
 
 class MorphinMathText(VGroup):
@@ -28,6 +28,9 @@ class MorphinMathText(VGroup):
 
     def animate_first(self, scene: Scene):
         scene.play(Write(self.texs[0]))
+        scene.wait(3)
+        scene.play(Indicate(self.texs[0], color = PRIMARY_COLOR))
+        scene.wait(1)
 
     def animate_rest(self, scene: Scene):
         for i in range(0, len(self.texs) - 1):
