@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, DOWN, UP, MathTex, Tex, Text, Write, Line
+from manim import LEFT, RIGHT, DOWN, UP, MathTex, Tex, Text, Write, Line, FadeOut
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -64,12 +64,19 @@ class TrustedSetup(SlideBase):
             end=self.tau.get_critical_point(RIGHT), color=SECONDARY_COLOR)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "intro to trusted setup", "data/sound/episode3/slide4-0.mp3")
         scene.play(Write(self.title_label))
         scene.play(Write(self.tau))
+        self.new_subsection(scene, "tau", "data/sound/episode3/slide4-1.mp3")
         scene.play(Write(self.vector_g1))
         self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_2)
+        self.new_subsection(scene, "multiplying by G1", "data/sound/episode3/slide4-2.mp3")
         scene.play(Write(self.vector_g2))
         scene.play(Write(self.strike))
+        self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-3.mp3")
         self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
         self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
+        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-4.mp3")
+        scene.wait(5)
+
 

@@ -63,13 +63,18 @@ class Ceremony(SlideBase):
         self.tau.next_to(self.vector_k, DOWN, buff=0.5)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "ceremony intro", "data/sound/episode3/slide5-0.mp3")
         scene.play(Write(self.title_label))
         scene.play(Write(self.tau_0))
+        self.new_subsection(scene, "first participant", "data/sound/episode3/slide5-1.mp3")
         scene.play(Write(self.vector_0))
         scene.play(Write(self.tau_1))
+        self.new_subsection(scene, "beginning of ceremony", "data/sound/episode3/slide5-2.mp3")
         scene.play(Write(self.vector_1))
         scene.play(Write(self.three_dot))
+        self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-3.mp3")
         scene.play(Write(self.tau_k))
         scene.play(Write(self.vector_k))
+        self.new_subsection(scene, "conclusion of ceremony", "data/sound/episode3/slide5-4.mp3")
         scene.play(Write(self.tau))
         scene.wait(2)

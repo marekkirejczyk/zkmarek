@@ -187,10 +187,6 @@ EPISODE3 = [
     Ceremony(),
     CeremonyVerification(),
     CeremonyVerification2(),
-    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    PolynomialCommitment(),
-    KZG(),
-    Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
     Credits2(),
 ]
@@ -198,6 +194,10 @@ EPISODE3 = [
 EPISODE4 = [
     # Intro("data/sound/episode2/slide1-0.mp3"),
     # Sponsored(),
+    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    PolynomialCommitment(),
+    KZG(),
+    Verkle(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
 ]

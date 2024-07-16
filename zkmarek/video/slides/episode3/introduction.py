@@ -42,10 +42,12 @@ class Introduction(SlideBase):
 
         self.new_subsection(scene, "any polynomial", "data/sound/episode3/slide1-2.mp3")
         self.person_wthumb.generate_target()
-        self.person_wthumb.target.shift(RIGHT*2+DOWN*2).scale(2)
+        self.person_wthumb.target.shift(RIGHT*2.5+DOWN).scale(2)
         scene.play(MoveToTarget(self.person_wthumb))
         scene.play(FadeIn(self.polynomial))
+        scene.wait(0.5)
         scene.play(FadeIn(self.polynomial1))
+        scene.wait(1.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.person_wthumb, self.polynomial, self.polynomial1))
