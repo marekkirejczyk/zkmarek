@@ -46,5 +46,5 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: Movie HQ
-        path: media/videos/main/**/EllipticCurves.mp4
+        path: media/videos/main/1080p60/EllipticCurves.mp4
         retention-days: 5
