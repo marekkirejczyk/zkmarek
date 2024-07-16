@@ -33,7 +33,7 @@ class Pairing(SlideBase):
         self.brace1.shift(UP * 2.5)
         self.brace2.shift(UP * 2.5)
         self.brace3.shift(UP * 2.5)
-        self.brace1_label = Text(r"Subgroup of points on elliptic curve", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.brace1_label = Text(r"Subgroups of points on elliptic curve", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace1.put_at_tip(self.brace1_label)
         self.brace3_label = Text(r"Prime field", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace3.put_at_tip(self.brace3_label)

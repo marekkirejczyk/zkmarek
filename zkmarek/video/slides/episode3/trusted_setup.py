@@ -75,12 +75,12 @@ class TrustedSetup(SlideBase):
 
         self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-3.mp3")
         scene.play(Write(self.vector_g2))
+        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-4.mp3")
+
         scene.play(Write(self.strike))
         self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
-        
-        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-4.mp3")
         self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
         
-        scene.wait(5)
+        scene.wait(1.5)
 
 

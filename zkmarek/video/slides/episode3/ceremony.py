@@ -1,4 +1,4 @@
-from manim import LEFT, DOWN, UP, MathTex, Tex, Text, Write, Line
+from manim import LEFT, DOWN, UP, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -43,6 +43,7 @@ class Ceremony(SlideBase):
 
     def construct(self):
         self.title_label = Text("Ceremony", font=PRIMARY_FONT, color=PRIMARY_COLOR)
+        self.group = ImageMobject("zkmarek/video/slides/episode3/group.png")
         self.vector_0 = TexArray(PARTICIPANT_1)
         self.vector_1 = TexArray(PARTICIPANT_2)
         self.vector_k = TexArray(PARTICIPANT_N, 3)
@@ -65,13 +66,20 @@ class Ceremony(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "ceremony intro", "data/sound/episode3/slide5-0.mp3")
         scene.play(Write(self.title_label))
-        scene.play(Write(self.tau_0))
+        scene.wait(1.5)
+        scene.play(FadeIn(self.group))
+
         self.new_subsection(scene, "first participant", "data/sound/episode3/slide5-1.mp3")
+        scene.play(Write(self.tau_0), FadeOut(self.group))
         scene.play(Write(self.vector_0))
-        scene.play(Write(self.tau_1))
+        scene.play(Indicate(self.tau_0, color = SECONDARY_COLOR))
         self.new_subsection(scene, "beginning of ceremony", "data/sound/episode3/slide5-2.mp3")
+        scene.play(Write(self.tau_1))
         scene.play(Write(self.vector_1))
         scene.play(Write(self.three_dot))
+        scene.wait(3)
+        scene.play(Indicate(self.tau_0))
+        scene.play(Indicate(self.tau_1))
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-3.mp3")
         scene.play(Write(self.tau_k))
         scene.play(Write(self.vector_k))

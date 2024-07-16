@@ -86,12 +86,15 @@ class CeremonyVerification(SlideBase):
         self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "intro to verification", "data/sound/episode3/slide6-0.mp3")
         scene.play(Write(self.title_label))
+        self.new_subsection(scene, "not the powers of tau", "data/sound/episode3/slide6-1.mp3")
         scene.play(Write(self.header_label))
         scene.play(Write(self.subheader_label))
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
         scene.play(FadeIn(self.arrows_g1[0]))
+        self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-2.mp3")
         self.pairing1.animate_first(scene)
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
