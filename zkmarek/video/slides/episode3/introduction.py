@@ -57,8 +57,8 @@ class Introduction(SlideBase):
 
     def animate_tree(self, scene):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)
-        scene.play(AddTextLetterByLetter(self.plonk), run_time=2)
+        scene.play(AddTextLetterByLetter(self.plonk), run_time=1.5)
         scene.play(FadeOut(self.plonk))
         scene.play(Create(tree))
-        scene.wait(1)
+        scene.wait(0.7)
         scene.play(FadeOut(tree))
