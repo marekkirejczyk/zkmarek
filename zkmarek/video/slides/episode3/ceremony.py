@@ -75,6 +75,5 @@ class Ceremony(SlideBase):
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-3.mp3")
         scene.play(Write(self.tau_k))
         scene.play(Write(self.vector_k))
-        self.new_subsection(scene, "conclusion of ceremony", "data/sound/episode3/slide5-4.mp3")
         scene.play(Write(self.tau))
         scene.wait(2)

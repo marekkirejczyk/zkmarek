@@ -182,13 +182,13 @@ EPISODE3 = [
     Introduction(),
     TitleSlide("Pairing", sound="data/sound/episode3/slide1-3.mp3", wait_time=3),
     Pairing(),
-    TitleSlide("Trusted setup"),
+    TitleSlide("Trusted setup", sound="data/sound/episode3/slide3-0.mp3", wait_time=1.5),
     TrustedSetup(),
     Ceremony(),
     CeremonyVerification(),
     CeremonyVerification2(),
-    Subscribe("data/sound/episode1/s28.wav"),
-    Credits2(),
+    # Subscribe("data/sound/episode1/s28.wav"),
+    # Credits2(),
 ]
 
 EPISODE4 = [

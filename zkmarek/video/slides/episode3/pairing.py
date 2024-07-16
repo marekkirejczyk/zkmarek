@@ -68,7 +68,7 @@ class Pairing(SlideBase):
         self.multiplying_brace.put_at_tip(self.multiplying_brace_label)
         self.non_degeneracy_label = Text("Non-degeneracy", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         nd_text = r"\forall{a \in G_1}, \forall{b \in G_2} ({{a, b \neq \mathcal{O}}}"
-        nd_text += r" \Rightarrow e(a, b) \neq {{1_{G_T})}} "
+        nd_text += r" \Rightarrow e(a, b) \neq {{1_{G_T}}}) "
         self.non_degeneracy = MathTex(nd_text, font_size=40, color=SECONDARY_COLOR)
         self.computability_label = Text("Computability", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
 
@@ -137,5 +137,3 @@ class Pairing(SlideBase):
 
         self.new_subsection(scene, "computability", "data/sound/episode3/slide2-6.mp3")
         scene.play(Write(self.computability_label))
-
- 
