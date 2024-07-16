@@ -1,6 +1,6 @@
-from manim import FadeIn, FadeOut, ImageMobject, LEFT, RIGHT, UP, DOWN, MathTex, Create, Group, MoveToTarget
+from manim import FadeIn, FadeOut, ImageMobject, LEFT, RIGHT, UP, DOWN, MathTex, Create, Group, MoveToTarget, Text, AddTextLetterByLetter
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import SECONDARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 
 class Introduction(SlideBase):
@@ -23,9 +23,12 @@ class Introduction(SlideBase):
         self.thumb4 = thumb.copy().next_to(self.person4, UP+RIGHT).shift(DOWN+LEFT)
 
         self.tau = MathTex(r"\tau", font_size = 80, color = SECONDARY_COLOR)
-
-        self.polynomial = MathTex(r"p(x) = a_n\cdot x^n + a_{n-1}\cdot x^{n-1} + \cdots + a_1 \cdot x + a_0", font_size = 50, color = SECONDARY_COLOR).shift(DOWN)
-        self.polynomial1 = MathTex(r"p(\tau) = z", font_size = 50, color = SECONDARY_COLOR).next_to(self.polynomial, DOWN)
+        self.plonk = Text("PLONK", font_size=100,
+            font=PRIMARY_FONT,
+            color=SECONDARY_COLOR)
+        
+        self.polynomial = MathTex(r"p(x) = x^5+9x^4+6", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
+        self.polynomial1 = MathTex(r"p(\tau) = z", font_size = 60, color = SECONDARY_COLOR).next_to(self.polynomial, DOWN)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to tau", "data/sound/episode3/slide1-0.mp3")
@@ -42,7 +45,7 @@ class Introduction(SlideBase):
 
         self.new_subsection(scene, "any polynomial", "data/sound/episode3/slide1-2.mp3")
         self.person_wthumb.generate_target()
-        self.person_wthumb.target.shift(RIGHT*2.5+DOWN).scale(2)
+        self.person_wthumb.target.shift(RIGHT*4+DOWN).scale(2)
         scene.play(MoveToTarget(self.person_wthumb))
         scene.play(FadeIn(self.polynomial))
         scene.wait(0.5)
@@ -54,6 +57,8 @@ class Introduction(SlideBase):
 
     def animate_tree(self, scene):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)
+        scene.play(AddTextLetterByLetter(self.plonk), run_time=2)
+        scene.play(FadeOut(self.plonk))
         scene.play(Create(tree))
-        scene.wait(3)
+        scene.wait(1)
         scene.play(FadeOut(tree))
