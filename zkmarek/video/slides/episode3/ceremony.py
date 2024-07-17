@@ -44,6 +44,8 @@ class Ceremony(SlideBase):
     def construct(self):
         self.title_label = Text("Ceremony", font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.group = ImageMobject("zkmarek/video/slides/episode3/group.png")
+        self.person = ImageMobject("zkmarek/video/slides/episode3/person_blue.png").scale(0.5)
+        self.person2 = ImageMobject("zkmarek/video/slides/teaser3/person.png").scale(0.5)
         self.person_tau0 = MathTex(r"\tau_0", color = SECONDARY_COLOR, font_size=70).next_to(self.group, DOWN, buff=0.01)
         self.person_tau1 = MathTex(r"\tau_1", color = SECONDARY_COLOR, font_size=70).next_to(self.group, LEFT, buff=0.1)
         self.person_tau2 = MathTex(r"\tau_2", color = SECONDARY_COLOR, font_size=70).next_to(self.group, RIGHT, buff=0.1)
@@ -59,8 +61,10 @@ class Ceremony(SlideBase):
         self.title_label.to_edge(UP)
         self.vector_0.next_to(self.title_label, DOWN, buff=0.8)
         self.tau_0.next_to(self.vector_0, LEFT)
+        self.person.next_to(self.tau_0, LEFT)
         self.vector_1.next_to(self.vector_0, DOWN, buff=0.5)
         self.tau_1.next_to(self.vector_1, LEFT)
+        self.person2.next_to(self.tau_1, LEFT)
         self.three_dot.next_to(self.vector_1, DOWN, buff=0.5)
         self.vector_k.next_to(self.three_dot, DOWN, buff=0.5)
         self.tau_k.next_to(self.vector_k, LEFT)
@@ -76,11 +80,11 @@ class Ceremony(SlideBase):
         scene.play(FadeIn(self.person_tau2))
 
         self.new_subsection(scene, "first participant", "data/sound/episode3/slide5-1.mp3")
-        scene.play(Write(self.tau_0), FadeOut(self.group, self.person_tau0, self.person_tau1, self.person_tau2))
+        scene.play(FadeIn(self.person), Write(self.tau_0), FadeOut(self.person_tau0, self.person_tau1, self.person_tau2, self.group))
         scene.play(Write(self.vector_0))
 
         self.new_subsection(scene, "beginning of ceremony", "data/sound/episode3/slide5-2.mp3")
-        scene.play(Write(self.tau_1))
+        scene.play(Write(self.tau_1), FadeIn(self.person2))
         scene.play(Write(self.vector_1))
         scene.wait(3)
         scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR))

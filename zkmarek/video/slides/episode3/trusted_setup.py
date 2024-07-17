@@ -1,6 +1,6 @@
-from manim import LEFT, RIGHT, DOWN, UP, MathTex, Tex, Text, Write, Line
+from manim import LEFT, RIGHT, DOWN, UP, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -63,23 +63,50 @@ class TrustedSetup(SlideBase):
             start=self.tau.get_critical_point(LEFT),
             end=self.tau.get_critical_point(RIGHT), color=SECONDARY_COLOR)
 
+        person = ImageMobject("zkmarek/video/slides/teaser3/person.png").scale(0.45).shift(DOWN)
+
+        self.person1 = person.copy().shift(2*LEFT)
+        self.person2 = person.copy().shift(2*RIGHT)
+        self.person3 = person.copy().shift(UP)
+        self.person4 = person.copy().shift(DOWN)
+
+        self.tau_number = MathTex(r"\tau", font_size=80, color = SECONDARY_COLOR).shift(DOWN)
+
+        question = Text("?", font_size=35, color = PRIMARY_COLOR, font = PRIMARY_FONT)
+
+        self.question1 = question.copy().next_to(self.person1, UP+RIGHT).shift(DOWN*0.7+LEFT*0.5)
+        self.question2 = question.copy().next_to(self.person2, UP+RIGHT).shift(DOWN*0.7+LEFT*0.5)
+        self.question3 = question.copy().next_to(self.person3, UP+RIGHT).shift(DOWN*0.7+LEFT*0.5)
+        self.question4 = question.copy().next_to(self.person4, UP+RIGHT).shift(DOWN*0.7+LEFT*0.5)
+
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to trusted setup", "data/sound/episode3/slide4-0.mp3")
         scene.play(Write(self.title_label))
         scene.wait(1.5)
         scene.play(Write(self.tau))
+        scene.play(FadeIn(self.person1, self.person2, self.person3, self.person4))
+        scene.wait(2)
+        scene.play(FadeIn(self.tau_number))
+        scene.wait(3)
+        scene.play(FadeIn(self.question4, self.question1, self.question3, self.question2))
         
-        self.new_subsection(scene, "multiplying by G1", "data/sound/episode3/slide4-2.mp3")
-        scene.play(Write(self.vector_g1))
+        self.new_subsection(scene, "multiplying by G1", "data/sound/episode3/slide4-1.mp3")
+        scene.play(FadeOut(self.question4, self.question1, self.question3, self.question2, self.person1, self.person2, self.person3, self.person4, self.tau_number),Write(self.vector_g1))
         self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_2)
-
-        self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-3.mp3")
+        scene.wait(3)
+        scene.play(Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_g1[1][1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_g1[3][1], color = HIGHLIGHT_COLOR))
+        self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-2.mp3")
         scene.play(Write(self.vector_g2))
-        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-4.mp3")
-
+        scene.wait(3)
+        scene.play(Indicate(self.vector_g2[0][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
         self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
         self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
-        scene.play(Write(self.strike))
-        scene.wait(1.5)
+        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-3.mp3")
+
+        scene.wait(4.5)
 
 
