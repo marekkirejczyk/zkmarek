@@ -67,8 +67,8 @@ class TrustedSetup(SlideBase):
 
         self.person1 = person.copy().shift(2*LEFT)
         self.person2 = person.copy().shift(2*RIGHT)
-        self.person3 = person.copy().shift(UP)
-        self.person4 = person.copy().shift(DOWN)
+        self.person3 = person.copy().shift(1.5*UP)
+        self.person4 = person.copy().shift(1.5*DOWN)
 
         self.tau_number = MathTex(r"\tau", font_size=80, color = SECONDARY_COLOR).shift(DOWN)
 
@@ -104,9 +104,9 @@ class TrustedSetup(SlideBase):
         scene.wait(3)
         scene.play(Indicate(self.vector_g2[0][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
         self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
-        self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
-        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-3.mp3")
 
+        self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-3.mp3")
+        self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
         scene.wait(4.5)
 
 

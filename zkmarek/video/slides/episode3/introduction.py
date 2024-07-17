@@ -43,7 +43,7 @@ class Introduction(SlideBase):
 
         self.new_subsection(scene, "no one knows", "data/sound/episode3/slide1-2.mp3")
         scene.play(FadeIn(self.question))
-        scene.wait(3)
+        scene.wait(2)
         scene.play(FadeOut(self.question))
         self.new_subsection(scene, "calculate polynomial", "data/sound/episode3/slide1-3.mp3")
         self.person_wthumb.generate_target()
@@ -51,7 +51,7 @@ class Introduction(SlideBase):
         scene.play(MoveToTarget(self.person_wthumb))
 
         scene.play(FadeIn(self.polynomial))
-        scene.wait(0.5)
+        scene.wait(0.7)
         scene.play(TransformMatchingShapes(VGroup(self.tau, self.polynomial), self.polynomial2))
 
         scene.wait(0.5)

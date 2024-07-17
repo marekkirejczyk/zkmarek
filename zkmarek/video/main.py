@@ -180,7 +180,7 @@ EPISODE3 = [
     # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
     Sponsored(),
     Introduction(),
-    TitleSlide("Pairing", sound="data/sound/episode3/slide1-3.mp3", wait_time=3),
+    TitleSlide("Pairing", sound="data/sound/episode3/slide1-4.mp3", wait_time=3),
     Pairing(),
     TitleSlide("Trusted setup", sound="data/sound/episode3/slide3-0.mp3", wait_time=1.5),
     TrustedSetup(),

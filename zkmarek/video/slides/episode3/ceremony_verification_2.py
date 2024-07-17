@@ -70,6 +70,7 @@ class CeremonyVerification2(SlideBase):
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "another array", "data/sound/episode3/slide7-0.mp3")
         scene.play(Write(self.title_label))
         scene.play(Write(self.header_label))
         scene.play(Write(self.subheader_label))
@@ -77,13 +78,17 @@ class CeremonyVerification2(SlideBase):
 
         scene.play(FadeIn(self.vec_g1_current))
         scene.play(FadeIn(self.tau_current))
+        self.new_subsection(scene, "P i+1", "data/sound/episode3/slide7-1.mp3")
         self.vec_g1_current.animate_transform_matching_shapes(scene, SETUP_CURRENT_2)
 
         scene.play(FadeIn(self.vec_next))
         scene.play(FadeIn(self.tau_next))
         scene.play(FadeIn(self.arrow))
+        self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
         self.pairing.animate_first(scene)
+        self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")
         self.pairing.animate_rest(scene)
+        self.new_subsection(scene, "verification", "data/sound/episode3/slide7-4.mp3")
         self.pairing.animate_out(scene)
 
         scene.play(FadeOut(self.vec_g1_current),

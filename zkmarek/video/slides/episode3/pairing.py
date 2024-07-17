@@ -98,7 +98,7 @@ class Pairing(SlideBase):
         scene.play(FadeOut(self.brace1, self.brace2), FadeOut(self.brace1_label))
 
         scene.play(FadeIn(self.brace3))
-        scene.play(FadeIn(self.brace3_label))
+        scene.play(FadeIn(self.brace3_label), Indicate(self.definition[6], color = HIGHLIGHT_COLOR))
         scene.play(FadeOut(self.brace3), FadeOut(self.brace3_label))
         scene.wait(3.3)
         scene.play(Indicate(self.definition[0], color = HIGHLIGHT_COLOR, scale_factor=2))

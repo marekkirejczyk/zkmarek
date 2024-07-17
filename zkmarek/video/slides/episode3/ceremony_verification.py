@@ -33,7 +33,12 @@ SETUP_WITH_TAU_G2 = [
     r"..." ,
     r"{{ \tau^n }} {{ G_2 }}"]
 
-
+PARTICIPANT_N = [
+    r"\tau_0^1 \tau_1^1 ... \tau_k^1 G_1",
+    r"\tau_0^2\tau_1^2 ... \tau_k^2 G_1",
+    r". . .",
+    r"\tau_0^n \tau_1^n ... \tau_k^n G_1"
+]
 
 class CeremonyVerification(SlideBase):
     title_label: Text
@@ -75,6 +80,7 @@ class CeremonyVerification(SlideBase):
             r"e({{P_0}}, {{Q_0}}) = e({{P_1}}, {{G_2}})"
         ])
         self.pairing2 = MathTex(r"e({{P_1}}, {{Q_0}}) = e({{P_2}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
+        self.vector_k = TexArray(PARTICIPANT_N, 3)
         self.title_label.to_edge(UP)
         self.header_label.next_to(self.title_label, DOWN, buff=0.6)
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)
@@ -84,17 +90,20 @@ class CeremonyVerification(SlideBase):
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
         self.pairing1.next_to(self.vec_g2, DOWN, buff=0.5)
         self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
+        self.vector_k.next_to(self.title, DOWN, buff=0.8)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to verification", "data/sound/episode3/slide6-0.mp3")
         scene.play(Write(self.title_label))
         self.new_subsection(scene, "not the powers of tau", "data/sound/episode3/slide6-1.mp3")
+        scene.play(Write(self.vector_k))
+        self.new_subsection(scene, "not powers of tau", "data/sound/episode3/slide6-2.mp3")
         scene.play(Write(self.header_label))
         scene.play(Write(self.subheader_label))
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
         scene.play(FadeIn(self.arrows_g1[0]))
-        self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-2.mp3")
+        self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-3.mp3")
         self.pairing1.animate_first(scene)
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
@@ -105,7 +114,7 @@ class CeremonyVerification(SlideBase):
 
         scene.play(FadeOut(self.arrows_g1[0]))
         self.pairing1.animate_out(scene)
-
+        self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-4.mp3")
         scene.play(Write(self.arrows_g1[1]))
         scene.play(Write(self.pairing2))
         scene.play(Unwrite(self.pairing2))
