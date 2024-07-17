@@ -90,7 +90,7 @@ class CeremonyVerification(SlideBase):
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
         self.pairing1.next_to(self.vec_g2, DOWN, buff=0.5)
         self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
-        self.vector_k.next_to(self.title, DOWN, buff=0.8)
+        self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to verification", "data/sound/episode3/slide6-0.mp3")
