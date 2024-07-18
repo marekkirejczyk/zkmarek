@@ -138,17 +138,10 @@ TEASER2 = [
 ]
 
 EPISODE2 = [
-    Intro(
-        sound="data/sound/episode2/slide1-0.mp3",
-        background_sound="data/sound/episode2/background.mp3",
-    ),
+    Intro(sound="data/sound/episode2/slide1-0.mp3", background_sound="data/sound/episode2/background.mp3"),
     Sponsored(),
     PreviouslyOn(),
-    TitleSlide(
-        "Digital Signature Algorithm",
-        pre_wait_time=1.5,
-        sound="data/sound/episode2/slide4-0.mp3",
-    ),
+    TitleSlide("Digital Signature Algorithm", pre_wait_time=1.5, sound="data/sound/episode2/slide4-0.mp3"),
     DigitalSignatureInterface(),
     Signature(),
     Deterministic(),
@@ -161,23 +154,16 @@ EPISODE2 = [
 ]
 
 TEASER3 = [
-    Intro(
-        sound="data/sound/teaser3/slide0-0.mp3",
-        background_sound="data/sound/teaser3/background.mp3",
-    ),
+    Intro(sound="data/sound/teaser3/slide0-0.mp3", background_sound="data/sound/teaser3/background.mp3"),
     Sponsored(),
-    E2Reference(
-        "Intuition behind digital signature",
-        sound="data/sound/teaser3/slide3.mp3",
-        pre_wait_time=1.5,
-    ),
+    E2Reference("Intuition behind digital signature", sound="data/sound/teaser3/slide3.mp3", pre_wait_time=1.5),
     Intuition(),
     Subscribe("data/sound/episode1/s28.wav"),
     CreditsT3(),
 ]
 
 EPISODE3 = [
-    Intro(sound="data/sound/teaser2/slide0-0.mp3"),
+    Intro(sound="data/sound/teaser2/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
     Sponsored(),
     Introduction(),
     TitleSlide("Pairing", sound="data/sound/episode3/slide1-4.mp3", wait_time=3.5),
