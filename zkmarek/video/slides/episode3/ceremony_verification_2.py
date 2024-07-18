@@ -1,5 +1,4 @@
-from manim import (DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex,
-                   Text, Write)
+from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -91,8 +90,7 @@ class CeremonyVerification2(SlideBase):
         self.new_subsection(scene, "verification", "data/sound/episode3/slide7-4.mp3")
         self.pairing.animate_out(scene)
 
-        scene.play(FadeOut(self.vec_g1_current),
-            FadeOut(self.vec_next),
-            FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))
+        scene.wait(4)
 
-        scene.wait(5)
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.vec_g1_current), FadeOut(self.vec_next), FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))

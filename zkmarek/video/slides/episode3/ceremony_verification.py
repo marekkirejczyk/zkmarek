@@ -1,7 +1,6 @@
 from typing import List
 
-from manim import (DOWN, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex,
-                   Text, Unwrite, Write)
+from manim import DOWN, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -133,8 +132,6 @@ class CeremonyVerification(SlideBase):
         for arrow in self.arrows_g2:
             scene.play(FadeOut(arrow))
 
-        scene.wait(2)
-
+    def animate_out(self, scene):
         scene.play(
-            FadeOut(self.vec_g1),
-            FadeOut(self.vec_g2))
+            FadeOut(self.vec_g1, self.vec_g2, self.title_label, self.subheader_label, self.header_label))
