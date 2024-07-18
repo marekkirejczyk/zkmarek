@@ -82,14 +82,13 @@ class TrustedSetup(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to trusted setup", "data/sound/episode3/slide4-0.mp3")
         scene.play(Write(self.title_label))
-        scene.wait(1)
+        scene.wait(2)
         scene.play(Write(self.tau))
         scene.play(FadeIn(self.person1))
         scene.play(FadeIn(self.person3))
         scene.play(FadeIn(self.person2))
         scene.play(FadeIn(self.person4))
         scene.play(FadeIn(self.tau_number))
-        scene.wait(1.5)
         scene.play(FadeIn(self.question4, self.question1, self.question3, self.question2))
         
         self.new_subsection(scene, "multiplying by G1", "data/sound/episode3/slide4-1.mp3")
