@@ -65,7 +65,7 @@ class CeremonyVerification2(SlideBase):
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}}",
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}}, {{ \tau_{[i+1]} }} \cdot G_2)}}",
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, {{1}} \cdot G_2)",
-            r"{{e(P_0^i, Q_0^{[i+1]} }} = e(P_0^{ {{i+1}} }, G_2)"
+            r"{{e(P_0^i, Q_0^{[i+1]}) }} = e(P_0^{ {{i+1}} }, G_2)"
         ])
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
 
@@ -93,6 +93,6 @@ class CeremonyVerification2(SlideBase):
 
         scene.play(FadeOut(self.vec_g1_current),
             FadeOut(self.vec_next),
-            FadeOut(self.arrow))
+            FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))
 
-        scene.wait(2)
+        scene.wait(5)

@@ -93,20 +93,24 @@ class CeremonyVerification(SlideBase):
         self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "intro to verification", "data/sound/episode3/slide6-0.mp3")
-        scene.play(Write(self.title_label))
-        self.new_subsection(scene, "not the powers of tau", "data/sound/episode3/slide6-1.mp3")
+        self.new_subsection(scene, "should have the powers of tau", "data/sound/episode3/slide6-1.mp3")
+        scene.play(Write(self.title_label))       
         scene.play(Write(self.vector_k))
+
         self.new_subsection(scene, "not powers of tau", "data/sound/episode3/slide6-2.mp3")
+        scene.play(FadeOut(self.vector_k))
         scene.play(Write(self.header_label))
         scene.play(Write(self.subheader_label))
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
         scene.play(FadeIn(self.arrows_g1[0]))
+
         self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-3.mp3")
         self.pairing1.animate_first(scene)
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
+        
+        self.new_subsection(scene, "property of pairings", "data/sound/episode3/slide6-4.mp3")
         self.pairing1.animate_rest(scene)
 
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_START_G1)
@@ -114,10 +118,11 @@ class CeremonyVerification(SlideBase):
 
         scene.play(FadeOut(self.arrows_g1[0]))
         self.pairing1.animate_out(scene)
-        self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-4.mp3")
+
+        self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-5.mp3")
         scene.play(Write(self.arrows_g1[1]))
         scene.play(Write(self.pairing2))
-        scene.play(Unwrite(self.pairing2))
+        scene.play(FadeOut(self.pairing2))
         scene.play(FadeOut(self.arrows_g1[1]))
 
         scene.play(Write(self.arrows_g1[2]))

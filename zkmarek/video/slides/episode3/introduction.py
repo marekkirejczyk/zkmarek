@@ -32,7 +32,10 @@ class Introduction(SlideBase):
         self.new_subsection(scene, "intro to tau", "data/sound/episode3/slide1-0.mp3")
         scene.play(FadeIn(self.person1, self.person2, self.person3, self.person4))
         scene.play(FadeIn(self.tau))
-        scene.play(FadeIn(self.thumb1, self.thumb2, self.thumb3, self.thumb4))
+        scene.play(FadeIn(self.thumb1))
+        scene.play(FadeIn(self.thumb2))
+        scene.play(FadeIn(self.thumb3))
+        scene.play(FadeIn(self.thumb4))
 
         self.new_subsection(scene, "trusted setup Plonk, zk snarks", "data/sound/episode3/slide1-1.mp3")
         self.person_wthumb = Group(self.person1, self.thumb1, self.person2, self.person3, self.person4, self.thumb2, self.thumb3, self.thumb4, self.tau)
@@ -57,7 +60,7 @@ class Introduction(SlideBase):
         scene.wait(0.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.person_wthumb, self.polynomial2))
+        scene.play(FadeOut(self.person1, self.person2, self.person3, self.person4, self.polynomial2))
 
     def animate_tree(self, scene):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)

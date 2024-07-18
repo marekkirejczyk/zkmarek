@@ -80,6 +80,8 @@ class Pairing(SlideBase):
         self.definition.next_to(self.definition_label, DOWN)
         self.bilinearity_label.next_to(self.definition, DOWN, buff=0.8)
         self.bilinearity.next_to(self.bilinearity_label, DOWN)
+        self.bilinearity2.next_to(self.bilinearity_label, DOWN)
+        self.bilinearity3.next_to(self.bilinearity_label, DOWN)
         self.non_degeneracy_label.next_to(self.bilinearity, DOWN, buff=1)
         self.non_degeneracy.next_to(self.non_degeneracy_label, DOWN)
         self.computability_label.next_to(self.non_degeneracy, DOWN, buff=0.6)

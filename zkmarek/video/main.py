@@ -59,7 +59,7 @@ from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerifi
 from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.episode3.introduction import Introduction
-
+from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
 config.width = 16
 config.height = 9
 
@@ -178,9 +178,9 @@ TEASER3 = [
 
 EPISODE3 = [
     # Intro(sound="data/sound/teaser2/slide0-0.mp3"),
-    Sponsored(),
+    # Sponsored(),
     Introduction(),
-    TitleSlide("Pairing", sound="data/sound/episode3/slide1-4.mp3", wait_time=3),
+    TitleSlide("Pairing", sound="data/sound/episode3/slide1-4.mp3", wait_time=3.5),
     Pairing(),
     TitleSlide("Trusted setup", sound="data/sound/episode3/slide3-0.mp3", wait_time=1.5),
     TrustedSetup(),
@@ -188,8 +188,8 @@ EPISODE3 = [
     Ceremony(),
     CeremonyVerification(),
     CeremonyVerification2(),
-    # Subscribe("data/sound/episode1/s28.wav"),
-    # Credits2(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    CreditsE3(),
 ]
 
 EPISODE4 = [

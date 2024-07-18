@@ -28,7 +28,7 @@ class MorphinMathText(VGroup):
 
     def animate_first(self, scene: Scene):
         scene.play(Write(self.texs[0]))
-        scene.wait(3)
+        scene.wait(1)
         scene.play(Indicate(self.texs[0], color = PRIMARY_COLOR))
         scene.wait(1)
 
