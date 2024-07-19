@@ -163,7 +163,7 @@ TEASER3 = [
 ]
 
 EPISODE3 = [
-    Intro(sound="data/sound/teaser2/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
     Sponsored(),
     Introduction(),
     TitleSlide("Pairing", sound="data/sound/episode3/slide1-4.mp3", wait_time=3.5),

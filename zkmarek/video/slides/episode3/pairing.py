@@ -123,10 +123,10 @@ class Pairing(SlideBase):
         scene.wait(0.5)
         scene.play(Indicate(self.bilinearity[9], color = HIGHLIGHT_COLOR))
         scene.wait(4)
-        scene.play(TransformMatchingShapes(self.bilinearity, self.bilinearity2))
+        scene.play(FadeOut(self.bilinearity), FadeIn(self.bilinearity2))
         
         scene.wait(4)
-        scene.play(TransformMatchingShapes(self.bilinearity2, self.bilinearity3))
+        scene.play(FadeOut(self.bilinearity2), FadeIn(self.bilinearity3))
         scene.wait(1)
 
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-3.mp3")

@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, DOWN, UP, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate
+from manim import LEFT, RIGHT, DOWN, UP, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate, TransformMatchingShapes
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -26,7 +26,7 @@ SETUP_G1_3 = [
 ]
 
 SETUP_G2_1 = [
-    r"\tau^1 G_2",
+    r"{{\tau^1}} {{G_2}}",
     r"\tau^2 G_2",
     r"...",
     r"\tau^n G_2"
@@ -54,11 +54,15 @@ class TrustedSetup(SlideBase):
         self.tau = Tex(r"$\tau$ - random secret shared number in $\mathbb{F}_p$", color=SECONDARY_COLOR)
 
         self.vector_g1 = TexArray(SETUP_G1_1)
+        self.new_vector_g1 = TexArray(SETUP_G1_2)
         self.vector_g2 = TexArray(SETUP_G2_1)
+        self.new_vector_g2 = TexArray(SETUP_G2_1)
         self.title_label.to_edge(UP)
         self.tau.next_to(self.title_label, DOWN, buff=0.8)
         self.vector_g1.next_to(self.tau, DOWN, buff=0.6)
+        self.new_vector_g1.next_to(self.tau, DOWN, buff=0.6)
         self.vector_g2.next_to(self.vector_g1, DOWN)
+        self.new_vector_g2.next_to(self.vector_g1, DOWN)
         self.strike = Line(
             start=self.tau.get_critical_point(LEFT),
             end=self.tau.get_critical_point(RIGHT), color=SECONDARY_COLOR)
@@ -90,24 +94,34 @@ class TrustedSetup(SlideBase):
         scene.play(FadeIn(self.person4))
         scene.play(FadeIn(self.tau_number))
         scene.play(FadeIn(self.question4, self.question1, self.question3, self.question2))
-        
+        scene.wait(3.5)
+
         self.new_subsection(scene, "multiplying by G1", "data/sound/episode3/slide4-1.mp3")
-        scene.play(FadeOut(self.question4, self.question1, self.question3, self.question2, self.person1, self.person2, self.person3, self.person4, self.tau_number),Write(self.vector_g1))
-        self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_2)
-        scene.wait(2.5)
-        scene.play(Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
-        scene.wait(2.5)
-        scene.play(Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_g1[1][1], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_g1[3][1], color = HIGHLIGHT_COLOR))
+        scene.play(FadeOut(self.question4, self.question1, self.question3, self.question2, self.person1, self.person2, self.person3, self.person4, self.tau_number))
+        scene.play(Write(self.vector_g1.cells[0])) 
+        scene.wait(6)
+
+        scene.play(Indicate(self.vector_g1.cells[0][1][2], color = HIGHLIGHT_COLOR)) # indicate on G1
+        scene.wait(3)
+        scene.play(Indicate(self.vector_g1.cells[0][1][0], color = HIGHLIGHT_COLOR)) # indicate on tau
+
+        for i in range(1, len(self.vector_g1.cells)):
+            self.vector_g1.cells[i].next_to(self.vector_g1.cells[i-1], RIGHT, buff=0)
+            scene.play(FadeIn(self.vector_g1.cells[i]), run_time=0.5)
+            scene.play(Indicate(self.vector_g1.cells[i][1][0], color = HIGHLIGHT_COLOR))
+            scene.wait(0.4) 
+
+        for old_cell, new_cell in zip(self.vector_g1.cells, self.new_vector_g1.cells):
+            scene.play(TransformMatchingShapes(old_cell[1], new_cell[1]), run_time=0.4)
+
         self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-2.mp3")
         scene.play(Write(self.vector_g2))
         scene.wait(2)
-        scene.play(Indicate(self.vector_g2[0][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g1[0][1], color = HIGHLIGHT_COLOR))
-        self.vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
+        scene.play(Indicate(self.new_vector_g1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
+        
+        self.new_vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
 
         self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-3.mp3")
         self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
         scene.wait(3.5)
-
 
