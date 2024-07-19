@@ -1,6 +1,6 @@
 from typing import List
 
-from manim import DOWN, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write
+from manim import DOWN, TAU, UP, LEFT, RIGHT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -78,7 +78,17 @@ class CeremonyVerification(SlideBase):
             r"e({{P_0}}, {{Q_0}}) = e({{\tau^2}} \cdot G_1}}, {{1}} \cdot G_2){{ }}",
             r"e({{P_0}}, {{Q_0}}) = e({{P_1}}, {{G_2}})"
         ])
-        self.pairing2 = MathTex(r"e({{P_1}}, {{Q_0}}) = e({{P_2}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
+        self.pairing = MathTex(r"e({{P_0}}, {{Q_0}}) \quad =", font_size=40, color=SECONDARY_COLOR)
+        self.pairing1_1 = MorphinMathText([
+            r"e({{P_0}}, {{Q_0}})",
+            r"e({{\tau \cdot G_1}}, {{Q_0}})",
+            r"e({{\tau \cdot G_1}}, {{\tau \cdot G_2}})",
+            r"e({{\tau}} \cdot G_1, {{\tau}} \cdot G_2) {{ }}",
+            r"e({{1}} \cdot G_1, {{1}} \cdot G_2)^{ {{ \tau^2}} } ",
+            r"e({{\tau^2}} \cdot G_1}}, {{1}} \cdot G_2){{ }}",
+            r"e({{P_1}}, {{G_2}})"
+        ])
+        self.pairing2 = MathTex(r"e({{P _1}}, {{Q _0}}) {{=}} e({{P_2}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
         self.vector_k = TexArray(PARTICIPANT_N, 3)
         self.title_label.to_edge(UP)
         self.header_label.next_to(self.title_label, DOWN, buff=0.6)
@@ -88,6 +98,8 @@ class CeremonyVerification(SlideBase):
         self.arrows_g1 = self.generate_arrows(self.vec_g1)
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
         self.pairing1.next_to(self.vec_g2, DOWN, buff=0.5)
+        self.pairing.next_to(self.vec_g2, DOWN, buff = 0.5).shift(LEFT*2)
+        self.pairing1_1.next_to(self.vec_g2, DOWN, buff = 0.45).shift(RIGHT)
         self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
         self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
 
@@ -105,22 +117,28 @@ class CeremonyVerification(SlideBase):
         scene.play(FadeIn(self.arrows_g1[0]))
 
         self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-3.mp3")
-        self.pairing1.animate_first(scene)
+        scene.play(Write(self.pairing))
+        scene.wait(1)
+        scene.play(Indicate(self.pairing, color = PRIMARY_COLOR))
+        scene.wait(1)
+
+        self.pairing1_1.animate_rest(scene)
+
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
-        
         self.new_subsection(scene, "property of pairings", "data/sound/episode3/slide6-4.mp3")
-        self.pairing1.animate_rest(scene)
 
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_START_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_START_G2)
 
         scene.play(FadeOut(self.arrows_g1[0]))
-        self.pairing1.animate_out(scene)
+        self.pairing1_1.animate_out(scene)
+        scene.play(FadeOut(self.pairing))
 
         self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-5.mp3")
         scene.play(Write(self.arrows_g1[1]))
         scene.play(Write(self.pairing2))
+        scene.play(Indicate(self.pairing2[5], color = PRIMARY_COLOR))
         scene.play(FadeOut(self.pairing2))
         scene.play(FadeOut(self.arrows_g1[1]))
 
