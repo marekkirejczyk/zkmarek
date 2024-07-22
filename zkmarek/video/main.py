@@ -59,6 +59,7 @@ from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerifi
 from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.episode3.introduction import Introduction
+from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
 config.width = 16
 config.height = 9
@@ -174,6 +175,7 @@ EPISODE3 = [
     Ceremony(),
     CeremonyVerification(),
     CeremonyVerification2(),
+    Polynomial(),
     Subscribe("data/sound/episode1/s28.wav"),
     CreditsE3(),
 ]
