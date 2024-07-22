@@ -2,7 +2,7 @@ from typing import List
 
 from manim import DOWN, TAU, UP, LEFT, RIGHT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode3.morphin_math_text import MorphinMathText
@@ -112,11 +112,19 @@ class CeremonyVerification(SlideBase):
         scene.play(FadeOut(self.vector_k))
         scene.play(Write(self.header_label))
         scene.play(Write(self.subheader_label))
+
+        self.new_subsection(scene, "setup", "data/sound/episode3/slide6-3.mp3")
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
         scene.play(FadeIn(self.arrows_g1[0]))
+        scene.play(Indicate(self.vec_g1.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(Indicate(self.vec_g1.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(Indicate(self.vec_g1.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.3)
 
-        self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-3.mp3")
+        scene.play(Indicate(self.vec_g2.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(Indicate(self.vec_g2.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(Indicate(self.vec_g2.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.3)
+
         scene.play(Write(self.pairing[0]))
         self.pairing.generate_target()
 
@@ -125,11 +133,12 @@ class CeremonyVerification(SlideBase):
         scene.play(Indicate(self.pairing[0], color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(MoveToTarget(self.pairing))
+        self.new_subsection(scene, "property of pairings", "data/sound/episode3/slide6-5.mp3")
         self.pairing1_1.animate_rest(scene)
 
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
-        self.new_subsection(scene, "property of pairings", "data/sound/episode3/slide6-4.mp3")
+
 
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_START_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_START_G2)
@@ -138,9 +147,8 @@ class CeremonyVerification(SlideBase):
         self.pairing1_1.animate_out(scene)
         scene.play(FadeOut(self.pairing))
 
-        self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-5.mp3")
-        scene.play(Write(self.arrows_g1[1]))
-        scene.play(Write(self.pairing2))
+        self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-6.mp3")
+        scene.play(Write(self.arrows_g1[1]), Write(self.pairing2))
         scene.play(Indicate(self.pairing2[5], color = PRIMARY_COLOR))
         scene.play(FadeOut(self.pairing2))
         scene.play(FadeOut(self.arrows_g1[1]))
