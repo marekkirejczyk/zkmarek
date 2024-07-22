@@ -28,6 +28,7 @@ class Introduction(SlideBase):
         self.groth = Text("Groth 16", font_size=80, font = PRIMARY_FONT, color = PRIMARY_COLOR)
         self.polynomial = MathTex(r"p(x) = x^5+9x^4+6", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
         self.polynomial2 =  MathTex(r"p(\tau) = \tau^5+9\tau^4+6", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
+
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to tau", "data/sound/episode3/slide1-0.mp3")
         scene.play(FadeIn(self.person1, self.person2, self.person3, self.person4))
@@ -57,7 +58,7 @@ class Introduction(SlideBase):
         scene.wait(0.7)
         scene.play(TransformMatchingShapes(VGroup(self.tau, self.polynomial), self.polynomial2))
 
-        scene.wait(0.5)
+        scene.wait(4.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.person1, self.person2, self.person3, self.person4, self.polynomial2, self.thumb2, self.thumb3, self.thumb4, self.thumb1))
@@ -65,8 +66,9 @@ class Introduction(SlideBase):
     def animate_tree(self, scene):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)
         scene.play(AddTextLetterByLetter(self.plonk), run_time=1.5)
+        scene.wait(0.4)
         scene.play(FadeOut(self.plonk), FadeIn(self.groth))
         scene.play(FadeOut(self.groth))
         scene.play(Create(tree))
-        scene.wait(0.7)
+        scene.wait(0.5)
         scene.play(FadeOut(tree))

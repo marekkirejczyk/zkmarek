@@ -108,13 +108,15 @@ class TrustedSetup(SlideBase):
         for i in range(1, len(self.vector_g1.cells)):
             self.vector_g1.cells[i].next_to(self.vector_g1.cells[i-1], RIGHT, buff=0)
             scene.play(FadeIn(self.vector_g1.cells[i]), run_time=0.5)
-            scene.play(Indicate(self.vector_g1.cells[i][1][0], color = HIGHLIGHT_COLOR))
+            if i != 2:
+                scene.play(Indicate(self.vector_g1.cells[i][1][0], color = HIGHLIGHT_COLOR))
             scene.wait(0.4) 
 
         for old_cell, new_cell in zip(self.vector_g1.cells, self.new_vector_g1.cells):
             scene.play(TransformMatchingShapes(old_cell[1], new_cell[1]), run_time=0.4)
 
         self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-2.mp3")
+        scene.wait(1.5)
         scene.play(Write(self.vector_g2))
         scene.wait(2)
         scene.play(Indicate(self.new_vector_g1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))

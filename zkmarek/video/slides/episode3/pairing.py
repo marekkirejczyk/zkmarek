@@ -41,8 +41,8 @@ class Pairing(SlideBase):
         self.bilinearity_label = Text("Bilinearity", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         self.bilinearity1 = MathTex(r"e({{P}} \oplus {{P'}}, Q)", font_size = 40, color = SECONDARY_COLOR)
         self.bilinearity = MathTex(r"e({{P}} {{\oplus}} {{P'}}, Q) = e({{P}}, Q) {{\oplus}} e({{P'}}, Q)", font_size=40, color=SECONDARY_COLOR)
-        self.bilinearity2 = MathTex(r"e(P + P', Q) = e({{P}}, Q) \oplus e({{P'}}, Q)", font_size=40, color=SECONDARY_COLOR)
-        self.bilinearity3 = MathTex(r"e(P + P', Q) = e({{P}}, Q) \cdot e({{P'}}, Q)", font_size=40, color=SECONDARY_COLOR)
+        self.bilinearity2 = MathTex(r"e(P {{+}} P', Q) = e({{P}}, Q) {{\oplus}} e({{P'}}, Q)", font_size=40, color=SECONDARY_COLOR)
+        self.bilinearity3 = MathTex(r"e(P + P', Q) = e({{P}}, Q) {{\cdot}} e({{P'}}, Q)", font_size=40, color=SECONDARY_COLOR)
 
         self.bilinearity1[1].set_color(PRIMARY_COLOR)
         self.bilinearity1[3].set_color(PRIMARY_COLOR)
@@ -50,8 +50,8 @@ class Pairing(SlideBase):
         self.bilinearity[5].set_color(PRIMARY_COLOR)
         self.bilinearity[7].set_color(PRIMARY_COLOR)
         self.bilinearity[11].set_color(PRIMARY_COLOR)
-        self.bilinearity2[1].set_color(PRIMARY_COLOR)
         self.bilinearity2[3].set_color(PRIMARY_COLOR)
+        self.bilinearity2[7].set_color(PRIMARY_COLOR)
         self.bilinearity_morph = MorphinMathText([
             r"{{e(aP, bQ)}}",
             r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
@@ -124,9 +124,8 @@ class Pairing(SlideBase):
         scene.play(Indicate(self.bilinearity[9], color = HIGHLIGHT_COLOR))
         scene.wait(4)
         scene.play(FadeOut(self.bilinearity), FadeIn(self.bilinearity2))
-        
         scene.wait(4)
-        scene.play(FadeOut(self.bilinearity2), FadeIn(self.bilinearity3))
+        scene.play(TransformMatchingShapes(self.bilinearity2, self.bilinearity3))
         scene.wait(1)
 
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-3.mp3")

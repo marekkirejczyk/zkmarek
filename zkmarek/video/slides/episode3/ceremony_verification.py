@@ -1,6 +1,6 @@
 from typing import List
 
-from manim import DOWN, TAU, UP, LEFT, RIGHT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate
+from manim import DOWN, TAU, UP, LEFT, RIGHT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -78,7 +78,7 @@ class CeremonyVerification(SlideBase):
             r"e({{P_0}}, {{Q_0}}) = e({{\tau^2}} \cdot G_1}}, {{1}} \cdot G_2){{ }}",
             r"e({{P_0}}, {{Q_0}}) = e({{P_1}}, {{G_2}})"
         ])
-        self.pairing = MathTex(r"e({{P_0}}, {{Q_0}}) \quad =", font_size=40, color=SECONDARY_COLOR)
+        self.pairing = MathTex(r"{{e(P_0, Q_0)}} \quad =", font_size=40, color=SECONDARY_COLOR)
         self.pairing1_1 = MorphinMathText([
             r"e({{P_0}}, {{Q_0}})",
             r"e({{\tau \cdot G_1}}, {{Q_0}})",
@@ -98,7 +98,7 @@ class CeremonyVerification(SlideBase):
         self.arrows_g1 = self.generate_arrows(self.vec_g1)
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
         self.pairing1.next_to(self.vec_g2, DOWN, buff=0.5)
-        self.pairing.next_to(self.vec_g2, DOWN, buff = 0.5).shift(LEFT*2)
+        self.pairing.next_to(self.vec_g2, DOWN, buff = 0.5)
         self.pairing1_1.next_to(self.vec_g2, DOWN, buff = 0.45).shift(RIGHT)
         self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
         self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
@@ -117,11 +117,14 @@ class CeremonyVerification(SlideBase):
         scene.play(FadeIn(self.arrows_g1[0]))
 
         self.new_subsection(scene, "pairing", "data/sound/episode3/slide6-3.mp3")
-        scene.play(Write(self.pairing))
-        scene.wait(1)
-        scene.play(Indicate(self.pairing, color = PRIMARY_COLOR))
-        scene.wait(1)
+        scene.play(Write(self.pairing[0]))
+        self.pairing.generate_target()
 
+        self.pairing.target.next_to(self.vec_g2, DOWN, buff = 0.5).shift(2*LEFT)
+        scene.wait(1)
+        scene.play(Indicate(self.pairing[0], color = PRIMARY_COLOR))
+        scene.wait(1)
+        scene.play(MoveToTarget(self.pairing))
         self.pairing1_1.animate_rest(scene)
 
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)

@@ -81,22 +81,27 @@ class Ceremony(SlideBase):
 
         self.new_subsection(scene, "first participant", "data/sound/episode3/slide5-1.mp3")
         scene.play(FadeIn(self.person), Write(self.tau_0), FadeOut(self.person_tau0, self.person_tau1, self.person_tau2, self.group))
-        scene.wait(3.7)
+        scene.wait(1.2)
         scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.8)
-        scene.play(Write(self.vector_0.cells[0]))
-
-        scene.play(Write(self.vector_0[1:]))
+        scene.wait(2.5)
+        self.vector_0[0].next_to(self.tau_0, RIGHT)
+        scene.play(Write(self.vector_0[0]))
         scene.play(Indicate(self.vector_0.cells[0][1][0], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_0.cells[1][1][0], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_0.cells[3][1][0], color = HIGHLIGHT_COLOR))
+
+        for i in range(1, len(self.vector_0.cells)):
+            self.vector_0.cells[i].next_to(self.vector_0.cells[i-1], RIGHT, buff=0)
+            scene.play(Write(self.vector_0.cells[i]), run_time=0.5)
+            if i != 2:
+                scene.play(Indicate(self.vector_0.cells[i][1][0], color = HIGHLIGHT_COLOR))
+            scene.wait(0.4) 
 
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-2.mp3")
         scene.play(Write(self.tau_1), FadeIn(self.person2))
         scene.play(Write(self.vector_1))
-        scene.wait(3.5)
-        scene.play(Indicate(self.vector_0.cells[0][1][0], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_0.cells[1][1][0], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_0.cells[3][1][0], color = HIGHLIGHT_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.vector_0.cells[0][1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_0.cells[1][1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_0.cells[3][1], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "last participant", "data/sound/episode3/slide5-3.mp3")
         scene.play(Write(self.three_dot))
