@@ -1,7 +1,10 @@
-from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, UP, DOWN, MathTex, TransformMatchingShapes, VGroup, Text, Indicate, ImageMobject, Arrow, GrowArrow
+from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, UP, DOWN, MathTex, TransformMatchingShapes, VGroup, Text, Indicate, ImageMobject, Arrow, GrowArrow, MoveToTarget, ValueTracker, Create
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
+from zkmarek.video.slides.episode3.chart import ContinuousEllipticChart
+from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
+from zkmarek.crypto.cec_affine import CECAffine
 
 SETUP_G1_1 = [
     r"{{ \tau^1 }} \cdot {{G}}",
@@ -19,9 +22,13 @@ class Polynomial(SlideBase):
         self.subtitle = Text("Secure evaluation without knowing tau", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=32).next_to(self.title_label, DOWN)
         
         self.vector = TexArray(SETUP_G1_1).next_to(self.subtitle, DOWN)
-        self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x + 7", font_size = 60, color = SECONDARY_COLOR)
-        self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 + 7 = 9", font_size = 60, color = SECONDARY_COLOR)
-        self.polynomial_tau = MathTex(r"P(\tau) = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] + 7 [G]", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x - 7", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau = MathTex(r"P(\tau) = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 [G]", font_size = 60, color = SECONDARY_COLOR)
+        self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.subtitle, DOWN)
+        self.p1_x = ValueTracker(1)
+        a = CECAffine.from_x(self.p1_x.get_value())
+        self.p1 = DotOnCurve(self.chart.ax, "a", a)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to evaluating", "data/sound/episode3/slide8-0.mp3")
@@ -53,11 +60,19 @@ class Polynomial(SlideBase):
 
         self.new_subsection(scene, "combine coefficients", "data/sound/episode3/slide8-5.mp3")
         scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial), self.polynomial_tau))
+        scene.wait(4)
+        
+        self.polynomial_tau.generate_target()
+        self.polynomial_tau.target.to_edge(DOWN+RIGHT).scale(0.5)
+        scene.play(FadeOut(self.vector), MoveToTarget(self.polynomial_tau))
+        self.chart.animate_in(scene)
+        scene.play(Create(self.p1.dot))
+        scene.play(Write(self.p1.label))
 
         self.new_subsection(scene, "commitments and teaser", "data/sound/episode3/slide8-6.mp3")
-        scene.play(FadeOut(self.polynomial_tau, self.vector))
+        scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.p1.label))
         self.animtion_commitment(scene)
-        scene.wait(3)
+        scene.wait(1.5)
 
     def animtion_commitment(self, scene):
         committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*3).scale(0.5)
@@ -76,4 +91,4 @@ class Polynomial(SlideBase):
         scene.play(FadeOut(arrow1, commitment, committer, committer_label, verifier, verifier_label))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.title_label))
+        scene.play(FadeOut(self.title_label, self.subtitle))
