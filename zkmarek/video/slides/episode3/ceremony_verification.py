@@ -117,14 +117,16 @@ class CeremonyVerification(SlideBase):
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
         scene.play(FadeIn(self.arrows_g1[0]))
+        scene.wait(1)
         scene.play(Indicate(self.vec_g1.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.wait(2)
+        scene.wait(1.5)
         scene.play(Indicate(self.vec_g2.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g2.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g2.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.7)
 
+        self.new_subsection(scene, "property of pairings", "data/sound/episode3/slide6-4.mp3")
         scene.play(Write(self.pairing[0]))
         self.pairing.generate_target()
 
@@ -133,13 +135,11 @@ class CeremonyVerification(SlideBase):
         scene.play(Indicate(self.pairing[0], color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(MoveToTarget(self.pairing))
-        self.new_subsection(scene, "property of pairings", "data/sound/episode3/slide6-5.mp3")
         self.pairing1_1.animate_rest(scene)
 
+        self.new_subsection(scene, "why pairings?", "data/sound/episode3/slide6-5.mp3")
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
-
-
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_START_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_START_G2)
 

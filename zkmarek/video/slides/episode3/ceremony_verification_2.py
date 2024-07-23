@@ -83,8 +83,10 @@ class CeremonyVerification2(SlideBase):
         scene.play(FadeIn(self.vec_next))
         scene.play(FadeIn(self.tau_next))
         scene.play(FadeIn(self.arrow))
+
         self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
         self.pairing.animate_first(scene)
+        scene.wait(2)
         self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")
         scene.wait(3)
         self.pairing.animate_rest(scene)

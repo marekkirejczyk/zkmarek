@@ -111,7 +111,7 @@ class TrustedSetup(SlideBase):
             scene.play(FadeIn(self.vector_g1.cells[i]), run_time=0.4)
             if i != 2:
                 scene.play(Indicate(self.vector_g1.cells[i][1][0], color = HIGHLIGHT_COLOR))
-            scene.wait(0.4) 
+            # scene.wait(0.4) 
 
         for old_cell, new_cell in zip(self.vector_g1.cells, self.new_vector_g1.cells):
             scene.play(TransformMatchingShapes(old_cell[1], new_cell[1]), run_time=0.4)
