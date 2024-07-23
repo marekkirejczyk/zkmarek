@@ -14,7 +14,7 @@ class ContinuousEllipticChart(VGroup):
         self.include_details = include_details
         step = 2 if include_details else 20
         self.ax = Axes(
-            x_range=[-1, 5, step],
+            x_range=[-3, 5, step],
             y_range=[-9, 4, step],
             x_length=7,
             axis_config={

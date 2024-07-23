@@ -26,7 +26,7 @@ class Polynomial(SlideBase):
         self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_tau = MathTex(r"P(\tau) = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 [G]", font_size = 60, color = SECONDARY_COLOR)
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.subtitle, DOWN)
-        self.p1_x = ValueTracker(1)
+        self.p1_x = ValueTracker(-1.491)
         a = CECAffine.from_x(self.p1_x.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "a", a)
 
@@ -37,9 +37,9 @@ class Polynomial(SlideBase):
 
         self.new_subsection(scene, "we know a sequence", "data/sound/episode3/slide8-1.mp3")
         scene.play(Write(self.vector))
-        scene.play(Indicate(self.vector.cells[0][1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.play(Indicate(self.vector.cells[1][1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.play(Indicate(self.vector.cells[3][1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[0][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[1][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[3][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vector.cells[0][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vector.cells[1][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vector.cells[3][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
