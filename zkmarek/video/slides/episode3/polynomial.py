@@ -28,7 +28,8 @@ class Polynomial(SlideBase):
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.subtitle, DOWN)
         self.p1_x = ValueTracker(-1.491)
         a = CECAffine.from_x(self.p1_x.get_value())
-        self.p1 = DotOnCurve(self.chart.ax, "a", a)
+        self.p1 = DotOnCurve(self.chart.ax, "\tau", a)
+        self.tau = MathTex(r"\tau", color = HIGHLIGHT_COLOR, font_size = 26).next_to(self.p1, RIGHT, buff = 0.1).shift(LEFT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to evaluating", "data/sound/episode3/slide8-0.mp3")
@@ -67,10 +68,10 @@ class Polynomial(SlideBase):
         scene.play(FadeOut(self.vector), MoveToTarget(self.polynomial_tau))
         self.chart.animate_in(scene)
         scene.play(Create(self.p1.dot))
-        scene.play(Write(self.p1.label))
+        scene.play(Write(self.tau))
 
         self.new_subsection(scene, "commitments and teaser", "data/sound/episode3/slide8-6.mp3")
-        scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.p1.label))
+        scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.tau))
         self.animtion_commitment(scene)
         scene.wait(1.5)
 
