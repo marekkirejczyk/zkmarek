@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, DOWN, MathTex, ImageMobject, AddTextLetterByLetter, Text
+from manim import FadeIn, FadeOut, LEFT, RIGHT, DOWN, MathTex, ImageMobject, AddTextLetterByLetter, Text
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -24,7 +24,7 @@ class ToxicWaste(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "toxic waste", "data/sound/episode3/slide7.5-0.mp3")
-        scene.play(Write(self.group))
+        scene.play(FadeIn(self.group))
         scene.play(FadeIn(self.person_tau0))
         scene.play(FadeIn(self.person_tau1))
         scene.play(FadeIn(self.person_tau2))
