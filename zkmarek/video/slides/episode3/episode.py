@@ -5,6 +5,7 @@ from zkmarek.video.slides.episode3.pairing import Pairing
 from zkmarek.video.slides.episode3.trusted_setup import TrustedSetup
 from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
+from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
 from zkmarek.video.slides.intro import Intro
 from zkmarek.video.slides.episode2.support import Sponsored
@@ -23,6 +24,7 @@ EPISODE3 = [
     Ceremony(),
     CeremonyVerification(),
     CeremonyVerification2(),
+    ToxicWaste(),
     Polynomial(),
     Subscribe("data/sound/episode1/s28.wav"),
     CreditsE3(),
