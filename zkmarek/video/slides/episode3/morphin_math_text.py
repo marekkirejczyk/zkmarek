@@ -35,7 +35,7 @@ class MorphinMathText(VGroup):
     def animate_rest(self, scene: Scene):
         for i in range(0, len(self.texs) - 1):
             scene.play(TransformMatchingShapes(self.texs[i], self.texs[i+1]))
-            scene.wait(0.6)
+            scene.wait(0.8)
 
     def animate_next(self, scene: Scene, i):
         scene.play(TransformMatchingTex(self.texs[i], self.texs[i+1]))

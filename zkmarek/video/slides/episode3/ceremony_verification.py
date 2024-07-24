@@ -160,7 +160,8 @@ class CeremonyVerification(SlideBase):
             scene.play(Write(arrow))
         for arrow in self.arrows_g2:
             scene.play(FadeOut(arrow))
-
+        scene.wait(3)
+        
     def animate_out(self, scene):
         scene.play(
             FadeOut(self.vec_g1, self.vec_g2, self.title_label, self.subheader_label, self.header_label))

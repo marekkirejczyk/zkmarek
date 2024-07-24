@@ -5,6 +5,8 @@ from zkmarek.video.mobjects.tex_array import TexArray
 from zkmarek.video.slides.episode3.chart import ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.crypto.cec_affine import CECAffine
+from zkmarek.video.mobjects.verkle_tree import VerkleTree
+
 
 SETUP_G1_1 = [
     r"{{ \tau^1 }} \cdot {{G}}",
@@ -24,12 +26,12 @@ class Polynomial(SlideBase):
         self.vector = TexArray(SETUP_G1_1).next_to(self.subtitle, DOWN)
         self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x - 7", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
-        self.polynomial_tau = MathTex(r"P(\tau) = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 [G]", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau = MathTex(r"P(\tau)\cdot G = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 [G]", font_size = 60, color = SECONDARY_COLOR)
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.subtitle, DOWN)
         self.p1_x = ValueTracker(-1.491)
         a = CECAffine.from_x(self.p1_x.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "\tau", a)
-        self.tau = MathTex(r"\tau", color = HIGHLIGHT_COLOR, font_size = 26).next_to(self.p1, RIGHT, buff = 0.1).shift(LEFT)
+        self.tau = MathTex(r"\tau\cdot G", color = HIGHLIGHT_COLOR, font_size = 40).next_to(self.p1, LEFT, buff = 0.1).shift(LEFT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to evaluating", "data/sound/episode3/slide8-0.mp3")
@@ -72,14 +74,15 @@ class Polynomial(SlideBase):
 
         self.new_subsection(scene, "commitments and teaser", "data/sound/episode3/slide8-6.mp3")
         scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.tau))
+        self.animate_tree(scene)
         self.animtion_commitment(scene)
         scene.wait(1.5)
 
     def animtion_commitment(self, scene):
         committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*3).scale(0.5)
         verifier = ImageMobject("zkmarek/video/slides/episode3/person_blue.png").shift(RIGHT * 3).scale(0.5)
-        committer_label = Text("Committer", font = PRIMARY_COLOR, font_size=40, color = PRIMARY_COLOR).next_to(committer, DOWN)
-        verifier_label = Text("Verifier", font = PRIMARY_COLOR, font_size=40, color = PRIMARY_COLOR).next_to(verifier, DOWN)
+        committer_label = Text("Committer", font = PRIMARY_FONT, font_size=40, color = PRIMARY_COLOR).next_to(committer, DOWN)
+        verifier_label = Text("Verifier", font = PRIMARY_FONT, font_size=40, color = PRIMARY_COLOR).next_to(verifier, DOWN)
         commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.5)
         
         scene.play(FadeIn(committer, committer_label, verifier, verifier_label, commitment))
@@ -88,8 +91,15 @@ class Polynomial(SlideBase):
         
         scene.play(GrowArrow(arrow1))
         
-        scene.wait(4)
+        scene.wait(1.5)
         scene.play(FadeOut(arrow1, commitment, committer, committer_label, verifier, verifier_label))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.subtitle))
+
+    def animate_tree(self, scene):
+        tree = VerkleTree().scale(0.8).shift(UP*1.5)
+        scene.wait(0.4)
+        scene.play(Create(tree))
+        scene.wait(0.5)
+        scene.play(FadeOut(tree))

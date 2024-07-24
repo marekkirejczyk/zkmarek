@@ -1,4 +1,4 @@
-from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate
+from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate, ReplacementTransform
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -57,6 +57,7 @@ class Ceremony(SlideBase):
         self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT, color=SECONDARY_COLOR).scale(0.5)
         self.tau_k = Tex(r"$\tau_k$: ", color=SECONDARY_COLOR)
         self.tau = MathTex(r"\tau = \tau_0 \tau_1 ... \tau_k", color=SECONDARY_COLOR)
+        self.secret = Text("secret", font = PRIMARY_FONT, color = SECONDARY_COLOR, font_size=32).next_to(self.vector_0, LEFT)
 
         self.title_label.to_edge(UP)
         self.vector_0.next_to(self.title_label, DOWN, buff=0.8)
@@ -87,22 +88,26 @@ class Ceremony(SlideBase):
         self.vector_0[0].next_to(self.tau_0, RIGHT)
         scene.play(Write(self.vector_0[0]))
         scene.play(Indicate(self.vector_0.cells[0][1][0], color = HIGHLIGHT_COLOR))
+        scene.wait(2.7)
+        scene.play(ReplacementTransform(self.tau_0, self.secret))
+        scene.wait(2)
+        scene.play(ReplacementTransform(self.secret, self.tau_0))
+        scene.wait(1)
 
         for i in range(1, len(self.vector_0.cells)):
             self.vector_0.cells[i].next_to(self.vector_0.cells[i-1], RIGHT, buff=0)
             scene.play(Write(self.vector_0.cells[i]), run_time=0.4)
             if i != 2:
                 scene.play(Indicate(self.vector_0.cells[i][1][0], color = HIGHLIGHT_COLOR))
-            # scene.wait(0.4) 
 
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-2.mp3")
         scene.play(Write(self.tau_1), FadeIn(self.person2))
-        scene.play(Write(self.vector_1))
         scene.wait(1.7)
         scene.play(Indicate(self.vector_0.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.55)
         scene.play(Indicate(self.vector_0.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.55)
         scene.play(Indicate(self.vector_0.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.55)
-
+        scene.play(Write(self.vector_1))
+        
         self.new_subsection(scene, "last participant", "data/sound/episode3/slide5-3.mp3")
         scene.play(Write(self.three_dot))
         scene.play(Write(self.tau_k))
