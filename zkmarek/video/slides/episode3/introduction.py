@@ -33,9 +33,8 @@ class Introduction(SlideBase):
         self.polynomial5 =  MathTex(r"h(\tau) = \tau^{18}-17\tau^{19}+6\tau", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*3).scale(0.5)
  
         self.polynomial_enc2 =  MathTex(r"p(\tau)\cdot G = \tau^5\cdot G+9\tau^4\cdot G+6\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
-        self.polynomial_enc3 =  MathTex(r"f(\tau)\cdot G = \tau^{24}\cdot G-84\tau^{10}\cdot G-16\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(RIGHT*3.2+DOWN*2).scale(0.6)
-        self.polynomial_enc4 =  MathTex(r"g(\tau)\cdot G = \tau^{32}\cdot G-18\tau^{20}\cdot G+63\tau^3\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(LEFT*3+DOWN*2).scale(0.6)
-        self.polynomial_enc5 =  MathTex(r"h(\tau)\cdot G = \tau^{18}\cdot G-17\tau^{19}\cdot G+6\tau[\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*3).scale(0.6)
+        self.polynomial_enc4 =  MathTex(r"g(\tau)\cdot G = \tau^{32}\cdot G-18\tau^{20}\cdot G+63\tau^3\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*2).scale(0.6)
+        self.polynomial_enc5 =  MathTex(r"h(\tau)\cdot G = \tau^{18}\cdot G-17\tau^{19}\cdot G+6\tau\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*3).scale(0.6)
 
         self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(RIGHT).scale(0.3)
 
