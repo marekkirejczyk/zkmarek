@@ -64,7 +64,7 @@ class CeremonyVerification2(SlideBase):
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}}",
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}}, {{ \tau_{[i+1]} }} \cdot G_2)}}",
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}} {{ \tau_{[i+1]} }}, \cdot G_2)}}",
-            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, \cdot G_2)",
+            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, G_2)",
         ], wait_time=2)
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
 
