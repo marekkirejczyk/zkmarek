@@ -59,6 +59,7 @@ class Introduction(SlideBase):
         scene.play(FadeIn(self.question))
         scene.wait(2)
         scene.play(FadeOut(self.question))
+        
         self.new_subsection(scene, "calculate polynomial", "data/sound/episode3/slide1-3.mp3")
         self.person_wthumb.generate_target()
         self.person_wthumb.target.shift(RIGHT*4+DOWN).scale(2)
