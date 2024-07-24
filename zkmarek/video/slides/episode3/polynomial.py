@@ -76,7 +76,6 @@ class Polynomial(SlideBase):
         scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.tau))
         self.animate_tree(scene)
         self.animtion_commitment(scene)
-        scene.wait(1.5)
 
     def animtion_commitment(self, scene):
         committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*3).scale(0.5)

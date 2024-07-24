@@ -28,9 +28,9 @@ class Introduction(SlideBase):
         self.groth = Text("Groth 16", font_size=80, font = PRIMARY_FONT, color = PRIMARY_COLOR)
         self.polynomial = MathTex(r"p(x) = x^5+9x^4+6", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
         self.polynomial2 =  MathTex(r"p(\tau) = \tau^5+9\tau^4+6", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
-        self.polynomial3 =  MathTex(r"f(\tau) = \tau^{24}-84\tau^{10}-16", font_size = 60, color = SECONDARY_COLOR).shift(RIGHT*3+DOWN*2).scale(0.6)
-        self.polynomial4 =  MathTex(r"g(\tau) = \tau^{32}-18\tau^{20}+63\tau^3", font_size = 60, color = SECONDARY_COLOR).shift(LEFT*3+DOWN*2).scale(0.6)
-        self.polynomial5 =  MathTex(r"h(\tau) = \tau^{18}-17\tau^{19}+6\tau", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*3).scale(0.6)
+        self.polynomial3 =  MathTex(r"f(\tau) = \tau^{24}-84\tau^{10}-16", font_size = 60, color = SECONDARY_COLOR).shift(RIGHT*3.2+DOWN*2).scale(0.5)
+        self.polynomial4 =  MathTex(r"g(\tau) = \tau^{32}-18\tau^{20}+63\tau^3", font_size = 60, color = SECONDARY_COLOR).shift(LEFT*3+DOWN*2).scale(0.5)
+        self.polynomial5 =  MathTex(r"h(\tau) = \tau^{18}-17\tau^{19}+6\tau", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*3).scale(0.5)
  
         self.polynomial_enc2 =  MathTex(r"p(\tau)\cdot G = \tau^5\cdot G+9\tau^4\cdot G+6\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN)
         self.polynomial_enc3 =  MathTex(r"f(\tau)\cdot G = \tau^{24}\cdot G-84\tau^{10}\cdot G-16\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(RIGHT*3.2+DOWN*2).scale(0.6)
@@ -59,7 +59,7 @@ class Introduction(SlideBase):
         scene.play(FadeIn(self.question))
         scene.wait(2)
         scene.play(FadeOut(self.question))
-        
+
         self.new_subsection(scene, "calculate polynomial", "data/sound/episode3/slide1-3.mp3")
         self.person_wthumb.generate_target()
         self.person_wthumb.target.shift(RIGHT*4+DOWN).scale(2)
@@ -71,8 +71,9 @@ class Introduction(SlideBase):
         scene.play(FadeIn(self.polynomial3))
         scene.play(FadeIn(self.polynomial4))
         scene.play(FadeIn(self.polynomial5))
+        scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.polynomial2, self.polynomial_enc2), TransformMatchingShapes(self.polynomial3, self.polynomial_enc3), TransformMatchingShapes(self.polynomial4, self.polynomial_enc4), TransformMatchingShapes(self.polynomial5, self.polynomial_enc5), FadeIn(self.lock))
-        scene.wait(2.5)
+        scene.wait(1.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.person1, self.person2, self.person3, self.person4, self.polynomial_enc2, self.thumb2, self.thumb3, self.thumb4, self.thumb1, self.polynomial_enc3, self.polynomial_enc4, self.polynomial_enc5, self.lock))

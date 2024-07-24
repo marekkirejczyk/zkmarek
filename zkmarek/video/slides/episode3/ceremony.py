@@ -87,7 +87,8 @@ class Ceremony(SlideBase):
         scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.8)
         scene.wait(2)
         scene.play(ReplacementTransform(self.tau_0, self.secret))
-        scene.wait(2)
+        scene.wait(1.5)
+        self.tau_0 = Tex(r"$\tau_0$: ", color=SECONDARY_COLOR).next_to(self.vector_0, LEFT)
         scene.play(ReplacementTransform(self.secret, self.tau_0))
         scene.wait(1)
         self.vector_0[0].next_to(self.tau_0, RIGHT)
@@ -97,7 +98,7 @@ class Ceremony(SlideBase):
 
         for i in range(1, len(self.vector_0.cells)):
             self.vector_0.cells[i].next_to(self.vector_0.cells[i-1], RIGHT, buff=0)
-            scene.play(Write(self.vector_0.cells[i]), run_time=0.4)
+            scene.play(Write(self.vector_0.cells[i]), run_time=0.3)
             if i != 2:
                 scene.play(Indicate(self.vector_0.cells[i][1][0], color = HIGHLIGHT_COLOR))
 
