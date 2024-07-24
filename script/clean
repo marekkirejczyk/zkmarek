@@ -2,5 +2,5 @@
 
 rm -fr ./media
 rm -fr ./elliptic_curves
-rm -fr ./EllipticCurves
+rm -fr ./episode3
 rm -fr ./.ruff_cache

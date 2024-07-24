@@ -188,7 +188,7 @@ DECKS = {
 DEFAULT_DECK = "E3"
 
 
-class EllipticCurves(Scene):
+class Episode3(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
