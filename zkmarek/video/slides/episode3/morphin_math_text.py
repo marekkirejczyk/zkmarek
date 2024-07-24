@@ -8,10 +8,12 @@ from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
 class MorphinMathText(VGroup):
     texts: List[str]
     texs: List[MathTex]
+    wait_time: float
 
-    def __init__(self, texts: List[str]):
+    def __init__(self, texts: List[str], wait_time: float = 0.8):
         super().__init__()
         self.texts = texts
+        self.wait_time = wait_time
 
         self.texs = []
         for tex in texts:
@@ -35,7 +37,7 @@ class MorphinMathText(VGroup):
     def animate_rest(self, scene: Scene):
         for i in range(0, len(self.texs) - 1):
             scene.play(TransformMatchingShapes(self.texs[i], self.texs[i+1]))
-            scene.wait(0.8)
+            scene.wait(self.wait_time)
 
     def animate_next(self, scene: Scene, i):
         scene.play(TransformMatchingTex(self.texs[i], self.texs[i+1]))

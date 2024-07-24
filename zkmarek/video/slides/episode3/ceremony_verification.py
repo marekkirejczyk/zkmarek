@@ -116,7 +116,6 @@ class CeremonyVerification(SlideBase):
         self.new_subsection(scene, "setup", "data/sound/episode3/slide6-3.mp3")
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
-        scene.play(FadeIn(self.arrows_g1[0]))
         scene.wait(1)
         scene.play(Indicate(self.vec_g1.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
@@ -142,11 +141,12 @@ class CeremonyVerification(SlideBase):
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_START_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_START_G2)
 
-        scene.play(FadeOut(self.arrows_g1[0]))
         self.pairing1_1.animate_out(scene)
         scene.play(FadeOut(self.pairing))
 
         self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-6.mp3")
+        scene.play(Write(self.arrows_g1[0]))
+        scene.play(FadeOut(self.arrows_g1[0]))
         scene.play(Write(self.arrows_g1[1]), FadeIn(self.pairing2))
         scene.play(Indicate(self.pairing2[5], color = PRIMARY_COLOR))
         scene.play(FadeOut(self.pairing2))

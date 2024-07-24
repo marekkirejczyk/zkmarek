@@ -63,9 +63,9 @@ class CeremonyVerification2(SlideBase):
         self.pairing = MorphinMathText([
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}}",
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}}, {{ \tau_{[i+1]} }} \cdot G_2)}}",
-            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, {{1}} \cdot G_2)",
-            r"{{e(P_0^i, Q_0^{[i+1]}) }} = e(P_0^{ {{i+1}} }, G_2)"
-        ])
+            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}} {{ \tau_{[i+1]} }}, \cdot G_2)}}",
+            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, \cdot G_2)",
+        ], wait_time=2)
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
 
     def animate_in(self, scene):
@@ -88,9 +88,10 @@ class CeremonyVerification2(SlideBase):
 
         self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")
         self.pairing.animate_first(scene)
-        scene.wait(1)
+
+        self.new_subsection(scene, "evaluating Pi", "data/sound/episode3/slide7-4.mp3")
         self.pairing.animate_rest(scene)
-        self.new_subsection(scene, "verification", "data/sound/episode3/slide7-4.mp3")
+        self.new_subsection(scene, "verification", "data/sound/episode3/slide7-5.mp3")
         self.pairing.animate_out(scene)
 
         scene.wait(4)

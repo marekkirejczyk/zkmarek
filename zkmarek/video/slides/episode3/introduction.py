@@ -70,7 +70,7 @@ class Introduction(SlideBase):
         scene.play(FadeIn(self.polynomial5))
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.polynomial2, self.polynomial_enc2), TransformMatchingShapes(self.polynomial4, self.polynomial_enc4), TransformMatchingShapes(self.polynomial5, self.polynomial_enc5), FadeIn(self.lock))
-        scene.wait(1.5)
+        scene.wait(3)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.person1, self.person2, self.person3, self.person4, self.polynomial_enc2, self.thumb2, self.thumb3, self.thumb4, self.thumb1, self.polynomial_enc4, self.polynomial_enc5, self.lock))
