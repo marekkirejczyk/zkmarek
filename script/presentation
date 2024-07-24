@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm -fr elliptic_curves episode3
+rm -fr elliptic_curves Episode3
 if [ "$1" = "-qk" ]; then
     res="2160p60"
 elif [ "$1" = "-ql" ]; then
@@ -10,5 +10,5 @@ else
 fi
 
 python -m manim --save_sections zkmarek/video/main.py $1
-manim_editor --quick_present_export media/videos/main/$res/sections/episode3.json &&
-python -m http.server 8000 --directory episode3
+manim_editor --quick_present_export media/videos/main/$res/sections/Episode3.json &&
+python -m http.server 8000 --directory Episode3

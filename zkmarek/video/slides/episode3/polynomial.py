@@ -31,7 +31,7 @@ class Polynomial(SlideBase):
         self.p1_x = ValueTracker(-1.491)
         a = CECAffine.from_x(self.p1_x.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "\tau", a)
-        self.tau = MathTex(r"\tau\cdot G", color = HIGHLIGHT_COLOR, font_size = 40).next_to(self.p1, LEFT, buff = 0.1).shift(LEFT)
+        self.tau = MathTex(r"\tau\cdot G", color = HIGHLIGHT_COLOR, font_size = 40).next_to(self.p1, LEFT, buff = 0.6)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to evaluating", "data/sound/episode3/slide8-0.mp3")
@@ -86,12 +86,10 @@ class Polynomial(SlideBase):
         commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.5)
         
         scene.play(FadeIn(committer, committer_label, verifier, verifier_label, commitment))
-        
         arrow1 = Arrow(committer.get_right(), verifier.get_left(), color = HIGHLIGHT_COLOR).shift(DOWN)
-        
         scene.play(GrowArrow(arrow1))
         
-        scene.wait(1.5)
+        scene.wait(0.5)
         scene.play(FadeOut(arrow1, commitment, committer, committer_label, verifier, verifier_label))
 
     def animate_out(self, scene):
@@ -101,5 +99,5 @@ class Polynomial(SlideBase):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)
         scene.wait(0.4)
         scene.play(Create(tree))
-        scene.wait(0.5)
+        scene.wait(1)
         scene.play(FadeOut(tree))

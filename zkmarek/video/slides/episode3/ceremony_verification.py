@@ -121,7 +121,7 @@ class CeremonyVerification(SlideBase):
         scene.play(Indicate(self.vec_g1.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.wait(1.5)
+        scene.wait(1)
         scene.play(Indicate(self.vec_g2.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g2.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g2.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.7)

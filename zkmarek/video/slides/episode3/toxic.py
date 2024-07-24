@@ -40,7 +40,7 @@ class ToxicWaste(SlideBase):
         self.group_person.target.move_to(LEFT*2)
         scene.play(MoveToTarget(self.group_person))
         scene.play(FadeIn(self.angel, self.person_tau3))
-        scene.wait(4)
+        scene.wait(5)
     
     def animate_out(self, scene):
         scene.play(FadeOut(self.angel, self.person_tau0, self.person_tau1, self.person_tau2, self.person_tau3, self.group, self.lock1, self.lock2, self.lock3))
