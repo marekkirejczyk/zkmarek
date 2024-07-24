@@ -91,7 +91,8 @@ class CeremonyVerification2(SlideBase):
 
         self.new_subsection(scene, "evaluating Pi", "data/sound/episode3/slide7-4.mp3")
         self.pairing.animate_rest(scene)
-        self.new_subsection(scene, "verification", "data/sound/episode3/slide7-5.mp3")
+
+        self.new_subsection(scene, "verification", "data/sound/episode4/slide7-5.mp3")
         self.pairing.animate_out(scene)
 
         scene.wait(4)
