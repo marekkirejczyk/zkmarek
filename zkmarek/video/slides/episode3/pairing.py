@@ -53,20 +53,28 @@ class Pairing(SlideBase):
             r"{{e(aP, bQ)}}",
             r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
             r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{b}}Q){{ }}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{a}}P, {{b}}Q){{^{}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
-              " = e({{ }}P, {{ }}Q){{^{ab}}}",
-            r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
-              " = e({{b}}P, {{a}}Q){{ }}",
-            r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
+            r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
+            r"{{e(aP, bQ)}} = e({{a}}P, Q){{^b}}",
+            r"{{e(aP, bQ)}} = e({{ }}P, Q){{^{ab}}}",
+            # r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}",
+            # r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
+            #   " = e({{ }}P, {{ }}Q){{^{ab}}}",
+            # r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
+            #   " = e({{b}}P, {{a}}Q){{ }}",
+            # r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
         ]).shift(DOWN)
-        self.multiplying = MathTex(r"a\cdot P = {{P+P+P \cdots}}", color = HIGHLIGHT_COLOR, font_size =40).next_to(self.bilinearity, DOWN).shift(DOWN)
-        self.multiplying_brace = Brace(self.multiplying[1], DOWN, color = PRIMARY_COLOR)
-        self.multiplying_brace_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.multiplying_brace.put_at_tip(self.multiplying_brace_label)
+        self.exponent = MathTex(r"e({{P + P + P \cdots}}, Q)", font_size=40, color=SECONDARY_COLOR)
+        self.exponent2 = MathTex(r"e({{P + P + P \cdots}}, Q) = {{e(P, Q)\cdot e(P, Q) \cdot e(P, Q)\cdots }}", font_size=40, color=SECONDARY_COLOR)
+        self.brace4 = Brace(self.exponent[1], DOWN, color=PRIMARY_COLOR)
+        self.brace4.shift(UP * 2.5)
+        self.brace4_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.brace4.put_at_tip(self.brace4_label)
+
+        self.brace5 = Brace(self.exponent2[3], DOWN, color=PRIMARY_COLOR)
+        self.brace5.shift(UP * 2.5)
+        self.brace5_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.brace5.put_at_tip(self.brace5_label)
+
         self.non_degeneracy_label = Text("Non-degeneracy", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         nd_text = r"\forall{a \in G_1}, \forall{b \in G_2} ({{a, b \neq \mathcal{O}}}"
         nd_text += r" \Rightarrow e(a, b) \neq {{1_{G_T}}}) "
@@ -79,6 +87,7 @@ class Pairing(SlideBase):
         self.bilinearity.next_to(self.bilinearity_label, DOWN)
         self.bilinearity2.next_to(self.bilinearity_label, DOWN)
         self.bilinearity3.next_to(self.bilinearity_label, DOWN)
+        self.exponent.next_to(self.bilinearity3, DOWN)
         self.non_degeneracy_label.next_to(self.bilinearity, DOWN, buff=1)
         self.non_degeneracy.next_to(self.non_degeneracy_label, DOWN)
         self.computability_label.next_to(self.non_degeneracy, DOWN, buff=0.6)
@@ -101,6 +110,8 @@ class Pairing(SlideBase):
         scene.play(FadeOut(self.brace3), FadeOut(self.brace3_label))
         scene.wait(3.3)
         scene.play(Indicate(self.definition[0], color = HIGHLIGHT_COLOR, scale_factor=2))
+        scene.wait(1)
+        self.new_subsection(scene, "three properties", "data/sound/episode3_1/slide2-0_1.mp3")
 
         self.new_subsection(scene, "bilinear definition", "data/sound/episode3/slide2-1.mp3")
         scene.play(Write(self.bilinearity_label))
@@ -126,19 +137,19 @@ class Pairing(SlideBase):
         scene.wait(1)
 
         self.new_subsection(scene, "multiplying", "data/sound/episode3/slide2-3.mp3")
-        self.bilinearity_morph.animate_in(scene)
+        scene.play(Write(self.exponent), Write(self.brace4), Write(self.brace4_label))
+        scene.wait(3)
+        scene.play(Indicate(self.bilinearity3, color = PRIMARY_COLOR))
+        scene.play(TransformMatchingShapes(self.exponent, self.exponent2))
+        scene.wait(2)
+        scene.play(Unwrite(self.exponent2), Unwrite(self.brace4), Unwrite(self.brace4_label))
+        
         self.play_sound(scene, "data/sound/episode3/slide2-3_1.mp3")
+        self.bilinearity_morph.animate_in(scene)
 
-        self.new_subsection(scene, "explaining the multiplying", "data/sound/episode3/slide2-4.mp3")
+        # self.new_subsection(scene, "explaining the multiplying", "data/sound/episode3/slide2-4.mp3")
         scene.play(self.bilinearity_morph.texs[-1].animate.next_to(self.bilinearity, DOWN))
         
-        scene.play(Write(self.multiplying), Write(self.multiplying_brace), Write(self.multiplying_brace_label))
-        scene.wait(4)
-        scene.play(Unwrite(self.multiplying), Unwrite(self.multiplying_brace), Unwrite(self.multiplying_brace_label))
-        scene.wait(1)
-        scene.play(Indicate(self.bilinearity3, color = PRIMARY_COLOR))
-        scene.wait(3)
-
         self.new_subsection(scene, "non degeneracy", "data/sound/episode3/slide2-5.mp3")
         scene.play(Write(self.non_degeneracy_label))
         scene.play(Write(self.non_degeneracy))

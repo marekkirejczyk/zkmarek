@@ -1,4 +1,4 @@
-from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Line, ImageMobject, FadeIn, FadeOut, Indicate, ReplacementTransform
+from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Unwrite, Line, ImageMobject, FadeIn, FadeOut, Indicate, ReplacementTransform
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -53,6 +53,10 @@ class Ceremony(SlideBase):
         self.vector_1 = TexArray(PARTICIPANT_2)
         self.vector_k = TexArray(PARTICIPANT_N, 3)
         self.tau_0 = Tex(r"$\tau_0$: ", color=SECONDARY_COLOR)
+        self.strike = Line(
+            start=self.tau_0.get_critical_point(LEFT),
+            end=self.tau_0.get_critical_point(RIGHT), color=SECONDARY_COLOR)
+
         self.tau_1 = Tex(r"$\tau_1$: ", color=SECONDARY_COLOR)
         self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT, color=SECONDARY_COLOR).scale(0.5)
         self.tau_k = Tex(r"$\tau_k$: ", color=SECONDARY_COLOR)
@@ -62,6 +66,7 @@ class Ceremony(SlideBase):
         self.title_label.to_edge(UP)
         self.vector_0.next_to(self.title_label, DOWN, buff=0.8)
         self.tau_0.next_to(self.vector_0, LEFT)
+        self.strike.next_to(self.vector_0, LEFT)
         self.secret.next_to(self.vector_0, LEFT)
         self.person.next_to(self.tau_0, LEFT)
         self.vector_1.next_to(self.vector_0, DOWN, buff=0.5)
@@ -86,10 +91,11 @@ class Ceremony(SlideBase):
         scene.wait(1.2)
         scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.8)
         scene.wait(2)
-        scene.play(ReplacementTransform(self.tau_0, self.secret))
+        # scene.play(ReplacementTransform(self.tau_0, self.secret))
+        scene.play(Write(self.strike))
         scene.wait(1.5)
-        self.tau_0 = Tex(r"$\tau_0$: ", color=SECONDARY_COLOR).next_to(self.vector_0, LEFT)
-        scene.play(ReplacementTransform(self.secret, self.tau_0))
+        # scene.play(ReplacementTransform(self.secret, self.tau_0))
+        scene.play(Unwrite(self.strike))
         self.vector_0[0].next_to(self.tau_0, RIGHT)
         scene.play(Write(self.vector_0[0]))
         scene.play(Indicate(self.vector_0.cells[0][1][0], color = HIGHLIGHT_COLOR))

@@ -31,7 +31,7 @@ class ToxicWaste(SlideBase):
         scene.play(FadeIn(self.lock2))
         scene.play(FadeIn(self.lock3))
         
-        self.new_subsection(scene, "toxic waste", "data/sound/episode4/slide7.5-1.mp3")
+        self.new_subsection(scene, "toxic waste", "data/sound/episode3_1/slide7.5-1.mp3")
         scene.play(AddTextLetterByLetter(self.toxic), run_time=2.5)
         scene.wait(2.5)
         scene.play(FadeOut(self.toxic))

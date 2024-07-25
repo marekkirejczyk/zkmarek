@@ -6,7 +6,7 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 
 SETUP_G1_1 = [
-    r"{{ \tau^1 }} \cdot {{ G_1 }}",
+    r"{{ \tau }} \cdot {{ G_1 }}",
     r"{{ \tau^2 }} \cdot {{ G_1 }}",
     r"..." ,
     r"{{ \tau^n }} \cdot {{ G_1 }}"]
@@ -26,7 +26,7 @@ SETUP_G1_3 = [
 ]
 
 SETUP_G2_1 = [
-    r"{{\tau^1}} {{G_2}}",
+    r"{{\tau}} {{G_2}}",
     r"\tau^2 G_2",
     r"...",
     r"\tau^n G_2"
@@ -119,12 +119,10 @@ class TrustedSetup(SlideBase):
         self.new_subsection(scene, "multiplying by G2", "data/sound/episode3/slide4-2.mp3")
         scene.wait(1.5)
         scene.play(Write(self.vector_g2))
-        # scene.wait(2)
         scene.play(Indicate(self.new_vector_g1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
-        
-        self.new_vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
 
         self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-3.mp3")
+        self.new_vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)
         self.vector_g2.animate_transform_matching_shapes(scene, SETUP_G2_2)
         scene.wait(3.5)
 
