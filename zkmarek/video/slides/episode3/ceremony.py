@@ -43,9 +43,9 @@ class Ceremony(SlideBase):
 
     def construct(self):
         self.title_label = Text("Ceremony", font=PRIMARY_FONT, color=PRIMARY_COLOR)
-        self.group = ImageMobject("zkmarek/video/slides/episode3/group.png")
-        self.person = ImageMobject("zkmarek/video/slides/episode3/person_blue.png").scale(0.5)
-        self.person2 = ImageMobject("zkmarek/video/slides/teaser3/person.png").scale(0.5)
+        self.group = ImageMobject("data/images/group.png")
+        self.person = ImageMobject("data/images/person_blue.png").scale(0.5)
+        self.person2 = ImageMobject("data/images/person.png").scale(0.5)
         self.person_tau0 = MathTex(r"\tau_0", color = SECONDARY_COLOR, font_size=70).next_to(self.group, DOWN, buff=0.01)
         self.person_tau1 = MathTex(r"\tau_1", color = SECONDARY_COLOR, font_size=70).next_to(self.group, LEFT, buff=0.1)
         self.person_tau2 = MathTex(r"\tau_2", color = SECONDARY_COLOR, font_size=70).next_to(self.group, RIGHT, buff=0.1)

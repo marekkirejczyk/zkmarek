@@ -102,7 +102,7 @@ class Intuition(SlideBase):
             "{{s =  (msg + r \cdot K_{Priv}) \cdot secret^{-1}  \mod n}}",
             SECONDARY_COLOR,
         ).to_edge(DOWN + LEFT)
-        self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(RIGHT).shift(2*DOWN+LEFT).scale(1/2.5)
+        self.lock = ImageMobject("data/images/Locked@2x.png").to_edge(RIGHT).shift(2*DOWN+LEFT).scale(1/2.5)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "G encrypts", "data/sound/teaser3/slide2-0.mp3")
@@ -447,11 +447,11 @@ class Intuition(SlideBase):
         scene.play(FadeOut(tree))
 
     def animtion_commitment(self, scene):
-        committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*3).scale(0.5)
-        verifier = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(RIGHT * 3).scale(0.5)
+        committer = ImageMobject("data/images/person.png").shift(LEFT*3).scale(0.5)
+        verifier = ImageMobject("data/images/person.png").shift(RIGHT * 3).scale(0.5)
         committer_label = Text("Committer", font = PRIMARY_COLOR, font_size=40, color = PRIMARY_COLOR).next_to(committer, DOWN)
         verifier_label = Text("Verifier", font = PRIMARY_COLOR, font_size=40, color = PRIMARY_COLOR).next_to(verifier, DOWN)
-        commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.5)
+        commitment = ImageMobject("data/images/Docs.png").scale(0.5)
         
         scene.play(FadeIn(committer, committer_label, verifier, verifier_label, commitment))
         

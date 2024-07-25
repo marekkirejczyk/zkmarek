@@ -8,14 +8,14 @@ class Introduction(SlideBase):
         super().__init__("Introduction to trusted setup")
 
     def construct(self):
-        person = ImageMobject("zkmarek/video/slides/teaser3/person.png").scale(0.6)
+        person = ImageMobject("data/images/person.png").scale(0.6)
 
         self.person1 = person.copy().shift(3*LEFT)
         self.person2 = person.copy().shift(3*RIGHT)
         self.person3 = person.copy().shift(2*UP)
         self.person4 = person.copy().shift(2*DOWN)
 
-        thumb = ImageMobject("zkmarek/video/slides/episode3/Thumb_up.png").scale(0.3)
+        thumb = ImageMobject("data/images/Thumb_up.png").scale(0.3)
 
         self.thumb1 = thumb.copy().next_to(self.person1, UP+RIGHT).shift(DOWN+LEFT)
         self.thumb2 = thumb.copy().next_to(self.person2, UP+RIGHT).shift(DOWN+LEFT)
@@ -35,7 +35,7 @@ class Introduction(SlideBase):
         self.polynomial_enc4 =  MathTex(r"g(\tau)\cdot G = \tau^{32}\cdot G-18\tau^{20}\cdot G+63\tau^3\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*2).scale(0.6)
         self.polynomial_enc5 =  MathTex(r"h(\tau)\cdot G = \tau^{18}\cdot G-17\tau^{19}\cdot G+6\tau\cdot G", font_size = 60, color = SECONDARY_COLOR).shift(DOWN*3).scale(0.6)
 
-        self.lock = ImageMobject("zkmarek/video/slides/teaser3/Locked@2x.png").to_edge(RIGHT).scale(0.3)
+        self.lock = ImageMobject("data/images/Locked@2x.png").to_edge(RIGHT).scale(0.3)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to tau", "data/sound/episode3/slide1-0.mp3")

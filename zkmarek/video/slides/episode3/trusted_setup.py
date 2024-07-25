@@ -67,7 +67,7 @@ class TrustedSetup(SlideBase):
             start=self.tau.get_critical_point(LEFT),
             end=self.tau.get_critical_point(RIGHT), color=SECONDARY_COLOR)
 
-        person = ImageMobject("zkmarek/video/slides/teaser3/person.png").scale(0.45).shift(DOWN)
+        person = ImageMobject("data/images/person.png").scale(0.45).shift(DOWN)
 
         self.person1 = person.copy().shift(2*LEFT)
         self.person2 = person.copy().shift(2*RIGHT)

@@ -78,11 +78,11 @@ class Polynomial(SlideBase):
         self.animtion_commitment(scene)
 
     def animtion_commitment(self, scene):
-        committer = ImageMobject("zkmarek/video/slides/teaser3/person.png").shift(LEFT*3).scale(0.5)
-        verifier = ImageMobject("zkmarek/video/slides/episode3/person_blue.png").shift(RIGHT * 3).scale(0.5)
+        committer = ImageMobject("data/images/person.png").shift(LEFT*3).scale(0.5)
+        verifier = ImageMobject("data/images/person_blue.png").shift(RIGHT * 3).scale(0.5)
         committer_label = Text("Committer", font = PRIMARY_FONT, font_size=40, color = PRIMARY_COLOR).next_to(committer, DOWN)
         verifier_label = Text("Verifier", font = PRIMARY_FONT, font_size=40, color = PRIMARY_COLOR).next_to(verifier, DOWN)
-        commitment = ImageMobject("zkmarek/video/slides/teaser3/Docs.png").scale(0.5)
+        commitment = ImageMobject("data/images/Docs.png").scale(0.5)
         
         scene.play(FadeIn(committer, committer_label, verifier, verifier_label, commitment))
         arrow1 = Arrow(committer.get_right(), verifier.get_left(), color = HIGHLIGHT_COLOR).shift(DOWN)
