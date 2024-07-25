@@ -1,17 +1,19 @@
 from typing import List
 
-from manim import MathTex, Scene, TransformMatchingTex, Unwrite, VGroup, Write
+from manim import MathTex, Scene, TransformMatchingTex, Unwrite, VGroup, Write, Indicate, TransformMatchingShapes
 
-from zkmarek.video.constant import SECONDARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
 
 
 class MorphinMathText(VGroup):
     texts: List[str]
     texs: List[MathTex]
+    wait_time: float
 
-    def __init__(self, texts: List[str]):
+    def __init__(self, texts: List[str], wait_time: float = 0.8):
         super().__init__()
         self.texts = texts
+        self.wait_time = wait_time
 
         self.texs = []
         for tex in texts:
@@ -28,10 +30,14 @@ class MorphinMathText(VGroup):
 
     def animate_first(self, scene: Scene):
         scene.play(Write(self.texs[0]))
+        scene.wait(1)
+        scene.play(Indicate(self.texs[0], color = PRIMARY_COLOR))
+        scene.wait(1)
 
     def animate_rest(self, scene: Scene):
         for i in range(0, len(self.texs) - 1):
-            scene.play(TransformMatchingTex(self.texs[i], self.texs[i+1]))
+            scene.play(TransformMatchingShapes(self.texs[i], self.texs[i+1]))
+            scene.wait(self.wait_time)
 
     def animate_next(self, scene: Scene, i):
         scene.play(TransformMatchingTex(self.texs[i], self.texs[i+1]))

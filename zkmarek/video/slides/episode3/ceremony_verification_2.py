@@ -1,5 +1,4 @@
-from manim import (DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex,
-                   Text, Write)
+from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -64,12 +63,13 @@ class CeremonyVerification2(SlideBase):
         self.pairing = MorphinMathText([
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}}",
             r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}}, {{ \tau_{[i+1]} }} \cdot G_2)}}",
-            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, {{1}} \cdot G_2)",
-            r"{{e(P_0^i, Q_0^{[i+1]} }} = e(P_0^{ {{i+1}} }, G_2)"
-        ])
+            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{{i}} {{ \tau_{[i+1]} }}, \cdot G_2)}}",
+            r"{{e(P_0^i, \tau_{[i+1]} \cdot G_2)}} = e(P_0^{ {{i+1}} }, G_2)",
+        ], wait_time=2)
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "another array", "data/sound/episode3/slide7-0.mp3")
         scene.play(Write(self.title_label))
         scene.play(Write(self.header_label))
         scene.play(Write(self.subheader_label))
@@ -77,17 +77,25 @@ class CeremonyVerification2(SlideBase):
 
         scene.play(FadeIn(self.vec_g1_current))
         scene.play(FadeIn(self.tau_current))
+        self.new_subsection(scene, "P i+1", "data/sound/episode3/slide7-1.mp3")
         self.vec_g1_current.animate_transform_matching_shapes(scene, SETUP_CURRENT_2)
 
         scene.play(FadeIn(self.vec_next))
         scene.play(FadeIn(self.tau_next))
         scene.play(FadeIn(self.arrow))
+
+        self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
+
+        self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")
         self.pairing.animate_first(scene)
+
+        self.new_subsection(scene, "evaluating Pi", "data/sound/episode3/slide7-4.mp3")
         self.pairing.animate_rest(scene)
+
+        self.new_subsection(scene, "verification", "data/sound/episode4/slide7-5.mp3")
         self.pairing.animate_out(scene)
 
-        scene.play(FadeOut(self.vec_g1_current),
-            FadeOut(self.vec_next),
-            FadeOut(self.arrow))
+        scene.wait(4)
 
-        scene.wait(2)
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.vec_g1_current), FadeOut(self.vec_next), FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))

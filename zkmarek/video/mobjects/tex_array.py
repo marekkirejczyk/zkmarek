@@ -36,6 +36,9 @@ class TexArray(VGroup):
             cell = TexCell(value, width)
             self.cells.append(cell)
             self.add(cell)
+        self.arrange(RIGHT, buff=0) 
+
+    def arrange_cells(self):
         self.arrange(RIGHT, buff=0)
 
     def animate_transform_matching_shapes(self, scene, values):
