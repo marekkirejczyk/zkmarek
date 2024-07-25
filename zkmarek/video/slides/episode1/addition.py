@@ -5,7 +5,7 @@ from zkmarek.video.mobjects.discreet_elliptic_chart import \
     DiscreteEllipticChart
 from zkmarek.video.mobjects.sidebar import Sidebar
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.ec.animate_addition import AnimateAddition
+from zkmarek.video.slides.episode1.animate_addition import AnimateAddition
 
 
 class Addition(SlideBase):

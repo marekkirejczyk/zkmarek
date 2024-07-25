@@ -3,9 +3,6 @@ from manim import DOWN, UP, RIGHT, Brace, FadeIn, FadeOut, MathTex, Text, Unwrit
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode3.morphin_math_text import MorphinMathText
-from zkmarek.video.slides.episode3.discreete_polynomial_chart import DiscreetePolynomialChart
-def poly(x):
-    return x * x * x - x * x * 2 + x * 3 + 4
 
 class Pairing(SlideBase):
     definition_label: MathTex
@@ -37,7 +34,7 @@ class Pairing(SlideBase):
         self.brace1.put_at_tip(self.brace1_label)
         self.brace3_label = Text(r"Prime field", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace3.put_at_tip(self.brace3_label)
-        self.chart = DiscreetePolynomialChart(41, poly).scale(0.55)
+
         self.bilinearity_label = Text("Bilinearity", font_size=40, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         self.bilinearity1 = MathTex(r"e({{P}} \oplus {{P'}}, Q)", font_size = 40, color = SECONDARY_COLOR)
         self.bilinearity = MathTex(r"e({{P}} {{\oplus}} {{P'}}, Q) = e({{P}}, Q) {{\oplus}} e({{P'}}, Q)", font_size=40, color=SECONDARY_COLOR)

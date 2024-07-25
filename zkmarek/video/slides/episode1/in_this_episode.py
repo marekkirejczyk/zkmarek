@@ -15,7 +15,7 @@ from ..common.slide_base import SlideBase
 class InThisEpisode(SlideBase):
     titles: list[str]
     descriptions: list[Text]
-    thumbnails: list[mobject]
+    # thumbnails: list[mobject]
 
     labels: list[VGroup]
     thumbnails_borders: list[Rectangle]

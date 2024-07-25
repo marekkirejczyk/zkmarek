@@ -9,7 +9,7 @@ from zkmarek.video.mobjects.clock import Clock
 from zkmarek.video.mobjects.fill_angle import FillAngle
 from zkmarek.video.mobjects.sidebar import Sidebar
 
-from .common.slide_base import SlideBase
+from ..common.slide_base import SlideBase
 
 
 class PrimeFields(SlideBase):

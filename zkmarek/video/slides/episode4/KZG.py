@@ -14,7 +14,7 @@ from manim import (
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.episode3.discreete_polynomial_chart import (
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import (
     DiscreetePolynomialChart,
 )
 
