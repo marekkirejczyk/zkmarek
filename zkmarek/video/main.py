@@ -24,8 +24,8 @@ from zkmarek.video.slides.episode1.scalar_mulitplication import ScalarMultiplica
 from zkmarek.video.slides.episode2.signature import Signature
 from zkmarek.video.slides.episode1.standards import Standards
 from zkmarek.video.slides.episode1.subgroups import Subgroups
-from zkmarek.video.slides.eth.ecrecover import ECRecoverSlide
-from zkmarek.video.slides.eth.ethereum_transaction import EthereumTransaction
+from zkmarek.video.slides.episode2.ecrecover import ECRecoverSlide
+from zkmarek.video.slides.episode2.ethereum_transaction import EthereumTransaction
 from zkmarek.video.slides.teaser.ecrecover import ECRecoverSlideTeaser
 from zkmarek.video.slides.teaser.ethereum_transaction import EthereumTransactionTeaser
 from zkmarek.video.slides.teaser.ecc_title import ECCTitleSlide
@@ -62,20 +62,13 @@ from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
-from zkmarek.video.slides.common.intro import Intro
-from zkmarek.video.slides.episode2.support import Sponsored
-from slides.common.title import TitleSlide
-from zkmarek.video.slides.common.subscribe import Subscribe
 
 config.width = 16
 config.height = 9
 
 
 TEASER = [
-    Intro(
-        sound="data/sound/teaser/s1.wav",
-        background_sound="data/sound/teaser/background.mp3",
-    ),
+    Intro(sound="data/sound/teaser/s1.wav", background_sound="data/sound/teaser/background.mp3"),
     TitleSlide("Episode 1", subtitle="Teaser"),
     ZKPSTitle(),
     SeasonTeaser(),
@@ -87,15 +80,8 @@ TEASER = [
 ]
 
 EPISODE1 = [
-    Intro(
-        sound="data/sound/episode1/s1.wav",
-        background_sound="data/sound/episode1/background.m4a",
-    ),
-    TitleSlide(
-        "Elliptic curves",
-        subtitle="in Ethereum wallet",
-        sound="data/sound/episode1/s2-1.wav",
-    ),
+    Intro(sound="data/sound/episode1/s1.wav", background_sound="data/sound/episode1/background.m4a"),
+    TitleSlide("Elliptic curves", subtitle="in Ethereum wallet", sound="data/sound/episode1/s2-1.wav"),
     TeaserReference(),
     InThisEpisode(),
     TitleSlide("Elliptic Curves", sound="data/sound/episode1/s5.wav"),
@@ -105,21 +91,13 @@ EPISODE1 = [
     CECAddition(),
     TitleSlide("Prime Fields", sound="data/sound/episode1/s10.wav"),
     PrimeFields(),
-    TitleSlide(
-        "Discrete Elliptic Curves", pre_wait_time=2, sound="data/sound/episode1/s12.m4a"
-    ),
+    TitleSlide("Discrete Elliptic Curves", pre_wait_time=2, sound="data/sound/episode1/s12.m4a"),
     ECIntroduction(),
-    TitleSlide(
-        "Discrete Elliptic Curves Operations",
-        pre_wait_time=2,
-        sound="data/sound/episode1/s14.wav",
-    ),
+    TitleSlide("Discrete Elliptic Curves Operations", pre_wait_time=2, sound="data/sound/episode1/s14.wav"),
     ECNegation(),
     ECAddition(),
     AdditionToInfinity(),
-    TitleSlide(
-        "Scalar multiplication", pre_wait_time=2, sound="data/sound/episode1/s18.m4a"
-    ),
+    TitleSlide("Scalar multiplication", pre_wait_time=2, sound="data/sound/episode1/s18.m4a"),
     ScalarMultiplication(),
     DoubleAndAdd(),
     TitleSlide("Subgroups", sound="data/sound/episode1/s21.m4a"),
@@ -134,10 +112,7 @@ EPISODE1 = [
 ]
 
 TEASER2 = [
-    Intro(
-        sound="data/sound/teaser2/slide0-0.mp3",
-        background_sound="data/sound/teaser2/backgroundt.mp3",
-    ),
+    Intro(sound="data/sound/teaser2/slide0-0.mp3", background_sound="data/sound/teaser2/backgroundt.mp3"),
     SponsoredTeaser(),
     ECRteaser(),
     ETHteaser(),

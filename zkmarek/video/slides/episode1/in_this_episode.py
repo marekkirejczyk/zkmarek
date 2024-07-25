@@ -1,4 +1,4 @@
-from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
+from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write
 
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.mobjects.clock import Clock
