@@ -88,9 +88,9 @@ class Ceremony(SlideBase):
 
         self.new_subsection(scene, "first participant", "data/sound/episode3/slide5-1.mp3")
         scene.play(FadeIn(self.person), Write(self.tau_0), FadeOut(self.person_tau0, self.person_tau1, self.person_tau2, self.group))
-        scene.wait(1.2)
+        scene.wait(1)
         scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.8)
-        scene.wait(2)
+        scene.wait(2.2)
         # scene.play(ReplacementTransform(self.tau_0, self.secret))
         scene.play(Write(self.strike))
         scene.wait(1.5)
@@ -103,8 +103,8 @@ class Ceremony(SlideBase):
 
         for i in range(1, len(self.vector_0.cells)):
             self.vector_0.cells[i].next_to(self.vector_0.cells[i-1], RIGHT, buff=0)
-            scene.play(Write(self.vector_0.cells[i]), run_time=0.3)
-            if i != 2:
+            scene.play(Write(self.vector_0.cells[i]), run_time=0.2)
+            if i == 3:
                 scene.play(Indicate(self.vector_0.cells[i][1][0], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-2.mp3")

@@ -97,5 +97,5 @@ class Polynomial(SlideBase):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)
         scene.wait(0.4)
         scene.play(Create(tree))
-        scene.wait(1)
+        scene.wait(1.2)
         scene.play(FadeOut(tree))

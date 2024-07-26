@@ -1,4 +1,4 @@
-from manim import DOWN, UP, RIGHT, Brace, FadeIn, FadeOut, MathTex, Text, Unwrite, Write, VGroup, TransformMatchingShapes, Indicate
+from manim import DOWN, UP, RIGHT, Brace, FadeIn, FadeOut, MathTex, Text, Unwrite, Write, VGroup, TransformMatchingShapes, Indicate, ReplacementTransform
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -56,6 +56,7 @@ class Pairing(SlideBase):
             r"{{e(aP, bQ)}} = e({{a}}P, bQ){{ }}",
             r"{{e(aP, bQ)}} = e({{a}}P, Q){{^b}}",
             r"{{e(aP, bQ)}} = e({{ }}P, Q){{^{ab}}}",
+            r"{{e(aP, bQ)}} = e({{ }}P, {{ }}Q){{^{ab}}} = e({{b}}P, {{a}}Q){{ }}"
             # r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}",
             # r"{{e(aP, bQ)}} = e({{ }}P, bQ){{^a}} = e(aP, {{ }}Q){{^b}} = e({{ }}P, {{ }}Q){{^{ab}}}"
             #   " = e({{ }}P, {{ }}Q){{^{ab}}}",
@@ -66,7 +67,7 @@ class Pairing(SlideBase):
         self.exponent = MathTex(r"e({{P + P + P \cdots}}, Q)", font_size=40, color=SECONDARY_COLOR)
         self.exponent2 = MathTex(r"e({{P + P + P \cdots}}, Q) = {{e(P, Q)\cdot e(P, Q) \cdot e(P, Q)\cdots }}", font_size=40, color=SECONDARY_COLOR)
         self.brace4 = Brace(self.exponent[1], DOWN, color=PRIMARY_COLOR)
-        self.brace4.shift(UP * 2.5)
+        # self.brace4.shift(UP * 2.5)
         self.brace4_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace4.put_at_tip(self.brace4_label)
 
@@ -88,6 +89,7 @@ class Pairing(SlideBase):
         self.bilinearity2.next_to(self.bilinearity_label, DOWN)
         self.bilinearity3.next_to(self.bilinearity_label, DOWN)
         self.exponent.next_to(self.bilinearity3, DOWN)
+        self.exponent2.next_to(self.bilinearity3, DOWN)
         self.non_degeneracy_label.next_to(self.bilinearity, DOWN, buff=1)
         self.non_degeneracy.next_to(self.non_degeneracy_label, DOWN)
         self.computability_label.next_to(self.non_degeneracy, DOWN, buff=0.6)
@@ -140,11 +142,11 @@ class Pairing(SlideBase):
         scene.play(Write(self.exponent), Write(self.brace4), Write(self.brace4_label))
         scene.wait(3)
         scene.play(Indicate(self.bilinearity3, color = PRIMARY_COLOR))
-        scene.play(TransformMatchingShapes(self.exponent, self.exponent2))
+        scene.play(TransformMatchingShapes(self.exponent, self.exponent2), ReplacementTransform(self.brace4, self.brace5),  ReplacementTransform(self.brace4_label, self.brace5_label))
         scene.wait(2)
-        scene.play(Unwrite(self.exponent2), Unwrite(self.brace4), Unwrite(self.brace4_label))
-        
         self.play_sound(scene, "data/sound/episode3/slide2-3_1.mp3")
+        scene.play(Unwrite(self.exponent2), Unwrite(self.brace5), Unwrite(self.brace5_label))
+        
         self.bilinearity_morph.animate_in(scene)
 
         # self.new_subsection(scene, "explaining the multiplying", "data/sound/episode3/slide2-4.mp3")

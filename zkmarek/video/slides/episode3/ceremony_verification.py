@@ -90,6 +90,7 @@ class CeremonyVerification(SlideBase):
         self.pairing.next_to(self.vec_g2, DOWN, buff = 0.5)
         self.pairing1_1.next_to(self.vec_g2, DOWN, buff = 0.45).shift(RIGHT)
         self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
+        self.pairing3.next_to(self.vec_g2, DOWN, buff=0.5)
         self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
 
     def animate_in(self, scene):
@@ -105,7 +106,7 @@ class CeremonyVerification(SlideBase):
         self.new_subsection(scene, "setup", "data/sound/episode3/slide6-3.mp3")
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
-        scene.wait(1)
+        scene.wait(1.6)
         scene.play(Indicate(self.vec_g1.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.7)
@@ -124,7 +125,7 @@ class CeremonyVerification(SlideBase):
         scene.wait(0.2)
         scene.play(MoveToTarget(self.pairing))
         self.pairing1_1.animate_rest(scene)
-
+        scene.play(FadeOut(self.arrows_g1[0]))
         self.new_subsection(scene, "why pairings?", "data/sound/episode3/slide6-5.mp3")
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G2)
@@ -133,7 +134,6 @@ class CeremonyVerification(SlideBase):
 
         self.pairing1_1.animate_out(scene)
         scene.play(FadeOut(self.pairing))
-        scene.play(FadeOut(self.arrows_g1[0]))
 
         self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-6.mp3")
         scene.play(Write(self.arrows_g1[1]), FadeIn(self.pairing2))
@@ -148,7 +148,7 @@ class CeremonyVerification(SlideBase):
             scene.play(Write(arrow))
         for arrow in self.arrows_g2:
             scene.play(FadeOut(arrow))
-        scene.wait(3)
+        scene.wait(2.5)
         
     def animate_out(self, scene):
         scene.play(
