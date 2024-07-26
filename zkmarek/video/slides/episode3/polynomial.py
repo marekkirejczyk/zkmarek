@@ -20,7 +20,8 @@ class Polynomial(SlideBase):
         super().__init__("Evaluating the polynomial")
 
     def construct(self):
-        self.title_label = Text("Evaluating a Polynomial for tau", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
+        self.title_label = Text("Evaluating a Polynomial for ", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
+        self.title_tau = MathTex(r"\tau", color = PRIMARY_COLOR, font_size=55).next_to(self.title_label, RIGHT, buff=0.25)
         self.title_label2 = Text("Stay tuned!", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
         self.vector = TexArray(SETUP_G1_1).next_to(self.title_label, DOWN)
         self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x - 7", font_size = 60, color = SECONDARY_COLOR)
@@ -36,7 +37,8 @@ class Polynomial(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro to evaluating", "data/sound/episode3/slide8-0.mp3")
-        scene.play(Write(self.title_label))
+        scene.play(Write(self.title_label), run_time=2.2)
+        scene.play(Write(self.title_tau))
 
         self.new_subsection(scene, "given by the formula", "data/sound/episode3/slide8-2.mp3")
         scene.wait(2)
@@ -72,7 +74,7 @@ class Polynomial(SlideBase):
         self.new_subsection(scene, "commitments and teaser", "data/sound/episode3/slide8-6.mp3")
         scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.tau))
         self.animate_tree(scene)
-        scene.play(TransformMatchingShapes(self.title_label, self.title_label2))
+        scene.play(TransformMatchingShapes(VGroup(self.title_label, self.title_tau), self.title_label2))
         self.new_subsection(scene, "next?", "data/sound/episode3_1/slide8-7.mp3")
         self.animtion_commitment(scene)
 
