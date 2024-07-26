@@ -22,12 +22,12 @@ class Polynomial(SlideBase):
     def construct(self):
         self.title_label = Text("Evaluating a Polynomial for tau", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
         self.title_label2 = Text("Stay tuned!", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
-        self.vector = TexArray(SETUP_G1_1).next_to(self.title, DOWN)
+        self.vector = TexArray(SETUP_G1_1).next_to(self.title_label, DOWN)
         self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x - 7", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
 
         self.polynomial_tau0 = MathTex(r"P(\tau)\cdot G = [2\cdot \tau^2 -3\cdot \tau - 7 ][ \cdot G]", font_size = 60, color = SECONDARY_COLOR)
-        self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.title, DOWN)
+        self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.title_label, DOWN)
         self.polynomial_tau = MathTex(r"P(\tau)\cdot G = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 \cdot [G]", font_size = 60, color = SECONDARY_COLOR)
         self.p1_x = ValueTracker(-1.491)
         a = CECAffine.from_x(self.p1_x.get_value())
@@ -72,7 +72,7 @@ class Polynomial(SlideBase):
         self.new_subsection(scene, "commitments and teaser", "data/sound/episode3/slide8-6.mp3")
         scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.tau))
         self.animate_tree(scene)
-        scene.play(TransformMatchingShapes(self.title_label, self.title_label2i))
+        scene.play(TransformMatchingShapes(self.title_label, self.title_label2))
         self.new_subsection(scene, "next?", "data/sound/episode3_1/slide8-7.mp3")
         self.animtion_commitment(scene)
 
