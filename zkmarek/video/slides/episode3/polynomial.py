@@ -26,7 +26,7 @@ class Polynomial(SlideBase):
         self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x - 7", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
 
-        self.polynomial_tau0 = MathTex(r"P(\tau)\cdot G = [2\cdot \tau^2 -3\cdot \tau - 7 ][ \cdot G]", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau0 = MathTex(r"P(\tau)\cdot G = [2\cdot \tau^2 -3\cdot \tau - 7 ]\cdot G", font_size = 60, color = SECONDARY_COLOR)
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.title_label, DOWN)
         self.polynomial_tau = MathTex(r"P(\tau)\cdot G = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 \cdot [G]", font_size = 60, color = SECONDARY_COLOR)
         self.p1_x = ValueTracker(-1.491)

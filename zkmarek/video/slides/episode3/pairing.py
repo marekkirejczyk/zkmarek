@@ -67,12 +67,12 @@ class Pairing(SlideBase):
         self.exponent = MathTex(r"e({{P + P + P \cdots}}, Q)", font_size=40, color=SECONDARY_COLOR)
         self.exponent2 = MathTex(r"e({{P + P + P \cdots}}, Q) = {{e(P, Q)\cdot e(P, Q) \cdot e(P, Q)\cdots }}", font_size=40, color=SECONDARY_COLOR)
         self.brace4 = Brace(self.exponent[1], DOWN, color=PRIMARY_COLOR)
-        # self.brace4.shift(UP * 2.5)
+        self.brace4.shift(DOWN*0.5)
         self.brace4_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace4.put_at_tip(self.brace4_label)
 
         self.brace5 = Brace(self.exponent2[3], DOWN, color=PRIMARY_COLOR)
-        self.brace5.shift(UP * 2.5)
+        self.brace5.shift(DOWN*0.5)
         self.brace5_label = Text(r"a times", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace5.put_at_tip(self.brace5_label)
 
@@ -144,9 +144,9 @@ class Pairing(SlideBase):
         scene.play(Indicate(self.bilinearity3, color = PRIMARY_COLOR))
         scene.play(TransformMatchingShapes(self.exponent, self.exponent2), ReplacementTransform(self.brace4, self.brace5),  ReplacementTransform(self.brace4_label, self.brace5_label))
         scene.wait(2)
-        self.play_sound(scene, "data/sound/episode3/slide2-3_1.mp3")
         scene.play(Unwrite(self.exponent2), Unwrite(self.brace5), Unwrite(self.brace5_label))
-        
+
+        self.play_sound(scene, "data/sound/episode3/slide2-3_1.mp3")
         self.bilinearity_morph.animate_in(scene)
 
         # self.new_subsection(scene, "explaining the multiplying", "data/sound/episode3/slide2-4.mp3")
