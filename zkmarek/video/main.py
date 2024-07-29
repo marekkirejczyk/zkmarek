@@ -53,6 +53,8 @@ from zkmarek.video.slides.teaser3.e2_reference import TitleSlide as E2Reference
 from zkmarek.video.slides.episode4.KZG import KZG
 from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
 from zkmarek.video.slides.episode4.verkle import Verkle
+from zkmarek.video.slides.e4.polynomials import Polynomials
+from zkmarek.video.slides.e4.commitment import Commitment
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
 from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
@@ -165,6 +167,8 @@ EPISODE3 = [
 EPISODE4 = [
     # Intro("data/sound/episode2/slide1-0.mp3"),
     # Sponsored(),
+    Polynomials(),
+    Commitment(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     PolynomialCommitment(),
     KZG(),
@@ -189,10 +193,10 @@ DECKS = {
     "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "E3"
+DEFAULT_DECK = "E4"
 
 
-class Episode3(Scene):
+class Episode4(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
