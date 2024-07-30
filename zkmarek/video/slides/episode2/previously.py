@@ -36,7 +36,7 @@ from zkmarek.video.mobjects.wallet import Wallet
 from zkmarek.video.slides.common.tex_slide import TexSlide
 from zkmarek.crypto.weierstrass_curve import Secp256k1_41
 from zkmarek.video.mobjects.sidebar import Sidebar
-from zkmarek.video.slides.ec.animate_subgroup import AnimateSubgroups
+from zkmarek.video.slides.episode1.animate_subgroup import AnimateSubgroups
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.subgroup import Subgroup
 from zkmarek.video.utils import load

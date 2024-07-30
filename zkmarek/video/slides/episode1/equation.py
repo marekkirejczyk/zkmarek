@@ -2,7 +2,7 @@ from manim import (DOWN, UP, FadeIn, FadeOut, MathTex, MoveToTarget,
                    ReplacementTransform, Text, TransformMatchingShapes, VGroup,
                    Write)
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
-from .common.slide_base import SlideBase
+from ..common.slide_base import SlideBase
 
 
 class EquationSlide(SlideBase):

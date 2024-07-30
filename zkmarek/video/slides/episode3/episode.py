@@ -7,7 +7,7 @@ from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
-from zkmarek.video.slides.intro import Intro
+from zkmarek.video.slides.common.intro import Intro
 from zkmarek.video.slides.episode2.support import Sponsored
 from slides.common.title import TitleSlide
 from zkmarek.video.slides.common.subscribe import Subscribe

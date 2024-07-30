@@ -1,4 +1,4 @@
-from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write, mobject
+from manim import DOWN, LEFT, Create, Rectangle, Text, VGroup, Write
 
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.mobjects.clock import Clock
@@ -15,7 +15,7 @@ from ..common.slide_base import SlideBase
 class InThisEpisode(SlideBase):
     titles: list[str]
     descriptions: list[Text]
-    thumbnails: list[mobject]
+    # thumbnails: list[mobject]
 
     labels: list[VGroup]
     thumbnails_borders: list[Rectangle]

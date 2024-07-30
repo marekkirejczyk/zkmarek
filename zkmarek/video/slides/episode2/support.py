@@ -21,10 +21,10 @@ class Sponsored(SlideBase):
 
     def construct(self):
         self.vlayer = ImageMobject(
-            "zkmarek/video/slides/episode2/sponsors/Logo_304_color_on_dark.png"
+            "data/images/Logo_304_color_on_dark.png"
         ).scale(1.3)
         self.ecosystem = ImageMobject(
-            "zkmarek/video/slides/episode2/sponsors/ecosystem_support_program.png"
+            "data/images/ecosystem_support_program.png"
         ).scale(0.3)
         self.title = Text(
             "This video is supported by",
