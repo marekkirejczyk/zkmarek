@@ -39,11 +39,11 @@ class Curve:
             y = slope * (self.x - x) - self.y
             return Curve(x, y)
 
-    def __eq__(self, __value: "CECAffine") -> bool: # type: ignore
+    def __eq__(self, __value: "Curve") -> bool: # type: ignore
         return self.x == __value.x and self.y == __value.y
 
     def __repr__(self):
-        return f"CECAffine({self.x}, {self.y})"
+        return f"Curve({self.x}, {self.y})"
 
 
 INFINITY = Curve(0, 0)
