@@ -33,10 +33,10 @@ SETUP_WITH_TAU_G2 = [
     r"{{ \tau^n }} {{ G_2 }}"]
 
 PARTICIPANT_N = [
-    r"\tau_0^1 \tau_1^1 ... \tau_k^1 G_1",
-    r"\tau_0^2\tau_1^2 ... \tau_k^2 G_1",
+    r"\tau_k^1 G_1",
+    r"\tau_k^2 G_1",
     r". . .",
-    r"\tau_0^n \tau_1^n ... \tau_k^n G_1"
+    r"\tau_k^n G_1"
 ]
 
 class CeremonyVerification(SlideBase):
@@ -79,7 +79,7 @@ class CeremonyVerification(SlideBase):
         ])
         self.pairing3 = MathTex(r"e({{P _{N-2}}}, {{Q _0}}) {{=}} e({{P_{N-1}}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
         self.pairing2 = MathTex(r"e({{P _1}}, {{Q _0}}) {{=}} e({{P_2}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
-        self.vector_k = TexArray(PARTICIPANT_N, 3)
+        self.vector_k = TexArray(PARTICIPANT_N)
         self.title_label.to_edge(UP)
         self.header_label.next_to(self.title_label, DOWN, buff=0.6)
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)

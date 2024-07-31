@@ -51,7 +51,7 @@ class Ceremony(SlideBase):
         self.person_tau2 = MathTex(r"\tau_2", color = SECONDARY_COLOR, font_size=70).next_to(self.group, RIGHT, buff=0.1)
         self.vector_0 = TexArray(PARTICIPANT_1)
         self.vector_1 = TexArray(PARTICIPANT_2)
-        self.vector_k = TexArray(PARTICIPANT_N, 3)
+        self.vector_k = TexArray(PARTICIPANT_N)
         self.tau_0 = Tex(r"$\tau_0$: ", color=SECONDARY_COLOR)
         self.strike = Line(
             start=self.tau_0.get_critical_point(LEFT),
