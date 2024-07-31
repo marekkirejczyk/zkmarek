@@ -22,22 +22,24 @@ SETUP_G1_3 = [
     r"P_0",
     r"P_1",
     r"...",
-    r"P_{N-1}"
+    r"P_{n-1}"
 ]
 
 SETUP_G2_1 = [
     r"{{\tau^1}} {{G_2}}",
     r"\tau^2 G_2",
     r"...",
-    r"\tau^n G_2"
+    r"\tau^k G_2"
 ]
 
 SETUP_G2_2 = [
     r"Q_0",
     r"Q_1",
     r"...",
-    r"Q_{N-1}"
+    r"Q_{k-1}"
 ]
+
+widths = [2, 2, 1, 2]
 
 class TrustedSetup(SlideBase):
     title_label: Text
@@ -55,7 +57,7 @@ class TrustedSetup(SlideBase):
 
         self.vector_g1 = TexArray(SETUP_G1_1)
         self.new_vector_g1 = TexArray(SETUP_G1_2)
-        self.vector_g2 = TexArray(SETUP_G2_1)
+        self.vector_g2 = TexArray(SETUP_G2_1, widths=widths)
         self.new_vector_g2 = TexArray(SETUP_G2_1)
         self.title_label.to_edge(UP)
         self.tau.next_to(self.title_label, DOWN, buff=0.8)
@@ -111,7 +113,6 @@ class TrustedSetup(SlideBase):
             scene.play(FadeIn(self.vector_g1.cells[i]), run_time=0.4)
             if i != 2:
                 scene.play(Indicate(self.vector_g1.cells[i][1][0], color = HIGHLIGHT_COLOR))
-            # scene.wait(0.4) 
 
         for old_cell, new_cell in zip(self.vector_g1.cells, self.new_vector_g1.cells):
             scene.play(TransformMatchingShapes(old_cell[1], new_cell[1]), run_time=0.4)
@@ -120,6 +121,9 @@ class TrustedSetup(SlideBase):
         scene.wait(1.5)
         scene.play(Write(self.vector_g2))
         scene.play(Indicate(self.new_vector_g1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
+        scene.wait(4)
+        scene.play(Indicate(self.vector_g2.cells[0][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[2][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[1][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[3][1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "there are ec points", "data/sound/episode3/slide4-3.mp3")
         self.new_vector_g1.animate_transform_matching_shapes(scene, SETUP_G1_3)

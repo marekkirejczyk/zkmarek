@@ -12,17 +12,17 @@ PARTICIPANT_1 = [
 ]
 
 PARTICIPANT_2 = [
-    r"\tau_0^1 \tau_1^1 G_1",
-    r"\tau_0^2\tau_1^2 G_1",
+    r"\tau_1^1 G_1",
+    r"\tau_1^2 G_1",
     ". . .",
-    r"\tau_0^n \tau_1^n G_1"
+    r"\tau_1^n G_1"
 ]
 
 PARTICIPANT_N = [
-    r"\tau_0^1 \tau_1^1 ... \tau_k^1 G_1",
-    r"\tau_0^2\tau_1^2 ... \tau_k^2 G_1",
+    r"\tau_k^1 G_1",
+    r"\tau_k^2 G_1",
     r". . .",
-    r"\tau_0^n \tau_1^n ... \tau_k^n G_1"
+    r"\tau_k^n G_1"
 ]
 
 
@@ -91,15 +91,12 @@ class Ceremony(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.8)
         scene.wait(2.2)
-        # scene.play(ReplacementTransform(self.tau_0, self.secret))
         scene.play(Write(self.strike))
         scene.wait(1.5)
-        # scene.play(ReplacementTransform(self.secret, self.tau_0))
         scene.play(Unwrite(self.strike))
         self.vector_0[0].next_to(self.tau_0, RIGHT)
         scene.play(Write(self.vector_0[0]))
         scene.play(Indicate(self.vector_0.cells[0][1][0], color = HIGHLIGHT_COLOR))
-
 
         for i in range(1, len(self.vector_0.cells)):
             self.vector_0.cells[i].next_to(self.vector_0.cells[i-1], RIGHT, buff=0)
