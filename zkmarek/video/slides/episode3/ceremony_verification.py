@@ -11,13 +11,13 @@ SETUP_START_G1 = [
     r"{{ P_0 }}",
     r"{{ P_1 }}",
     r"..." ,
-    r"{{ P_{N-1} }}"]
+    r"{{ P_{n-1} }}"]
 
 SETUP_START_G2 = [
     r"{{ Q_0 }}",
     r"{{ Q_1 }}",
     r"..." ,
-    r"{{ Q_{N-1} }}"]
+    r"{{ Q_{k-1} }}"]
 
 
 SETUP_WITH_TAU_G1 = [
@@ -30,7 +30,7 @@ SETUP_WITH_TAU_G2 = [
     r"{{ \tau^1 }} {{ G_2 }}",
     r"{{ \tau^2 }} {{ G_2 }}",
     r"..." ,
-    r"{{ \tau^n }} {{ G_2 }}"]
+    r"{{ \tau^k }} {{ G_2 }}"]
 
 PARTICIPANT_N = [
     r"\tau_k^1 G_1",
@@ -38,6 +38,8 @@ PARTICIPANT_N = [
     r". . .",
     r"\tau_k^n G_1"
 ]
+
+widths = [2, 2, 1, 2]
 
 class CeremonyVerification(SlideBase):
     title_label: Text
@@ -65,7 +67,7 @@ class CeremonyVerification(SlideBase):
         self.subheader_label = Text("Provide numbers that are not consecutive powers of tau",
             font=PRIMARY_FONT, color=SECONDARY_COLOR, font_size=24)
         self.vec_g1 = TexArray(SETUP_START_G1)
-        self.vec_g2 = TexArray(SETUP_START_G2)
+        self.vec_g2 = TexArray(SETUP_START_G2, widths=widths)
 
         self.pairing = MathTex(r"{{e(P_0, Q_0)}} \quad =", font_size=40, color=SECONDARY_COLOR)
         self.pairing1_1 = MorphinMathText([

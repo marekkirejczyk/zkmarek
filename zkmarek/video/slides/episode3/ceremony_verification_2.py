@@ -1,4 +1,4 @@
-from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate
+from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -21,7 +21,19 @@ SETUP_NEXT = [
     r"{{ \Tilde{P_0}}}",
     r"{{ \Tilde{P_1} }}",
     r"..." ,
-    r"{{ \Tilde{P_{n-1}} }}"]
+    r"{{ \Tilde{P}_{n-1} }}"]
+
+SETUP_CURRENT_Q = [
+    r"{{ Q_0 }}",
+    r"{{ Q_1} }}",
+    r"..." ,
+    r"{{ Q_{n-1} }}"]
+
+SETUP_NEXT_Q = [
+    r"{{ \Tilde{Q_0}}}",
+    r"{{ \Tilde{Q_1} }}",
+    r"..." ,
+    r"{{ \Tilde{Q}_{n-1} }}"]
 
 
 class CeremonyVerification2(SlideBase):
@@ -48,6 +60,8 @@ class CeremonyVerification2(SlideBase):
             font=PRIMARY_FONT, color=SECONDARY_COLOR, font_size=24)
         self.vec_g1_current = TexArray(SETUP_CURRENT)
         self.vec_next = TexArray(SETUP_NEXT)
+        self.vec_next_Q = TexArray(SETUP_NEXT_Q)
+        self.vec_current_Q = TexArray(SETUP_CURRENT_Q)
         self.tau_current = MathTex(r"\tau", font_size=40, color=SECONDARY_COLOR)
         self.tau_next = MathTex(r"\Tilde{\tau}", font_size=40, color=SECONDARY_COLOR)
 
@@ -58,6 +72,8 @@ class CeremonyVerification2(SlideBase):
         self.vec_next.next_to(self.vec_g1_current, DOWN, buff=0.5)
         self.tau_current.next_to(self.vec_g1_current, RIGHT, buff=0.5)
         self.tau_next.next_to(self.vec_next, RIGHT, buff=0.5)
+
+        self.vec_current_Q.next_to(self.vec_g1_current, DOWN, buff=0.02)
         self.arrow = CurvedArrow(self.vec_g1_current[0].get_left(), self.vec_next[0].get_left(),
             angle=TAU/4, color=PRIMARY_COLOR)
         self.pairing_ex = MathTex(r"e({{G_1}}, {{G_2}})", color = SECONDARY_COLOR)
@@ -79,15 +95,24 @@ class CeremonyVerification2(SlideBase):
 
         scene.play(FadeIn(self.vec_g1_current))
         scene.play(FadeIn(self.tau_current))
-        self.new_subsection(scene, "P i+1", "data/sound/episode3/slide7-1.mp3")
+        self.new_subsection(scene, "P and P tilde", "data/sound/episode3/slide7-1.mp3")
         self.vec_g1_current.animate_transform_matching_shapes(scene, SETUP_CURRENT_2)
 
         scene.play(FadeIn(self.vec_next))
         scene.play(FadeIn(self.tau_next))
 
+        scene.wait(4)
+        self.vec_next.generate_target()
+        self.vec_next.target.next_to(self.vec_current_Q, DOWN, buff=0.02)    
+        self.vec_next_Q.to_edge(DOWN)
+        scene.play(MoveToTarget(self.vec_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
+
         self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
+        self.vec_next.generate_target()
+        self.vec_next.target.next_to(self.vec_g1_current, DOWN, buff=0.5)
+        scene.play(MoveToTarget(self.vec_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
         scene.play(FadeIn(self.arrow))
-        
+
         self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")
         scene.wait(1)
         scene.play(Write(self.pairing_ex))
