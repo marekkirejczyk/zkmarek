@@ -122,3 +122,5 @@ class Ceremony(SlideBase):
         scene.play(Indicate(self.tau_1, color = PRIMARY_COLOR))
         scene.play(Indicate(self.tau_k, color = PRIMARY_COLOR))
         scene.play(Indicate(self.tau, color = PRIMARY_COLOR))
+
+        self.new_subsection(scene, "intro to pairing", "data/sound/episode3_1/slide5-4_new.mp3")
