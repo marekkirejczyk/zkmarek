@@ -19,10 +19,10 @@ PARTICIPANT_2 = [
 ]
 
 PARTICIPANT_N = [
-    r"\tau_k^1 G_1",
-    r"\tau_k^2 G_1",
+    r"\tau_i^1 G_1",
+    r"\tau_i^2 G_1",
     r". . .",
-    r"\tau_k^n G_1"
+    r"\tau_i^n G_1"
 ]
 
 
@@ -59,8 +59,8 @@ class Ceremony(SlideBase):
 
         self.tau_1 = Tex(r"$\tau_1$: ", color=SECONDARY_COLOR)
         self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT, color=SECONDARY_COLOR).scale(0.5)
-        self.tau_k = Tex(r"$\tau_k$: ", color=SECONDARY_COLOR)
-        self.tau = MathTex(r"\tau = \tau_0 \tau_1 ... \tau_k", color=SECONDARY_COLOR)
+        self.tau_k = Tex(r"$\tau_i$: ", color=SECONDARY_COLOR)
+        self.tau = MathTex(r"\tau = \tau_0 \tau_1 ... \tau_i", color=SECONDARY_COLOR)
         self.secret = Text("secret", font = PRIMARY_FONT, color = SECONDARY_COLOR, font_size=32)
 
         self.title_label.to_edge(UP)
@@ -106,10 +106,8 @@ class Ceremony(SlideBase):
 
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-2.mp3")
         scene.play(Write(self.tau_1), FadeIn(self.person2))
-        scene.wait(0.8)
-        scene.play(Indicate(self.vector_0.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.55)
-        scene.play(Indicate(self.vector_0.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.55)
-        scene.play(Indicate(self.vector_0.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.55)
+        scene.wait(2)
+        scene.play(Indicate(self.tau_1))
         scene.play(Write(self.vector_1))
 
         self.new_subsection(scene, "last participant", "data/sound/episode3/slide5-3.mp3")

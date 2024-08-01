@@ -33,10 +33,10 @@ SETUP_WITH_TAU_G2 = [
     r"{{ \tau^k }} {{ G_2 }}"]
 
 PARTICIPANT_N = [
-    r"\tau_k^1 G_1",
-    r"\tau_k^2 G_1",
+    r"\tau_i^1 G_1",
+    r"\tau_i^2 G_1",
     r". . .",
-    r"\tau_k^n G_1"
+    r"\tau_i^n G_1"
 ]
 
 widths = [2, 2, 1, 2]
@@ -88,12 +88,12 @@ class CeremonyVerification(SlideBase):
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)
 
         self.pairing.next_to(self.subheader_label, DOWN, buff = 0.5)
-        self.pairing1_1.next_to(self.subheader_label, DOWN, buff = 0.45).shift(RIGHT)
+        self.pairing1_1.next_to(self.subheader_label, DOWN, buff = 0.5).shift(RIGHT)
         self.pairing2.next_to(self.subheader_label, DOWN, buff=0.5)
         self.pairing3.next_to(self.subheader_label, DOWN, buff=0.5)
 
         self.vec_g1.next_to(self.pairing, DOWN, buff=0.8)
-        self.vec_g2.next_to(self.vec_g1, DOWN, buff=1.5)
+        self.vec_g2.next_to(self.vec_g1, DOWN, buff=0.8)
         self.arrows_g1 = self.generate_arrows(self.vec_g1)
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
         self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
