@@ -156,6 +156,7 @@ EPISODE3 = [
     Pairing(),
     CeremonyVerification(),
     CeremonyVerification2(),
+    TitleSlide("Toxic Waste", sound="data/sound/episode3_1/slide7.5-00.mp3", wait_time=1.5),
     ToxicWaste(),
     TitleSlide("The use of trusted setup", sound="data/sound/episode3_1/slide8-00.mp3", wait_time=1),
     Polynomial(),

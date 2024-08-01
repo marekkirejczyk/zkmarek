@@ -1,4 +1,4 @@
-from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget, TransformMatchingTex
+from manim import DOWN, RIGHT, TAU, UP, LEFT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget, TransformMatchingTex, ImageMobject
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -35,6 +35,7 @@ SETUP_NEXT_Q = [
     r"..." ,
     r"{{ \Tilde{Q}_{k-1} }}"]
 
+widths = [2, 2, 1, 2]
 
 class CeremonyVerification2(SlideBase):
     title_label: Text
@@ -60,15 +61,18 @@ class CeremonyVerification2(SlideBase):
             font=PRIMARY_FONT, color=SECONDARY_COLOR, font_size=24)
         self.vec_g1_current = TexArray(SETUP_CURRENT)
         self.vec_next = TexArray(SETUP_NEXT)
-        self.vec_next_Q = TexArray(SETUP_NEXT_Q)
-        self.vec_current_Q = TexArray(SETUP_CURRENT_Q)
+        self.vec_next_Q = TexArray(SETUP_NEXT_Q, widths=widths)
+        self.vec_current_Q = TexArray(SETUP_CURRENT_Q, widths=widths)
         self.tau_current = MathTex(r"\tau", font_size=40, color=SECONDARY_COLOR)
         self.tau_next = MathTex(r"\Tilde{\tau}", font_size=40, color=SECONDARY_COLOR)
+
+        self.person_current = ImageMobject("data/images/person_blue.png")
+        self.person_next = ImageMobject("data/images/person.png")
 
         self.title_label.to_edge(UP)
         self.header_label.next_to(self.title_label, DOWN, buff=0.8)
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)
-        self.vec_g1_current.next_to(self.subheader_label, DOWN, buff=0.5)
+        self.vec_g1_current.next_to(self.subheader_label, DOWN, buff=0.3)
         self.vec_next.next_to(self.vec_g1_current, DOWN, buff=0.5)
         self.tau_current.next_to(self.vec_g1_current, RIGHT, buff=0.5)
         self.tau_next.next_to(self.vec_next, RIGHT, buff=0.5)
@@ -87,6 +91,8 @@ class CeremonyVerification2(SlideBase):
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
         self.pairing_ex.next_to(self.vec_next, DOWN, buff=0.5)
         self.pairing_ex2.next_to(self.vec_next, DOWN, buff=0.5)
+        self.person_current.next_to(self.vec_g1_current, LEFT)
+        self.person_current.next_to(self.vec_next, LEFT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "another array", "data/sound/episode3/slide7-0.mp3")
@@ -95,12 +101,13 @@ class CeremonyVerification2(SlideBase):
         scene.play(Write(self.subheader_label))
 
 
-        scene.play(FadeIn(self.vec_g1_current))
+        scene.play(FadeIn(self.vec_g1_current, self.person_current))
         scene.play(FadeIn(self.tau_current))
+
         self.new_subsection(scene, "P and P tilde", "data/sound/episode3/slide7-1.mp3")
         self.vec_g1_current.animate_transform_matching_shapes(scene, SETUP_CURRENT_2)
 
-        scene.play(FadeIn(self.vec_next))
+        scene.play(FadeIn(self.vec_next, self.person_next))
         scene.play(FadeIn(self.tau_next))
 
         scene.wait(4)
@@ -109,14 +116,23 @@ class CeremonyVerification2(SlideBase):
         self.vec_next_Q.to_edge(DOWN)
         self.tau_next.generate_target()
         self.tau_next.target.shift(DOWN)
-        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
+        self.person_next.generate_target()
+        self.person_next.target.shift(DOWN*0.2)
+        self.person_current.generate_target()
+        self.person_current.target.shift(DOWN*0.2)
+        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), MoveToTarget(self.person_current), MoveToTarget(self.person_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
 
         self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
         self.vec_next.generate_target()
         self.vec_next.target.next_to(self.vec_g1_current, DOWN, buff=0.5)
         self.tau_next.generate_target()
         self.tau_next.target.shift(UP)
-        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
+
+        self.person_next.generate_target()
+        self.person_next.target.shift(UP*0.2)
+        self.person_current.generate_target()
+        self.person_current.target.shift(UP*0.2)
+        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), MoveToTarget(self.person_current), MoveToTarget(self.person_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
         scene.play(FadeIn(self.arrow))
 
         self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")

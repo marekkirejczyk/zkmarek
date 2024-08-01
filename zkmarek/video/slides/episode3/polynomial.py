@@ -14,6 +14,12 @@ SETUP_G1_1 = [
     r"..." ,
     r"{{ \tau^n }} \cdot {{G}}"]
 
+SETUP_G1_P = [
+    r"{{P_0}}",
+    r"{{P_1}}",
+    r"..." ,
+    r"{{P_n}}"]
+
 
 class Polynomial(SlideBase):
     def __init__(self):
@@ -24,12 +30,16 @@ class Polynomial(SlideBase):
         self.title_tau = MathTex(r"\tau", color = PRIMARY_COLOR, font_size=55).next_to(self.title_label, RIGHT, buff=0.25)
         self.title_label2 = Text("Stay tuned!", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
         self.vector = TexArray(SETUP_G1_1).next_to(self.title_label, DOWN)
-        self.polynomial = MathTex(r"P(x) = 2\cdot x^2 -3\cdot x - 7", font_size = 60, color = SECONDARY_COLOR)
-        self.polynomial_nunber = MathTex(r"P(2) = 2\cdot 2^2 -3\cdot 2 - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
+        self.vector2 = TexArray(SETUP_G1_P).next_to(self.title_label, DOWN)
+        self.polynomial = MathTex(r"F({{x}}) {{}} = 2\cdot {{x^2}} -3\cdot {{x}} - 7 {{}}", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_nunber = MathTex(r"F({{2}}) = 2\cdot {{2^2}} -3\cdot {{2}} - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
 
-        self.polynomial_tau0 = MathTex(r"P(\tau)\cdot G = [2\cdot \tau^2 -3\cdot \tau - 7 ]\cdot G", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_G = MathTex(r"F({{x}}) {{\cdot G}} = [2\cdot {{x^2}} -3\cdot {{x}} - 7] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau0 = MathTex(r"F({{\tau}}){{\cdot G}} = [2\cdot {{\tau^2}} -3\cdot {{\tau}} - 7 ] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.title_label, DOWN)
-        self.polynomial_tau = MathTex(r"P(\tau)\cdot G = 2\cdot [\tau^2 \cdot G] -3\cdot [\tau \cdot G] - 7 \cdot [G]", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau = MathTex(r"F({{\tau)\cdot G}} = {{2\cdot}} [{{\tau^2 \cdot G}}] {{-3\cdot}} [{{\tau \cdot G}}] {{- 7 \cdot [G]}}", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_P = MathTex(r"F({{\tau}}) {{\cdot G}} = {{2\cdot}} [{{P_1}}] {{-3\cdot}} [{{P_0}}] {{- 7 \cdot [G]}}", font_size = 60, color = SECONDARY_COLOR)
+
         self.p1_x = ValueTracker(-1.491)
         a = CECAffine.from_x(self.p1_x.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "\tau", a)
@@ -49,6 +59,10 @@ class Polynomial(SlideBase):
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.polynomial_nunber, self.polynomial))
 
+        self.new_subsection(scene, "encrypting by G", "data/sound/episode3_1/slide8-3_1.mp3")
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_G))
+
         self.new_subsection(scene, "tau instead of number", "data/sound/episode3/slide8-4.mp3")
         scene.play(Write(self.vector))
         scene.play(Indicate(self.vector.cells[0][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
@@ -56,22 +70,26 @@ class Polynomial(SlideBase):
         scene.play(Indicate(self.vector.cells[3][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
 
         self.new_subsection(scene, "combine coefficients", "data/sound/episode3/slide8-5.mp3")
-        scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial), self.polynomial_tau0))
+        scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial_G), self.polynomial_tau0))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.polynomial_tau0, self.polynomial_tau))
-        scene.wait(3)
-        
-        self.polynomial_tau.generate_target()
-        self.polynomial_tau.target.to_edge(DOWN+RIGHT).scale(0.5)
-        scene.play(FadeOut(self.vector), MoveToTarget(self.polynomial_tau))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.polynomial_tau, self.polynomial_P))
+        self.vector.animate_transform_matching_shapes(scene, SETUP_G1_P)
+
+        self.polynomial_P.generate_target()
+        self.polynomial_P.target.to_edge(DOWN+RIGHT).scale(0.5)
+        scene.play(FadeOut(self.vector), MoveToTarget(self.polynomial_P))
         self.chart.animate_in(scene)
         scene.play(Create(self.p1.dot))
         scene.play(Write(self.tau))
-
+        scene.wait(2)
+        
         self.new_subsection(scene, "commitments and teaser", "data/sound/episode3/slide8-6.mp3")
-        scene.play(FadeOut(self.polynomial_tau, self.chart, self.p1.dot, self.tau))
+        scene.play(FadeOut(self.polynomial_P, self.chart, self.p1.dot, self.tau))
         self.animate_tree(scene)
         scene.play(TransformMatchingShapes(VGroup(self.title_label, self.title_tau), self.title_label2))
+
         self.new_subsection(scene, "next?", "data/sound/episode3_1/slide8-7.mp3")
         self.animtion_commitment(scene)
 
