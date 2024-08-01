@@ -88,7 +88,7 @@ class CeremonyVerification(SlideBase):
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)
 
         self.pairing.next_to(self.subheader_label, DOWN, buff = 0.5)
-        self.pairing1_1.next_to(self.subheader_label, DOWN, buff = 0.45).shift(RIGHT)
+        self.pairing1_1.next_to(self.subheader_label, DOWN, buff = 0.35).shift(RIGHT)
         self.pairing2.next_to(self.subheader_label, DOWN, buff=0.5)
         self.pairing3.next_to(self.subheader_label, DOWN, buff=0.5)
 

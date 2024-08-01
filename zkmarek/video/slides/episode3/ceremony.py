@@ -107,7 +107,7 @@ class Ceremony(SlideBase):
         self.new_subsection(scene, "next participant", "data/sound/episode3/slide5-2.mp3")
         scene.play(Write(self.tau_1), FadeIn(self.person2))
         scene.wait(2)
-        scene.play(Indicate(self.tau_1))
+        scene.play(Indicate(self.tau_1, color = PRIMARY_COLOR))
         scene.play(Write(self.vector_1))
 
         self.new_subsection(scene, "last participant", "data/sound/episode3/slide5-3.mp3")

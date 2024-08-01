@@ -125,7 +125,7 @@ class TrustedSetup(SlideBase):
         scene.play(Indicate(self.vector_g2.cells[0][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[2][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[1][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[3][1], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
         scene.wait(1)
-        n_k = MathTex(r"n>>k").next_to(self.vector_g2, DOWN)
+        n_k = MathTex(r"n>>k", color = PRIMARY_COLOR).next_to(self.vector_g2, DOWN)
         scene.play(FadeIn(n_k))
         scene.wait(1)
         scene.play(FadeOut(n_k))
