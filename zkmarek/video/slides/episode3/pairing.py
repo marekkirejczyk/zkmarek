@@ -151,6 +151,7 @@ class Pairing(SlideBase):
 
         # self.new_subsection(scene, "explaining the multiplying", "data/sound/episode3/slide2-4.mp3")
         scene.play(self.bilinearity_morph.texs[-1].animate.next_to(self.bilinearity, DOWN))
+        scene.wait(1.5)
         
         self.new_subsection(scene, "non degeneracy", "data/sound/episode3/slide2-5.mp3")
         scene.play(Write(self.non_degeneracy_label))

@@ -31,7 +31,10 @@ class Credits(SlideBase):
         self.add_credit("Marek Kirejczyk @zkmarek")
         self.add_credit("Marta Wleklińska @martawleklinska")
         
-        # self.add_title("Special thanks")
+        self.add_title("Special thanks")
+        self.add_credit("Piotr Szlachciak @PiotrSzlachciak")
+        self.add_credit("Marcin Kostrzewa @mmkostrzewa")
+        
         self.add_title("Music from Udio AI music")
         self.group.generate_target()
         self.group.shift(5 * DOWN)
