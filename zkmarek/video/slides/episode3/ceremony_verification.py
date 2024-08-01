@@ -88,7 +88,6 @@ class CeremonyVerification(SlideBase):
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)
 
         self.pairing.next_to(self.subheader_label, DOWN, buff = 0.5)
-        self.pairing1_1.next_to(self.subheader_label, DOWN, buff = 0.35).shift(RIGHT)
         self.pairing2.next_to(self.subheader_label, DOWN, buff=0.5)
         self.pairing3.next_to(self.subheader_label, DOWN, buff=0.5)
 
@@ -129,6 +128,7 @@ class CeremonyVerification(SlideBase):
         scene.play(Write(self.arrows_g1[0]))
         scene.wait(0.2)
         scene.play(MoveToTarget(self.pairing))
+        self.pairing1_1.next_to(self.pairing, RIGHT, buff = 0.2)
         self.pairing1_1.animate_rest(scene)
         scene.play(FadeOut(self.arrows_g1[0]))
         self.new_subsection(scene, "why pairings?", "data/sound/episode3/slide6-5.mp3")
