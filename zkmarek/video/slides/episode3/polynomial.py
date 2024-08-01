@@ -54,15 +54,12 @@ class Polynomial(SlideBase):
         scene.play(Indicate(self.vector.cells[0][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vector.cells[1][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vector.cells[3][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.play(Indicate(self.vector.cells[0][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.play(Indicate(self.vector.cells[1][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
-        scene.play(Indicate(self.vector.cells[3][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
 
         self.new_subsection(scene, "combine coefficients", "data/sound/episode3/slide8-5.mp3")
         scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial), self.polynomial_tau0))
-        scene.wait(1)
+        scene.wait(2)
         scene.play(TransformMatchingShapes(self.polynomial_tau0, self.polynomial_tau))
-        scene.wait(2.5)
+        scene.wait(3)
         
         self.polynomial_tau.generate_target()
         self.polynomial_tau.target.to_edge(DOWN+RIGHT).scale(0.5)

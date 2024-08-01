@@ -78,10 +78,10 @@ class CeremonyVerification2(SlideBase):
             angle=TAU/4, color=PRIMARY_COLOR)
         self.pairing_ex = MathTex(r"e({{G_1}}, {{G_2}})", color = SECONDARY_COLOR)
         self.pairing = MorphinMathText([
-            r"{{e(P_0^i, Q_0^{i+1})}}",
-            r"{{e(P_0^i, Q_0^{i+1})}} = e(P_0^{{i}}, {{ \tau_{[i+1]} }} \cdot G_2)}}",
-            r"{{e(P_0^i, Q_0^{i+1})}} = e(P_0^{{i}} {{ \tau_{[i+1]} }}, \cdot G_2)}}",
-            r"{{e(P_0^i, Q_0^{i+1})}} = e(P_0^{ {{i+1}} }, G_2)",
+            r"{{e(P_0, \Tilde{Q}_0)}}",
+            r"{{e(P_0, \Tilde{Q}_0)}} = e(P_0, {{ \Tilde{\tau} }} \cdot G_2)}}",
+            r"{{e(P_0, \Tilde{Q}_0)}} = e(P_0 {{ \Tilde{\tau} }}, \cdot G_2)}}",
+            r"{{e(P_0, \Tilde{Q}_0)}} = e(\Tilde{P}_0, G_2)",
         ], wait_time=2)
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
         self.pairing_ex.next_to(self.vec_next, DOWN, buff=0.5)
@@ -105,12 +105,16 @@ class CeremonyVerification2(SlideBase):
         self.vec_next.generate_target()
         self.vec_next.target.next_to(self.vec_current_Q, DOWN, buff=0.02)    
         self.vec_next_Q.to_edge(DOWN)
-        scene.play(MoveToTarget(self.vec_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
+        self.tau_next.generate_target()
+        self.tau_next.target.shift(DOWN)
+        scene.play(MoveToTarget(self.vec_next, self.tau_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
 
         self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
         self.vec_next.generate_target()
         self.vec_next.target.next_to(self.vec_g1_current, DOWN, buff=0.5)
-        scene.play(MoveToTarget(self.vec_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
+        self.tau_next.generate_target()
+        self.tau_next.target.shift(UP)
+        scene.play(MoveToTarget(self.vec_next, self.tau_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
         scene.play(FadeIn(self.arrow))
 
         self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")

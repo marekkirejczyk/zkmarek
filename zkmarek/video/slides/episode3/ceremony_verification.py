@@ -92,7 +92,7 @@ class CeremonyVerification(SlideBase):
         self.pairing2.next_to(self.subheader_label, DOWN, buff=0.5)
         self.pairing3.next_to(self.subheader_label, DOWN, buff=0.5)
 
-        self.vec_g1.next_to(self.pairing, DOWN, buff=0.3)
+        self.vec_g1.next_to(self.pairing, DOWN, buff=0.8)
         self.vec_g2.next_to(self.vec_g1, DOWN, buff=1.5)
         self.arrows_g1 = self.generate_arrows(self.vec_g1)
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
@@ -123,7 +123,7 @@ class CeremonyVerification(SlideBase):
         scene.play(Write(self.pairing[0]))
         self.pairing.generate_target()
 
-        self.pairing.target.next_to(self.vec_g2, DOWN, buff = 0.5).shift(2*LEFT)
+        self.pairing.target.next_to(self.subheader_label, DOWN, buff = 0.5).shift(2*LEFT)
         scene.wait(1)
         scene.play(Indicate(self.pairing[0], color = PRIMARY_COLOR))
         scene.play(Write(self.arrows_g1[0]))
@@ -146,14 +146,14 @@ class CeremonyVerification(SlideBase):
         scene.play(FadeOut(self.pairing2))
         scene.play(FadeOut(self.arrows_g1[1]))
         
-        scene.play(Write(self.arrows_g1[2]), Write(self.pairing3))
-        scene.play(FadeOut(self.arrows_g1[2]), Unwrite(self.pairing3))
+        scene.play(Write(self.arrows_g1[2]), FadeIn(self.pairing3))
+        scene.play(FadeOut(self.arrows_g1[2]), FadeOut(self.pairing3))
 
         for arrow in self.arrows_g2:
             scene.play(Write(arrow))
         for arrow in self.arrows_g2:
             scene.play(FadeOut(arrow))
-        scene.wait(2.5)
+        scene.wait(2)
         
     def animate_out(self, scene):
         scene.play(
