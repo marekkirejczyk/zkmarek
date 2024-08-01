@@ -82,17 +82,20 @@ class CeremonyVerification(SlideBase):
         self.pairing3 = MathTex(r"e({{P _{N-2}}}, {{Q _0}}) {{=}} e({{P_{N-1}}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
         self.pairing2 = MathTex(r"e({{P _1}}, {{Q _0}}) {{=}} e({{P_2}}, {{G_2}})", font_size=40, color=SECONDARY_COLOR)
         self.vector_k = TexArray(PARTICIPANT_N)
+
         self.title_label.to_edge(UP)
         self.header_label.next_to(self.title_label, DOWN, buff=0.6)
         self.subheader_label.next_to(self.header_label, DOWN, buff=0.3)
-        self.vec_g1.next_to(self.subheader_label, DOWN, buff=0.3)
+
+        self.pairing.next_to(self.subheader_label, DOWN, buff = 0.5)
+        self.pairing1_1.next_to(self.subheader_label, DOWN, buff = 0.45).shift(RIGHT)
+        self.pairing2.next_to(self.subheader_label, DOWN, buff=0.5)
+        self.pairing3.next_to(self.subheader_label, DOWN, buff=0.5)
+
+        self.vec_g1.next_to(self.pairing, DOWN, buff=0.3)
         self.vec_g2.next_to(self.vec_g1, DOWN, buff=1.5)
         self.arrows_g1 = self.generate_arrows(self.vec_g1)
         self.arrows_g2 = self.generate_arrows(self.vec_g2)
-        self.pairing.next_to(self.vec_g2, DOWN, buff = 0.5)
-        self.pairing1_1.next_to(self.vec_g2, DOWN, buff = 0.45).shift(RIGHT)
-        self.pairing2.next_to(self.vec_g2, DOWN, buff=0.5)
-        self.pairing3.next_to(self.vec_g2, DOWN, buff=0.5)
         self.vector_k.next_to(self.title_label, DOWN, buff=0.8)
 
     def animate_in(self, scene):
@@ -108,7 +111,7 @@ class CeremonyVerification(SlideBase):
         self.new_subsection(scene, "setup", "data/sound/episode3/slide6-3.mp3")
         scene.play(FadeIn(self.vec_g1))
         scene.play(FadeIn(self.vec_g2))
-        scene.wait(1.6)
+        scene.wait(2.6)
         scene.play(Indicate(self.vec_g1.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.vec_g1.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.7)

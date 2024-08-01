@@ -75,7 +75,10 @@ class Introduction(SlideBase):
         # scene.wait(3.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.person1, self.person2, self.person3, self.person4, self.polynomial_enc2, self.thumb2, self.thumb3, self.thumb4, self.thumb1, self.polynomial_enc4, self.polynomial_enc5, self.lock, self.tau))
+        scene.play(FadeOut(self.person1, self.person2, self.person3, self.person4,
+                            #self.polynomial_enc2,
+                            self.thumb2, self.thumb3, self.thumb4, self.thumb1, #self.polynomial_enc4, self.polynomial_enc5, self.lock, 
+                            self.tau))
 
     def animate_tree(self, scene):
         tree = VerkleTree().scale(0.8).shift(UP*1.5)

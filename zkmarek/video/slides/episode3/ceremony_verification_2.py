@@ -120,7 +120,8 @@ class CeremonyVerification2(SlideBase):
         scene.play(Indicate(self.pairing_ex[1], color = HIGHLIGHT_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.pairing_ex[3], color = HIGHLIGHT_COLOR))
-
+        scene.wait(2.5)
+        scene.play(FadeOut(self.pairing_ex))
         self.new_subsection(scene, "we take P and Q tilde", "data/sound/episode3_1/slide7-3_2.mp3")
         self.pairing.animate_first(scene)
 
@@ -130,7 +131,7 @@ class CeremonyVerification2(SlideBase):
         self.new_subsection(scene, "verification", "data/sound/episode3_1/slide7-5.mp3")
         self.pairing.animate_out(scene)
 
-        scene.wait(4)
+        scene.wait(5.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.vec_g1_current), FadeOut(self.vec_next), FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))

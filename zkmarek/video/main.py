@@ -157,6 +157,7 @@ EPISODE3 = [
     CeremonyVerification(),
     CeremonyVerification2(),
     ToxicWaste(),
+    TitleSlide("The use of trusted setup", sound="data/sound/episode3_1/slide8_00.mp3", wait_time=2.5),
     Polynomial(),
     Subscribe("data/sound/episode1/s28.wav"),
     CreditsE3(),

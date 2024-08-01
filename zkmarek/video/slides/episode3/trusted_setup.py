@@ -121,7 +121,7 @@ class TrustedSetup(SlideBase):
         scene.wait(1.5)
         scene.play(Write(self.vector_g2))
         scene.play(Indicate(self.new_vector_g1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
-        scene.wait(4)
+        scene.wait(3)
         scene.play(Indicate(self.vector_g2.cells[0][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[2][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[1][1], color = HIGHLIGHT_COLOR), Indicate(self.vector_g2.cells[3][1], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.vector_g2.cells[0][1][2], color = HIGHLIGHT_COLOR))
 
