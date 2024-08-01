@@ -36,7 +36,7 @@ class Polynomial(SlideBase):
         self.tau = MathTex(r"\tau\cdot G", color = HIGHLIGHT_COLOR, font_size = 40).next_to(self.p1, LEFT, buff = 0.6)
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "intro to evaluating", "data/sound/episode3/slide8-0.mp3")
+        self.new_subsection(scene, "intro to evaluating", "data/sound/episode3_1/slide8-0_new.mp3")
         scene.play(Write(self.title_label), run_time=2.2)
         scene.play(Write(self.title_tau))
 
