@@ -27,13 +27,13 @@ SETUP_CURRENT_Q = [
     r"{{ Q_0 }}",
     r"{{ Q_1} }}",
     r"..." ,
-    r"{{ Q_{n-1} }}"]
+    r"{{ Q_{k-1} }}"]
 
 SETUP_NEXT_Q = [
     r"{{ \Tilde{Q_0}}}",
     r"{{ \Tilde{Q_1} }}",
     r"..." ,
-    r"{{ \Tilde{Q}_{n-1} }}"]
+    r"{{ \Tilde{Q}_{k-1} }}"]
 
 
 class CeremonyVerification2(SlideBase):
