@@ -107,14 +107,14 @@ class CeremonyVerification2(SlideBase):
         self.vec_next_Q.to_edge(DOWN)
         self.tau_next.generate_target()
         self.tau_next.target.shift(DOWN)
-        scene.play(MoveToTarget(self.vec_next, self.tau_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
+        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
 
         self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
         self.vec_next.generate_target()
         self.vec_next.target.next_to(self.vec_g1_current, DOWN, buff=0.5)
         self.tau_next.generate_target()
         self.tau_next.target.shift(UP)
-        scene.play(MoveToTarget(self.vec_next, self.tau_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
+        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
         scene.play(FadeIn(self.arrow))
 
         self.new_subsection(scene, "pairings", "data/sound/episode3/slide7-3.mp3")
