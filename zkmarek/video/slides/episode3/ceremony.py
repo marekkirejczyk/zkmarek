@@ -129,4 +129,4 @@ class Ceremony(SlideBase):
 
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.person, self.person2, self.person3, self.tau0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))
+        scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))
