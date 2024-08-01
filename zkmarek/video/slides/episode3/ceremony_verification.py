@@ -1,6 +1,6 @@
 from typing import List
 
-from manim import DOWN, TAU, UP, LEFT, RIGHT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget
+from manim import DOWN, TAU, UP, LEFT, RIGHT, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget, Unwrite
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -71,7 +71,6 @@ class CeremonyVerification(SlideBase):
 
         self.pairing = MathTex(r"{{e(P_0, Q_0)}} \quad =", font_size=40, color=SECONDARY_COLOR)
         self.pairing1_1 = MorphinMathText([
-            r"e({{P_0}}, Q_0)",
             r"e({{P_0}}, {{Q_0}})",
             r"e({{\tau \cdot G_1}}, {{Q_0}})",
             r"e({{\tau \cdot G_1}}, {{\tau}} \cdot G_2)",
@@ -132,7 +131,8 @@ class CeremonyVerification(SlideBase):
         scene.play(MoveToTarget(self.pairing))
         self.pairing1_1.next_to(self.pairing, RIGHT, buff = 0.2)
         self.pairing1_1.animate_rest(scene)
-        scene.play(FadeOut(self.arrows_g1[0], self.pairing))
+        scene.play(FadeOut(self.arrows_g1[0]), Unwrite(self.pairing))
+        self.pairing1_1.animate_out(scene)
 
         self.new_subsection(scene, "why pairings?", "data/sound/episode3/slide6-5.mp3")
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_WITH_TAU_G1)
@@ -140,8 +140,7 @@ class CeremonyVerification(SlideBase):
         self.vec_g1.animate_transform_matching_shapes(scene, SETUP_START_G1)
         self.vec_g2.animate_transform_matching_shapes(scene, SETUP_START_G2)
 
-        self.pairing1_1.animate_out(scene)
-        scene.wait(1.5)
+        scene.wait(2.5)
         
         self.new_subsection(scene, "calculations correct", "data/sound/episode3/slide6-6.mp3")
         scene.play(Write(self.arrows_g1[1]), FadeIn(self.pairing2))

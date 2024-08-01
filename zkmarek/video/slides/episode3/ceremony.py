@@ -45,7 +45,7 @@ class Ceremony(SlideBase):
         self.title_label = Text("Ceremony", font=PRIMARY_FONT, color=PRIMARY_COLOR)
         self.group = ImageMobject("data/images/group.png")
         self.person = ImageMobject("data/images/person_blue.png").scale(0.5)
-        self.person3 = ImageMobject("data/images/person_blue.png").scale(0.5)
+        self.person3 = self.person.copy()
         self.person2 = ImageMobject("data/images/person.png").scale(0.5)
         self.person_tau0 = MathTex(r"\tau_0", color = SECONDARY_COLOR, font_size=70).next_to(self.group, DOWN, buff=0.01)
         self.person_tau1 = MathTex(r"\tau_1", color = SECONDARY_COLOR, font_size=70).next_to(self.group, LEFT, buff=0.1)
@@ -77,7 +77,7 @@ class Ceremony(SlideBase):
         self.vector_k.next_to(self.three_dot, DOWN, buff=0.5)
         self.tau_k.next_to(self.vector_k, LEFT)
         self.tau.next_to(self.vector_k, DOWN, buff=0.5)
-        self.person.next_to(self.tau_k, LEFT)
+        self.person3.next_to(self.tau_k, LEFT)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "ceremony intro", "data/sound/episode3/slide5-0.mp3")
@@ -122,6 +122,11 @@ class Ceremony(SlideBase):
         scene.play(Indicate(self.tau_1, color = PRIMARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.tau_k, color = PRIMARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.tau, color = PRIMARY_COLOR), run_time=0.5)
+        scene.wait(1.5)
 
         self.new_subsection(scene, "intro to pairing", "data/sound/episode3_1/slide5-4_new.mp3")
         scene.wait(3)
+
+        
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.person, self.person2, self.person3, self.tau0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))

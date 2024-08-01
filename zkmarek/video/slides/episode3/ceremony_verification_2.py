@@ -11,11 +11,6 @@ SETUP_CURRENT = [
     r"..." ,
     r"{{ P_{n-1} }}"]
 
-SETUP_CURRENT_2 = [
-    r"{{ P_0 }}",
-    r"{{ P_1} }}",
-    r"..." ,
-    r"{{ P_{n-1} }}"]
 
 SETUP_NEXT = [
     r"{{ \Tilde{P_0}}}",
@@ -66,8 +61,8 @@ class CeremonyVerification2(SlideBase):
         self.tau_current = MathTex(r"\tau", font_size=40, color=SECONDARY_COLOR)
         self.tau_next = MathTex(r"\Tilde{\tau}", font_size=40, color=SECONDARY_COLOR)
 
-        self.person_current = ImageMobject("data/images/person_blue.png")
-        self.person_next = ImageMobject("data/images/person.png")
+        self.person_current = ImageMobject("data/images/person_blue.png").scale(0.5)
+        self.person_next = ImageMobject("data/images/person.png").scale(0.5)
 
         self.title_label.to_edge(UP)
         self.header_label.next_to(self.title_label, DOWN, buff=0.8)
@@ -77,7 +72,7 @@ class CeremonyVerification2(SlideBase):
         self.tau_current.next_to(self.vec_g1_current, RIGHT, buff=0.5)
         self.tau_next.next_to(self.vec_next, RIGHT, buff=0.5)
 
-        self.vec_current_Q.next_to(self.vec_g1_current, DOWN, buff=0.02)
+        self.vec_current_Q.next_to(self.vec_g1_current, DOWN, buff=0.03)
         self.arrow = CurvedArrow(self.vec_g1_current[0].get_left(), self.vec_next[0].get_left(),
             angle=TAU/4, color=PRIMARY_COLOR)
         self.pairing_ex = MathTex(r"e({{G_1}}, {{G_2}})", color = SECONDARY_COLOR)
@@ -92,7 +87,7 @@ class CeremonyVerification2(SlideBase):
         self.pairing_ex.next_to(self.vec_next, DOWN, buff=0.5)
         self.pairing_ex2.next_to(self.vec_next, DOWN, buff=0.5)
         self.person_current.next_to(self.vec_g1_current, LEFT)
-        self.person_current.next_to(self.vec_next, LEFT)
+        self.person_next.next_to(self.vec_next, LEFT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "another array", "data/sound/episode3/slide7-0.mp3")
@@ -105,33 +100,39 @@ class CeremonyVerification2(SlideBase):
         scene.play(FadeIn(self.tau_current))
 
         self.new_subsection(scene, "P and P tilde", "data/sound/episode3/slide7-1.mp3")
-        self.vec_g1_current.animate_transform_matching_shapes(scene, SETUP_CURRENT_2)
+        scene.wait(1.5)
 
         scene.play(FadeIn(self.vec_next, self.person_next))
         scene.play(FadeIn(self.tau_next))
 
         scene.wait(4)
         self.vec_next.generate_target()
-        self.vec_next.target.next_to(self.vec_current_Q, DOWN, buff=0.02)    
+        self.vec_next.target.next_to(self.vec_current_Q, DOWN, buff=0.2)    
         self.vec_next_Q.to_edge(DOWN)
+
         self.tau_next.generate_target()
-        self.tau_next.target.shift(DOWN)
+        self.tau_next.target.shift(DOWN*1.2)
+        self.tau_current.generate_target()
+        self.tau_current.target.shift(DOWN*0.4)
+
         self.person_next.generate_target()
-        self.person_next.target.shift(DOWN*0.2)
+        self.person_next.target.shift(DOWN*1.2)
         self.person_current.generate_target()
-        self.person_current.target.shift(DOWN*0.2)
-        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), MoveToTarget(self.person_current), MoveToTarget(self.person_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
+        self.person_current.target.shift(DOWN*0.4)
+        scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), MoveToTarget(self.person_current), MoveToTarget(self.tau_current), MoveToTarget(self.person_next), FadeIn(self.vec_current_Q, self.vec_next_Q))
 
         self.new_subsection(scene, "verify", "data/sound/episode3/slide7-2.mp3")
         self.vec_next.generate_target()
         self.vec_next.target.next_to(self.vec_g1_current, DOWN, buff=0.5)
         self.tau_next.generate_target()
-        self.tau_next.target.shift(UP)
+        self.tau_next.target.shift(UP*1.2)
+        self.tau_current.generate_target()
+        self.tau_current.target.shift(UP*0.4)
 
         self.person_next.generate_target()
-        self.person_next.target.shift(UP*0.2)
+        self.person_next.target.shift(UP*1.2)
         self.person_current.generate_target()
-        self.person_current.target.shift(UP*0.2)
+        self.person_current.target.shift(UP*0.4)
         scene.play(MoveToTarget(self.vec_next), MoveToTarget(self.tau_next), MoveToTarget(self.person_current), MoveToTarget(self.person_next), FadeOut(self.vec_current_Q, self.vec_next_Q))
         scene.play(FadeIn(self.arrow))
 
@@ -161,4 +162,4 @@ class CeremonyVerification2(SlideBase):
         scene.wait(2.7)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.vec_g1_current), FadeOut(self.vec_next), FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))
+        scene.play(FadeOut(self.vec_g1_current), FadeOut(self.vec_next), FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label, self.person_current, self.person_next))
