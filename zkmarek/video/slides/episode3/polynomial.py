@@ -31,8 +31,8 @@ class Polynomial(SlideBase):
         self.title_label2 = Text("Stay tuned!", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
         self.vector = TexArray(SETUP_G1_1).next_to(self.title_label, DOWN)
         self.vector2 = TexArray(SETUP_G1_P).next_to(self.title_label, DOWN)
-        self.polynomial = MathTex(r"F({{x}}) {{}} = 2\cdot {{x^2}} -3\cdot {{x}} - 7 {{}}", font_size = 60, color = SECONDARY_COLOR)
-        self.polynomial_nunber = MathTex(r"F({{2}}) = 2\cdot {{2^2}} -3\cdot {{2}} - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial = MathTex(r"F({{ x }}) = 2\cdot {{ x^2 }} -3\cdot {{ x }} - 7", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_nunber = MathTex(r"F({{ 2 }}) = 2\cdot {{ 2^2 }} -3\cdot {{ 2 }} - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
 
         self.polynomial_G = MathTex(r"F({{x}}) {{\cdot G}} = [2\cdot {{x^2}} -3\cdot {{x}} - 7] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_tau0 = MathTex(r"F({{\tau}}){{\cdot G}} = [2\cdot {{\tau^2}} -3\cdot {{\tau}} - 7 ] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
@@ -55,9 +55,12 @@ class Polynomial(SlideBase):
         scene.play(Write(self.polynomial))
 
         self.new_subsection(scene, "evaluating at number", "data/sound/episode3/slide8-3.mp3")
-        scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_nunber))
-        scene.wait(2)
-        scene.play(TransformMatchingShapes(self.polynomial_nunber, self.polynomial))
+        num_2 = MathTex("2", color = SECONDARY_COLOR).next_to(self.polynomial, UP, buff=0.7)
+        scene.play(FadeIn(num_2))
+        scene.play(TransformMatchingShapes(VGroup(num_2.copy(), self.polynomial[1]), self.polynomial_nunber[1]), TransformMatchingShapes(VGroup(num_2.copy(), self.polynomial[3]), self.polynomial_nunber[3]), TransformMatchingShapes(VGroup(num_2.copy(), self.polynomial[5]), self.polynomial_nunber[5]), TransformMatchingShapes(self.polynomial, self.polynomial_nunber), run_time=2)
+        scene.wait(0.5)
+        
+        scene.play(TransformMatchingShapes(self.polynomial_nunber, self.polynomial), FadeOut(num_2))
 
         self.new_subsection(scene, "encrypting by G", "data/sound/episode3_1/slide8-3_1.mp3")
         scene.wait(2)

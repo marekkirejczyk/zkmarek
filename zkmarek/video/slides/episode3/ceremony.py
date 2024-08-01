@@ -125,7 +125,7 @@ class Ceremony(SlideBase):
         scene.wait(1.5)
 
         self.new_subsection(scene, "intro to pairing", "data/sound/episode3_1/slide5-4_new.mp3")
-        scene.wait(3)
+        scene.wait(6)
 
         
     def animate_out(self, scene):
