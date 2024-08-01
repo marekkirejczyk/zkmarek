@@ -55,12 +55,11 @@ class Polynomial(SlideBase):
         scene.play(Write(self.polynomial))
 
         self.new_subsection(scene, "evaluating at number", "data/sound/episode3/slide8-3.mp3")
-        num_2 = MathTex("2", color = SECONDARY_COLOR).next_to(self.polynomial, UP, buff=0.7)
-        scene.play(FadeIn(num_2))
-        scene.play(TransformMatchingShapes(VGroup(num_2.copy(), self.polynomial[1]), self.polynomial_nunber[1]), TransformMatchingShapes(VGroup(num_2.copy(), self.polynomial[3]), self.polynomial_nunber[3]), TransformMatchingShapes(VGroup(num_2.copy(), self.polynomial[5]), self.polynomial_nunber[5]), TransformMatchingShapes(self.polynomial, self.polynomial_nunber), run_time=2)
-        scene.wait(0.5)
+
+        scene.play(TransformMatchingShapes(self.polynomial[1], self.polynomial_nunber[1]), TransformMatchingShapes(self.polynomial[3], self.polynomial_nunber[3]), TransformMatchingShapes(self.polynomial[5], self.polynomial_nunber[5]), TransformMatchingShapes(self.polynomial, self.polynomial_nunber), run_time=2)
+        scene.wait(1)
         
-        scene.play(TransformMatchingShapes(self.polynomial_nunber, self.polynomial), FadeOut(num_2))
+        scene.play(TransformMatchingShapes(self.polynomial_nunber, self.polynomial))
 
         self.new_subsection(scene, "encrypting by G", "data/sound/episode3_1/slide8-3_1.mp3")
         scene.wait(2)
