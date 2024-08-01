@@ -1,4 +1,4 @@
-from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget
+from manim import DOWN, RIGHT, TAU, UP, CurvedArrow, FadeIn, FadeOut, MathTex, Text, Write, Indicate, MoveToTarget, TransformMatchingTex
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -77,14 +77,16 @@ class CeremonyVerification2(SlideBase):
         self.arrow = CurvedArrow(self.vec_g1_current[0].get_left(), self.vec_next[0].get_left(),
             angle=TAU/4, color=PRIMARY_COLOR)
         self.pairing_ex = MathTex(r"e({{G_1}}, {{G_2}})", color = SECONDARY_COLOR)
+        self.pairing_ex2 = MathTex(r"e({{P}}, {{Q}})", color = SECONDARY_COLOR)
         self.pairing = MorphinMathText([
             r"{{e(P_0, \Tilde{Q}_0)}}",
             r"{{e(P_0, \Tilde{Q}_0)}} = e(P_0, {{ \Tilde{\tau} }} \cdot G_2)}}",
-            r"{{e(P_0, \Tilde{Q}_0)}} = e(P_0 {{ \Tilde{\tau} }}, \cdot G_2)}}",
+            r"{{e(P_0, \Tilde{Q}_0)}} = e(P_0 {{ \Tilde{\tau} }}, G_2)}}",
             r"{{e(P_0, \Tilde{Q}_0)}} = e(\Tilde{P}_0, G_2)",
         ], wait_time=2)
         self.pairing.next_to(self.vec_next, DOWN, buff=0.5)
         self.pairing_ex.next_to(self.vec_next, DOWN, buff=0.5)
+        self.pairing_ex2.next_to(self.vec_next, DOWN, buff=0.5)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "another array", "data/sound/episode3/slide7-0.mp3")
@@ -124,8 +126,10 @@ class CeremonyVerification2(SlideBase):
         scene.play(Indicate(self.pairing_ex[1], color = HIGHLIGHT_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.pairing_ex[3], color = HIGHLIGHT_COLOR))
-        scene.wait(2.5)
-        scene.play(FadeOut(self.pairing_ex))
+        scene.wait(2)
+        scene.play(TransformMatchingTex(self.pairing_ex, self.pairing_ex2))
+        scene.wait(1.5)
+        scene.play(FadeOut(self.pairing_ex2))
         self.new_subsection(scene, "we take P and Q tilde", "data/sound/episode3_1/slide7-3_2.mp3")
         self.pairing.animate_first(scene)
 
@@ -134,8 +138,11 @@ class CeremonyVerification2(SlideBase):
 
         self.new_subsection(scene, "verification", "data/sound/episode3_1/slide7-5.mp3")
         self.pairing.animate_out(scene)
-
-        scene.wait(5.5)
+        scene.wait(1)
+        scene.play(Indicate(self.vec_next.cells[0][1], color = HIGHLIGHT_COLOR), run_time=0.5) 
+        scene.play(Indicate(self.vec_next.cells[1][1], color = HIGHLIGHT_COLOR), run_time=0.5) 
+        scene.play(Indicate(self.vec_next.cells[3][1], color = HIGHLIGHT_COLOR), run_time=0.5) 
+        scene.wait(2.7)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.vec_g1_current), FadeOut(self.vec_next), FadeOut(self.arrow, self.tau_current, self.tau_next,  self.header_label, self.subheader_label, self.title_label))

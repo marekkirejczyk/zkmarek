@@ -124,4 +124,4 @@ class Ceremony(SlideBase):
         scene.play(Indicate(self.tau, color = PRIMARY_COLOR))
 
         self.new_subsection(scene, "intro to pairing", "data/sound/episode3_1/slide5-4_new.mp3")
-        scene.wait(3.5)
+        scene.wait(3)
