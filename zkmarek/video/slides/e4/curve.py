@@ -1,5 +1,3 @@
-import math
-
 class Curve:
     x: float
     y: float
@@ -10,7 +8,7 @@ class Curve:
 
     @staticmethod
     def from_x(x, sgn = 1):
-        y = 2*x **2 + 3*x - 5
+        y = 2*x **2 + 3*x - 2
         return Curve(x, -y) if sgn < 0 else Curve(x, y)
 
     def __neg__(self):
