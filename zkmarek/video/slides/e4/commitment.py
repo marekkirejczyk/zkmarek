@@ -26,7 +26,3 @@ class Commitment(SlideBase):
 
         self.new_subsection(scene, "quotient", "data/sound/e4/slide2-4.mp3")
 
-        self.new_subsection(scene, "pairings", "data/sound/e4/slide2-5.mp3")
-
-        self.new_subsection(scene, "conclusion", "data/sound/e4/slide2-6.mp3")
-

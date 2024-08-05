@@ -51,7 +51,7 @@ from zkmarek.video.slides.teaser3.intuition import Intuition
 from zkmarek.video.slides.teaser3.credits import Credits as CreditsT3
 from zkmarek.video.slides.teaser3.e2_reference import TitleSlide as E2Reference
 from zkmarek.video.slides.episode4.KZG import KZG
-from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
+# from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
 from zkmarek.video.slides.episode4.verkle import Verkle
 from zkmarek.video.slides.e4.polynomials import Polynomials
 from zkmarek.video.slides.e4.commitment import Commitment
@@ -150,27 +150,27 @@ EPISODE3 = [
     Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
     Sponsored(),
     Introduction(),
-    TitleSlide("Pairing", sound="data/sound/episode3/slide1-4.mp3", wait_time=3.5),
-    Pairing(),
-    TitleSlide("Trusted setup", sound="data/sound/episode3/slide3-0.mp3", wait_time=1.5),
+    TitleSlide("Trusted setup", sound="data/sound/episode3_1/slide3-0_new.mp3", wait_time=1.5),
     TrustedSetup(),
     TitleSlide("Ceremony", sound="data/sound/episode3/slide4-4.mp3", wait_time=3),
     Ceremony(),
+    TitleSlide("Pairing", sound="data/sound/episode3_1/slide1_4_new.mp3", wait_time=3.5),
+    Pairing(),
     CeremonyVerification(),
     CeremonyVerification2(),
+    TitleSlide("Toxic Waste", sound="data/sound/episode3_1/slide7.5-00.mp3", wait_time=1.5),
     ToxicWaste(),
+    TitleSlide("The use of trusted setup", sound="data/sound/episode3_1/slide8-00.mp3", wait_time=1),
     Polynomial(),
     Subscribe("data/sound/episode1/s28.wav"),
     CreditsE3(),
 ]
 
 EPISODE4 = [
-    # Intro("data/sound/episode2/slide1-0.mp3"),
-    # Sponsored(),
     Polynomials(),
     Commitment(),
+    # PolynomialCommitment(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    PolynomialCommitment(),
     KZG(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),
