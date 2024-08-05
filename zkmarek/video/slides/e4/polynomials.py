@@ -64,10 +64,12 @@ class Polynomials(SlideBase):
 
         scene.play(FadeIn(self.polynomial_eqn1))
         scene.play(TransformMatchingShapes(VGroup(self.x.copy(), self.polynomial_eqn1), self.polynomial_eqn2), run_time=2)
+
+        scene.play(Indicate(self.polynomial_eqn2[1], color = HIGHLIGHT_COLOR), run_time=0.5)
+        scene.play(Indicate(self.polynomial_eqn2[3], color = HIGHLIGHT_COLOR), run_time=0.5)
+        scene.play(Indicate(self.polynomial_eqn2[5], color = HIGHLIGHT_COLOR), run_time=0.5)
+
         scene.play(TransformMatchingShapes(self.polynomial_eqn2, self.polynomial_eqn), run_time=2)
-        scene.play(Indicate(self.polynomial_eqn[3], color = HIGHLIGHT_COLOR), run_time=0.5)
-        scene.play(Indicate(self.polynomial_eqn[7], color = HIGHLIGHT_COLOR), run_time=0.5)
-        scene.play(Indicate(self.polynomial_eqn[11], color = HIGHLIGHT_COLOR), run_time=0.5)
 
         scene.play(Indicate(self.polynomial_eqn[1], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.polynomial_eqn[5], color = HIGHLIGHT_COLOR), run_time=0.5)
@@ -89,10 +91,10 @@ class Polynomials(SlideBase):
         scene.play(Create(self.chart.ax), run_time=2)
         scene.wait(1.5)
         scene.play(Create(self.p1.dot))
-        scene.play(Create(self.p2.dot))
-        scene.play(Create(self.p3.dot))
         scene.play(Write(self.p1.label))
+        scene.play(Create(self.p2.dot))
         scene.play(Write(self.p2.label))
+        scene.play(Create(self.p3.dot))
         scene.play(Write(self.p3.label))
         scene.wait(0.5)
         scene.play(Indicate(self.polynomial_eqn, color = PRIMARY_COLOR))
@@ -117,9 +119,11 @@ class Polynomials(SlideBase):
         self.new_subsection(scene, "roots", "data/sound/e4/slide1-4.mp3")
         scene.wait(2)
         scene.play(Indicate(self.p1.dot))
+        self.root1.shift(UP)
         scene.play(Create(self.root1))
         scene.play(Indicate(self.root1))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial2))
+        scene.wait(4)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart.graph, self.title_label, self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1))
