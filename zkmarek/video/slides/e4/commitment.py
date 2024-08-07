@@ -58,7 +58,7 @@ class Commitment(SlideBase):
         scene.wait(2)
         scene.play(MoveToTarget(self.trusted_setup))
 
-        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-2.mp3")
+        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-3.mp3")
         scene.wait(1.5)
         scene.play(Write(self.commitment))
         scene.wait(1.5)
@@ -71,7 +71,7 @@ class Commitment(SlideBase):
         scene.wait(3)
         scene.play(FadeOut(self.ec_point, self.ec_point_label))
 
-        self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-3.mp3")
+        self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-4.mp3")
         self.commiter.generate_target()
         self.commiter.target.to_edge(LEFT)
         
@@ -91,14 +91,17 @@ class Commitment(SlideBase):
         scene.play(MoveToTarget(self.commitment))
 
         self.chart.next_to(self.commitment, DOWN)
-        create_arrow(self.commitment, self.chart)
-        scene.play(Write(self.chart))
+        
+        scene.play(Write(self.chart), Write(create_arrow(self.commitment, self.chart)))
         scene.wait(2)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.trusted_setup))
-        
-        self.new_subsection(scene, "quotient", "data/sound/e4/slide2-4.mp3")
+
+        self.new_subsection(scene, "opening", "data/sound/e4/slide2-5.mp3")
+
+        self.new_subsection(scene, "kzg", "data/sound/e4/slide2-6.mp3")
+        scene.wait(5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.trusted_setup, self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.commitment))

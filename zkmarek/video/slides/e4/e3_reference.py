@@ -36,11 +36,11 @@ class Episode3Reference(SlideBase):
         self.slide = Ceremony()
         self.slide.construct()
 
-        self.new_subsection(scene, "to recap", "data/sound/e4/slide2-4.mp3")
+        self.new_subsection(scene, "to recap", "data/sound/e4/slide0-2.mp3")
         scene.play(FadeOut(self.arrow, self.label))
         self.slide.animate_miniature(scene)
 
-        self.new_subsection(scene, "polynomial", "data/sound/e4/slide2-5.mp3")
+        self.new_subsection(scene, "polynomial", "data/sound/e4/slide0-3.mp3")
         scene.play(FadeOut(self.slide))
         self.slide2 = Polynomial()
         self.slide2.construct()
