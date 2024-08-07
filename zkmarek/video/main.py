@@ -170,10 +170,11 @@ EPISODE3 = [
 
 EPISODE4 = [
     Episode3Reference(),
+    TitleSlide("Polynomials", sound="data/sound/e4/slide0-4.mp3", wait_time=2.5),
     Polynomials(),
     Commitment(),
     # PolynomialCommitment(),
-    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
+    # TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     KZG(),
     Verkle(),
     Subscribe("data/sound/episode1/s28.wav"),

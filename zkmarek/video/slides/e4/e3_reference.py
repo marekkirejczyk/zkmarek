@@ -37,6 +37,7 @@ class Episode3Reference(SlideBase):
         self.slide.construct()
 
         self.new_subsection(scene, "to recap", "data/sound/e4/slide2-4.mp3")
+        scene.play(FadeOut(self.arrow, self.label))
         self.slide.animate_miniature(scene)
 
         self.new_subsection(scene, "polynomial", "data/sound/e4/slide2-5.mp3")
@@ -45,11 +46,8 @@ class Episode3Reference(SlideBase):
         self.slide2.construct()
         scene.wait(0.5)
         self.slide2.animate_miniature(scene)
-
-        self.new_subsection(scene, "this episode", "data/sound/e4/slide0-4.mp3")
-        scene.play(FadeOut(self.slide2))
         
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.label), FadeOut(self.arrow))
+        scene.play(FadeOut(self.slide2))
         self.wait_for_sound(scene)
