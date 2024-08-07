@@ -37,6 +37,7 @@ class Episode3Reference(SlideBase):
 
         self.new_subsection(scene, "to recap", "data/sound/e4/slide0-2.mp3")
         self.slide.animate_miniature(scene)
+        
 
         self.new_subsection(scene, "powers of tau", "data/sound/e4/slide0-3.mp3")
         self.slide.animate_miniature2(scene)
