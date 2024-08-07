@@ -50,11 +50,6 @@ from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.intuition import Intuition
 from zkmarek.video.slides.teaser3.credits import Credits as CreditsT3
 from zkmarek.video.slides.teaser3.e2_reference import TitleSlide as E2Reference
-from zkmarek.video.slides.episode4.KZG import KZG
-# from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
-from zkmarek.video.slides.episode4.verkle import Verkle
-from zkmarek.video.slides.e4.polynomials import Polynomials
-from zkmarek.video.slides.e4.commitment import Commitment
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
 from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
@@ -64,6 +59,13 @@ from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
+from zkmarek.video.slides.episode4.KZG import KZG
+# from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
+from zkmarek.video.slides.episode4.verkle import Verkle
+from zkmarek.video.slides.e4.polynomials import Polynomials
+from zkmarek.video.slides.e4.commitment import Commitment
+from zkmarek.video.slides.e4.e3_reference import Episode3Reference
+
 
 config.width = 16
 config.height = 9
@@ -167,6 +169,7 @@ EPISODE3 = [
 ]
 
 EPISODE4 = [
+    Episode3Reference(),
     Polynomials(),
     Commitment(),
     # PolynomialCommitment(),

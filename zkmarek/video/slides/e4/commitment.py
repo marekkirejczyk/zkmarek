@@ -1,6 +1,6 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, TransformMatchingShapes, Brace, VGroup, MoveToTarget, FadeOut
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, TransformMatchingShapes, Brace, Group, MoveToTarget, FadeOut
 
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.tex_array import TexArray
 
@@ -26,30 +26,29 @@ PARTICIPANT_N = [
 ]
 
 class Commitment(SlideBase):
-
     def __init__(self):
         super().__init__("Commitment")
 
     def construct(self):
         self.title = Text("Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=80).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(LEFT*3)
-        self.commiter = ImageMobject("data/images/person_blue.png").shift(RIGHT*3)
+        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*3)
+        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*3)
 
         self.commiter_label = Text("Commiter", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.verifier, DOWN, buff = 0.4)
 
         person = ImageMobject("data/images/person.png").scale(0.4)
 
-        self.person1 = person.copy().shift(3*LEFT)
-        self.person2 = person.copy().shift(3*RIGHT)
-        self.person3 = person.copy().shift(2*UP)
-        self.person4 = person.copy().shift(2*DOWN)
+        self.person1 = person.copy().shift(LEFT)
+        self.person2 = person.copy().shift(RIGHT)
+        self.person3 = person.copy().shift(UP)
+        self.person4 = person.copy().shift(DOWN)
         self.tau = MathTex(r"\tau", font_size = 60, color = SECONDARY_COLOR)
         self.tau_encrypted = MathTex(r"\tau \cdot G", font_size = 60, color = SECONDARY_COLOR)
 
-        self.commitment = MathTex(r"C = P(\tau)\cdot G_1", color = SECONDARY_COLOR)
-        self.ec_point = Brace("elliptic curve point", DOWN, color = PRIMARY_COLOR)
-        self.ec_point_label = Text(r"Subgroups of points on elliptic curve", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.commitment = MathTex(r"C = {{P(\tau)\cdot G_1}}", color = SECONDARY_COLOR)
+        self.ec_point = Brace(self.commitment[1], DOWN, color = PRIMARY_COLOR)
+        self.ec_point_label = Text(r"elliptic curve point", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.ec_point.put_at_tip(self.ec_point_label)
 
         self.vector_0 = TexArray(PARTICIPANT_1)
@@ -82,9 +81,9 @@ class Commitment(SlideBase):
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.tau, self.tau_encrypted))
 
-        self.trusted_setup = VGroup(self.person1, self.person2, self.person3, self.person4, self.tau_encrypted)
+        self.trusted_setup = Group(self.person1, self.person2, self.person3, self.person4, self.tau_encrypted)
         self.trusted_setup.generate_target()
-        self.trusted_setup.target.to_corner(UP+RIGHT).scale(0.8)
+        self.trusted_setup.target.to_edge(UP+RIGHT).scale(0.4)
         scene.wait(2)
         scene.play(MoveToTarget(self.trusted_setup))
 
