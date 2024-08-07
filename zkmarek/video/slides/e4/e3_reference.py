@@ -3,10 +3,12 @@ from manim import (LEFT, UP, FadeOut, Text, Arrow, RIGHT, MoveToTarget, rate_fun
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode3.ceremony import Ceremony
+from zkmarek.video.slides.episode3.polynomial import Polynomial
 
 
 class Episode3Reference(SlideBase):
     slide: Ceremony
+    slide2: Polynomial
 
     def __init__(self):
         super().__init__("E3 Reference")
@@ -33,18 +35,21 @@ class Episode3Reference(SlideBase):
         scene.play(ApplyWave(VGroup(self.label, self.arrow)), run_time=2)
         self.slide = Ceremony()
         self.slide.construct()
-        scene.wait(0.5)
 
-        self.new_subsection(scene, "to recap", "data/sound/e4/slide0-2.mp3")
+        self.new_subsection(scene, "to recap", "data/sound/e4/slide2-4.mp3")
         self.slide.animate_miniature(scene)
-        
 
-        self.new_subsection(scene, "powers of tau", "data/sound/e4/slide0-3.mp3")
-        self.slide.animate_miniature2(scene)
+        self.new_subsection(scene, "polynomial", "data/sound/e4/slide2-5.mp3")
+        scene.play(FadeOut(self.slide))
+        self.slide2 = Polynomial()
+        self.slide2.construct()
+        scene.wait(0.5)
+        self.slide2.animate_miniature(scene)
 
         self.new_subsection(scene, "this episode", "data/sound/e4/slide0-4.mp3")
+        scene.play(FadeOut(self.slide2))
         
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.slide), FadeOut(self.label), FadeOut(self.arrow))
+        scene.play(FadeOut(self.label), FadeOut(self.arrow))
         self.wait_for_sound(scene)

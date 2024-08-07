@@ -139,11 +139,9 @@ class Ceremony(SlideBase):
         self.person3.scale(0.65).next_to(self.tau_k, LEFT, buff = 0.6)
         scene.play(FadeIn(text, self.person, self.person2, self.person3, rectangle, self.title_label, self.tau_0, self.tau_1, self.tau_k))
         self.add(text)
-        scene.wait(3)
-        scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.tau_1, color = PRIMARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.tau_k, color = PRIMARY_COLOR), run_time=0.7)
-        scene.wait(2)
+        scene.play(Indicate(self.tau_0, color = PRIMARY_COLOR), run_time=0.4)
+        scene.play(Indicate(self.tau_1, color = PRIMARY_COLOR), run_time=0.4)
+        scene.play(Indicate(self.tau_k, color = PRIMARY_COLOR), run_time=0.4)
         self.vector_0.scale(0.65).next_to(self.tau_0, RIGHT, buff = 0.5)
         self.vector_1.scale(0.65).next_to(self.tau_1, RIGHT, buff = 0.5)
         self.vector_k.scale(0.65).next_to(self.tau_k, RIGHT, buff = 0.5)
@@ -151,12 +149,8 @@ class Ceremony(SlideBase):
         scene.play(Write(self.vector_0[0]))
         scene.play(Write(self.vector_1[0]))
         scene.play(Write(self.vector_k[0]))
-        scene.wait(2)
-        scene.play(Indicate(self.vector_0.cells[0][1][2], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_1.cells[0][1][2], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.vector_k.cells[0][1][2], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_0.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_k.cells[0][1][2], color = HIGHLIGHT_COLOR))
 
-    def animate_miniature2(self, scene):
         for i in range(1, len(self.vector_0.cells)):
             self.vector_0.cells[i].next_to(self.vector_0.cells[i-1], RIGHT, buff=0)
             self.vector_1.cells[i].next_to(self.vector_1.cells[i-1], RIGHT, buff=0)
@@ -164,7 +158,7 @@ class Ceremony(SlideBase):
             scene.play(Write(self.vector_0.cells[i]), Write(self.vector_1.cells[i]), Write(self.vector_k.cells[i]), run_time=0.2)
         scene.play(FadeIn(self.three_dot))
 
-        scene.wait(3)
+        scene.wait(4)
         scene.play(FadeOut(self.tau_0, self.tau_1, self.tau_k, self.person, self.person2, self.person3, self.vector_0, self.vector_1, self.vector_k, self.three_dot, self.title_label))
 
     def animate_out(self, scene):

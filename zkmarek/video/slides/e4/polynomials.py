@@ -96,7 +96,6 @@ class Polynomials(SlideBase):
         scene.play(Write(self.p2.label))
         scene.play(Create(self.p3.dot))
         scene.play(Write(self.p3.label))
-        scene.wait(0.5)
         scene.play(Indicate(self.polynomial_eqn, color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.p1.label.copy(), self.poly_point1))
@@ -119,11 +118,11 @@ class Polynomials(SlideBase):
         self.new_subsection(scene, "roots", "data/sound/e4/slide1-4.mp3")
         scene.wait(2)
         scene.play(Indicate(self.p1.dot))
-        self.root1.shift(UP)
+        self.root1.label.shift(UP*0.2)
         scene.play(Create(self.root1))
         scene.play(Indicate(self.root1))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial2))
         scene.wait(4)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.graph, self.title_label, self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1))
+        scene.play(FadeOut(self.chart.graph, self.title_label, self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1, self.polynomial2, self.poly_point1, self.poly_point2, self.poly_point3))

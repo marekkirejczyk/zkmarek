@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, UP, DOWN, MathTex, TransformMatchingShapes, VGroup, Text, Indicate, ImageMobject, Arrow, GrowArrow, MoveToTarget, ValueTracker, Create
+from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, UP, DOWN, MathTex, TransformMatchingShapes, VGroup, Text, Indicate, ImageMobject, Arrow, GrowArrow, MoveToTarget, ValueTracker, Create, Rectangle
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -118,3 +118,20 @@ class Polynomial(SlideBase):
         scene.play(Create(tree))
         scene.wait(1.2)
         scene.play(FadeOut(tree))
+
+    def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
+        text = Text("Evaluating a polynomial", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65)
+        self.add(rectangle, self.polynomial, self.polynomial_G, self.vector, self.chart)
+        self.scale(0.65)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        scene.play(FadeIn(text, rectangle, self.polynomial))
+        self.add(text)
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_G))
+        scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial_G), self.polynomial_tau0))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.polynomial_tau0, self.polynomial_tau))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.polynomial_tau, self.polynomial_P))

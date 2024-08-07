@@ -2,28 +2,6 @@ from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, Math
 
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.mobjects.tex_array import TexArray
-
-PARTICIPANT_1 = [
-    r"{{\tau_0^1}}  {{G_1}}",
-    r"{{\tau_0^2}} {{G_1}}",
-    r". . .",
-    r"{{\tau_0^n}}  {{G_1}}"
-]
-
-PARTICIPANT_2 = [
-    r"\tau_1^1 G_1",
-    r"\tau_1^2 G_1",
-    ". . .",
-    r"\tau_1^n G_1"
-]
-
-PARTICIPANT_N = [
-    r"\tau_i^1 G_1",
-    r"\tau_i^2 G_1",
-    r". . .",
-    r"\tau_i^n G_1"
-]
 
 class Commitment(SlideBase):
     def __init__(self):
@@ -51,23 +29,12 @@ class Commitment(SlideBase):
         self.ec_point_label = Text(r"elliptic curve point", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.ec_point.put_at_tip(self.ec_point_label)
 
-        self.vector_0 = TexArray(PARTICIPANT_1)
-        self.vector_1 = TexArray(PARTICIPANT_2)
-        self.vector_k = TexArray(PARTICIPANT_N)
-        self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT, color=SECONDARY_COLOR).scale(0.5)
-
-        self.vector_0.next_to(self.title, DOWN)
-        self.vector_1.next_to(self.vector_0, DOWN, buff = 0.4)
-        self.three_dot.next_to(self.vector_1, DOWN, buff=0.4)
-        self.vector_k.next_to(self.three_dot, DOWN, buff=0.4)
-
-
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide2-0.mp3")
         scene.wait(4)
         scene.play(FadeIn(self.commiter))
         scene.play(FadeIn(self.verifier))
-        scene.wait(2)
+        scene.wait(0.5)
         scene.play(Write(self.commiter_label))
         scene.play(Write(self.verifier_label))
 
@@ -90,7 +57,7 @@ class Commitment(SlideBase):
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-2.mp3")
         scene.wait(3)
         scene.play(Write(self.commitment))
-        scene.wait(2)
+        scene.wait(4)
         scene.play(FadeIn(self.ec_point_label))
         scene.play(FadeIn(self.ec_point))
         scene.wait(3)
@@ -110,15 +77,6 @@ class Commitment(SlideBase):
         self.verifier_label.target.to_edge(RIGHT)
 
         scene.play(MoveToTarget(self.commiter), MoveToTarget(self.commiter_label), MoveToTarget(self.verifier), MoveToTarget(self.verifier_label))
-        scene.play(Write(self.vector_0), run_time=0.7)
-        scene.play(Write(self.vector_1), run_time=0.7)
-        scene.play(Write(self.three_dot), run_time=0.7)
-        scene.play(Write(self.vector_k), run_time=0.7)
-
-
-        self.new_subsection(scene, "what trusted setup?", "data/sound/e4/slide2-4.mp3")
-
-        self.new_subsection(scene, "encrypted polynomial", "data/sound/e4/slide2-5.mp3")
 
         self.new_subsection(scene, "quotient", "data/sound/e4/slide2-4.mp3")
 
