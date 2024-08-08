@@ -30,20 +30,20 @@ class Episode3Reference(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "Intro", sound="data/sound/e4/slide0-1.mp3")
         self.create_arrow()
+        self.slide = Ceremony()
+        self.slide.construct()
+        self.slide2 = Polynomial()
+        self.slide2.construct()
+
         scene.play(MoveToTarget(self.label, rate_func=rate_functions.ease_out_bounce, run_time=1),
             MoveToTarget(self.arrow, rate_func=rate_functions.ease_out_bounce, run_time=1))
         scene.play(ApplyWave(VGroup(self.label, self.arrow)), run_time=2)
-        self.slide = Ceremony()
-        self.slide.construct()
 
         self.new_subsection(scene, "to recap", "data/sound/e4/slide0-2.mp3")
         scene.play(FadeOut(self.arrow, self.label))
         self.slide.animate_miniature(scene)
 
         self.new_subsection(scene, "polynomial", "data/sound/e4/slide0-3.mp3")
-        scene.play(FadeOut(self.slide))
-        self.slide2 = Polynomial()
-        self.slide2.construct()
         scene.wait(0.5)
         self.slide2.animate_miniature(scene)
         

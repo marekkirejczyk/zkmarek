@@ -6,8 +6,8 @@ from manim import (
     FadeIn,
     FadeOut,
     MathTex,
-    TransformMatchingTex,
-    VGroup,
+    TransformMatchingShapes,
+    Group,
     ReplacementTransform,
     Indicate
 )
@@ -46,7 +46,7 @@ class KZG(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification2 = MathTex(
-            r"e( q(\tau)\cdot G_1, (\tau-z) \cdot G_2) ) = e(P(\tau\cdot G_1) - y \cdot G_1, G_2)",
+            r"e( {{q(\tau)\cdot G_1}}, (\tau-z) \cdot G_2) ) = e({{P(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
@@ -100,8 +100,11 @@ class KZG(SlideBase):
         self.new_subsection(scene, "what is quotient", "data/sound/e4/slide3-2.mp3")
         scene.play(Indicate(self.equation))
         scene.wait(4)
-        scene.play(Indicate(self.equation[4], color = SECONDARY_COLOR))
         scene.play(Indicate(self.equation[6], color = SECONDARY_COLOR))
+        scene.play(Indicate(self.equation[8], color = SECONDARY_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.equation[2], color = SECONDARY_COLOR))
+        scene.play(Indicate(self.equation[4], color = SECONDARY_COLOR))
 
         self.chart.animate_shift_dots(scene, self.y.value)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
@@ -136,15 +139,11 @@ class KZG(SlideBase):
         self.new_subsection(scene, "definitions of C and PI", "data/sound/e4/slide3-7.mp3")
         scene.wait(4)
         scene.play(
-            TransformMatchingTex(
-                VGroup(self.verification, self.proof.copy()), self.verification2
-            )
+            TransformMatchingShapes(
+                Group(self.verification[1].copy(), self.proof.copy(), self.verification[7].copy(), self.commitment.copy(), self.verification), self.verification2
+            ),    run_time=2         
         )
 
         self.new_subsection(scene, "bilinear", "data/sound/e4/slide3-8.mp3")
-        scene.play(
-            TransformMatchingTex(
-                VGroup(self.verification2, self.commitment.copy()), self.verification3
-            )
-        )
+        scene.wait(2.5)
         scene.play(ReplacementTransform(self.verification3, self.verification4))

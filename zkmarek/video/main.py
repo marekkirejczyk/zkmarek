@@ -61,7 +61,7 @@ from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
 from zkmarek.video.slides.episode4.KZG import KZG
 # from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
-from zkmarek.video.slides.episode4.verkle import Verkle
+# from zkmarek.video.slides.episode4.verkle import Verkle
 from zkmarek.video.slides.e4.polynomials import Polynomials
 from zkmarek.video.slides.e4.commitment import Commitment
 from zkmarek.video.slides.e4.e3_reference import Episode3Reference
@@ -170,14 +170,14 @@ EPISODE3 = [
 
 EPISODE4 = [
     Episode3Reference(),
-    TitleSlide("Polynomials", sound="data/sound/e4/slide0-4.mp3", wait_time=2.5),
+    TitleSlide("Polynomials", subtitle="KZG: Kate, Zaverucha and Goldberg", sound="data/sound/e4/slide0-4.mp3", wait_time=5),
     Polynomials(),
     Commitment(),
     # PolynomialCommitment(),
     # TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     KZG(),
-    Verkle(),
-    Subscribe("data/sound/episode1/s28.wav"),
+    # Verkle(),
+    # Subscribe("data/sound/episode1/s28.wav"),
 ]
 
 EPISODE5 = [

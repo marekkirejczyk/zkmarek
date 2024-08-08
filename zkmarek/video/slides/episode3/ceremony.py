@@ -155,7 +155,7 @@ class Ceremony(SlideBase):
         scene.play(Indicate(self.vector_0.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_k.cells[0][1][2], color = HIGHLIGHT_COLOR))
 
         scene.wait(2)
-        scene.play(FadeOut(self.vector_0, self.vector_1, self.vector_k, self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k))
+        scene.play(FadeOut(self.vector_0, self.vector_1, self.vector_k, self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.three_dot))
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))

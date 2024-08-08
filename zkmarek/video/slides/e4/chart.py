@@ -12,7 +12,7 @@ class Chart(VGroup):
     def __init__(self, include_details=True, **kwargs):
         super().__init__(**kwargs)
         self.include_details = include_details
-        step = 2 if include_details else 20
+        step = 10 if include_details else 20
         self.ax = Axes(
             x_range=[-4.5, 3.1, step],
             y_range=[-3.2, 27, step],
@@ -35,9 +35,9 @@ class Chart(VGroup):
         self.add(self.ax)
         if include_details:
             self.labels = self.ax.get_axis_labels(
-                SingleStringMathTex(r"\mathbb{R}", tex_template=template,
+                SingleStringMathTex(r"x", tex_template=template,
                     font_size=26, color=PRIMARY_COLOR),
-                SingleStringMathTex(r"\mathbb{R}", tex_template=template,
+                SingleStringMathTex(r"y", tex_template=template,
                     font_size=26, color=PRIMARY_COLOR)
             )
             self.add(self.labels)
