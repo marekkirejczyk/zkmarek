@@ -174,7 +174,6 @@ EPISODE4 = [
     Polynomials(),
     Commitment(),
     # PolynomialCommitment(),
-    # TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
     KZG(),
     # Verkle(),
     # Subscribe("data/sound/episode1/s28.wav"),

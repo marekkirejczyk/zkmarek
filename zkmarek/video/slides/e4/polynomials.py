@@ -17,9 +17,11 @@ class Polynomials(SlideBase):
         self.x = MathTex(r"x", color = SECONDARY_COLOR).next_to(self.title_label, DOWN)  
         self.polynomial_eqn1 = MathTex(r"P(x) = x", color = SECONDARY_COLOR)     
         self.polynomial_eqn = MathTex(r"P(x) = {{a_n}} \cdot {{x^n}} + {{a_{n-1} }}\cdot {{x^{n-1} }} + \cdots + {{a_1}} \cdot {{x}} + {{a_0}}", color = SECONDARY_COLOR)
-        self.polynomial_eqn3 = MathTex(r"P(x) = {{a_2}} \cdot {{x^2}} + {{a_{1} }}\cdot {{x }} + {{a_0}}", color = SECONDARY_COLOR)
+        self.polynomial_eqn3 = MathTex(r"P(x) = {{a_2}} \cdot {{x^2}} + {{a_{1} }}\cdot {{x }} + {{a_0}}", color = SECONDARY_COLOR).to_edge(DOWN)
         self.polynomial_eqn2 = MathTex(r"P(x) = {{x}}^n + {{x}}^{n-1} + \cdots + {{x}}", color = SECONDARY_COLOR)
         self.polynomial = MathTex(r"P(x) = 2 x^2 + 3x - 2", color = SECONDARY_COLOR).to_edge(DOWN)
+        self.quotient = MathTex(r"Q(x) = x^3 + x^2 - 2x + 8", color = SECONDARY_COLOR).to_edge(DOWN)
+        self.subtract = MathTex(r"R(x) = x^3 - x^2 - 5x + 10", color = SECONDARY_COLOR).to_edge(DOWN)
         self.polynomial2 = MathTex(r"P(x) = 2 x^2 + 3x - 2 = (2x-1)(x+2)", color = SECONDARY_COLOR).to_edge(DOWN)
 
         self.proof = ImageMobject("data/images/Proof.png")
@@ -48,6 +50,10 @@ class Polynomials(SlideBase):
         self.p05 = ValueTracker(0.5)
         a05 = Curve.from_x(self.p05.get_value())
         self.root2 = DotOnCurve(self.chart.ax, "(0.5,0)", a05)
+
+        self.p_intersect = ValueTracker(-2.5328)
+        a_i = Curve.from_x(self.p_intersect.get_value())
+        self.intersect = DotOnCurve(self.chart.ax, "(0.5,0)", a_i)
 
         self.point = []
         self.N = 30 # n/o of points
@@ -133,6 +139,16 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.root1, color = SECONDARY_COLOR), Indicate(self.root2, color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial2))
         scene.wait(4)
+
+        self.new_subsection(scene, "operations", "data/sound/e4/slide1-5.mp3")
+        scene.wait(4)
+        scene.play(Write(self.chart.graph2))
+        self.quotient.next_to(self.polynomial, UP, buff = 0.6).scale(0.7)
+        scene.play(Write(self.quotient))
+
+        self.new_subsection(scene, "equality", "data/sound/e4/slide1-6.mp3")
+        scene.wait(2.5)
+        scene.play(Create(self.intersect))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart.graph, self.title_label, self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1, self.polynomial2, self.poly_point1, self.poly_point2, self.poly_point3))
