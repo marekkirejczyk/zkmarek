@@ -60,9 +60,6 @@ class Proof1(SlideBase):
         self.opening5.next_to(self.opening, DOWN)
         self.opening6.next_to(self.opening, DOWN)
         self.opening7.next_to(self.opening, DOWN)
-        self.commitment.next_to(self.equation, DOWN)
-        self.proof.next_to(self.commitment, DOWN)
-        self.verification.to_edge(DOWN)
 
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
