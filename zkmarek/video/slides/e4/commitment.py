@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, TransformMatchingShapes, Brace, Group, MoveToTarget, FadeOut, Indicate, Arrow, AddTextLetterByLetter, ReplacementTransform, ValueTracker, Create
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, Brace, MoveToTarget, FadeOut, Indicate, Arrow, AddTextLetterByLetter, ReplacementTransform, ValueTracker, Create
 
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -43,7 +43,7 @@ class Commitment(SlideBase):
         self.new_subsection(scene, "committing", "data/sound/e4/slide2-1.mp3")
         scene.play(AddTextLetterByLetter(self.message), run_time=2.5)
 
-        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-3.mp3")
+        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-2.mp3")
         scene.wait(1.5)
         scene.play(ReplacementTransform(self.message, self.commitment))
         scene.wait(1.5)
@@ -56,7 +56,7 @@ class Commitment(SlideBase):
         scene.wait(3)
         scene.play(FadeOut(self.ec_point, self.ec_point_label))
 
-        self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-4.mp3")
+        self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-3.mp3")
         self.commiter.generate_target()
         self.commiter.target.to_edge(LEFT)
         
@@ -82,12 +82,12 @@ class Commitment(SlideBase):
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
         scene.wait(1)
 
-        self.new_subsection(scene, "opening", "data/sound/e4/slide2-5.mp3")
+        self.new_subsection(scene, "opening", "data/sound/e4/slide2-4.mp3")
         scene.wait(1.5)
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
 
-        self.new_subsection(scene, "kzg", "data/sound/e4/slide2-6.mp3")
+        self.new_subsection(scene, "kzg", "data/sound/e4/slide2-5.mp3")
         scene.wait(5)
 
     def animate_out(self, scene):

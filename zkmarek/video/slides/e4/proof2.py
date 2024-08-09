@@ -5,7 +5,10 @@ from manim import (
     UP,
     MathTex,
     Indicate,
-    Write
+    Write,
+    FadeIn,
+    TransformMatchingShapes,
+    VGroup
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -33,6 +36,9 @@ class Proof2(SlideBase):
 
     def construct(self):
         self.chart = DiscreetePolynomialChart(41, poly)
+
+        self.definition = MathTex(r"{{e}}: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
+        self.definition2 = MathTex(r"e(G_1, G_2) \rightarrow G_T", font_size=70, color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"C = P(\tau) \cdot G_1", color=PRIMARY_COLOR)
@@ -56,6 +62,8 @@ class Proof2(SlideBase):
 
         self.chart.to_edge(LEFT)
         self.polynomial.to_edge(RIGHT + UP)
+        self.definition.next_to(self.polynomial, DOWN)
+        self.definition2.next_to(self.definition, DOWN)
         self.equation.next_to(self.polynomial, DOWN)
         self.commitment.next_to(self.equation, DOWN)
         self.proof.next_to(self.commitment, DOWN)
@@ -70,6 +78,10 @@ class Proof2(SlideBase):
         self.new_subsection(
             scene, "pairings", "data/sound/e4/slide4-0.mp3"
         )
+        scene.wait(3)
+        scene.play(FadeIn(self.definition))
+        scene.wait(2)
+        scene.play(FadeIn(self.definition2))
         
         self.new_subsection(scene, "pi - proof", "data/sound/e4/slide4-1.mp3")
         scene.wait(2.5)
@@ -77,13 +89,15 @@ class Proof2(SlideBase):
         scene.wait(4)
         scene.play(Write(self.commitment))
 
-        # self.new_subsection(scene, "pairings eqn", "data/sound/e4/slide4-2.mp3")
-        # scene.play(Write(self.verification))
+        self.new_subsection(scene, "pairings eqn", "data/sound/e4/slide4-2.mp3")
+        scene.play(Write(self.verification))
 
-        # self.new_subsection(scene, "correctly formed", "data/sound/e4/slide4-3.mp3")
+        self.new_subsection(scene, "correctly formed", "data/sound/e4/slide4-3.mp3")
+        scene.play(Write(self.equation))
+        scene.play(Indicate(self.equation))
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-4.mp3")
-        scene.play(Write(self.verification))
+
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
         scene.wait(2)
@@ -94,3 +108,14 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.verification[11], color = SECONDARY_COLOR))
+
+        self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
+
+        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.verification, self.commitment.copy()), self.verification2))
+
+        self.new_subsection(scene, "bilinearity", "data/sound/e4/slide4-7.mp3")
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.verification2, self.verification3))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.verification3, self.verification4))
+        scene.wait(4)
