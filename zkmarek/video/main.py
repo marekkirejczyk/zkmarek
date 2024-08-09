@@ -59,7 +59,8 @@ from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
-from zkmarek.video.slides.episode4.KZG import KZG
+from zkmarek.video.slides.e4.proof2 import Proof2
+from zkmarek.video.slides.e4.proof import Proof1
 # from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
 # from zkmarek.video.slides.episode4.verkle import Verkle
 from zkmarek.video.slides.e4.polynomials import Polynomials
@@ -174,7 +175,8 @@ EPISODE4 = [
     Polynomials(),
     Commitment(),
     # PolynomialCommitment(),
-    KZG(),
+    Proof1(),
+    Proof2(),
     # Verkle(),
     # Subscribe("data/sound/episode1/s28.wav"),
 ]
