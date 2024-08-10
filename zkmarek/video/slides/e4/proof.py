@@ -79,9 +79,6 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.opening, color = SECONDARY_COLOR))
 
         self.chart.add_xaxis_label(self.z.value, r"z")
-        line_z = self.chart.animate_create_vertical_line(
-            scene, self.z.value, self.y.value
-        )
 
         self.new_subsection(scene, "divisibility", "data/sound/e4/slide3-2.mp3")
         scene.wait(2)

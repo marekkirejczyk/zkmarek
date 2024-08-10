@@ -77,6 +77,7 @@ class Proof2(SlideBase):
         self.new_subsection(
             scene, "pairings", "data/sound/e4/slide4-0.mp3"
         )
+        self.chart.gen_points()
         scene.play(FadeIn(self.chart))
         scene.wait(2)
         scene.play(FadeIn(self.definition2))
