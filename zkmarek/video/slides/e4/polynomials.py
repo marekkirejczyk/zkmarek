@@ -53,7 +53,7 @@ class Polynomials(SlideBase):
 
         self.p_intersect = ValueTracker(-2.5328)
         a_i = Curve.from_x(self.p_intersect.get_value())
-        self.intersect = DotOnCurve(self.chart.ax, "(0.5,0)", a_i)
+        self.intersect = DotOnCurve(self.chart.ax, r"(\tau,0)", a_i)
 
         self.point = []
         self.N = 30 # n/o of points
@@ -68,7 +68,7 @@ class Polynomials(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
         scene.play(Write(self.title_label))
-        scene.wait(3)
+        scene.wait(5.5)
         scene.play(FadeIn(self.x))
         scene.wait(2)
 
@@ -85,18 +85,8 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial_eqn[5], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.polynomial_eqn[9], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.polynomial_eqn[13], color = HIGHLIGHT_COLOR), run_time=0.5)
-        
 
-        self.new_subsection(scene, "crypto", "data/sound/e4/slide1-1.mp3")
-        self.polynomial_eqn.generate_target()
-        self.polynomial_eqn.target.to_edge(DOWN).scale(0.7)
-        scene.play(FadeOut(self.x), MoveToTarget(self.polynomial_eqn), run_time=2)
-        scene.play(FadeIn(self.verifying))
-        scene.wait(3)
-        scene.play(ReplacementTransform(self.verifying, self.proof), run_time=1.5)
-
-        self.new_subsection(scene, "specific eqn", "data/sound/e4/slide1-2.mp3")
-        scene.play(FadeOut(self.proof))
+        self.new_subsection(scene, "specific eqn", "data/sound/e4/slide1-1.mp3")
         scene.wait(1)
         scene.play(Create(self.chart.ax), run_time=2)
         scene.wait(1.5)
@@ -106,13 +96,14 @@ class Polynomials(SlideBase):
         scene.play(Write(self.p2.label), run_time=0.7)
         scene.play(Create(self.p3.dot), run_time=0.5)
         scene.play(Write(self.p3.label), run_time=0.7)
+        scene.wait(2)
         scene.play(Indicate(self.polynomial_eqn, color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.p1.label.copy(), self.poly_point1))
         scene.play(TransformMatchingShapes(self.p2.label.copy(), self.poly_point2))
         scene.play(TransformMatchingShapes(self.p3.label.copy(), self.poly_point3))
 
-        self.new_subsection(scene, "interpolation", "data/sound/e4/slide1-3.mp3")
+        self.new_subsection(scene, "interpolation", "data/sound/e4/slide1-2.mp3")
         scene.play(Write(self.chart.graph))
         scene.wait(2)
         scene.play(Indicate(self.polynomial_eqn[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[5], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[9], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[13], color = HIGHLIGHT_COLOR), run_time=0.5)
@@ -130,7 +121,7 @@ class Polynomials(SlideBase):
             point = self.point[i]
             scene.play(FadeOut(point.dot), run_time=0.05)
 
-        self.new_subsection(scene, "roots", "data/sound/e4/slide1-4.mp3")
+        self.new_subsection(scene, "roots", "data/sound/e4/slide1-3.mp3")
         scene.wait(2)
         scene.play(Indicate(self.p1.dot))
         self.root1.label.shift(UP*0.2)
@@ -138,17 +129,25 @@ class Polynomials(SlideBase):
         scene.play(Create(self.root1), Create(self.root2))
         scene.play(Indicate(self.root1, color = SECONDARY_COLOR), Indicate(self.root2, color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial2))
-        scene.wait(4)
-
-        self.new_subsection(scene, "operations", "data/sound/e4/slide1-5.mp3")
-        scene.wait(4)
+        
+        self.new_subsection(scene, "operations", "data/sound/e4/slide1-4.mp3")
+        scene.play(FadeOut(self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1, self.polynomial2, self.poly_point1, self.poly_point2, self.poly_point3))
+        scene.wait(5)
         scene.play(Write(self.chart.graph2))
-        self.quotient.next_to(self.polynomial, UP, buff = 0.6).scale(0.7)
-        scene.play(Write(self.quotient))
-
-        self.new_subsection(scene, "equality", "data/sound/e4/slide1-6.mp3")
+        scene.play(Create(self.intersect.dot))
+        self.quotient.next_to(self.polynomial, UP, buff = 0.2).scale(0.7)
+        self.polynomial2.generate_target()
+        self.polynomial2.target.scale(0.7)
+        scene.wait(3)
+        scene.play(Write(self.quotient), MoveToTarget(self.polynomial2))
         scene.wait(2.5)
-        scene.play(Create(self.intersect))
+        scene.play(Write(self.intersect.label))
+        scene.play(Indicate(self.intersect.label, color = SECONDARY_COLOR))
 
+        self.new_subsection(scene, "equality", "data/sound/e4/slide1-5.mp3")
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.chart.graph2, self.chart.graph3))
+        scene.wait(6)
+        
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.graph, self.title_label, self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1, self.polynomial2, self.poly_point1, self.poly_point2, self.poly_point3))
+        scene.play(FadeOut(self.chart.graph3, self.chart.graph2, self.chart.graph, self.title_label))

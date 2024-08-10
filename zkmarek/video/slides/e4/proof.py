@@ -42,7 +42,7 @@ class Proof1(SlideBase):
 
         self.opening = MathTex(r"p(z)=y", color = SECONDARY_COLOR, font_size=40)
         self.opening2 = MathTex(r"p(x) - y = 0", color = SECONDARY_COLOR, font_size=40)
-        self.opening3 = MathTex(r"\frac{p(x) - y}{x - z} = ...", color = SECONDARY_COLOR, font_size=40)
+        self.opening3 = MathTex(r"\frac{{{p(x)}} - {{y}}}{x - z} = ...", color = SECONDARY_COLOR, font_size=40)
         self.opening4 = MathTex(r"\frac{p(x) - y}{x - z} = q(x)", color = SECONDARY_COLOR, font_size=40)
         self.opening5 = MathTex(r"p(x) - y = (x - z)\cdot q(x)", color = SECONDARY_COLOR, font_size=40)
         self.opening6 = MathTex(r"p(z) - y = (z - z)\cdot q(x)", color = SECONDARY_COLOR, font_size=40)
@@ -51,9 +51,9 @@ class Proof1(SlideBase):
         self.not_infty = Text("If the quotient isn't infinity for z", font = PRIMARY_FONT, color = PRIMARY_COLOR).to_edge(DOWN)
 
         self.chart.to_edge(LEFT)
-        self.polynomial.to_edge(RIGHT + UP)
+        self.polynomial.to_edge(DOWN + LEFT).scale(0.8)
         self.equation.next_to(self.polynomial, DOWN)
-        self.opening.next_to(self.polynomial, DOWN)
+        self.opening.to_edge(UP + RIGHT)
         self.opening2.next_to(self.opening, DOWN)
         self.opening3.next_to(self.opening, DOWN)
         self.opening4.next_to(self.opening, DOWN)
@@ -78,27 +78,22 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "challange - w/o revealing p", "data/sound/e4/slide3-1.mp3")
         scene.play(FadeIn(self.opening))
         scene.play(Indicate(self.opening, color = SECONDARY_COLOR))
-        line_tau_y = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value - self.y.value
-        )
 
         self.chart.add_xaxis_label(self.z.value, r"z")
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
 
-        self.chart.add(line_tau_y)
-
         self.new_subsection(scene, "divisibility", "data/sound/e4/slide3-2.mp3")
         scene.wait(2)
         scene.play(Write(self.opening2))
         scene.play(Indicate(self.opening))
-        scene.wait(3)
+        scene.wait(4.5)
         scene.play(TransformMatchingShapes(self.opening2, self.opening3))
 
         self.new_subsection(scene, "quotient", "data/sound/e4/slide3-3.mp3")
         scene.wait(2)
-        scene.play(Indicate(self.opening))
+        # scene.play(Indicate(self.opening))
 
         self.new_subsection(scene, "can be divided", "data/sound/e4/slide3-4.mp3")
         line_tau = self.chart.animate_create_vertical_line(
@@ -108,6 +103,9 @@ class Proof1(SlideBase):
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(FadeOut(line_z))
         scene.play(FadeOut(line_tau))
+        scene.play(Indicate(self.opening3[1], color = PRIMARY_COLOR))
+        scene.wait(1)
+        scene.play(Indicate(self.opening3[3], color = PRIMARY_COLOR))
         scene.play(TransformMatchingShapes(self.opening3, self.opening4))
 
         self.new_subsection(scene, "why is it crucial", "data/sound/e4/slide3-5.mp3")
@@ -115,28 +113,7 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening4, self.opening5))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6))
-        scene.wait(2)
+        scene.wait(4)
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
-        # self.chart.add_xaxis_label(self.tau.value, r"\tau")
-
-
-
-        # self.new_subsection(scene, "what is quotient", "data/sound/e4/slide3-2.mp3")
-        # scene.play(Indicate(self.equation))
-        # scene.wait(4)
-        # scene.play(Indicate(self.equation[6], color = SECONDARY_COLOR))
-        # scene.play(Indicate(self.equation[8], color = SECONDARY_COLOR))
-        # scene.wait(2)
-        # scene.play(Indicate(self.equation[2], color = SECONDARY_COLOR))
-        # scene.play(Indicate(self.equation[4], color = SECONDARY_COLOR))
-
-
-
-        # self.new_subsection(scene, "equation", "data/sound/e4/slide3-3.mp3")
-        # scene.play(self.chart.animate.scale(0.9))
-        # scene.play(self.chart.animate.to_edge(UP))
-
-        # scene.play(FadeIn(self.commitment))
-        # scene.play(FadeIn(self.proof))
 
 

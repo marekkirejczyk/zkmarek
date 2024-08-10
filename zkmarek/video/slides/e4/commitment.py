@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, Brace, MoveToTarget, FadeOut, Indicate, Arrow, AddTextLetterByLetter, ReplacementTransform, ValueTracker, Create
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, Brace, MoveToTarget, FadeOut, Indicate, Arrow, AddTextLetterByLetter, ReplacementTransform, ValueTracker, Create, TransformMatchingShapes
 
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -31,6 +31,8 @@ class Commitment(SlideBase):
         a = Curve.from_x(self.point.get_value())
         self.p = DotOnCurve(self.chart.ax, "(z, y)", a)
 
+        self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
+
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide2-0.mp3")
         scene.wait(1.5)
@@ -41,19 +43,20 @@ class Commitment(SlideBase):
         scene.play(Write(self.verifier_label))
 
         self.new_subsection(scene, "committing", "data/sound/e4/slide2-1.mp3")
+        scene.wait(2)
         scene.play(AddTextLetterByLetter(self.message), run_time=2.5)
 
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-2.mp3")
-        scene.wait(1.5)
+        # scene.wait(1.5)
         scene.play(ReplacementTransform(self.message, self.commitment))
         scene.wait(1.5)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
         scene.wait(1.5)
         scene.play(Indicate(self.commitment[3], color = PRIMARY_COLOR))
-        scene.wait(2)
+
         scene.play(FadeIn(self.ec_point_label))
         scene.play(FadeIn(self.ec_point))
-        scene.wait(3)
+        scene.wait(1.5)
         scene.play(FadeOut(self.ec_point, self.ec_point_label))
 
         self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-3.mp3")
@@ -77,17 +80,22 @@ class Commitment(SlideBase):
 
         self.chart.next_to(self.commitment, DOWN).shift(DOWN)
         
-        scene.play(Write(self.chart), Write(create_arrow(self.commitment, self.chart)))
+        scene.play(Write(self.chart.ax), Write(self.chart.graph), Write(self.chart.labels), Write(create_arrow(self.commitment, self.chart)))
         scene.wait(2)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
         scene.wait(1)
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide2-4.mp3")
         scene.wait(1.5)
+        self.p.dot.shift(DOWN)
+        self.p.label.shift(DOWN)
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
 
         self.new_subsection(scene, "kzg", "data/sound/e4/slide2-5.mp3")
+        scene.play(FadeOut(self.commitment))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.p.label.copy(), self.opening))
         scene.wait(5)
 
     def animate_out(self, scene):

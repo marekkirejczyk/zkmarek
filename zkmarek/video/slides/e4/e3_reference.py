@@ -49,5 +49,5 @@ class Episode3Reference(SlideBase):
         
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.slide2))
+        # scene.play(FadeOut(self.slide2))
         self.wait_for_sound(scene)

@@ -36,6 +36,10 @@ class Chart(VGroup):
             lambda x, y: x**3 +x**2 - 2*x + 8 - y,
             color=HIGHLIGHT_COLOR
         )
+        self.graph3 = self.ax.plot_implicit_curve(
+            lambda x, y: x**3 - x**2 - 5*x + 10 - y,
+            color=HIGHLIGHT_COLOR
+        )
         self.add(self.ax)
         if include_details:
             self.labels = self.ax.get_axis_labels(
@@ -47,6 +51,7 @@ class Chart(VGroup):
             self.add(self.labels)
         self.add(self.graph)
         self.add(self.graph2)
+        self.add(self.graph3)
 
     def animate_in(self, scene):
         if self.include_details:
@@ -54,3 +59,5 @@ class Chart(VGroup):
         else:
             scene.play(Create(self.ax))
         scene.play(Write(self.graph))
+        scene.play(Write(self.graph2))
+        scene.play(Write(self.graph3))

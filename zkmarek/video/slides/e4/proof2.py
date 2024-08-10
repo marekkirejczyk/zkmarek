@@ -8,7 +8,8 @@ from manim import (
     Write,
     FadeIn,
     TransformMatchingShapes,
-    VGroup
+    VGroup,
+    FadeOut
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -37,8 +38,7 @@ class Proof2(SlideBase):
     def construct(self):
         self.chart = DiscreetePolynomialChart(41, poly)
 
-        self.definition = MathTex(r"{{e}}: {{G_1}}  \times {{G_2}} \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
-        self.definition2 = MathTex(r"e(G_1, G_2) \rightarrow G_T", font_size=70, color=PRIMARY_COLOR)
+        self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"C = P(\tau) \cdot G_1", color=PRIMARY_COLOR)
@@ -61,12 +61,11 @@ class Proof2(SlideBase):
         ).to_edge(DOWN)
 
         self.chart.to_edge(LEFT)
-        self.polynomial.to_edge(RIGHT + UP)
-        self.definition.next_to(self.polynomial, DOWN)
-        self.definition2.next_to(self.definition, DOWN)
-        self.equation.next_to(self.polynomial, DOWN)
-        self.commitment.next_to(self.equation, DOWN)
-        self.proof.next_to(self.commitment, DOWN)
+        self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
+        self.definition2.to_edge(UP + RIGHT)
+        self.equation.next_to(self.commitment, DOWN)
+        self.commitment.next_to(self.proof, DOWN)
+        self.proof.to_edge(UP + RIGHT)
         self.verification.to_edge(DOWN)
 
         self.tau = FieldElement(33, 41)
@@ -78,13 +77,17 @@ class Proof2(SlideBase):
         self.new_subsection(
             scene, "pairings", "data/sound/e4/slide4-0.mp3"
         )
-        scene.wait(3)
-        scene.play(FadeIn(self.definition))
+        scene.play(FadeIn(self.chart))
         scene.wait(2)
         scene.play(FadeIn(self.definition2))
+        scene.wait(4)
+        scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
+        scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
+        scene.play(Indicate(self.definition2[5], color = SECONDARY_COLOR))
         
         self.new_subsection(scene, "pi - proof", "data/sound/e4/slide4-1.mp3")
         scene.wait(2.5)
+        scene.play(FadeOut(self.definition2))
         scene.play(Write(self.proof))
         scene.wait(4)
         scene.play(Write(self.commitment))
@@ -103,7 +106,28 @@ class Proof2(SlideBase):
         scene.wait(2)
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
 
+        self.chart.add_xaxis_label(self.tau.value, r"\tau")
+        line_tau = self.chart.animate_create_vertical_line(
+            scene, self.tau.value, self.value_at_tau.value
+        )
+        line_tau_y = self.chart.animate_create_vertical_line(
+            scene, self.tau.value, self.value_at_tau.value - self.y.value
+        )
+
+        self.chart.add_xaxis_label(self.z.value, r"z")
+        line_z = self.chart.animate_create_vertical_line(
+            scene, self.z.value, self.y.value
+        )
+        self.play_sound(scene, "data/sound/episode4/slide11-1.mp3")
+        self.chart.add(line_tau_y)
+
+        self.chart.animate_shift_dots(scene, self.y.value)
+        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
+        scene.play(FadeOut(line_z))
+        scene.play(FadeOut(line_tau))
+
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-5.mp3")
+        scene.wait(2)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
         scene.wait(1)
