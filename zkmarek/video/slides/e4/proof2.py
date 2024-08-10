@@ -9,7 +9,8 @@ from manim import (
     FadeIn,
     TransformMatchingShapes,
     VGroup,
-    FadeOut
+    FadeOut,
+    MoveToTarget
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -38,13 +39,13 @@ class Proof2(SlideBase):
     def construct(self):
         self.chart = DiscreetePolynomialChart(41, poly)
 
-        self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", font_size=70, color=PRIMARY_COLOR)
+        self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"C = P(\tau) \cdot G_1", color=PRIMARY_COLOR)
         self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", color=PRIMARY_COLOR)
         self.verification = MathTex(
-            r"e( {{\pi}}, {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}} {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification2 = MathTex(
@@ -62,10 +63,10 @@ class Proof2(SlideBase):
 
         self.chart.to_edge(LEFT)
         self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
-        self.definition2.to_edge(UP + RIGHT)
-        self.equation.next_to(self.commitment, DOWN)
-        self.commitment.next_to(self.proof, DOWN)
         self.proof.to_edge(UP + RIGHT)
+        self.definition2.to_edge(UP + RIGHT)
+        self.commitment.next_to(self.proof, DOWN)
+        self.equation.next_to(self.commitment, DOWN)
         self.verification.to_edge(DOWN)
 
         self.tau = FieldElement(33, 41)
@@ -81,7 +82,7 @@ class Proof2(SlideBase):
         scene.play(FadeIn(self.chart))
         scene.wait(2)
         scene.play(FadeIn(self.definition2))
-        scene.wait(4)
+        scene.wait(6)
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
         scene.play(Indicate(self.definition2[5], color = SECONDARY_COLOR))
@@ -94,7 +95,9 @@ class Proof2(SlideBase):
         scene.play(Write(self.commitment))
 
         self.new_subsection(scene, "pairings eqn", "data/sound/e4/slide4-2.mp3")
-        scene.play(Write(self.verification))
+        self.chart.generate_target()
+        self.chart.target.scale(0.8)
+        scene.play(Write(self.verification), MoveToTarget(self.chart))
 
         self.new_subsection(scene, "correctly formed", "data/sound/e4/slide4-3.mp3")
         scene.play(Write(self.equation))
@@ -121,6 +124,7 @@ class Proof2(SlideBase):
         )
         self.play_sound(scene, "data/sound/episode4/slide11-1.mp3")
         self.chart.add(line_tau_y)
+        self.chart.add(line_z)
 
         self.chart.animate_shift_dots(scene, self.y.value)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)

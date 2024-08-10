@@ -52,7 +52,7 @@ class Proof1(SlideBase):
         self.chart.to_edge(LEFT).scale(0.8)
         self.polynomial.to_edge(DOWN + LEFT).scale(0.8)
         self.equation.next_to(self.polynomial, DOWN)
-        self.opening.to_edge(UP + RIGHT).shift(LEFT)
+        self.opening.to_edge(UP + RIGHT).shift(LEFT*2)
         self.opening2.next_to(self.opening, DOWN)
         self.opening3.next_to(self.opening, DOWN)
         self.opening4.next_to(self.opening, DOWN)

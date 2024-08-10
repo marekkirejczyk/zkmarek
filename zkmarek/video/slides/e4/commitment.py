@@ -27,7 +27,7 @@ class Commitment(SlideBase):
         self.ec_point.put_at_tip(self.ec_point_label)
         self.chart = Chart(include_details=True).scale(0.6)
 
-        self.point = ValueTracker(-2.5)
+        self.point = ValueTracker(-3)
         a = Curve.from_x(self.point.get_value())
         self.p = DotOnCurve(self.chart.ax, "(z, y)", a)
 
@@ -51,13 +51,13 @@ class Commitment(SlideBase):
         scene.play(ReplacementTransform(self.message, self.commitment))
         scene.wait(1.5)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
-        scene.wait(1.5)
+        scene.wait(0.5)
         scene.play(Indicate(self.commitment[3], color = PRIMARY_COLOR))
 
-        scene.play(FadeIn(self.ec_point_label))
-        scene.play(FadeIn(self.ec_point))
-        scene.wait(1.5)
-        scene.play(FadeOut(self.ec_point, self.ec_point_label))
+        # scene.play(FadeIn(self.ec_point_label))
+        # scene.play(FadeIn(self.ec_point))
+        # scene.wait(1.5)
+        # scene.play(FadeOut(self.ec_point, self.ec_point_label))
 
         self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-3.mp3")
         self.commiter.generate_target()

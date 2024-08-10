@@ -27,7 +27,7 @@ class Polynomials(SlideBase):
         self.proof = ImageMobject("data/images/Proof.png")
         self.verifying = ImageMobject("data/images/Docs.png")
 
-        self.chart = Chart(include_details=False).scale(0.6).next_to(self.title_label, DOWN).shift(DOWN)
+        self.chart = Chart(include_details=True).scale(0.6).next_to(self.title_label, DOWN).shift(DOWN)
         self.p1_1 = ValueTracker(1)
         a1_1 = Curve.from_x(self.p1_1.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "(1,3)", a1_1)
@@ -87,7 +87,9 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial_eqn[13], color = HIGHLIGHT_COLOR), run_time=0.5)
 
         self.new_subsection(scene, "specific eqn", "data/sound/e4/slide1-1.mp3")
-        scene.wait(1)
+        self.polynomial_eqn.generate_target()
+        self.polynomial_eqn.target.to_edge(DOWN)
+        scene.play(MoveToTarget(self.polynomial_eqn))
         scene.play(Create(self.chart.ax), run_time=2)
         scene.wait(1.5)
         scene.play(Create(self.p1.dot), run_time=0.5)
@@ -131,7 +133,7 @@ class Polynomials(SlideBase):
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial2))
         
         self.new_subsection(scene, "operations", "data/sound/e4/slide1-4.mp3")
-        scene.play(FadeOut(self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1, self.polynomial2, self.poly_point1, self.poly_point2, self.poly_point3))
+        scene.play(FadeOut(self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.root1, self.polynomial2, self.poly_point1, self.poly_point2, self.poly_point3, self.root2))
         scene.wait(5)
         scene.play(Write(self.chart.graph2))
         scene.play(Create(self.intersect.dot))
@@ -150,4 +152,4 @@ class Polynomials(SlideBase):
         scene.wait(6)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.graph3, self.chart.graph2, self.chart.graph, self.title_label))
+        scene.play(FadeOut(self.chart.graph3, self.chart.graph, self.title_label))
