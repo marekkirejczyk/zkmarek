@@ -6,7 +6,6 @@ from manim import (
     FadeIn,
     MathTex,
     Indicate,
-    FadeOut,
     TransformMatchingShapes,
     Write,
     Text
@@ -42,7 +41,7 @@ class Proof1(SlideBase):
 
         self.opening = MathTex(r"p(z)=y", color = SECONDARY_COLOR, font_size=40)
         self.opening2 = MathTex(r"p(x) - y = 0", color = SECONDARY_COLOR, font_size=40)
-        self.opening3 = MathTex(r"\frac{{{p(x)}} - {{y}}}{x - z} = ...", color = SECONDARY_COLOR, font_size=40)
+        self.opening3 = MathTex(r"\frac{  p(x) - y }{x - z} = ...", color = SECONDARY_COLOR, font_size=40)
         self.opening4 = MathTex(r"\frac{p(x) - y}{x - z} = q(x)", color = SECONDARY_COLOR, font_size=40)
         self.opening5 = MathTex(r"p(x) - y = (x - z)\cdot q(x)", color = SECONDARY_COLOR, font_size=40)
         self.opening6 = MathTex(r"p(z) - y = (z - z)\cdot q(x)", color = SECONDARY_COLOR, font_size=40)
@@ -50,10 +49,10 @@ class Proof1(SlideBase):
 
         self.not_infty = Text("If the quotient isn't infinity for z", font = PRIMARY_FONT, color = PRIMARY_COLOR).to_edge(DOWN)
 
-        self.chart.to_edge(LEFT)
+        self.chart.to_edge(LEFT).scale(0.8)
         self.polynomial.to_edge(DOWN + LEFT).scale(0.8)
         self.equation.next_to(self.polynomial, DOWN)
-        self.opening.to_edge(UP + RIGHT)
+        self.opening.to_edge(UP + RIGHT).shift(LEFT)
         self.opening2.next_to(self.opening, DOWN)
         self.opening3.next_to(self.opening, DOWN)
         self.opening4.next_to(self.opening, DOWN)
@@ -96,16 +95,10 @@ class Proof1(SlideBase):
         # scene.play(Indicate(self.opening))
 
         self.new_subsection(scene, "can be divided", "data/sound/e4/slide3-4.mp3")
-        line_tau = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value
-        )
-        self.chart.animate_shift_dots(scene, self.y.value)
-        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
-        scene.play(FadeOut(line_z))
-        scene.play(FadeOut(line_tau))
-        scene.play(Indicate(self.opening3[1], color = PRIMARY_COLOR))
+        scene.wait(4)
+        scene.play(Indicate(self.opening3, color = PRIMARY_COLOR))
         scene.wait(1)
-        scene.play(Indicate(self.opening3[3], color = PRIMARY_COLOR))
+        # scene.play(Indicate(self.opening3[3], color = PRIMARY_COLOR))
         scene.play(TransformMatchingShapes(self.opening3, self.opening4))
 
         self.new_subsection(scene, "why is it crucial", "data/sound/e4/slide3-5.mp3")

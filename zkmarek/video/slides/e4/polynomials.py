@@ -1,4 +1,4 @@
-from manim import DOWN, UP, RIGHT, FadeIn, FadeOut, MathTex, ValueTracker, Text, Create, Write, TransformMatchingShapes, VGroup, Indicate, ImageMobject, MoveToTarget, ReplacementTransform
+from manim import DOWN, UP, RIGHT, FadeIn, FadeOut, MathTex, ValueTracker, Text, Create, Write, TransformMatchingShapes, VGroup, Indicate, ImageMobject, MoveToTarget
 
 from numpy import linspace
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
