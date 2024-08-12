@@ -20,7 +20,7 @@ class Episode3Reference(SlideBase):
         self.tau1 = MathTex(r"\tau_1", color = SECONDARY_COLOR, font_size=70).next_to(self.group, LEFT, buff=0.1)
         self.tau2 = MathTex(r"\tau_2", color = SECONDARY_COLOR, font_size=70).next_to(self.group, RIGHT, buff=0.1)
 
-        self.title = Text("Previously on zkMarek", color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
+        self.title_label = Text("Previously on zkMarek", color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
         self.arrow.align_on_border(UP, buff=0.1)
         self.arrow.shift(RIGHT * 1)
         self.arrow.generate_target()
@@ -35,7 +35,7 @@ class Episode3Reference(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Intro", sound="data/sound/e4/slide0-1.mp3")
-        scene.play(Write(self.title), run_time=2)
+        scene.play(Write(self.title_label))
         scene.play(FadeIn(self.group))
         scene.play(Write(self.tau0))
         scene.play(Write(self.tau1))
