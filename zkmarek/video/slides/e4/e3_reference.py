@@ -13,14 +13,17 @@ class Episode3Reference(SlideBase):
     def __init__(self):
         super().__init__("E3 Reference")
 
-    def create_arrow(self):
-        self.arrow = Arrow(start=LEFT, end=RIGHT, color=PRIMARY_COLOR)
+    def construct(self):
+        self.title_label = Text("Previously on zkMarek", color = PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.title_label.to_edge(UP)
         self.group = ImageMobject("data/images/group.png")
         self.tau0 = MathTex(r"\tau_0", color = SECONDARY_COLOR, font_size=70).next_to(self.group, DOWN, buff=0)
         self.tau1 = MathTex(r"\tau_1", color = SECONDARY_COLOR, font_size=70).next_to(self.group, LEFT, buff=0.1)
         self.tau2 = MathTex(r"\tau_2", color = SECONDARY_COLOR, font_size=70).next_to(self.group, RIGHT, buff=0.1)
 
-        self.title_label = Text("Previously on zkMarek", color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
+    def create_arrow(self):
+        self.arrow = Arrow(start=LEFT, end=RIGHT, color=PRIMARY_COLOR)
+
         self.arrow.align_on_border(UP, buff=0.1)
         self.arrow.shift(RIGHT * 1)
         self.arrow.generate_target()
