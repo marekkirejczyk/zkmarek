@@ -42,7 +42,7 @@ class Proof2(SlideBase):
         self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
-        self.commitment = MathTex(r"C = P(\tau) \cdot G_1", color=PRIMARY_COLOR)
+        self.commitment = MathTex(r"C = p(\tau) \cdot G_1", color=PRIMARY_COLOR)
         self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", color=PRIMARY_COLOR)
         self.verification = MathTex(
             r"e( {{\pi}}, {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
@@ -64,7 +64,7 @@ class Proof2(SlideBase):
         self.chart.to_edge(LEFT)
         self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
         self.proof.to_edge(UP + RIGHT).shift(LEFT*2)
-        self.definition2.to_edge(UP + RIGHT).shift(LEFT*2)
+        self.definition2.to_edge(UP + RIGHT).shift(LEFT)
         self.commitment.next_to(self.proof, DOWN)
         self.equation.next_to(self.commitment, DOWN)
         self.verification.to_edge(DOWN)

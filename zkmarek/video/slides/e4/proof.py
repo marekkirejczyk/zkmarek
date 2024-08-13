@@ -40,7 +40,7 @@ class Proof1(SlideBase):
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
 
         self.opening = MathTex(r"p(z)=y", color = SECONDARY_COLOR, font_size=40)
-        self.opening2 = MathTex(r"p(x) - y = 0", color = SECONDARY_COLOR, font_size=40)
+        self.opening2 = MathTex(r"p(z) - y = 0", color = SECONDARY_COLOR, font_size=40)
         self.opening3 = MathTex(r"\frac{  p(x) - y }{x - z} = ...", color = SECONDARY_COLOR, font_size=40)
         self.opening4 = MathTex(r"\frac{p(x) - y}{x - z} = q(x)", color = SECONDARY_COLOR, font_size=40)
         self.opening5 = MathTex(r"p(x) - y = (x - z)\cdot q(x)", color = SECONDARY_COLOR, font_size=40)
@@ -77,6 +77,8 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "challange - w/o revealing p", "data/sound/e4/slide3-1.mp3")
         scene.play(FadeIn(self.opening))
         scene.play(Indicate(self.opening, color = SECONDARY_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.polynomial))
 
         self.chart.add_xaxis_label(self.z.value, r"z")
         self.chart.add_xaxis_label(self.tau.value, r"\tau")
@@ -104,7 +106,9 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening4, self.opening5))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6))
-        scene.wait(4)
+        scene.wait(2)
+        scene.play(Indicate(self.opening2))
+        scene.wait(2)
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
 
 

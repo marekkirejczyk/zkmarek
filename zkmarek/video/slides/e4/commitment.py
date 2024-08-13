@@ -26,7 +26,6 @@ class Commitment(SlideBase):
         self.ec_point_label = Text(r"elliptic curve point", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.ec_point.put_at_tip(self.ec_point_label)
         self.chart = Chart(include_details=True).scale(0.6).shift(DOWN*0.4)
-        # self.chart.next_to(self.commitment, DOWN, buff = 0)
 
         self.point = ValueTracker(-3)
         a = Curve.from_x(self.point.get_value())
@@ -37,6 +36,8 @@ class Commitment(SlideBase):
         self.p_tau = DotOnCurve(self.chart.ax, r"(\tau, ?)", a_tau)
 
         self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
+
+        self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.chart, DOWN, buff = 0.3)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide2-0.mp3")
@@ -79,8 +80,8 @@ class Commitment(SlideBase):
         self.commitment.target.shift(UP*2)
         scene.play(MoveToTarget(self.commitment))
 
-        
-        scene.play(Write(self.chart.ax), Write(self.chart.graph), Write(self.chart.labels), Write(create_arrow(self.commitment, self.chart)))
+        self.arrow = Arrow(start=self.polynomial.get_top(), end=self.chart.graph.get_bottom(), color =PRIMARY_COLOR)
+        scene.play(Write(self.chart.ax), Write(self.chart.graph), Write(self.chart.labels))
         scene.wait(2)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
         scene.wait(1)
@@ -91,21 +92,15 @@ class Commitment(SlideBase):
 
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
-
-        self.new_subsection(scene, "kzg", "data/sound/e4/slide2-5.mp3")
         scene.play(FadeOut(self.commitment))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.p.label.copy(), self.opening))
-        scene.wait(7.5)
+
+        self.new_subsection(scene, "kzg", "data/sound/e4/slide2-5.mp3")
+        scene.play(Write(self.polynomial))
+        scene.play(Write(self.arrow))
+        scene.wait(5.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart))
 
-def create_arrow(start, end):
-    return Arrow(
-        start=start.get_bottom(),
-        end=end[0].get_top(),
-        color=PRIMARY_COLOR,
-        buff=0,
-        max_tip_length_to_length_ratio=0.1,
-        max_stroke_width_to_length_ratio=1)
