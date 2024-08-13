@@ -25,11 +25,16 @@ class Commitment(SlideBase):
         self.ec_point = Brace(self.commitment, DOWN, color = PRIMARY_COLOR)
         self.ec_point_label = Text(r"elliptic curve point", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.ec_point.put_at_tip(self.ec_point_label)
-        self.chart = Chart(include_details=True).scale(0.6)
+        self.chart = Chart(include_details=True).scale(0.6).shift(DOWN*0.4)
+        # self.chart.next_to(self.commitment, DOWN, buff = 0)
 
         self.point = ValueTracker(-3)
         a = Curve.from_x(self.point.get_value())
         self.p = DotOnCurve(self.chart.ax, "(z, y)", a)
+
+        self.point_tau = ValueTracker(2)
+        a_tau = Curve.from_x(self.point_tau.get_value())
+        self.p_tau = DotOnCurve(self.chart.ax, r"(\tau, ?)", a_tau)
 
         self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
 
@@ -51,13 +56,9 @@ class Commitment(SlideBase):
         scene.play(ReplacementTransform(self.message, self.commitment))
         scene.wait(1.5)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
-        scene.wait(0.5)
         scene.play(Indicate(self.commitment[3], color = PRIMARY_COLOR))
 
-        # scene.play(FadeIn(self.ec_point_label))
-        # scene.play(FadeIn(self.ec_point))
-        # scene.wait(1.5)
-        # scene.play(FadeOut(self.ec_point, self.ec_point_label))
+
 
         self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide2-3.mp3")
         self.commiter.generate_target()
@@ -78,17 +79,16 @@ class Commitment(SlideBase):
         self.commitment.target.shift(UP*2)
         scene.play(MoveToTarget(self.commitment))
 
-        self.chart.next_to(self.commitment, DOWN).shift(DOWN)
         
         scene.play(Write(self.chart.ax), Write(self.chart.graph), Write(self.chart.labels), Write(create_arrow(self.commitment, self.chart)))
         scene.wait(2)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
         scene.wait(1)
+        scene.play(Create(self.p_tau))
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide2-4.mp3")
         scene.wait(1.5)
-        self.p.dot.shift(DOWN)
-        self.p.label.shift(DOWN)
+
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
 
@@ -96,10 +96,10 @@ class Commitment(SlideBase):
         scene.play(FadeOut(self.commitment))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.p.label.copy(), self.opening))
-        scene.wait(5)
+        scene.wait(7.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.commitment))
+        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart))
 
 def create_arrow(start, end):
     return Arrow(

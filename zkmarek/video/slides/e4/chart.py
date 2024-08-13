@@ -14,8 +14,8 @@ class Chart(VGroup):
         self.include_details = include_details
         step = 10 if include_details else 20
         self.ax = Axes(
-            x_range=[-4.5, 3.1, step],
-            y_range=[-3.2, 27, step],
+            x_range=[-4.7, 4, step],
+            y_range=[-3.4, 27, step],
             x_length=7,
             axis_config={
                 "include_numbers": include_details,
@@ -44,9 +44,9 @@ class Chart(VGroup):
         if include_details:
             self.labels = self.ax.get_axis_labels(
                 SingleStringMathTex(r"x", tex_template=template,
-                    font_size=26, color=PRIMARY_COLOR),
+                    font_size=56, color=PRIMARY_COLOR),
                 SingleStringMathTex(r"y", tex_template=template,
-                    font_size=26, color=PRIMARY_COLOR)
+                    font_size=56, color=PRIMARY_COLOR)
             )
             self.add(self.labels)
         self.add(self.graph)

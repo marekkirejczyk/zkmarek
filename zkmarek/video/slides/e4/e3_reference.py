@@ -38,20 +38,20 @@ class Episode3Reference(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "Intro", sound="data/sound/e4/slide0-1.mp3")
-        scene.play(Write(self.title_label))
-        scene.play(FadeIn(self.group))
-        scene.play(Write(self.tau0))
-        scene.play(Write(self.tau1))
-        scene.play(Write(self.tau2))
+        scene.play(Write(self.title_label), run_time=1)
+        scene.play(MoveToTarget(self.label, rate_func=rate_functions.ease_out_bounce, run_time=1),
+            MoveToTarget(self.arrow, rate_func=rate_functions.ease_out_bounce, run_time=1))
+        scene.play(ApplyWave(VGroup(self.label, self.arrow)), run_time=2)
+        scene.play(FadeIn(self.group), run_time=0.7)
+        scene.play(Write(self.tau0), run_time=0.7)
+        scene.play(Write(self.tau1), run_time=0.7)
+        scene.play(Write(self.tau2), run_time=0.7)
         self.create_arrow()
         self.slide = Ceremony()
         self.slide.construct()
         self.slide2 = Polynomial()
         self.slide2.construct()
 
-        scene.play(MoveToTarget(self.label, rate_func=rate_functions.ease_out_bounce, run_time=1),
-            MoveToTarget(self.arrow, rate_func=rate_functions.ease_out_bounce, run_time=1))
-        scene.play(ApplyWave(VGroup(self.label, self.arrow)), run_time=2)
 
         self.new_subsection(scene, "to recap", "data/sound/e4/slide0-2.mp3")
         scene.play(FadeOut(self.arrow, self.label, self.tau0, self.tau1, self.tau2, self.group))
@@ -63,5 +63,5 @@ class Episode3Reference(SlideBase):
         
 
     def animate_out(self, scene):
-        # scene.play(FadeOut(self.slide2))
         self.wait_for_sound(scene)
+        scene.play(FadeOut(self.title_label))

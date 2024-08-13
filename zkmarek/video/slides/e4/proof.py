@@ -49,8 +49,8 @@ class Proof1(SlideBase):
 
         self.not_infty = Text("If the quotient isn't infinity for z", font = PRIMARY_FONT, color = PRIMARY_COLOR).to_edge(DOWN)
 
-        self.chart.to_edge(LEFT).scale(0.8)
-        self.polynomial.to_edge(DOWN + LEFT).scale(0.8)
+        self.chart.to_edge(LEFT).scale(0.8).shift(UP*0.5)
+        self.polynomial.to_edge(DOWN + LEFT).scale(0.8).shift(RIGHT)
         self.equation.next_to(self.polynomial, DOWN)
         self.opening.to_edge(UP + RIGHT).shift(LEFT*2)
         self.opening2.next_to(self.opening, DOWN)
@@ -79,6 +79,7 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.opening, color = SECONDARY_COLOR))
 
         self.chart.add_xaxis_label(self.z.value, r"z")
+        self.chart.add_xaxis_label(self.tau.value, r"\tau")
 
         self.new_subsection(scene, "divisibility", "data/sound/e4/slide3-2.mp3")
         scene.wait(2)

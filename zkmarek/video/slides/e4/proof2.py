@@ -45,26 +45,26 @@ class Proof2(SlideBase):
         self.commitment = MathTex(r"C = P(\tau) \cdot G_1", color=PRIMARY_COLOR)
         self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", color=PRIMARY_COLOR)
         self.verification = MathTex(
-            r"e( {{\pi}} {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification2 = MathTex(
-            r"e( {{q(\tau)\cdot G_1}}, (\tau-z) \cdot G_2) ) = e({{P(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
+            r"e( {{q(\tau)\cdot G_1}}, ({{\tau-z}}) \cdot G_2) ) = e({{P(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
-            r"e(q(\tau) \cdot (\tau-z) \cdot G_1, G_2) = e([P(\tau -y]\cdot G_1, G_2)",
+            r"e({{q(\tau) \cdot (\tau-z) \cdot G_1}}, G_2) = e({{[P(\tau -y]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
-            r"q(\tau), (\tau-z) = P(\tau) -y",
+            r"q(\tau)\cdot (\tau-z) = P(\tau) -y",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
 
         self.chart.to_edge(LEFT)
         self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
-        self.proof.to_edge(UP + RIGHT)
-        self.definition2.to_edge(UP + RIGHT)
+        self.proof.to_edge(UP + RIGHT).shift(LEFT*2)
+        self.definition2.to_edge(UP + RIGHT).shift(LEFT*2)
         self.commitment.next_to(self.proof, DOWN)
         self.equation.next_to(self.commitment, DOWN)
         self.verification.to_edge(DOWN)
@@ -82,13 +82,13 @@ class Proof2(SlideBase):
         scene.play(FadeIn(self.chart))
         scene.wait(2)
         scene.play(FadeIn(self.definition2))
-        scene.wait(6)
+        scene.wait(7)
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
+        scene.wait(0.5)
         scene.play(Indicate(self.definition2[5], color = SECONDARY_COLOR))
         
         self.new_subsection(scene, "pi - proof", "data/sound/e4/slide4-1.mp3")
-        scene.wait(2.5)
         scene.play(FadeOut(self.definition2))
         scene.play(Write(self.proof))
         scene.wait(4)
@@ -104,7 +104,7 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.equation))
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-4.mp3")
-
+        scene.wait(2)
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
         scene.wait(2)
@@ -130,17 +130,18 @@ class Proof2(SlideBase):
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(FadeOut(line_z))
         scene.play(FadeOut(line_tau))
+        scene.play(FadeOut(line_tau_y))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-5.mp3")
         scene.wait(2)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
-        scene.wait(1)
+
         scene.play(Indicate(self.verification[11], color = SECONDARY_COLOR))
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
 
-        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.verification, self.commitment.copy()), self.verification2))
+        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.verification, self.commitment.copy()), self.verification2), run_time=2)
 
         self.new_subsection(scene, "bilinearity", "data/sound/e4/slide4-7.mp3")
         scene.wait(2)
