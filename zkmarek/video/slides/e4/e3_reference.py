@@ -1,4 +1,4 @@
-from manim import (LEFT, UP, DOWN, MathTex, FadeIn, Write, FadeOut, Text, Arrow, RIGHT, MoveToTarget, rate_functions, ApplyWave, VGroup, ImageMobject)
+from manim import LEFT, UP, DOWN, MathTex, Write, FadeOut, Text, RIGHT, ImageMobject
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -34,7 +34,7 @@ class Episode3Reference(SlideBase):
 
 
         self.new_subsection(scene, "to recap", "data/sound/e4/slide0-2.mp3")
-        scene.play(FadeOut(self.arrow, self.label, self.tau0, self.tau1, self.tau2, self.group))
+        scene.play(FadeOut(self.tau0, self.tau1, self.tau2, self.group))
         self.slide.animate_miniature(scene)
 
         self.new_subsection(scene, "polynomial", "data/sound/e4/slide0-3.mp3")
