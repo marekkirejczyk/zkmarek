@@ -88,6 +88,7 @@ class Polynomials(SlideBase):
             self.point.append(DotOnCurve(self.chart.ax, "", a)) 
         self.z = FieldElement(1, 5)
 
+
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
         scene.play(Write(self.title_label), run_time=2)
