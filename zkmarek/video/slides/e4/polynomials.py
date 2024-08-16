@@ -18,8 +18,8 @@ class Polynomials(SlideBase):
         super().__init__("Polynomials")
 
     def construct(self):
-        self.chart = DiscreetePolynomialChart(5, poly)
-        self.chart.to_edge(LEFT).scale(0.8).shift(UP*0.5)
+        self.chart1 = DiscreetePolynomialChart(5, poly)
+        self.chart1.to_edge(LEFT).scale(0.8).shift(UP*0.5)
         self.title_label = Text("Polynomials", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.x = MathTex(r"x", color = PRIMARY_COLOR, font_size=70)  
 
@@ -205,14 +205,14 @@ class Polynomials(SlideBase):
         scene.wait(2)
         scene.play(FadeOut(self.intersect_sub))
         scene.wait(2)
+        scene.play(FadeOut(self.chart.graph3, self.chart.ax, self.chart.labels, self.title_label, self.line_subtract, self.minus, self.subtract_z, self.quotient_z, self.polynomial_z))
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
-        self.chart.gen_points()
+        self.chart1.gen_points()
         scene.play(FadeIn(self.chart))
-        self.chart.add_xaxis_label(self.z.value, r"z")
+        self.chart1.add_xaxis_label(self.z.value, r"z")
 
-    def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.graph3, self.chart.ax, self.chart.labels, self.title_label, self.line_subtract, self.minus, self.subtract_z, self.quotient_z, self.polynomial_z))
+        self.new_subsection(scene, "example of finite field", "data/sound/e4/slide1-7.mp3")
 
     def animate_random_number(self, scene):
         first_number = random.randint(1, 20)

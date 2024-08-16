@@ -171,8 +171,9 @@ EPISODE3 = [
 
 EPISODE4 = [
     Episode3Reference(),
-    TitleSlide("Polynomials", subtitle="KZG: Kate, Zaverucha and Goldberg", sound="data/sound/e4/slide0-4.mp3", wait_time=5),
+    TitleSlide("Polynomials", sound="data/sound/e4/slide0-4.mp3", wait_time=5),
     Polynomials(),
+    TitleSlide("Commitments", wait_time=1.5),
     Commitment(),
     # PolynomialCommitment(),
     Proof1(),
