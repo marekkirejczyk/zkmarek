@@ -21,32 +21,12 @@ class Episode3Reference(SlideBase):
         self.tau1 = MathTex(r"\tau_1", color = SECONDARY_COLOR, font_size=70).next_to(self.group, LEFT, buff=0.1)
         self.tau2 = MathTex(r"\tau_2", color = SECONDARY_COLOR, font_size=70).next_to(self.group, RIGHT, buff=0.1)
 
-    def create_arrow(self, scene):
-        self.arrow = Arrow(start=LEFT, end=RIGHT, color=PRIMARY_COLOR)
-
-        self.arrow.align_on_border(UP, buff=0.1)
-        self.arrow.shift(RIGHT * 1)
-        self.arrow.generate_target()
-
-        self.label = Text("Click here for episode 3", font_size=24, color=PRIMARY_COLOR, font=PRIMARY_FONT)
-        self.label.next_to(self.arrow, LEFT)
-        self.label.generate_target()
-
-        self.arrow.shift(9 * LEFT)
-        self.label.shift(9 * LEFT)
-
-        scene.play(MoveToTarget(self.label, rate_func=rate_functions.ease_out_bounce, run_time=0.7),
-            MoveToTarget(self.arrow, rate_func=rate_functions.ease_out_bounce, run_time=0.7))
-        scene.play(ApplyWave(VGroup(self.label, self.arrow)), run_time=1)
-        scene.play(FadeIn(self.group), run_time=0.7)
-
     def animate_in(self, scene):
         self.new_subsection(scene, "Intro", sound="data/sound/e4/slide0-1.mp3")
-        self.create_arrow(scene)
-        scene.play(Write(self.title_label), run_time=1)
-        scene.play(Write(self.tau0), run_time=0.7)
-        scene.play(Write(self.tau1), run_time=0.7)
-        scene.play(Write(self.tau2), run_time=0.7)
+        scene.play(Write(self.title_label), run_time=1.2)
+        scene.play(Write(self.tau0), run_time=1)
+        scene.play(Write(self.tau1), run_time=1)
+        scene.play(Write(self.tau2), run_time=1)
         self.slide = Ceremony()
         self.slide.construct()
         self.slide2 = Polynomial()

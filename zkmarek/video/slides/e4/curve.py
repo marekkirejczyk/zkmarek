@@ -8,7 +8,7 @@ class Curve:
 
     @staticmethod
     def from_x(x, sgn = 1):
-        y = 2*x **2 + 3*x - 2
+        y = 4 *x**(3)-8 *x**(2)-17* x+30
         return Curve(x, -y) if sgn < 0 else Curve(x, y)
 
     def __neg__(self):

@@ -15,7 +15,7 @@ class Chart(VGroup):
         step = 10 if include_details else 20
         self.ax = Axes(
             x_range=[-4.7, 4, step],
-            y_range=[-3.4, 27, step],
+            y_range=[-4.2, 37, step],
             x_length=7,
             axis_config={
                 "include_numbers": include_details,
@@ -29,7 +29,7 @@ class Chart(VGroup):
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
         self.graph = self.ax.plot_implicit_curve(
-            lambda x, y: 2*x**2 + 3*x - 2 - y,
+            lambda x, y: 4*x**3 - 8*x**2 - 17*x +30 - y,
             color=SECONDARY_COLOR
         )
         self.graph2 = self.ax.plot_implicit_curve(
@@ -37,7 +37,7 @@ class Chart(VGroup):
             color=HIGHLIGHT_COLOR
         )
         self.graph3 = self.ax.plot_implicit_curve(
-            lambda x, y: x**3 - x**2 - 5*x + 10 - y,
+            lambda x, y: 3*x**3 - 9*x**2 - 15*x + 22 - y,
             color=HIGHLIGHT_COLOR
         )
         self.add(self.ax)
