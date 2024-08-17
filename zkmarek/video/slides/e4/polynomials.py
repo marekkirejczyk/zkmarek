@@ -9,8 +9,14 @@ from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e4.curve import Curve
 from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
+
 def poly(x):
-    return 4 * x * x * x - 8 * x * x - 17 * x + 30
+    if isinstance(x, FieldElement):
+        output = FieldElement(4, x.order) * x * x * x - FieldElement(8, x.order) * x * x * FieldElement(2, x.order) - FieldElement(17, x.order) * x + FieldElement(30, x.order)
+    else:
+        output = 4 * x * x * x - 8 * x * x * 2 - 17 * x + 30
+    return output
+
 
 class Polynomials(SlideBase):
 
@@ -87,6 +93,8 @@ class Polynomials(SlideBase):
             a = Curve.from_x(points.get_value())
             self.point.append(DotOnCurve(self.chart.ax, "", a)) 
 
+        # self.z = FieldElement(7, 5)
+        # self.y = poly(self.z)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
