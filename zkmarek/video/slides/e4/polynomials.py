@@ -10,7 +10,7 @@ from zkmarek.video.slides.e4.curve import Curve
 from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 def poly(x):
-    return 4 * x ** 3 - 8 * x **2 + 17 * x + 30
+    return 4 * x * x * x - 8 * x * x - 17 * x + 30
 
 class Polynomials(SlideBase):
 
@@ -57,11 +57,11 @@ class Polynomials(SlideBase):
 
         self.p3_23 = ValueTracker(3)
         a3_23 = Curve.from_x(self.p3_23.get_value())
-        self.p3 = DotOnCurve(self.chart.ax, "(3,-12)", a3_23)
+        self.p3 = DotOnCurve(self.chart.ax, "(3, 15)", a3_23)
 
         self.poly_point1 = MathTex("P(1) = 9", color = PRIMARY_COLOR).to_edge(RIGHT)
         self.poly_point2 = MathTex("P(2) = -4", color = PRIMARY_COLOR).next_to(self.poly_point1, DOWN)
-        self.poly_point3 = MathTex("P(3) = -12", color = PRIMARY_COLOR).next_to(self.poly_point2, DOWN)
+        self.poly_point3 = MathTex("P(3) = 15", color = PRIMARY_COLOR).next_to(self.poly_point2, DOWN)
 
         self.p25 = ValueTracker(-2)
         a25 = Curve.from_x(self.p25.get_value())
@@ -86,7 +86,6 @@ class Polynomials(SlideBase):
             points = ValueTracker(point_value)
             a = Curve.from_x(points.get_value())
             self.point.append(DotOnCurve(self.chart.ax, "", a)) 
-        self.z = FieldElement(1, 5)
 
 
     def animate_in(self, scene):
@@ -210,7 +209,6 @@ class Polynomials(SlideBase):
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
         self.chart1.gen_points()
         scene.play(FadeIn(self.chart))
-        self.chart1.add_xaxis_label(self.z.value, r"z")
 
         self.new_subsection(scene, "example of finite field", "data/sound/e4/slide1-7.mp3")
 
