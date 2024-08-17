@@ -22,11 +22,8 @@ class PolynomialCommitment(SlideBase):
 
         self.message = Text("message", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=50)
 
-        self.commitment = MathTex(r"C = P({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.chart, UP, buff = 0.2)
-        self.ec_point = Brace(self.commitment, DOWN, color = PRIMARY_COLOR)
-        self.ec_point_label = Text(r"elliptic curve point", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT)
-        self.ec_point.put_at_tip(self.ec_point_label)
         self.chart = Chart(include_details=True).scale(0.8).to_edge(LEFT)
+        self.commitment = MathTex(r"C = P({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.chart, UP, buff = 0.2)
 
         self.point = ValueTracker(-1.849)
         a = Curve.from_x(self.point.get_value())
