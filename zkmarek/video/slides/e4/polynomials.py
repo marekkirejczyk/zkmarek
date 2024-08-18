@@ -66,8 +66,8 @@ class Polynomials(SlideBase):
         self.poly_point2 = MathTex("P(2) = -4", color = PRIMARY_COLOR).next_to(self.poly_point1, DOWN)
         self.poly_point3 = MathTex("P(3) = 15", color = PRIMARY_COLOR).next_to(self.poly_point2, DOWN)
 
-        self.p2 = ValueTracker(-2)
-        a2 = Curve.from_x(self.p2.get_value())
+        self.p_2 = ValueTracker(-2)
+        a2 = Curve.from_x(self.p_2.get_value())
         self.root1 = DotOnCurve(self.chart.ax, "({{-2}},{{0}})", a2)
         self.p05 = ValueTracker(1.5)
         a05 = Curve.from_x(self.p05.get_value())

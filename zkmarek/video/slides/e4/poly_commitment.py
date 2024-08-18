@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, Brace, MoveToTarget, FadeOut, Indicate, Arrow, AddTextLetterByLetter, ReplacementTransform, ValueTracker, Create, TransformMatchingShapes
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, MoveToTarget, FadeOut, Indicate, Arrow, ValueTracker, Create, TransformMatchingShapes
 
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
