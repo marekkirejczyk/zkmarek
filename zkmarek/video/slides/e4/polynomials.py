@@ -78,7 +78,7 @@ class Polynomials(SlideBase):
 
         self.p_intersect = ValueTracker(-1.849)
         a_i = Curve.from_x(self.p_intersect.get_value())
-        self.intersect = DotOnCurve(self.chart.ax, r"(z,y)", a_i)
+        self.intersect = DotOnCurve(self.chart.ax, r"({{z}}, {{y}})", a_i)
         self.intersect.set_color(PRIMARY_COLOR)
 
         self.point = []
