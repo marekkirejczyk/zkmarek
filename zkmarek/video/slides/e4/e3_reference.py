@@ -1,4 +1,4 @@
-from manim import LEFT, UP, DOWN, MathTex, Write, FadeOut, Text, RIGHT, ImageMobject
+from manim import LEFT, UP, DOWN, MathTex, Write, FadeOut, Text, RIGHT, ImageMobject, FadeIn
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -24,6 +24,7 @@ class Episode3Reference(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "Intro", sound="data/sound/e4/slide0-1.mp3")
         scene.play(Write(self.title_label), run_time=1.2)
+        scene.play(FadeIn(self.group), run_time=1)
         scene.play(Write(self.tau0), run_time=1)
         scene.play(Write(self.tau1), run_time=1)
         scene.play(Write(self.tau2), run_time=1)
