@@ -1,6 +1,6 @@
 from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, MoveToTarget, FadeOut, Indicate, Arrow, ValueTracker, Create, TransformMatchingShapes
 
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
@@ -14,8 +14,8 @@ class PolynomialCommitment(SlideBase):
 
     def construct(self):
         self.title = Text("Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=80).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*3)
-        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*3)
+        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*1.5)
+        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*1.5)
 
         self.commiter_label = Text("Commiter", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.verifier, DOWN, buff = 0.4)
@@ -35,7 +35,7 @@ class PolynomialCommitment(SlideBase):
 
         self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
 
-        self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.chart, DOWN, buff = 0.3)
+        self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.chart, DOWN, buff = 0).scale(0.4)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide3-1.mp3")
@@ -45,8 +45,8 @@ class PolynomialCommitment(SlideBase):
         scene.play(Write(self.chart.ax), Write(self.chart.graph), Write(self.chart.labels))
         scene.wait(2)
         scene.play(FadeIn(self.verifier))
-        scene.wait(0.5)
         scene.play(Write(self.verifier_label))
+        scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "committing", "data/sound/e4/slide3-2.mp3")
 
