@@ -276,12 +276,12 @@ class Polynomials(SlideBase):
         self.new_subsection(scene, "p=23", "data/sound/e4/slide1-10.mp3")
         scene.wait(3)
         self.chart2.gen_points()
-        scene.play(TransformMatchingShapes(self.chart1, self.chart2))
+        scene.play(FadeOut(self.chart1), FadeIn(self.chart2))
         scene.wait(2)
 
         self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
         self.chart3.gen_points()
-        scene.play(TransformMatchingShapes(self.chart2, self.chart3))
+        scene.play(FadeOut(self.chart2), FadeIn(self.chart3))
 
         scene.wait(2)
 
