@@ -14,12 +14,20 @@ class DiscreetePolynomialChart(VGroup):
         self.f = f
         self.p = p
         self.dots = []
-        self.ax = Axes(
-            x_range=[0, p, 2],
-            y_range=[0, p, 2],
-            x_length=7,
-            axis_config={"include_numbers": True},
-        )
+        if self.p>10:
+            self.ax = Axes(
+                x_range=[0, p, 10],
+                y_range=[0, p, 10],
+                x_length=7,
+                axis_config={"include_numbers": True},
+            )
+        else:
+            self.ax = Axes(
+                x_range=[0, p, 1],
+                y_range=[0, p, 1],
+                x_length=7,
+                axis_config={"include_numbers": True},
+            )
         self.ax.color = PRIMARY_COLOR
         self.add(self.ax)
 

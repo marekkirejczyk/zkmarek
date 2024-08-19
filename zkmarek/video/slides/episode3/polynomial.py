@@ -129,6 +129,11 @@ class Polynomial(SlideBase):
         scene.play(FadeIn(text, rectangle, self.polynomial, self.vector))
         self.add(text)
         scene.wait(2)
+        scene.play(Indicate(self.vector.cells[0][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[1][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[3][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
+        
+        self.new_subsection(scene, "polynomial", "data/sound/e4/slide0-4.mp3")
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_G))
         scene.wait(2)
         scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial_G), self.polynomial_tau0))

@@ -1,26 +1,28 @@
-from manim import Create, Rectangle, ImageMobject, RIGHT, LEFT, UP, FadeIn, MoveToTarget
+from manim import Create, Rectangle, ImageMobject, RIGHT, LEFT, UP, FadeIn, MoveToTarget, Text, Write, Indicate
 
-from zkmarek.video.constant import PRIMARY_COLOR
-from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.slides.common.tex_slide import TexSlide
 
 
-class Commitment(SlideBase):
+class Commitment(TexSlide):
 
     def __init__(self):
-        super().__init__("Commitment")
+        super().__init__("Commitment", "zkmarek/video/slides/e4/properties.tex")
 
     def construct(self):
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*3)
+        self.title_text = Text("Commitment scheme", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=100).to_edge(UP)
+        self.verifier = ImageMobject("data/images/person.png")
         self.commiter = ImageMobject("data/images/person_blue.png")
         self.rectangle = Rectangle(height=1.5, width=4, color = PRIMARY_COLOR).next_to(self.commiter, LEFT + UP, buff = 0)
         self.rectangle_copy = Rectangle(height=1.5, width=4, color = PRIMARY_COLOR).next_to(self.commiter, LEFT + UP, buff = 0)
+
+        self.verifier.shift(3*RIGHT)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "envelope", "data/sound/e4/slide2-1.mp3")
         scene.play(FadeIn(self.commiter))
         scene.play(Create(self.rectangle))
 
-        self.new_subsection(scene, "another party", "data/sound/e4/slide2-3.mp3")
         self.commiter.generate_target()
         self.commiter.target.shift(LEFT*3)
         scene.play(MoveToTarget(self.commiter))
@@ -30,3 +32,15 @@ class Commitment(SlideBase):
         self.rectangle_copy.generate_target()
         self.rectangle_copy.target.next_to(self.verifier, UP+RIGHT)
         scene.play(MoveToTarget(self.rectangle_copy), run_time=2)
+
+        self.new_subsection(scene, "properties of commitment", "data/sound/e4/slide2-2.mp3")
+        self.tex.scale(0.8)
+        scene.play(Write(self.tex))
+
+        self.new_subsection(scene, "hiding", "data/sound/e4/slide2-3.mp3")
+        scene.wait(2)
+        scene.play(Indicate(self.tex[0][0:7]))
+        scene.wait(2)
+
+        self.new_subsection(scene, "binding", "data/sound/e4/slide2-3.mp3")
+        scene.play(Indicate(self.tex[0][8:13]))
