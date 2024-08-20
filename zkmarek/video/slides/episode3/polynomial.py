@@ -127,6 +127,7 @@ class Polynomial(SlideBase):
         self.add(rectangle, self.polynomial, self.polynomial_G, self.vector, self.polynomial_tau0, self.tau, self.p1.dot)
         self.scale(0.65)
         text.next_to(rectangle, DOWN, buff=0.4)
+        self.vector.scale(1.2)
         scene.play(FadeIn(text, rectangle, self.vector))
         self.add(text)
         scene.wait(0.1)
@@ -140,8 +141,8 @@ class Polynomial(SlideBase):
         
         self.new_subsection(scene, "polynomial", "data/sound/e4/slide0-4.mp3")
         self.vector.generate_target()
-        self.vector.target.shift(UP*2)
-        scene.play(MoveToTarget(self.vector), run_time=1)
+        self.vector.target.shift(UP*2).scale(5/6).shift(DOWN*0.5)
+        scene.play(MoveToTarget(self.vector), FadeIn(self.polynomial), run_time=1)
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_G))
         scene.wait(3)

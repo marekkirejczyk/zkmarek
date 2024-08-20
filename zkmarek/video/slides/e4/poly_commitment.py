@@ -13,7 +13,7 @@ class PolynomialCommitment(SlideBase):
         super().__init__("Polynomial Commitment")
 
     def construct(self):
-        self.title = Text("Polynomial Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=80).to_edge(UP)
+        self.title = Text("Polynomial Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*1.5)
         self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*1.5)
 
@@ -24,12 +24,12 @@ class PolynomialCommitment(SlideBase):
 
         self.chart = Chart(include_details=True).scale(0.5).to_edge(LEFT+UP).shift(DOWN*0.3)
         self.commitment = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.chart, DOWN, buff = 0.4)
-        self.commitment_copy = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.verifier, RIGHT, buff = 0.2).shift(DOWN)
+        self.commitment_copy = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.verifier, RIGHT, buff = 0.2).shift(DOWN*0.8)
 
         self.point = ValueTracker(-1.849)
         a = Curve.from_x(self.point.get_value())
         self.p = DotOnCurve(self.chart.ax, "(z, y)", a)
-        self.p.label.shift(LEFT)
+        self.p.label.shift(LEFT*1.1)
         self.point_tau = ValueTracker(2)
         a_tau = Curve.from_x(self.point_tau.get_value())
         self.p_tau = DotOnCurve(self.chart.ax, r"({{\tau}}, {{?}})", a_tau)
@@ -39,12 +39,11 @@ class PolynomialCommitment(SlideBase):
         self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0.3).shift(RIGHT*1.5)
         self.trusted_setup2 = MathTex(r"p({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0.3).shift(RIGHT*1.5)
 
-        self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(3*UP)
+        self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
 
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide3-1.mp3")
-        scene.wait(1)
         scene.play(Write(self.title))
         scene.play(FadeIn(self.commiter))
         scene.play(Write(self.commiter_label))
@@ -56,7 +55,7 @@ class PolynomialCommitment(SlideBase):
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "committing", "data/sound/e4/slide3-2.mp3")
-        scene.wait(1)
+        scene.wait(0.2)
         scene.play(Indicate(self.commiter, color = HIGHLIGHT_COLOR))
         scene.wait(4)
     
@@ -112,5 +111,5 @@ class PolynomialCommitment(SlideBase):
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart.ax, self.chart.labels, self.chart.graph, self.p_tau, self.p, self.trusted_setup2, self.commitment_copy))
+        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart.ax, self.chart.labels, self.chart.graph, self.p_tau, self.p, self.trusted_setup2, self.commitment_copy, self.title))
 

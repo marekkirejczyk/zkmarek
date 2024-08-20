@@ -1,7 +1,7 @@
 from manim import Axes, Create, SingleStringMathTex, TexTemplate, VGroup, Write
 from manim.mobject.graphing.functions import ImplicitFunction
 
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
 
 
 class Chart(VGroup):
@@ -38,7 +38,7 @@ class Chart(VGroup):
         )
         self.graph3 = self.ax.plot_implicit_curve(
             lambda x, y: 3*x**3 - 9*x**2 - 15*x + 22 - y,
-            color=PRIMARY_COLOR
+            color=HIGHLIGHT2_COLOR
         )
         self.add(self.ax)
         if include_details:
