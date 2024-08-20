@@ -10,16 +10,16 @@ class Commitment(SlideBase):
         super().__init__("Commitment")
 
     def construct(self):
-        self.title_text = Text("Commitment scheme", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=100).to_edge(UP)
+        self.title_text = Text("Commitment scheme", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png")
         self.commiter = ImageMobject("data/images/person_blue.png")
-        self.rectangle = Rectangle(height=1.5, width=4, color = PRIMARY_COLOR).next_to(self.commiter, LEFT + UP, buff = 0)
+        self.rectangle = Rectangle(height=1.5, width=4, color = PRIMARY_COLOR).to_edge(LEFT + UP, buff = 0)
         self.rectangle_copy = Rectangle(height=1.5, width=4, color = PRIMARY_COLOR).next_to(self.commiter, LEFT + UP, buff = 0)
         self.commitment = Text("secret message", font = PRIMARY_FONT, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = 0.3)
         self.commitment_copy = Text("secret message", font = PRIMARY_FONT, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = 0.3)
         self.verifier.shift(3*RIGHT)
-        self.lock = ImageMobject("data/images/Locked@2x.png").next_to(self.commitment, RIGHT, buff = 0.1)
-        self.lock_copy = ImageMobject("data/images/Locked@2x.png").next_to(self.commitment, RIGHT, buff = 0.1)
+        self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.4).next_to(self.commitment, RIGHT, buff = 0.1)
+        self.lock_copy = ImageMobject("data/images/Locked@2x.png").scale(0.4).next_to(self.commitment, RIGHT, buff = 0.1)
         self.tex = Tex(load("zkmarek/video/slides/e4/properties.tex"), color=SECONDARY_COLOR)
 
     def animate_in(self, scene):
@@ -33,13 +33,16 @@ class Commitment(SlideBase):
         scene.play(MoveToTarget(self.commiter))
         scene.play(FadeIn(self.verifier))
         scene.wait(1)
+        scene.play(Write(self.commitment))
+        scene.wait(2)
+        scene.play(FadeIn(self.lock))
 
         self.commitment_copy.generate_target()
-        self.commitment_copy.target.next_to(self.verifier, UP+RIGHT, buff = 0.3)
+        self.commitment_copy.target.next_to(self.verifier, UP+RIGHT, buff = 0.1)
         self.lock_copy.generate_target()
         self.lock_copy.target.next_to(self.commitment_copy, RIGHT, buff = 0.1)
         self.rectangle_copy.generate_target()
-        self.rectangle_copy.target.next_to(self.verifier, UP+RIGHT, buff=0)
+        self.rectangle_copy.target.to_edge(UP+RIGHT)
         scene.play(MoveToTarget(self.rectangle_copy), MoveToTarget(self.commitment_copy), run_time=2)
 
         self.new_subsection(scene, "properties of commitment", "data/sound/e4/slide2-2.mp3")

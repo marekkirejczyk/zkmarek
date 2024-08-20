@@ -167,11 +167,11 @@ class Polynomials(SlideBase):
         scene.play(Create(self.root1), run_time=0.4)
         scene.play(Create(self.root2), run_time=0.4)
         scene.play(Create(self.root3), run_time=0.4)
-        scene.play(Indicate(self.root1, color = SECONDARY_COLOR), Indicate(self.root2, color = SECONDARY_COLOR), Indicate(self.root3))
+        scene.play(Indicate(self.root1, color = SECONDARY_COLOR), Indicate(self.root2, color = SECONDARY_COLOR), Indicate(self.root3, color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_roots))
-        scene.play(Indicate(self.chart.ax[0], color = HIGHLIGHT_COLOR), Indicate(self.root1.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.polynomial_roots[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[5], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.root1.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.polynomial_roots[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[5], color = HIGHLIGHT_COLOR))
         scene.wait(1.1)
-        scene.play(Indicate(self.chart.ax[1], color = HIGHLIGHT_COLOR), Indicate(self.root1.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[3], color = HIGHLIGHT_COLOR, scale_factor=2))
+        scene.play(Indicate(self.root1.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[3], color = HIGHLIGHT_COLOR, scale_factor=2))
         scene.play(TransformMatchingShapes(self.polynomial_roots, self.polynomial2))
         scene.wait(1)
         scene.play(Indicate(self.polynomial2[11], color = HIGHLIGHT_COLOR), Indicate(self.root2, color = HIGHLIGHT_COLOR))
@@ -225,7 +225,7 @@ class Polynomials(SlideBase):
         scene.wait(2)
         scene.play(FadeOut(self.intersect_sub))
         scene.wait(2)
-        self.polynomial.to_edge(DOWN).scale(0.7)
+        self.polynomial.to_edge(DOWN).shift(LEFT*3).scale(0.7)
         scene.play(FadeOut(self.line_subtract, self.minus, self.subtract_z, self.quotient_z), TransformMatchingShapes(self.polynomial_z, self.polynomial))
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
@@ -269,27 +269,30 @@ class Polynomials(SlideBase):
 
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")
         scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=1.2)
-        scene.wait(0.4)
+
         scene.play(Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR))
         scene.wait(0.5)
-        scene.play(Indicate(self.polynomial0_modulo5[13], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))
         scene.wait(4)
         scene.play(ApplyWave(self.chart1.ax[1], DIRECTION=UP))
         scene.wait(2)
 
         self.new_subsection(scene, "p=23", "data/sound/e4/slide1-10.mp3")
-        scene.play(TransformMatchingShapes(self.polynomial1_modulo5, self.polynomial_modulo23))
         scene.wait(2.3)
+        scene.play(TransformMatchingShapes(self.polynomial1_modulo5, self.polynomial_modulo23))
         self.chart2.gen_points()
         scene.play(FadeOut(self.chart1), FadeIn(self.chart2))
         scene.wait(2)
 
         self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
-        scene.play(TransformMatchingShapes(self.polynomial1_modulo5, self.polynomial_modulo23))
+        scene.play(TransformMatchingShapes(self.polynomial1_modulo23, self.polynomial_modulo41))
         self.chart3.gen_points()
         scene.play(FadeOut(self.chart2), FadeIn(self.chart3))
 
-        scene.wait(2)
+        scene.wait(1)
+    
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.chart3, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial_modulo41, self.p0, self.p1, self.p2, self.p3))
 
     def animate_random_number(self, scene):
         first_number = random.randint(1, 20)
