@@ -22,8 +22,9 @@ class PolynomialCommitment(SlideBase):
 
         self.message = Text("message", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=50)
 
-        self.chart = Chart(include_details=True).scale(0.3).to_edge(LEFT+UP)
-        self.commitment = MathTex(r"C = P({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.chart, UP, buff = 0.2)
+        self.chart = Chart(include_details=True).scale(0.4).to_edge(LEFT+UP).shift(DOWN*0.3)
+        self.commitment = MathTex(r"C = P({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.chart, DOWN, buff = 0.2)
+        self.commitment_copy = MathTex(r"C = P({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.verifier, UP+RIGHT, buff = 0.2)
 
         self.point = ValueTracker(-1.849)
         a = Curve.from_x(self.point.get_value())
@@ -31,9 +32,13 @@ class PolynomialCommitment(SlideBase):
 
         self.point_tau = ValueTracker(2)
         a_tau = Curve.from_x(self.point_tau.get_value())
-        self.p_tau = DotOnCurve(self.chart.ax, r"(\tau, ?)", a_tau)
+        self.p_tau = DotOnCurve(self.chart.ax, r"({{\tau}}, {{?}})", a_tau)
 
-        self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
+        self.trusted_setup = MathTex(r"{{\tau^1}} \cdot {{G_1}} + {{\tau^2}} \cdot {{G_1}} + {{\cdots}} + {{\tau^n}} \cdot {{G_1}} ").next_to(self.commiter, DOWN, buff = 0.1).shift(RIGHT)
+        self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ").next_to(self.commiter, DOWN, buff = 0.1).shift(RIGHT)
+        self.trusted_setup2 = MathTex(r"P({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ").next_to(self.commiter, DOWN, buff = 0.1).shift(RIGHT)
+
+        self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(3*UP)
 
         self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.chart, DOWN, buff = 0).scale(0.4)
 
@@ -46,12 +51,15 @@ class PolynomialCommitment(SlideBase):
         scene.wait(1)
         scene.play(FadeIn(self.verifier))
         scene.play(Write(self.verifier_label))
+        scene.wait(1.5)
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "committing", "data/sound/e4/slide3-2.mp3")
-        scene.wait(2)
+        scene.wait(4)
     
         scene.play(Create(self.p_tau))
+        scene.wait(1.5)
+        scene.play(Indicate(self.p_tau[1], color = HIGHLIGHT_COLOR))
         scene.play(Create(self.commitment))
 
         self.new_subsection(scene, "security of the commitment", "data/sound/e4/slide3-3.mp3")
@@ -63,38 +71,31 @@ class PolynomialCommitment(SlideBase):
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide3-4.mp3")
-        self.commiter.generate_target()
-        self.commiter.target.to_edge(LEFT)
-        
-        self.verifier.generate_target()
-        self.verifier.target.to_edge(RIGHT)
-
-        self.commiter_label.generate_target()
-        self.commiter_label.target.to_edge(LEFT)
-
-        self.verifier_label.generate_target()
-        self.verifier_label.target.to_edge(RIGHT)
-
-        scene.play(MoveToTarget(self.commiter), MoveToTarget(self.commiter_label), MoveToTarget(self.verifier), MoveToTarget(self.verifier_label))
+        scene.play(TransformMatchingShapes(self.commitment.copy(), self.commitment_copy))
         scene.wait(1.5)
-        self.commitment.generate_target()
-        self.commitment.target.shift(UP*2)
-        scene.play(MoveToTarget(self.commitment))
 
         self.arrow = Arrow(start=self.polynomial.get_top(), end=self.chart.graph.get_bottom(), color =PRIMARY_COLOR)
 
         scene.wait(2)
         scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
-        scene.wait(1)
-        scene.play(Create(self.p_tau))
 
         self.new_subsection(scene, "how to know what is tau?", "data/sound/e4/slide3-5.mp3")
         scene.wait(1.5)
-        tau = MathTex(r"\tau = ?", color = SECONDARY_COLOR).scale(0.4).next_to(self.verifier, UP+RIGHT, buff = 0)
+        tau = MathTex(r"\tau = ?", color = SECONDARY_COLOR).next_to(self.verifier, RIGHT, buff = 0)
         scene.play(Write(tau))
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide3-6.mp3")
         scene.play(Unwrite(tau))
+        scene.wait(2)
+        scene.play(FadeIn(self.trusted_setup))
+        scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2))
+        scene.wait(2.5)
+        scene.play(Indicate(self.trusted_setup2[3], color = HIGHLIGHT_COLOR))
+        scene.wait(1.5)
+        scene.play(Indicate(self.trusted_setup2[1], color = HIGHLIGHT_COLOR))
+        
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-7.mp3")
         scene.play(Create(self.p.dot))
@@ -104,9 +105,14 @@ class PolynomialCommitment(SlideBase):
         scene.play(TransformMatchingShapes(self.p.label.copy(), self.opening))
         scene.play(Write(self.polynomial))
         scene.play(Write(self.arrow))
-        scene.wait(5.5)
-        self.new_subsection(scene, "enough info", "data/sound/e4/slide3-8.mp3")
 
+        self.new_subsection(scene, "enough info", "data/sound/e4/slide3-8.mp3")
+        scene.wait(2)
+        scene.play(Indicate(self.verifier, color = HIGHLIGHT_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), Indicate(self.p, color = HIGHLIGHT_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart))
