@@ -13,7 +13,7 @@ class Commitment(SlideBase):
         self.title_text = Text("Commitment scheme", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
         self.commiter = ImageMobject("data/images/person_blue.png")
         self.rectangle = Rectangle(height=1.5, width=4, color = PRIMARY_COLOR).next_to(self.commiter, LEFT, buff = 0.5)
-        self.commitment = Text("secret message", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.6).next_to(self.commiter, LEFT, buff = 0.6).shift(LEFT)
+        self.commitment = Text("secret message", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.6).next_to(self.commiter, LEFT, buff = 0.6).shift(LEFT*0.8)
 
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.25).next_to(self.commitment, RIGHT, buff = 0.1)
         self.tex = Tex(load("zkmarek/video/slides/e4/properties.tex"), color=SECONDARY_COLOR)

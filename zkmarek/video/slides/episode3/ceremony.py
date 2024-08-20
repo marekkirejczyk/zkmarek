@@ -131,7 +131,7 @@ class Ceremony(SlideBase):
         rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
         text = Text("Ceremony of the trusted setup", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=50).scale(0.65)
-        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).shift(RIGHT)
+        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).shift(RIGHT+DOWN*0.2)
         self.add(rectangle, self.tau_0, self.tau_1, self.tau_k)
         self.scale(0.65)
         self.tau_0.scale(1.2).shift(DOWN*0.2)

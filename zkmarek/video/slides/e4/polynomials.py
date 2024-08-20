@@ -222,8 +222,9 @@ class Polynomials(SlideBase):
         self.intersect_sub.label.shift(LEFT*0.2+UP*0.35)
 
         scene.play(Write(self.subtract), run_time=1)
-        scene.play(TransformMatchingShapes(VGroup(self.chart.graph2, self.chart.graph), self.chart.graph3), TransformMatchingShapes(self.intersect, self.intersect_sub), Write(self.label_poly_r), Unwrite(self.label_poly_p), Unwrite(self.label_poly_q))
-        scene.wait(2)
+        scene.play(Unwrite(self.label_poly_p), Unwrite(self.label_poly_q), run_time=1)
+        scene.play(TransformMatchingShapes(VGroup(self.chart.graph2, self.chart.graph), self.chart.graph3), TransformMatchingShapes(self.intersect, self.intersect_sub), Write(self.label_poly_r))
+        scene.wait(1)
         scene.play(TransformMatchingShapes(self.subtract, self.subtract_z), TransformMatchingShapes(self.polynomial, self.polynomial_z), TransformMatchingShapes(self.quotient, self.quotient_z))
         scene.wait(2)
         scene.play(FadeOut(self.intersect_sub))
@@ -272,9 +273,8 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial0_modulo5[13], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")
-        scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=1.2)
-
-        scene.play(Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR))
+        scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5))
+        scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
         scene.wait(0.5)
         scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))
         scene.wait(4)

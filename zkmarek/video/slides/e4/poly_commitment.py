@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, FadeOut, Indicate, ValueTracker, Create, TransformMatchingShapes, Unwrite, MoveToTarget, VGroup
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, FadeOut, Indicate, ValueTracker, Create, TransformMatchingShapes, Unwrite, MoveToTarget, Group
 
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -22,7 +22,7 @@ class PolynomialCommitment(SlideBase):
 
         self.message = Text("message", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=50)
 
-        self.chart = Chart(include_details=True).scale(0.5).to_edge(LEFT+UP).shift(DOWN*0.3)
+        self.chart = Chart(include_details=True).scale(0.5).next_to(self.commiter, LEFT).shift(UP*0.3)
         self.commitment = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.chart, DOWN, buff = 0.4)
         self.commitment_copy = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.verifier, RIGHT, buff = 0.2).shift(DOWN*0.8)
 
@@ -74,8 +74,7 @@ class PolynomialCommitment(SlideBase):
 
         self.new_subsection(scene, "what is verifiers job", "data/sound/e4/slide3-4.mp3")
         scene.play(TransformMatchingShapes(self.commitment.copy(), self.commitment_copy))
-        scene.wait(3.5)
-        scene.play(Indicate(self.commitment[1], color = PRIMARY_COLOR))
+
 
         self.new_subsection(scene, "how to know what is tau?", "data/sound/e4/slide3-5.mp3")
         scene.wait(3)
@@ -85,7 +84,7 @@ class PolynomialCommitment(SlideBase):
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide3-6.mp3")
         scene.play(Unwrite(tau))
        
-        self.images = VGroup(self.commiter, self.commiter_label, self.verifier, self.verifier_label)
+        self.images = Group(self.commiter, self.commiter_label, self.verifier, self.verifier_label)
         self.images.generate_target()
         self.images.target.shift(UP*1.5)
         scene.play(MoveToTarget(self.images), run_time=2)
@@ -118,5 +117,5 @@ class PolynomialCommitment(SlideBase):
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart.ax, self.chart.labels, self.chart.graph, self.p_tau, self.p, self.trusted_setup2, self.commitment_copy, self.title))
+        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart.ax, self.chart.labels, self.chart.graph, self.p_tau, self.p, self.commitment_copy, self.title))
 
