@@ -285,7 +285,7 @@ class Polynomials(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
-        scene.play(TransformMatchingShapes(self.polynomial1_modulo23, self.polynomial_modulo41))
+        scene.play(TransformMatchingShapes(self.polynomial_modulo23, self.polynomial_modulo41))
         self.chart3.gen_points()
         scene.play(FadeOut(self.chart2), FadeIn(self.chart3))
 
