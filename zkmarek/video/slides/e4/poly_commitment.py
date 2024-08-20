@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, FadeOut, Indicate, ValueTracker, Create, TransformMatchingShapes, Unwrite
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, FadeOut, Indicate, ValueTracker, Create, TransformMatchingShapes, Unwrite, MoveToTarget, VGroup
 
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -35,9 +35,9 @@ class PolynomialCommitment(SlideBase):
         self.p_tau = DotOnCurve(self.chart.ax, r"({{\tau}}, {{?}})", a_tau)
         self.p_tau.label.shift(DOWN*0.15+LEFT*0.15).scale(1.1)
 
-        self.trusted_setup = MathTex(r"{{\tau^1}} \cdot {{G_1}} + {{\tau^2}} \cdot {{G_1}} + {{\cdots}} + {{\tau^n}} \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0.3).shift(RIGHT*1.5)
-        self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0.3).shift(RIGHT*1.5)
-        self.trusted_setup2 = MathTex(r"p({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0.3).shift(RIGHT*1.5)
+        self.trusted_setup = MathTex(r"{{\tau^1}} \cdot {{G_1}} + {{\tau^2}} \cdot {{G_1}} + {{\cdots}} + {{\tau^n}} \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
+        self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
+        self.trusted_setup2 = MathTex(r"p({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
 
         self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
 
@@ -51,11 +51,11 @@ class PolynomialCommitment(SlideBase):
         scene.wait(1)
         scene.play(FadeIn(self.verifier))
         scene.play(Write(self.verifier_label))
-        scene.wait(1.5)
+        scene.wait(1)
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "committing", "data/sound/e4/slide3-2.mp3")
-        scene.wait(0.2)
+        scene.wait(1.2)
         scene.play(Indicate(self.commiter, color = HIGHLIGHT_COLOR))
         scene.wait(4)
     
@@ -84,7 +84,11 @@ class PolynomialCommitment(SlideBase):
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide3-6.mp3")
         scene.play(Unwrite(tau))
-        scene.wait(2)
+       
+        self.images = VGroup(self.commiter, self.commiter_label, self.verifier, self.verifier_label)
+        self.images.generate_target()
+        self.images.target.shift(UP*1.5)
+        scene.play(MoveToTarget(self.images), run_time=2)
         scene.play(FadeIn(self.trusted_setup))
         scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1))
         scene.wait(2)
@@ -98,13 +102,16 @@ class PolynomialCommitment(SlideBase):
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-7.mp3")
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
-        scene.play(FadeOut(self.commitment))
-        scene.wait(2)
+        scene.play(FadeOut(self.commitment, self.trusted_setup2))
+
+        self.images.generate_target()
+        self.images.target.shift(DOWN*1.5)
+        scene.play(MoveToTarget(self.images), run_time=2)
         scene.play(TransformMatchingShapes(self.p.label.copy(), self.opening))
 
         self.new_subsection(scene, "enough info", "data/sound/e4/slide3-8.mp3")
         scene.wait(2)
-        scene.play(Indicate(self.verifier, color = HIGHLIGHT_COLOR))
+
         scene.wait(3.5)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), Indicate(self.p, color = HIGHLIGHT_COLOR))
         scene.wait(2)

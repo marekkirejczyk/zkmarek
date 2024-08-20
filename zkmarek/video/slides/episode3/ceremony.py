@@ -152,15 +152,15 @@ class Ceremony(SlideBase):
         self.three_dot.scale(0.65).next_to(self.tau_1, DOWN, buff = 0.4)
         scene.play(Write(self.three_dot))
         scene.play(Write(self.tau_k))
-        scene.play(Write(self.line0))
-        scene.play(Write(self.line1))
-        scene.play(Write(self.linei))
+        scene.play(Indicate(self.tau_0, color = HIGHLIGHT_COLOR), Indicate(self.tau_1, color = HIGHLIGHT_COLOR), Indicate(self.tau_k, color = HIGHLIGHT_COLOR))
+        scene.play(Write(self.line0), run_time=0.3)
+        scene.play(Write(self.line1), run_time=0.3)
+        scene.play(Write(self.linei), run_time=0.3)
 
         scene.play(Write(self.tau_col))
 
-        scene.play(Indicate(self.tau_0, color = HIGHLIGHT_COLOR), Indicate(self.tau_1, color = HIGHLIGHT_COLOR), Indicate(self.tau_k, color = HIGHLIGHT_COLOR))
 
-        scene.wait(2)
+        scene.wait(1)
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.three_dot, text, rectangle, self.line0, self.line1, self.linei, self.tau_col))
         
     def animate_out(self, scene):
