@@ -29,14 +29,17 @@ class TexCell(VGroup):
 
 class TexArray(VGroup):
     cells: list[TexCell]
-    def __init__(self, values, width = 2):
+    def __init__(self, values, widths=None):
         super().__init__()
         self.cells = []
-        for i, value in enumerate(values):
+        default_width=2
+        widths = widths or [default_width] * len(values)
+        for i, (value, width) in enumerate(zip(values, widths)):
             cell = TexCell(value, width)
             self.cells.append(cell)
             self.add(cell)
         self.arrange(RIGHT, buff=0) 
+
 
     def arrange_cells(self):
         self.arrange(RIGHT, buff=0)
