@@ -152,7 +152,7 @@ class Ceremony(SlideBase):
         scene.play(Write(self.vector_1))
         scene.play(Write(self.three_dot))
         scene.play(Write(self.vector_k))
-        scene.play(Indicate(self.vector_0.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_1.cells[0][1][2], color = HIGHLIGHT_COLOR), Indicate(self.vector_k.cells[0][1][2], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.vector_0.cells[0][1][0], color = HIGHLIGHT_COLOR), Indicate(self.vector_1.cells[0][1][0], color = HIGHLIGHT_COLOR), Indicate(self.vector_k.cells[0][1][0], color = HIGHLIGHT_COLOR))
 
         scene.wait(2)
         scene.play(FadeOut(self.vector_0, self.vector_1, self.vector_k, self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.three_dot, text, rectangle, self.title_label))

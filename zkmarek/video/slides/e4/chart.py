@@ -38,7 +38,7 @@ class Chart(VGroup):
         )
         self.graph3 = self.ax.plot_implicit_curve(
             lambda x, y: 3*x**3 - 9*x**2 - 15*x + 22 - y,
-            color=HIGHLIGHT_COLOR
+            color=PRIMARY_COLOR
         )
         self.add(self.ax)
         if include_details:
