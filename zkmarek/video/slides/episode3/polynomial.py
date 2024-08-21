@@ -35,6 +35,7 @@ class Polynomial(SlideBase):
         self.polynomial_nunber = MathTex(r"F({{ 2 }}) = 2\cdot {{ 2^2 }} -3\cdot {{ 2 }} - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
 
         self.polynomial_G = MathTex(r"F({{x}}) {{\cdot G}} = [2\cdot {{x^2}} -3\cdot {{x}} - 7] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau_mini = MathTex(r"F({{\\tau}}) {{}} = [2\cdot {{\tau^2}} -3\cdot {{\tau}} - 7] {{}}", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_tau0 = MathTex(r"F({{\tau}}){{\cdot G}} = [2\cdot {{\tau^2}} -3\cdot {{\tau}} - 7 ] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.title_label, DOWN)
         self.polynomial_tau = MathTex(r"F({{\tau)\cdot G}} = {{2\cdot}} [{{\tau^2 \cdot G}}] {{-3\cdot}} [{{\tau \cdot G}}] {{- 7 \cdot [G]}}", font_size = 60, color = SECONDARY_COLOR)
@@ -124,7 +125,7 @@ class Polynomial(SlideBase):
         text = Text("Evaluating a polynomial", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=50).scale(0.65)
         self.vector.shift(DOWN*2)
-        self.add(rectangle, self.polynomial, self.polynomial_G, self.vector, self.polynomial_tau0, self.tau, self.p1.dot)
+        self.add(rectangle, self.polynomial, self.polynomial_tau_mini, self.vector, self.polynomial_tau0, self.tau, self.p1.dot)
         self.scale(0.65)
         text.next_to(rectangle, DOWN, buff=0.4)
         self.vector.scale(1.2)
@@ -144,9 +145,9 @@ class Polynomial(SlideBase):
         self.vector.target.shift(UP*2).scale(5/6).shift(DOWN*0.5)
         scene.play(MoveToTarget(self.vector), FadeIn(self.polynomial), run_time=1)
         scene.wait(1.5)
-        scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_G))
+        scene.play(TransformMatchingShapes(VGroup(self.polynomial, self.vector[0][1].copy(), self.vector[1][1].copy()), self.polynomial_tau_mini))
         scene.wait(3)
-        scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial_G), self.polynomial_tau0))
+        scene.play(TransformMatchingShapes(VGroup(self.vector[0][1].copy(), self.vector[1][1].copy(), self.polynomial_tau_mini), self.polynomial_tau0))
 
         scene.wait(1.5)
         scene.play(FadeOut(self.polynomial_tau0, self.vector, text, rectangle))
