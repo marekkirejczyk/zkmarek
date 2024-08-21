@@ -1,4 +1,4 @@
-from manim import Create, Rectangle, ImageMobject, RIGHT, LEFT, UP, DOWN, FadeIn, MoveToTarget, Text, Write, Indicate, Tex, FadeOut
+from manim import Create, Rectangle, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Indicate, Tex, FadeOut, Transform
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -17,6 +17,33 @@ class Commitment(SlideBase):
 
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.25).next_to(self.commitment, RIGHT, buff = 0.1)
         self.tex = Tex(load("zkmarek/video/slides/e4/properties.tex"), color=SECONDARY_COLOR)
+        self.envelope_body_closed = Polygon(
+            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
+        )
+
+        self.envelope_flap_closed = Polygon(
+            [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
+            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
+        )
+
+        self.outline_closed = VGroup(
+            self.envelope_body_closed.copy().set_fill(opacity=0.2),
+            self.envelope_flap_closed.copy().set_fill(opacity=0.2)
+        )
+        self.envelope_body = Polygon(
+            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
+        )
+        self.envelope_flap = Polygon(
+            [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
+            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
+        )
+
+        self.outline = VGroup(
+            self.envelope_body.copy().set_fill(opacity=0.2),
+            self.envelope_flap.copy().set_fill(opacity=0.2)
+        )
 
     def animate_in(self, scene):
         self.new_subsection(scene, "envelope", "data/sound/e4/slide2-1.mp3")
@@ -28,26 +55,37 @@ class Commitment(SlideBase):
         scene.play(Write(self.commitment), run_time=1.2)
         scene.wait(2)
         scene.play(FadeIn(self.lock))
-
-
-        scene.wait(4.5)
-        scene.play(Indicate(self.lock, color = HIGHLIGHT_COLOR))
-
-        self.new_subsection(scene, "properties of commitment", "data/sound/e4/slide2-2.mp3")
+        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed, self.outline_closed))
+        scene.wait(2)
+        scene.play(Transform(VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.outline_closed) ,VGroup(self.envelope_body, self.envelope_flap, self.outline)))
 
         self.tex.scale(0.8).next_to(self.commiter, RIGHT, buff = 1)
         scene.play(Write(self.tex))
 
-        self.new_subsection(scene, "hiding", "data/sound/e4/slide2-3.mp3")
+        self.new_subsection(scene, "hiding", "data/sound/e4/slide2-1a.mp3")
         scene.wait(0.2)
         scene.play(Indicate(self.tex[0][1:7], color = HIGHLIGHT_COLOR))
         scene.wait(2)
 
-        self.new_subsection(scene, "binding", "data/sound/e4/slide2-4.mp3")
+        self.new_subsection(scene, "binding", "data/sound/e4/slide2-1b.mp3")
         scene.play(Indicate(self.tex[0][8:15], color = HIGHLIGHT_COLOR))   
         scene.wait(4)
         scene.play(Indicate(self.lock, color = HIGHLIGHT_COLOR))
         scene.wait(3)
+
+        self.new_subsection(scene, "polynomial commitments", "data/sound/e4/slide2-2.mp3")
+
+        self.new_subsection(scene, "committer creates a commitment", "data/sound/e4/slide2-3.mp3")
+
+        self.new_subsection(scene, "commitment is sent", "data/sound/e4/slide2-4.mp3")
+
+        self.new_subsection(scene, "validate the commitment", "data/sound/e4/slide2-5.mp3")
+
+        self.new_subsection(scene, "open the commitment", "data/sound/e4/slide2-6.mp3")
+
+        self.new_subsection(scene, "committer proves that he knows the polynomial", "data/sound/e4/slide2-7.mp3")
+
+
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.tex, self.rectangle, self.commitment, self.commiter, self.lock, self.title_text))

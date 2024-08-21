@@ -40,7 +40,7 @@ class Polynomials(SlideBase):
         self.polynomial_eqn2 = MathTex(r"{{x}}^n + {{x}}^{n-1} + \cdots + {{x}}", color = PRIMARY_COLOR, font_size = 60)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
         self.polynomial_z = MathTex(r"P({{z}}) = 4 {{z^3}} - 8{{z^2}} - 17 {{z}} + 30 {{=y}}", color = PRIMARY_COLOR).to_edge(RIGHT).shift(LEFT*0.1+UP*0.4)
-        self.polynomial_roots = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 = {{0}}", color = PRIMARY_COLOR).to_edge(DOWN)
+        self.polynomial_roots = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 {{= 0}}", color = PRIMARY_COLOR).to_edge(DOWN)
         self.quotient = MathTex(r"Q({{x}}) = {{x^3}} + {{x^2}} - 2{{x}} + 8 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
         self.quotient_z = MathTex(r"Q({{z}}) = {{z}}^3 + {{z}}^2 - 2{{z}} + 8 {{=y}}", color = PRIMARY_COLOR).next_to(self.polynomial_z, DOWN, buff = 0.3)
@@ -50,6 +50,10 @@ class Polynomials(SlideBase):
         self.polynomial2 = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} = {{(2x-3)}}{{(2x-5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
         self.chart = Chart(include_details=True).scale(0.8).next_to(self.title_label, DOWN)
+        self.p0 = ValueTracker(0)
+        a0_1 = Curve.from_x(self.p0.get_value())
+        self.p0 = DotOnCurve(self.chart.ax, "(0,30)", a0_1)
+
         self.p1_1 = ValueTracker(1)
         a1_1 = Curve.from_x(self.p1_1.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "(1,9)", a1_1)
@@ -62,7 +66,8 @@ class Polynomials(SlideBase):
         a3_23 = Curve.from_x(self.p3_23.get_value())
         self.p3 = DotOnCurve(self.chart.ax, "(3, 15)", a3_23)
 
-        self.poly_point1 = MathTex("P(1) = 9", color = PRIMARY_COLOR).to_edge(RIGHT)
+        self.poly_point0 = MathTex("P(0) = 30", color = PRIMARY_COLOR).to_edge(RIGHT)
+        self.poly_point1 = MathTex("P(1) = 9", color = PRIMARY_COLOR).next_to(self.poly_point0, DOWN)
         self.poly_point2 = MathTex("P(2) = -4", color = PRIMARY_COLOR).next_to(self.poly_point1, DOWN)
         self.poly_point3 = MathTex("P(3) = 15", color = PRIMARY_COLOR).next_to(self.poly_point2, DOWN)
 
@@ -124,6 +129,8 @@ class Polynomials(SlideBase):
         scene.play(MoveToTarget(self.polynomial_eqn))
         scene.play(Create(self.chart.ax), Create(self.chart.labels), run_time=2)
         scene.wait(2.5)
+        scene.play(Create(self.p0.dot), run_time=0.7)
+        scene.play(Write(self.p0.label), run_time=0.7)
         scene.play(Create(self.p1.dot), run_time=0.7)
         scene.play(Write(self.p1.label), run_time=0.7)
         scene.play(Create(self.p2.dot), run_time=0.7)
@@ -133,11 +140,13 @@ class Polynomials(SlideBase):
         scene.wait(2.7)
         scene.play(Indicate(self.polynomial_eqn, color = PRIMARY_COLOR))
         scene.wait(2)
+        scene.play(TransformMatchingShapes(self.p0.label.copy(), self.poly_point0))
         scene.play(TransformMatchingShapes(self.p1.label.copy(), self.poly_point1))
         scene.play(TransformMatchingShapes(self.p2.label.copy(), self.poly_point2))
         scene.play(TransformMatchingShapes(self.p3.label.copy(), self.poly_point3))
 
         self.new_subsection(scene, "interpolation", "data/sound/e4/slide1-2.mp3")
+        scene.play(Indicate(self.p0, color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.p2, color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.p3, color = HIGHLIGHT_COLOR), run_time=0.7)
@@ -157,7 +166,7 @@ class Polynomials(SlideBase):
         #     scene.play(FadeOut(point.dot), run_time=0.05)
 
         self.new_subsection(scene, "roots", "data/sound/e4/slide1-3.mp3")
-        scene.play(FadeOut(self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.poly_point1, self.poly_point2, self.poly_point3), run_time=1)
+        scene.play(FadeOut(self.p1.dot, self.p1.label, self.p2.dot, self.p2.label, self.p3.dot, self.p3.label, self.p0, self.poly_point1, self.poly_point0, self.poly_point2, self.poly_point3), run_time=1)
         scene.play(Indicate(self.polynomial, color = SECONDARY_COLOR))
 
         self.root1.label.shift(UP*0.2+LEFT*1.3)
@@ -195,6 +204,7 @@ class Polynomials(SlideBase):
         self.chart.graph3.shift(LEFT*4+UP*0.15)
         self.intersect.shift(LEFT*4+UP*0.15)
         self.intersect.label.shift(0.2*DOWN+LEFT*0.1)
+        scene.wait(0.7)
         scene.play(Write(self.chart.graph2), Write(self.label_poly_q))
         scene.play(Create(self.intersect.dot))
         self.quotient.next_to(self.polynomial, DOWN, buff = 0.3)
