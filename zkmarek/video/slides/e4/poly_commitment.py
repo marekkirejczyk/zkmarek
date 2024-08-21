@@ -39,7 +39,7 @@ class PolynomialCommitment(SlideBase):
         self.trusted_setup = MathTex(r"{{\tau^1}} \cdot {{G_1}} + {{\tau^2}} \cdot {{G_1}} + {{\cdots}} + {{\tau^n}} \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
         self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
         self.trusted_setup2 = MathTex(r"p({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
-
+ 
         self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
         self.tex = Tex(load("zkmarek/video/slides/e4/properties.tex"), color=SECONDARY_COLOR)
         self.envelope_body_closed = Polygon(
