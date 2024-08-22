@@ -123,7 +123,7 @@ class PolynomialCommitment(SlideBase):
         self.envelope_body.next_to(self.commiter, LEFT+DOWN)
         self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN)
         self.envelope_flap.next_to(self.envelope_body, UP, buff = 0)
-        self.envelope_flap_closed.next_to(self.envelope_body, UP = -1)
+        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -1)
         scene.wait(2)
         scene.play(Write(self.commitment))
         scene.play(Indicate(self.commitment[1], color = HIGHLIGHT_COLOR))
