@@ -50,7 +50,7 @@ class PolynomialCommitment(SlideBase):
         self.envelope_flap_closed = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        ).scale(0.6)
+        ).scale(0.58)
 
         self.outline_closed = VGroup(
             self.envelope_body_closed.copy().set_fill(opacity=0.2),
@@ -64,17 +64,11 @@ class PolynomialCommitment(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.6)
-
-        self.outline = VGroup(
-            self.envelope_body.copy().set_fill(opacity=0.2),
-            self.envelope_flap.copy().set_fill(opacity=0.2)
-        )
         self.envelope_body.next_to(self.commiter, LEFT)
         self.envelope_body_closed.next_to(self.commiter, LEFT)
-        self.outline.next_to(self.commiter, LEFT)
-        self.outline_closed.next_to(self.commiter, LEFT)
+
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -1)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.95)
         self.message.next_to(self.commiter, RIGHT, buff = 0.1)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.25).next_to(self.message, RIGHT, buff = 0.1)
 
@@ -97,14 +91,7 @@ class PolynomialCommitment(SlideBase):
         scene.play(MoveToTarget(secret_message))
         scene.play(FadeOut(secret_message))
 
-        # self.envelope_flap_closed = Polygon(
-        #     [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
-        #     fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        # ).scale(0.6).next_to(self.envelope_body_closed, UP, buff = -1)
-        # self.envelope_flap = Polygon(
-        #     [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
-        #     fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        # ).scale(0.6).next_to(self.envelope_body, UP, buff= 0)
+
         scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
 
         self.tex.scale(0.8).next_to(self.commiter, RIGHT, buff = 1)
@@ -131,11 +118,11 @@ class PolynomialCommitment(SlideBase):
         self.envelope_body.next_to(self.commiter, LEFT+DOWN)
         self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN)
         self.envelope_flap.next_to(self.envelope_body, UP, buff = 0)
-        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -1)
+        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -0.95)
         scene.wait(2)
-        scene.play(Write(self.commitment))
-        scene.play(Indicate(self.commitment[1], color = HIGHLIGHT_COLOR))
         scene.play(Create(self.p_tau))
+        scene.play(TransformMatchingShapes(self.p_tau.label[1].copy(), self.commitment))
+        scene.play(Indicate(self.commitment[1], color = HIGHLIGHT_COLOR))
         scene.wait(0.6)
         scene.play(Indicate(self.commitment[3], color = HIGHLIGHT_COLOR))
         self.images = Group(self.commiter, self.commiter_label, self.verifier, self.verifier_label)
@@ -156,8 +143,8 @@ class PolynomialCommitment(SlideBase):
         scene.play(FadeIn(self.envelope_body, self.envelope_flap))
         self.commitment_copy.generate_target()
         self.commitment_copy.target.next_to(self.commiter, LEFT+DOWN, buff = 0.4).shift(0.3*LEFT)
-        scene.play(MoveToTarget(self.commitment_copy), FadeOut(self.commitment))
-        scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
+
+        scene.play(MoveToTarget(self.commitment_copy), FadeOut(self.commitment), TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
 
         commitment_sent = VGroup(self.commitment_copy, self.envelope_body, self.envelope_flap_closed)
         commitment_sent.generate_target()
@@ -170,31 +157,22 @@ class PolynomialCommitment(SlideBase):
 
         bubble = RoundedRectangle(corner_radius=0.5, width=speech_text.width + 1, height=speech_text.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+RIGHT, buff = -1).shift(0.2*DOWN)
         
-        bubble_tail = Polygon(
-            [1, -0.5, 0], 
-            [0.5, -1.5, 0],  
-            [1.5, -1.5, 0], 
-        )
-        
-        bubble_tail.next_to(bubble, DOWN, buff=0)
-
-        speech_bubble = VGroup(bubble, bubble_tail)
-        speech_bubble.shift(UP) 
+        bubble.shift(UP) 
 
         speech_text.move_to(bubble.get_center())
         scene.wait(5)
-        scene.play(Create(speech_bubble), Write(speech_text))
+        scene.play(Create(bubble), Write(speech_text))
         self.envelope_flap = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        ).scale(0.6).next_to(self.envelope_body, UP, buff= 0)
+        ).scale(0.58).next_to(self.envelope_body, UP, buff= 0)
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
         self.commitment_copy.generate_target()
         self.commitment_copy.target.shift(UP*2)
         scene.play(MoveToTarget(self.commitment_copy))
 
         self.new_subsection(scene, "open the commitment", "data/sound/e4/slide2-6.mp3")
-        scene.play(FadeOut(speech_bubble, speech_text))
+        scene.play(FadeOut(bubble, speech_text))
 
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
