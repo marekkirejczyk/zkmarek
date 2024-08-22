@@ -165,7 +165,7 @@ class PolynomialCommitment(SlideBase):
         self.envelope_flap = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        ).scale(0.58).next_to(self.envelope_body, UP, buff= 0)
+        ).scale(0.6).next_to(self.envelope_body, UP, buff= 0)
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
         self.commitment_copy.generate_target()
         self.commitment_copy.target.shift(UP*2)
