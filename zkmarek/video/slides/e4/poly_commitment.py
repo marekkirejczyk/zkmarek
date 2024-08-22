@@ -1,4 +1,4 @@
-from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, FadeOut, Indicate, ValueTracker, Create, TransformMatchingShapes, MoveToTarget, Group, Tex, Polygon, VGroup, Transform, Circle
+from manim import LEFT, RIGHT, FadeIn, ImageMobject, Text, DOWN, UP, Write, MathTex, FadeOut, Indicate, ValueTracker, Create, TransformMatchingShapes, MoveToTarget, Group, Tex, Polygon, VGroup, Transform, Circle, RoundedRectangle
 
 from zkmarek.video.utils import load
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
@@ -18,7 +18,7 @@ class PolynomialCommitment(SlideBase):
         self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*1.5)
         self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*1.5)
 
-        self.commiter_label = Text("Commiter", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.commiter, DOWN, buff = 0.4)
+        self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.verifier, DOWN, buff = 0.4)
 
         self.message = Text("message", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=50)
@@ -96,7 +96,7 @@ class PolynomialCommitment(SlideBase):
         scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
         scene.play(MoveToTarget(secret_message))
         scene.play(FadeOut(secret_message))
-        scene.wait(1)
+
         # self.envelope_flap_closed = Polygon(
         #     [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
         #     fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
@@ -156,42 +156,60 @@ class PolynomialCommitment(SlideBase):
         scene.play(FadeIn(self.envelope_body, self.envelope_flap))
         self.commitment_copy.generate_target()
         self.commitment_copy.target.next_to(self.commiter, LEFT+DOWN, buff = 0.4).shift(0.3*LEFT)
-        scene.play(MoveToTarget(self.commitment_copy))
+        scene.play(MoveToTarget(self.commitment_copy), FadeOut(self.commitment))
         scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
 
         commitment_sent = VGroup(self.commitment_copy, self.envelope_body, self.envelope_flap_closed)
         commitment_sent.generate_target()
         commitment_sent.target.shift(9.7*RIGHT)
         self.envelope_flap.shift(9.7*RIGHT)
-        scene.play(MoveToTarget(commitment_sent), FadeOut(self.commitment))
+        scene.play(MoveToTarget(commitment_sent))
 
         self.new_subsection(scene, "validate the commitment", "data/sound/e4/slide2-5.mp3")
+        speech_text = Tex(r"Hey, can you let me\\ open the commitment?", font_size=32, color = PRIMARY_COLOR)
 
-        self.new_subsection(scene, "open the commitment", "data/sound/e4/slide2-6.mp3")
+        bubble = RoundedRectangle(corner_radius=0.5, width=speech_text.width + 1, height=speech_text.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+RIGHT, buff = -1).shift(0.2*DOWN)
+        
+        bubble_tail = Polygon(
+            [1, -0.5, 0], 
+            [0.5, -1.5, 0],  
+            [1.5, -1.5, 0], 
+        )
+        
+        bubble_tail.next_to(bubble, DOWN, buff=0)
+
+        speech_bubble = VGroup(bubble, bubble_tail)
+        speech_bubble.shift(UP) 
+
+        speech_text.move_to(bubble.get_center())
+        scene.wait(5)
+        scene.play(Create(speech_bubble), Write(speech_text))
         self.envelope_flap = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.6).next_to(self.envelope_body, UP, buff= 0)
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
         self.commitment_copy.generate_target()
-        self.commitment_copy.target.shift(UP*2.5)
+        self.commitment_copy.target.shift(UP*2)
         scene.play(MoveToTarget(self.commitment_copy))
+
+        self.new_subsection(scene, "open the commitment", "data/sound/e4/slide2-6.mp3")
+        scene.play(FadeOut(speech_bubble, speech_text))
 
         scene.play(Create(self.p.dot))
         scene.play(Write(self.p.label))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle, self.p.label.copy()), self.opening))
 
-
         self.new_subsection(scene, "committer proves that he knows the polynomial", "data/sound/e4/slide2-7.mp3")
         self.opening.generate_target()
         self.opening.target.next_to(commitment_sent, UP, buff = 1.3)
         scene.play(MoveToTarget(self.opening))
         scene.wait(2)
-        scene.play(Indicate(self.chart.graph))
+        scene.play(Indicate(self.chart.graph, color = HIGHLIGHT2_COLOR))
         scene.play(FadeOut(self.commitment_copy))
 
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart.ax, self.chart.labels, self.chart.graph, self.p_tau, self.p, self.commitment_copy, self.title, self.commitment, self.envelope_flap, self.envelope_body_closed))
+        scene.play(FadeOut(self.commiter, self.verifier, self.commiter_label, self.verifier_label, self.opening, self.chart.ax, self.chart.labels, self.chart.graph, self.p_tau, self.p, self.title, self.envelope_flap, self.envelope_body))
 
