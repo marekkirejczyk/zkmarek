@@ -49,6 +49,15 @@ class DiscreetePolynomialChart(VGroup):
             self.dots.append(dot)
             self.add(dot)
 
+    def gen_points2(self):
+        for i in range(0, self.p):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            dot = Dot(self.ax.coords_to_point(x.value, y.value), color=SECONDARY_COLOR)
+            dot.set_z_index(10, family=True)
+            self.dots.append(dot)
+            self.add(dot)
+
     def add_xaxis_label(self, x, label):
         label = MathTex(label, color=PRIMARY_COLOR)
         label.move_to(self.ax.coords_to_point(x, -2.5))

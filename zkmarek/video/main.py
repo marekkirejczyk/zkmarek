@@ -173,6 +173,7 @@ EPISODE4 = [
     Polynomials(),
     TitleSlide("Commitments", sound="data/sound/e4/slide2-0.mp3", wait_time=3.5),
     PolynomialCommitment(),
+    TitleSlide("Proof"),
     Proof1(),
     Proof2(),
     # Subscribe("data/sound/episode1/s28.wav"),

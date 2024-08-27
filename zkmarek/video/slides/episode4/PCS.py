@@ -21,7 +21,7 @@ from zkmarek.video.constant import (
     PRIMARY_FONT,
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.episode4.discreete_polynomial_chart import (
+from zkmarek.video.slides.e4.discreete_polynomial_chart import (
     DiscreetePolynomialChart,
 )
 

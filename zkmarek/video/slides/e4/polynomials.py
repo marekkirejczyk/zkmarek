@@ -7,7 +7,7 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e4.curve import Curve
-from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 
 def poly(x):
@@ -215,9 +215,7 @@ class Polynomials(SlideBase):
         scene.wait(2)
         scene.play(Write(self.intersect.label))
         scene.play(Indicate(self.intersect.label[1], color = HIGHLIGHT_COLOR))
-        scene.wait(0.5)
-        scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_z), TransformMatchingShapes(self.quotient, self.quotient_z), run_time=1.5)
-        scene.play(Indicate(self.intersect.label, color = SECONDARY_COLOR))
+        scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_z), TransformMatchingShapes(self.quotient, self.quotient_z), run_time=1)
         scene.play(Indicate(self.polynomial_z[9], color = SECONDARY_COLOR))
         scene.play(Indicate(self.quotient_z[9], color = SECONDARY_COLOR))
 
@@ -300,11 +298,10 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial0_modulo5[13], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")
-        scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5))
-        scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
-        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
+
         scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))
-        scene.wait(4)
+        scene.wait(4.5)
         scene.play(ApplyWave(self.chart1.ax[1], DIRECTION=UP))
 
         top_val = MathTex(r"p-1", color = SECONDARY_COLOR).to_edge(UP+RIGHT).shift(DOWN*1.2+LEFT*3).scale(0.8)
