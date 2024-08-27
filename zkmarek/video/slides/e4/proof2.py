@@ -22,7 +22,7 @@ from zkmarek.video.slides.e4.discreete_polynomial_chart import (
 
 
 def poly(x):
-    return x * x * x - x * x * 2 + x * 3 + 4
+    return x * x * x - x * x * 2 + x * 3 + 7
 
 
 class Proof2(SlideBase):
@@ -54,7 +54,7 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
-            r"e({{q(\tau) \cdot (\tau-z) \cdot G_1}}, G_2) = e({{[p(\tau -y]\cdot G_1}}, G_2)",
+            r"e({{q(\tau) \cdot (\tau-z) \cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
@@ -92,7 +92,7 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "pi - proof", "data/sound/e4/slide4-1.mp3")
         scene.play(FadeOut(self.definition2))
         scene.play(Write(self.proof))
-        scene.wait(2.5)
+        scene.wait(2)
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.proof[4], color = HIGHLIGHT_COLOR))
@@ -108,18 +108,13 @@ class Proof2(SlideBase):
         self.chart.target.scale(0.8)
         scene.play(Write(self.verification), MoveToTarget(self.chart))
         scene.play(Write(self.equation2))
-        scene.wait(2)
-        scene.play(Indicate(self.equation2[6], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.equation2[8], color = HIGHLIGHT_COLOR))
-        scene.wait(2)
-        scene.play(Indicate(self.equation2[2], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.equation2[4], color = HIGHLIGHT_COLOR))
 
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-3.mp3")
         scene.play(TransformMatchingShapes(self.equation2, self.equation))
-        scene.wait(2)
+        scene.wait(1)
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
+        scene.wait(1)
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
         scene.wait(2)
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
@@ -142,11 +137,8 @@ class Proof2(SlideBase):
 
         self.chart.animate_shift_dots(scene, self.y.value)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
-        scene.play(FadeOut(line_z))
-        scene.play(FadeOut(line_tau))
-        scene.play(FadeOut(line_tau_y))
+        scene.play(FadeOut(line_z, line_tau, line_tau_y))
 
-        scene.wait(2)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
 

@@ -22,7 +22,7 @@ from zkmarek.video.slides.e4.discreete_polynomial_chart import (
 
 
 def poly(x):
-    return x * x * x - x * x * 2 + x * 3 + 3
+    return x * x * x - x * x * 2 + x * 3 + 7
 def poly2(x):
     if isinstance(x, FieldElement):
         output = FieldElement(4, x.order) * x * x * x - FieldElement(8, x.order) * x * x  - FieldElement(17, x.order) * x + FieldElement(30, x.order)
@@ -86,20 +86,23 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
 
         self.chart.add_xaxis_label(self.tau.value, r"\tau")
-        line_tau_y = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value - self.y.value
-        )
-        self.chart.add(line_tau_y)
+        line_tau = self.chart.animate_create_vertical_line(scene, self.tau.value, self.value_at_tau.value)
+        self.chart.add(line_tau)
         self.new_subsection(scene, "contructing q via tau", "data/sound/e4/slide3-2.mp3")
         scene.wait(2)
         self.chart2.gen_points2()
         scene.play(FadeIn(self.chart2))
+        self.chart.remove(line_tau)
         scene.play(Write(self.equality_quotient))
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.wait(2)
         self.chart.add_xaxis_label(self.z.value, r"z")
-
+        self.chart.add_xaxis_label(self.z.value, r"z")
+        line_z = self.chart.animate_create_vertical_line(
+            scene, self.z.value, self.y.value
+        )
+        self.chart.add(line_z)
         self.equality_quotient.generate_target()
         self.equality_quotient.target.to_edge(DOWN+RIGHT).shift(LEFT*2)
         scene.play(MoveToTarget(self.equality_quotient), run_time=1.5)
@@ -123,7 +126,7 @@ class Proof1(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "there exist a q(x)", "data/sound/e4/slide3-6.mp3")
-        scene.wait(1.5)
+        scene.wait(2)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
@@ -139,4 +142,4 @@ class Proof1(SlideBase):
 
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.chart2, self.equality_quotient, self.opening7, self.opening, self.polynomial))
+        scene.play(FadeOut(self.chart, self.opening7, self.opening, self.polynomial))
