@@ -70,7 +70,7 @@ class Proof1(SlideBase):
         self.opening6.next_to(self.opening, DOWN)
         self.opening7.next_to(self.opening, DOWN)
 
-        self.tau = FieldElement(1, 41)
+        self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
         self.z = FieldElement(13, 41)
         self.y = poly(self.z)
@@ -86,19 +86,18 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
 
         self.chart.add_xaxis_label(self.tau.value, r"\tau")
-        line_tau = self.chart.animate_create_vertical_line(scene, self.tau.value, self.value_at_tau.value)
-        self.chart.add(line_tau)
+
         self.new_subsection(scene, "contructing q via tau", "data/sound/e4/slide3-2.mp3")
         scene.wait(2)
         self.chart2.gen_points2()
         scene.play(FadeIn(self.chart2))
-        self.chart.remove(line_tau)
+
         scene.play(Write(self.equality_quotient))
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.wait(2)
         self.chart.add_xaxis_label(self.z.value, r"z")
-        self.chart.add_xaxis_label(self.z.value, r"z")
+
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
@@ -139,7 +138,7 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.chart.labels[0], color = HIGHLIGHT_COLOR))
 
         scene.play(TransformMatchingShapes(self.opening6, self.opening7), run_time=1.3)
-
+        scene.wait(3)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart, self.opening7, self.opening, self.polynomial))
