@@ -15,15 +15,15 @@ class PolynomialCommitment(SlideBase):
 
     def construct(self):
         self.title = Text("Polynomial Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*1.5)
-        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*1.5)
+        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*1.5).scale(0.6)
+        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*1.5).scale(0.6)
 
-        self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.commiter, DOWN, buff = 0.4)
-        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).next_to(self.verifier, DOWN, buff = 0.4)
+        self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
+        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
 
         self.message = Text("message", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=50)
 
-        self.chart = Chart(include_details=True).scale(0.5).next_to(self.commiter, LEFT).shift(UP*1.3)
+        self.chart = Chart(include_details=True).scale(0.4).next_to(self.commiter, LEFT).shift(UP*1.3)
         self.commitment = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.commiter, LEFT+DOWN, buff = 0.4).shift(UP)
         self.commitment_copy = MathTex(r"C = p({{\tau}}) \cdot {{G_1}}", color = SECONDARY_COLOR).next_to(self.commiter, LEFT+DOWN, buff = 0.4).shift(UP)
 
@@ -90,7 +90,7 @@ class PolynomialCommitment(SlideBase):
         secret_message.target.next_to(self.commiter, LEFT, buff = 0.1)
         scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
         scene.play(MoveToTarget(secret_message))
-        scene.play(FadeOut(secret_message))
+        scene.play(FadeOut(self.message))
 
 
         scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
@@ -107,7 +107,7 @@ class PolynomialCommitment(SlideBase):
         scene.play(Indicate(self.tex[0][8:15], color = HIGHLIGHT_COLOR))   
 
         self.new_subsection(scene, "polynomial commitments", "data/sound/e4/slide2-2.mp3")
-        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), FadeOut(self.tex))
+        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed, self.lock), FadeOut(self.tex))
         scene.play(Write(self.chart.ax), Write(self.chart.graph), Write(self.chart.labels))
 
         self.new_subsection(scene, "committer creates a commitment", "data/sound/e4/slide2-3.mp3")
