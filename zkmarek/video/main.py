@@ -169,7 +169,7 @@ EPISODE3 = [
 
 EPISODE4 = [
     Episode3Reference(),
-    TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=3),
+    TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=1.5),
     Polynomials(),
     TitleSlide("Commitments", sound="data/sound/e4/slide2-0.mp3", wait_time=3.5),
     PolynomialCommitment(),

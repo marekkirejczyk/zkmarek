@@ -15,8 +15,8 @@ class PolynomialCommitment(SlideBase):
 
     def construct(self):
         self.title = Text("Polynomial Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=40).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*1.5).scale(0.6)
-        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*1.5).scale(0.6)
+        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*2.5).scale(0.6)
+        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*2.5).scale(0.6)
 
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
@@ -170,7 +170,6 @@ class PolynomialCommitment(SlideBase):
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
         self.commitment.generate_target()
         self.commitment.target.shift(UP*2)
-        scene.play(MoveToTarget(self.commitment))
 
         self.new_subsection(scene, "open the commitment", "data/sound/e4/slide2-6.mp3")
         scene.play(FadeOut(bubble, speech_text))
@@ -179,6 +178,7 @@ class PolynomialCommitment(SlideBase):
         scene.play(Write(self.p.label))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle, self.p.label.copy()), self.opening))
+        scene.play(MoveToTarget(self.commitment))
 
         self.new_subsection(scene, "committer proves that he knows the polynomial", "data/sound/e4/slide2-7.mp3")
         self.opening.generate_target()
