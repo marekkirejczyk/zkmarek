@@ -107,7 +107,7 @@ class Polynomials(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
-        scene.play(Write(self.title_label), run_time=2)
+        scene.play(Write(self.title_label), run_time=1)
         # self.animate_random_number(scene)
         scene.play(Write(self.x), run_time=0.5)
         scene.play(TransformMatchingShapes(self.x, self.polynomial_eqn2))
@@ -339,7 +339,7 @@ class Polynomials(SlideBase):
         scene.play(FadeOut(self.chart2), FadeIn(self.chart3), TransformMatchingShapes(self.polynomial_modulo23, self.polynomial_modulo41))
 
     
-        self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
+        self.new_subsection(scene, "security", "data/sound/e4/slide1-12.mp3")
         scene.wait(1.5)
         scene.play(ApplyWave(self.chart3.ax[0]), ApplyWave(self.chart3.ax[1]), run_time=2)
         scene.wait(4)
