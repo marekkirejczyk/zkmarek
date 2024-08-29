@@ -1,4 +1,4 @@
-from manim import DOWN, UP, RIGHT, LEFT, FadeIn, FadeOut, MathTex, ValueTracker, Text, Create, Write, TransformMatchingShapes, Indicate, ApplyWave, MoveToTarget, Transform, Line, VGroup, Unwrite
+from manim import DOWN, UP, RIGHT, LEFT, FadeIn, FadeOut, MathTex, ValueTracker, Text, Create, Write, TransformMatchingShapes, Indicate, ApplyWave, MoveToTarget, Transform, Line, VGroup, Unwrite, ReplacementTransform
 
 from numpy import linspace
 import random
@@ -104,6 +104,8 @@ class Polynomials(SlideBase):
 
         self.polynomial_modulo23 = MathTex(r"P({{x}}) \mod \ 23 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 23}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
         self.polynomial_modulo41 = MathTex(r"P({{x}}) \mod \ 41 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 41}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
+
+        self.p_order = MathTex(r"41\rightarrow 2^{256}", color = HIGHLIGHT_COLOR).next_to(self.chart3.ax[0], UP, buff = 0.5)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
@@ -214,7 +216,7 @@ class Polynomials(SlideBase):
         self.chart.graph2.shift(LEFT*4+UP*0.15)
         self.chart.graph3.shift(LEFT*4+UP*0.15)
         self.intersect.shift(LEFT*4+UP*0.15)    
-        self.intersect.label.shift(0.2*DOWN+LEFT*0.1)
+        self.intersect.label.shift(0.2*DOWN+LEFT*0.15)
         scene.play(Write(self.polynomial), Write(self.label_poly_p), run_time=1.5)
         scene.play(Write(self.chart.graph2), Write(self.label_poly_q))
         scene.play(Create(self.intersect.dot))
@@ -342,19 +344,20 @@ class Polynomials(SlideBase):
 
         self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
         self.chart3.gen_points()
-        scene.play(FadeOut(self.chart2), FadeIn(self.chart3), TransformMatchingShapes(self.polynomial_modulo23, self.polynomial_modulo41))
+        scene.play(FadeOut(self.chart2), FadeIn(self.chart3), ReplacementTransform(self.polynomial_modulo23, self.polynomial_modulo41))
         scene.wait(2)
     
         self.new_subsection(scene, "security", "data/sound/e4/slide1-12.mp3")
         scene.wait(1.5)
         scene.play(ApplyWave(self.chart3.ax[0]), ApplyWave(self.chart3.ax[1]), run_time=2)
-        scene.wait(4)
+        scene.wait(2)
+        scene.play(Write(self.p_order))
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
         scene.wait(5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart3, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial_modulo41, self.p0, self.p1, self.p2, self.p3))
+        scene.play(FadeOut(self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial_modulo41, self.p0, self.p1, self.p2, self.p3))
 
     def animate_random_number(self, scene):
         first_number = random.randint(1, 20)

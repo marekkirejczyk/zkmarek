@@ -11,6 +11,7 @@ from manim import (
     VGroup,
     FadeOut,
     MoveToTarget,
+    TransformMatchingTex,
     ReplacementTransform
 )
 
@@ -43,7 +44,7 @@ class Proof2(SlideBase):
         self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}\cdot ({{\tau}} - {{x_0}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
-        self.equation2 = MathTex(r"{{q(\tau)}}\cdot ({{x}} - {{x_0}}) = {{p(x)}} - {{y}}", color=PRIMARY_COLOR)
+        self.equation2 = MathTex(r"{{q(x)}}\cdot ({{x}} - {{x_0}}) = {{p(x)}} - {{y}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
         self.verification = MathTex(
@@ -55,16 +56,16 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
-            r"e( {{q(\tau)\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
 
         self.verification2 = MathTex(
-            r"e( {{q(\tau)\cdot G_1}}, ({{\tau-x_0}}) \cdot G_2) ) = e({{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) \cdot G_2) ) = e({{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
-            r"e({{q(\tau) \cdot (\tau-x_0) \cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
+            r"e({{q(\tau)}} \cdot (\tau-x_0) {{\cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
@@ -80,6 +81,7 @@ class Proof2(SlideBase):
         self.equation.next_to(self.commitment, DOWN)
         self.equation2.next_to(self.commitment, DOWN)
         self.verification.to_edge(DOWN)
+        self.verification0a.to_edge(DOWN)
         self.verification1.to_edge(DOWN)
 
         self.tau = FieldElement(33, 41)
@@ -151,6 +153,8 @@ class Proof2(SlideBase):
         scene.wait(3)
 
         scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
 
@@ -165,18 +169,21 @@ class Proof2(SlideBase):
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-5.mp3")
 
-        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.verification), self.verification1), run_time=2)
+        scene.play(TransformMatchingTex(VGroup(self.proof.copy(), self.verification), self.verification1), run_time=2)
         scene.wait(1)
-        scene.play(TransformMatchingShapes(VGroup(self.commitment.copy(), self.verification1), self.verification2), run_time=2)
+        scene.play(TransformMatchingTex(VGroup(self.commitment.copy(), self.verification1), self.verification2), run_time=2)
         
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
         scene.wait(2)
-        scene.play(TransformMatchingShapes(self.verification2, self.verification3))
+        scene.play(TransformMatchingTex(self.verification2, self.verification3))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
         scene.wait(3)
         scene.play(Indicate(self.equation, color = HIGHLIGHT_COLOR), Indicate(self.verification4, color = HIGHLIGHT_COLOR))
-        scene.wait(3)
+        scene.wait(4)    
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.chart, self.commitment, self.proof, self.equation, self.verification4))

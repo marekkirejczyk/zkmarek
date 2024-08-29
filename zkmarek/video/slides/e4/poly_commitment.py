@@ -87,7 +87,7 @@ class PolynomialCommitment(SlideBase):
         scene.wait(1)
         secret_message = Group(self.lock, self.message)
         secret_message.generate_target()
-        secret_message.target.next_to(self.commiter, LEFT, buff = -0.2).scale(0.5)
+        secret_message.target.next_to(self.commiter, LEFT, buff = -0.2).scale(0.5).shift(RIGHT*0.2)
         scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
         scene.play(MoveToTarget(secret_message))
         scene.play(FadeOut(self.message))

@@ -52,7 +52,7 @@ class Proof1(SlideBase):
 
         self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y}}", color = PRIMARY_COLOR)
         self.opening2 = MathTex(r"{{p(x_0)}} {{- y}} = {{0}}", color = PRIMARY_COLOR)
-        self.opening3 = MathTex(r"{{p(x_0)}} {{- y}} = {{r(x)}} {{}}", color = PRIMARY_COLOR)
+        self.opening3 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{}}", color = PRIMARY_COLOR)
         self.opening4 = MathTex(r"{{p(x_0)}} {{- y}} = {{r(x_0)}} {{=0}}", color = PRIMARY_COLOR)
         self.opening5 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{=(x-x_0)}} {{(...)}}", color = PRIMARY_COLOR)
         self.opening6 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{=(x-x_0)}} {{\cdot q(x)}}", color = PRIMARY_COLOR)
