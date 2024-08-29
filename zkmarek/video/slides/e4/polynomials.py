@@ -49,8 +49,8 @@ class Polynomials(SlideBase):
         self.subtract_z = MathTex("R(x_0)", "=", "3x_0^3", "-", "9x_0^2", "-", "15x_0", "+", "22", "=0", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots = MathTex("R(x)", "=", "3", "(x-x_0)", "(x-x_1)", "(x-x_2)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots_b = MathTex(r"\frac{R(x)}{x-x_0} = 3(x-x_1)(x-x_2)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
-        self.polynomial2 = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} = {{(2x-3)}}{{(2x-5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
-        self.polynomial2_a = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} ={{1\cdot}} {{(2x-3)}}{{(2x-5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
+        self.polynomial2 = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} = 4{{(x-1.5)}}{{(x-2.5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
+        self.polynomial2_a = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} ={{4\cdot}} {{(x-1.5)}}{{(x-2.5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
         self.chart = Chart(include_details=True).scale(0.8).next_to(self.title_label, DOWN)
         self.p0 = ValueTracker(0)
@@ -146,6 +146,7 @@ class Polynomials(SlideBase):
         scene.play(TransformMatchingShapes(self.p1.label.copy(), self.poly_point1))
         scene.play(TransformMatchingShapes(self.p2.label.copy(), self.poly_point2))
         scene.play(TransformMatchingShapes(self.p3.label.copy(), self.poly_point3))
+        scene.wait(1.5)
 
         self.new_subsection(scene, "interpolation", "data/sound/e4/slide1-2.mp3")
         scene.play(Indicate(self.p0, color = HIGHLIGHT_COLOR), run_time=0.7)
@@ -156,7 +157,7 @@ class Polynomials(SlideBase):
         # for i in range(self.N):
         #     point = self.point[i]
         #     scene.play(Create(point.dot), run_time=0.05)
-
+        scene.wait(1.5)
         scene.play(Indicate(self.polynomial_eqn, color = HIGHLIGHT_COLOR))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.polynomial_eqn, self.polynomial_eqn3))
@@ -315,7 +316,7 @@ class Polynomials(SlideBase):
         scene.wait(0.5)
         scene.play(Indicate(self.polynomial0_modulo5[13], color = HIGHLIGHT_COLOR))
         scene.wait(1.5)
-        
+
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")
         scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=0.5)
         scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)

@@ -42,29 +42,33 @@ class Proof2(SlideBase):
 
         self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
-        self.equation = MathTex(r"{{q(\tau)}}\cdot ({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
-        self.equation2 = MathTex(r"{{q(\tau)}}\cdot ({{x}} - {{z}}) = {{p(x)}} - {{y}}", color=PRIMARY_COLOR)
+        self.equation = MathTex(r"{{q(\tau)}}\cdot ({{\tau}} - {{x_0}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
+        self.equation2 = MathTex(r"{{q(\tau)}}\cdot ({{x}} - {{x_0}}) = {{p(x)}} - {{y}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
         self.verification = MathTex(
-            r"e( {{\pi}}, {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            color=PRIMARY_COLOR,
+        )
+        self.verification0a = MathTex(
+            r"e( {{\pi}}, {{(\tau\cdot G_2)}} {{-x_0 \cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
-            r"e( {{q(\tau)\cdot G_1}}, {{(\tau-z)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
 
         self.verification2 = MathTex(
-            r"e( {{q(\tau)\cdot G_1}}, ({{\tau-z}}) \cdot G_2) ) = e({{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
+            r"e( {{q(\tau)\cdot G_1}}, ({{\tau-x_0}}) \cdot G_2) ) = e({{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
-            r"e({{q(\tau) \cdot (\tau-z) \cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
+            r"e({{q(\tau) \cdot (\tau-x_0) \cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
-            r"q(\tau)\cdot (\tau-z) = p(\tau) -y",
+            r"q(\tau)\cdot (\tau-x_0) = p(\tau) -y",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
 
@@ -131,13 +135,22 @@ class Proof2(SlideBase):
             scene, self.tau.value, self.value_at_tau.value - self.y.value
         )
 
-        self.chart.add_xaxis_label(self.z.value, r"z")
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
         self.chart.add(line_tau_y)
         self.chart.add(line_z)
+
+        self.new_subsection(scene, "how the prover knows LHS", "data/sound/e4/slide4-3a.mp3")
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
+        scene.wait(1)
+        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(3)
+
+        scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
 
@@ -162,5 +175,8 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification2, self.verification3))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
+
+        self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
+        scene.wait(3)
         scene.play(Indicate(self.equation, color = HIGHLIGHT_COLOR), Indicate(self.verification4, color = HIGHLIGHT_COLOR))
         scene.wait(3)

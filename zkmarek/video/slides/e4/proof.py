@@ -50,13 +50,13 @@ class Proof1(SlideBase):
 
         self.equality_quotient = MathTex(r"{{q(\tau)}} = {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
-        self.opening = MathTex(r"{{p(z)}} {{}} = {{y}}", color = PRIMARY_COLOR)
-        self.opening2 = MathTex(r"{{p(z)}} {{- y}} = {{0}}", color = PRIMARY_COLOR)
-        self.opening3 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{}}", color = PRIMARY_COLOR)
-        self.opening4 = MathTex(r"{{p(z)}} {{- y}} = {{r(z)}} {{=0}}", color = PRIMARY_COLOR)
-        self.opening5 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{=(x-z)}} {{(...)}}", color = PRIMARY_COLOR)
-        self.opening6 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{=(x-z)}} {{\cdot q(x)}}", color = PRIMARY_COLOR)
-        self.opening7 = MathTex(r"\frac{p(x)- y}{x-z} = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
+        self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y}}", color = PRIMARY_COLOR)
+        self.opening2 = MathTex(r"{{p(x_0)}} {{- y}} = {{0}}", color = PRIMARY_COLOR)
+        self.opening3 = MathTex(r"{{p(x_0)}} {{- y}} = {{r(x)}} {{}}", color = PRIMARY_COLOR)
+        self.opening4 = MathTex(r"{{p(x_0)}} {{- y}} = {{r(x_0)}} {{=0}}", color = PRIMARY_COLOR)
+        self.opening5 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{=(x-x_0)}} {{(...)}}", color = PRIMARY_COLOR)
+        self.opening6 = MathTex(r"{{p(x)}} {{- y}} = {{r(x)}} {{=(x-x_0)}} {{\cdot q(x)}}", color = PRIMARY_COLOR)
+        self.opening7 = MathTex(r"\frac{p(x)- y}{x-x_0} = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
 
         self.chart.to_edge(LEFT).scale(0.8).shift(UP*0.5)
         self.chart2.to_edge(LEFT).scale(0.8).shift(UP*0.5)
@@ -96,7 +96,7 @@ class Proof1(SlideBase):
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.wait(2)
-        self.chart.add_xaxis_label(self.z.value, r"z")
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
 
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
