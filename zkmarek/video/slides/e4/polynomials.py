@@ -39,7 +39,7 @@ class Polynomials(SlideBase):
 
         self.polynomial_eqn2 = MathTex(r"{{x}}^n + {{x}}^{n-1} + \cdots + {{x}}", color = PRIMARY_COLOR, font_size = 60)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
-        self.polynomial_z = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 {{=y}}", color = PRIMARY_COLOR).to_edge(RIGHT).shift(LEFT*0.1+UP*0.4)
+        self.polynomial_z = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 {{=y}}", color = PRIMARY_COLOR).to_edge(RIGHT).shift(LEFT*0.1+UP*2.4)
         self.polynomial_roots = MathTex(r"P({{x_i}}) = 4 {{x_i^3}} - 8{{x_i^2}} - 17 {{x_i}} + 30 {{= 0}}", color = PRIMARY_COLOR).to_edge(DOWN)
         self.quotient = MathTex(r"Q({{x}}) = {{x^3}} + {{x^2}} - 2{{x}} + 8 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
@@ -190,6 +190,7 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial2[12], color = HIGHLIGHT_COLOR), Indicate(self.root3, color = HIGHLIGHT_COLOR))
         scene.wait(0.2)
         scene.play(Indicate(self.polynomial2[13], color = HIGHLIGHT_COLOR), Indicate(self.root1, color = HIGHLIGHT_COLOR))
+        scene.wait(2.5)
 
         self.new_subsection(scene, "we know 'a' ", "data/sound/e4/slide1-3a.mp3")
         scene.wait(2)
@@ -204,10 +205,10 @@ class Polynomials(SlideBase):
         self.chart_group = VGroup(self.chart.ax, self.chart.labels, self.chart.graph)
         self.chart_group.generate_target()
         self.chart_group.target.shift(LEFT*4+UP*0.15)
-        self.polynomial.to_edge(RIGHT).shift(LEFT*0.8+UP*3.7)
+        self.polynomial.to_edge(RIGHT).shift(LEFT*0.8+UP*5.7)
         self.label_poly_p = MathTex(r"P(x)", color = SECONDARY_COLOR).next_to(self.chart.graph, RIGHT, buff = 0.1).shift(4*LEFT+UP)
         self.label_poly_q = MathTex(r"Q(x)", color = HIGHLIGHT_COLOR).next_to(self.chart.graph2, LEFT, buff = 0.1).shift(LEFT*0.8+UP)
-        self.label_poly_r = MathTex(r"R(x)", color = PRIMARY_COLOR).next_to(self.chart.graph3, RIGHT, buff = 0.1).shift(LEFT*5+UP)
+        self.label_poly_r = MathTex(r"R(x)", color = PRIMARY_COLOR).next_to(self.chart.graph3, RIGHT, buff = 0.1).shift(LEFT*6+UP)
         scene.play(MoveToTarget(self.chart_group), run_time=1.5)
         self.chart.graph2.shift(LEFT*4+UP*0.15)
         self.chart.graph3.shift(LEFT*4+UP*0.15)
@@ -234,7 +235,7 @@ class Polynomials(SlideBase):
         scene.wait(1)
         a_i = Curve.from_x(self.p_intersect.get_value())
         self.intersect_sub = DotOnCurve(self.chart.ax, r"(x_0, 0)", a_i)
-        self.intersect_sub.set_color(PRIMARY_COLOR).shift(DOWN*0.85)
+        self.intersect_sub.set_color(PRIMARY_COLOR).shift(DOWN*0.88)
         self.intersect_sub.label.shift(LEFT*0.2+UP*0.3)
 
         self.p_intersect1 = ValueTracker(1.041)
@@ -264,14 +265,16 @@ class Polynomials(SlideBase):
         scene.wait(2)
         scene.play(FadeOut(self.quotient_z, self.minus, self.line_subtract), TransformMatchingShapes(self.polynomial_z, self.polynomial))
         scene.play(TransformMatchingShapes(self.subtract_z, self.subtract_z_roots), Create(self.intersect1), Create(self.intersect2))
+        scene.wait(3.5)
 
         self.new_subsection(scene, "R is divisable", "data/sound/e4/slide1-5b.mp3")
-        scene.wait(2.5)
+        scene.wait(4)
         scene.play(Indicate(self.subtract_z_roots[3], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.subtract_z_roots[4], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.subtract_z_roots[5], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.subtract_z_roots, self.subtract_z_roots_b))
+        scene.wait(2)
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
         scene.play(Unwrite(self.label_poly_r), FadeOut(self.intersect1, self.intersect2, self.intersect_sub, self.subtract_z_roots_b), run_time=0.7)
@@ -311,7 +314,8 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial0_modulo5[11], color = HIGHLIGHT_COLOR))
         scene.wait(0.5)
         scene.play(Indicate(self.polynomial0_modulo5[13], color = HIGHLIGHT_COLOR))
-
+        scene.wait(1.5)
+        
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")
         scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=0.5)
         scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
@@ -326,6 +330,7 @@ class Polynomials(SlideBase):
             scene, 4, 0, 4
         )
         scene.play(FadeOut(top_val))
+        scene.wait(2)
 
         self.new_subsection(scene, "p=23", "data/sound/e4/slide1-10.mp3")
         scene.wait(2.3)
@@ -337,7 +342,7 @@ class Polynomials(SlideBase):
         self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
         self.chart3.gen_points()
         scene.play(FadeOut(self.chart2), FadeIn(self.chart3), TransformMatchingShapes(self.polynomial_modulo23, self.polynomial_modulo41))
-
+        scene.wait(2)
     
         self.new_subsection(scene, "security", "data/sound/e4/slide1-12.mp3")
         scene.wait(1.5)
@@ -345,7 +350,7 @@ class Polynomials(SlideBase):
         scene.wait(4)
         scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
-        scene.wait(3)
+        scene.wait(5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart3, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial_modulo41, self.p0, self.p1, self.p2, self.p3))

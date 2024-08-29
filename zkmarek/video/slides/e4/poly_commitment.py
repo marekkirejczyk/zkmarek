@@ -29,28 +29,28 @@ class PolynomialCommitment(SlideBase):
 
         self.point = ValueTracker(-1.849)
         a = Curve.from_x(self.point.get_value())
-        self.p = DotOnCurve(self.chart.ax, "(z, y)", a)
-        self.p.label.shift(LEFT*1.1)
+        self.p = DotOnCurve(self.chart.ax, "(x_0, y)", a)
+        self.p.label.shift(LEFT*1.2)
         self.point_tau = ValueTracker(2)
         a_tau = Curve.from_x(self.point_tau.get_value())
         self.p_tau = DotOnCurve(self.chart.ax, r"({{\tau}}, {{?}})", a_tau)
         self.p_tau.label.shift(DOWN*0.15+LEFT*0.15).scale(1.1)
 
-        self.trusted_setup = MathTex(r"{{\tau^1}} \cdot {{G_1}} + {{\tau^2}} \cdot {{G_1}} + {{\cdots}} + {{\tau^n}} \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
-        self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
-        self.trusted_setup2 = MathTex(r"p({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*1.5)
+        self.trusted_setup = MathTex(r"{{\tau^1}} \cdot {{G_1}} + {{\tau^2}} \cdot {{G_1}} + {{\cdots}} + {{\tau^n}} \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*3)
+        self.trusted_setup1 = MathTex(r"\left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*3)
+        self.trusted_setup2 = MathTex(r"p({{\tau}}) \cdot{{G_1}} = \left[ {{\tau^1}} + {{\tau^2}} + {{\cdots}} + {{\tau^n}} \right] \cdot {{G_1}} ", color = SECONDARY_COLOR).next_to(self.commiter_label, DOWN, buff = 0).shift(RIGHT*3)
  
-        self.opening = MathTex(r"p(z) = y", color = SECONDARY_COLOR).shift(2*UP)
+        self.opening = MathTex(r"p(x_0) = y", color = SECONDARY_COLOR).shift(2*UP)
         self.tex = Tex(load("zkmarek/video/slides/e4/properties.tex"), color=SECONDARY_COLOR)
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
             fill_color=PRIMARY_COLOR, fill_opacity=0.5
-        ).scale(0.6)
+        ).scale(0.4)
 
         self.envelope_flap_closed = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        ).scale(0.58)
+        ).scale(0.39)
 
         self.outline_closed = VGroup(
             self.envelope_body_closed.copy().set_fill(opacity=0.2),
@@ -59,16 +59,16 @@ class PolynomialCommitment(SlideBase):
         self.envelope_body = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
             fill_color=PRIMARY_COLOR, fill_opacity=0.5
-        ).scale(0.6)
+        ).scale(0.4)
         self.envelope_flap = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        ).scale(0.59)
+        ).scale(0.395)
         self.envelope_body.next_to(self.commiter, LEFT)
         self.envelope_body_closed.next_to(self.commiter, LEFT)
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.95)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.65)
         self.message.next_to(self.commiter, RIGHT, buff = 0.1)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.25).next_to(self.message, RIGHT, buff = 0.1)
 
@@ -87,7 +87,7 @@ class PolynomialCommitment(SlideBase):
         scene.wait(1)
         secret_message = Group(self.lock, self.message)
         secret_message.generate_target()
-        secret_message.target.next_to(self.commiter, LEFT, buff = 0.1)
+        secret_message.target.next_to(self.commiter, LEFT, buff = -0.2).scale(0.5)
         scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
         scene.play(MoveToTarget(secret_message))
         scene.play(FadeOut(self.message))
@@ -105,6 +105,7 @@ class PolynomialCommitment(SlideBase):
         self.new_subsection(scene, "binding", "data/sound/e4/slide2-1b.mp3")
         scene.wait(1.2)
         scene.play(Indicate(self.tex[0][8:15], color = HIGHLIGHT_COLOR))   
+        scene.wait(8.5)
 
         self.new_subsection(scene, "polynomial commitments", "data/sound/e4/slide2-2.mp3")
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed, self.lock), FadeOut(self.tex))
@@ -119,7 +120,7 @@ class PolynomialCommitment(SlideBase):
         self.envelope_body.next_to(self.commiter, LEFT+DOWN)
         self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN)
         self.envelope_flap.next_to(self.envelope_body, UP, buff = 0)
-        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -0.95)
+        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -0.65)
         scene.wait(2)
         scene.play(Create(self.p_tau))
         scene.play(TransformMatchingShapes(self.p_tau.label[1].copy(), self.commitment))
@@ -143,14 +144,14 @@ class PolynomialCommitment(SlideBase):
         self.new_subsection(scene, "commitment is sent", "data/sound/e4/slide2-4.mp3")
         scene.play(FadeIn(self.envelope_body, self.envelope_flap))
         self.commitment.generate_target()
-        self.commitment.target.next_to(self.commiter, LEFT+DOWN, buff = 0.4).shift(0.3*LEFT)
+        self.commitment.target.next_to(self.commiter, LEFT+DOWN, buff = 0.4).scale(0.7).shift(RIGHT*0.35)
 
         scene.play(MoveToTarget(self.commitment), TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
 
         commitment_sent = VGroup(self.commitment, self.envelope_body, self.envelope_flap_closed)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(9.7*RIGHT)
-        self.envelope_flap.shift(9.7*RIGHT)
+        commitment_sent.target.shift(10*RIGHT)
+        self.envelope_flap.shift(10*RIGHT)
         scene.play(MoveToTarget(commitment_sent))
 
         self.new_subsection(scene, "validate the commitment", "data/sound/e4/slide2-5.mp3")
@@ -166,10 +167,10 @@ class PolynomialCommitment(SlideBase):
         self.envelope_flap = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
-        ).scale(0.59).next_to(self.envelope_body, UP, buff= 0)
+        ).scale(0.395).next_to(self.envelope_body, UP, buff= 0)
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
         self.commitment.generate_target()
-        self.commitment.target.shift(UP*2)
+        self.commitment.target.shift(UP*2).scale(1/0.7)
 
         self.new_subsection(scene, "open the commitment", "data/sound/e4/slide2-6.mp3")
         scene.play(FadeOut(bubble, speech_text))
