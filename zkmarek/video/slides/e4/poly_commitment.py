@@ -68,7 +68,7 @@ class PolynomialCommitment(SlideBase):
         self.envelope_body_closed.next_to(self.commiter, LEFT)
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.65)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
         self.message.next_to(self.commiter, RIGHT, buff = 0.1)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.25).next_to(self.message, RIGHT, buff = 0.1)
 
@@ -120,7 +120,7 @@ class PolynomialCommitment(SlideBase):
         self.envelope_body.next_to(self.commiter, LEFT+DOWN)
         self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN)
         self.envelope_flap.next_to(self.envelope_body, UP, buff = 0)
-        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -0.65)
+        self.envelope_flap_closed.next_to(self.envelope_body, UP, buff = -0.64)
         scene.wait(2)
         scene.play(Create(self.p_tau))
         scene.play(TransformMatchingShapes(self.p_tau.label[1].copy(), self.commitment))

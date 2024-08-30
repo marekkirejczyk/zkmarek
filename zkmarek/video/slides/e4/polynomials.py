@@ -49,6 +49,8 @@ class Polynomials(SlideBase):
         self.subtract_z = MathTex("R(x_0)", "=", "3x_0^3", "-", "9x_0^2", "-", "15x_0", "+", "22", "=0", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots = MathTex("R(x)", "=", "3", "(x-x_0)", "(x-x_1)", "(x-x_2)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots_b = MathTex(r"\frac{R(x)}{x-x_0} = 3(x-x_1)(x-x_2)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
+        self.subtract_z_roots_b1 = MathTex(r"\frac{R(x)}{x-x_1} = 3(x-x_0)(x-x_2)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
+        self.subtract_z_roots_b2 = MathTex(r"\frac{R(x)}{x-x_2} = 3(x-x_0)(x-x_1)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.polynomial2 = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} = 4{{(x-1.5)}}{{(x-2.5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
         self.polynomial2_a = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + {{30}} ={{4\cdot}} {{(x-1.5)}}{{(x-2.5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
@@ -105,7 +107,7 @@ class Polynomials(SlideBase):
         self.polynomial_modulo23 = MathTex(r"P({{x}}) \mod \ 23 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 23}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
         self.polynomial_modulo41 = MathTex(r"P({{x}}) \mod \ 41 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 41}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
 
-        self.p_order = MathTex(r"41\rightarrow 2^{256}", color = HIGHLIGHT_COLOR).next_to(self.chart3.ax[0], UP, buff = 0.5)
+        self.p_order = MathTex(r"p\rightarrow 2^{256}", color = HIGHLIGHT_COLOR).next_to(self.chart3.ax[0], UP, buff = 0.8).shift(RIGHT*0.7)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
@@ -263,6 +265,7 @@ class Polynomials(SlideBase):
         scene.wait(3)
         scene.play(Indicate(self.intersect_sub, color = HIGHLIGHT_COLOR, scale_factor=1.7))
         self.polynomial.to_edge(DOWN).shift(LEFT*3).scale(0.7)
+        scene.wait(5)
 
         self.new_subsection(scene, "R in terms of roots", "data/sound/e4/slide1-5a.mp3")
         scene.wait(2)
@@ -277,7 +280,11 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.subtract_z_roots[5], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.subtract_z_roots, self.subtract_z_roots_b))
-        scene.wait(2)
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(self.subtract_z_roots_b, self.subtract_z_roots_b1))
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(self.subtract_z_roots_b1, self.subtract_z_roots_b2))
+        scene.wait(1)
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
         scene.play(Unwrite(self.label_poly_r), FadeOut(self.intersect1, self.intersect2, self.intersect_sub, self.subtract_z_roots_b), run_time=0.7)
