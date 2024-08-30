@@ -93,8 +93,6 @@ class Proof2(SlideBase):
         self.new_subsection(
             scene, "pairings", "data/sound/e4/slide4-0.mp3"
         )
-        self.chart.gen_points()
-        scene.play(FadeIn(self.chart))
         scene.wait(2)
         scene.play(FadeIn(self.definition2))
         scene.wait(4.7)
@@ -117,9 +115,8 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.commitment[4], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
-        self.chart.generate_target()
-        self.chart.target.scale(0.8)
-        scene.play(Write(self.verification), MoveToTarget(self.chart))
+
+        scene.play(Write(self.verification))
         scene.play(Write(self.equation2))
 
 
@@ -129,21 +126,9 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
-        line_tau = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value
-        )
-        line_tau_y = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value - self.y.value
-        )
 
-        self.chart.add_xaxis_label(self.z.value, r"x_0")
-        line_z = self.chart.animate_create_vertical_line(
-            scene, self.z.value, self.y.value
-        )
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
-        self.chart.add(line_tau_y)
-        self.chart.add(line_z)
+
 
         self.new_subsection(scene, "how the prover knows LHS", "data/sound/e4/slide4-3a.mp3")
         scene.wait(1)
@@ -157,10 +142,6 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
-
-        self.chart.animate_shift_dots(scene, self.y.value)
-        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
-        scene.play(FadeOut(line_z, line_tau, line_tau_y), run_time=0.3)
 
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
@@ -186,4 +167,4 @@ class Proof2(SlideBase):
         scene.wait(4)    
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.commitment, self.proof, self.equation, self.verification4))
+        scene.play(FadeOut(self.commitment, self.proof, self.equation, self.verification4))

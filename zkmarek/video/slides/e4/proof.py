@@ -8,7 +8,7 @@ from manim import (
     Indicate,
     TransformMatchingShapes,
     Write,
-    MoveToTarget,
+    Unwrite,
     FadeOut
 )
 
@@ -93,21 +93,25 @@ class Proof1(SlideBase):
         scene.play(FadeIn(self.chart2))
 
         scene.play(Write(self.equality_quotient))
+        scene.wait(5)
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
+        scene.play(FadeOut(self.chart2), run_time=1)
         scene.wait(2)
-        self.chart.add_xaxis_label(self.z.value, r"x_0")
-
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
+        line_tau = self.chart.animate_create_vertical_line(
+            scene, self.tau.value, self.value_at_tau.value
+        )
+        line_tau_y = self.chart.animate_create_vertical_line(
+            scene, self.tau.value, self.value_at_tau.value - self.y.value
+        )   
         self.chart.add(line_z)
-        self.equality_quotient.generate_target()
-        self.equality_quotient.target.to_edge(DOWN+RIGHT).shift(LEFT*2)
-        scene.play(MoveToTarget(self.equality_quotient), run_time=1.5)
+        scene.play(Unwrite(self.equality_quotient), run_time=1)
         scene.play(Write(self.opening))
         scene.wait(1)
-        scene.play(FadeOut(self.chart2, self.equality_quotient), run_time=1)
+        scene.play(FadeOut(self.equality_quotient), run_time=1)
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.opening.copy(), self.opening2), run_time=1.5)
 
@@ -117,9 +121,21 @@ class Proof1(SlideBase):
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.opening3, self.opening4), run_time=1.5)
 
+        self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
+
+        scene.play(TransformMatchingShapes(self.opening4, self.opening3))
+        self.chart.add(line_tau_y)
+        self.chart.add(line_z)
+        self.chart.animate_shift_dots(scene, self.y.value)
+
+        self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
+        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
+        scene.play(FadeOut(line_z, line_tau, line_tau_y), run_time=0.3)
+
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
-        scene.play(TransformMatchingShapes(self.opening4, self.opening5), run_time=1.5)
+        scene.play(TransformMatchingShapes(self.opening3, self.opening5), run_time=1.5)
         scene.wait(1)
         scene.play(Indicate(self.opening5[6], color = HIGHLIGHT_COLOR))
         scene.wait(2)
@@ -133,8 +149,7 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.opening6[7], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "security", "data/sound/e4/slide3-7.mp3")
-        scene.wait(2)
-        scene.wait(2)
+        scene.wait(0.5)
         scene.play(Indicate(self.chart.labels[0], color = HIGHLIGHT_COLOR))
 
         scene.play(TransformMatchingShapes(self.opening6, self.opening7), run_time=1.3)
