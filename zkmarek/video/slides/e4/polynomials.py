@@ -195,7 +195,7 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial2[12], color = HIGHLIGHT_COLOR), Indicate(self.root3, color = HIGHLIGHT_COLOR))
         scene.wait(0.2)
         scene.play(Indicate(self.polynomial2[13], color = HIGHLIGHT_COLOR), Indicate(self.root1, color = HIGHLIGHT_COLOR))
-        scene.wait(2.5)
+        scene.wait(3.5)
 
         self.new_subsection(scene, "we know 'a' ", "data/sound/e4/slide1-3a.mp3")
         scene.wait(2)
@@ -271,7 +271,7 @@ class Polynomials(SlideBase):
         scene.wait(2)
         scene.play(FadeOut(self.quotient_z, self.minus, self.line_subtract), TransformMatchingShapes(self.polynomial_z, self.polynomial))
         scene.play(TransformMatchingShapes(self.subtract_z, self.subtract_z_roots), Create(self.intersect1), Create(self.intersect2))
-        scene.wait(3.5)
+        scene.wait(4.5)
 
         self.new_subsection(scene, "R is divisable", "data/sound/e4/slide1-5b.mp3")
         scene.wait(4)
@@ -287,7 +287,7 @@ class Polynomials(SlideBase):
         scene.wait(1)
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
-        scene.play(Unwrite(self.label_poly_r), FadeOut(self.intersect1, self.intersect2, self.intersect_sub, self.subtract_z_roots_b), run_time=0.7)
+        scene.play(Unwrite(self.label_poly_r), FadeOut(self.intersect1, self.intersect2, self.intersect_sub, self.subtract_z_roots_b2), run_time=0.7)
         self.chart1.gen_points()
         scene.play(Create(self.chart1), TransformMatchingShapes(self.chart.graph3, self.chart.graph), run_time=1.5)
         scene.wait(4)

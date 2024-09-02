@@ -48,7 +48,7 @@ class Proof1(SlideBase):
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
 
-        self.equality_quotient = MathTex(r"{{q(\tau)}} = {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
+        self.equality_quotient = MathTex(r"{{q(\tau)}} \stackrel{?}{=} {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
         self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y}}", color = PRIMARY_COLOR)
         self.opening2 = MathTex(r"{{p(x_0)}} {{- y}} = {{0}}", color = PRIMARY_COLOR)
@@ -96,8 +96,8 @@ class Proof1(SlideBase):
         scene.wait(5)
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
-        scene.play(FadeOut(self.chart2), run_time=1)
-        scene.wait(2)
+        scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
+        scene.wait(1)
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
@@ -108,7 +108,7 @@ class Proof1(SlideBase):
             scene, self.tau.value, self.value_at_tau.value - self.y.value
         )   
         self.chart.add(line_z)
-        scene.play(Unwrite(self.equality_quotient), run_time=1)
+        scene.wait(1)
         scene.play(Write(self.opening))
         scene.wait(1)
         scene.play(FadeOut(self.equality_quotient), run_time=1)
@@ -120,6 +120,7 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening2, self.opening3), run_time=1.5)
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.opening3, self.opening4), run_time=1.5)
+        scene.wait(1.2)
 
         self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
         self.chart.add_xaxis_label(self.z.value, r"x_0")
@@ -136,9 +137,9 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
         scene.play(TransformMatchingShapes(self.opening3, self.opening5), run_time=1.5)
-        scene.wait(1)
+        scene.wait(0.2)
         scene.play(Indicate(self.opening5[6], color = HIGHLIGHT_COLOR))
-        scene.wait(2)
+        scene.wait(2.5)
 
         self.new_subsection(scene, "there exist a q(x)", "data/sound/e4/slide3-6.mp3")
         scene.wait(2)

@@ -10,25 +10,22 @@ from manim import (
     TransformMatchingShapes,
     VGroup,
     FadeOut,
-    MoveToTarget,
     TransformMatchingTex,
-    ReplacementTransform
+    ImageMobject,
+    Text,
+    Brace,
+    Create,
 )
 
-from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import (
-    DiscreetePolynomialChart,
-)
-
+from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7
 
 
 class Proof2(SlideBase):
-    chart: DiscreetePolynomialChart
     polynomial: MathTex
     equation: MathTex
     commitment: MathTex
@@ -39,14 +36,32 @@ class Proof2(SlideBase):
         super().__init__("Proof2")
 
     def construct(self):
+        self.title = Text("Proof", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
+        self.verifier = ImageMobject("data/images/person.png").to_corner(LEFT+UP).scale(0.6)
+        self.commiter = ImageMobject("data/images/person_blue.png").to_corner(RIGHT+UP).scale(0.6)
+
+        self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
+        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
+
         self.chart = DiscreetePolynomialChart(41, poly)
+        self.chart.next_to(self.commiter_label).scale(0.4)
 
         self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
-        self.equation = MathTex(r"{{q(\tau)}}\cdot ({{\tau}} - {{x_0}}) = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
-        self.equation2 = MathTex(r"{{q(x)}}\cdot ({{x}} - {{x_0}}) = {{p(x)}} - {{y}}", color=PRIMARY_COLOR)
+        self.equation = MathTex(r"{{q(\tau)}}\cdot {{(\tau - x_0)}} = {{p(\tau)}} - {{y}}", color=PRIMARY_COLOR)
+        self.equation2 = MathTex(r"{{q(x)}}\cdot {{(x - x_0)}} = {{p(x)}} - {{y}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
+        self.brace1 = Brace(self.commitment, color=PRIMARY_COLOR, direction=LEFT)
+
+        self.brace1.scale(2)
+        self.brace1_label = Text("elliptic curve points", font_size=20, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.brace1.put_at_tip(self.brace1_label)
+
+        self.opening = MathTex(r"p(x_0)=y", color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 1.0)
+        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, RIGHT, buff = 0)
+        self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
+
         self.verification = MathTex(
             r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
@@ -73,31 +88,33 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
 
-        self.chart.to_edge(LEFT)
         self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
-        self.proof.to_edge(UP + RIGHT).shift(LEFT*2)
-        self.definition2.to_edge(UP + RIGHT).shift(LEFT+DOWN)
+        self.proof.next_to(self.verifier_label, DOWN).shift(LEFT)
+        self.definition2.next_to(self.title, DOWN, buff = 1.0)
         self.commitment.next_to(self.proof, DOWN)
         self.equation.next_to(self.commitment, DOWN)
+        self.opening2.next_to(self.commitment, DOWN)
+        self.opening.next_to(self.commitment, DOWN)
         self.equation2.next_to(self.commitment, DOWN)
-        self.verification.to_edge(DOWN)
-        self.verification0a.to_edge(DOWN)
-        self.verification1.to_edge(DOWN)
-
-        self.tau = FieldElement(33, 41)
-        self.value_at_tau = poly(self.tau)
-        self.z = FieldElement(13, 41)
-        self.y = poly(self.z)
+        self.verification.to_edge(DOWN).shift(UP)
+        self.verification0a.to_edge(DOWN).shift(UP)
+        self.verification1.to_edge(DOWN).shift(UP)
+        self.verification2.to_edge(DOWN).shift(UP)
+        self.verification3.to_edge(DOWN).shift(UP)
+        self.verification4.to_edge(DOWN).shift(UP)
 
     def animate_in(self, scene):
         self.new_subsection(
             scene, "pairings", "data/sound/e4/slide4-0.mp3"
         )
-        scene.wait(2)
+        scene.play(Write(self.title), run_time=1.5)
+        scene.wait(0.5)
         scene.play(FadeIn(self.definition2))
-        scene.wait(4.7)
+        scene.play(FadeIn(self.commiter, self.verifier), run_time=2)
+        scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
+
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
-        scene.wait(1)
+        scene.wait(1.3)
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
 
         self.new_subsection(scene, "pi - proof", "data/sound/e4/slide4-1.mp3")
@@ -114,15 +131,31 @@ class Proof2(SlideBase):
         scene.wait(0.5)
         scene.play(Indicate(self.commitment[4], color = HIGHLIGHT_COLOR))
 
+        self.new_subsection(scene, "is opening correct?", "data/sound/e4/slide4-1a.mp3")
+        scene.play(Create(self.chart), run_time=1)
+        scene.play(Write(self.opening), run_time=1)
+        scene.wait(0.4)
+        scene.play(FadeIn(self.thumb_up), run_time=0.6)
+        scene.wait(1.4)
+
+        self.new_subsection(scene, "verify if p is divisible", "data/sound/e4/slide4-1b.mp3")
+        scene.wait(1)
+        scene.play(FadeOut(self.thumb_up), run_time=0.7)
+        scene.wait(0.8)
+        scene.play(TransformMatchingShapes(self.opening, self.opening2), run_time=1.5)
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.opening2, self.equation2), run_time=1.5)
+
+        self.new_subsection(scene, "true for tau", "data/sound/e4/slide4-1c.mp3")
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.equation2, self.equation), run_time=1.5)
+
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
 
         scene.play(Write(self.verification))
-        scene.play(Write(self.equation2))
-
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-3.mp3")
-        scene.play(ReplacementTransform(self.equation2, self.equation))
-        scene.wait(1)
+        scene.wait(1.5)
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
