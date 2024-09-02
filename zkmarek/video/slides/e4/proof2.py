@@ -37,8 +37,8 @@ class Proof2(SlideBase):
 
     def construct(self):
         self.title = Text("Proof", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").to_corner(LEFT+UP).scale(0.6)
-        self.commiter = ImageMobject("data/images/person_blue.png").to_corner(RIGHT+UP).scale(0.6)
+        self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
+        self.commiter = ImageMobject("data/images/person_blue.png").to_corner(LEFT+UP).scale(0.6).shift(RIGHT)
 
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
@@ -77,6 +77,10 @@ class Proof2(SlideBase):
 
         self.verification2 = MathTex(
             r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) \cdot G_2) ) = e({{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
+            color=PRIMARY_COLOR,
+        ).to_edge(DOWN)
+        self.verification2a = MathTex(
+            r"e( {{q(\tau)\cdot G_1, (\tau-x_0) \cdot G_2) ) = e(}} {{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
@@ -132,6 +136,7 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.commitment[4], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "is opening correct?", "data/sound/e4/slide4-1a.mp3")
+        self.chart.gen_points()
         scene.play(Create(self.chart), run_time=1)
         scene.play(Write(self.opening), run_time=1)
         scene.wait(0.4)
@@ -153,6 +158,7 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
 
         scene.play(Write(self.verification))
+        scene.wait(2)
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-3.mp3")
         scene.wait(1.5)
@@ -166,16 +172,16 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "how the prover knows LHS", "data/sound/e4/slide4-3a.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(3)
+        scene.wait(2.5)
 
         scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
-
+        scene.wait(1.5)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
 
@@ -189,8 +195,9 @@ class Proof2(SlideBase):
         
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
+        scene.play(TransformMatchingShapes(self.verification2, self.verification2a), run_time=0.05)
         scene.wait(2)
-        scene.play(TransformMatchingTex(self.verification2, self.verification3))
+        scene.play(TransformMatchingTex(self.verification2a, self.verification3))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
 

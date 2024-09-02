@@ -9,11 +9,12 @@ from manim import (
     TransformMatchingShapes,
     Write,
     Unwrite,
-    FadeOut
+    FadeOut,
+    VGroup,
 )
 
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import (
@@ -126,9 +127,14 @@ class Proof1(SlideBase):
         self.chart.add_xaxis_label(self.z.value, r"x_0")
 
         scene.play(TransformMatchingShapes(self.opening4, self.opening3))
+        scene.wait(2)
         self.chart.add(line_tau_y)
         self.chart.add(line_z)
-        self.chart.animate_shift_dots(scene, self.y.value)
+        scene.wait(1)
+        scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR))
+        dots = VGroup(*self.chart.dots)
+        scene.play(Indicate(dots, color=HIGHLIGHT2_COLOR, scale=1.05))
+        scene.wait(1)
 
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
@@ -143,11 +149,12 @@ class Proof1(SlideBase):
 
         self.new_subsection(scene, "there exist a q(x)", "data/sound/e4/slide3-6.mp3")
         scene.wait(2)
-        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(1.5)
+        scene.play(Indicate(self.opening5[4], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.opening5[5], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
         scene.wait(1.5)
-        scene.play(Indicate(self.opening6[7], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "security", "data/sound/e4/slide3-7.mp3")
         scene.wait(0.5)
@@ -156,5 +163,5 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening6, self.opening7), run_time=1.3)
         scene.wait(3)
 
-    def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.opening7, self.opening, self.polynomial))
+    # def animate_out(self, scene):
+    #     scene.play(FadeOut(self.chart.labels, self.chart.ax, self.chart.dots, self.opening7, self.opening, self.polynomial))
