@@ -57,9 +57,6 @@ class Proof2(SlideBase):
         self.brace1_label = Text("elliptic curve points", font_size=20, color=PRIMARY_COLOR, font = PRIMARY_FONT)
         self.brace1.put_at_tip(self.brace1_label)
 
-        self.opening = MathTex(r"p(x_0)=y", color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 1.0)
-        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = -0.8)
-        self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
 
         self.verification = MathTex(
             r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
@@ -95,9 +92,11 @@ class Proof2(SlideBase):
         self.proof.next_to(self.verifier_label, DOWN)
         self.definition2.next_to(self.title, DOWN, buff = 1.0)
         self.commitment.next_to(self.proof, DOWN)
+        self.opening = MathTex(r"p(x_0)=y", color = PRIMARY_COLOR).next_to(self.commitment, DOWN)
+        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = 0.3)
+        self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
         self.equation.next_to(self.commitment, DOWN)
         self.opening2.next_to(self.commitment, DOWN)
-        self.opening.next_to(self.commitment, DOWN)
         self.equation2.next_to(self.commitment, DOWN)
         self.verification.to_edge(DOWN).shift(UP*0.5)
         self.verification0a.to_edge(DOWN).shift(UP*0.5)
@@ -106,7 +105,7 @@ class Proof2(SlideBase):
         self.verification2a.to_edge(DOWN).shift(UP*0.5)
         self.verification3.to_edge(DOWN).shift(UP*0.5)
         self.verification4.to_edge(DOWN).shift(UP*0.5)
-        self.chart.next_to(self.commiter_label, DOWN, buff = -0.4).scale(0.3)
+        self.chart.next_to(self.commiter_label, DOWN, buff = -2).scale(0.3)
 
     def animate_in(self, scene):
         self.new_subsection(

@@ -1,6 +1,6 @@
 from manim import FadeIn, Create, Brace, Text, DOWN, LEFT, RIGHT, UP, Write, MathTex, FadeOut, Indicate, AddTextLetterByLetter, MoveToTarget
 
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.merkle_tree import MerkleTree
 
