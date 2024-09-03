@@ -64,6 +64,7 @@ from zkmarek.video.slides.e4.proof import Proof1
 from zkmarek.video.slides.e4.polynomials import Polynomials
 from zkmarek.video.slides.e4.poly_commitment import PolynomialCommitment
 from zkmarek.video.slides.e4.e3_reference import Episode3Reference
+from zkmarek.video.slides.e4.summary import SummaryE4
 
 
 config.width = 16
@@ -176,7 +177,8 @@ EPISODE4 = [
     TitleSlide("Proof"),
     Proof1(),
     Proof2(),
-    # Subscribe("data/sound/episode1/s28.wav"),
+    SummaryE4(),
+    Subscribe("data/sound/episode1/s28.wav"),
 ]
 
 EPISODE5 = [
