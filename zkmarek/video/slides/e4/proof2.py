@@ -44,7 +44,6 @@ class Proof2(SlideBase):
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
 
         self.chart = DiscreetePolynomialChart(41, poly)
-        self.chart.next_to(self.commiter_label).scale(0.4)
 
         self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
@@ -81,10 +80,10 @@ class Proof2(SlideBase):
         ).to_edge(DOWN)
         self.verification2a = MathTex(
             r"e( {{q(\tau)\cdot G_1, (\tau-x_0) \cdot G_2) ) = e(}} {{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
-            color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3 = MathTex(
             r"e({{q(\tau)}} \cdot (\tau-x_0) {{\cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
+            color=PRIMARY_COLOR,
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
@@ -93,19 +92,20 @@ class Proof2(SlideBase):
         ).to_edge(DOWN)
 
         self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
-        self.proof.next_to(self.verifier_label, DOWN).shift(LEFT)
+        self.proof.next_to(self.verifier_label, DOWN)
         self.definition2.next_to(self.title, DOWN, buff = 1.0)
         self.commitment.next_to(self.proof, DOWN)
         self.equation.next_to(self.commitment, DOWN)
         self.opening2.next_to(self.commitment, DOWN)
         self.opening.next_to(self.commitment, DOWN)
         self.equation2.next_to(self.commitment, DOWN)
-        self.verification.to_edge(DOWN).shift(UP)
-        self.verification0a.to_edge(DOWN).shift(UP)
-        self.verification1.to_edge(DOWN).shift(UP)
-        self.verification2.to_edge(DOWN).shift(UP)
-        self.verification3.to_edge(DOWN).shift(UP)
-        self.verification4.to_edge(DOWN).shift(UP)
+        self.verification.to_edge(DOWN).shift(UP*0.5)
+        self.verification0a.to_edge(DOWN).shift(UP*0.5)
+        self.verification1.to_edge(DOWN).shift(UP*0.5)
+        self.verification2.to_edge(DOWN).shift(UP*0.5)
+        self.verification3.to_edge(DOWN).shift(UP*0.5)
+        self.verification4.to_edge(DOWN).shift(UP*0.5)
+        self.chart.next_to(self.commiter_label, DOWN).scale(0.4)
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -116,7 +116,7 @@ class Proof2(SlideBase):
         scene.play(FadeIn(self.definition2))
         scene.play(FadeIn(self.commiter, self.verifier), run_time=2)
         scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
-
+        scene.wait(1.9)
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
         scene.wait(1.3)
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
@@ -207,4 +207,4 @@ class Proof2(SlideBase):
         scene.wait(4)    
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.proof, self.equation, self.verification4))
+        scene.play(FadeOut(self.commitment, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.chart, self.proof, self.equation, self.verification4))

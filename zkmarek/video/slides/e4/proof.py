@@ -109,6 +109,7 @@ class Proof1(SlideBase):
             scene, self.tau.value, self.value_at_tau.value - self.y.value
         )   
         self.chart.add(line_z)
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
         scene.wait(1)
         scene.play(Write(self.opening))
         scene.wait(1)
@@ -124,17 +125,16 @@ class Proof1(SlideBase):
         scene.wait(1.2)
 
         self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
-        self.chart.add_xaxis_label(self.z.value, r"x_0")
 
         scene.play(TransformMatchingShapes(self.opening4, self.opening3))
         scene.wait(2)
         self.chart.add(line_tau_y)
         self.chart.add(line_z)
         scene.wait(1)
-        scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR))
         dots = VGroup(*self.chart.dots)
         scene.play(Indicate(dots, color=HIGHLIGHT2_COLOR, scale=1.05))
-        scene.wait(1)
+        scene.wait(2)
+        scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
 
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
