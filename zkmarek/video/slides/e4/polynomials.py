@@ -265,7 +265,7 @@ class Polynomials(SlideBase):
         scene.wait(3)
         scene.play(Indicate(self.intersect_sub, color = HIGHLIGHT_COLOR, scale_factor=1.7))
         self.polynomial.to_edge(DOWN).shift(LEFT*3).scale(0.7)
-        scene.wait(5)
+        scene.wait(6)
 
         self.new_subsection(scene, "R in terms of roots", "data/sound/e4/slide1-5a.mp3")
         scene.wait(2)

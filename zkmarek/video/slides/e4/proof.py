@@ -98,6 +98,7 @@ class Proof1(SlideBase):
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
         scene.wait(1)
         line_z = self.chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
@@ -109,7 +110,6 @@ class Proof1(SlideBase):
             scene, self.tau.value, self.value_at_tau.value - self.y.value
         )   
         self.chart.add(line_z)
-        self.chart.add_xaxis_label(self.z.value, r"x_0")
         scene.wait(1)
         scene.play(Write(self.opening))
         scene.wait(1)
@@ -135,8 +135,10 @@ class Proof1(SlideBase):
         scene.play(Indicate(dots, color=HIGHLIGHT2_COLOR, scale=1.05))
         scene.wait(2)
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
-
+        self.chart.animate_shift_dots(scene, self.y.value)
+        
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
+        scene.wait(1.5)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(FadeOut(line_z, line_tau, line_tau_y), run_time=0.3)
 

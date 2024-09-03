@@ -58,7 +58,7 @@ class Proof2(SlideBase):
         self.brace1.put_at_tip(self.brace1_label)
 
         self.opening = MathTex(r"p(x_0)=y", color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 1.0)
-        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = 0)
+        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = -0.8)
         self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
 
         self.verification = MathTex(
@@ -66,7 +66,7 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification0a = MathTex(
-            r"e( {{\pi}}, {{(\tau\cdot G_2)}} {{-x_0 \cdot G_2}}) ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, {{\tau\cdot G_2}} {{-x_0 \cdot G_2}} ) = e({{C}} - {{y}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
@@ -80,6 +80,7 @@ class Proof2(SlideBase):
         ).to_edge(DOWN)
         self.verification2a = MathTex(
             r"e( {{q(\tau)\cdot G_1, (\tau-x_0) \cdot G_2) ) = e(}} {{p(\tau)\cdot G_1}} - y \cdot G_1, G_2)",
+            color = PRIMARY_COLOR
         ).to_edge(DOWN)
         self.verification3 = MathTex(
             r"e({{q(\tau)}} \cdot (\tau-x_0) {{\cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
@@ -102,9 +103,10 @@ class Proof2(SlideBase):
         self.verification0a.to_edge(DOWN).shift(UP*0.5)
         self.verification1.to_edge(DOWN).shift(UP*0.5)
         self.verification2.to_edge(DOWN).shift(UP*0.5)
+        self.verification2a.to_edge(DOWN).shift(UP*0.5)
         self.verification3.to_edge(DOWN).shift(UP*0.5)
         self.verification4.to_edge(DOWN).shift(UP*0.5)
-        self.chart.next_to(self.commiter_label, DOWN, buff = 0.01).scale(0.3)
+        self.chart.next_to(self.commiter_label, DOWN, buff = -0.4).scale(0.3)
 
     def animate_in(self, scene):
         self.new_subsection(
@@ -201,9 +203,9 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
-        scene.wait(3)
+        scene.wait(4)
         scene.play(Indicate(self.equation, color = HIGHLIGHT_COLOR), Indicate(self.verification4, color = HIGHLIGHT_COLOR))
-        scene.wait(4)    
+        scene.wait(3)    
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commitment, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.chart, self.proof, self.equation, self.verification4))
