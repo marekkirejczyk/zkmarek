@@ -58,7 +58,7 @@ class Proof2(SlideBase):
         self.brace1.put_at_tip(self.brace1_label)
 
         self.opening = MathTex(r"p(x_0)=y", color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 1.0)
-        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, RIGHT, buff = 0)
+        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = 0)
         self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
 
         self.verification = MathTex(
@@ -84,7 +84,6 @@ class Proof2(SlideBase):
         self.verification3 = MathTex(
             r"e({{q(\tau)}} \cdot (\tau-x_0) {{\cdot G_1}}, G_2) = e({{[p(\tau) -y]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
-            color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
             r"q(\tau)\cdot (\tau-x_0) = p(\tau) -y",
@@ -105,7 +104,7 @@ class Proof2(SlideBase):
         self.verification2.to_edge(DOWN).shift(UP*0.5)
         self.verification3.to_edge(DOWN).shift(UP*0.5)
         self.verification4.to_edge(DOWN).shift(UP*0.5)
-        self.chart.next_to(self.commiter_label, DOWN).scale(0.4)
+        self.chart.next_to(self.commiter_label, DOWN, buff = 0.01).scale(0.3)
 
     def animate_in(self, scene):
         self.new_subsection(
