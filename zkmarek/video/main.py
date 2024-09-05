@@ -62,9 +62,8 @@ from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
 from zkmarek.video.slides.e4.proof2 import Proof2
 from zkmarek.video.slides.e4.proof import Proof1
 from zkmarek.video.slides.e4.polynomials import Polynomials
-from zkmarek.video.slides.e4.poly_commitment import PolynomialCommitment
+from zkmarek.video.slides.e4.commitment import Commitment
 from zkmarek.video.slides.e4.e3_reference import Episode3Reference
-from zkmarek.video.slides.e4.summary import SummaryE4
 
 
 config.width = 16
@@ -173,11 +172,10 @@ EPISODE4 = [
     TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=1.5),
     Polynomials(),
     TitleSlide("Commitments", sound="data/sound/e4/slide2-0.mp3", wait_time=3.5),
-    PolynomialCommitment(),
+    Commitment(),
     TitleSlide("Proof"),
     Proof1(),
     Proof2(),
-    # Subscribe("data/sound/episode1/s28.wav"),
 ]
 
 EPISODE5 = [
