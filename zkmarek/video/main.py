@@ -177,8 +177,7 @@ EPISODE4 = [
     TitleSlide("Proof"),
     Proof1(),
     Proof2(),
-    SummaryE4(),
-    Subscribe("data/sound/episode1/s28.wav"),
+    # Subscribe("data/sound/episode1/s28.wav"),
 ]
 
 EPISODE5 = [

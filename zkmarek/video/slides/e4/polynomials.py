@@ -1,4 +1,4 @@
-from manim import DOWN, UP, RIGHT, LEFT, FadeIn, FadeOut, MathTex, ValueTracker, Text, Create, Write, TransformMatchingShapes, Indicate, ApplyWave, MoveToTarget, Transform, Line, VGroup, Unwrite, ReplacementTransform
+from manim import DOWN, UP, RIGHT, LEFT, FadeIn, FadeOut, MathTex, ValueTracker, Text, Create, Write, TransformMatchingShapes, Indicate, ApplyWave, MoveToTarget, Transform, Line, VGroup, Unwrite, ReplacementTransform, AddTextLetterByLetter
 
 from numpy import linspace
 import random
@@ -31,13 +31,10 @@ class Polynomials(SlideBase):
         self.chart3 = DiscreetePolynomialChart(41, poly)
         self.chart3.to_edge(RIGHT).scale(0.8).shift(UP*0.2)
         self.title_label = Text("Polynomials", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
-        self.x = MathTex(r"x", color = PRIMARY_COLOR, font_size=70)  
 
         self.polynomial_eqn = MathTex(r"P(x) = {{a_n}} \cdot {{x^n}} + {{a_{n-1} }}\cdot {{x^{n-1} }} + \cdots + {{a_1}} \cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60)
-        self.polynomial_eqn1 = MathTex(r"{{a_n}} \cdot {{x^n}} + {{a_{n-1} }}\cdot {{x^{n-1} }} + \cdots + {{a_1}} \cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60)
         self.polynomial_eqn3 = MathTex(r"P(x) = {{a_3}}\cdot {{x^3}} +{{a_2}} \cdot {{x^2}} + {{a_{1} }}\cdot {{x }} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
 
-        self.polynomial_eqn2 = MathTex(r"{{x}}^n + {{x}}^{n-1} + \cdots + {{x}}", color = PRIMARY_COLOR, font_size = 60)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
         self.polynomial_z = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 {{=y}}", color = PRIMARY_COLOR).to_edge(RIGHT).shift(LEFT*0.1+UP*2.4)
         self.polynomial_roots = MathTex(r"P({{x_i}}) = 4 {{x_i^3}} - 8{{x_i^2}} - 17 {{x_i}} + 30 {{= 0}}", color = PRIMARY_COLOR).to_edge(DOWN)
@@ -112,22 +109,18 @@ class Polynomials(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")
         scene.play(Write(self.title_label), run_time=1)
-        # self.animate_random_number(scene)
-        scene.play(Write(self.x), run_time=0.5)
-        scene.play(TransformMatchingShapes(self.x, self.polynomial_eqn2))
 
-        scene.play(Indicate(self.polynomial_eqn2[0], color = HIGHLIGHT_COLOR), run_time=0.3)
-        scene.play(Indicate(self.polynomial_eqn2[2], color = HIGHLIGHT_COLOR), run_time=0.3)
-        scene.play(Indicate(self.polynomial_eqn2[4], color = HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(AddTextLetterByLetter(self.polynomial_eqn), run_time=3)
+        scene.wait(0.5)
+        scene.play(Indicate(self.polynomial_eqn[3], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial_eqn[7], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial_eqn[11], color = HIGHLIGHT_COLOR))
+        scene.wait(1)
+        scene.play(Indicate(self.polynomial_eqn[1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial_eqn[5], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial_eqn[9], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial_eqn[13], color = HIGHLIGHT_COLOR))
 
-        scene.play(TransformMatchingShapes(self.polynomial_eqn2, self.polynomial_eqn1), run_time=0.7)
-
-        scene.play(Indicate(self.polynomial_eqn1[0], color = HIGHLIGHT_COLOR), run_time=0.3)
-        scene.play(Indicate(self.polynomial_eqn1[4], color = HIGHLIGHT_COLOR), run_time=0.3)
-        scene.play(Indicate(self.polynomial_eqn1[8], color = HIGHLIGHT_COLOR), run_time=0.3)
-        scene.play(Indicate(self.polynomial_eqn1[12], color = HIGHLIGHT_COLOR), run_time=0.3)
-
-        scene.play(TransformMatchingShapes(self.polynomial_eqn1, self.polynomial_eqn), run_time=0.7)
 
         self.new_subsection(scene, "specific eqn", "data/sound/e4/slide1-1.mp3")
         self.polynomial_eqn.generate_target()
@@ -342,17 +335,17 @@ class Polynomials(SlideBase):
         scene.play(FadeOut(top_val))
         scene.wait(2)
 
-        self.new_subsection(scene, "p=23", "data/sound/e4/slide1-10.mp3")
-        scene.wait(2.3)
-        scene.play(TransformMatchingShapes(self.polynomial1_modulo5, self.polynomial_modulo23))
-        self.chart2.gen_points()
-        scene.play(FadeOut(self.chart1), FadeIn(self.chart2))
-        scene.wait(1)
+        # self.new_subsection(scene, "p=23", "data/sound/e4/slide1-10.mp3")
+        # scene.wait(2.3)
+        # scene.play(TransformMatchingShapes(self.polynomial1_modulo5, self.polynomial_modulo23))
+        # self.chart2.gen_points()
+        # scene.play(FadeOut(self.chart1), FadeIn(self.chart2))
+        # scene.wait(1)
 
-        self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
-        self.chart3.gen_points()
-        scene.play(FadeOut(self.chart2), FadeIn(self.chart3), ReplacementTransform(self.polynomial_modulo23, self.polynomial_modulo41))
-        scene.wait(2)
+        # self.new_subsection(scene, "p=41", "data/sound/e4/slide1-11.mp3")
+        # self.chart3.gen_points()
+        # scene.play(FadeOut(self.chart2), FadeIn(self.chart3), ReplacementTransform(self.polynomial_modulo23, self.polynomial_modulo41))
+        # scene.wait(2)
     
         self.new_subsection(scene, "security", "data/sound/e4/slide1-12.mp3")
         scene.wait(1.5)
