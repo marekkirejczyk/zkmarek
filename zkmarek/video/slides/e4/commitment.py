@@ -20,8 +20,8 @@ class Commitment(SlideBase):
 
     def construct(self):
         self.title_text = Text("Commitment scheme", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*3.5).scale(0.6)
-        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*2.5).scale(0.6)
+        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5).scale(0.6)
+        self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*2).scale(0.6)
         self.commitment = Text("secret message", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.6).next_to(self.commiter, LEFT, buff = 0.6).shift(LEFT*0.8)
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
@@ -50,16 +50,19 @@ class Commitment(SlideBase):
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
-        self.chart = DiscreetePolynomialChart(41, poly).scale(0.3)
-        self.tex = Tex(load("zkmarek/video/slides/e4/stages.tex"), color=SECONDARY_COLOR).scale(0.55).shift(0.7*RIGHT+DOWN)
+        self.chart = DiscreetePolynomialChart(41, poly).scale(0.4)
+        self.tex = Tex(load("zkmarek/video/slides/e4/stages.tex"), color=SECONDARY_COLOR).scale(0.55).shift(0.9*RIGHT+DOWN*1.5)
         self.opening = MathTex(r"p(x_0) = y", color = SECONDARY_COLOR).shift(2*UP)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-0.mp3")
         scene.play(Write(self.title_text))
         scene.play(FadeIn(self.commiter))
         scene.play(Write(self.commiter_label))
         # (1) 0-33 (2) 34-68 (3) 60-99 (4) 100-120 (5) 121-139
-        
+        self.new_subsection(scene, "commitment locked", "data/sound/e4/slide2-1.mp3")
+
+
         speech_text_verifier = Tex(r"Hey, can you let me\\ open the commitment?", font_size=32, color = PRIMARY_COLOR)
 
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
@@ -75,39 +78,48 @@ class Commitment(SlideBase):
         scene.play(Create(self.chart))
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
+
         scene.play(Write(self.tex[0][0:33]))
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
-
-        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, *self.chart.dots.copy()), self.envelope_flap_closed), run_time=2)
+        self.dots = VGroup(*self.chart.dots).copy()
+        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots), self.envelope_flap_closed), run_time=2)
+        self.new_subsection(scene, "cant open it", "data/sound/e4/slide2-2.mp3")
 
         scene.play(FadeIn(self.verifier))
         scene.play(FadeIn(self.verifier_label))
 
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(10*RIGHT)
-        self.envelope_flap.shift(10*RIGHT)
+        commitment_sent.target.shift(9.5*RIGHT+DOWN)
+        self.envelope_flap.shift(9.5*RIGHT+DOWN)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
         scene.play(Write(self.tex[0][33:68]))
+        self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
+
         scene.play(Create(bubble_verifier))
         scene.play(Create(speech_text_verifier))
 
-        scene.play(Write(self.tex[0][68:99]))
+        scene.play(Write(self.tex[0][68:108]))
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
-        self.chart.add_xaxis_label(self.x0.value, r"x_0")
-        scene.play(Write(self.tex[0][99:129]))
+        self.chart.add_xaxis_label(self.tau.value, r"x_0")
+        scene.play(Write(self.tex[0][108:130]))
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
-        self.circle = Circle(radius = 0.3, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1)
+        self.circle = Circle(radius = 0.3, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.7+UP*0.9)
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
-        scene.play(Write(self.tex[0][129:]))
+        scene.play(Write(self.tex[0][130:]))
+        self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
+        scene.play(FadeOut(self.commitment))
+        self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
 
+        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
+
+        self.new_subsection(scene, "opening the commitment", "data/sound/e4/slide2-7.mp3")
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.commiter, self.title_text))
+        scene.play(FadeOut(self.commiter, self.title_text))

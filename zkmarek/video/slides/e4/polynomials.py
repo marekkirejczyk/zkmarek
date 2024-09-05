@@ -325,7 +325,7 @@ class Polynomials(SlideBase):
 
         scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))
         scene.wait(4.5)
-        scene.play(ApplyWave(self.chart1.ax[1], DIRECTION=UP))
+        scene.play(ApplyWave(self.chart3.ax[1], DIRECTION=UP))
 
         top_val = MathTex(r"p-1", color = SECONDARY_COLOR).to_edge(UP+RIGHT).shift(DOWN*1.2+LEFT*3).scale(0.8)
         scene.play(FadeIn(top_val))
