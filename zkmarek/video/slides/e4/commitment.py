@@ -192,4 +192,4 @@ class Commitment(SlideBase):
         scene.play(FadeOut(bubble_committer))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap, self.chart, self.opening, self.lock))
+        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock))

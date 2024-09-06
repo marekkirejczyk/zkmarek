@@ -77,14 +77,11 @@ class Proof1(SlideBase):
         self.y = poly(self.z)
 
     def animate_in(self, scene):
-        self.new_subsection(
-            scene, "how to verify", "data/sound/e4/slide3-0.mp3"
-        )
+
+        self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
         self.chart.gen_points()
         scene.play(FadeIn(self.chart))
         scene.play(FadeIn(self.polynomial))
-
-        self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
 
         self.chart.add_xaxis_label(self.tau.value, r"\tau")
 
