@@ -67,22 +67,19 @@ class Commitment(SlideBase):
         self.chart.gen_points()
         scene.play(Create(self.chart))
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
-        scene.wait(1)
+
         scene.play(FadeIn(self.lock))
+        scene.play(FadeIn(self.verifier))
+        scene.play(FadeIn(self.verifier_label))
 
         self.new_subsection(scene, "commitment locked", "data/sound/e4/slide2-1.mp3")
-
-
         speech_text_verifier = Tex(r"Hey, can you let me\\ open the commitment?", font_size=32, color = PRIMARY_COLOR)
-
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
 
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
-
-        # scene.play(Write(self.tex[0][0:33]))
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
@@ -95,8 +92,6 @@ class Commitment(SlideBase):
 
         self.new_subsection(scene, "cant open it", "data/sound/e4/slide2-2.mp3")
 
-        scene.play(FadeIn(self.verifier))
-        scene.play(FadeIn(self.verifier_label))
 
         commitment_sent = Group(self.envelope_body_closed, self.envelope_flap_closed, self.lock_copy)
         commitment_sent.generate_target()
@@ -124,10 +119,10 @@ class Commitment(SlideBase):
         # scene.play(Write(self.tex[0][130:]))
         scene.wait(1.5)
         scene.play(Write(self.proof), run_time=0.5)
-        scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
+        scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof, self.lock_copy))
+        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof))
         scene.wait(2.7)
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
@@ -170,7 +165,7 @@ class Commitment(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center()).scale(0.7)
 
-        scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap), MoveToTarget(self.commitment))
+        scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap), MoveToTarget(self.commitment), FadeOut(self.envelope_flap))
         scene.wait(1)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
@@ -186,12 +181,12 @@ class Commitment(SlideBase):
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
-        scene.wait(2)
-        scene.play(Indicate(self.opening[5], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.wait(1.5)
+        scene.play(Indicate(self.opening[4], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(1)
-        scene.play(Indicate(self.opening[1], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.play(Indicate(self.opening[0], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(1)
-        scene.play(Indicate(self.opening[3], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.play(Indicate(self.opening[2], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.play(FadeOut(bubble_committer))
 
     def animate_out(self, scene):
