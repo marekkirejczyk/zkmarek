@@ -1,4 +1,4 @@
-from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, Transform, MathTex, Circle, Indicate
+from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, Transform, MathTex, Circle, Indicate, Group
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -50,7 +50,7 @@ class Commitment(SlideBase):
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
         self.chart = DiscreetePolynomialChart(41, poly).scale(0.4)
         self.tex = Tex(load("zkmarek/video/slides/e4/stages.tex"), color=SECONDARY_COLOR).scale(0.55).shift(0.9*RIGHT+DOWN*1.5)
-        self.opening = MathTex(r"p(x_0) = y", color = SECONDARY_COLOR).shift(2*UP)
+        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y}}", color = SECONDARY_COLOR).shift(2*UP)
 
 
     def animate_in(self, scene):
@@ -98,7 +98,7 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.verifier))
         scene.play(FadeIn(self.verifier_label))
 
-        commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.lock_copy)
+        commitment_sent = Group(self.envelope_body_closed, self.envelope_flap_closed, self.lock_copy)
         commitment_sent.generate_target()
         commitment_sent.target.shift(9.5*RIGHT+DOWN)
         self.envelope_flap.shift(9.5*RIGHT+DOWN)
@@ -127,7 +127,7 @@ class Commitment(SlideBase):
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed))
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof))
+        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof, self.lock_copy))
         scene.wait(2.7)
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
@@ -135,8 +135,8 @@ class Commitment(SlideBase):
         self.polynomial_enc = MathTex(r"{{}} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN)
         scene.play(Write(self.polynomial_enc), run_time=1)
-        scene.wait(2)
-        scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR), run_time=0.9)
+        scene.wait(3.5)
+        scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
 
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
         scene.wait(1)
@@ -175,9 +175,9 @@ class Commitment(SlideBase):
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
         commitment_sent.target.shift(9.5*RIGHT+DOWN)
-        self.envelope_flap.shift(9.5*RIGHT+DOWN)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
+        self.envelope_flap.shift(9.5*RIGHT+DOWN)
 
         self.new_subsection(scene, "opening the commitment", "data/sound/e4/slide2-7.mp3")
 
@@ -187,7 +187,12 @@ class Commitment(SlideBase):
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
         scene.wait(2)
+        scene.play(Indicate(self.opening[5], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.opening[1], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.opening[3], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.play(FadeOut(bubble_committer))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap, self.envelope_flap_closed, self.chart, self.proof, self.opening))
+        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap, self.envelope_flap_closed, self.chart, self.proof, self.opening, self.lock))
