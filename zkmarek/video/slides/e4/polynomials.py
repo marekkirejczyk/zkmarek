@@ -357,7 +357,7 @@ class Polynomials(SlideBase):
         scene.wait(5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial_modulo41, self.p0, self.p1, self.p2, self.p3))
+        scene.play(FadeOut(self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
 
     def animate_random_number(self, scene):
         first_number = random.randint(1, 20)
