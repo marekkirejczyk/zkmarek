@@ -71,6 +71,7 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.lock))
         scene.play(FadeIn(self.verifier))
         scene.play(FadeIn(self.verifier_label))
+        scene.wait(1.5)
 
         self.new_subsection(scene, "commitment locked", "data/sound/e4/slide2-1.mp3")
         speech_text_verifier = Tex(r"Hey, can you let me\\ open the commitment?", font_size=32, color = PRIMARY_COLOR)
@@ -165,14 +166,15 @@ class Commitment(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center()).scale(0.7)
 
-        scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap), MoveToTarget(self.commitment), FadeOut(self.envelope_flap))
+        scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap), MoveToTarget(self.commitment))
         scene.wait(1)
+        scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
         commitment_sent.target.shift(9.5*RIGHT+DOWN)
+        self.envelope_flap.shift(9.5*RIGHT+DOWN)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
-        self.envelope_flap.shift(9.5*RIGHT+DOWN)
 
         self.new_subsection(scene, "opening the commitment", "data/sound/e4/slide2-7.mp3")
 
@@ -181,7 +183,7 @@ class Commitment(SlideBase):
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
-        scene.wait(1.5)
+        scene.wait(0.5)
         scene.play(Indicate(self.opening[4], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(1)
         scene.play(Indicate(self.opening[0], color = HIGHLIGHT2_COLOR), run_time=1)
@@ -190,4 +192,4 @@ class Commitment(SlideBase):
         scene.play(FadeOut(bubble_committer))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap, self.envelope_flap_closed, self.chart, self.proof, self.opening, self.lock))
+        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap, self.chart, self.opening, self.lock))

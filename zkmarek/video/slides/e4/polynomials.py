@@ -322,7 +322,7 @@ class Polynomials(SlideBase):
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")
         scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=0.5)
         scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
-
+        scene.wait(1)
         scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))
         scene.wait(4.5)
         scene.play(ApplyWave(self.chart3.ax[1], DIRECTION=UP))
