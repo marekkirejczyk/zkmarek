@@ -348,13 +348,12 @@ class Polynomials(SlideBase):
         # scene.wait(2)
     
         self.new_subsection(scene, "security", "data/sound/e4/slide1-12.mp3")
-        scene.wait(1.5)
+        scene.wait(0.5)
         scene.play(ApplyWave(self.chart3.ax[0]), ApplyWave(self.chart3.ax[1]), run_time=2)
-        scene.wait(2)
+        scene.wait(0.5)
         scene.play(Write(self.p_order))
-        scene.play(Indicate(self.chart.graph, color = HIGHLIGHT_COLOR))
 
-        scene.wait(5)
+        scene.wait(2.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
