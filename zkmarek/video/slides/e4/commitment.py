@@ -121,7 +121,7 @@ class Commitment(SlideBase):
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof))
+        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening))
         scene.wait(2.7)
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
