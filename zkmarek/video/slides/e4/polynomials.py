@@ -98,7 +98,7 @@ class Polynomials(SlideBase):
             self.point.append(DotOnCurve(self.chart.ax, "", a)) 
         self.polynomial_modulo = MathTex(r"P({{x}}) \mod \ p = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ p}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
         self.polynomial_modulo5 = MathTex(r"P({{x}}) \mod \ 41 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 5}} {{}} {{}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
-        self.polynomial0_modulo5 = MathTex(r"P({{0}}) \rightarrow 4\cdot {{0^3}} - 8\cdot{{0^2}} - 17\cdot {{0}} + 30 {{\mod \ 41}} {{= 30 \mod 41}} {30}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
+        self.polynomial0_modulo5 = MathTex(r"P({{0}}) \rightarrow 4\cdot {{0^3}} - 8\cdot{{0^2}} - 17\cdot {{0}} + 30 {{\mod \ 41}} {{= 30 \mod 41}} {{=30}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
         self.polynomial1_modulo5 = MathTex(r"P({{1}}) \rightarrow 4\cdot {{1^3}} - 8\cdot{{1^2}} - 17\cdot {{1}} + 30 {{\mod \ 41}} {{= 9 \mod 41}} {{= 9}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
 
         self.polynomial_modulo23 = MathTex(r"P({{x}}) \mod \ 23 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 23}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
@@ -316,7 +316,7 @@ class Polynomials(SlideBase):
         scene.wait(0.6)
         scene.play(Indicate(self.polynomial0_modulo5[11], color = HIGHLIGHT_COLOR))
         scene.wait(0.5)
-        scene.play(Indicate(self.polynomial0_modulo5[13], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial0_modulo5[12], color = HIGHLIGHT_COLOR))
         scene.wait(1.5)
 
         self.new_subsection(scene, "P(1)", "data/sound/e4/slide1-9.mp3")

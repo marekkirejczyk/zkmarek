@@ -79,7 +79,9 @@ class Commitment(SlideBase):
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
 
-        self.tau = FieldElement(33, 41)
+        self.x_zero = FieldElement(33, 41)
+        self.value_at_x_zero = poly(self.x_zero)
+        self.tau = FieldElement(18, 41)
         self.value_at_tau = poly(self.tau)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
@@ -109,17 +111,13 @@ class Commitment(SlideBase):
         # scene.play(Write(self.tex[0][68:108]))
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
-        self.chart.add_xaxis_label(self.tau.value, r"x_0")
+        self.chart.add_xaxis_label(self.x_zero.value, r"\tiny{x_0}")
         # scene.play(Write(self.tex[0][108:130]))
         self.circle = Circle(radius = 0.3, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.7+UP*0.9)
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
-        self.proof = MathTex(r"\pi", color = SECONDARY_COLOR).next_to(self.opening, DOWN)
-        # scene.play(Write(self.tex[0][130:]))
-        scene.wait(1.5)
-        scene.play(Write(self.proof), run_time=0.5)
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
@@ -133,6 +131,7 @@ class Commitment(SlideBase):
         scene.play(Write(self.polynomial_enc), run_time=1)
         scene.wait(3.5)
         scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
+        self.chart.add_xaxis_label(self.tau.value, r"\tiny{\tau}")
 
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
         scene.wait(1)
@@ -190,6 +189,10 @@ class Commitment(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.opening[2], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.play(FadeOut(bubble_committer))
+        self.proof = MathTex(r"\pi = \mathrm{proof}", color = SECONDARY_COLOR).next_to(self.opening, DOWN)
+        # scene.play(Write(self.tex[0][130:]))
+        scene.wait(1.5)
+        scene.play(Write(self.proof), run_time=0.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock))
+        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
