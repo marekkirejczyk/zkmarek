@@ -16,10 +16,10 @@ def poly(x):
 class Commitment(SlideBase):
 
     def __init__(self):
-        super().__init__("Commitment")
+        super().__init__("Polynomial commitment")
 
     def construct(self):
-        self.title_text = Text("Commitment scheme", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
+        self.title_text = Text("Polynomial commitment", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5).scale(0.6)
         self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*2).scale(0.6)
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
@@ -50,7 +50,6 @@ class Commitment(SlideBase):
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
         self.chart = DiscreetePolynomialChart(41, poly).scale(0.4)
         self.tex = Tex(load("zkmarek/video/slides/e4/stages.tex"), color=SECONDARY_COLOR).scale(0.55).shift(0.9*RIGHT+DOWN*1.5)
-        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y}}", color = SECONDARY_COLOR).shift(2*UP)
 
 
     def animate_in(self, scene):
@@ -58,9 +57,14 @@ class Commitment(SlideBase):
         scene.play(Write(self.title_text))
         scene.play(FadeIn(self.commiter))
         scene.play(Write(self.commiter_label))
-        # (1) 0-33 (2) 34-68 (3) 60-99 (4) 100-120 (5) 121-139
-        bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
 
+        bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
+        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y}}", color = SECONDARY_COLOR)
+        self.proof = MathTex(r"\pi = \mathrm{proof}", color = SECONDARY_COLOR)
+        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
+        self.opening.move_to(bubble_opening.get_center())
+        self.opening.shift(UP*0.3)
+        self.proof.next_to(self.opening, DOWN, buff = 0.3)
         self.chart.move_to(bubble_committer.get_center())
 
         scene.play(Create(bubble_committer))
@@ -74,7 +78,7 @@ class Commitment(SlideBase):
         scene.wait(1.5)
 
         self.new_subsection(scene, "commitment locked", "data/sound/e4/slide2-1.mp3")
-        speech_text_verifier = Tex(r"Hey, can you let me\\ open the commitment?", font_size=32, color = PRIMARY_COLOR)
+        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = PRIMARY_COLOR)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
@@ -85,13 +89,13 @@ class Commitment(SlideBase):
         self.value_at_tau = poly(self.tau)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap))
+        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
         self.dots = VGroup(*self.chart.dots).copy()
         self.lock_copy = self.lock.copy()
         self.lock_copy.generate_target()
         self.lock_copy.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots), self.envelope_flap_closed), MoveToTarget(self.lock_copy), run_time=2)
+        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.lock_copy), run_time=2)
 
         self.new_subsection(scene, "cant open it", "data/sound/e4/slide2-2.mp3")
 
@@ -102,26 +106,25 @@ class Commitment(SlideBase):
         self.envelope_flap.shift(9.5*RIGHT+DOWN)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
-        # scene.play(Write(self.tex[0][33:68]))
+
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
 
         scene.play(Create(bubble_verifier))
         scene.play(Create(speech_text_verifier))
 
-        # scene.play(Write(self.tex[0][68:108]))
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
-        self.chart.add_xaxis_label(self.x_zero.value, r"\tiny{x_0}")
-        # scene.play(Write(self.tex[0][108:130]))
+        self.chart.add_xaxis_label(self.x_zero.value, r"\small{x_0}")
+
         self.circle = Circle(radius = 0.3, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.7+UP*0.9)
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
-        scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
+        scene.play(TransformMatchingShapes(VGroup(self.circle), VGroup(self.opening, bubble_opening)))
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening))
+        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, bubble_opening))
         scene.wait(2.7)
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
@@ -181,7 +184,7 @@ class Commitment(SlideBase):
         scene.play(Create(speech_text_verifier))
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
-        scene.play(TransformMatchingShapes(VGroup(self.circle), self.opening))
+        scene.play(TransformMatchingShapes(VGroup(self.circle), VGroup(self.opening, bubble_opening)))
         scene.wait(0.5)
         scene.play(Indicate(self.opening[4], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(1)
@@ -189,10 +192,10 @@ class Commitment(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.opening[2], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.play(FadeOut(bubble_committer))
-        self.proof = MathTex(r"\pi = \mathrm{proof}", color = SECONDARY_COLOR).next_to(self.opening, DOWN)
         # scene.play(Write(self.tex[0][130:]))
         scene.wait(1.5)
         scene.play(Write(self.proof), run_time=0.5)
+        scene.wait(3)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
