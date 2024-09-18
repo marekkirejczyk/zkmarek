@@ -14,6 +14,10 @@ from manim import (
     ImageMobject,
     Text,
     Create,
+    Polygon,
+    MoveToTarget,
+    Tex,
+    RoundedRectangle,
 )
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
@@ -98,9 +102,75 @@ class Proof2(SlideBase):
         self.verification2a.to_edge(DOWN).shift(UP*0.5)
         self.verification3.to_edge(DOWN).shift(UP*0.5)
         self.verification4.to_edge(DOWN).shift(UP*0.5)
-        self.chart.next_to(self.commiter_label, DOWN, buff = -2).scale(0.3)
+        self.chart.next_to(self.commiter_label, DOWN, buff = -1).scale(0.4)
+        self.envelope_body_closed = Polygon(
+            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
+        ).scale(0.4)
+
+        self.envelope_flap_closed = Polygon(
+            [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
+            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
+        ).scale(0.39)
+
+        self.envelope_body = Polygon(
+            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
+        ).scale(0.4)
+        self.envelope_flap = Polygon(
+            [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
+            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
+        ).scale(0.395)
+        self.envelope_body.next_to(self.commiter, LEFT+DOWN, buff = 0.4)
+        self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN, buff = 0.4)
+
+        self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
+        self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2a.mp3")
+        scene.play(Write(self.title), run_time=2)
+
+        self.new_subsection(scene, "committer", "data/sound/e4/slide4-2b.mp3")
+        scene.play(FadeIn(self.commiter), run_time=1)
+        scene.play(Write(self.commiter_label), run_time=1.5)
+        scene.wait(1)
+        self.chart.generate_points()
+        scene.play(Create(self.chart), run_time=2)
+        self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
+
+        scene.play(FadeIn(self.lock))
+
+        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
+        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
+        self.dots = VGroup(*self.chart.dots).copy()
+        self.lock_copy = self.lock.copy()
+        self.lock_copy.generate_target()
+        self.lock_copy.target.move_to(self.envelope_body_closed.get_center())
+
+        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.lock_copy), run_time=2)
+
+        self.new_subsection(scene, "verfier", "data/sound/e4/slide4-2c.mp3")
+        scene.play(FadeIn(self.verifier), run_time=1)
+        scene.play(Write(self.verifier_label), run_rime=1.5)
+        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = PRIMARY_COLOR)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
+        bubble_verifier.shift(UP) 
+        speech_text_verifier.move_to(bubble_verifier.get_center())
+
+        self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2d.mp3")
+        scene.play(Create(bubble_verifier))
+        scene.play(Create(speech_text_verifier))
+        scene.play(FadeOut(bubble_verifier, speech_text_verifier))
+        self.proof = MathTex(r"\pi = q(\tau)\cdot G_1", color = SECONDARY_COLOR)
+        self.proof.next_to(self.opening, DOWN, buff = 0.3)
+        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
+        self.opening.move_to(bubble_opening.get_center())
+        self.opening.shift(UP*0.3)
+        scene.play(Create(bubble_opening))
+        scene.play(FadeIn(self.opening, self.proof))
+
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
         scene.play(Write(self.verification))
         scene.wait(2)

@@ -107,7 +107,10 @@ class Proof1(SlideBase):
         scene.play(FadeIn(self.chart2))
 
         scene.play(Write(self.equality_quotient))
-        scene.wait(5)
+        scene.wait(7)
+
+        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2a.mp3")
+        scene.wait(4.2)
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
@@ -134,7 +137,6 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
 
         scene.play(TransformMatchingShapes(self.opening4, self.opening3))
-        scene.wait(2)
         line_tau = self.chart.animate_create_vertical_line(
             scene, self.tau.value, self.value_at_tau.value
         )
@@ -164,7 +166,7 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "there exist a q(x)", "data/sound/e4/slide3-6.mp3")
         scene.wait(2)
         scene.play(Indicate(self.opening5[4], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.play(Indicate(self.opening5[5], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
         scene.wait(1.5)
@@ -186,10 +188,10 @@ class Proof1(SlideBase):
         self.opening.target.next_to(self.verifier_label, DOWN)
 
         scene.play(MoveToTarget(self.chart), MoveToTarget(self.opening), FadeOut(self.opening7), FadeIn(self.commiter, self.verifier), run_time=3.5)
+        scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
         scene.wait(0.5)
         scene.play(FadeIn(self.definition2))
-        scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
-        scene.wait(3.9)
+        scene.wait(4.9)
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
         scene.wait(1.3)
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
