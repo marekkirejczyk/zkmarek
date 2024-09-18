@@ -59,7 +59,7 @@ class Commitment(SlideBase):
         scene.play(Write(self.commiter_label))
 
         bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
-        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y}}", color = SECONDARY_COLOR)
+        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", color = SECONDARY_COLOR)
         self.proof = MathTex(r"\pi = \mathrm{proof}", color = SECONDARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         self.opening.move_to(bubble_opening.get_center())
