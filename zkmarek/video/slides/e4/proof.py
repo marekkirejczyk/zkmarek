@@ -14,7 +14,6 @@ from manim import (
     ImageMobject,
     Text,
     MoveToTarget,
-    Create,
 )
 
 from zkmarek.crypto.field_element import FieldElement
