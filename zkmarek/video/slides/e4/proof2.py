@@ -147,6 +147,8 @@ class Proof2(SlideBase):
         self.dots = VGroup(*self.chart.dots).copy()
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
+        scene.play(FadeIn(self.verifier), run_time=1)
+        scene.play(Write(self.verifier_label), run_rime=1.5)
 
         scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
@@ -157,8 +159,6 @@ class Proof2(SlideBase):
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
         self.new_subsection(scene, "verfier", "data/sound/e4/slide4-2c.mp3")
-        scene.play(FadeIn(self.verifier), run_time=1)
-        scene.play(Write(self.verifier_label), run_rime=1.5)
         speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = PRIMARY_COLOR)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = PRIMARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(0.9*LEFT)
         bubble_verifier.shift(UP) 
@@ -176,7 +176,12 @@ class Proof2(SlideBase):
         scene.play(Create(bubble_opening))
         scene.play(FadeIn(self.opening, self.proof))
         scene.wait(2)
-        scene.play(FadeOut(self.chart, self.lock, self.envelope_body_closed, self.envelope_flap_closed))
+        scene.play(FadeOut(self.lock, self.envelope_body_closed, self.envelope_flap_closed))
+        self.chart.generate_target()
+        self.chart.target.scale(0.6).shift(UP*0.7)
+        self.lock.generate_target()
+        self.lock.target.scale(0.6).shift(UP*0.4+LEFT*0.4)
+        scene.play(MoveToTarget(self.chart), MoveToTarget(self.lock))
 
         self.commitment.generate_target()
         self.commitment.target.next_to(self.verifier_label, DOWN)
@@ -188,14 +193,14 @@ class Proof2(SlideBase):
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
         scene.play(Write(self.verification))
-        scene.wait(2)
+        scene.wait(2.8)
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-3.mp3")
         scene.wait(1.5)
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
-
+        scene.wait(1.8)
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
 
 
@@ -225,9 +230,9 @@ class Proof2(SlideBase):
         
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
-        scene.play(TransformMatchingShapes(self.verification2, self.verification2a), run_time=0.05)
+        scene.play(TransformMatchingShapes(self.verification2, self.verification2a))
         scene.wait(2)
-        scene.play(TransformMatchingTex(self.verification2a, self.verification3))
+        scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=0.05)
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
 
@@ -237,4 +242,4 @@ class Proof2(SlideBase):
         scene.wait(3)    
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.equation, self.verification4))
+        scene.play(FadeOut(self.commitment, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.equation, self.verification4))
