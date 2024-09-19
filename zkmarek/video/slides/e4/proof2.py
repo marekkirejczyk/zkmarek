@@ -170,7 +170,7 @@ class Proof2(SlideBase):
         scene.play(Create(bubble_opening))
         scene.play(FadeIn(self.opening, self.proof))
         scene.wait(2)
-        scene.play(FadeOut(self.chart, self.lock, self.envelope_body_closed, self.envelope_flap_closed, self.lock_copy))
+        scene.play(FadeOut(self.chart, self.lock, self.envelope_body_closed, self.envelope_flap_closed))
 
         self.commitment.generate_target()
         self.commitment.target.next_to(self.verifier_label, DOWN)
