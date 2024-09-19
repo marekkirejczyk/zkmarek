@@ -238,5 +238,6 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "true for tau", "data/sound/e4/slide4-1c.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.equation2, self.equation), run_time=1.5)
-    # def animate_out(self, scene):
-    #     scene.play(FadeOut(self.chart.labels, self.chart.ax, self.chart.dots, self.opening7, self.opening, self.polynomial))
+
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.chart, self.proof, self.polynomial, self.equation, self.commiter, self.verifier, self.commitment, self.verifier_label, self.commiter_label))
