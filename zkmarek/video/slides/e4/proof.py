@@ -54,6 +54,8 @@ class Proof1(SlideBase):
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y_0}}", color=PRIMARY_COLOR)
 
         self.equality_quotient = MathTex(r"{{q(\tau)}} \stackrel{?}{=} {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
+        self.commitment_quotient = MathTex(r"{{C}} = {{p(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
+        self.commitment_quotient2 = MathTex(r"{{C}} \stackrel{?}{=} {{q(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
         self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y_0}}", color = PRIMARY_COLOR)
         self.opening2 = MathTex(r"{{p(x_0)}} {{- y_0}} = {{0}}", color = PRIMARY_COLOR)
@@ -107,10 +109,17 @@ class Proof1(SlideBase):
         scene.play(FadeIn(self.chart2))
 
         scene.play(Write(self.equality_quotient))
-        scene.wait(7)
+        scene.wait(3)
+        self.equality_quotient.generate_target()
+        self.equality_quotient.target.shift(UP*1.5)
+        scene.play(Write(self.commitment_quotient), MoveToTarget(self.equality_quotient))
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(VGroup(self.equality_quotient[0].copy(), self.commitment_quotient), self.commitment_quotient2))
+        scene.wait(2)
 
         self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2a.mp3")
-        scene.wait(4.2)
+        scene.play(FadeOut(self.commitment_quotient2), run_time=0.7)
+        scene.wait(3.8)
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
@@ -152,9 +161,9 @@ class Proof1(SlideBase):
         self.chart.animate_shift_dots(scene, self.y.value)
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
-        scene.wait(1.5)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(FadeOut(line_z, line_tau, line_tau_y), run_time=0.3)
+        scene.wait(1.8)
 
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
@@ -191,7 +200,7 @@ class Proof1(SlideBase):
         scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
         scene.wait(0.5)
         scene.play(FadeIn(self.definition2))
-        scene.wait(4.9)
+        scene.wait(6.2)
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
         scene.wait(1.3)
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))

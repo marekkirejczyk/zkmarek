@@ -87,16 +87,6 @@ class Polynomials(SlideBase):
         self.intersect = DotOnCurve(self.chart.ax, r"({{x_0}}, {{y}})", a_i)
         self.intersect.set_color(PRIMARY_COLOR)
 
-        self.p_intersect_1 = ValueTracker(1.0417)
-        a_i = Curve.from_x(self.p_intersect_1.get_value())
-        self.intersect_1 = DotOnCurve(self.chart.ax, r"", a_i)
-        self.intersect_1.set_color(PRIMARY_COLOR)
-
-        self.p_intersect_2 = ValueTracker(3.80735)
-        a_i = Curve.from_x(self.p_intersect_2.get_value())
-        self.intersect_2 = DotOnCurve(self.chart.ax, r"", a_i)
-        self.intersect_2.set_color(PRIMARY_COLOR)
-
         self.point = []
         self.N = 30 # n/o of points
         self.values = linspace(-4.5, 3, self.N)
@@ -229,7 +219,15 @@ class Polynomials(SlideBase):
         self.intersect_sub = DotOnCurve(self.chart.ax, r"(x_0, 0)", a_i)
         self.intersect_sub.set_color(PRIMARY_COLOR).shift(DOWN*0.88)
         self.intersect_sub.label.shift(LEFT*0.2+UP*0.3)
+        self.p_intersect_1 = ValueTracker(1.0417)
+        a_i = Curve.from_x(self.p_intersect_1.get_value())
+        self.intersect_1 = DotOnCurve(self.chart.ax, r"", a_i)
+        self.intersect_1.set_color(PRIMARY_COLOR)
 
+        self.p_intersect_2 = ValueTracker(3.80735)
+        a_i = Curve.from_x(self.p_intersect_2.get_value())
+        self.intersect_2 = DotOnCurve(self.chart.ax, r"", a_i)
+        self.intersect_2.set_color(PRIMARY_COLOR)
         self.p_intersect1 = ValueTracker(1.041)
         a_i1 = Curve.from_x(self.p_intersect1.get_value())
         self.intersect1 = DotOnCurve(self.chart.ax, r"({{x_1}}, {{0}})", a_i1)

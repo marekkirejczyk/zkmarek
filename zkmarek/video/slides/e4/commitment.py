@@ -122,6 +122,7 @@ class Commitment(SlideBase):
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(VGroup(self.circle), VGroup(self.opening, bubble_opening)))
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
+        scene.wait(2)
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
         scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, bubble_opening))
@@ -191,11 +192,10 @@ class Commitment(SlideBase):
         scene.play(Indicate(self.opening[0], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(1)
         scene.play(Indicate(self.opening[2], color = HIGHLIGHT2_COLOR), run_time=1)
-        scene.play(FadeOut(bubble_committer))
-        # scene.play(Write(self.tex[0][130:]))
-        scene.wait(1.5)
+        scene.wait(2)
         scene.play(Write(self.proof), run_time=0.5)
         scene.wait(3)
+        scene.play(FadeOut(bubble_committer, bubble_opening))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
