@@ -48,7 +48,9 @@ class Commitment(SlideBase):
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
-        self.chart = DiscreetePolynomialChart(41, poly).scale(0.4)
+        self.chart = DiscreetePolynomialChart(41, poly)
+        self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
+        self.chart.scale(0.4)
         self.tex = Tex(load("zkmarek/video/slides/e4/stages.tex"), color=SECONDARY_COLOR).scale(0.55).shift(0.9*RIGHT+DOWN*1.5)
 
 
@@ -59,8 +61,8 @@ class Commitment(SlideBase):
         scene.play(Write(self.commiter_label))
 
         bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
-        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", color = SECONDARY_COLOR)
-        self.proof = MathTex(r"\pi = \mathrm{proof}", color = SECONDARY_COLOR)
+        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = SECONDARY_COLOR)
+        self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = SECONDARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
@@ -79,7 +81,7 @@ class Commitment(SlideBase):
 
         self.new_subsection(scene, "commitment locked", "data/sound/e4/slide2-1.mp3")
         speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = PRIMARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 0.5, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
 
@@ -114,7 +116,6 @@ class Commitment(SlideBase):
 
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
-        self.chart.add_xaxis_label(self.x_zero.value, r"\small{x_0}")
 
         self.circle = Circle(radius = 0.3, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.7+UP*0.9)
 

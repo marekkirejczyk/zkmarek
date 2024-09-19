@@ -108,13 +108,13 @@ class Proof1(SlideBase):
         scene.play(FadeIn(self.chart2))
 
         scene.play(Write(self.equality_quotient))
-        scene.wait(3)
+        scene.wait(1.5)
         self.equality_quotient.generate_target()
         self.equality_quotient.target.shift(UP*1.5)
         scene.play(Write(self.commitment_quotient), MoveToTarget(self.equality_quotient))
         scene.wait(1)
         scene.play(TransformMatchingShapes(VGroup(self.equality_quotient[0].copy(), self.commitment_quotient), self.commitment_quotient2))
-        scene.wait(2)
+        scene.wait(3.7)
 
         self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2a.mp3")
         scene.play(FadeOut(self.commitment_quotient2), run_time=0.7)
@@ -174,11 +174,11 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "there exist a q(x)", "data/sound/e4/slide3-6.mp3")
         scene.wait(2)
         scene.play(Indicate(self.opening5[4], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
+
         scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
         scene.wait(1.5)
-        scene.play(Indicate(self.opening6[5], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
 
         self.new_subsection(scene, "security", "data/sound/e4/slide3-7.mp3")
         scene.wait(0.5)
@@ -238,6 +238,7 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "true for tau", "data/sound/e4/slide4-1c.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.equation2, self.equation), run_time=1.5)
+        scene.wait(4)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart, self.proof, self.polynomial, self.equation, self.commiter, self.verifier, self.commitment, self.verifier_label, self.commiter_label))

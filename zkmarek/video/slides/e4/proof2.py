@@ -88,7 +88,7 @@ class Proof2(SlideBase):
         self.polynomial.to_edge(LEFT + DOWN).scale(0.8)
         self.proof.next_to(self.verifier_label, DOWN)
         self.definition2.next_to(self.title, DOWN, buff = 1.0)
-        self.commitment.next_to(self.proof, DOWN)
+        self.commitment.next_to(self.commiter, RIGHT, buff = 0)
         self.opening = MathTex(r"p(x_0)=y_0", font_size=32, color = PRIMARY_COLOR).next_to(self.commitment, DOWN)
         self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = 0.3)
         self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
@@ -121,8 +121,8 @@ class Proof2(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.395)
-        self.envelope_body.next_to(self.commiter, LEFT+DOWN, buff = 0.4)
-        self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN, buff = 0.4)
+        self.envelope_body.next_to(self.commiter, RIGHT+DOWN, buff = 0.4)
+        self.envelope_body_closed.next_to(self.commiter, RIGHT+DOWN, buff = 0.4)
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
@@ -146,9 +146,15 @@ class Proof2(SlideBase):
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
         self.dots = VGroup(*self.chart.dots).copy()
         self.commitment.generate_target()
-        self.commitment.target.move_to(self.envelope_body_closed.get_center()).scale(0.7)
+        self.commitment.target.move_to(self.envelope_body_closed.get_center())
 
         scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.commitment), run_time=2)
+        commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
+        commitment_sent.generate_target()
+        commitment_sent.target.shift(6.5*RIGHT+DOWN*3)
+        self.envelope_flap.shift(6.5*RIGHT+DOWN*3)
+
+        scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
         self.new_subsection(scene, "verfier", "data/sound/e4/slide4-2c.mp3")
         scene.play(FadeIn(self.verifier), run_time=1)
@@ -175,9 +181,9 @@ class Proof2(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.next_to(self.verifier_label, DOWN)
         self.opening.generate_target()
-        self.opening.target.next_to(self.verifier_label, DOWN).shift(DOWN)
+        self.opening.target.next_to(self.verifier_label, DOWN).shift(DOWN*0.7)
         self.proof.generate_target()
-        self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*2)
+        self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*1.4)
         scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof), MoveToTarget(self.commitment), FadeOut(bubble_opening))
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
@@ -231,4 +237,4 @@ class Proof2(SlideBase):
         scene.wait(3)    
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.chart, self.proof, self.equation, self.verification4))
+        scene.play(FadeOut(self.commitment, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.equation, self.verification4))
