@@ -48,6 +48,10 @@ class Commitment(SlideBase):
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
+        self.x_zero = FieldElement(33, 41)
+        self.value_at_x_zero = poly(self.x_zero)
+        self.tau = FieldElement(18, 41)
+        self.value_at_tau = poly(self.tau)
         self.chart = DiscreetePolynomialChart(41, poly)
         self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
         self.chart.scale(0.4)
@@ -85,10 +89,6 @@ class Commitment(SlideBase):
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
 
-        self.x_zero = FieldElement(33, 41)
-        self.value_at_x_zero = poly(self.x_zero)
-        self.tau = FieldElement(18, 41)
-        self.value_at_tau = poly(self.tau)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
