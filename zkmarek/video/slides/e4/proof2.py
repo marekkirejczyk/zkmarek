@@ -190,6 +190,24 @@ class Proof2(SlideBase):
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*1.4)
         scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof), MoveToTarget(self.commitment), FadeOut(bubble_opening))
+        
+        self.new_subsection(
+            scene, "pairings", "data/sound/e4/slide4-0.mp3"
+        )
+        self.chart.generate_target()
+        self.chart.target.next_to(self.commiter_label, DOWN, buff = -1).scale(0.5)
+        self.opening.generate_target()
+        self.opening.target.next_to(self.verifier_label, DOWN)
+
+        scene.play(MoveToTarget(self.chart), MoveToTarget(self.opening), FadeOut(self.opening7), FadeIn(self.commiter, self.verifier), run_time=3.5)
+        scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
+        scene.wait(0.5)
+        scene.play(FadeIn(self.definition2))
+        scene.wait(6.2)
+        scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
+        scene.wait(1.3)
+        scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
+
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
         scene.play(Write(self.verification))

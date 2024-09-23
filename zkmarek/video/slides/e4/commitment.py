@@ -1,4 +1,4 @@
-from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, Transform, MathTex, Circle, Indicate, Group
+from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, Transform, MathTex, Circle, Indicate, Group, CurvedArrow
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -25,6 +25,7 @@ class Commitment(SlideBase):
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
+        self.thumb = ImageMobject("data/images/Thumb_up.png")
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
             fill_color=PRIMARY_COLOR, fill_opacity=0.5
@@ -55,7 +56,9 @@ class Commitment(SlideBase):
         self.chart = DiscreetePolynomialChart(41, poly)
         self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
         self.chart.scale(0.4)
-        self.tex = Tex(load("zkmarek/video/slides/e4/stages.tex"), color=SECONDARY_COLOR).scale(0.55).shift(0.9*RIGHT+DOWN*1.5)
+        self.trusted_setup = MathTex(r"{{\tau^1}} {{\cdot G_1}} + {{\tau^2}} {{\cdot G_1}} + \cdots + {{\tau^n}} {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*1.5)
+        self.trusted_setup1 = MathTex(r"{{}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*1.5)
+        self.trusted_setup2 = MathTex(r"{{p(\tau)}} {{\cdot G_1}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*1.5)
 
 
     def animate_in(self, scene):
@@ -109,35 +112,61 @@ class Commitment(SlideBase):
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
-        self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
-
         scene.play(Create(bubble_verifier))
         scene.play(Create(speech_text_verifier))
 
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.3, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.7+UP*0.9)
+        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*1+UP*1)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*1.2+UP*1)
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
-        scene.play(TransformMatchingShapes(VGroup(self.circle), VGroup(self.opening, bubble_opening)))
+        scene.play(TransformMatchingShapes(self.circle, self.circle_full))
+        self.circle_full.generate_target()
+        self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
+        scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
         scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
         scene.wait(2)
 
+        self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
+        scene.wait(1.5)
+        scene.play(Write(self.proof))
+        scene.wait(2)
+        scene.play(FadeOut(bubble_opening))
+        self.opening.generate_target()
+        self.opening.target.next_to(self.verifier_label, DOWN)
+        self.proof.generate_target()
+        self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN)
+        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), FadeOut(self.circle_full), run_time=1.5)
+        scene.wait(2.5)
+        self.arrow_check_opening = CurvedArrow(self.proof, self.opening)
+        self.thumb.next_to(self.arrow_check_opening, LEFT, buff=0)
+        
+
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, bubble_opening))
+        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof))
+        self.title_text_kzg = Text("KZG", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
+        scene.play(TransformMatchingShapes(self.title_text, self.title_text_kzg))
         scene.wait(2.7)
+        self.opening.move_to(bubble_opening.get_center())
+        self.opening.shift(UP*0.3)
+        self.proof.next_to(self.opening, DOWN, buff = 0.3)
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
-        scene.wait(2)
+        scene.play(Write(self.trusted_setup), run_time=0.5)
+        scene.wait(0.7)
+        scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1), run_time=0.5)
+        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2), run_time=0.5)
+        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
         self.polynomial_enc = MathTex(r"{{}} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
-        scene.play(Write(self.polynomial_enc), run_time=1)
-        scene.wait(3.5)
+        scene.wait(2.5)
         scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
         self.chart.add_xaxis_label(self.tau.value, r"\tiny{\tau}")
-
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.polynomial_enc, self.commitment), run_time=1.5)

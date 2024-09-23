@@ -71,7 +71,7 @@ class Proof1(SlideBase):
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
 
         self.chart = DiscreetePolynomialChart(41, poly)
-        self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
+
         self.equation2 = MathTex(r"{{q(x)}}\cdot {{(x - x_0)}} = {{p(x)}} - {{y_0}}", color=PRIMARY_COLOR)
         self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
@@ -187,58 +187,6 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening6, self.opening7), run_time=1.3)
         scene.wait(3)
 
-        self.new_subsection(
-            scene, "pairings", "data/sound/e4/slide4-0.mp3"
-        )
-        self.chart.generate_target()
-        self.chart.target.next_to(self.commiter_label, DOWN, buff = -1).scale(0.5)
-        self.opening.generate_target()
-        self.opening.target.next_to(self.verifier_label, DOWN)
-
-        scene.play(MoveToTarget(self.chart), MoveToTarget(self.opening), FadeOut(self.opening7), FadeIn(self.commiter, self.verifier), run_time=3.5)
-        scene.play(Write(self.verifier_label), Write(self.commiter_label), run_time=2)
-        scene.wait(0.5)
-        scene.play(FadeIn(self.definition2))
-        scene.wait(6.2)
-        scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
-        scene.wait(1.3)
-        scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
-
-        self.new_subsection(scene, "pi - proof", "data/sound/e4/slide4-1.mp3")
-        scene.play(FadeOut(self.definition2))
-        self.proof.next_to(self.opening, DOWN)
-        self.equation2.next_to(self.verifier_label, DOWN)
-        self.equation.next_to(self.verifier_label, DOWN)
-        self.commitment.next_to(self.proof, DOWN)
-        scene.play(Write(self.proof))
-        scene.wait(2)
-        scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
-        scene.wait(1)
-        scene.play(Indicate(self.proof[4], color = HIGHLIGHT_COLOR))
-        scene.wait(1)
-        scene.play(Write(self.commitment))
-        scene.wait(1)
-        scene.play(Indicate(self.commitment[2], color = HIGHLIGHT_COLOR))
-        scene.wait(0.5)
-        scene.play(Indicate(self.commitment[4], color = HIGHLIGHT_COLOR))
-
-        self.new_subsection(scene, "is opening correct?", "data/sound/e4/slide4-1a.mp3")
-        self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.2).next_to(self.opening, LEFT, buff = 0.3)
-        scene.wait(2.4)
-        scene.play(FadeIn(self.thumb_up), run_time=0.6)
-        scene.wait(1.4)
-
-        self.new_subsection(scene, "verify if p is divisible", "data/sound/e4/slide4-1b.mp3")
-        scene.wait(1)
-        scene.play(FadeOut(self.thumb_up), run_time=0.7)
-        scene.wait(0.8)
-        self.opening2 = MathTex(r"{{q(x)}} {{}} {{}} = {{\frac{p(x)- y}{x-x_0} }}", color = PRIMARY_COLOR)
-        scene.play(TransformMatchingShapes(self.opening, self.equation2), run_time=1.5)
-
-        self.new_subsection(scene, "true for tau", "data/sound/e4/slide4-1c.mp3")
-        scene.wait(1)
-        scene.play(TransformMatchingShapes(self.equation2, self.equation), run_time=1.5)
-        scene.wait(4)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart, self.proof, self.polynomial, self.equation, self.commiter, self.verifier, self.commitment, self.verifier_label, self.commiter_label))
