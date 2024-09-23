@@ -57,7 +57,7 @@ class Commitment(SlideBase):
         self.chart.scale(0.4)
         self.trusted_setup = MathTex(r"{{\tau^1}} {{\cdot G_1}} + {{\tau^2}} {{\cdot G_1}} + \cdots + {{\tau^n}} {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
         self.trusted_setup1 = MathTex(r"{{}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
-        self.trusted_setup2 = MathTex(r"{{p(\tau)}} {{\cdot G_1}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
+        self.trusted_setup2 = MathTex(r"{{p(\tau)}} {{\cdot G_1}}= \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
 
 
     def animate_in(self, scene):
@@ -117,8 +117,8 @@ class Commitment(SlideBase):
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.85+UP*0.95)
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.85+UP*0.95)
+        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.85)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.85)
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
@@ -156,14 +156,14 @@ class Commitment(SlideBase):
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
         scene.play(Write(self.trusted_setup), run_time=0.5)
         scene.wait(0.7)
-        scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1), run_time=0.5)
-        scene.wait(0.5)
-        scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2), run_time=0.5)
-        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1), run_time=0.8)
+        scene.wait(0.8)
+        scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2), run_time=0.8)
+        scene.wait(1)
         self.polynomial_enc = MathTex(r"{{}} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
-        scene.wait(2.5)
+        scene.wait(1.5)
         scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
         self.chart.add_xaxis_label(self.tau.value, r"\tiny{\tau}")
 
@@ -213,9 +213,14 @@ class Commitment(SlideBase):
 
         scene.play(Create(bubble_verifier))
         scene.play(Create(speech_text_verifier))
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.85)
+
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
-        scene.play(TransformMatchingShapes(VGroup(self.circle), VGroup(self.opening, bubble_opening)))
+        scene.play(TransformMatchingShapes(self.circle, self.circle_full))
+        self.circle_full.generate_target()
+        self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
+        scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
         scene.wait(0.5)
         scene.play(Indicate(self.opening[4], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(1)
@@ -228,4 +233,4 @@ class Commitment(SlideBase):
         scene.play(FadeOut(bubble_committer, bubble_opening))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
+        scene.play(FadeOut(self.commiter, self.title_text_kzg, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))

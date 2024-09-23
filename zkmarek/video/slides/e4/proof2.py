@@ -193,13 +193,10 @@ class Proof2(SlideBase):
         
         self.new_subsection(
             scene, "pairings", "data/sound/e4/slide4-0.mp3")
-        self.opening.generate_target()
-        self.opening.target.next_to(self.verifier_label, DOWN)
 
-        scene.play(MoveToTarget(self.opening), run_time=3.5)
-        scene.wait(0.5)
+        scene.wait(4.5)
         scene.play(FadeIn(self.definition2))
-        scene.wait(6.2)
+        scene.wait(6.7)
         scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
         scene.wait(1.3)
         scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
@@ -235,6 +232,8 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
 
         scene.play(Indicate(self.verification[11], color = SECONDARY_COLOR))
+
+        self.new_subsection(scene, "why the equation?", "data/sound/e4/slide4-4a.mp3")
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-5.mp3")
 

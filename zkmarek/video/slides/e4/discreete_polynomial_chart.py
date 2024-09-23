@@ -88,15 +88,7 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 a = d.animate.move_to(self.ax.c2p(x.value, yy))
                 animations.append(a)
-        scene.play(*animations)
-
-    def animate_shift_dots_wrap_fix(self, scene, y_shift):
-        animations = []
-        for i, d in enumerate(self.dots):
-            x = FieldElement(i, self.p)
-            y = self.f(x)
-            yy = y.value - y_shift
-            if yy < 0:
+            elif yy < 0:
                 a = d.animate.move_to(self.ax.c2p(x.value, yy % 41))
             animations.append(a)
         scene.play(*animations)
