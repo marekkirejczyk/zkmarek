@@ -117,9 +117,9 @@ class Commitment(SlideBase):
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.85)
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.85)
-
+        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
+        scene.wait(1)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
@@ -142,10 +142,11 @@ class Commitment(SlideBase):
         scene.wait(2.5)
         self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left())
         self.thumb.next_to(self.arrow_check_opening, LEFT, buff=0)
+        scene.play(FadeIn(self.thumb), Write(self.arrow_check_opening))
         
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof))
+        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb))
         self.title_text_kzg = Text("KZG", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
         scene.play(TransformMatchingShapes(self.title_text, self.title_text_kzg))
         scene.wait(2.7)
@@ -213,8 +214,8 @@ class Commitment(SlideBase):
 
         scene.play(Create(bubble_verifier))
         scene.play(Create(speech_text_verifier))
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.85)
-
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
+        scene.wait(1)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
@@ -223,8 +224,7 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
         scene.wait(0.5)
         scene.play(Indicate(self.opening[4], color = HIGHLIGHT2_COLOR), run_time=1)
-        scene.wait(1)
-        scene.play(Indicate(self.opening[0], color = HIGHLIGHT2_COLOR), run_time=1)
+
         scene.wait(1)
         scene.play(Indicate(self.opening[2], color = HIGHLIGHT2_COLOR), run_time=1)
         scene.wait(2)
@@ -233,4 +233,4 @@ class Commitment(SlideBase):
         scene.play(FadeOut(bubble_committer, bubble_opening))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text_kzg, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
+        scene.play(FadeOut(self.commiter, self.circle_full, self.title_text_kzg, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))

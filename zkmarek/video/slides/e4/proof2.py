@@ -36,10 +36,10 @@ class Proof2(SlideBase):
     verification: MathTex
 
     def __init__(self):
-        super().__init__("Proof2")
+        super().__init__("Verification")
 
     def construct(self):
-        self.title = Text("Proof", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
+        self.title = Text("Verification", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
         self.commiter = ImageMobject("data/images/person_blue.png").to_corner(LEFT+UP).scale(0.6).shift(RIGHT)
 
@@ -135,20 +135,19 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "committer", "data/sound/e4/slide4-2b.mp3")
         scene.play(FadeIn(self.commiter), run_time=1)
         scene.play(Write(self.commiter_label), run_time=1.5)
-        scene.wait(1)
         self.chart.gen_points()
         scene.play(Create(self.chart), run_time=2)
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
 
         scene.play(FadeIn(self.lock))
+        scene.play(FadeIn(self.verifier), run_time=1)
+        scene.play(Write(self.verifier_label), run_rime=1.5)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
         self.dots = VGroup(*self.chart.dots).copy()
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
-        scene.play(FadeIn(self.verifier), run_time=1)
-        scene.play(Write(self.verifier_label), run_rime=1.5)
 
         scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
@@ -190,21 +189,12 @@ class Proof2(SlideBase):
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*1.4)
         scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof), MoveToTarget(self.commitment), FadeOut(bubble_opening))
-        
-        self.new_subsection(
-            scene, "pairings", "data/sound/e4/slide4-0.mp3")
-
-        scene.wait(4.5)
-        scene.play(FadeIn(self.definition2))
-        scene.wait(6.7)
-        scene.play(Indicate(self.definition2[1], color = SECONDARY_COLOR))
-        scene.wait(1.3)
-        scene.play(Indicate(self.definition2[3], color = SECONDARY_COLOR))
-
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
         scene.play(Write(self.verification))
-        scene.wait(2.8)
+        scene.play(Indicate(self.proof, color = SECONDARY_COLOR), Indicate(self.verification[1], color = SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), Indicate(self.verification[3], color = HIGHLIGHT_COLOR), run_time=1)
+        scene.play(Indicate(self.commitment, color = SECONDARY_COLOR), Indicate(self.verification[7], color = SECONDARY_COLOR), run_time=1)
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-3.mp3")
         scene.wait(1.5)
@@ -213,7 +203,7 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
         scene.wait(1.8)
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
-
+        scene.wait(1.5)
 
         self.new_subsection(scene, "how the prover knows LHS", "data/sound/e4/slide4-3a.mp3")
         scene.wait(1)
@@ -232,6 +222,7 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
 
         scene.play(Indicate(self.verification[11], color = SECONDARY_COLOR))
+        scene.wait(2)
 
         self.new_subsection(scene, "why the equation?", "data/sound/e4/slide4-4a.mp3")
 
@@ -250,9 +241,7 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
-        scene.wait(4)
-        scene.play(Indicate(self.equation, color = HIGHLIGHT_COLOR), Indicate(self.verification4, color = HIGHLIGHT_COLOR))
-        scene.wait(3)    
+        scene.wait(7)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.equation, self.verification4))
+        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.equation, self.verification4))
