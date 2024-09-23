@@ -160,7 +160,6 @@ class Proof1(SlideBase):
         self.chart.animate_shift_dots(scene, self.y.value)
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
-        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(FadeOut(line_z, line_tau, line_tau_y), run_time=0.3)
         scene.wait(1.8)
 
