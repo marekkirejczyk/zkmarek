@@ -2,7 +2,6 @@ from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, 
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.utils import load
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 
@@ -56,9 +55,9 @@ class Commitment(SlideBase):
         self.chart = DiscreetePolynomialChart(41, poly)
         self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
         self.chart.scale(0.4)
-        self.trusted_setup = MathTex(r"{{\tau^1}} {{\cdot G_1}} + {{\tau^2}} {{\cdot G_1}} + \cdots + {{\tau^n}} {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*1.5)
-        self.trusted_setup1 = MathTex(r"{{}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*1.5)
-        self.trusted_setup2 = MathTex(r"{{p(\tau)}} {{\cdot G_1}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*1.5)
+        self.trusted_setup = MathTex(r"{{\tau^1}} {{\cdot G_1}} + {{\tau^2}} {{\cdot G_1}} + \cdots + {{\tau^n}} {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
+        self.trusted_setup1 = MathTex(r"{{}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
+        self.trusted_setup2 = MathTex(r"{{p(\tau)}} {{\cdot G_1}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
 
 
     def animate_in(self, scene):
@@ -118,8 +117,8 @@ class Commitment(SlideBase):
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*1+UP*1)
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*1.2+UP*1)
+        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.85+UP*0.95)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.85+UP*0.95)
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
@@ -136,12 +135,12 @@ class Commitment(SlideBase):
         scene.wait(2)
         scene.play(FadeOut(bubble_opening))
         self.opening.generate_target()
-        self.opening.target.next_to(self.verifier_label, DOWN)
+        self.opening.target.next_to(self.verifier, UP)
         self.proof.generate_target()
-        self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN)
+        self.proof.target.next_to(self.verifier, UP).shift(UP)
         scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), FadeOut(self.circle_full), run_time=1.5)
         scene.wait(2.5)
-        self.arrow_check_opening = CurvedArrow(self.proof, self.opening)
+        self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left())
         self.thumb.next_to(self.arrow_check_opening, LEFT, buff=0)
         
 
@@ -161,12 +160,13 @@ class Commitment(SlideBase):
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2), run_time=0.5)
         scene.wait(0.5)
-        scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
         self.polynomial_enc = MathTex(r"{{}} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
+        scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
         scene.wait(2.5)
         scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
         self.chart.add_xaxis_label(self.tau.value, r"\tiny{\tau}")
+
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.polynomial_enc, self.commitment), run_time=1.5)

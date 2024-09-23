@@ -189,4 +189,4 @@ class Proof1(SlideBase):
 
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.proof, self.polynomial, self.equation, self.commiter, self.verifier, self.commitment, self.verifier_label, self.commiter_label))
+        scene.play(FadeOut(self.chart, self.polynomial, self.equation, self.opening7))
