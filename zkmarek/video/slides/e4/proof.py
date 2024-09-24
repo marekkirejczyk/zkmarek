@@ -98,13 +98,11 @@ class Proof1(SlideBase):
         self.y = poly(self.z)
 
     def animate_in(self, scene):
+        self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         self.chart.gen_points()
         scene.play(FadeIn(self.chart))
         scene.play(FadeIn(self.polynomial))
 
-
-        self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
-        scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
         self.chart.add_xaxis_label(self.z.value, r"x_0")
         scene.wait(1)
         line_z = self.chart.animate_create_vertical_line(
@@ -161,6 +159,7 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
         scene.wait(1.5)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(3)
 
         self.new_subsection(scene, "security", "data/sound/e4/slide3-7.mp3")
         scene.wait(0.5)
@@ -171,7 +170,7 @@ class Proof1(SlideBase):
 
         self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
         scene.play(FadeOut(self.opening7, self.opening))
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
+        self.chart2.add_xaxis_label(self.tau.value, r"\tau")
 
         self.new_subsection(scene, "contructing q via tau", "data/sound/e4/slide3-2.mp3")
         scene.wait(4)
