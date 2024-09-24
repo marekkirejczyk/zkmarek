@@ -13,7 +13,8 @@ from manim import (
     VGroup,
     ImageMobject,
     Text,
-    MoveToTarget,
+    GrowArrow,
+    Create,
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -53,6 +54,9 @@ class Proof1(SlideBase):
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y_0}}", color=PRIMARY_COLOR)
 
         self.equality_quotient = MathTex(r"{{q(\tau)}} \stackrel{?}{=} {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
+        self.equality_quotien1 = MathTex(r"q({{\tau}}) - p({{\tau}}) \stackrel{?}{=} 0", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2+DOWN*1.5)
+        self.equality_quotient2 = MathTex(r"q({{x}}) = {{a_n}}\cdot {{x^n}} + {{a_{n-1} \cdot x^{n-1}}} + \cdots + a_0 ", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2+DOWN*3)
+        self.arrow_indication = GrowArrow(self.equality_quotien1.get_bottom(), self.equality_quotient2.get_top(), color = PRIMARY_COLOR)
         self.commitment_quotient = MathTex(r"{{C}} = {{p(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
         self.commitment_quotient2 = MathTex(r"{{C}} \stackrel{?}{=} {{q(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
@@ -109,16 +113,36 @@ class Proof1(SlideBase):
 
         scene.play(Write(self.equality_quotient))
         scene.wait(1.5)
-        self.equality_quotient.generate_target()
-        self.equality_quotient.target.shift(UP*1.5)
-        scene.play(Write(self.commitment_quotient), MoveToTarget(self.equality_quotient))
         scene.wait(1)
-        scene.play(TransformMatchingShapes(VGroup(self.equality_quotient[0].copy(), self.commitment_quotient), self.commitment_quotient2))
         scene.wait(3.7)
 
         self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2a.mp3")
-        scene.play(FadeOut(self.commitment_quotient2), run_time=0.7)
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.equality_quotient.copy(), self.equality_quotien1))
         scene.wait(3.8)
+
+        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2b.mp3")
+        scene.wait(1)
+        scene.play(Indicate(self.equality_quotien1[1], color = HIGHLIGHT2_COLOR))
+        scene.play(Indicate(self.equality_quotien1[3], color = HIGHLIGHT2_COLOR))
+        scene.wait(2)
+        scene.play(Create(self.arrow_indication))
+        scene.play(Write(self.equality_quotient2))
+
+        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2c.mp3")
+        scene.wait(1)
+        scene.play(FadeOut(self.arrow_indication, self.equality_quotient2))
+        self.p_order = MathTex(r"p \approx 2^{256}", color = SECONDARY_COLOR).next_to(self.chart, RIGHT+DOWN)
+        self.arrow_p = GrowArrow(self.chart.get_bottom(), self.p_order.get_left(), color = SECONDARY_COLOR)
+        self.n_order = MathTex(r"n \approx 2^{28}", color = HIGHLIGHT_COLOR).next_to(self.equality_quotien1, DOWN).shift(DOWN)
+        self.arrow_n = GrowArrow(self.equality_quotien1.get_bottom(), self.n_order.get_top(), color = HIGHLIGHT_COLOR)
+        scene.play(Write(self.p_order), Create(self.arrow_p))
+        scene.wait(1)
+        scene.play(Write(self.n_order), Create(self.arrow_n))
+        scene.wait(4)
+        scene.play(FadeOut(self.arrow_n, self.arrow_p))
+        scene.wait(1)
+        scene.play(FadeOut(self.n_order, self.p_order))
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)

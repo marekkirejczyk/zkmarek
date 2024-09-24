@@ -139,10 +139,11 @@ class Commitment(SlideBase):
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP).shift(UP)
         scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), FadeOut(self.circle_full), run_time=1.5)
-        scene.wait(2.5)
+        scene.wait(0.5)
         self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left())
         self.thumb.next_to(self.arrow_check_opening, LEFT, buff=0)
         scene.play(FadeIn(self.thumb), Write(self.arrow_check_opening))
+        scene.wait(2.5)
         
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")

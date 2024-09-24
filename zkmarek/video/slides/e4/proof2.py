@@ -64,24 +64,24 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
 
         self.verification2 = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) \cdot G_2) ) = e({{p(\tau)\cdot G_1}} - y_0 \cdot G_1, G_2)",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification2a = MathTex(
-            r"e( {{q(\tau)\cdot G_1, (\tau-x_0) \cdot G_2) ) = e(}} {{p(\tau)\cdot G_1}} - y_0 \cdot G_1, G_2)",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) {{\cdot G_2}} ) = e( {{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color = PRIMARY_COLOR
         ).to_edge(DOWN)
         self.verification3 = MathTex(
-            r"e({{q(\tau)}} \cdot (\tau-x_0) {{\cdot G_1}}, G_2) = e({{[p(\tau) -y_0]\cdot G_1}}, G_2)",
+            r"e({{q(\tau)}} {{\cdot (\tau-x_0)}} {{\cdot G_1}}, G_2) = e({{[p(\tau) -y_0]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
-            r"q(\tau)\cdot (\tau-x_0) = p(\tau) -y_0",
+            r"{{q(\tau)}} {{\cdot (\tau-x_0)}} = {{p(\tau)}} -{{y_0}}",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
 
@@ -192,6 +192,7 @@ class Proof2(SlideBase):
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
         scene.play(Write(self.verification))
+        scene.wait(2.5)
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR), Indicate(self.verification[1], color = SECONDARY_COLOR), run_time=1)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), Indicate(self.verification[3], color = HIGHLIGHT_COLOR), run_time=1)
         scene.play(Indicate(self.commitment, color = SECONDARY_COLOR), Indicate(self.verification[7], color = SECONDARY_COLOR), run_time=1)
@@ -210,15 +211,17 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
         scene.wait(0.5)
         scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(2.5)
+        scene.wait(4.5)
 
         scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(2)
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR))
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
-        scene.wait(1.5)
+        scene.wait(2.5)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
+        scene.wait(0.8)
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
 
         scene.play(Indicate(self.verification[11], color = SECONDARY_COLOR))
@@ -231,12 +234,12 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingTex(VGroup(self.proof.copy(), self.verification), self.verification1), run_time=2)
         scene.wait(1)
         scene.play(TransformMatchingTex(VGroup(self.commitment.copy(), self.verification1), self.verification2), run_time=2)
-        
+        scene.wait(1.5)
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
         scene.play(TransformMatchingShapes(self.verification2, self.verification2a))
         scene.wait(2)
-        scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=0.05)
+        scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=0.8)
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification4))
 
