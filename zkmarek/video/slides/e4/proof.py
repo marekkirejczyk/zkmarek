@@ -13,7 +13,7 @@ from manim import (
     VGroup,
     ImageMobject,
     Text,
-    GrowArrow,
+    Arrow,
     Create,
 )
 
@@ -53,12 +53,11 @@ class Proof1(SlideBase):
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}({{\tau}} - {{z}}) = {{p(\tau)}} - {{y_0}}", color=PRIMARY_COLOR)
 
-        self.equality_quotient = MathTex(r"{{q(\tau)}} \stackrel{?}{=} {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
-        self.equality_quotien1 = MathTex(r"q({{\tau}}) - p({{\tau}}) \stackrel{?}{=} 0", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2+DOWN*1.5)
-        self.equality_quotient2 = MathTex(r"q({{x}}) = {{a_n}}\cdot {{x^n}} + {{a_{n-1} \cdot x^{n-1}}} + \cdots + a_0 ", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2+DOWN*3)
-        self.arrow_indication = GrowArrow(self.equality_quotien1.get_bottom(), self.equality_quotient2.get_top(), color = PRIMARY_COLOR)
+        self.equality_quotient = MathTex(r"{{f(\tau)}} \stackrel{?}{=} {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2+UP*2.5)
+        self.equality_quotien1 = MathTex(r"f({{\tau}}) - p({{\tau}}) \stackrel{?}{=} 0", color = SECONDARY_COLOR).next_to(self.equality_quotient, DOWN)
+        self.equality_quotient2 = MathTex(r"f({{x}}) = {{a_n}}\cdot {{x^n}} + {{a_{n-1} \cdot x^{n-1}}} + \cdots + a_0 ", color = SECONDARY_COLOR).next_to(self.equality_quotien1, DOWN).scale(0.5)
+        self.arrow_indication = Arrow(self.equality_quotien1.get_bottom(), self.equality_quotient2.get_top(), color = PRIMARY_COLOR)
         self.commitment_quotient = MathTex(r"{{C}} = {{p(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
-        self.commitment_quotient2 = MathTex(r"{{C}} \stackrel{?}{=} {{q(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
         self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y_0}}", color = PRIMARY_COLOR)
         self.opening2 = MathTex(r"{{p(x_0)}} {{- y_0}} = {{0}}", color = PRIMARY_COLOR)
@@ -132,10 +131,10 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2c.mp3")
         scene.wait(1)
         scene.play(FadeOut(self.arrow_indication, self.equality_quotient2))
-        self.p_order = MathTex(r"p \approx 2^{256}", color = SECONDARY_COLOR).next_to(self.chart, RIGHT+DOWN)
-        self.arrow_p = GrowArrow(self.chart.get_bottom(), self.p_order.get_left(), color = SECONDARY_COLOR)
+        self.p_order = MathTex(r"p \approx 2^{256}", color = SECONDARY_COLOR).next_to(self.chart, RIGHT+DOWN).shift(RIGHT)
+        self.arrow_p = Arrow(self.chart.get_bottom(), self.p_order.get_left(), color = SECONDARY_COLOR)
         self.n_order = MathTex(r"n \approx 2^{28}", color = HIGHLIGHT_COLOR).next_to(self.equality_quotien1, DOWN).shift(DOWN)
-        self.arrow_n = GrowArrow(self.equality_quotien1.get_bottom(), self.n_order.get_top(), color = HIGHLIGHT_COLOR)
+        self.arrow_n = Arrow(self.equality_quotien1.get_bottom(), self.n_order.get_top(), color = HIGHLIGHT_COLOR)
         scene.play(Write(self.p_order), Create(self.arrow_p))
         scene.wait(1)
         scene.play(Write(self.n_order), Create(self.arrow_n))
