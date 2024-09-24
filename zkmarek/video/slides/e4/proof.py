@@ -98,12 +98,10 @@ class Proof1(SlideBase):
         self.y = poly(self.z)
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
         self.chart.gen_points()
         scene.play(FadeIn(self.chart))
         scene.play(FadeIn(self.polynomial))
 
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
@@ -169,9 +167,11 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.chart.labels[0], color = HIGHLIGHT_COLOR))
 
         scene.play(TransformMatchingShapes(self.opening6, self.opening7), run_time=1.3)
-        scene.wait(3)
-        scene.play(FadeOut(self.opening7))
-        scene.wait(2)
+        scene.wait(3.8)
+
+        self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
+        scene.play(FadeOut(self.opening7, self.opening))
+        self.chart.add_xaxis_label(self.tau.value, r"\tau")
 
         self.new_subsection(scene, "contructing q via tau", "data/sound/e4/slide3-2.mp3")
         scene.wait(4)
@@ -191,10 +191,10 @@ class Proof1(SlideBase):
         scene.wait(3)
         scene.play(Indicate(self.equality_quotien1[1], color = HIGHLIGHT2_COLOR))
         scene.play(Indicate(self.equality_quotien1[3], color = HIGHLIGHT2_COLOR))
-        scene.wait(4)
+        scene.wait(1)
         scene.play(Create(self.arrow_indication))
         scene.play(Write(self.equality_quotient2))
-        scene.wait(4)
+        scene.wait(2.5)
         scene.play(Indicate(self.equality_quotient2[3], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.equality_quotient2[5], color = HIGHLIGHT_COLOR))
 
@@ -205,8 +205,9 @@ class Proof1(SlideBase):
         self.arrow_p = Arrow(self.chart.get_bottom(), self.p_order.get_left(), color = SECONDARY_COLOR)
         self.n_order = MathTex(r"n \approx 2^{28}", color = HIGHLIGHT_COLOR).next_to(self.equality_quotien1, DOWN).shift(DOWN)
         self.arrow_n = Arrow(self.equality_quotien1.get_bottom(), self.n_order.get_top(), color = HIGHLIGHT_COLOR)
-        scene.play(Write(self.p_order), Create(self.arrow_p))
         scene.wait(1)
+        scene.play(Write(self.p_order), Create(self.arrow_p))
+        scene.wait(2)
         scene.play(Write(self.n_order), Create(self.arrow_n))
         scene.wait(4)
         scene.play(FadeOut(self.arrow_n, self.arrow_p))

@@ -64,16 +64,16 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
 
         self.verification2 = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification2a = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, ({{\tau-x_0}}) {{\cdot G_2}} ) = e( {{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color = PRIMARY_COLOR
         ).to_edge(DOWN)
         self.verification3 = MathTex(
