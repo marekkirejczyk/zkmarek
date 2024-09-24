@@ -45,7 +45,7 @@ class Proof1(SlideBase):
     verification: MathTex
 
     def __init__(self):
-        super().__init__("Proof2")
+        super().__init__("Proof")
 
     def construct(self):
         self.chart = DiscreetePolynomialChart(41, poly)
@@ -214,4 +214,4 @@ class Proof1(SlideBase):
         scene.play(FadeOut(self.n_order, self.p_order))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.dots, self.chart.labels, self.chart.ax, self.polynomial, self.equality_quotien1))
+        scene.play(FadeOut(self.chart, self.polynomial, self.equality_quotien1))
