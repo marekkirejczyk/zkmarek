@@ -231,9 +231,9 @@ class Proof2(SlideBase):
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-5.mp3")
 
-        scene.play(TransformMatchingTex(VGroup(self.proof.copy(), self.verification), self.verification1), run_time=2)
+        scene.play(TransformMatchingTex(VGroup(self.commitment.copy(), self.verification), self.verification1), run_time=2)
         scene.wait(1)
-        scene.play(TransformMatchingTex(VGroup(self.commitment.copy(), self.verification1), self.verification2), run_time=2)
+        scene.play(TransformMatchingTex(VGroup(self.proof.copy(), self.verification1), self.verification2), run_time=2)
         scene.wait(1.5)
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-6.mp3")
