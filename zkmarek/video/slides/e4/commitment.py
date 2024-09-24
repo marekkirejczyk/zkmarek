@@ -24,7 +24,7 @@ class Commitment(SlideBase):
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
-        self.thumb = ImageMobject("data/images/Thumb_up.png")
+        self.thumb = ImageMobject("data/images/Thumb_up.png").scale(0.4)
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
             fill_color=PRIMARY_COLOR, fill_opacity=0.5
@@ -117,8 +117,8 @@ class Commitment(SlideBase):
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
+        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.78)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.78)
         scene.wait(1)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         scene.play(Create(self.circle))
@@ -140,7 +140,7 @@ class Commitment(SlideBase):
         self.proof.target.next_to(self.verifier, UP).shift(UP)
         scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), FadeOut(self.circle_full), run_time=1.5)
         scene.wait(0.5)
-        self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left())
+        self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left(), color = HIGHLIGHT_COLOR)
         self.thumb.next_to(self.arrow_check_opening, LEFT, buff=0)
         scene.play(FadeIn(self.thumb), Write(self.arrow_check_opening))
         scene.wait(2.5)

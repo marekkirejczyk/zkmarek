@@ -55,7 +55,7 @@ class Proof1(SlideBase):
 
         self.equality_quotient = MathTex(r"{{f(\tau)}} \stackrel{?}{=} {{p(\tau)}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2+UP*2.5)
         self.equality_quotien1 = MathTex(r"f({{\tau}}) - p({{\tau}}) \stackrel{?}{=} 0", color = SECONDARY_COLOR).next_to(self.equality_quotient, DOWN)
-        self.equality_quotient2 = MathTex(r"f({{x}}) = {{a_n}}\cdot {{x^n}} + {{a_{n-1} \cdot x^{n-1}}} + \cdots + a_0 ", color = SECONDARY_COLOR).next_to(self.equality_quotien1, DOWN).scale(0.5)
+        self.equality_quotient2 = MathTex(r"f({{x}}) = {{a_n}}\cdot {{x^n}} + {{a_{n-1} \cdot x^{n-1}}} + \cdots + a_0 ", color = SECONDARY_COLOR).next_to(self.equality_quotien1, DOWN).shift(DOWN).scale(0.6)
         self.arrow_indication = Arrow(self.equality_quotien1.get_bottom(), self.equality_quotient2.get_top(), color = PRIMARY_COLOR)
         self.commitment_quotient = MathTex(r"{{C}} = {{p(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
@@ -104,44 +104,6 @@ class Proof1(SlideBase):
         scene.play(FadeIn(self.polynomial))
 
         self.chart.add_xaxis_label(self.tau.value, r"\tau")
-
-        self.new_subsection(scene, "contructing q via tau", "data/sound/e4/slide3-2.mp3")
-        scene.wait(2)
-        self.chart2.gen_points2()
-        scene.play(FadeIn(self.chart2))
-
-        scene.play(Write(self.equality_quotient))
-        scene.wait(1.5)
-        scene.wait(1)
-        scene.wait(3.7)
-
-        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2a.mp3")
-        scene.wait(2)
-        scene.play(TransformMatchingShapes(self.equality_quotient.copy(), self.equality_quotien1))
-        scene.wait(3.8)
-
-        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2b.mp3")
-        scene.wait(1)
-        scene.play(Indicate(self.equality_quotien1[1], color = HIGHLIGHT2_COLOR))
-        scene.play(Indicate(self.equality_quotien1[3], color = HIGHLIGHT2_COLOR))
-        scene.wait(2)
-        scene.play(Create(self.arrow_indication))
-        scene.play(Write(self.equality_quotient2))
-
-        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2c.mp3")
-        scene.wait(1)
-        scene.play(FadeOut(self.arrow_indication, self.equality_quotient2))
-        self.p_order = MathTex(r"p \approx 2^{256}", color = SECONDARY_COLOR).next_to(self.chart, RIGHT+DOWN).shift(RIGHT)
-        self.arrow_p = Arrow(self.chart.get_bottom(), self.p_order.get_left(), color = SECONDARY_COLOR)
-        self.n_order = MathTex(r"n \approx 2^{28}", color = HIGHLIGHT_COLOR).next_to(self.equality_quotien1, DOWN).shift(DOWN)
-        self.arrow_n = Arrow(self.equality_quotien1.get_bottom(), self.n_order.get_top(), color = HIGHLIGHT_COLOR)
-        scene.play(Write(self.p_order), Create(self.arrow_p))
-        scene.wait(1)
-        scene.play(Write(self.n_order), Create(self.arrow_n))
-        scene.wait(4)
-        scene.play(FadeOut(self.arrow_n, self.arrow_p))
-        scene.wait(1)
-        scene.play(FadeOut(self.n_order, self.p_order))
 
         self.new_subsection(scene, "opening", "data/sound/e4/slide3-3.mp3")
         scene.play(FadeOut(self.chart2), Unwrite(self.equality_quotient), run_time=3)
@@ -208,7 +170,48 @@ class Proof1(SlideBase):
 
         scene.play(TransformMatchingShapes(self.opening6, self.opening7), run_time=1.3)
         scene.wait(3)
+        scene.play(FadeOut(self.opening7))
+        scene.wait(2)
 
+        self.new_subsection(scene, "contructing q via tau", "data/sound/e4/slide3-2.mp3")
+        scene.wait(4)
+        self.chart2.gen_points2()
+        scene.play(FadeIn(self.chart2))
+        scene.wait(1)
+        scene.play(Write(self.equality_quotient))
+
+        scene.wait(6.7)
+
+        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2a.mp3")
+        scene.wait(3.5)
+        scene.play(TransformMatchingShapes(self.equality_quotient.copy(), self.equality_quotien1))
+        scene.wait(7)
+
+        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2b.mp3")
+        scene.wait(3)
+        scene.play(Indicate(self.equality_quotien1[1], color = HIGHLIGHT2_COLOR))
+        scene.play(Indicate(self.equality_quotien1[3], color = HIGHLIGHT2_COLOR))
+        scene.wait(4)
+        scene.play(Create(self.arrow_indication))
+        scene.play(Write(self.equality_quotient2))
+        scene.wait(4)
+        scene.play(Indicate(self.equality_quotient2[3], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.equality_quotient2[5], color = HIGHLIGHT_COLOR))
+
+        self.new_subsection(scene, "possibility for attack", "data/sound/e4/slide3-2c.mp3")
+        scene.wait(1)
+        scene.play(FadeOut(self.arrow_indication, self.equality_quotient2))
+        self.p_order = MathTex(r"p \approx 2^{256}", color = SECONDARY_COLOR).next_to(self.chart, RIGHT+DOWN).shift(RIGHT)
+        self.arrow_p = Arrow(self.chart.get_bottom(), self.p_order.get_left(), color = SECONDARY_COLOR)
+        self.n_order = MathTex(r"n \approx 2^{28}", color = HIGHLIGHT_COLOR).next_to(self.equality_quotien1, DOWN).shift(DOWN)
+        self.arrow_n = Arrow(self.equality_quotien1.get_bottom(), self.n_order.get_top(), color = HIGHLIGHT_COLOR)
+        scene.play(Write(self.p_order), Create(self.arrow_p))
+        scene.wait(1)
+        scene.play(Write(self.n_order), Create(self.arrow_n))
+        scene.wait(4)
+        scene.play(FadeOut(self.arrow_n, self.arrow_p))
+        scene.wait(1)
+        scene.play(FadeOut(self.n_order, self.p_order))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.polynomial, self.opening7))
+        scene.play(FadeOut(self.chart.dots, self.chart.labels, self.chart.ax, self.polynomial, self.equality_quotien1))

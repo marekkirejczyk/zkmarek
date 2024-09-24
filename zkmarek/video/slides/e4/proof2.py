@@ -52,7 +52,7 @@ class Proof2(SlideBase):
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}\cdot {{(\tau - x_0)}} = {{p(\tau)}} - {{y_0}}", color=PRIMARY_COLOR)
         self.equation2 = MathTex(r"{{q(x)}}\cdot {{(x - x_0)}} = {{p(x)}} - {{y_0}}", color=PRIMARY_COLOR)
-        self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", font_size = 32, color=PRIMARY_COLOR)
+        self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", font_size = 32, color=SECONDARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
 
         self.verification = MathTex(
@@ -168,7 +168,7 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2d.mp3")
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
         self.proof = MathTex(r"\pi = q(\tau)\cdot G_1", font_size=32, color = SECONDARY_COLOR)
-        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, DOWN+RIGHT, buff = -0.3).shift(RIGHT*0.7)
+        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, DOWN+RIGHT, buff = -0.3).shift(RIGHT*0.7+DOWN*0.2)
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
@@ -247,4 +247,4 @@ class Proof2(SlideBase):
         scene.wait(7)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.equation, self.verification4))
+        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4))

@@ -165,7 +165,7 @@ class Polynomials(SlideBase):
         scene.play(Create(self.root3), run_time=0.4)
         scene.play(Indicate(self.root1, color = SECONDARY_COLOR), Indicate(self.root2, color = SECONDARY_COLOR), Indicate(self.root3, color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_roots))
-        scene.play(Indicate(self.root1.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.polynomial_roots[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[5], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.root1.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[1], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.polynomial_roots[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[5], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_roots[7], color = HIGHLIGHT_COLOR))
         scene.wait(1.1)
         scene.play(Indicate(self.root1.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.polynomial_roots[9], color = HIGHLIGHT_COLOR, scale_factor=2))
         scene.play(TransformMatchingShapes(self.polynomial_roots, self.polynomial2))
