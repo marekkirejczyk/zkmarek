@@ -63,6 +63,11 @@ class DiscreetePolynomialChart(VGroup):
         label.move_to(self.ax.coords_to_point(x, -2.5))
         self.add(label)
 
+    def add_yaxis_label(self, y, label):
+        label = MathTex(label, color=PRIMARY_COLOR)
+        label.move_to(self.ax.coords_to_point(-5.5, y))
+        self.add(label)
+
     def animate_create_vertical_line(self, scene, x, y_top):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, y_top)

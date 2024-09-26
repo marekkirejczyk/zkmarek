@@ -65,6 +65,7 @@ from zkmarek.video.slides.e4.polynomials import Polynomials
 from zkmarek.video.slides.e4.commitment import Commitment
 from zkmarek.video.slides.e4.e3_reference import Episode3Reference
 from zkmarek.video.slides.e4.credits import Credits as CreditsE4
+from zkmarek.video.slides.e4.security import Security
 
 
 config.width = 16
@@ -177,8 +178,10 @@ EPISODE4 = [
     TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3"),
     Proof1(),
     Proof2(),
-    Subscribe("data/sound/episode1/s28.wav"),
-    CreditsE4(),
+    TitleSlide("Security", sound = "data/sound/e4/slide5-0.mp3", wait_time=2),
+    Security(),
+    # Subscribe("data/sound/episode1/s28.wav"),
+    # CreditsE4(),
 ]
 
 EPISODE5 = [
