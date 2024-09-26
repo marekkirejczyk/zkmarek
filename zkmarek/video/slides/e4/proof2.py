@@ -18,6 +18,7 @@ from manim import (
     MoveToTarget,
     Tex,
     RoundedRectangle,
+    Arrow,
 )
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
@@ -56,7 +57,7 @@ class Proof2(SlideBase):
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
 
         self.verification = MathTex(
-            r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}}) ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification0a = MathTex(
@@ -80,6 +81,10 @@ class Proof2(SlideBase):
             r"e({{q(\tau)}} {{\cdot (\tau-x_0)}} {{\cdot G_1}}, G_2) = e({{[p(\tau) -y_0]\cdot G_1}}, G_2)",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
+        self.verification3a = MathTex(
+            r"{{e(}} {{q(\tau)}} {{ \cdot (\tau-x_0)}} {{\cdot G_1 , G_2)}} = {{e(}} {{p(\tau)}} -{{y_0}} {{\cdot G_1, G_2)}}",
+            color=PRIMARY_COLOR,
+        ).to_edge(DOWN)
         self.verification4 = MathTex(
             r"{{q(\tau)}} {{\cdot (\tau-x_0)}} = {{p(\tau)}} -{{y_0}}",
             color=PRIMARY_COLOR,
@@ -101,6 +106,7 @@ class Proof2(SlideBase):
         self.verification2.to_edge(DOWN).shift(UP*0.5)
         self.verification2a.to_edge(DOWN).shift(UP*0.5)
         self.verification3.to_edge(DOWN).shift(UP*0.5)
+        self.verification3a.to_edge(DOWN).shift(UP*0.5)
         self.verification4.to_edge(DOWN).shift(UP*0.5)
         self.chart.next_to(self.commiter_label, DOWN, buff = -1).scale(0.4)
         self.envelope_body_closed = Polygon(
@@ -127,6 +133,12 @@ class Proof2(SlideBase):
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
+
+        self.final_verification = MathTex(r"{{p(x_0)}} = {{y_0}} {{}}", color = PRIMARY_COLOR).shift(UP*2)
+        self.final_verification2 = MathTex(r"{{p(x_0)}} - {{y_0}} = {{0}} {{}}", color = PRIMARY_COLOR).shift(UP*0.8)
+        self.final_verification3 = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} {{q(x)}}", color = PRIMARY_COLOR).shift(0.4*DOWN)
+        self.final_verification4 = MathTex(r"{{q(x)}} {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR).shift(0.4*DOWN)
+        self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = PRIMARY_COLOR)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2a.mp3")
@@ -167,14 +179,16 @@ class Proof2(SlideBase):
 
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2d.mp3")
         scene.play(FadeOut(bubble_verifier, speech_text_verifier))
-        self.proof = MathTex(r"\pi = q(\tau)\cdot G_1", font_size=32, color = PRIMARY_COLOR)
+        self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, RIGHT, buff = -0.3).shift(RIGHT*0.7)
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Create(bubble_opening))
         scene.play(FadeIn(self.opening, self.proof))
-        scene.wait(2)
+        scene.wait(1.5)
+        scene.play(Indicate(self.proof[0], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
         scene.play(FadeOut(self.lock, self.envelope_body_closed, self.envelope_flap_closed))
         self.chart.generate_target()
         self.chart.target.scale(0.6).shift(UP*0.7)
@@ -219,7 +233,7 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
-        scene.wait(2.5)
+        scene.wait(5)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.wait(0.8)
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
@@ -241,13 +255,28 @@ class Proof2(SlideBase):
         scene.wait(2)
         scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=0.8)
         scene.wait(2)
-        scene.play(TransformMatchingShapes(self.verification3, self.verification4))
+        scene.play(TransformMatchingShapes(self.verification3, self.verification3a))
+        scene.wait(1.5)
+        scene.play(TransformMatchingShapes(self.verification3a, self.verification4))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
-        scene.wait(7)
+        scene.wait(2)
+        scene.play(Write(self.final_verification))
+        scene.wait(1.7)
+        scene.play(TransformMatchingShapes(self.final_verification.copy(), self.final_verification2))
+        scene.wait(2.9)
+        scene.play(Write(self.final_verification3))
+        scene.wait(1)
+        scene.play(Indicate(self.final_verification3[6], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.final_verification3[5], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
-        
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.final_verification3, self.final_verification4))
+        scene.wait(2)
+        scene.play(Create(self.arrow))
+        scene.wait(4)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4))
+        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4, self.final_verification4, self.arrow, self.final_verification, self.final_verification2))

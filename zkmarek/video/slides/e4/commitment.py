@@ -99,7 +99,7 @@ class Commitment(SlideBase):
         self.lock_copy.generate_target()
         self.lock_copy.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.lock_copy), run_time=2)
+        scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), FadeOut(self.envelope_body_closed), MoveToTarget(self.lock_copy), run_time=2)
 
         self.new_subsection(scene, "cant open it", "data/sound/e4/slide2-2.mp3")
 
@@ -126,7 +126,8 @@ class Commitment(SlideBase):
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
         scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
-        scene.play(Transform(self.envelope_flap_closed, self.envelope_flap), FadeIn(self.envelope_flap), FadeOut(self.envelope_flap_closed, self.lock_copy))
+        self.lock_open = ImageMobject("data/images/Lock_Open.png").scale(0.2).move_to(self.envelope_body_closed.get_center())
+        scene.play(Transform(self.lock_copy, self.lock_open))
         scene.wait(2)
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
@@ -157,11 +158,11 @@ class Commitment(SlideBase):
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
         scene.play(Write(self.trusted_setup), run_time=0.5)
-        scene.wait(0.7)
-        scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1), run_time=0.8)
-        scene.wait(0.8)
-        scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2), run_time=0.8)
         scene.wait(1)
+        scene.play(TransformMatchingShapes(self.trusted_setup, self.trusted_setup1), run_time=1)
+        scene.wait(1.2)
+        scene.play(TransformMatchingShapes(self.trusted_setup1, self.trusted_setup2), run_time=1.2)
+        scene.wait(1.5)
         self.polynomial_enc = MathTex(r"{{}} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
@@ -201,9 +202,9 @@ class Commitment(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center()).scale(0.7)
 
-        scene.play(TransformMatchingShapes(self.envelope_flap_closed, self.envelope_flap), MoveToTarget(self.commitment))
+        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap), MoveToTarget(self.commitment))
         scene.wait(1)
-        scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed))
+        scene.play(FadeOut(self.envelope_flap), FadeIn(self.envelope_flap_closed))
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
         commitment_sent.target.shift(9.5*RIGHT+DOWN)

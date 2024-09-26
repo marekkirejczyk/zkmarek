@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Unwrite
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Unwrite, FadeIn, FadeOut
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
@@ -89,6 +89,11 @@ class DiscreetePolynomialChart(VGroup):
                 a = d.animate.move_to(self.ax.c2p(x.value, yy))
                 animations.append(a)
             elif yy < 0:
-                a = d.animate.move_to(self.ax.c2p(x.value, yy % 41))
-            animations.append(a)
+                fade_out = FadeOut(d)  
+                move_dot = d.move_to(self.ax.c2p(x.value, yy % self.p)) 
+                fade_in = FadeIn(d) 
+
+                animations.append(fade_out)
+                animations.append(move_dot)
+                animations.append(fade_in)
         scene.play(*animations)

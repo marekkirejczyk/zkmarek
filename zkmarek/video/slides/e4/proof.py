@@ -13,7 +13,6 @@ from manim import (
     ImageMobject,
     Text,
     Arrow,
-    Create,
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -65,7 +64,7 @@ class Proof1(SlideBase):
         self.opening4 = MathTex(r"{{p(x_0)}} {{- y_0}} = {{r(x_0)}} {{=0}}", color = PRIMARY_COLOR)
         self.opening5 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} {{(...)}}", color = PRIMARY_COLOR)
         self.opening6 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} \cdot {{ q(x)}}", color = PRIMARY_COLOR)
-        self.opening7 = MathTex(r"\frac{p(x)- y_0}{x-x_0} = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
+        self.opening7 = MathTex(r"\frac{  {{p(x)}} {{- y_0}} }{ {{(x-x_0)}} } = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
 
         self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
         self.commiter = ImageMobject("data/images/person_blue.png").to_corner(LEFT+UP).scale(0.6).shift(RIGHT)
@@ -112,9 +111,7 @@ class Proof1(SlideBase):
         self.chart.add(line_z)
         scene.wait(1)
         scene.play(Write(self.opening))
-        scene.wait(1)
-        scene.play(FadeOut(self.equality_quotient), run_time=1)
-        scene.wait(0.5)
+        scene.wait(2.5)
         scene.play(TransformMatchingShapes(self.opening.copy(), self.opening2), run_time=1.5)
 
         self.new_subsection(scene, "p(x)-y as polynomial", "data/sound/e4/slide3-4.mp3")
@@ -148,9 +145,13 @@ class Proof1(SlideBase):
 
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
-        scene.play(TransformMatchingShapes(self.opening3, self.opening5), run_time=1.5)
-        scene.wait(0.2)
-        scene.play(Indicate(self.opening5[6], color = HIGHLIGHT_COLOR))
+        scene.play(TransformMatchingShapes(self.opening3, self.opening4), run_time=1.7)
+        scene.play(Indicate(self.opening4[4], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.opening4[5], color = HIGHLIGHT_COLOR))
+
+        scene.play(TransformMatchingShapes(self.opening4, self.opening5), run_time=1.5)
+        scene.wait(2.2)
+        scene.play(Indicate(self.opening5[5], color = HIGHLIGHT_COLOR))
         scene.wait(2.5)
 
         self.new_subsection(scene, "divisability will prove opening", "data/sound/e4/slide3-6.mp3")
@@ -167,11 +168,14 @@ class Proof1(SlideBase):
         scene.wait(0.5)
         scene.play(Indicate(self.chart.labels[0], color = HIGHLIGHT_COLOR))
 
-        scene.wait(4.5)
+        scene.wait(2.5)
+        scene.play(TransformMatchingShapes(self.opening6, self.opening7))
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.wait(2)
+        scene.play(TransformMatchingShapes(self.opening7, self.opening6))
         scene.play(Indicate(self.opening6[6], color = HIGHLIGHT_COLOR))
+        scene.wait(4.5)
 
         # self.new_subsection(scene, "challange - secret tau", "data/sound/e4/slide3-1.mp3")
         # scene.play(FadeOut(self.opening7, self.opening))
@@ -219,4 +223,4 @@ class Proof1(SlideBase):
         # scene.play(FadeOut(self.n_order, self.p_order))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.r_of_x, self.equality_quotien1))
+        scene.play(FadeOut(self.chart, self.r_of_x, self.opening6))
