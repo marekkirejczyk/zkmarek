@@ -81,7 +81,6 @@ class DiscreetePolynomialChart(VGroup):
         line = Line(s, e, color=SECONDARY_COLOR, z_index=0)
         scene.play(GrowFromPoint(line, point=s))
         scene.wait(1)
-        scene.play(Unwrite(line))
         return line
     
     def animate_shift_dots(self, scene, y_shift):

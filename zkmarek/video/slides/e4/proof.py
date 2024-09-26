@@ -82,7 +82,7 @@ class Proof1(SlideBase):
         self.chart.to_edge(LEFT).scale(0.8).shift(UP*0.5)
         self.chart2.to_edge(LEFT).scale(0.8).shift(UP*0.5)
         self.polynomial.to_edge(DOWN + LEFT).scale(0.8).shift(RIGHT)
-        self.r_of_x.to_edge(DOWN + LEFT).scale(0.8).shift(RIGHT)
+        self.r_of_x.to_edge(DOWN + LEFT).scale(0.8).shift(RIGHT*2.3)
         self.opening.to_edge(RIGHT).shift(LEFT*2+UP*2)
         self.equation.next_to(self.opening, DOWN)
         self.opening2.next_to(self.opening, DOWN)
@@ -160,9 +160,9 @@ class Proof1(SlideBase):
 
         scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
-        scene.wait(1.5)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(3)
+
+        scene.wait(4.2)
 
         self.new_subsection(scene, "and this is quotient", "data/sound/e4/slide3-7.mp3")
         scene.wait(0.5)
@@ -178,4 +178,4 @@ class Proof1(SlideBase):
         scene.wait(4.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.r_of_x, self.opening6))
+        scene.play(FadeOut(self.chart, self.r_of_x, self.opening6, self.opening))

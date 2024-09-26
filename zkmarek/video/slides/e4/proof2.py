@@ -135,9 +135,9 @@ class Proof2(SlideBase):
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
 
         self.final_verification = MathTex(r"{{p(x_0)}} = {{y_0}} {{}}", color = PRIMARY_COLOR).shift(UP*2)
-        self.final_verification2 = MathTex(r"{{p(x_0)}} - {{y_0}} = {{0}} {{}}", color = PRIMARY_COLOR).shift(UP*0.8)
-        self.final_verification3 = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} {{q(x)}}", color = PRIMARY_COLOR).shift(0.4*DOWN)
-        self.final_verification4 = MathTex(r"{{q(x)}} {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR).shift(0.4*DOWN)
+        self.final_verification2 = MathTex(r"{{p(x_0)}} - {{y_0}} = {{0}} {{}}", color = PRIMARY_COLOR).shift(UP*1)
+        self.final_verification3 = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} \cdot {{q(x)}}", color = PRIMARY_COLOR)
+        self.final_verification4 = MathTex(r"{{q(x)}} \cdot {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR)
         self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = PRIMARY_COLOR)
 
     def animate_in(self, scene):
@@ -233,7 +233,7 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
-        scene.wait(5)
+        scene.wait(6)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.wait(0.8)
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
@@ -267,16 +267,18 @@ class Proof2(SlideBase):
         scene.wait(2.9)
         scene.play(Write(self.final_verification3))
         scene.wait(1)
-        scene.play(Indicate(self.final_verification3[6], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.final_verification3[5], color = HIGHLIGHT_COLOR))
+
         scene.play(Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
 
-        self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
+        self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-8.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.final_verification3, self.final_verification4))
         scene.wait(2)
         scene.play(Create(self.arrow))
-        scene.wait(4)
+        scene.wait(3.5)
+        scene.play(Indicate(self.final_verification4[1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[1], color = HIGHLIGHT_COLOR))
+
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4, self.final_verification4, self.arrow, self.final_verification, self.final_verification2))

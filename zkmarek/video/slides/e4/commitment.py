@@ -1,4 +1,4 @@
-from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, Transform, MathTex, Circle, Indicate, Group, CurvedArrow
+from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, ReplacementTransform, MathTex, Circle, Indicate, Group, CurvedArrow
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -54,6 +54,7 @@ class Commitment(SlideBase):
         self.value_at_tau = poly(self.tau)
         self.chart = DiscreetePolynomialChart(41, poly)
         self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
+        self.chart.add_xaxis_label(self.tau.value, r"\tau")
         self.chart.scale(0.4)
         self.trusted_setup = MathTex(r"{{\tau^1}} {{\cdot G_1}} + {{\tau^2}} {{\cdot G_1}} + \cdots + {{\tau^n}} {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
         self.trusted_setup1 = MathTex(r"{{}} \left[ {{\tau^1}} + {{\tau^2}}  + \cdots + {{\tau^n}} \right] {{\cdot G_1}}", color = SECONDARY_COLOR).shift(DOWN*2.5)
@@ -99,7 +100,7 @@ class Commitment(SlideBase):
         self.lock_copy.generate_target()
         self.lock_copy.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), FadeOut(self.envelope_body_closed), MoveToTarget(self.lock_copy), run_time=2)
+        scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), FadeOut(self.envelope_flap), MoveToTarget(self.lock_copy), run_time=2)
 
         self.new_subsection(scene, "cant open it", "data/sound/e4/slide2-2.mp3")
 
@@ -127,7 +128,7 @@ class Commitment(SlideBase):
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
         scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
         self.lock_open = ImageMobject("data/images/Lock_Open.png").scale(0.2).move_to(self.envelope_body_closed.get_center())
-        scene.play(Transform(self.lock_copy, self.lock_open))
+        scene.play(ReplacementTransform(self.lock_copy, self.lock_open))
         scene.wait(2)
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
@@ -148,7 +149,7 @@ class Commitment(SlideBase):
         
 
         self.new_subsection(scene, "once again", "data/sound/e4/slide2-4.mp3")
-        scene.play(FadeOut(self.envelope_flap, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb))
+        scene.play(FadeOut(self.envelope_flap_closed, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb, self.lock_open))
         self.title_text_kzg = Text("KZG", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
         scene.play(TransformMatchingShapes(self.title_text, self.title_text_kzg))
         scene.wait(2.7)
@@ -168,7 +169,6 @@ class Commitment(SlideBase):
         scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
         scene.wait(1.5)
         scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
-        self.chart.add_xaxis_label(self.tau.value, r"\tiny{\tau}")
 
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
         scene.wait(1)

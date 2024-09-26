@@ -1,11 +1,11 @@
-from manim import FadeIn, FadeOut, MathTex, Arrow, Text, LEFT, DOWN, UP, RIGHT, Write, Create, MoveToTarget
+from manim import FadeIn, FadeOut, MathTex, Arrow, Text, LEFT, DOWN, UP, RIGHT, Write, Create, MoveToTarget, Brace
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import (
     DiscreetePolynomialChart,
 )
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7
 
@@ -40,20 +40,11 @@ class Security(SlideBase):
         scene.play(Write(self.title_text))
         self.chart.gen_points()
         scene.play(Create(self.chart))
-        line_z = self.chart.animate_create_vertical_line(
-            scene, self.z.value, self.y.value
-        )
-
-        scene.play(FadeIn(line_z))
-        self.chart.add_xaxis_label(self.z.value, r"x_0")
-        scene.wait(2)
-        scene.play(Write(self.fake_opening), Write(self.correct_opening))
-        scene.wait()
-        scene.play(Create(self.arrow_fake), FadeIn(self.fake_text))
-        scene.play(Create(self.arrow_correct), FadeIn(self.correct_text))
-        scene.wait()
         self.chart.add_yaxis_label(self.y.value, r"y_0")
         self.chart.add_yaxis_label(self.fake_y.value, r"y_1")
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
+        line_z = self.chart.animate_create_vertical_line(
+            scene, self.z.value, self.y.value)
         line_fake_y = self.chart.animate_create_horizontal_line(
             scene, self.fake_y.value, 0, self.fake_z.value
         )
@@ -62,27 +53,40 @@ class Security(SlideBase):
         )
         scene.play(FadeIn(line_correct_y))
         scene.play(FadeIn(line_fake_y))
+
+        scene.play(Write(self.fake_opening), Write(self.correct_opening))
+        scene.play(Create(self.arrow_fake), FadeIn(self.fake_text))
+        scene.play(Create(self.arrow_correct), FadeIn(self.correct_text))
+
+        self.new_subsection(scene, "this only works for correct opening", "data/sound/e4/slide5-2.mp3")
         self.fake_opening.generate_target()
-        self.fake_opening.target.shift(1.5*RIGHT+DOWN*1.7)
+        self.fake_opening.target.shift(1.5*RIGHT)
         self.correct_opening.generate_target()
         self.correct_opening.target.shift(UP*0.1+1.5*RIGHT)
         scene.play(FadeOut(self.fake_text, self.correct_text, self.arrow_correct, self.arrow_fake))
-
-        self.new_subsection(scene, "this only works for correct opening", "data/sound/e4/slide5-2.mp3")
         scene.play(MoveToTarget(self.correct_opening), MoveToTarget(self.fake_opening))
         scene.wait()
         self.division_correct.next_to(self.correct_opening, DOWN)
+        scene.play(Write(self.division_correct))
+
+
+        self.new_subsection(scene, "fake division", "data/sound/e4/slide5-3.mp3")
         self.division_fake.next_to(self.fake_opening, DOWN)
-        scene.play(Write(self.division_correct), Write(self.division_fake))
+        scene.play(Write(self.division_fake))
+        scene.wait(1)
+        self.remainder_brace = Brace(self.division_fake[7], DOWN, color = PRIMARY_COLOR)
+        self.brace_label = Text(r"remainder", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.remainder_brace.put_at_tip(self.brace_label)
 
-        scene.play(FadeOut(line_z))
+        scene.play(FadeIn(self.remainder_brace))
+        scene.play(FadeIn(self.brace_label))
 
-        self.new_subsection(scene, "SDH assumption", "data/sound/e4/slide5-3.mp3")
-        scene.play(FadeOut(self.fake_opening, self.division_correct, self.division_fake, self.correct_opening))
+        self.new_subsection(scene, "SDH assumption", "data/sound/e4/slide5-4.mp3")
+        scene.play(FadeOut(self.fake_opening, self.division_correct, self.division_fake, self.correct_opening, self.brace_label, self.remainder_brace))
         scene.wait(1)
         scene.play(Write(self.sdh))
         scene.wait(6)
 
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_text, self.chart))
+        scene.play(FadeOut(self.title_text, self.chart, self.sdh))

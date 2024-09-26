@@ -169,7 +169,9 @@ EPISODE3 = [
     CreditsE3(),
 ]
 
-EPISODE4 = [
+EPISODE4 = [    
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
+    Sponsored(),
     Episode3Reference(),
     TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=1.5),
     Polynomials(),
@@ -180,8 +182,8 @@ EPISODE4 = [
     Proof2(),
     TitleSlide("Security", sound = "data/sound/e4/slide5-0.mp3", wait_time=2),
     Security(),
-    # Subscribe("data/sound/episode1/s28.wav"),
-    # CreditsE4(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    CreditsE4(),
 ]
 
 EPISODE5 = [
