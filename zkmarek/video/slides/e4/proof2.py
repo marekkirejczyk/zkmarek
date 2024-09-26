@@ -246,5 +246,8 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
         scene.wait(7)
 
+        self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
+        
+
     def animate_out(self, scene):
         scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4))
