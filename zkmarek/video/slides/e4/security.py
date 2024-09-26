@@ -5,7 +5,7 @@ from zkmarek.video.slides.e4.discreete_polynomial_chart import (
     DiscreetePolynomialChart,
 )
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7
 
@@ -53,6 +53,7 @@ class Security(SlideBase):
         )
         scene.play(FadeIn(line_correct_y))
         scene.play(FadeIn(line_fake_y))
+        scene.play(FadeIn(line_z))
 
         scene.play(Write(self.fake_opening), Write(self.correct_opening))
         scene.play(Create(self.arrow_fake), FadeIn(self.fake_text))
