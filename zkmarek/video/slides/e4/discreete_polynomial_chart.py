@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Unwrite, FadeIn, FadeOut
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Unwrite
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
@@ -88,12 +88,32 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 a = d.animate.move_to(self.ax.c2p(x.value, yy))
                 animations.append(a)
-            elif yy < 0:
-                fade_out = FadeOut(d)  
-                move_dot = d.move_to(self.ax.c2p(x.value, yy % self.p)) 
-                fade_in = FadeIn(d) 
-
-                animations.append(fade_out)
-                animations.append(move_dot)
-                animations.append(fade_in)
         scene.play(*animations)
+
+    def animate_shift_dots_wrap_fix(self, scene, y_shift):
+        animations = []
+        for i, d in enumerate(self.dots):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            yy = y.value - y_shift
+            if yy < 0:
+                a = d.animate.move_to(self.ax.c2p(x.value, yy % 41))
+            animations.append(a)
+        scene.play(*animations)
+
+    def animate_shift_dots_with_fade(self, scene, y_shift):
+        animations = []
+        for i, d in enumerate(self.dots):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            yy = y.value - y_shift
+            if yy >= 0:
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
+            else:
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)).set_opacity(0.2))
+    
+        scene.play(*animations)
+
+        for d in self.dots:
+            if d.get_fill_opacity() < 1:
+                d.set_fill(opacity=1)

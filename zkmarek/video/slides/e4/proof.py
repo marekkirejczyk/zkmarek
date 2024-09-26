@@ -64,7 +64,7 @@ class Proof1(SlideBase):
         self.opening4 = MathTex(r"{{p(x_0)}} {{- y_0}} = {{r(x_0)}} {{=0}}", color = PRIMARY_COLOR)
         self.opening5 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} {{(...)}}", color = PRIMARY_COLOR)
         self.opening6 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} \cdot {{ q(x)}}", color = PRIMARY_COLOR)
-        self.opening7 = MathTex(r"\frac{  {{p(x)}} {{- y_0}} }{ {{(x-x_0)}} } = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
+        self.opening7 = MathTex(r"\frac{  p(x) - y_0 }{ (x-x_0) } = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
 
         self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
         self.commiter = ImageMobject("data/images/person_blue.png").to_corner(LEFT+UP).scale(0.6).shift(RIGHT)
@@ -136,7 +136,7 @@ class Proof1(SlideBase):
         scene.play(Indicate(dots, color=HIGHLIGHT2_COLOR, scale=1.05))
         scene.wait(2)
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
-        self.chart.animate_shift_dots(scene, self.y.value)
+        self.chart.animate_shift_dots_with_fade(scene, self.y.value)
         scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
