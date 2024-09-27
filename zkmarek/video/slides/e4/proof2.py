@@ -170,17 +170,17 @@ class Proof2(SlideBase):
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
         self.new_subsection(scene, "verfier", "data/sound/e4/slide4-2c.mp3")
-        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = PRIMARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = PRIMARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(0.9*LEFT+DOWN*0.5)
+        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
         tail_verifier = Polygon(
-            [0.2, 0, 0], 
-            [-0.5, -0.73, 0], 
-            [0.78, -1.1, 0], 
+            [0, 0, 0], 
+            [0, -0.9, 0], 
+            [0.78, 0.1, 0], 
             color=SECONDARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4)
+        ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4).shift(0.55*RIGHT)
 
         scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
@@ -188,19 +188,19 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2d.mp3")
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size=32, color = PRIMARY_COLOR)
-        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, RIGHT, buff = -0.3).shift(RIGHT*0.7)
+        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, RIGHT, buff = -0.3).shift(RIGHT*0.7+DOWN*0.5)
         tail = Polygon(
             [0, 0.03, 0], 
-            [-0.5, -0.2, 0], 
+            [-0.9, 0.2, 0], 
             [0, -1, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_opening, LEFT, buff=-0.8).scale(0.4)
+        ).next_to(bubble_opening, LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.55)
 
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.play(Create(bubble_opening, tail))
+        scene.play(Create(bubble_opening), Create(tail))
         scene.play(FadeIn(self.opening, self.proof))
         scene.wait(1.5)
         scene.play(Indicate(self.proof[0], color = HIGHLIGHT_COLOR))
@@ -224,7 +224,7 @@ class Proof2(SlideBase):
         scene.play(Write(self.verification))
         scene.wait(2.5)
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR), Indicate(self.verification[1], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), Indicate(self.verification[3], color = HIGHLIGHT_COLOR), run_time=1)
+        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), Indicate(self.verification[9], color = HIGHLIGHT_COLOR), Indicate(self.verification[3], color = HIGHLIGHT_COLOR), run_time=1)
         scene.play(Indicate(self.commitment, color = SECONDARY_COLOR), Indicate(self.verification[7], color = SECONDARY_COLOR), run_time=1)
 
         self.new_subsection(scene, "LHS", "data/sound/e4/slide4-3.mp3")
@@ -269,7 +269,7 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "bilinear", "data/sound/e4/slide4-6.mp3")
         scene.play(TransformMatchingShapes(self.verification2, self.verification2a))
         scene.wait(2)
-        scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=0.8)
+        scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=1.8)
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification3a))
         scene.wait(1.5)
