@@ -172,10 +172,9 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
-        scene.wait(2)
         scene.play(TransformMatchingShapes(self.opening7, self.opening6))
         scene.play(Indicate(self.opening6[6], color = HIGHLIGHT_COLOR))
-        scene.wait(4.5)
+        scene.wait(6.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart, self.r_of_x, self.opening6, self.opening))

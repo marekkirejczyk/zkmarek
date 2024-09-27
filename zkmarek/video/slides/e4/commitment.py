@@ -68,9 +68,17 @@ class Commitment(SlideBase):
         scene.play(Write(self.commiter_label))
 
         bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
-        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = SECONDARY_COLOR)
-        self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = SECONDARY_COLOR)
+        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
+        self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
+        tail = Polygon(
+            [0, 0, 0], 
+            [-0.5, -1, 0], 
+            [0.78, -0.94, 0], 
+            color=PRIMARY_COLOR,
+            fill_opacity=0.4
+        ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.10+DOWN*0.2)
+
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
@@ -87,10 +95,17 @@ class Commitment(SlideBase):
         scene.wait(1.5)
 
         self.new_subsection(scene, "commitment locked", "data/sound/e4/slide2-1.mp3")
-        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = PRIMARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = PRIMARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN)
+        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN+LEFT*0.3)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
+        tail_verifier = Polygon(
+            [0.2, 0, 0], 
+            [-0.5, -0.75, 0], 
+            [0.78, -1.1, 0], 
+            color=SECONDARY_COLOR,
+            fill_opacity=0.4
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.10+DOWN*0.2)
 
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
@@ -112,7 +127,7 @@ class Commitment(SlideBase):
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
-        scene.play(Create(bubble_verifier))
+        scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
 
         self.x0 = FieldElement(13, 41)
@@ -121,12 +136,12 @@ class Commitment(SlideBase):
         self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.78)
         self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.78)
         scene.wait(1)
-        scene.play(FadeOut(bubble_verifier, speech_text_verifier))
+        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
-        scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
+        scene.play(FadeIn(self.opening, bubble_opening, tail), MoveToTarget(self.circle_full))
         self.lock_open = ImageMobject("data/images/Lock_Open.png").scale(0.2).move_to(self.envelope_body_closed.get_center())
         scene.play(ReplacementTransform(self.lock_copy, self.lock_open))
         scene.wait(2)
@@ -135,7 +150,7 @@ class Commitment(SlideBase):
         scene.wait(1.5)
         scene.play(Write(self.proof))
         scene.wait(2)
-        scene.play(FadeOut(bubble_opening))
+        scene.play(FadeOut(bubble_opening, tail))
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP)
         self.proof.generate_target()
@@ -214,16 +229,16 @@ class Commitment(SlideBase):
 
         self.new_subsection(scene, "opening the commitment", "data/sound/e4/slide2-7.mp3")
 
-        scene.play(Create(bubble_verifier))
+        scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
         self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
         scene.wait(1)
-        scene.play(FadeOut(bubble_verifier, speech_text_verifier))
+        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
-        scene.play(FadeIn(self.opening, bubble_opening), MoveToTarget(self.circle_full))
+        scene.play(FadeIn(self.opening, bubble_opening, tail), MoveToTarget(self.circle_full))
         scene.wait(0.5)
         scene.play(Indicate(self.opening[4], color = HIGHLIGHT2_COLOR), run_time=1)
 
@@ -232,7 +247,7 @@ class Commitment(SlideBase):
         scene.wait(2)
         scene.play(Write(self.proof), run_time=0.5)
         scene.wait(3)
-        scene.play(FadeOut(bubble_committer, bubble_opening))
+        scene.play(FadeOut(bubble_committer, bubble_opening, tail))
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commiter, self.circle_full, self.title_text_kzg, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
