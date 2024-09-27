@@ -72,9 +72,9 @@ class Commitment(SlideBase):
         self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
-            [0, 0, 0], 
+            [0, 0.03, 0], 
             [-0.5, -1, 0], 
-            [0.78, -0.94, 0], 
+            [0.8, -0.9, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.10+DOWN*0.2)
@@ -101,7 +101,7 @@ class Commitment(SlideBase):
         speech_text_verifier.move_to(bubble_verifier.get_center())
         tail_verifier = Polygon(
             [0.2, 0, 0], 
-            [-0.5, -0.75, 0], 
+            [-0.5, -0.73, 0], 
             [0.78, -1.1, 0], 
             color=SECONDARY_COLOR,
             fill_opacity=0.4
@@ -133,8 +133,8 @@ class Commitment(SlideBase):
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.78)
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.78)
+        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
         scene.wait(1)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         scene.play(Create(self.circle))
