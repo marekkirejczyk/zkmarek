@@ -72,12 +72,12 @@ class Commitment(SlideBase):
         self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
-            [0, 0.03, 0], 
+            [0.23, 0.06, 0], 
             [-0.5, -1, 0], 
-            [0.8, -0.9, 0], 
+            [0.97, -0.67, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.10+DOWN*0.2)
+        ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.07+DOWN*0.17)
 
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
@@ -100,12 +100,12 @@ class Commitment(SlideBase):
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
         tail_verifier = Polygon(
-            [0.2, 0, 0], 
-            [-0.5, -0.73, 0], 
+            [0.2, 0.05, 0], 
+            [-0.56, -0.67, 0], 
             [0.78, -1.1, 0], 
             color=SECONDARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.10+DOWN*0.2)
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
 
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))

@@ -82,7 +82,7 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3a = MathTex(
-            r"{{e(}} {{q(\tau)}} {{\cdot}} {{(\tau-x_0)}} {{\cdot G_1}} , {{G_2)}} = {{e(}} {{p(\tau)}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"{{e(}} {{q(\tau)}} {{\cdot}} {{(\tau-x_0)}} {{\cdot G_1}} , {{G_2)}} = {{e(}}[ {{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
@@ -138,22 +138,22 @@ class Proof2(SlideBase):
         self.final_verification2 = MathTex(r"{{p(x_0)}} - {{y_0}} = {{0}} {{}}", color = PRIMARY_COLOR).shift(UP*1)
         self.final_verification3 = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} \cdot {{q(x)}}", color = PRIMARY_COLOR)
         self.final_verification4 = MathTex(r"{{q(x)}} \cdot {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR)
-        self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = PRIMARY_COLOR)
+        self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = HIGHLIGHT_COLOR)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2a.mp3")
         scene.play(Write(self.title), run_time=2)
 
         self.new_subsection(scene, "committer", "data/sound/e4/slide4-2b.mp3")
-        scene.play(FadeIn(self.commiter), run_time=1)
-        scene.play(Write(self.commiter_label), run_time=1.5)
+        scene.play(FadeIn(self.commiter), run_time=0.7)
+        scene.play(Write(self.commiter_label), run_time=0.6)
         self.chart.gen_points()
-        scene.play(Create(self.chart), run_time=2)
+        scene.play(Create(self.chart), run_time=1.3)
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
 
         scene.play(FadeIn(self.lock))
-        scene.play(FadeIn(self.verifier), run_time=1)
-        scene.play(Write(self.verifier_label), run_rime=1.5)
+        scene.play(FadeIn(self.verifier), run_time=0.7)
+        scene.play(Write(self.verifier_label), run_rime=0.6)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
@@ -161,7 +161,7 @@ class Proof2(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(VGroup(self.envelope_flap, self.dots.scale(0.7)), self.envelope_flap_closed), MoveToTarget(self.commitment), run_time=2)
+        scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), FadeOut(self.envelope_flap), MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
         commitment_sent.target.shift(6.5*RIGHT+DOWN*3)
@@ -170,7 +170,7 @@ class Proof2(SlideBase):
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
         self.new_subsection(scene, "verfier", "data/sound/e4/slide4-2c.mp3")
-        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR)
+        speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
@@ -180,7 +180,7 @@ class Proof2(SlideBase):
             [0.78, 0.1, 0], 
             color=SECONDARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4).shift(0.55*RIGHT)
+        ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4).shift(0.58*RIGHT)
 
         scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
@@ -195,7 +195,7 @@ class Proof2(SlideBase):
             [0, -1, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_opening, LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.55)
+        ).next_to(bubble_opening, LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.54)
 
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
@@ -291,11 +291,10 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.final_verification3, self.final_verification4))
         scene.wait(2)
         scene.play(Create(self.arrow))
-        scene.wait(3.5)
-        scene.play(Indicate(self.final_verification4[1], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.verification4[0], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.verification4[2], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.verification4[4], color = HIGHLIGHT_COLOR))
+        scene.wait(1)
+        scene.play(Indicate(self.verification4[0], color = HIGHLIGHT_COLOR), Indicate(self.final_verification4[0], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[4], color = HIGHLIGHT_COLOR), Indicate(self.final_verification4[2], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[6], color = HIGHLIGHT_COLOR), Indicate(self.final_verification4[4], color = HIGHLIGHT_COLOR))
 
 
     def animate_out(self, scene):

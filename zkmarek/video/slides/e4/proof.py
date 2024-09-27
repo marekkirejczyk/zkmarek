@@ -155,13 +155,12 @@ class Proof1(SlideBase):
         scene.wait(2.5)
 
         self.new_subsection(scene, "divisability will prove opening", "data/sound/e4/slide3-6.mp3")
-        scene.wait(2)
-        scene.play(Indicate(self.opening5[4], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.wait(1.5)
 
-        scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(TransformMatchingShapes(self.opening5, self.opening6), run_time=1.5)
 
-        scene.wait(5)
+        scene.wait(2)
 
         self.new_subsection(scene, "and this is quotient", "data/sound/e4/slide3-7.mp3")
         scene.wait(0.5)
@@ -170,7 +169,8 @@ class Proof1(SlideBase):
         scene.wait(2.5)
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
         scene.wait(1)
-        scene.play(Indicate(self.opening7[0]))
+        scene.play(Indicate(self.opening7[0], color = HIGHLIGHT2_COLOR))
+        scene.wait(3)
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.play(TransformMatchingShapes(self.opening7, self.opening6))

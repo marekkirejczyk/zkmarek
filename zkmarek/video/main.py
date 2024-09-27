@@ -150,7 +150,7 @@ TEASER3 = [
 ]
 
 EPISODE3 = [
-    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
     Sponsored(),
     Introduction(),
     TitleSlide("Trusted setup", sound="data/sound/episode3_1/slide3-0_new.mp3", wait_time=1.5),
@@ -170,7 +170,7 @@ EPISODE3 = [
 ]
 
 EPISODE4 = [    
-    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/episode3/background.mp3",),
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
     Sponsored(),
     Episode3Reference(),
     TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=1.5),
