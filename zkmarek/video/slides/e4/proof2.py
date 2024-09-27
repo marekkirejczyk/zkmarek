@@ -182,7 +182,7 @@ class Proof2(SlideBase):
             fill_opacity=0.4
         ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4)
 
-        scene.play(Create(bubble_verifier, tail_verifier))
+        scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
 
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2d.mp3")
