@@ -66,6 +66,7 @@ from zkmarek.video.slides.e4.commitment import Commitment
 from zkmarek.video.slides.e4.e3_reference import Episode3Reference
 from zkmarek.video.slides.e4.credits import Credits as CreditsE4
 from zkmarek.video.slides.e4.security import Security
+from zkmarek.video.slides.e4.kzg import KZG
 
 
 config.width = 16
@@ -175,8 +176,10 @@ EPISODE4 = [
     Episode3Reference(),
     TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=1.5),
     Polynomials(),
-    TitleSlide("Polynomial commitment", sound="data/sound/e4/slide2-0a.mp3", wait_time=2),
+    TitleSlide("Polynomial commitments", sound="data/sound/e4/slide2-0a.mp3", wait_time=2),
     Commitment(),
+    TitleSlide("KZG", subtitle="Kate, Zawierucha, Goldberg", sound = "data/sound/e4/slide2-4.mp3"),
+    KZG(),
     TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3"),
     Proof1(),
     Proof2(),

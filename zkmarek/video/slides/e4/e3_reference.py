@@ -1,6 +1,6 @@
-from manim import LEFT, UP, DOWN, MathTex, Write, FadeOut, Text, RIGHT, ImageMobject, FadeIn
+from manim import LEFT, UP, DOWN, MathTex, Write, FadeOut, Text, RIGHT, ImageMobject, FadeIn, Rectangle, TransformMatchingShapes
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.polynomial import Polynomial
@@ -42,7 +42,31 @@ class Episode3Reference(SlideBase):
         scene.wait(0.5)
         self.slide2.animate_miniature(scene)
         
-
+        self.new_subsection(scene, "pairings", "data/sound/e4/slide0-4a.mp3")
+        self.definition = MathTex(r"e(G_1, G_2) \rightarrow G_T", color = PRIMARY_COLOR).shift(UP*1.5)
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
+        text = Text("Pairings", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65)
+        self.add(rectangle, self.definition)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        scene.play(FadeIn(text, rectangle, self.definition))
+        self.scale(0.65)
+    
+        self.new_subsection(scene, "bilinearity", "data/sound/e4/slide0-4b.mp3")
+        self.thesis = MathTex(r"a\cdot b = c \cdot d", color = HIGHLIGHT_COLOR).next_to(self.definition, DOWN)
+        self.bilinearity = MathTex(r"e({{a}}\cdot {{G_1}}, {{b}} \cdot {{G_2}} ) \stackrel{?}{=} e({{c}} \cdot {{G_1}}, {{d}} \cdot {{G_2}})", color = SECONDARY_COLOR).next_to(self.thesis, DOWN)
+        self.bilinearity2 = MathTex(r"{{e(}} {{a}} \cdot {{b}} \cdot {{G_1}}, {{G_2}} ) \stackrel{?}{=} {{e(}} {{c}} \cdot {{d}} \cdot {{G_1}}, {{G_2}} )", color = SECONDARY_COLOR).next_to(self.thesis, DOWN)
+        self.bilinearity3 = MathTex(r"{{}} {{a}} \cdot {{b}} {{}} {{}} = {{}} {{c}} \cdot {{d}} {{}} {{}}").next_to(self.bilinearity2, DOWN)
+        scene.play(Write(self.thesis))
+        scene.wait(2)
+        scene.play(Write(self.bilinearity))
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.bilinearity, self.bilinearity2), run_time=2)
+        scene.wait(1)
+        scene.play(Write(self.bilinearity3))
+        scene.wait(1)
+        scene.play(FadeOut(self.bilinearity2, self.bilinearity3, self.thesis, self.definition, rectangle, text))
+        
     def animate_out(self, scene):
         self.wait_for_sound(scene)
         scene.play(FadeOut(self.title_label))

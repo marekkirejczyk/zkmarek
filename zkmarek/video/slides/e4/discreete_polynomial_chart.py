@@ -114,7 +114,8 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
             else:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)).set_opacity(0.2))
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)).set_opacity(0.1))
     
         scene.play(*animations)
 

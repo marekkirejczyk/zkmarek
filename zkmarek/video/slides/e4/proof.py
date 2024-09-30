@@ -131,17 +131,18 @@ class Proof1(SlideBase):
             scene, self.tau.value, self.value_at_tau.value - self.y.value
         )   
         self.chart.add(line_tau_y)
+        self.chart.add(line_tau)
         scene.wait(1)
-        dots = VGroup(*self.chart.dots)
-        scene.play(Indicate(dots, color=HIGHLIGHT2_COLOR, scale=1.05))
+        self.dots = VGroup(*self.chart.dots)
+        scene.play(Indicate(self.dots, color=HIGHLIGHT2_COLOR, scale=1.05))
         scene.wait(2)
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
         self.chart.animate_shift_dots_with_fade(scene, self.y.value)
         scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
-        scene.play(FadeOut(line_z, line_tau, line_tau_y), run_time=0.3)
         scene.wait(1.8)
+        scene.play(FadeOut(line_tau, line_tau_y, line_z))
 
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
@@ -176,6 +177,7 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.opening7, self.opening6))
         scene.play(Indicate(self.opening6[6], color = HIGHLIGHT_COLOR))
         scene.wait(6.5)
+        scene.play(FadeOut(self.dots))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.r_of_x, self.opening6, self.opening))
+        scene.play(FadeOut(self.chart.ax, self.chart.labels, self.r_of_x, self.opening6, self.opening))

@@ -322,7 +322,7 @@ class Polynomials(SlideBase):
 
         top_val = MathTex(r"p-1", color = SECONDARY_COLOR).to_edge(UP+RIGHT).shift(DOWN*1.2+LEFT*3).scale(0.8)
         scene.play(FadeIn(top_val))
-        self.chart3.animate_create_horizontal_line(
+        self.top_value = self.chart3.animate_create_horizontal_line(
             scene, 40, 0, 40
         )
         scene.play(FadeOut(top_val))
@@ -337,7 +337,7 @@ class Polynomials(SlideBase):
         scene.wait(2.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
+        scene.play(FadeOut(self.top_value, self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
 
     def animate_random_number(self, scene):
         first_number = random.randint(1, 20)
