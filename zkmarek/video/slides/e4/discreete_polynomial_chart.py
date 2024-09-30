@@ -101,10 +101,12 @@ class DiscreetePolynomialChart(VGroup):
             y = self.f(x)
             yy = y.value - y_shift
             if yy < 0:
-                a = d.animate.move_to(self.ax.c2p(x.value, yy % 41))
-            animations.append(a)
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)))
         scene.play(*animations)
-
+        for d in self.dots:
+            if d.get_fill_opacity() < 1:
+                d.set_fill(opacity=1)
+                
     def animate_shift_dots_with_fade(self, scene, y_shift):
         animations = []
         for i, d in enumerate(self.dots):
@@ -114,11 +116,8 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
             else:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)).set_opacity(0.1))
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.1))
+
     
         scene.play(*animations)
 
-        for d in self.dots:
-            if d.get_fill_opacity() < 1:
-                d.set_fill(opacity=1)

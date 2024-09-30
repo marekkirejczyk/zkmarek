@@ -1,4 +1,4 @@
-from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, ReplacementTransform, MathTex, Circle, Indicate
+from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, MathTex, Circle, Indicate
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -76,9 +76,9 @@ class KZG(SlideBase):
         self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
-            [0.23, 0.06, 0], 
-            [-0.5, -1, 0], 
-            [0.97, -0.67, 0], 
+            [0.08, 0.08, 0], 
+            [-0.35, -1.2, 0], 
+            [0.93, -0.65, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.03+DOWN*0.15)
@@ -89,10 +89,9 @@ class KZG(SlideBase):
 
         self.new_subsection(scene, "trusted setup", "data/sound/e4/slide2-5.mp3")
         self.title_text_kzg = Text("KZG", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
-        scene.play(FadeIn(self.verifier, self.verifier_label, self.commiter, self.commiter_label, self.title_text_kzg))
-        scene.play(Create(bubble_committer))
+        scene.play(FadeIn(self.verifier, self.verifier_label, self.commiter, self.commiter_label, self.title_text_kzg), run_time=0.7)
         self.chart.gen_points()
-        scene.play(Create(self.chart), FadeIn(self.lock))
+        scene.play(Create(bubble_committer), Create(self.chart), FadeIn(self.lock), run_time=0.7)
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
@@ -105,13 +104,11 @@ class KZG(SlideBase):
         self.polynomial_enc = MathTex(r"{{}} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR).next_to(self.chart, DOWN).shift(DOWN*0.2)
         scene.play(TransformMatchingShapes(self.trusted_setup2, self.polynomial_enc), run_time=0.8)
-        scene.wait(1.5)
-        scene.play(Indicate(self.polynomial_enc[1], color = HIGHLIGHT_COLOR, scale_factor=1.8), run_time=1.2)
+        scene.wait(0.5)
 
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-6.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.polynomial_enc, self.commitment), run_time=1.5)
-        scene.wait(1.2)
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
             fill_color=PRIMARY_COLOR, fill_opacity=0.5
@@ -130,8 +127,8 @@ class KZG(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.395)
-        self.envelope_body.next_to(self.commiter, LEFT+DOWN, buff = 0.4)
-        self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN, buff = 0.4)
+        self.envelope_body.next_to(self.commiter, LEFT+DOWN, buff = 0.6)
+        self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN, buff = 0.6)
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
@@ -172,7 +169,9 @@ class KZG(SlideBase):
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), run_time=0.5)
-        scene.wait(5.5)
+        scene.wait(1.5)
+        scene.play(Indicate(self.proof[1], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.proof[3], color = HIGHLIGHT_COLOR))
         scene.play(FadeOut(bubble_committer, bubble_opening, tail))
 
     def animate_out(self, scene):

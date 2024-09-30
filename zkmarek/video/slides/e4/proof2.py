@@ -145,15 +145,11 @@ class Proof2(SlideBase):
         scene.play(Write(self.title), run_time=2)
 
         self.new_subsection(scene, "committer", "data/sound/e4/slide4-2b.mp3")
-        scene.play(FadeIn(self.commiter), run_time=0.7)
-        scene.play(Write(self.commiter_label), run_time=0.6)
+        scene.play(FadeIn(self.commiter), Write(self.commiter_label), run_time=0.6)
         self.chart.gen_points()
-        scene.play(Create(self.chart), run_time=1.3)
+        scene.play(Create(self.chart), FadeIn(self.lock), run_time=1.3)
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
-
-        scene.play(FadeIn(self.lock))
-        scene.play(FadeIn(self.verifier), run_time=0.7)
-        scene.play(Write(self.verifier_label), run_rime=0.6)
+        scene.play(FadeIn(self.verifier), Write(self.verifier_label), run_rime=0.6)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
@@ -167,7 +163,7 @@ class Proof2(SlideBase):
         commitment_sent.target.shift(6.5*RIGHT+DOWN*3)
         self.envelope_flap.shift(6.5*RIGHT+DOWN*3)
 
-        scene.play(MoveToTarget(commitment_sent), run_time=1.8)
+        scene.play(MoveToTarget(commitment_sent), run_time=1)
 
         self.new_subsection(scene, "verfier", "data/sound/e4/slide4-2c.mp3")
         speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
@@ -232,7 +228,7 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
-        scene.wait(1.8)
+        scene.wait(2.3)
         scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
         scene.wait(1.5)
 
@@ -241,10 +237,9 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
         scene.wait(0.5)
         scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(4.5)
+        scene.wait(3.8)
 
         scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
-        scene.wait(2)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR))
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
@@ -272,15 +267,14 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=1.8)
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.verification3, self.verification3a))
-        scene.wait(1.5)
-        scene.play(TransformMatchingShapes(self.verification3a, self.verification4))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
-        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.verification3a, self.verification4))
+        scene.wait(1)
         scene.play(Write(self.final_verification))
-        scene.wait(1.7)
+        scene.wait(1)
         scene.play(TransformMatchingShapes(self.final_verification.copy(), self.final_verification2))
-        scene.wait(2.9)
+        scene.wait(2.6)
         scene.play(Write(self.final_verification3))
         scene.wait(1)
 

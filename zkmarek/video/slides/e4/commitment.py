@@ -68,9 +68,9 @@ class Commitment(SlideBase):
         self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
-            [0.2, 0.06, 0], 
+            [0.06, 0.08, 0], 
             [-0.35, -1.2, 0], 
-            [0.97, -0.7, 0], 
+            [0.93, -0.65, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.01+DOWN*0.14)
@@ -139,12 +139,12 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.opening, bubble_opening, tail), MoveToTarget(self.circle_full))
         self.lock_open = ImageMobject("data/images/Lock_Open.png").scale(0.2).move_to(self.envelope_body_closed.get_center())
         scene.play(ReplacementTransform(self.lock_copy, self.lock_open))
-        scene.wait(2)
+        scene.wait(1)
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
         scene.wait(1.5)
         scene.play(Write(self.proof))
-        scene.wait(2)
+        scene.wait(1)
         scene.play(FadeOut(bubble_opening, tail))
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP)
@@ -156,7 +156,7 @@ class Commitment(SlideBase):
         self.arrow_check_opening2 = CurvedArrow(self.proof.get_left(), self.envelope_flap_closed.get_left(), color = HIGHLIGHT_COLOR)
         self.thumb.next_to(self.arrow_check_opening2, LEFT, buff=0)
         scene.play(FadeIn(self.thumb), Write(self.arrow_check_opening), Write(self.arrow_check_opening2))
-        scene.wait(2.5)
+        scene.wait(1.7)
         scene.play(FadeOut(bubble_committer))
         
 

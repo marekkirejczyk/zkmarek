@@ -325,7 +325,7 @@ class Polynomials(SlideBase):
         self.top_value = self.chart3.animate_create_horizontal_line(
             scene, 40, 0, 40
         )
-        scene.play(FadeOut(top_val))
+        scene.play(FadeOut(top_val, self.top_value))
         scene.wait(2)
 
         self.new_subsection(scene, "security", "data/sound/e4/slide1-12.mp3")
@@ -337,7 +337,7 @@ class Polynomials(SlideBase):
         scene.wait(2.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.top_value, self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
+        scene.play(FadeOut(self.chart3, self.p_order, self.chart.ax, self.chart.graph, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
 
     def animate_random_number(self, scene):
         first_number = random.randint(1, 20)

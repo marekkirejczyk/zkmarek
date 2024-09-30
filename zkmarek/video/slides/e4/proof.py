@@ -138,9 +138,10 @@ class Proof1(SlideBase):
         scene.wait(2)
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
         self.chart.animate_shift_dots_with_fade(scene, self.y.value)
-        scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
+        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
+        scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         scene.wait(1.8)
         scene.play(FadeOut(line_tau, line_tau_y, line_z))
 
@@ -164,10 +165,7 @@ class Proof1(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "and this is quotient", "data/sound/e4/slide3-7.mp3")
-        scene.wait(0.5)
-        scene.play(Indicate(self.chart.labels[0], color = HIGHLIGHT_COLOR))
-
-        scene.wait(2.5)
+        scene.wait(3.5)
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
         scene.wait(1)
         scene.play(Indicate(self.opening7[0], color = HIGHLIGHT2_COLOR))
@@ -176,8 +174,7 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.play(TransformMatchingShapes(self.opening7, self.opening6))
         scene.play(Indicate(self.opening6[6], color = HIGHLIGHT_COLOR))
-        scene.wait(6.5)
-        scene.play(FadeOut(self.dots))
+        scene.wait(7.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.ax, self.chart.labels, self.r_of_x, self.opening6, self.opening))
+        scene.play(FadeOut(self.chart.ax, *self.chart.dots, self.chart.labels, self.r_of_x, self.opening6, self.opening))
