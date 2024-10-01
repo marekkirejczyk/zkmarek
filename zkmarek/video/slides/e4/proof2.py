@@ -147,8 +147,8 @@ class Proof2(SlideBase):
         self.new_subsection(scene, "committer", "data/sound/e4/slide4-2b.mp3")
         scene.play(FadeIn(self.commiter), Write(self.commiter_label), run_time=0.6)
         self.chart.gen_points()
-        scene.play(Create(self.chart), FadeIn(self.lock), run_time=1.3)
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
+        scene.play(Create(self.chart), FadeIn(self.lock), run_time=1.3)
         scene.play(FadeIn(self.verifier), Write(self.verifier_label), run_rime=0.6)
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
@@ -160,8 +160,8 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), FadeOut(self.envelope_flap), MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(6.5*RIGHT+DOWN*3)
-        self.envelope_flap.shift(6.5*RIGHT+DOWN*3)
+        commitment_sent.target.shift(6.5*RIGHT+DOWN*2)
+        self.envelope_flap.shift(6.5*RIGHT+DOWN*2)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1)
 
@@ -198,7 +198,7 @@ class Proof2(SlideBase):
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Create(bubble_opening), Create(tail))
         scene.play(FadeIn(self.opening, self.proof))
-        scene.wait(1.5)
+        scene.wait(0.7)
         scene.play(Indicate(self.proof[0], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
         scene.play(FadeOut(self.lock, self.envelope_body_closed, self.envelope_flap_closed))

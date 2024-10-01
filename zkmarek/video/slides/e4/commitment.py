@@ -70,7 +70,7 @@ class Commitment(SlideBase):
         tail = Polygon(
             [0.06, 0.08, 0], 
             [-0.35, -1.2, 0], 
-            [0.93, -0.65, 0], 
+            [0.93, -0.63, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.01+DOWN*0.14)
@@ -142,7 +142,6 @@ class Commitment(SlideBase):
         scene.wait(1)
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
-        scene.wait(1.5)
         scene.play(Write(self.proof))
         scene.wait(1)
         scene.play(FadeOut(bubble_opening, tail))
@@ -161,7 +160,7 @@ class Commitment(SlideBase):
         
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.envelope_flap_closed, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb, self.lock_open, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title_text, self.chart, self.arrow_check_opening2))
+        scene.play(FadeOut(self.envelope_flap_closed, self.lock, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb, self.lock_open, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title_text, self.chart, self.arrow_check_opening2))
 
 
      

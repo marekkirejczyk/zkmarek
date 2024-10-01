@@ -144,6 +144,9 @@ class Proof1(SlideBase):
         scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         scene.wait(1.8)
         scene.play(FadeOut(line_tau, line_tau_y, line_z))
+        self.chart.remove(line_tau)
+        self.chart.remove(line_tau_y)
+        self.chart.remove(line_z)
 
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
@@ -174,7 +177,7 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.play(TransformMatchingShapes(self.opening7, self.opening6))
         scene.play(Indicate(self.opening6[6], color = HIGHLIGHT_COLOR))
-        scene.wait(7.5)
+        scene.wait(8.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.ax, *self.chart.dots, self.chart.labels, self.r_of_x, self.opening6, self.opening))
+        scene.play(FadeOut(self.chart, self.r_of_x, self.opening6, self.opening))

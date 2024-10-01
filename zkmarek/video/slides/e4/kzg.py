@@ -78,7 +78,7 @@ class KZG(SlideBase):
         tail = Polygon(
             [0.08, 0.08, 0], 
             [-0.35, -1.2, 0], 
-            [0.93, -0.65, 0], 
+            [0.93, -0.63, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.03+DOWN*0.15)
@@ -170,8 +170,8 @@ class KZG(SlideBase):
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), run_time=0.5)
         scene.wait(1.5)
-        scene.play(Indicate(self.proof[1], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.proof[3], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.proof[0], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
         scene.play(FadeOut(bubble_committer, bubble_opening, tail))
 
     def animate_out(self, scene):
