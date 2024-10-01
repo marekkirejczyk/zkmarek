@@ -58,7 +58,7 @@ class Episode3Reference(SlideBase):
     
         self.new_subsection(scene, "bilinearity", "data/sound/e4/slide0-4b.mp3")
         self.bilinearity = MathTex(r"e({{a}}\cdot {{G_1}}, {{b}} \cdot {{G_2}} ) \stackrel{?}{=} e({{c}} \cdot {{G_1}}, {{d}} \cdot {{G_2}})", color = SECONDARY_COLOR).next_to(self.definition, DOWN).shift(DOWN)
-        self.bilinearity2 = MathTex(r"{{e(}} {{a}} \cdot {{b}} \cdot {{G_1}}, {{G_2}} ) \stackrel{?}{=} {{e(}} {{c}} \cdot {{d}} \cdot {{G_1}}, {{G_2}} )", color = SECONDARY_COLOR).next_to(self.definition, DOWN)
+        self.bilinearity2 = MathTex(r"{{e(}} {{a}} \cdot {{b}} \cdot {{G_1}}, {{G_2}} ) \stackrel{?}{=} {{e(}} {{c}} \cdot {{d}} \cdot {{G_1}}, {{G_2}} )", color = SECONDARY_COLOR).next_to(self.definition, DOWN).shift(DOWN)
         self.bilinearity3 = MathTex(r"{{}} {{a}} \cdot {{b}} {{}} {{}} = {{}} {{c}} \cdot {{d}} {{}} {{}}", color = HIGHLIGHT_COLOR).next_to(self.bilinearity2, DOWN)
         scene.wait(2)
         scene.play(Write(self.bilinearity))

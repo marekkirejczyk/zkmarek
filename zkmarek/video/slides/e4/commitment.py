@@ -117,8 +117,8 @@ class Commitment(SlideBase):
 
         commitment_sent = Group(self.envelope_body_closed, self.envelope_flap_closed, self.lock_copy)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(9.5*RIGHT+DOWN)
-        self.envelope_flap.shift(9.5*RIGHT+DOWN)
+        commitment_sent.target.shift(9.5*RIGHT+DOWN*0.7)
+        self.envelope_flap.shift(9.5*RIGHT+DOWN*0.7)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 

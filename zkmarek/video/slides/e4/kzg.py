@@ -91,8 +91,8 @@ class KZG(SlideBase):
         self.title_text_kzg = Text("KZG", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
         scene.play(FadeIn(self.verifier, self.verifier_label, self.commiter, self.commiter_label, self.title_text_kzg), run_time=0.7)
         self.chart.gen_points()
-        scene.play(Create(bubble_committer), Create(self.chart), FadeIn(self.lock), run_time=0.7)
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
+        scene.play(Create(bubble_committer), Create(self.chart), FadeIn(self.lock), run_time=0.7)
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         scene.play(Write(self.trusted_setup), run_time=0.5)
@@ -142,8 +142,8 @@ class KZG(SlideBase):
         scene.play(FadeOut(self.envelope_flap), FadeIn(self.envelope_flap_closed))
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(9.5*RIGHT+DOWN)
-        self.envelope_flap.shift(9.5*RIGHT+DOWN)
+        commitment_sent.target.shift(9.5*RIGHT+DOWN*0.7)
+        self.envelope_flap.shift(9.5*RIGHT+DOWN*0.7)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
