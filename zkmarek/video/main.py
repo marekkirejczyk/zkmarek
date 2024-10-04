@@ -178,7 +178,7 @@ EPISODE4 = [
     Polynomials(),
     TitleSlide("Polynomial commitments", sound="data/sound/e4/slide2-0a.mp3", wait_time=2),
     Commitment(),
-    TitleSlide("KZG", subtitle="Kate, Zawierucha, Goldberg", sound = "data/sound/e4/slide2-4.mp3"),
+    TitleSlide("KZG", subtitle="Kate, Zaverucha, Goldberg", sound = "data/sound/e4/slide2-4.mp3"),
     KZG(),
     TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3"),
     Proof1(),
