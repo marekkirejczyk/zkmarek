@@ -36,11 +36,11 @@ class Polynomials(SlideBase):
         self.polynomial_eqn3 = MathTex(r"P(x) = {{a_3}}\cdot {{x^3}} +{{a_2}} \cdot {{x^2}} + {{a_{1} }}\cdot {{x }} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
 
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
-        self.polynomial_z = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 {{=y}}", color = PRIMARY_COLOR).to_edge(RIGHT).shift(LEFT*0.1+UP*2.4)
+        self.polynomial_z = MathTex(r"P({{x_0}}) = 4 {{x_0^3}} - 8{{x_0^2}} - 17 {{x_0}} + 30 {{=y_0}}", color = PRIMARY_COLOR).to_edge(RIGHT).shift(LEFT*0.1+UP*2.4)
         self.polynomial_roots = MathTex(r"P({{x_i}}) = 4 {{x_i^3}} - 8{{x_i^2}} - 17 {{x_i}} + 30 {{= 0}}", color = PRIMARY_COLOR).to_edge(DOWN)
         self.quotient = MathTex(r"Q({{x}}) = {{x^3}} + {{x^2}} - 2{{x}} + 8 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
-        self.quotient_z = MathTex(r"Q({{x_0}}) = {{x_0}}^3 + {{x_0}}^2 - 2{{x_0}} + 8 {{=y}}", color = PRIMARY_COLOR).next_to(self.polynomial_z, DOWN, buff = 0.3)
+        self.quotient_z = MathTex(r"Q({{x_0}}) = {{x_0}}^3 + {{x_0}}^2 - 2{{x_0}} + 8 {{=y_0}}", color = PRIMARY_COLOR).next_to(self.polynomial_z, DOWN, buff = 0.3)
         self.line_subtract = Line(start = self.quotient_z.get_left(), end = self.quotient_z.get_right(), color = HIGHLIGHT_COLOR).next_to(self.quotient_z, DOWN, buff = 0.2).scale(1.1)
         self.subtract = MathTex("R(x)", "=", "3x^3", "-", "9x^2", "-", "15x", "+", "22", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN)
         self.subtract_z = MathTex("R(x_0)", "=", "3x_0^3", "-", "9x_0^2", "-", "15x_0", "+", "22", "=0", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
@@ -84,7 +84,7 @@ class Polynomials(SlideBase):
 
         self.p_intersect = ValueTracker(-1.849)
         a_i = Curve.from_x(self.p_intersect.get_value())
-        self.intersect = DotOnCurve(self.chart.ax, r"({{x_0}}, {{y}})", a_i)
+        self.intersect = DotOnCurve(self.chart.ax, r"({{x_0}}, {{y_0}})", a_i)
         self.intersect.set_color(PRIMARY_COLOR)
 
         self.point = []
@@ -114,6 +114,8 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.polynomial_eqn[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[7], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[11], color = HIGHLIGHT_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.polynomial_eqn[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[5], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[9], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[13], color = HIGHLIGHT_COLOR))
+        scene.wait(1.7)
+        scene.play(Indicate(self.polynomial_eqn[4], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[8], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[12], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "specific eqn", "data/sound/e4/slide1-1.mp3")
         self.polynomial_eqn.generate_target()
@@ -251,7 +253,9 @@ class Polynomials(SlideBase):
         scene.wait(3)
         scene.play(Indicate(self.intersect_sub, color = HIGHLIGHT_COLOR, scale_factor=1.7))
         self.polynomial.to_edge(DOWN).shift(LEFT*3).scale(0.7)
-        scene.wait(6)
+        scene.wait(3)
+        scene.play(Indicate(self.subtract_z[9], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.subtract_z[0], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "R in terms of roots", "data/sound/e4/slide1-5a.mp3")
         scene.wait(2)
@@ -264,13 +268,13 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.subtract_z_roots[3], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.subtract_z_roots[4], color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.subtract_z_roots[5], color = HIGHLIGHT_COLOR), run_time=0.5)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.subtract_z_roots, self.subtract_z_roots_b))
         scene.wait(0.2)
         scene.play(TransformMatchingShapes(self.subtract_z_roots_b, self.subtract_z_roots_b1))
         scene.wait(0.2)
         scene.play(TransformMatchingShapes(self.subtract_z_roots_b1, self.subtract_z_roots_b2))
-        scene.wait(1)
+        scene.wait(0.5)
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
         scene.play(Unwrite(self.label_poly_r), FadeOut(self.intersect1, self.intersect2, self.intersect_sub, self.subtract_z_roots_b2), run_time=0.7)

@@ -38,5 +38,5 @@ class Credits(SlideBase):
         self.group.shift(5 * DOWN)
         self.group.target.shift(16 * UP)
         scene.play(
-            MoveToTarget(self.group, run_time=7, rate_func=rate_functions.linear)
+            MoveToTarget(self.group, run_time=6, rate_func=rate_functions.linear)
         )
