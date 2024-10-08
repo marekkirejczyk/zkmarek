@@ -41,7 +41,7 @@ class Polynomials(SlideBase):
         self.quotient = MathTex(r"Q({{x}}) = {{x^3}} + {{x^2}} - 2{{x}} + 8 {{}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
         self.quotient_z = MathTex(r"Q({{x_0}}) = {{x_0}}^3 + {{x_0}}^2 - 2{{x_0}} + 8 {{=y_0}}", color = PRIMARY_COLOR).next_to(self.polynomial_z, DOWN, buff = 0.3)
-        self.line_subtract = Line(start = self.quotient_z.get_left(), end = self.quotient_z.get_right(), color = HIGHLIGHT_COLOR).next_to(self.quotient_z, DOWN, buff = 0.2).scale(1.1)
+        self.line_subtract = Line(start = self.quotient_z.get_left(), end = self.quotient_z.get_right(), color = HIGHLIGHT_COLOR).next_to(self.quotient_z, DOWN, buff = 0.2).scale(1.07)
         self.subtract = MathTex("R(x)", "=", "3x^3", "-", "9x^2", "-", "15x", "+", "22", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN)
         self.subtract_z = MathTex("R(x_0)", "=", "3x_0^3", "-", "9x_0^2", "-", "15x_0", "+", "22", "=0", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots = MathTex("R(x)", "=", "3", "(x-x_0)", "(x-x_1)", "(x-x_2)", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
@@ -146,12 +146,9 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.p2, color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Indicate(self.p3, color = HIGHLIGHT_COLOR), run_time=0.7)
         scene.play(Write(self.chart.graph))
-
-        scene.wait(1.5)
-        scene.play(Indicate(self.polynomial_eqn, color = HIGHLIGHT_COLOR))
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.polynomial_eqn, self.polynomial_eqn3))
-        scene.wait(1.5)
+        scene.wait(1)
         scene.play(TransformMatchingShapes(self.polynomial_eqn3, self.polynomial))
 
         self.new_subsection(scene, "roots", "data/sound/e4/slide1-3.mp3")

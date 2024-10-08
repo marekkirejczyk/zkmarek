@@ -170,7 +170,6 @@ class KZG(SlideBase):
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), run_time=0.5)
         scene.wait(1.5)
-        scene.play(Indicate(self.proof[0], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
         scene.play(FadeOut(bubble_committer, bubble_opening, tail))
 
