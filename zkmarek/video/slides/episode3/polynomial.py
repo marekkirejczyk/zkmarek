@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, UP, DOWN, MathTex, TransformMatchingShapes, VGroup, Text, Indicate, ImageMobject, Arrow, GrowArrow, MoveToTarget, ValueTracker, Create
+from manim import FadeIn, FadeOut, Write, LEFT, RIGHT, UP, DOWN, MathTex, TransformMatchingShapes, VGroup, Text, Indicate, ImageMobject, Arrow, GrowArrow, MoveToTarget, ValueTracker, Create, Rectangle
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -35,6 +35,7 @@ class Polynomial(SlideBase):
         self.polynomial_nunber = MathTex(r"F({{ 2 }}) = 2\cdot {{ 2^2 }} -3\cdot {{ 2 }} - 7 = -5", font_size = 60, color = SECONDARY_COLOR)
 
         self.polynomial_G = MathTex(r"F({{x}}) {{\cdot G}} = [2\cdot {{x^2}} -3\cdot {{x}} - 7] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
+        self.polynomial_tau_mini = MathTex(r"F({{\tau}}) {{}} = [2\cdot {{\tau^2}} -3\cdot {{\tau}} - 7] {{}}", font_size = 60, color = SECONDARY_COLOR)
         self.polynomial_tau0 = MathTex(r"F({{\tau}}){{\cdot G}} = [2\cdot {{\tau^2}} -3\cdot {{\tau}} - 7 ] {{\cdot G}}", font_size = 60, color = SECONDARY_COLOR)
         self.chart = ContinuousEllipticChart(include_details=False).scale(0.6).next_to(self.title_label, DOWN)
         self.polynomial_tau = MathTex(r"F({{\tau)\cdot G}} = {{2\cdot}} [{{\tau^2 \cdot G}}] {{-3\cdot}} [{{\tau \cdot G}}] {{- 7 \cdot [G]}}", font_size = 60, color = SECONDARY_COLOR)
@@ -118,3 +119,34 @@ class Polynomial(SlideBase):
         scene.play(Create(tree))
         scene.wait(1.2)
         scene.play(FadeOut(tree))
+
+    def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
+        text = Text("Evaluating a polynomial", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65)
+        self.vector.shift(DOWN*2)
+        self.add(rectangle, self.polynomial, self.polynomial_tau_mini, self.vector, self.polynomial_tau0, self.tau, self.p1.dot)
+        self.scale(0.65)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        self.vector.scale(1.2)
+        scene.play(FadeIn(text, rectangle, self.vector))
+        self.add(text)
+        scene.wait(0.1)
+        scene.play(Indicate(self.vector.cells[0][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[1][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[3][1][0], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[0][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[1][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.play(Indicate(self.vector.cells[3][1][2], color = HIGHLIGHT_COLOR), run_time=0.7)
+        scene.wait(3)
+        
+        self.new_subsection(scene, "polynomial", "data/sound/e4/slide0-4.mp3")
+        self.vector.generate_target()
+        self.vector.target.shift(UP*2).scale(5/6).shift(DOWN*0.5)
+        scene.play(MoveToTarget(self.vector), FadeIn(self.polynomial), run_time=1)
+        scene.wait(1.5)
+        scene.play(TransformMatchingShapes(VGroup(self.polynomial, self.vector[0][1].copy(), self.vector[1][1].copy()), self.polynomial_tau0))
+        scene.wait(3)
+        scene.play(Indicate(self.polynomial_tau0[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_tau0[9], color = HIGHLIGHT_COLOR))
+        scene.wait(1.5)
+        scene.play(FadeOut(self.polynomial_tau0, self.vector, text, rectangle))

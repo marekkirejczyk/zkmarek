@@ -1,4 +1,4 @@
-from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Unwrite, Line, ImageMobject, FadeIn, FadeOut, Indicate
+from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Unwrite, Line, ImageMobject, FadeIn, FadeOut, Indicate, Rectangle
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -12,14 +12,14 @@ PARTICIPANT_1 = [
 ]
 
 PARTICIPANT_2 = [
-    r"\tau_1^1 G_1",
+    r"{{\tau_1^1}} {{G_1}}",
     r"\tau_1^2 G_1",
     ". . .",
     r"\tau_1^n G_1"
 ]
 
 PARTICIPANT_N = [
-    r"\tau_i^1 G_1",
+    r"{{\tau_i^1}} {{G_1}}",
     r"\tau_i^2 G_1",
     r". . .",
     r"\tau_i^n G_1"
@@ -58,6 +58,10 @@ class Ceremony(SlideBase):
             start=self.tau_0.get_critical_point(LEFT),
             end=self.tau_0.get_critical_point(RIGHT), color=SECONDARY_COLOR)
 
+        self.tau_1_mini = Tex(r"$\tau_1$ ", color=SECONDARY_COLOR)
+        self.tau_k_mini = Tex(r"$\tau_i$ ", color=SECONDARY_COLOR)
+        self.tau_0_mini = Tex(r"$\tau_0$ ", color=SECONDARY_COLOR)
+
         self.tau_1 = Tex(r"$\tau_1$: ", color=SECONDARY_COLOR)
         self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT, color=SECONDARY_COLOR).scale(0.5)
         self.tau_k = Tex(r"$\tau_i$: ", color=SECONDARY_COLOR)
@@ -67,15 +71,18 @@ class Ceremony(SlideBase):
         self.title_label.to_edge(UP)
         self.vector_0.next_to(self.title_label, DOWN, buff=0.8)
         self.tau_0.next_to(self.vector_0, LEFT)
+        self.tau_0_mini.next_to(self.vector_0, LEFT)
         self.strike.next_to(self.vector_0, LEFT)
         self.secret.next_to(self.vector_0, LEFT)
         self.person.next_to(self.tau_0, LEFT)
         self.vector_1.next_to(self.vector_0, DOWN, buff=0.5)
         self.tau_1.next_to(self.vector_1, LEFT)
+        self.tau_1_mini.next_to(self.vector_1, LEFT)
         self.person2.next_to(self.tau_1, LEFT)
         self.three_dot.next_to(self.vector_1, DOWN, buff=0.5)
         self.vector_k.next_to(self.three_dot, DOWN, buff=0.5)
         self.tau_k.next_to(self.vector_k, LEFT)
+        self.tau_k_mini.next_to(self.vector_k, LEFT)
         self.tau.next_to(self.vector_k, DOWN, buff=0.5)
         self.person3.next_to(self.tau_k, LEFT)
         
@@ -127,6 +134,41 @@ class Ceremony(SlideBase):
         self.new_subsection(scene, "intro to pairing", "data/sound/episode3_1/slide5-4_new.mp3")
         scene.wait(6)
 
+    def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8)
+        text = Text("Ceremony of the trusted setup", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65)
+        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).shift(RIGHT+DOWN*0.2)
+        self.add(rectangle, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini)
+        self.scale(0.65)
+        self.tau_0_mini.scale(1.2).shift(DOWN*0.2)
+        self.tau_1_mini.scale(1.2).shift(DOWN*0.2)
+        self.tau_k_mini.scale(1.2).shift(DOWN*0.2)
+        self.line0 = Line(start = self.tau_0_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_0_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.2)
+        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.3)
+        self.linei = Line(start = self.tau_k_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_k_mini, DOWN, buff = 0.1).shift(RIGHT+UP*1.55)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        self.person.scale(0.65).next_to(self.tau_0_mini, LEFT, buff = 0.6)
+        self.person2.scale(0.65).next_to(self.tau_1_mini, LEFT, buff = 0.6)
+        self.person3.scale(0.65).next_to(self.tau_k_mini, LEFT, buff = 0.6)
+        scene.play(FadeIn(text, rectangle))
+        self.add(text)
+        scene.play(FadeIn(self.person, self.person2, self.person3))
+        scene.play(Write(self.tau_0_mini))
+        scene.play(Write(self.tau_1_mini))
+        self.three_dot.scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.4)
+        scene.play(Write(self.three_dot))
+        scene.play(Write(self.tau_k_mini))
+        scene.play(Indicate(self.tau_0_mini, color = HIGHLIGHT_COLOR), Indicate(self.tau_1_mini, color = HIGHLIGHT_COLOR), Indicate(self.tau_k_mini, color = HIGHLIGHT_COLOR))
+        scene.play(Write(self.line0), run_time=0.3)
+        scene.play(Write(self.line1), run_time=0.3)
+        scene.play(Write(self.linei), run_time=0.3)
+
+        scene.play(Write(self.tau_col))
+
+
+        scene.wait(1)
+        scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.three_dot, text, rectangle, self.line0, self.line1, self.linei, self.tau_col))
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))

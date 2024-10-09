@@ -50,9 +50,6 @@ from zkmarek.video.slides.teaser2.sponsored import Sponsored as SponsoredTeaser
 from zkmarek.video.slides.teaser3.intuition import Intuition
 from zkmarek.video.slides.teaser3.credits import Credits as CreditsT3
 from zkmarek.video.slides.teaser3.e2_reference import TitleSlide as E2Reference
-from zkmarek.video.slides.episode4.KZG import KZG
-from zkmarek.video.slides.episode4.PCS import PolynomialCommitment
-from zkmarek.video.slides.episode4.verkle import Verkle
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.episode3.ceremony_verification import CeremonyVerification
 from zkmarek.video.slides.episode3.ceremony_verification_2 import CeremonyVerification2
@@ -62,6 +59,15 @@ from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
+from zkmarek.video.slides.e4.proof2 import Proof2
+from zkmarek.video.slides.e4.proof import Proof1
+from zkmarek.video.slides.e4.polynomials import Polynomials
+from zkmarek.video.slides.e4.commitment import Commitment
+from zkmarek.video.slides.e4.e3_reference import Episode3Reference
+from zkmarek.video.slides.e4.credits import Credits as CreditsE4
+from zkmarek.video.slides.e4.security import Security
+from zkmarek.video.slides.e4.kzg import KZG
+
 
 config.width = 16
 config.height = 9
@@ -164,14 +170,23 @@ EPISODE3 = [
     CreditsE3(),
 ]
 
-EPISODE4 = [
-    # Intro("data/sound/episode2/slide1-0.mp3"),
-    # Sponsored(),
-    TitleSlide("KZG", subtitle="Kate, Zaverucha and Goldberg"),
-    PolynomialCommitment(),
+EPISODE4 = [    
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
+    Sponsored(),
+    Episode3Reference(),
+    TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=4.5),
+    Polynomials(),
+    TitleSlide("Polynomial commitments", sound="data/sound/e4/slide2-0a.mp3", wait_time=2),
+    Commitment(),
+    TitleSlide("KZG", subtitle="Kate, Zaverucha, Goldberg", sound = "data/sound/e4/slide2-4.mp3"),
     KZG(),
-    Verkle(),
+    TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3"),
+    Proof1(),
+    Proof2(),
+    TitleSlide("Security", sound = "data/sound/e4/slide5-0.mp3", wait_time=2),
+    Security(),
     Subscribe("data/sound/episode1/s28.wav"),
+    CreditsE4(),
 ]
 
 EPISODE5 = [
@@ -191,10 +206,10 @@ DECKS = {
     "E5": EPISODE5,
 }
 
-DEFAULT_DECK = "E3"
+DEFAULT_DECK = "E4"
 
 
-class Episode3(Scene):
+class Episode4(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
