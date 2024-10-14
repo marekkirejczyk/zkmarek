@@ -35,7 +35,8 @@ class Security(SlideBase):
         self.y = poly(self.z)
         self.fake_z = FieldElement(32, 41)
         self.fake_y = poly(self.fake_z)
-        self.sdh = Text("q-strong SDH assumption", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.chart, RIGHT).shift(UP*1.5+RIGHT)
+        self.sdh = Text("q-SDH assumption", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.chart, RIGHT).shift(UP*1.5+RIGHT)
+        self.more_info = Text("for more info, click the link in the description!", color = PRIMARY_COLOR, font_size=25).next_to(self.sdh, DOWN).shift(DOWN)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "fake proof", "data/sound/e4/slide5-1.mp3")
@@ -49,8 +50,6 @@ class Security(SlideBase):
         line_correct_y = self.chart.animate_create_horizontal_line(
             scene, self.y.value, 0, self.z.value
         )
-        # scene.play(Create(line_correct_y), run_time=0.05)
-        # scene.play(Create(line_z), run_time=0.05)
         scene.play(Write(self.correct_opening))
         scene.play(Create(self.arrow_correct), FadeIn(self.correct_text))
 
@@ -58,7 +57,6 @@ class Security(SlideBase):
         line_fake_y = self.chart.animate_create_horizontal_line(
             scene, self.fake_y.value, 0, self.fake_z.value
         )
-        # scene.play(Create(line_fake_y), run_time=0.05)
         scene.play(Write(self.fake_opening))
         scene.play(Create(self.arrow_fake), FadeIn(self.fake_text))
         scene.wait(1)
@@ -86,7 +84,7 @@ class Security(SlideBase):
         self.new_subsection(scene, "fake division", "data/sound/e4/slide5-3.mp3")
         self.division_fake.next_to(self.fake_opening, DOWN)
         self.division_fake_frac.next_to(self.fake_opening, DOWN)
-        scene.play(Write(self.division_fake), TransformMatchingShapes(self.division_correct_frac, self.division_correct), run_time=1)
+        scene.play(Write(self.division_fake), run_time=1)
         scene.play(Indicate(self.fake_opening, color = HIGHLIGHT_COLOR))
         scene.play(Indicate(line_fake_y, color = HIGHLIGHT_COLOR, scale_factor=2))
         scene.wait(0.5)
@@ -105,13 +103,14 @@ class Security(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "SDH assumption", "data/sound/e4/slide5-4.mp3")
-        scene.play(FadeOut(self.fake_opening, self.division_correct, self.division_fake_frac, self.correct_opening, self.brace_label, self.remainder_brace, self.strike))
+        scene.play(FadeOut(self.fake_opening, self.division_correct_frac, self.division_fake_frac, self.correct_opening, self.brace_label, self.remainder_brace, self.strike))
         scene.wait(1)
         scene.play(Write(self.sdh))
+        scene.play(FadeIn(self.more_info))
         scene.wait(2)
         scene.play(FadeOut(line_z, line_fake_y, line_correct_y))
         scene.wait(2)
 
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_text, self.chart, self.sdh))
+        scene.play(FadeOut(self.title_text, self.chart, self.sdh, self.more_info))

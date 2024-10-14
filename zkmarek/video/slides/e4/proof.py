@@ -13,6 +13,8 @@ from manim import (
     ImageMobject,
     Text,
     Arrow,
+    Transform,
+    CurvedArrow,
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -65,6 +67,7 @@ class Proof1(SlideBase):
         self.opening5 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} {{(...)}}", color = PRIMARY_COLOR)
         self.opening6 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} \cdot {{ q(x)}}", color = PRIMARY_COLOR)
         self.opening7 = MathTex(r"\frac{  p(x) - y_0 }{ (x-x_0) } = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
+        self.opening8 = MathTex(r"{{q(x)}} = \frac{  p(x) - y_0 }{ (x-x_0) } {{}} ", color = PRIMARY_COLOR)
 
         self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
         self.commiter = ImageMobject("data/images/person_blue.png").to_corner(LEFT+UP).scale(0.6).shift(RIGHT)
@@ -91,6 +94,7 @@ class Proof1(SlideBase):
         self.opening5.next_to(self.opening, DOWN)
         self.opening6.next_to(self.opening, DOWN)
         self.opening7.next_to(self.opening, DOWN)
+        self.opening8.next_to(self.opening, DOWN)
 
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
@@ -139,11 +143,11 @@ class Proof1(SlideBase):
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
         self.chart.animate_shift_dots_with_fade(scene, self.y.value)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
+        scene.play(FadeOut(line_tau, line_tau_y, line_z))
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
         scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         scene.wait(1.8)
-        scene.play(FadeOut(line_tau, line_tau_y, line_z))
         self.chart.remove(line_tau)
         self.chart.remove(line_tau_y)
         self.chart.remove(line_z)
@@ -173,11 +177,14 @@ class Proof1(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.opening7[0], color = HIGHLIGHT2_COLOR))
         scene.wait(3)
+        self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening8, DOWN).shift(DOWN+LEFT*0.1)
+        self.arrow_quotient = CurvedArrow(self.opening8[0].get_left(), self.quotient_text.get_left(), color = SECONDARY_COLOR)
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
-        scene.play(TransformMatchingShapes(self.opening7, self.opening6))
-        scene.play(Indicate(self.opening6[6], color = HIGHLIGHT_COLOR))
-        scene.wait(8.5)
+        scene.play(Transform(self.opening7, self.opening8))
+        scene.wait(1)
+        scene.play(FadeIn(self.arrow_quotient, self.quotient_text), run_time=1)
+        scene.wait(6.5)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.r_of_x, self.opening6, self.opening))
+        scene.play(FadeOut(self.chart, self.r_of_x, self.opening8, self.opening, self.arrow_quotient, self.quotient_text))

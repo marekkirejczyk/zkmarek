@@ -65,7 +65,7 @@ class Commitment(SlideBase):
 
         bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
         self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
-        self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
+        self.proof = MathTex(r"\mathrm{proof} \ \pi", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
             [0.06, 0.08, 0], 
@@ -102,10 +102,12 @@ class Commitment(SlideBase):
             color=SECONDARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
+        self.commitment_text = Text("Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.envelope_body_closed, DOWN+RIGHT).shift(DOWN*0.5+RIGHT*0.7)
+        self.arrow_commitment = CurvedArrow(self.commitment_text.get_left(), self.envelope_body_closed.get_right(), color = HIGHLIGHT2_COLOR).shift(UP*0.2)
 
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
+        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap), FadeIn(self.commitment_text, self.arrow_commitment))
         self.dots = VGroup(*self.chart.dots).copy()
         self.lock_copy = self.lock.copy()
         self.lock_copy.generate_target()
@@ -120,7 +122,7 @@ class Commitment(SlideBase):
         commitment_sent.target.shift(9.5*RIGHT+DOWN*0.7)
         self.envelope_flap.shift(9.5*RIGHT+DOWN*0.7)
 
-        scene.play(MoveToTarget(commitment_sent), run_time=1.8)
+        scene.play(MoveToTarget(commitment_sent), FadeOut(self.arrow_commitment, self.commitment_text), run_time=1.8)
 
         scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))

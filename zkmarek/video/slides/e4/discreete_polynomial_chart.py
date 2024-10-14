@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
@@ -48,6 +48,16 @@ class DiscreetePolynomialChart(VGroup):
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
+
+    def indicate_point(self, scene, value_at_x):
+        for i in range(0, self.p):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            dot = Dot(self.ax.coords_to_point(x.value, y.value), color=HIGHLIGHT_COLOR)
+            dot.set_z_index(10, family=True)
+
+            if x == value_at_x:
+                scene.play(Indicate(dot, scale_factor=3))
 
     def gen_points2(self):
         for i in range(0, self.p):
