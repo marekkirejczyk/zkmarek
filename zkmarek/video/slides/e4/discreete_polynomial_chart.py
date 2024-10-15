@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
@@ -58,6 +58,8 @@ class DiscreetePolynomialChart(VGroup):
 
             if x == value_at_x:
                 scene.play(Indicate(dot, scale_factor=3))
+                scene.play(FadeOut(dot))
+
 
     def gen_points2(self):
         for i in range(0, self.p):
