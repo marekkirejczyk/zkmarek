@@ -321,7 +321,8 @@ class Polynomials(SlideBase):
         self.value_at_two = poly(self.polynomial_at_two)
         self.chart3.indicate_point(scene, self.polynomial_at_two)
         # self.change_chart_axes(scene, self.chart)
-
+        scene.play(Indicate(self.p2))
+        
         scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=0.5)
         scene.play(Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
         scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))

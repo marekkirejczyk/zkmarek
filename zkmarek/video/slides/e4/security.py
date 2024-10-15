@@ -36,7 +36,7 @@ class Security(SlideBase):
         self.fake_z = FieldElement(32, 41)
         self.fake_y = poly(self.fake_z)
         self.sdh = Text("q-SDH assumption", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.chart, RIGHT).shift(UP*1.5+RIGHT)
-        self.more_info = Text("for more info, click the link in the description!", color = PRIMARY_COLOR, font_size=25).next_to(self.sdh, DOWN).shift(DOWN)
+        self.more_info = Text("for more info, click the link in the description!", color = PRIMARY_COLOR, font_size=25, font = PRIMARY_FONT).next_to(self.sdh, DOWN).shift(DOWN)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "fake proof", "data/sound/e4/slide5-1.mp3")
