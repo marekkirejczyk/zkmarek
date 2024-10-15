@@ -320,7 +320,7 @@ class Polynomials(SlideBase):
         self.change_chart_axes(scene, self.chart)
 
         scene.play(TransformMatchingShapes(self.polynomial0_modulo5, self.polynomial1_modulo5), run_time=0.5)
-        scene.play(Indicate(self.p1, color = HIGHLIGHT_COLOR), Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
+        scene.play(Indicate(self.polynomial1_modulo5[11], color = HIGHLIGHT_COLOR), run_time=1.2)
         scene.play(Indicate(self.polynomial1_modulo5[13], color = HIGHLIGHT_COLOR))
         scene.wait(4.5)
         scene.play(ApplyWave(self.chart3.ax[1], DIRECTION=UP))
@@ -342,12 +342,12 @@ class Polynomials(SlideBase):
         scene.wait(2.3)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart3, self.p_order, self.chart.graph, self.chart.ax, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))
+        scene.play(FadeOut(self.chart3, self.p_order, self.chart.graph, self.chart.ax, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3, self.p5_new))
 
 
     def change_chart_axes(self, scene, chart):
         new_axes = Axes(
-            x_range=[-4.7, 6, 1],
+            x_range=[-4.7, 5.5, 1],
             y_range=[-5.5, 250, 20],
             x_length=7,
             axis_config={
@@ -359,14 +359,18 @@ class Polynomials(SlideBase):
                 }
             }
         )
-        self.p0.shift(DOWN*2.7+LEFT*0.1)
-        self.p2.shift(DOWN*0.13+LEFT*0.08)
-        self.p1.shift(DOWN*1.05+LEFT*0.2)
-        self.p3.shift(DOWN*1.2+LEFT*0.2)
+        self.p0.generate_target()
+        self.p0.target.shift(DOWN*2.91)
+        self.p1.generate_target()
+        self.p1.target.shift(DOWN*1.2)
+        self.p2.generate_target()
+        self.p2.target.shift(DOWN*0.19+LEFT*0.05)
+        self.p3.generate_target()
+        self.p3.target.shift(DOWN*1.67+LEFT*0.04)
         self.p5_245 = ValueTracker(5)
         a5_245 = Curve.from_x(self.p5_245.get_value())
         self.p5_new = DotOnCurve(self.chart.ax, "(5, 245)", a5_245) 
-        self.p5_new.next_to(self.p3, RIGHT).shift(UP*2.5)
+        self.p5_new.next_to(self.p3, RIGHT).shift(UP*2.7+LEFT*0.4)
 
         new_axes.scale(0.8).shift(LEFT*4+UP*0.15)
         scene.play(
@@ -374,5 +378,9 @@ class Polynomials(SlideBase):
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: 4 * x**3 - 8 * x**2 - 17 * x + 30 - y,
                 color=SECONDARY_COLOR
-            )), Create(self.p5_new),
+            )), Create(self.p5_new), 
+            MoveToTarget(self.p0),
+            MoveToTarget(self.p1),
+            MoveToTarget(self.p2),
+            MoveToTarget(self.p3),
             run_time=2)

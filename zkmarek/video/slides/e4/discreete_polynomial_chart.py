@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
@@ -88,7 +88,7 @@ class DiscreetePolynomialChart(VGroup):
     def animate_create_horizontal_line(self, scene, y, x_left, x_right):
         s = self.ax.c2p(x_left, y)
         e = self.ax.c2p(x_right, y)
-        line = Line(s, e, color=SECONDARY_COLOR, z_index=0)
+        line = DashedLine(s, e, color=SECONDARY_COLOR, z_index=0)
         scene.play(GrowFromPoint(line, point=s))
         scene.wait(1)
         return line
