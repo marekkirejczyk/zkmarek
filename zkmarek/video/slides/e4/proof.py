@@ -14,7 +14,6 @@ from manim import (
     Text,
     Arrow,
     Transform,
-    CurvedArrow,
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -178,7 +177,7 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.opening7[0], color = HIGHLIGHT2_COLOR))
         scene.wait(3)
         self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening8, DOWN).shift(DOWN+LEFT*0.1)
-        self.arrow_quotient = CurvedArrow(self.opening8[0].get_left(), self.quotient_text.get_left(), color = SECONDARY_COLOR)
+        self.arrow_quotient = Arrow(self.quotient_text.get_left(), self.opening8[0].get_left(), color = SECONDARY_COLOR).scale(0.8)
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.play(Transform(self.opening7, self.opening8))

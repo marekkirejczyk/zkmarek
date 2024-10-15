@@ -244,7 +244,7 @@ class Proof2(SlideBase):
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
         self.new_subsection(scene, "RHS", "data/sound/e4/slide4-4.mp3")
-        scene.wait(6)
+        scene.wait(4)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.wait(0.8)
         scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
