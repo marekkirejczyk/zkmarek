@@ -171,6 +171,11 @@ class KZG(SlideBase):
         scene.play(Write(self.proof), run_time=0.5)
         scene.wait(1.5)
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
+        self.proof.generate_target()
+        self.proof.target.next_to(self.verifier, UP)
+        self.opening.generate_target()
+        self.opening.target.next_to(self.verifier, UP).shift(UP)
+        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening))
         scene.play(FadeOut(bubble_committer, bubble_opening, tail))
 
     def animate_out(self, scene):

@@ -13,7 +13,6 @@ from manim import (
     ImageMobject,
     Text,
     Arrow,
-    Transform,
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -60,13 +59,12 @@ class Proof1(SlideBase):
         self.commitment_quotient = MathTex(r"{{C}} = {{p(\tau)}}\cdot {{G_1}}", color = SECONDARY_COLOR).to_edge(RIGHT).shift(LEFT*2)
 
         self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y_0}}", color = PRIMARY_COLOR)
-        self.opening2 = MathTex(r"{{p(x_0)}} {{- y_0}} = {{0}}", color = PRIMARY_COLOR)
-        self.opening3 = MathTex(r"{{p(x)}} {{- y_0}} = {{r(x)}} {{}}", color = PRIMARY_COLOR)
-        self.opening4 = MathTex(r"{{p(x_0)}} {{- y_0}} = {{r(x_0)}} {{=0}}", color = PRIMARY_COLOR)
-        self.opening5 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} {{(...)}}", color = PRIMARY_COLOR)
-        self.opening6 = MathTex(r"{{p(x)}} {{- y_0}} {{}} {{=(x-x_0)}} \cdot {{ q(x)}}", color = PRIMARY_COLOR)
-        self.opening7 = MathTex(r"\frac{  p(x) - y_0 }{ (x-x_0) } = {{}} {{}} {{q(x)}}", color = PRIMARY_COLOR)
-        self.opening8 = MathTex(r"{{q(x)}} = \frac{  p(x) - y_0 }{ (x-x_0) } {{}} ", color = PRIMARY_COLOR)
+        self.opening2 = MathTex(r"{{}} {{p(x_0)}} {{- y_0}} = {{0}}", color = PRIMARY_COLOR)
+        self.opening3 = MathTex(r"{{r(x)=}} {{p(x)}} {{- y_0}} {{}}", color = PRIMARY_COLOR)
+        self.opening4 = MathTex(r"{{r(x_0)=}}{{p(x_0)}} {{- y_0}} {{=0}}", color = PRIMARY_COLOR)
+        self.opening5 = MathTex(r"{{(x-x_0)}} {{(...)=}}{{p(x)}} {{- y_0}} {{}} ", color = PRIMARY_COLOR)
+        self.opening6 = MathTex(r"{{=(x-x_0)}} \cdot {{ q(x)=}}{{p(x)}} {{- y_0}} {{}} ", color = PRIMARY_COLOR)
+        self.opening7 = MathTex(r"{{}} {{q(x)=}}\frac{  p(x) - y_0 }{ (x-x_0) } = {{}}", color = PRIMARY_COLOR)
 
         self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
         self.commiter = ImageMobject("data/images/person_blue.png").to_corner(LEFT+UP).scale(0.6).shift(RIGHT)
@@ -93,7 +91,6 @@ class Proof1(SlideBase):
         self.opening5.next_to(self.opening, DOWN)
         self.opening6.next_to(self.opening, DOWN)
         self.opening7.next_to(self.opening, DOWN)
-        self.opening8.next_to(self.opening, DOWN)
 
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
@@ -127,28 +124,19 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
 
         scene.play(TransformMatchingShapes(self.opening4, self.opening3))
-        line_tau = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value
-        )
-        line_tau_y = self.chart.animate_create_vertical_line(
-            scene, self.tau.value, self.value_at_tau.value - self.y.value
-        )   
-        self.chart.add(line_tau_y)
-        self.chart.add(line_tau)
+
         scene.wait(1)
         self.dots = VGroup(*self.chart.dots)
         scene.play(Indicate(self.dots, color=HIGHLIGHT2_COLOR, scale=1.05))
         scene.wait(2)
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
         self.chart.animate_shift_dots_with_fade(scene, self.y.value)
-        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
-        scene.play(FadeOut(line_tau, line_tau_y, line_z))
+        scene.play(FadeOut(line_z))
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
+        self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         scene.wait(1.8)
-        self.chart.remove(line_tau)
-        self.chart.remove(line_tau_y)
         self.chart.remove(line_z)
 
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
@@ -180,10 +168,9 @@ class Proof1(SlideBase):
         self.arrow_quotient = Arrow(self.quotient_text.get_left(), self.opening8[0].get_left(), color = SECONDARY_COLOR).scale(0.8)
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
-        scene.play(Transform(self.opening7, self.opening8))
         scene.wait(1)
         scene.play(FadeIn(self.arrow_quotient, self.quotient_text), run_time=1)
-        scene.wait(6.5)
+        scene.wait(8)
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart, self.r_of_x, self.opening8, self.opening, self.arrow_quotient, self.quotient_text))
+        scene.play(FadeOut(self.chart, self.r_of_x, self.opening, self.arrow_quotient, self.quotient_text))
