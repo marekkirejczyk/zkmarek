@@ -53,8 +53,8 @@ class Commitment(SlideBase):
         self.tau = FieldElement(18, 41)
         self.value_at_tau = poly(self.tau)
         self.chart = DiscreetePolynomialChart(41, poly)
-        self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
+        self.label_x_0 = self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
+        self.label_tau = self.chart.add_xaxis_label(self.tau.value, r"\tau")
         self.chart.scale(0.4)
 
     def animate_in(self, scene):
@@ -134,6 +134,7 @@ class Commitment(SlideBase):
         self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
         scene.wait(0.2)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier), Create(self.circle))
+        self.chart.indicate_xaxis_label(scene, self.label_x_0)
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)

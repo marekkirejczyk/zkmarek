@@ -61,7 +61,7 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification0a = MathTex(
-            r"e( {{\pi}}, {{\tau\cdot G_2}} {{-x_0 \cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, {{(\tau}} {{-x_0)}} {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
@@ -135,9 +135,8 @@ class Proof2(SlideBase):
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
 
         self.final_verification = MathTex(r"{{p(x_0)}} = {{y_0}} {{}}", color = PRIMARY_COLOR).shift(UP*2)
-        self.final_verification2 = MathTex(r"{{p(x_0)}} - {{y_0}} = {{0}} {{}}", color = PRIMARY_COLOR).shift(UP*1)
-        self.final_verification3 = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} \cdot {{q(x)}}", color = PRIMARY_COLOR)
-        self.final_verification4 = MathTex(r"{{q(x)}} \cdot {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR)
+        self.final_verification2 = MathTex(r"{{}} {{}} {{p(x_0)}} - {{y_0}} = {{0}}", color = PRIMARY_COLOR).shift(UP*1)
+        self.final_verification3 = MathTex(r"{{q(x)}} \cdot {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR)
         self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = HIGHLIGHT_COLOR)
 
     def animate_in(self, scene):
@@ -236,10 +235,10 @@ class Proof2(SlideBase):
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
         scene.wait(0.5)
-        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.8)
 
-        scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.verification0a[4], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR))
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
@@ -281,15 +280,13 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-8.mp3")
-        scene.wait(1)
-        scene.play(TransformMatchingShapes(self.final_verification3, self.final_verification4))
-        scene.wait(2)
+        scene.wait(4)
         scene.play(Create(self.arrow))
         scene.wait(1)
-        scene.play(Indicate(self.verification4[0], color = HIGHLIGHT_COLOR), Indicate(self.final_verification4[0], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.verification4[4], color = HIGHLIGHT_COLOR), Indicate(self.final_verification4[2], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.verification4[6], color = HIGHLIGHT_COLOR), Indicate(self.final_verification4[4], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[0], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[0], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[4], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[2], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[6], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
 
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4, self.final_verification4, self.arrow, self.final_verification, self.final_verification2))
+        scene.play(FadeOut(self.commitment, self.lock, self.opening, self.chart, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title, self.proof, self.verification4, self.final_verification3, self.arrow, self.final_verification, self.final_verification2))

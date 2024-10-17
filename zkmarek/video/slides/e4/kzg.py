@@ -168,15 +168,15 @@ class KZG(SlideBase):
         scene.wait(2)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.play(Write(self.proof), run_time=0.5)
+        scene.play(Write(self.proof), FadeOut(self.circle_full), run_time=0.5)
         scene.wait(1.5)
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP)
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP).shift(UP)
-        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening))
         scene.play(FadeOut(bubble_committer, bubble_opening, tail))
+        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening))
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.circle_full, self.title_text_kzg, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
+        scene.play(FadeOut(self.commiter, self.title_text_kzg, self.commiter_label, self.verifier, self.verifier_label, self.commitment, self.envelope_body_closed, self.envelope_flap_closed, self.chart, self.opening, self.lock, self.proof))
