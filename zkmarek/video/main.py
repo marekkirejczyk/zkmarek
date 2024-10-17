@@ -180,7 +180,7 @@ EPISODE4 = [
     Commitment(),
     TitleSlide("KZG", subtitle="Kate, Zaverucha, Goldberg", sound = "data/sound/e4/slide2-4.mp3"),
     KZG(),
-    TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3"),
+    TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3", wait_time=0.5),
     Proof1(),
     Proof2(),
     TitleSlide("Security", sound = "data/sound/e4/slide5-0.mp3", wait_time=2),

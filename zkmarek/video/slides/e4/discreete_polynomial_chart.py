@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup
+from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
@@ -49,6 +49,18 @@ class DiscreetePolynomialChart(VGroup):
             self.dots.append(dot)
             self.add(dot)
 
+    def indicate_point(self, scene, value_at_x):
+        for i in range(0, self.p):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            dot = Dot(self.ax.coords_to_point(x.value, y.value), color=HIGHLIGHT_COLOR)
+            dot.set_z_index(10, family=True)
+
+            if x == value_at_x:
+                scene.play(Indicate(dot, scale_factor=3))
+                scene.play(FadeOut(dot))
+
+
     def gen_points2(self):
         for i in range(0, self.p):
             x = FieldElement(i, self.p)
@@ -62,6 +74,10 @@ class DiscreetePolynomialChart(VGroup):
         label = MathTex(label, color=PRIMARY_COLOR)
         label.move_to(self.ax.coords_to_point(x, -3))
         self.add(label)
+        return label
+    
+    def indicate_xaxis_label(self, scene, label):
+        scene.play(Indicate(label, scale_factor=1.7, color=HIGHLIGHT_COLOR))
 
     def add_yaxis_label(self, y, label):
         label = MathTex(label, color=PRIMARY_COLOR)
@@ -78,7 +94,7 @@ class DiscreetePolynomialChart(VGroup):
     def animate_create_horizontal_line(self, scene, y, x_left, x_right):
         s = self.ax.c2p(x_left, y)
         e = self.ax.c2p(x_right, y)
-        line = Line(s, e, color=SECONDARY_COLOR, z_index=0)
+        line = DashedLine(s, e, color=SECONDARY_COLOR, z_index=0)
         scene.play(GrowFromPoint(line, point=s))
         scene.wait(1)
         return line
@@ -116,7 +132,7 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
             else:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.1))
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.4))
 
     
         scene.play(*animations)
