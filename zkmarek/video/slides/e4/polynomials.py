@@ -274,10 +274,10 @@ class Polynomials(SlideBase):
         scene.wait(0.5)
 
         self.new_subsection(scene, "finite fields", "data/sound/e4/slide1-6.mp3")
-        self.polynomial.set_opacity(1)
         scene.play(Unwrite(self.label_poly_r), FadeOut(self.intersect1, self.intersect2, self.intersect_sub, self.subtract_z_roots_b2), run_time=0.7)
         self.chart3.gen_points()
         scene.play(Create(self.chart3), TransformMatchingShapes(self.chart.graph3, self.chart.graph), run_time=1.5)
+        self.polynomial.set_opacity(1)
         scene.wait(4)
         scene.play(ApplyWave(self.chart3.ax[0]), ApplyWave(self.chart3.ax[1]), DIRECTION=UP)
         scene.wait(4)

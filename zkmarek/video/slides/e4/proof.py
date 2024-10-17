@@ -170,7 +170,7 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.wait(1)
         scene.play(FadeIn(self.arrow_quotient, self.quotient_text), run_time=1)
-        scene.wait(10)
+        scene.wait(6)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart, self.r_of_x, self.opening, self.arrow_quotient, self.quotient_text, self.opening7))

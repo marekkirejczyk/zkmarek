@@ -61,7 +61,7 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification0a = MathTex(
-            r"e( {{\pi}}, {{(\tau}} {{-x_0)}} {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, ({{(tau}} {{-x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
@@ -235,10 +235,10 @@ class Proof2(SlideBase):
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
         scene.wait(0.5)
-        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[6], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.8)
 
-        scene.play(Indicate(self.verification0a[4], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.verification0a[4], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR))
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
@@ -277,7 +277,6 @@ class Proof2(SlideBase):
         scene.play(Write(self.final_verification3))
         scene.wait(1)
 
-        scene.play(Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-8.mp3")
         scene.wait(4)
