@@ -15,10 +15,10 @@ def poly(x):
 class Commitment(SlideBase):
 
     def __init__(self):
-        super().__init__("Polynomial commitments")
+        super().__init__("Polynomial Commitments")
 
     def construct(self):
-        self.title_text = Text("Polynomial commitments", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
+        self.title_text = Text("Polynomial Commitments", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5).scale(0.6)
         self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*2).scale(0.6)
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)

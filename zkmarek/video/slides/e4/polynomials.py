@@ -343,7 +343,7 @@ class Polynomials(SlideBase):
         scene.play(Write(self.p_order))
         scene.wait(1)
         scene.play(FadeOut(top_val, self.top_value))
-        scene.wait(2.5)
+        scene.wait(4.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart3, self.p_order, self.chart.graph, self.chart.ax, self.chart.labels, self.title_label, self.polynomial1_modulo5, self.p0, self.p1, self.p2, self.p3))

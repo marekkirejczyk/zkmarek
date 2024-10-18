@@ -88,8 +88,8 @@ class Security(SlideBase):
         scene.play(Indicate(line_fake_y, color = HIGHLIGHT_COLOR, scale_factor=2))
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.division_fake, self.division_fake_frac))
-        self.remainder_brace = Brace(self.division_fake_frac[2], DOWN, color = PRIMARY_COLOR)
-        self.brace_label = Text(r"remainder", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.remainder_brace = Brace(self.division_fake_frac[2], DOWN, color = SECONDARY_COLOR)
+        self.brace_label = Text(r"remainder", font_size=30, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         self.remainder_brace.put_at_tip(self.brace_label)
 
         scene.play(FadeIn(self.remainder_brace))
@@ -107,7 +107,7 @@ class Security(SlideBase):
         scene.play(Write(self.sdh))
         scene.wait(2)
         scene.play(FadeOut(line_z, line_fake_y, line_correct_y))
-        scene.wait(2)
+        scene.wait(4)
 
 
     def animate_out(self, scene):

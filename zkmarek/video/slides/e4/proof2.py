@@ -19,6 +19,7 @@ from manim import (
     Tex,
     RoundedRectangle,
     Arrow,
+    StealthTip
 )
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
@@ -53,7 +54,7 @@ class Proof2(SlideBase):
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
         self.equation = MathTex(r"{{q(\tau)}}\cdot {{(\tau - x_0)}} = {{p(\tau)}} - {{y_0}}", color=PRIMARY_COLOR)
         self.equation2 = MathTex(r"{{q(x)}}\cdot {{(x - x_0)}} = {{p(x)}} - {{y_0}}", color=PRIMARY_COLOR)
-        self.commitment = MathTex(r"{{C}} = {{ p(\tau)}} \cdot {{G_1}}", font_size = 32, color=PRIMARY_COLOR)
+        self.commitment = MathTex(r"{{C}} = {{p(\tau)}} \cdot {{G_1}}", font_size = 32, color=PRIMARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color=PRIMARY_COLOR)
 
         self.verification = MathTex(
@@ -61,20 +62,20 @@ class Proof2(SlideBase):
             color=PRIMARY_COLOR,
         )
         self.verification0a = MathTex(
-            r"e( {{\pi}}, ({{(tau}} {{-x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
         self.verification1 = MathTex(
-            r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
 
         self.verification2 = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification2a = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot}} {{G_2}} ) = e({{p(\tau)\cdot G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot}} {{G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color = PRIMARY_COLOR
         ).to_edge(DOWN)
         self.verification3 = MathTex(
@@ -87,6 +88,10 @@ class Proof2(SlideBase):
         ).to_edge(DOWN)
         self.verification4 = MathTex(
             r"{{q(\tau)}} {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}",
+            color=PRIMARY_COLOR,
+        ).to_edge(DOWN)
+        self.verification5 = MathTex(
+            r"q({{\tau}}) {{\cdot}} ({{\tau}}-x_0) = p({{\tau}}) - {{y_0}}",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
 
@@ -108,6 +113,7 @@ class Proof2(SlideBase):
         self.verification3.to_edge(DOWN).shift(UP*0.5)
         self.verification3a.to_edge(DOWN).shift(UP*0.5)
         self.verification4.to_edge(DOWN).shift(UP*0.5)
+        self.verification5.to_edge(DOWN).shift(UP*0.5)
         self.chart.next_to(self.commiter_label, DOWN, buff = -1).scale(0.4)
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
@@ -137,7 +143,7 @@ class Proof2(SlideBase):
         self.final_verification = MathTex(r"{{p(x_0)}} = {{y_0}} {{}}", color = PRIMARY_COLOR).shift(UP*2)
         self.final_verification2 = MathTex(r"{{}} {{}} {{p(x_0)}} - {{y_0}} = {{0}}", color = PRIMARY_COLOR).shift(UP*1)
         self.final_verification3 = MathTex(r"{{q(x)}} \cdot {{(x-x_0)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR)
-        self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = HIGHLIGHT_COLOR)
+        self.arrow = Arrow(self.final_verification3.get_bottom(), self.verification4.get_top(), color = HIGHLIGHT_COLOR, tip_shape=StealthTip)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "one last time", "data/sound/e4/slide4-2a.mp3")
@@ -235,10 +241,10 @@ class Proof2(SlideBase):
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.verification, self.verification0a), run_time=1.2)
         scene.wait(0.5)
-        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[6], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.verification0a[3], color = HIGHLIGHT_COLOR), Indicate(self.verification0a[7], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(3.8)
 
-        scene.play(Indicate(self.verification0a[4], color = HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.verification0a[5], color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR))
         scene.play(TransformMatchingShapes(self.verification0a, self.verification))
 
@@ -279,12 +285,16 @@ class Proof2(SlideBase):
 
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-8.mp3")
-        scene.wait(4)
-        scene.play(Create(self.arrow))
-        scene.wait(1)
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.verification4, self.verification5))
+        scene.wait(1.5)
+        scene.play(Create(self.arrow), Indicate(self.verification5[1], color = HIGHLIGHT_COLOR), Indicate(self.verification5[5], color = HIGHLIGHT_COLOR), Indicate(self.verification5[7], color = HIGHLIGHT_COLOR))
+        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(self.verification5, self.verification4))
         scene.play(Indicate(self.verification4[0], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[0], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.verification4[4], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[2], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.verification4[6], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[8], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
 
 
     def animate_out(self, scene):

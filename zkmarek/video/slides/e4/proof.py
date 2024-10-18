@@ -13,6 +13,7 @@ from manim import (
     ImageMobject,
     Text,
     Arrow,
+    StealthTip
 )
 
 from zkmarek.crypto.field_element import FieldElement
@@ -117,7 +118,7 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "p(x)-y as polynomial", "data/sound/e4/slide3-4.mp3")
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.opening2, self.opening3), run_time=1.5)
-        scene.wait(4.5)
+        scene.wait(5.5)
         scene.play(TransformMatchingShapes(self.opening3, self.opening4), run_time=1.5)
         scene.wait(1.2)
 
@@ -132,12 +133,13 @@ class Proof1(SlideBase):
         scene.play(Indicate(line_z, color = HIGHLIGHT2_COLOR), run_time=1)
         self.chart.animate_shift_dots_with_fade(scene, self.y.value)
         scene.play(FadeOut(line_z))
+        self.chart.remove(line_z)
         
         self.new_subsection(scene, "modulo operation", "data/sound/e4/slide3-4b.mp3")
+        scene.wait(3.2)
         self.chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(TransformMatchingShapes(self.polynomial, self.r_of_x))
         scene.wait(2.8)
-        self.chart.remove(line_z)
 
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
@@ -165,7 +167,7 @@ class Proof1(SlideBase):
         scene.play(Indicate(self.opening7[0], color = HIGHLIGHT2_COLOR))
         scene.wait(3)
         self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening7, DOWN).shift(DOWN+LEFT*0.1)
-        self.arrow_quotient = Arrow(self.quotient_text.get_left(), self.opening7[1].get_left(), color = SECONDARY_COLOR).scale(0.8)
+        self.arrow_quotient = Arrow(self.quotient_text.get_left(), self.opening7[1].get_left(), color = SECONDARY_COLOR, tip_shape=StealthTip).scale(0.8)
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
         scene.wait(1)
