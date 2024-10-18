@@ -146,7 +146,7 @@ class Polynomial(SlideBase):
         scene.play(MoveToTarget(self.vector), FadeIn(self.polynomial), run_time=1)
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(VGroup(self.polynomial, self.vector[0][1].copy(), self.vector[1][1].copy()), self.polynomial_tau0))
-        scene.wait(3)
+        scene.wait(1.5)
         scene.play(Indicate(self.polynomial_tau0[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_tau0[9], color = HIGHLIGHT_COLOR))
         scene.wait(1.5)
         scene.play(FadeOut(self.polynomial_tau0, self.vector, text, rectangle))

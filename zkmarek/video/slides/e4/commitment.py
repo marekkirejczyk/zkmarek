@@ -15,10 +15,10 @@ def poly(x):
 class Commitment(SlideBase):
 
     def __init__(self):
-        super().__init__("Polynomial commitments")
+        super().__init__("Polynomial Commitments")
 
     def construct(self):
-        self.title_text = Text("Polynomial commitments", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
+        self.title_text = Text("Polynomial Commitments", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5).scale(0.6)
         self.commiter = ImageMobject("data/images/person_blue.png").shift(LEFT*2).scale(0.6)
         self.commiter_label = Text("Committer", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
@@ -53,8 +53,8 @@ class Commitment(SlideBase):
         self.tau = FieldElement(18, 41)
         self.value_at_tau = poly(self.tau)
         self.chart = DiscreetePolynomialChart(41, poly)
-        self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
+        self.label_x_0 = self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
+        self.label_tau = self.chart.add_xaxis_label(self.tau.value, r"\tau")
         self.chart.scale(0.4)
 
     def animate_in(self, scene):
@@ -65,7 +65,7 @@ class Commitment(SlideBase):
 
         bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
         self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
-        self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
+        self.proof = MathTex(r"\mathrm{proof} \ \pi", font_size=32, color = PRIMARY_COLOR)
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
             [0.06, 0.08, 0], 
@@ -102,10 +102,12 @@ class Commitment(SlideBase):
             color=SECONDARY_COLOR,
             fill_opacity=0.4
         ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
+        self.commitment_text = Text("Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.envelope_body_closed, DOWN+RIGHT).shift(DOWN*0.5+RIGHT*0.7)
+        self.arrow_commitment = CurvedArrow(self.commitment_text.get_left(), self.envelope_body_closed.get_right(), color = HIGHLIGHT2_COLOR).shift(UP*0.2)
 
 
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
+        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap), FadeIn(self.commitment_text, self.arrow_commitment))
         self.dots = VGroup(*self.chart.dots).copy()
         self.lock_copy = self.lock.copy()
         self.lock_copy.generate_target()
@@ -119,7 +121,7 @@ class Commitment(SlideBase):
         commitment_sent.generate_target()
         commitment_sent.target.shift(9.5*RIGHT+DOWN*0.7)
         self.envelope_flap.shift(9.5*RIGHT+DOWN*0.7)
-
+        scene.play(FadeOut(self.arrow_commitment, self.commitment_text))
         scene.play(MoveToTarget(commitment_sent), run_time=1.8)
 
         scene.play(Create(bubble_verifier), Create(tail_verifier))
@@ -132,6 +134,7 @@ class Commitment(SlideBase):
         self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
         scene.wait(0.2)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier), Create(self.circle))
+        self.chart.indicate_xaxis_label(scene, self.label_x_0)
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
@@ -141,12 +144,12 @@ class Commitment(SlideBase):
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
         scene.play(Write(self.proof))
         scene.wait(1)
-        scene.play(FadeOut(bubble_opening, tail))
+        scene.play(FadeOut(bubble_opening, tail), FadeOut(self.circle_full))
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP)
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP).shift(UP)
-        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), FadeOut(self.circle_full), run_time=1.5)
+        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=1.5)
         scene.wait(0.5)
         self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left(), color = HIGHLIGHT_COLOR)
         self.arrow_check_opening2 = CurvedArrow(self.proof.get_left(), self.envelope_flap_closed.get_left(), color = HIGHLIGHT_COLOR)
