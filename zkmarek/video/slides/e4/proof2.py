@@ -21,7 +21,7 @@ from manim import (
     Arrow,
     StealthTip
 )
-
+from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
@@ -30,7 +30,7 @@ def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7
 
 
-class Proof2(SlideBase):
+class Verification(SlideBase):
     polynomial: MathTex
     equation: MathTex
     commitment: MathTex
@@ -49,6 +49,12 @@ class Proof2(SlideBase):
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
 
         self.chart = DiscreetePolynomialChart(41, poly)
+        self.tau = FieldElement(33, 41)
+        self.value_at_tau = poly(self.tau)
+        self.z = FieldElement(13, 41)
+        self.y = poly(self.z)
+        self.chart.add_xaxis_label(self.z.value, r"x_0")
+        self.chart.add_xaxis_label(self.tau.value, r"\tau")
 
         self.definition2 = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color=PRIMARY_COLOR)
         self.polynomial = MathTex("p(x) = x^3 - 2x^2 + 3x + 4", color=PRIMARY_COLOR)
@@ -75,19 +81,19 @@ class Proof2(SlideBase):
         )
 
         self.verification2 = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification2a = MathTex(
-            r"e( {{q(\tau)}}{{\cdot G_1}}, {{(\tau-x_0)}} {{\cdot}} {{G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            r"e( {{q(\tau)}} \cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot}} {{G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color = PRIMARY_COLOR
         ).to_edge(DOWN)
         self.verification3 = MathTex(
-            r"e({{q(\tau)}}{{\cdot}} {{(\tau-x_0)}} {{\cdot G_1}}, {{G_2}}) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})",
+            r"e({{q(\tau)}}{{\cdot}} {{(\tau-x_0)}} {{\cdot~G_1}}, {{G_2}}) = e(({{p(\tau)}} - {{y_0}}) {{\cdot~G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification3a = MathTex(
-            r"{{e(}} {{q(\tau)}} {{\cdot}} {{(\tau-x_0)}} {{\cdot G_1}} , {{G_2)}} = {{e(}}[ {{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})",
+            r"{{e(}} {{q(\tau)}} {{\cdot}} {{(\tau-x_0)}} {{\cdot G_1}} , {{G_2)}} = {{e(}}( {{p(\tau)}} - {{y_0}}) {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         ).to_edge(DOWN)
         self.verification4 = MathTex(
@@ -161,14 +167,14 @@ class Proof2(SlideBase):
         scene.play(Create(self.chart), FadeIn(self.lock), run_time=1.3)
         scene.play(FadeIn(self.verifier), Write(self.verifier_label), run_rime=0.6)
 
-        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
+        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed, self.commitment))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
         self.dots = VGroup(*self.chart.dots).copy()
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), 
-                   FadeOut(self.envelope_flap), MoveToTarget(self.commitment), run_time=2)
+        scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed), 
+                   MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
         commitment_sent.target.shift(6.5*RIGHT+DOWN*2)
@@ -211,9 +217,9 @@ class Proof2(SlideBase):
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Create(bubble_opening), Create(tail))
         scene.play(FadeIn(self.opening, self.proof))
-        scene.wait(0.7)
         scene.play(Indicate(self.proof, color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
+        scene.wait(1.3)
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
         self.chart.generate_target()
         self.chart.target.scale(0.6).shift(UP*0.7)
@@ -232,7 +238,9 @@ class Proof2(SlideBase):
 
         self.new_subsection(scene, "we use eqn", "data/sound/e4/slide4-2.mp3")
         scene.play(Write(self.verification))
-        scene.wait(2.5)
+        scene.wait(0.5)
+        scene.play(Indicate(self.verification, color=HIGHLIGHT_COLOR), run_time=1)
+        scene.wait(1)
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR), 
                    Indicate(self.verification[1], color = SECONDARY_COLOR), 
                    run_time=1)
@@ -248,10 +256,7 @@ class Proof2(SlideBase):
         scene.wait(1.5)
         scene.play(Indicate(self.verification[1], color = SECONDARY_COLOR))
         scene.wait(2.5)
-        scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR))
-        scene.wait(2.3)
-        scene.play(Indicate(self.verification[5], color = SECONDARY_COLOR))
-        scene.wait(1.5)
+        scene.play(Indicate(self.verification[3], color = SECONDARY_COLOR), Indicate(self.verification[5], color = SECONDARY_COLOR))
 
         self.new_subsection(scene, "how the prover knows LHS", "data/sound/e4/slide4-3a.mp3")
         scene.wait(1)
@@ -269,49 +274,48 @@ class Proof2(SlideBase):
         scene.wait(4)
         scene.play(Indicate(self.verification[7], color = SECONDARY_COLOR))
         scene.wait(0.8)
-        scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR))
-
-        scene.play(Indicate(self.verification[11], color = SECONDARY_COLOR))
-        scene.wait(2)
+        scene.play(Indicate(self.verification[9], color = SECONDARY_COLOR), Indicate(self.verification[11], color = SECONDARY_COLOR))
 
         self.new_subsection(scene, "why the equation?", "data/sound/e4/slide4-4a.mp3")
         scene.play(TransformMatchingShapes(self.verification, self.verification0b))
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-5.mp3")
 
-        scene.play(FadeOut(self.verification0b[0], self.verification0b[1], self.verification0b[2],
-                           self.verification0b[3], self.verification0b[4], self.verification0b[5], 
-                           self.verification0b[6], self.verification0b[10], self.verification0b[11], 
-                           self.verification0b[12], self.verification0b[13], self.verification0b[14], 
-                           self.verification0b[15]), 
-                   TransformMatchingShapes(VGroup(self.commitment[2].copy(), self.commitment[3].copy(), 
-                                                  self.commitment[4].copy(), self.verification0b[9], 
-                                                  self.verification0b[8], self.verification0b[7]), 
-                                           VGroup(self.verification1[8], self.verification1[9], 
-                                                  self.verification1[10], self.verification1[7])), 
-                   FadeIn(self.verification1[0], self.verification1[1], self.verification1[2], 
-                          self.verification1[3], self.verification1[4], self.verification1[5], 
-                          self.verification1[6], self.verification1[11], self.verification1[12], 
-                          self.verification1[13], self.verification1[14], self.verification1[15], 
-                          self.verification1[16]), run_time=2)
+        # scene.play(FadeOut(self.verification0b[0], self.verification0b[1], self.verification0b[2],
+        #                    self.verification0b[3], self.verification0b[4], self.verification0b[5], 
+        #                    self.verification0b[6], self.verification0b[10], self.verification0b[11], 
+        #                    self.verification0b[12], self.verification0b[13], self.verification0b[14], 
+        #                    self.verification0b[15]), 
+        #            TransformMatchingShapes(VGroup(self.commitment[2].copy(), self.commitment[3].copy(), 
+        #                                           self.commitment[4].copy(), self.verification0b[9], 
+        #                                           self.verification0b[8], self.verification0b[7]), 
+        #                                    VGroup(self.verification1[8], self.verification1[9], 
+        #                                           self.verification1[10], self.verification1[7])), 
+        #            FadeIn(self.verification1[0], self.verification1[1], self.verification1[2], 
+        #                   self.verification1[3], self.verification1[4], self.verification1[5], 
+        #                   self.verification1[6], self.verification1[11], self.verification1[12], 
+        #                   self.verification1[13], self.verification1[14], self.verification1[15], 
+        #                   self.verification1[16]), run_time=2)
         # scene.play(TransformMatchingShapes(VGroup(self.commitment[2].copy(), self.commitment[3].copy(), 
         #                                           self.commitment[4].copy(), self.verification0b), self.verification1), run_time=2)
+        scene.play(TransformMatchingTex(self.verification0b, self.verification1), Indicate(self.commitment, color = HIGHLIGHT_COLOR), run_time=2)
         scene.wait(1)
-        scene.play(FadeOut(self.verification1[1], self.verification1[0], self.verification1[3], 
-                           self.verification1[4], self.verification1[5], self.verification1[6], 
-                           self.verification1[7], self.verification1[8], self.verification1[9], 
-                           self.verification1[10], self.verification1[11], self.verification1[12], 
-                           self.verification1[13], self.verification1[14], self.verification1[15], 
-                           self.verification1[16]), 
-                   TransformMatchingShapes(VGroup(self.proof[2].copy(), self.proof[3].copy(), 
-                                                  self.proof[4].copy(), self.verification1[2]), 
-                                           VGroup(self.verification2[1], self.verification2[2])), 
-                   FadeIn(self.verification2[0], self.verification2[3], self.verification2[4], 
-                          self.verification2[5], self.verification2[6], self.verification2[7], 
-                          self.verification2[8], self.verification2[9], self.verification2[10], 
-                          self.verification2[11], self.verification2[12], self.verification2[13], 
-                          self.verification2[14], self.verification2[15], self.verification2[16], 
-                          self.verification2[17]), run_time=2)
+        # scene.play(FadeOut(self.verification1[1], self.verification1[0], self.verification1[3], 
+        #                    self.verification1[4], self.verification1[5], self.verification1[6], 
+        #                    self.verification1[7], self.verification1[8], self.verification1[9], 
+        #                    self.verification1[10], self.verification1[11], self.verification1[12], 
+        #                    self.verification1[13], self.verification1[14], self.verification1[15], 
+        #                    self.verification1[16]), 
+        #            TransformMatchingShapes(VGroup(self.proof[2].copy(), self.proof[3].copy(), 
+        #                                           self.proof[4].copy(), self.verification1[2]), 
+        #                                    VGroup(self.verification2[1], self.verification2[2])), 
+        #            FadeIn(self.verification2[0], self.verification2[3], self.verification2[4], 
+        #                   self.verification2[5], self.verification2[6], self.verification2[7], 
+        #                   self.verification2[8], self.verification2[9], self.verification2[10], 
+        #                   self.verification2[11], self.verification2[12], self.verification2[13], 
+        #                   self.verification2[14], self.verification2[15], self.verification2[16], 
+        #                   self.verification2[17]), run_time=2)
+        scene.play(TransformMatchingTex(self.verification1, self.verification2), Indicate(self.proof, color = HIGHLIGHT_COLOR), run_time=2)
         scene.wait(1.5)
 
         self.new_subsection(scene, "bilinear", "data/sound/e4/slide4-6.mp3")
@@ -344,7 +348,7 @@ class Proof2(SlideBase):
         scene.play(Indicate(self.verification4[0], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[0], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.verification4[4], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[2], color = HIGHLIGHT_COLOR))
         scene.play(Indicate(self.verification4[6], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.verification4[8], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[4], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.verification4[8], color = HIGHLIGHT_COLOR), Indicate(self.final_verification3[6], color = HIGHLIGHT_COLOR))
 
 
     def animate_out(self, scene):

@@ -18,9 +18,9 @@ class Security(SlideBase):
         self.title_text = Text("Security", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = DiscreetePolynomialChart(41, poly).to_edge(LEFT).shift(DOWN+LEFT*0.7).scale(0.7)
         self.correct_opening = MathTex(r"{{p(x_0)}} = {{y_0}}", color = PRIMARY_COLOR).scale(0.8).shift(RIGHT*1.5+UP*1.5)
-        self.fake_opening = MathTex(r"{{p(x_0)}} = {{y_1}}", color = PRIMARY_COLOR).scale(0.8).shift(RIGHT*1.5)
+        self.fake_opening = MathTex(r"{{p(x_0)}} = {{y_1}}", color = SECONDARY_COLOR).scale(0.8).shift(RIGHT*1.5)
         self.correct_text = Text("Correct opening", color = PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.7).shift(RIGHT*5+UP*1.5)
-        self.fake_text = Text("Fake opening", color = PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.7).shift(RIGHT*5)
+        self.fake_text = Text("Fake opening", color = SECONDARY_COLOR, font = PRIMARY_FONT).scale(0.7).shift(RIGHT*5)
         self.arrow_fake = Arrow(self.fake_text.get_left(), self.fake_opening.get_right())
         self.arrow_correct = Arrow(self.correct_text.get_left(), self.correct_opening.get_right())
 

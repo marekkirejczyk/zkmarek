@@ -102,7 +102,7 @@ class Polynomials(SlideBase):
         self.polynomial_modulo23 = MathTex(r"P({{x}}) \mod \ 23 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 23}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
         self.polynomial_modulo41 = MathTex(r"P({{x}}) \mod \ 41 = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{\mod \ 41}}", color = PRIMARY_COLOR).scale(0.7).to_edge(DOWN)
 
-        self.p_order = MathTex(r"p\rightarrow 2^{256}", color = HIGHLIGHT_COLOR).next_to(self.chart3.ax[0], UP, buff = 0.8).shift(RIGHT*0.7)
+        self.p_order = MathTex(r"p\rightarrow 2^{256}", color = SECONDARY_COLOR).next_to(self.chart3.ax[0], UP, buff = 0.8).shift(RIGHT*0.7)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "intro", "data/sound/e4/slide1-0.mp3")

@@ -59,7 +59,7 @@ from zkmarek.video.slides.episode3.introduction import Introduction
 from zkmarek.video.slides.episode3.polynomial import Polynomial
 from zkmarek.video.slides.episode3.toxic import ToxicWaste
 from zkmarek.video.slides.episode3.credits import Credits as CreditsE3
-from zkmarek.video.slides.e4.proof2 import Proof2
+from zkmarek.video.slides.e4.proof2 import Verification
 from zkmarek.video.slides.e4.proof import Proof1
 from zkmarek.video.slides.e4.polynomials import Polynomials
 from zkmarek.video.slides.e4.commitment import Commitment
@@ -182,7 +182,7 @@ EPISODE4 = [
     KZG(),
     TitleSlide("Proof", sound = "data/sound/e4/slide3-0.mp3", wait_time=0.5),
     Proof1(),
-    Proof2(),
+    Verification(),
     TitleSlide("Security", sound = "data/sound/e4/slide5-0.mp3", wait_time=2),
     Security(),
     Subscribe("data/sound/episode1/s28.wav"),

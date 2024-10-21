@@ -63,24 +63,24 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.commiter))
         scene.play(Write(self.commiter_label))
 
-        bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
+        self.bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
         self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
         self.proof = MathTex(r"\mathrm{proof} \ \pi", font_size=32, color = PRIMARY_COLOR)
-        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
+        self.bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
             [0.06, 0.08, 0], 
             [-0.35, -1.2, 0], 
             [0.93, -0.63, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.01+DOWN*0.14)
+        ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.01+DOWN*0.14)
 
-        self.opening.move_to(bubble_opening.get_center())
+        self.opening.move_to(self.bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        self.chart.move_to(bubble_committer.get_center())
+        self.chart.move_to(self.bubble_committer.get_center())
 
-        scene.play(Create(bubble_committer))
+        scene.play(Create(self.bubble_committer))
         self.chart.gen_points()
         scene.play(Create(self.chart))
         self.lock.next_to(self.chart, RIGHT, buff = 0).shift(UP)
@@ -113,7 +113,7 @@ class Commitment(SlideBase):
         self.lock_copy.generate_target()
         self.lock_copy.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(VGroup(self.dots.scale(0.7)), self.envelope_flap_closed), FadeOut(self.envelope_flap), MoveToTarget(self.lock_copy), run_time=2)
+        scene.play(TransformMatchingShapes(VGroup(self.dots), self.envelope_flap_closed), FadeOut(self.envelope_flap), MoveToTarget(self.lock_copy), run_time=2)
 
         self.new_subsection(scene, "cant open it", "data/sound/e4/slide2-2.mp3")
 
@@ -139,28 +139,27 @@ class Commitment(SlideBase):
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
         self.lock_open = ImageMobject("data/images/Lock_Open.png").scale(0.2).move_to(self.envelope_body_closed.get_center())
-        scene.play(FadeIn(self.opening, bubble_opening, tail), MoveToTarget(self.circle_full), ReplacementTransform(self.lock_copy, self.lock_open))
+        scene.play(FadeIn(self.opening, self.bubble_opening, tail), MoveToTarget(self.circle_full), ReplacementTransform(self.lock_copy, self.lock_open))
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
         scene.play(Write(self.proof))
         scene.wait(1)
-        scene.play(FadeOut(bubble_opening, tail), FadeOut(self.circle_full))
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP)
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP).shift(UP)
         scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=1.5)
         scene.wait(0.5)
+        scene.play(FadeOut(self.bubble_opening, tail), FadeOut(self.circle_full))
         self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left(), color = HIGHLIGHT_COLOR)
         self.arrow_check_opening2 = CurvedArrow(self.proof.get_left(), self.envelope_flap_closed.get_left(), color = HIGHLIGHT_COLOR)
         self.thumb.next_to(self.arrow_check_opening2, LEFT, buff=0)
         scene.play(FadeIn(self.thumb), Write(self.arrow_check_opening), Write(self.arrow_check_opening2))
-        scene.wait(1.7)
-        scene.play(FadeOut(bubble_committer))
+        scene.wait(2.7)
         
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.envelope_flap_closed, self.lock, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb, self.lock_open, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title_text, self.chart, self.arrow_check_opening2))
+        scene.play(FadeOut(self.bubble_committer, self.envelope_flap_closed, self.lock, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb, self.lock_open, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title_text, self.chart, self.arrow_check_opening2))
 
 
      
