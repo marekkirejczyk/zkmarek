@@ -173,7 +173,7 @@ class Verification(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
 
-        scene.play(TransformMatchingShapes(self.envelope_flap, self.envelope_flap_closed), 
+        scene.play(FadeOut(self.envelope_flap), FadeIn(self.envelope_flap_closed), 
                    MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
@@ -323,10 +323,10 @@ class Verification(SlideBase):
         scene.wait(2)
         scene.play(TransformMatchingTex(self.verification2a, self.verification3), run_time=1.8)
         scene.wait(2)
-        scene.play(TransformMatchingShapes(self.verification3, self.verification3a))
+        # scene.play(TransformMatchingShapes(self.verification3, self.verification3a))
 
         self.new_subsection(scene, "verificaion", "data/sound/e4/slide4-7.mp3")
-        scene.play(TransformMatchingShapes(self.verification3a, self.verification4))
+        scene.play(TransformMatchingShapes(self.verification3, self.verification4))
         scene.wait(1)
         scene.play(Write(self.final_verification))
         scene.wait(1)

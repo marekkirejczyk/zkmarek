@@ -48,9 +48,9 @@ class Commitment(SlideBase):
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
-        self.x_zero = FieldElement(33, 41)
+        self.x_zero = FieldElement(13, 41)
         self.value_at_x_zero = poly(self.x_zero)
-        self.tau = FieldElement(18, 41)
+        self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
         self.chart = DiscreetePolynomialChart(41, poly)
         self.label_x_0 = self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
@@ -130,10 +130,9 @@ class Commitment(SlideBase):
         self.x0 = FieldElement(13, 41)
         self.y = poly(self.x0)
 
-        self.circle = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
-        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(RIGHT*0.95+UP*0.8)
+        self.circle = Circle(radius = 0.12, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(LEFT*0.42+UP*0.28)
+        self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(LEFT*0.42+UP*0.28)
         scene.wait(0.2)
-        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier), Create(self.circle))
         self.chart.indicate_xaxis_label(scene, self.label_x_0)
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
         self.circle_full.generate_target()
@@ -142,20 +141,21 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.opening, self.bubble_opening, tail), MoveToTarget(self.circle_full), ReplacementTransform(self.lock_copy, self.lock_open))
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
+        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier), Create(self.circle))
         scene.play(Write(self.proof))
         scene.wait(1)
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP)
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP).shift(UP)
+        scene.play(FadeOut(self.bubble_opening, tail), FadeOut(self.circle_full))
         scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=1.5)
         scene.wait(0.5)
-        scene.play(FadeOut(self.bubble_opening, tail), FadeOut(self.circle_full))
         self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left(), color = HIGHLIGHT_COLOR)
         self.arrow_check_opening2 = CurvedArrow(self.proof.get_left(), self.envelope_flap_closed.get_left(), color = HIGHLIGHT_COLOR)
         self.thumb.next_to(self.arrow_check_opening2, LEFT, buff=0)
         scene.play(FadeIn(self.thumb), Write(self.arrow_check_opening), Write(self.arrow_check_opening2))
-        scene.wait(2.7)
+        scene.wait(2.4)
         
 
     def animate_out(self, scene):

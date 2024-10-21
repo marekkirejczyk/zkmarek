@@ -49,10 +49,10 @@ class Proof1(SlideBase):
 
         self.opening = MathTex(r"{{p(x_0)}} {{}} = {{y_0}}", color = PRIMARY_COLOR)
         self.opening2 = MathTex(r"{{}} {{p(x_0)}} {{- y_0}} = {{0}}", color = PRIMARY_COLOR)
-        self.opening3 = MathTex(r"{{r(x)=}} {{p(x)}} {{- y_0}} {{}}", color = PRIMARY_COLOR)
+        self.opening3 = MathTex(r"{{r(x)}}= {{p(x)}} {{- y_0}} {{}}", color = PRIMARY_COLOR)
         self.opening4 = MathTex(r"{{r(x_0)=}}{{p(x_0)}} {{- y_0}} {{=0}}", color = PRIMARY_COLOR)
         self.opening5 = MathTex(r"{{(x-x_0)}} {{(...)=}}{{p(x)}} {{- y_0}} {{}} ", color = PRIMARY_COLOR)
-        self.opening6 = MathTex(r"{{(x-x_0)}} \cdot {{ q(x)=}}{{p(x)}} {{- y_0}} {{}} ", color = PRIMARY_COLOR)
+        self.opening6 = MathTex(r"{{(x-x_0)}} \cdot {{ q(x)}}={{p(x)}} {{- y_0}} {{}} ", color = PRIMARY_COLOR)
         self.opening7 = MathTex(r"{{}} {{q(x)=}}\frac{  p(x) - y_0 }{ (x-x_0) } {{}}", color = PRIMARY_COLOR)
 
         self.verifier = ImageMobject("data/images/person.png").to_corner(RIGHT+UP).scale(0.6).shift(LEFT)
@@ -100,6 +100,8 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "p(x)-y as polynomial", "data/sound/e4/slide3-4.mp3")
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.opening2, self.opening3), run_time=1.5)
+        scene.wait(1.2)
+        scene.play(Indicate(self.opening3[0], color = HIGHLIGHT_COLOR))
         scene.wait(6.5)
 
         self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
@@ -122,8 +124,6 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "rewriting it with roots", "data/sound/e4/slide3-5.mp3")
         scene.wait(3.5)
         scene.play(TransformMatchingShapes(self.opening3, self.opening4), run_time=1.7)
-        scene.play(Indicate(self.opening4[4], color = HIGHLIGHT_COLOR))
-        scene.play(Indicate(self.opening4[5], color = HIGHLIGHT_COLOR))
         self.chart.indicate_xaxis_label(scene, self.x_0_label)
 
         scene.play(TransformMatchingShapes(self.opening4, self.opening5), run_time=1.5)
@@ -140,17 +140,15 @@ class Proof1(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "and this is quotient", "data/sound/e4/slide3-7.mp3")
-        scene.wait(3.5)
+        scene.wait(2)
+        scene.play(Indicate(self.opening6[2], color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
-        scene.wait(1)
-        scene.play(Indicate(self.opening7[0], color = HIGHLIGHT2_COLOR))
-        scene.wait(3)
-        self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening7, DOWN).shift(DOWN+LEFT*0.1)
+        self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening7, DOWN).shift(LEFT*0.1)
         scene.play(FadeIn(self.quotient_text), run_time=1)
+        scene.wait(4.2)
 
         self.new_subsection(scene, "how quotient help us?", "data/sound/e4/slide3-8.mp3")
-        scene.wait(1)
-        scene.wait(6)
+        scene.wait(8.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart, self.r_of_x, self.opening, self.quotient_text, self.opening7))
