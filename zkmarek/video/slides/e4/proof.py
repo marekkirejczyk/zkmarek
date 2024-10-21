@@ -100,9 +100,9 @@ class Proof1(SlideBase):
         self.new_subsection(scene, "p(x)-y as polynomial", "data/sound/e4/slide3-4.mp3")
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.opening2, self.opening3), run_time=1.5)
-        scene.wait(1.2)
+        scene.wait(1.5)
         scene.play(Indicate(self.opening3[0], color = HIGHLIGHT_COLOR))
-        scene.wait(6.5)
+        scene.wait(3.3)
 
         self.new_subsection(scene, "r(x) in a chart", "data/sound/e4/slide3-4a.mp3")
 
@@ -127,9 +127,7 @@ class Proof1(SlideBase):
         self.chart.indicate_xaxis_label(scene, self.x_0_label)
 
         scene.play(TransformMatchingShapes(self.opening4, self.opening5), run_time=1.5)
-        scene.wait(2.2)
-        scene.play(Indicate(self.opening5[5], color = HIGHLIGHT_COLOR))
-        scene.wait(2.5)
+        scene.wait(5)
 
         self.new_subsection(scene, "divisability will prove opening", "data/sound/e4/slide3-6.mp3")
         scene.wait(1.5)
@@ -143,7 +141,7 @@ class Proof1(SlideBase):
         scene.wait(2)
         scene.play(Indicate(self.opening6[2], color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(self.opening6, self.opening7))
-        self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening7, DOWN).shift(LEFT*0.1)
+        self.quotient_text = Text("quotient polynomial", color = SECONDARY_COLOR, font_size=20, font=PRIMARY_FONT).next_to(self.opening7, DOWN).shift(LEFT*0.35)
         scene.play(FadeIn(self.quotient_text), run_time=1)
         scene.wait(4.2)
 

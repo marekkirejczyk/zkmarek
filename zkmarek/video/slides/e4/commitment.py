@@ -132,8 +132,9 @@ class Commitment(SlideBase):
 
         self.circle = Circle(radius = 0.12, color = HIGHLIGHT2_COLOR).next_to(self.chart, DOWN, buff=-1).shift(LEFT*0.42+UP*0.28)
         self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.chart, DOWN, buff=-1).shift(LEFT*0.42+UP*0.28)
-        scene.wait(0.2)
+        scene.wait(0.7)
         self.chart.indicate_xaxis_label(scene, self.label_x_0)
+        scene.play(Create(self.circle))
         scene.play(TransformMatchingShapes(self.circle, self.circle_full))
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
@@ -141,7 +142,7 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.opening, self.bubble_opening, tail), MoveToTarget(self.circle_full), ReplacementTransform(self.lock_copy, self.lock_open))
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
-        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier), Create(self.circle))
+        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         scene.play(Write(self.proof))
         scene.wait(1)
         self.opening.generate_target()
