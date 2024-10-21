@@ -61,6 +61,10 @@ class Proof2(SlideBase):
             r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
         )
+        self.verification0b = MathTex(
+            r"e( {{\pi}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{C}} {{}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
+            color=PRIMARY_COLOR,
+        )
         self.verification0a = MathTex(
             r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
             color=PRIMARY_COLOR,
@@ -107,6 +111,7 @@ class Proof2(SlideBase):
         self.equation2.next_to(self.commitment, DOWN)
         self.verification.to_edge(DOWN).shift(UP*0.5)
         self.verification0a.to_edge(DOWN).shift(UP*0.5)
+        self.verification0b.to_edge(DOWN).shift(UP*0.5)
         self.verification1.to_edge(DOWN).shift(UP*0.5)
         self.verification2.to_edge(DOWN).shift(UP*0.5)
         self.verification2a.to_edge(DOWN).shift(UP*0.5)
@@ -258,12 +263,14 @@ class Proof2(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "why the equation?", "data/sound/e4/slide4-4a.mp3")
+        scene.play(TransformMatchingShapes(self.verification, self.verification0b))
 
         self.new_subsection(scene, "commitment and pi", "data/sound/e4/slide4-5.mp3")
 
-        scene.play(TransformMatchingTex(VGroup(self.commitment.copy(), self.verification), self.verification1), run_time=2)
+        scene.play(FadeOut(self.verification0b[0], self.verification0b[1], self.verification0b[2], self.verification0b[3], self.verification0b[4], self.verification0b[5], self.verification0b[6], self.verification0b[10], self.verification0b[11], self.verification0b[12], self.verification0b[13], self.verification0b[14], self.verification0b[15]), TransformMatchingShapes(VGroup(self.commitment[2].copy(), self.commitment[3].copy(), self.commitment[4].copy(), self.verification0b[9], self.verification0b[8], self.verification0b[7]), VGroup(self.verification1[8], self.verification1[9], self.verification1[10], self.verification1[7])), FadeIn(self.verification1[0], self.verification1[1], self.verification1[2], self.verification1[3], self.verification1[4], self.verification1[5], self.verification1[6], self.verification1[11], self.verification1[12], self.verification1[13], self.verification1[14], self.verification1[15], self.verification1[16]), run_time=2)
+        # scene.play(TransformMatchingShapes(VGroup(self.commitment[2].copy(), self.commitment[3].copy(), self.commitment[4].copy(), self.verification0b), self.verification1), run_time=2)
         scene.wait(1)
-        scene.play(TransformMatchingTex(VGroup(self.proof.copy(), self.verification1), self.verification2), run_time=2)
+        scene.play(FadeOut(self.verification1[1], self.verification1[0], self.verification1[3], self.verification1[4], self.verification1[5], self.verification1[6], self.verification1[7], self.verification1[8], self.verification1[9], self.verification1[10], self.verification1[11], self.verification1[12], self.verification1[13], self.verification1[14], self.verification1[15], self.verification1[16]), TransformMatchingShapes(VGroup(self.proof[2].copy(), self.proof[3].copy(), self.proof[4].copy(), self.verification1[2]), VGroup(self.verification2[1], self.verification2[2])), FadeIn(self.verification2[0], self.verification2[3], self.verification2[4], self.verification2[5], self.verification2[6], self.verification2[7], self.verification2[8], self.verification2[9], self.verification2[10], self.verification2[11], self.verification2[12], self.verification2[13], self.verification2[14], self.verification2[15], self.verification2[16]), run_time=2)
         scene.wait(1.5)
 
         self.new_subsection(scene, "bilinear", "data/sound/e4/slide4-6.mp3")

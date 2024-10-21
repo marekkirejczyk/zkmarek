@@ -174,7 +174,7 @@ EPISODE4 = [
     Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
     Sponsored(),
     Episode3Reference(),
-    TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=4.5),
+    TitleSlide("Polynomials", sound="data/sound/e4/slide0-5.mp3", wait_time=5),
     Polynomials(),
     TitleSlide("Polynomial Commitments", sound="data/sound/e4/slide2-0a.mp3", wait_time=2),
     Commitment(),
