@@ -47,7 +47,7 @@ class Polynomials(SlideBase):
         self.subtract_z_roots_b = MathTex(r"\frac{R(x)}{x-x_0} = 3{{(x-x_1)}}{{(x-x_2)}}", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots_b1 = MathTex(r"\frac{R(x)}{x-x_1} = 3{{(x-x_0){{(x-x_2)}}", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
         self.subtract_z_roots_b2 = MathTex(r"\frac{R(x)}{x-x_2} = 3{{(x-x_0)}}{{(x-x_1)}}", color = PRIMARY_COLOR).next_to(self.line_subtract, DOWN, aligned_edge=LEFT)
-        self.polynomial2 = MathTex(r"P({{x}}) = 4{{(x-1.5)}}{{(x-2.5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
+        self.polynomial2 = MathTex(r"P({{x}}) = {{4}}{{(x-1.5)}}{{(x-2.5)}}{{(x+2)}}", color = PRIMARY_COLOR).to_edge(DOWN)
 
         self.chart = Chart(include_details=True).scale(0.8).next_to(self.title_label, DOWN)
         self.p0 = ValueTracker(0)
@@ -111,9 +111,9 @@ class Polynomials(SlideBase):
         scene.play(AddTextLetterByLetter(self.polynomial_eqn), run_time=3)
         scene.wait(0.5)
         scene.play(Indicate(self.polynomial_eqn[3], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[7], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[11], color = HIGHLIGHT_COLOR))
-        scene.wait(1)
+        scene.wait(2.8)
         scene.play(Indicate(self.polynomial_eqn[1], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[5], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[9], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[13], color = HIGHLIGHT_COLOR))
-        scene.wait(1.7)
+        scene.wait(1)
         scene.play(Indicate(self.polynomial_eqn[4], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[8], color = HIGHLIGHT_COLOR), Indicate(self.polynomial_eqn[12], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "specific eqn", "data/sound/e4/slide1-1.mp3")
@@ -174,6 +174,8 @@ class Polynomials(SlideBase):
         scene.wait(3.2)
 
         self.new_subsection(scene, "we know 'a' ", "data/sound/e4/slide1-3a.mp3")
+        scene.wait(4.8)
+        scene.play(Indicate(self.polynomial2[3], color = HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "operations", "data/sound/e4/slide1-4.mp3")
         scene.play(FadeOut(self.root1, self.polynomial2, self.root2, self.root3))

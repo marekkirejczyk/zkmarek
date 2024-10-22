@@ -171,6 +171,8 @@ class KZG(SlideBase):
         scene.play(Write(self.proof), FadeOut(self.circle_full), run_time=0.5)
         scene.wait(1.5)
         scene.play(Indicate(self.proof[2], color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.proof[4], color = HIGHLIGHT_COLOR))
+        scene.wait(2)
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP)
         self.opening.generate_target()
