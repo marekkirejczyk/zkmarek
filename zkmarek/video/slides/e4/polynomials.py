@@ -166,11 +166,11 @@ class Polynomials(SlideBase):
         scene.play(Indicate(self.root1.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root2.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.root3.label[3], color = HIGHLIGHT_COLOR, scale_factor=2), Indicate(self.polynomial_roots[9], color = HIGHLIGHT_COLOR, scale_factor=2))
         scene.play(TransformMatchingShapes(self.polynomial_roots, self.polynomial2))
         scene.wait(1)
-        scene.play(Indicate(self.polynomial2[3], color = HIGHLIGHT_COLOR), Indicate(self.root2, color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial2[4], color = HIGHLIGHT_COLOR), Indicate(self.root2, color = HIGHLIGHT_COLOR))
         scene.wait(0.35)
-        scene.play(Indicate(self.polynomial2[4], color = HIGHLIGHT_COLOR), Indicate(self.root3, color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial2[5], color = HIGHLIGHT_COLOR), Indicate(self.root3, color = HIGHLIGHT_COLOR))
         scene.wait(0.35)
-        scene.play(Indicate(self.polynomial2[5], color = HIGHLIGHT_COLOR), Indicate(self.root1, color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.polynomial2[6], color = HIGHLIGHT_COLOR), Indicate(self.root1, color = HIGHLIGHT_COLOR))
         scene.wait(3.2)
 
         self.new_subsection(scene, "we know 'a' ", "data/sound/e4/slide1-3a.mp3")
@@ -192,9 +192,10 @@ class Polynomials(SlideBase):
         self.chart.graph3.shift(LEFT*4+UP*0.15)
         self.intersect.shift(LEFT*4+UP*0.15)    
         self.intersect.label.shift(0.2*UP+LEFT*1.35)
-        scene.play(Write(self.polynomial), Write(self.label_poly_p), run_time=1.5)
-        scene.play(Write(self.chart.graph2), Write(self.label_poly_q))
-        scene.play(Create(self.intersect.dot))
+        scene.play(Write(self.polynomial), Write(self.label_poly_p), 
+                   Write(self.chart.graph2), Write(self.label_poly_q), 
+                   Create(self.intersect.dot), run_time=1.5)
+
         self.p_intersect_1 = ValueTracker(1.0417)
         a_i = Curve.from_x(self.p_intersect_1.get_value())
         self.intersect_1 = DotOnCurve(self.chart.ax, r"", a_i)
@@ -209,13 +210,14 @@ class Polynomials(SlideBase):
         self.quotient.next_to(self.polynomial, DOWN, buff = 0.3)
         scene.play(Indicate(self.intersect.dot, color = HIGHLIGHT_COLOR))
         scene.play(Write(self.quotient))
-        scene.wait(2)
+        scene.wait(0.2)
         scene.play(Write(self.intersect.label))
         scene.play(Indicate(self.intersect.label[1], color = HIGHLIGHT_COLOR), Indicate(self.intersect.dot, color = HIGHLIGHT_COLOR))
         scene.play(TransformMatchingShapes(self.polynomial, self.polynomial_z), TransformMatchingShapes(self.quotient, self.quotient_z), run_time=1)
         scene.play(Indicate(self.polynomial_z[9], color = SECONDARY_COLOR))
         scene.play(Indicate(self.quotient_z[9], color = SECONDARY_COLOR))
-
+        scene.wait(3)
+        
         self.new_subsection(scene, "equality", "data/sound/e4/slide1-5.mp3")
         scene.play(TransformMatchingShapes(self.polynomial_z, self.polynomial), TransformMatchingShapes(self.quotient_z, self.quotient), run_time=1)
         self.minus = MathTex("-", color = PRIMARY_COLOR).next_to(self.quotient_z, LEFT, buff = 0.3).shift(UP*0.05+RIGHT*0.1)
