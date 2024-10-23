@@ -27,11 +27,12 @@ class Credits(SlideBase):
     def animate_in(self, scene):
         self.add_title("Idea and voice")
         self.add_credit("Marek Kirejczyk @zkmarek")
+        
         self.add_title("Code and animation")
-        self.add_credit("Marek Kirejczyk @zkmarek")
         self.add_credit("Marta Wleklińska @martawleklinska")
         
         self.add_title("Special thanks")
+        self.add_credit("Maciej Kalka @Mojtek")
 
         self.add_title("Music from Udio AI music")
         self.group.generate_target()

@@ -18,16 +18,16 @@ class Security(SlideBase):
         self.title_text = Text("Security", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = DiscreetePolynomialChart(41, poly).to_edge(LEFT).shift(DOWN+LEFT*0.7).scale(0.7)
         self.correct_opening = MathTex(r"{{p(x_0)}} = {{y_0}}", color = PRIMARY_COLOR).scale(0.8).shift(RIGHT*1.5+UP*1.5)
-        self.fake_opening = MathTex(r"{{p(x_0)}} = {{y_1}}", color = PRIMARY_COLOR).scale(0.8).shift(RIGHT*1.5)
+        self.fake_opening = MathTex(r"{{p(x_0)}} = {{y_1}}", color = SECONDARY_COLOR).scale(0.8).shift(RIGHT*1.5)
         self.correct_text = Text("Correct opening", color = PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.7).shift(RIGHT*5+UP*1.5)
-        self.fake_text = Text("Fake opening", color = PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.7).shift(RIGHT*5)
+        self.fake_text = Text("Fake opening", color = SECONDARY_COLOR, font = PRIMARY_FONT).scale(0.7).shift(RIGHT*5)
         self.arrow_fake = Arrow(self.fake_text.get_left(), self.fake_opening.get_right())
         self.arrow_correct = Arrow(self.correct_text.get_left(), self.correct_opening.get_right())
 
-        self.division_fake = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} {{\cdot q_1(x)}} + \frac{a}{(x-x_0)}", color = HIGHLIGHT_COLOR).scale(0.7)
-        self.division_fake_frac = MathTex(r"\frac{p(x) - y_0}{(x-x_0)} = {{}} {{q_1(x)}}  {{+ a}}", color = HIGHLIGHT_COLOR).scale(0.7)
-        self.division_correct = MathTex(r"{{p(x)}} - {{y_0}} = {{(x-x_0)}} {{\cdot q(x)}}", color = HIGHLIGHT_COLOR).scale(0.7)
-        self.division_correct_frac = MathTex(r"\frac{p(x) - y_0}{(x-x_0)} = {{}} {{q(x)}}", color = HIGHLIGHT_COLOR).scale(0.7)
+        self.division_fake = MathTex(r"{{q_1(x)}} \cdot {{(x-x_0)}}  + \frac{a}{(x-x_0)} = {{p(x)}} - {{y_0}} ", color = HIGHLIGHT_COLOR).scale(0.7)
+        self.division_fake_frac = MathTex(r"{{q_1(x)}}{{}} = {{a + }}  \frac{p(x) - y_0}{(x-x_0)}", color = HIGHLIGHT_COLOR).scale(0.7)
+        self.division_correct = MathTex(r"{{q(x)}}\cdot {{(x-x_0)}} ={{p(x)}} - {{y_0}}", color = HIGHLIGHT_COLOR).scale(0.7)
+        self.division_correct_frac = MathTex(r" {{q(x)}} {{}} = \frac{p(x) - y_0}{(x-x_0)}", color = HIGHLIGHT_COLOR).scale(0.7)
 
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
@@ -35,7 +35,7 @@ class Security(SlideBase):
         self.y = poly(self.z)
         self.fake_z = FieldElement(32, 41)
         self.fake_y = poly(self.fake_z)
-        self.sdh = Text("q-strong SDH assumption", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.chart, RIGHT).shift(UP*1.5+RIGHT)
+        self.sdh = Text("q-SDH assumption", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=25).next_to(self.chart, RIGHT).shift(UP*1.5+RIGHT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "fake proof", "data/sound/e4/slide5-1.mp3")
@@ -49,8 +49,6 @@ class Security(SlideBase):
         line_correct_y = self.chart.animate_create_horizontal_line(
             scene, self.y.value, 0, self.z.value
         )
-        # scene.play(Create(line_correct_y), run_time=0.05)
-        # scene.play(Create(line_z), run_time=0.05)
         scene.play(Write(self.correct_opening))
         scene.play(Create(self.arrow_correct), FadeIn(self.correct_text))
 
@@ -58,7 +56,6 @@ class Security(SlideBase):
         line_fake_y = self.chart.animate_create_horizontal_line(
             scene, self.fake_y.value, 0, self.fake_z.value
         )
-        # scene.play(Create(line_fake_y), run_time=0.05)
         scene.play(Write(self.fake_opening))
         scene.play(Create(self.arrow_fake), FadeIn(self.fake_text))
         scene.wait(1)
@@ -74,25 +71,25 @@ class Security(SlideBase):
         self.division_correct.next_to(self.correct_opening, DOWN)
         self.division_correct_frac.next_to(self.correct_opening, DOWN)
         scene.play(Write(self.division_correct))
-        scene.play(Indicate(self.division_correct[6], color = PRIMARY_COLOR))
+        scene.play(Indicate(self.division_correct[0], color = PRIMARY_COLOR))
         scene.wait(2.5)
-        scene.play(Indicate(self.division_correct[0], color = PRIMARY_COLOR, scale_factor=1.5), Indicate(self.division_correct[1], color = PRIMARY_COLOR, scale_factor=1.5), Indicate(self.division_correct[2], color = PRIMARY_COLOR, scale_factor=1.5))
+        scene.play(Indicate(self.division_correct[4], color = PRIMARY_COLOR, scale_factor=1.5), Indicate(self.division_correct[5], color = PRIMARY_COLOR, scale_factor=1.5), Indicate(self.division_correct[6], color = PRIMARY_COLOR, scale_factor=1.5))
         scene.wait(0.8)
-        scene.play(Indicate(self.correct_opening, color = SECONDARY_COLOR))
-        scene.play(Indicate(self.division_correct[4], color = PRIMARY_COLOR))
+        scene.play(Indicate(self.correct_opening, color = HIGHLIGHT_COLOR))
+        scene.play(Indicate(self.division_correct[2], color = PRIMARY_COLOR))
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.division_correct, self.division_correct_frac))
 
         self.new_subsection(scene, "fake division", "data/sound/e4/slide5-3.mp3")
         self.division_fake.next_to(self.fake_opening, DOWN)
         self.division_fake_frac.next_to(self.fake_opening, DOWN)
-        scene.play(Write(self.division_fake), TransformMatchingShapes(self.division_correct_frac, self.division_correct), run_time=1)
-        scene.play(Indicate(self.fake_opening, color = HIGHLIGHT_COLOR))
+        scene.play(Write(self.division_fake), run_time=1)
+        scene.play(Indicate(self.fake_opening, color = SECONDARY_COLOR))
         scene.play(Indicate(line_fake_y, color = HIGHLIGHT_COLOR, scale_factor=2))
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.division_fake, self.division_fake_frac))
-        self.remainder_brace = Brace(self.division_fake_frac[4], DOWN, color = PRIMARY_COLOR)
-        self.brace_label = Text(r"remainder", font_size=30, color=PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.remainder_brace = Brace(self.division_fake_frac[2], DOWN, color = SECONDARY_COLOR)
+        self.brace_label = Text(r"remainder", font_size=30, color=SECONDARY_COLOR, font = PRIMARY_FONT)
         self.remainder_brace.put_at_tip(self.brace_label)
 
         scene.play(FadeIn(self.remainder_brace))
@@ -105,12 +102,12 @@ class Security(SlideBase):
         scene.wait(2)
 
         self.new_subsection(scene, "SDH assumption", "data/sound/e4/slide5-4.mp3")
-        scene.play(FadeOut(self.fake_opening, self.division_correct, self.division_fake_frac, self.correct_opening, self.brace_label, self.remainder_brace, self.strike))
+        scene.play(FadeOut(self.fake_opening, self.division_correct_frac, self.division_fake_frac, self.correct_opening, self.brace_label, self.remainder_brace, self.strike))
         scene.wait(1)
         scene.play(Write(self.sdh))
         scene.wait(2)
         scene.play(FadeOut(line_z, line_fake_y, line_correct_y))
-        scene.wait(2)
+        scene.wait(4)
 
 
     def animate_out(self, scene):
