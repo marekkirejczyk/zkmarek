@@ -190,6 +190,11 @@ EPISODE4 = [
 ]
 
 EPISODE5 = [
+    Intro(sound="data/sound/episode3/slide0-0.mp3"),
+    Sponsored(),
+]
+
+EPISODE6 = [
     SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     TexSlide("Sources", "data/schnorr/sources.tex"),
@@ -204,12 +209,13 @@ DECKS = {
     "E3": EPISODE3,
     "E4": EPISODE4,
     "E5": EPISODE5,
+    "E6": EPISODE6,
 }
 
-DEFAULT_DECK = "E4"
+DEFAULT_DECK = "E5"
 
 
-class Episode4(Scene):
+class Episode5(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
