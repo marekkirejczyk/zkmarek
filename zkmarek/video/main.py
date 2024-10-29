@@ -190,7 +190,6 @@ EPISODE4 = [
 ]
 
 EPISODE5 = [
-    Intro(sound="data/sound/episode3/slide0-0.mp3"),
     Sponsored(),
 ]
 
