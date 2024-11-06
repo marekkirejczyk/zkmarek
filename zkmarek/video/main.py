@@ -67,7 +67,7 @@ from zkmarek.video.slides.e4.e3_reference import Episode3Reference
 from zkmarek.video.slides.e4.credits import Credits as CreditsE4
 from zkmarek.video.slides.e4.security import Security
 from zkmarek.video.slides.e4.kzg import KZG
-
+from zkmarek.video.slides.e5.e4reference import Episode4Recap
 
 config.width = 16
 config.height = 9
@@ -191,6 +191,7 @@ EPISODE4 = [
 
 EPISODE5 = [
     Sponsored(),
+    Episode4Recap(),
 ]
 
 EPISODE6 = [
