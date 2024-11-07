@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, GRAY, Line
+from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, GRAY, Line, WHITE
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -98,6 +98,8 @@ class Episode4Recap(SlideBase):
             fill_opacity=0.4
         ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4).shift(0.58*RIGHT)
 
+        
+        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
         scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, 
@@ -114,8 +116,6 @@ class Episode4Recap(SlideBase):
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        
-        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
         scene.play(Create(bubble_opening), Create(tail))
         scene.play(FadeIn(self.opening, self.proof))
         scene.wait(2)
@@ -133,48 +133,51 @@ class Episode4Recap(SlideBase):
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, self.committer, self.committer_label, self.opening, self.proof))
-        block1 = Rectangle(width=3, height=3, color=HIGHLIGHT_COLOR)
-        prev_hash1 = Text("Prev hash").scale(0.5).next_to(block1.get_top(), DOWN)
-        tx1 = Text("transaction 1").scale(0.4).next_to(prev_hash1, DOWN)
-        tx2 = Text("transaction 2").scale(0.4).next_to(tx1, DOWN)
-        pow_text1 = Text("Proof of work", color=HIGHLIGHT_COLOR).scale(0.5).next_to(block1.get_bottom(), UP)
+        block1 = Rectangle(width=3, height=3)
+        block1.set_color_by_gradient([WHITE, HIGHLIGHT_COLOR, PRIMARY_COLOR])
+        prev_hash1 = Text("Prev hash", font = PRIMARY_FONT, color = SECONDARY_COLOR).scale(0.5).next_to(block1.get_top(), DOWN)
+        tx1 = Text("transaction 1", font = PRIMARY_FONT).scale(0.4).next_to(prev_hash1, DOWN)
+        tx2 = Text("transaction 2", font = PRIMARY_FONT).scale(0.4).next_to(tx1, DOWN)
+        pow_text1 = Text("Proof of work", color=PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5).next_to(block1.get_bottom(), UP)
         line1_1 = Line(block1.get_left(), block1.get_right(), color=GRAY).shift(UP*0.85)
         line1_2 = line1_1.copy().shift(DOWN*1.6)
+        self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT).scale(0.3).next_to(tx1, DOWN).shift(DOWN*0.35)
         
-        self.block1_group = VGroup(block1, prev_hash1, tx1, tx2, pow_text1, line1_1, line1_2)
+        self.block1_group = VGroup(block1, prev_hash1, tx1, tx2, pow_text1, line1_1, line1_2, self.three_dot)
         self.block1_group.shift(LEFT * 4)
         
         block2 = block1.copy().shift(RIGHT * 4)
-        prev_hash2 = Text("Prev hash").scale(0.5).next_to(block2.get_top(), DOWN)
-        tx3 = Text("transaction 3").scale(0.4).next_to(prev_hash2, DOWN)
-        tx4 = Text("transactio 4").scale(0.4).next_to(tx3, DOWN)
-        pow_text2 = Text("Proof of work", color=HIGHLIGHT_COLOR).scale(0.5).next_to(block2.get_bottom(), UP)
+        prev_hash2 = Text("Prev hash", font = PRIMARY_FONT, color = SECONDARY_COLOR).scale(0.5).next_to(block2.get_top(), DOWN)
+        tx3 = Text("transaction 3", font = PRIMARY_FONT).scale(0.4).next_to(prev_hash2, DOWN)
+        tx4 = Text("transaction 4", font = PRIMARY_FONT).scale(0.4).next_to(tx3, DOWN)
+        pow_text2 = Text("Proof of work", color=PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5).next_to(block2.get_bottom(), UP)
         line2_1 =Line(block2.get_left(), block2.get_right(), color=GRAY).shift(UP*0.85)
         line2_2 = line2_1.copy().shift(DOWN*1.6)
+        self.three_dot2 = Text(".\n.\n.", font=PRIMARY_FONT).scale(0.3).next_to(tx3, DOWN).shift(DOWN*0.35)
         
-        self.block2_group = VGroup(block2, prev_hash2, tx3, tx4, pow_text2, line2_1, line2_2)
+        self.block2_group = VGroup(block2, prev_hash2, tx3, tx4, pow_text2, line2_1, line2_2, self.three_dot2)
         
         block3 = block2.copy().shift(RIGHT * 4)
-        prev_hash3 = Text("Prev hash").scale(0.5).next_to(block3.get_top(), DOWN)
-        tx5 = Text("transaction 5").scale(0.4).next_to(prev_hash3, DOWN)
-        tx6 = Text("transactio 6").scale(0.4).next_to(tx5, DOWN)
-        pow_text3 = Text("Proof of work", color=HIGHLIGHT_COLOR).scale(0.5).next_to(block3.get_bottom(), UP)
+        prev_hash3 = Text("Prev hash", font = PRIMARY_FONT, color = SECONDARY_COLOR).scale(0.5).next_to(block3.get_top(), DOWN)
+        tx5 = Text("transaction 5", font = PRIMARY_FONT).scale(0.4).next_to(prev_hash3, DOWN)
+        tx6 = Text("transaction 6", font = PRIMARY_FONT).scale(0.4).next_to(tx5, DOWN)
+        pow_text3 = Text("Proof of work", color=PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5).next_to(block3.get_bottom(), UP)
         line3_1 =Line(block3.get_left(), block3.get_right(), color=GRAY).shift(UP*0.85)
         line3_2 = line3_1.copy().shift(DOWN*1.6)
-        
-        self.block3_group = VGroup(block3, prev_hash3, tx5, tx6, pow_text3, line3_1, line3_2)
+        self.three_dot3 = Text(".\n.\n.", font=PRIMARY_FONT).scale(0.3).next_to(tx5, DOWN).shift(DOWN*0.35)    
+        self.block3_group = VGroup(block3, prev_hash3, tx5, tx6, pow_text3, line3_1, line3_2, self.three_dot3)
         
         self.arrow = Arrow(block1.get_right(), block2.get_left(), color=SECONDARY_COLOR)
         self.arrow2 = Arrow(block2.get_right(), block3.get_left(), color=SECONDARY_COLOR)
         
-        scene.play(FadeIn(self.block1_group))
+        scene.play(Create(self.block1_group))
         scene.wait(1)
         scene.play(GrowArrow(self.arrow))
         scene.wait(0.5)
-        scene.play(FadeIn(self.block2_group))
+        scene.play(Create(self.block2_group))
         scene.play(GrowArrow(self.arrow2))
         scene.wait(0.5)
-        scene.play(FadeIn(self.block3_group))
+        scene.play(Create(self.block3_group))
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.arrow, self.arrow2, self.block1_group, self.block2_group, self.block3_group, self.title_label))
