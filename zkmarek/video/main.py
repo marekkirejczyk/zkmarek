@@ -190,7 +190,7 @@ EPISODE4 = [
 ]
 
 EPISODE5 = [
-    Sponsored(),
+    # Sponsored(),
     Episode4Recap(),
 ]
 

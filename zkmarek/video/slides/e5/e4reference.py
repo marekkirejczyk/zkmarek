@@ -1,9 +1,8 @@
-from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, GRAY, Line, WHITE
+from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, GRAY, Line, WHITE, Indicate
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
-from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR
 
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7
@@ -29,8 +28,8 @@ class Episode4Recap(SlideBase):
         self.value_at_tau = poly(self.tau)
         self.z = FieldElement(13, 41)
         self.y = poly(self.z)
-        self.chart.add_xaxis_label(self.z.value, r"x_0")
-        self.chart.add_xaxis_label(self.tau.value, r"\tau")
+        self.chart_label_x0 = self.chart.add_xaxis_label(self.z.value, r"x_0")
+        self.chart_label_tau = self.chart.add_xaxis_label(self.tau.value, r"\tau")
 
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
@@ -61,8 +60,7 @@ class Episode4Recap(SlideBase):
         self.proof.next_to(self.verifier_label, DOWN)
         self.opening = MathTex(r"p(x_0)=y_0", font_size=32, color = SECONDARY_COLOR).next_to(self.commitment, DOWN)
         self.commitment.next_to(self.committer, RIGHT, buff = 0)
-        self.chart.next_to(self.committer_label, DOWN, buff = -1).scale(0.4)
-
+        self.chart.next_to(self.committer_label, DOWN, buff = -1).scale(0.3).shift(UP)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "In previous episode...", "data/sound/e5/slide0-1.mp3")
@@ -71,10 +69,10 @@ class Episode4Recap(SlideBase):
         scene.play(FadeIn(self.verifier, self.verifier_label))
         self.chart.gen_points()
         scene.play(Create(self.chart))
+        self.dots = VGroup(*self.chart.dots)
         
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed, self.commitment))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
-        self.dots = VGroup(*self.chart.dots).copy()
         self.commitment.generate_target()
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
 
@@ -82,8 +80,8 @@ class Episode4Recap(SlideBase):
                    MoveToTarget(self.commitment), run_time=2)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(6.5*RIGHT+DOWN*2)
-        self.envelope_flap.shift(6.5*RIGHT+DOWN*2)
+        commitment_sent.target.shift(5.5*RIGHT+DOWN*2)
+        self.envelope_flap.shift(5.5*RIGHT+DOWN*2)
 
         scene.play(MoveToTarget(commitment_sent), run_time=1)
         speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
@@ -118,7 +116,9 @@ class Episode4Recap(SlideBase):
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Create(bubble_opening), Create(tail))
         scene.play(FadeIn(self.opening, self.proof))
-        scene.wait(2)
+        scene.wait(0.5)
+        self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
+        scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
         scene.play(FadeOut(bubble_opening, tail))
         self.opening.generate_target()
