@@ -69,6 +69,7 @@ from zkmarek.video.slides.e4.security import Security
 from zkmarek.video.slides.e4.kzg import KZG
 from zkmarek.video.slides.e5.e4reference import Episode4Recap
 from zkmarek.video.slides.e5.layer2 import Layer2
+from zkmarek.video.slides.e5.blobs import Blobs
 config.width = 16
 config.height = 9
 
@@ -192,8 +193,10 @@ EPISODE4 = [
 EPISODE5 = [
     # Sponsored(),
     Episode4Recap(),
-    TitleSlide("Layer 2", sound="data/sound/e5/slide0-4.mp3"),
+    TitleSlide("Layer 2", sound="data/sound/e5/slide0-4.mp3", wait_time=1),
     Layer2(),
+    TitleSlide("Blobs", sound="data/sound/e5/slide1-3.mp3", wait_time=2),
+    Blobs(),
 ]
 
 EPISODE6 = [

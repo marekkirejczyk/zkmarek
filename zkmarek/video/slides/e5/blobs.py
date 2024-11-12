@@ -1,0 +1,54 @@
+from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ApplyWave, VGroup, Rectangle, WHITE, Indicate, Brace, GREY_A
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
+from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+
+def poly(x):
+    return x * x * x - x * x * 2 + x * 3 + 7
+
+
+class Blobs(SlideBase):
+    def __init__(self) -> None:
+        super().__init__(title="Blobs")
+        
+    def construct(self):
+        self.blob_container = Rectangle(width=3, height=2, fill_opacity=0.3).set_color_by_gradient([PRIMARY_COLOR, GREY_A, WHITE])
+        self.number_sequence = MathTex(r"{{\left[}} {{a_0}}, {{a_1}}, {{\cdots}}, {{a_{4055}}},  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
+        self.chart = DiscreetePolynomialChart(41, poly).scale(0.5)
+        self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, WHITE, PRIMARY_COLOR])
+        self.brace_blob.put_at_tip(self.blob_container)
+        self.less_than_p = MathTex(r"<p", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
+        self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT).set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
+        
+    def animate_in(self, scene):
+        self.new_subsection(scene, "what is blob?", "data/sound/e5/slide2-1.mp3")
+        scene.play(Create(self.blob_container))
+        scene.play(Create(self.number_sequence), Create(self.brace_blob))
+        for i in range(5):
+            scene.play(Indicate(self.number_sequence[2*i], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]))
+        
+        self.new_subsection(scene, "field elements", "data/sound/e5/slide2-2.mp3")
+        scene.play(FadeOut(self.blob_container))
+        self.chart.gen_points()
+        scene.play(Create(self.chart))
+        
+        self.dots = VGroup(*self.chart.dots)
+        scene.wait(2)
+        scene.play(Indicate(self.dots, color = [SECONDARY_COLOR, WHITE, GREY_A]))
+        scene.play(ApplyWave(self.chart.labels))   
+        scene.play(Create(self.less_than_p))
+        scene.wait(2)
+             
+        self.new_subsection(scene, "32 bytes", "data/sound/e5/slide2-3.mp3")
+        scene.play(FadeOut(self.less_than_p))
+        self.number_sequence[3].set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
+        self.bytes_of_ec.next_to(self.number_sequence[3], UP)
+        scene.play(Create(self.bytes_of_ec))
+        
+        self.new_subsection(scene, "128 k bytes", "data/sound/e5/slide2-4.mp3")
+        scene.wait(4)
+        
+        
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.brace_blob, self.chart, self.number_sequence, self.bytes_of_ec))
+        

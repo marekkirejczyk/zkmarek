@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group
+from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -150,16 +150,15 @@ class Episode4Recap(SlideBase):
         self.ethereum_logo3.move_to(block3.get_center()) 
         self.block3_group = Group(block3, self.ethereum_logo3)
         
-        self.arrow = Arrow(block1.get_right(), block2.get_left(), color=SECONDARY_COLOR)
-        self.arrow2 = Arrow(block2.get_right(), block3.get_left(), color=SECONDARY_COLOR)
+        self.arrow = Arrow(block1.get_right(), block2.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip)
+        self.arrow2 = Arrow(block2.get_right(), block3.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip)
         
         scene.play(FadeIn(self.block1_group))
-        scene.wait(1)
+        
         scene.play(GrowArrow(self.arrow))
-        scene.wait(0.5)
+        
         scene.play(FadeIn(self.block2_group))
         scene.play(GrowArrow(self.arrow2))
-        scene.wait(0.5)
         scene.play(FadeIn(self.block3_group))
         
     def animate_out(self, scene):
