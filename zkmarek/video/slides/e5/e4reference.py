@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, GRAY, Line, WHITE, Indicate
+from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -49,6 +49,7 @@ class Episode4Recap(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.395)
+        self.ethereum_logo = ImageMobject("data/images/ethereum_logo.png").scale(0.5)
         self.envelope_body.next_to(self.committer, RIGHT+DOWN, buff = 0.4)
         self.envelope_body_closed.next_to(self.committer, RIGHT+DOWN, buff = 0.4)
 
@@ -133,51 +134,33 @@ class Episode4Recap(SlideBase):
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, self.committer, self.committer_label, self.opening, self.proof))
-        block1 = Rectangle(width=3, height=3)
+        block1 = Rectangle(width=2, height=3)
         block1.set_color_by_gradient([WHITE, HIGHLIGHT_COLOR, PRIMARY_COLOR])
-        prev_hash1 = Text("Prev hash", font = PRIMARY_FONT, color = SECONDARY_COLOR).scale(0.5).next_to(block1.get_top(), DOWN)
-        tx1 = Text("transaction 1", font = PRIMARY_FONT).scale(0.4).next_to(prev_hash1, DOWN)
-        tx2 = Text("transaction 2", font = PRIMARY_FONT).scale(0.4).next_to(tx1, DOWN)
-        pow_text1 = Text("Proof of work", color=PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5).next_to(block1.get_bottom(), UP)
-        line1_1 = Line(block1.get_left(), block1.get_right(), color=GRAY).shift(UP*0.85)
-        line1_2 = line1_1.copy().shift(DOWN*1.6)
-        self.three_dot = Text(".\n.\n.", font=PRIMARY_FONT).scale(0.3).next_to(tx1, DOWN).shift(DOWN*0.35)
-        
-        self.block1_group = VGroup(block1, prev_hash1, tx1, tx2, pow_text1, line1_1, line1_2, self.three_dot)
+        self.ethereum_logo.move_to(block1.get_center())
+        self.block1_group = Group(block1, self.ethereum_logo)
         self.block1_group.shift(LEFT * 4)
         
         block2 = block1.copy().shift(RIGHT * 4)
-        prev_hash2 = Text("Prev hash", font = PRIMARY_FONT, color = SECONDARY_COLOR).scale(0.5).next_to(block2.get_top(), DOWN)
-        tx3 = Text("transaction 3", font = PRIMARY_FONT).scale(0.4).next_to(prev_hash2, DOWN)
-        tx4 = Text("transaction 4", font = PRIMARY_FONT).scale(0.4).next_to(tx3, DOWN)
-        pow_text2 = Text("Proof of work", color=PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5).next_to(block2.get_bottom(), UP)
-        line2_1 =Line(block2.get_left(), block2.get_right(), color=GRAY).shift(UP*0.85)
-        line2_2 = line2_1.copy().shift(DOWN*1.6)
-        self.three_dot2 = Text(".\n.\n.", font=PRIMARY_FONT).scale(0.3).next_to(tx3, DOWN).shift(DOWN*0.35)
-        
-        self.block2_group = VGroup(block2, prev_hash2, tx3, tx4, pow_text2, line2_1, line2_2, self.three_dot2)
+        self.ethereum_logo2 = self.ethereum_logo.copy()
+        self.ethereum_logo2.move_to(block2.get_center())
+        self.block2_group = Group(block2, self.ethereum_logo2)
         
         block3 = block2.copy().shift(RIGHT * 4)
-        prev_hash3 = Text("Prev hash", font = PRIMARY_FONT, color = SECONDARY_COLOR).scale(0.5).next_to(block3.get_top(), DOWN)
-        tx5 = Text("transaction 5", font = PRIMARY_FONT).scale(0.4).next_to(prev_hash3, DOWN)
-        tx6 = Text("transaction 6", font = PRIMARY_FONT).scale(0.4).next_to(tx5, DOWN)
-        pow_text3 = Text("Proof of work", color=PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5).next_to(block3.get_bottom(), UP)
-        line3_1 =Line(block3.get_left(), block3.get_right(), color=GRAY).shift(UP*0.85)
-        line3_2 = line3_1.copy().shift(DOWN*1.6)
-        self.three_dot3 = Text(".\n.\n.", font=PRIMARY_FONT).scale(0.3).next_to(tx5, DOWN).shift(DOWN*0.35)    
-        self.block3_group = VGroup(block3, prev_hash3, tx5, tx6, pow_text3, line3_1, line3_2, self.three_dot3)
+        self.ethereum_logo3 = self.ethereum_logo.copy()
+        self.ethereum_logo3.move_to(block3.get_center()) 
+        self.block3_group = Group(block3, self.ethereum_logo3)
         
         self.arrow = Arrow(block1.get_right(), block2.get_left(), color=SECONDARY_COLOR)
         self.arrow2 = Arrow(block2.get_right(), block3.get_left(), color=SECONDARY_COLOR)
         
-        scene.play(Create(self.block1_group))
+        scene.play(FadeIn(self.block1_group))
         scene.wait(1)
         scene.play(GrowArrow(self.arrow))
         scene.wait(0.5)
-        scene.play(Create(self.block2_group))
+        scene.play(FadeIn(self.block2_group))
         scene.play(GrowArrow(self.arrow2))
         scene.wait(0.5)
-        scene.play(Create(self.block3_group))
+        scene.play(FadeIn(self.block3_group))
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.arrow, self.arrow2, self.block1_group, self.block2_group, self.block3_group, self.title_label))

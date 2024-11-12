@@ -68,7 +68,7 @@ from zkmarek.video.slides.e4.credits import Credits as CreditsE4
 from zkmarek.video.slides.e4.security import Security
 from zkmarek.video.slides.e4.kzg import KZG
 from zkmarek.video.slides.e5.e4reference import Episode4Recap
-
+from zkmarek.video.slides.e5.layer2 import Layer2
 config.width = 16
 config.height = 9
 
@@ -192,6 +192,8 @@ EPISODE4 = [
 EPISODE5 = [
     # Sponsored(),
     Episode4Recap(),
+    TitleSlide("Layer 2", sound="data/sound/e5/slide0-4.mp3"),
+    Layer2(),
 ]
 
 EPISODE6 = [
