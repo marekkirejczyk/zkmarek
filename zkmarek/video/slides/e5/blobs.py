@@ -42,11 +42,12 @@ class Blobs(SlideBase):
         scene.play(Indicate(self.dots, color = [SECONDARY_COLOR, WHITE, GREY_A]))
         scene.play(ApplyWave(self.chart.labels))   
         # scene.play(Create(self.less_than_p))
-        scene.wait(2)
+        scene.wait(1.2)
              
         self.new_subsection(scene, "32 bytes", "data/sound/e5/slide2-3.mp3")
         self.chart.generate_target()
         self.chart.target.shift(DOWN)
+        scene.wait(1.5)
         self.number_sequence[4].set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
         self.bytes_of_ec.next_to(self.number_sequence[4], UP)
         scene.wait(3)
@@ -56,7 +57,7 @@ class Blobs(SlideBase):
         scene.play(MoveToTarget(self.chart))
         scene.wait(2)
         scene.play(Create(self.kilo_bytes_of_ec))
-        scene.wait(4)
+        scene.wait(2.5)
         
         
     def animate_out(self, scene):
