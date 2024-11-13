@@ -150,8 +150,10 @@ class Episode4Recap(SlideBase):
         self.ethereum_logo3.move_to(block3.get_center()) 
         self.block3_group = Group(block3, self.ethereum_logo3)
         
-        self.arrow = Arrow(block1.get_right(), block2.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip)
-        self.arrow2 = Arrow(block2.get_right(), block3.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip)
+        self.arrow = Arrow(block1.get_right(), block2.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip, 
+                           stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([SECONDARY_COLOR, WHITE])
+        self.arrow2 = Arrow(block2.get_right(), block3.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip, 
+                            stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([SECONDARY_COLOR, WHITE])
         
         scene.play(FadeIn(self.block1_group))
         

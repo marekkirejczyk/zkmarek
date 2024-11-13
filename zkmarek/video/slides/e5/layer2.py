@@ -92,8 +92,10 @@ class Layer2(SlideBase):
         scene.play(Create(self.layer2_group), Write(self.brace_tx))
         scene.play(Create(self.layer2), GrowArrow(self.arrow_layer2))
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum))
+        scene.wait(1.5)
         
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
+        scene.play(FadeIn(self.rollup_brace, self.rollup_text))
         scene.play(Indicate(self.tx_label, color = [SECONDARY_COLOR, PRIMARY_COLOR]),
                    Indicate(self.tx_label2, color = [SECONDARY_COLOR, PRIMARY_COLOR]),
                    Indicate(self.tx_label3, color = [SECONDARY_COLOR, PRIMARY_COLOR]),
@@ -103,7 +105,6 @@ class Layer2(SlideBase):
                    Indicate(self.tx_label7, color = [SECONDARY_COLOR, PRIMARY_COLOR]),
                    Indicate(self.tx_label8, color = [SECONDARY_COLOR, PRIMARY_COLOR]))
 
-        scene.play(FadeIn(self.rollup_brace, self.rollup_text))
         scene.play(Create(self.finalized_group))
         scene.play(Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         
