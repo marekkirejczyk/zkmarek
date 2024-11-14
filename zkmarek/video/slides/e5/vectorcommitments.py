@@ -15,6 +15,7 @@ class VectorCommitments(SlideBase):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
         self.number_sequence = MathTex(r"\left[ {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
+        self.number_sequence100 = MathTex(r"\left[ {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller_indeces = MathTex(r"\left[ {{a}}{{_0}}, {{a}}{{_1}}, {{a}}{{_2}}, {{a}}{{_3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, DOWN).shift(DOWN)
         for i in range(4):
@@ -67,20 +68,20 @@ class VectorCommitments(SlideBase):
             scene.play(Indicate(self.number_sequence_smaller[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.9)
             
         scene.wait(2)
-        scene.play(Create(self.p0), run_time=0.5)
-        scene.play(Create(self.p1), run_time=0.5)
-        scene.play(Create(self.p2), run_time=0.5)
-        scene.play(Create(self.p3), run_time=0.5)
+        scene.play(Create(self.p0), run_time=0.4)
+        scene.play(Create(self.p1), run_time=0.4)
+        scene.play(Create(self.p2), run_time=0.4)
+        scene.play(Create(self.p3), run_time=0.4)
         scene.play(Create(self.number_sequence_smaller_indeces), GrowArrow(self.arrow_number_indeces), run_time=1)
-        scene.play(Indicate(self.p0.label[1], color = WHITE, scale_factor=1.8), run_time=0.4)
-        scene.play(Indicate(self.p1.label[1], color = WHITE, scale_factor=1.8), run_time=0.4)
-        scene.play(Indicate(self.p2.label[1], color = WHITE, scale_factor=1.8), run_time=0.4)
-        scene.play(Indicate(self.p3.label[1], color = WHITE, scale_factor=1.8), run_time=0.4)
+        scene.play(Indicate(self.p0.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p1.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p2.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p3.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
         scene.wait(0.1)
-        scene.play(Indicate(self.p0.label[3], color = WHITE, scale_factor=1.8), run_time=0.4)
-        scene.play(Indicate(self.p1.label[3], color = WHITE, scale_factor=1.8), run_time=0.4)
-        scene.play(Indicate(self.p2.label[3], color = WHITE, scale_factor=1.8), run_time=0.4)
-        scene.play(Indicate(self.p3.label[3], color = WHITE, scale_factor=1.8), run_time=0.4)
+        scene.play(Indicate(self.p0.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p1.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p2.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p3.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
         
         self.new_subsection(scene, "poly of degree 3", "data/sound/e5/slide3-1a.mp3")
         scene.play(FadeOut(self.number_sequence_smaller_indeces, self.arrow_number_indeces), run_time=1)
@@ -92,22 +93,22 @@ class VectorCommitments(SlideBase):
         self.new_subsection(scene, "Lagrange interpolation", "data/sound/e5/slide3-1b.mp3")
         scene.wait(6)
         scene.play(Indicate(self.polynomial[3], color = HIGHLIGHT_COLOR, scale_factor=1.6))
-        scene.play(Indicate(self.p0, color = WHITE, scale_factor=1.7), run_time=0.4)
-        scene.play(Indicate(self.p1, color = WHITE, scale_factor=1.7), run_time=0.4)
-        scene.play(Indicate(self.p2, color = WHITE, scale_factor=1.7), run_time=0.4)
-        scene.play(Indicate(self.p3, color = WHITE, scale_factor=1.7), run_time=0.4)
+        scene.play(Indicate(self.p0, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p1, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p2, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p3, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
-        scene.play(FadeOut(self.number_sequence_smaller), FadeIn(self.number_sequence))
+        scene.play(FadeOut(self.number_sequence_smaller), FadeIn(self.number_sequence100))
         scene.wait(0.2)
         scene.play(FadeOut(self.polynomial), FadeIn(self.polynomial_eqn_100), FadeOut(self.p0, self.p1, self.p2, self.p3))
 
         self.change_chart_axes(scene, self.chart)
         scene.wait(5.5)
-        scene.play(FadeOut(self.polynomial_eqn_100), FadeIn(self.polynomial_eqn_4096))
+        scene.play(FadeOut(self.polynomial_eqn_100), FadeIn(self.polynomial_eqn_4096), FadeOut(self.number_sequence100), FadeIn(self.number_sequence))
 
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
-        scene.wait(2.2)
+        scene.wait(1.8)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
         
@@ -121,8 +122,8 @@ class VectorCommitments(SlideBase):
 
     def change_chart_axes(self, scene, chart):
         new_axes = Axes(
-            x_range=[-4.7, 1000, 200],
-            y_range=[-5.5, 10000, 2000],
+            x_range=[-4.7, 100, 20],
+            y_range=[-5.5, 100, 20],
             x_length=7,
             axis_config={
                 "include_numbers": True,
@@ -146,7 +147,7 @@ class VectorCommitments(SlideBase):
             MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/100)**2) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
