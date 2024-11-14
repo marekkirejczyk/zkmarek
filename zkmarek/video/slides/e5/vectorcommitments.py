@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -64,7 +64,8 @@ class VectorCommitments(SlideBase):
         scene.wait(1)
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
         for i in range(4):
-            scene.play(Indicate(self.number_sequence_smaller[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.8)
+            scene.play(Indicate(self.number_sequence_smaller[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.9)
+            
         scene.wait(2)
         scene.play(Create(self.p0), run_time=0.5)
         scene.play(Create(self.p1), run_time=0.5)
@@ -89,7 +90,7 @@ class VectorCommitments(SlideBase):
         scene.wait(2)
         
         self.new_subsection(scene, "Lagrange interpolation", "data/sound/e5/slide3-1b.mp3")
-        scene.wait(4)
+        scene.wait(6)
         scene.play(Indicate(self.polynomial[3], color = HIGHLIGHT_COLOR, scale_factor=1.6))
         scene.play(Indicate(self.p0, color = WHITE, scale_factor=1.7), run_time=0.4)
         scene.play(Indicate(self.p1, color = WHITE, scale_factor=1.7), run_time=0.4)
@@ -135,10 +136,14 @@ class VectorCommitments(SlideBase):
 
 
         new_axes.scale(0.7).shift(LEFT*3.5)
-        chart.labels[0].next_to(new_axes[0], UP+RIGHT, buff = 0.1)
-        chart.labels[1].next_to(new_axes[1], UP+RIGHT, buff = 0.1)
+        chart.labels[0].generate_target()
+        chart.labels[0].target.next_to(new_axes[0], UP+RIGHT, buff = 0.1)
+        chart.labels[1].generate_target()
+        chart.labels[1].target.next_to(new_axes[1], UP+RIGHT, buff = 0.1)
         
         scene.play(
+            MoveToTarget(chart.labels[0]),
+            MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k for k in range(1, 101)) - y,

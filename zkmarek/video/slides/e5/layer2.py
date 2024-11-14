@@ -78,10 +78,10 @@ class Layer2(SlideBase):
         self.arrow_layer1 = Arrow(self.finalized_blocks[3].get_right(), self.layer1_ethereum.get_left(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY])
         
-        self.blobs = Text("EIP-4844 blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*2.5+UP*1.5)
-        self.blist = BulletedList("Cheap temporary storage;", "Smart contracts accessible data...", "...even post removal", 
+        self.blobs = Text(r"{{E}}{{I}}{{P}}-{{4}}{{8}}{{4}}{{4}} blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*2.5+UP*1.5)
+        self.blist = BulletedList("Cheap temporary storage", "Smart contracts accessible data...", "...even post removal", 
                                   height=5, width=5).next_to(self.blobs, DOWN).shift(DOWN)
-        self.blist.set_color_by_tex("Cheap temporary storage;", SECONDARY_COLOR)
+        self.blist.set_color_by_tex("Cheap temporary storage", SECONDARY_COLOR)
         self.blist.set_color_by_tex("Smart contracts accessible data...", HIGHLIGHT_COLOR)
         self.blist.set_color_by_tex("...even post removal", PRIMARY_COLOR)
         
@@ -108,6 +108,10 @@ class Layer2(SlideBase):
         scene.play(Create(self.finalized_group))
         scene.play(Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         
+        scene.wait(3.5)
+        for i in range(4):
+            scene.play(Indicate(self.finalized_blocks[i], color = [HIGHLIGHT_COLOR, GREY, WHITE]), run_time=0.8)
+        
         self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-2.mp3")
         self.block_chain = Group(self.tx_group, self.layer1_ethereum, self.layer2, self.ethereum, 
                                  self.ethereum2, self.ethereum3, self.ethereum4, self.transactions,
@@ -119,6 +123,9 @@ class Layer2(SlideBase):
         self.box = SurroundingRectangle(self.block_chain, buff = 0.2).set_color_by_gradient([PRIMARY_COLOR, GREY, WHITE])
         scene.wait()
         scene.play(AddTextLetterByLetter(self.blobs))#, Create(self.box))
+        for i in range(8):
+            if i!=3:
+                scene.play(Indicate(self.blobs[i], color = SECONDARY_COLOR), run_time=0.12)
         
         self.new_subsection(scene, "blobs are cheaper", "data/sound/e5/slide1-2a.mp3")
 

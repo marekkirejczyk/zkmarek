@@ -14,7 +14,7 @@ class Blobs(SlideBase):
     def construct(self):
         self.title_text = Text("Blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.blob_container = Rectangle(width=3, height=2, fill_opacity=0.3).set_color_by_gradient([PRIMARY_COLOR, GREY_A, WHITE])
-        self.number_sequence = MathTex(r"{{\left[}} {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4055}}},  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
+        self.number_sequence = MathTex(r"{{\left[}} {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}},  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
         self.chart = DiscreetePolynomialChart(41, poly).scale(0.5).shift(DOWN)
         self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, WHITE, PRIMARY_COLOR])
         self.brace_blob.put_at_tip(self.blob_container)
