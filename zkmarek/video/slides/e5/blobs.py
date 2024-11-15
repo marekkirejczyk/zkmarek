@@ -14,17 +14,17 @@ class Blobs(SlideBase):
     def construct(self):
         self.title_text = Text("Blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.blob_container = Rectangle(width=3, height=2, fill_opacity=0.3).set_color_by_gradient([PRIMARY_COLOR, GREY_A, WHITE])
-        self.number_sequence = MathTex(r"{{\left[}} {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}},  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
+        self.number_sequence = MathTex(r"{{\left[}} {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}}  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
         self.chart = DiscreetePolynomialChart(41, poly).scale(0.5).shift(DOWN)
         self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, WHITE, PRIMARY_COLOR])
         self.brace_blob.put_at_tip(self.blob_container)
         self.less_than_p = MathTex(r"<p", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
-        self.order_p = MathTex(r"p \rightarrow 2^{256}", color = SECONDARY_COLOR, font_size = 24).next_to(self.chart, RIGHT+UP)
+        self.order_p = MathTex(r"p \rightarrow 2^{256}", color = SECONDARY_COLOR, font_size = 40).next_to(self.chart.ax[0], RIGHT+UP).shift(UP)
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
         self.kilo_bytes_of_ec = Text("128 kB", font=PRIMARY_FONT, font_size = 24).set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.bytes_of_ec)
         self.kilo_bytes_of_ec.shift(UP*0.3)
-        self.kilo_bytes_of_ec_eqn = MathTex(r"= 32 B \times 4096", font_size = 24).set_color_by_gradient([WHITE, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec, DOWN, buff = 0.5)
+        self.kilo_bytes_of_ec_eqn = MathTex(r"= 32 \ \mathrm{B} \times 4096", font_size = 24).set_color_by_gradient([WHITE, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec, DOWN, buff = 0.5).shift(UP*0.3)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "what is blob?", "data/sound/e5/slide2-1.mp3")
@@ -42,11 +42,11 @@ class Blobs(SlideBase):
         self.dots = VGroup(*self.chart.dots)
         scene.wait(2)
         scene.play(Indicate(self.dots, color = [SECONDARY_COLOR, WHITE, GREY_A]))
-        scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+2], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]), run_time=0.3)
-        
+            scene.play(Indicate(self.number_sequence[2*i+2], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]), run_time=0.2)
         scene.play(Create(self.less_than_p))
+        scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
+        
         scene.wait(1.2)
              
         self.new_subsection(scene, "32 bytes", "data/sound/e5/slide2-3.mp3")
@@ -63,7 +63,7 @@ class Blobs(SlideBase):
         scene.play(MoveToTarget(self.chart))
         scene.wait(2)
         scene.play(Create(self.kilo_bytes_of_ec), Create(self.kilo_bytes_of_ec_eqn))
-        scene.wait(2.5)
+        scene.wait(2)
         
         
     def animate_out(self, scene):

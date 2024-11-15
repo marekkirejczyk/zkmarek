@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, PURPLE_A)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, PURPLE_A, TEAL_C)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -55,43 +55,43 @@ class VectorCommitments(SlideBase):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
         scene.play(Write(self.number_sequence))
-        scene.wait(1)
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.4)
-        scene.play(Create(self.chart.ax), Create(self.chart.labels), Create(self.chart.graph), GrowArrow(self.arrow_number_chart), Create(self.question_mark), run_time=1)
+            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.25)
+        scene.play(Create(self.chart.ax), Create(self.chart.labels), run_time=0.8)
+        scene.play(Create(self.chart.graph), GrowArrow(self.arrow_number_chart), Create(self.question_mark))
         
         
         self.new_subsection(scene, "[30, 9, -4, 15] - points on xy plane", "data/sound/e5/slide3-1.mp3")
         scene.wait(1)
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
+        scene.wait(1)
+        scene.play(Create(self.p0), run_time=0.5)
+        scene.play(Create(self.p1), run_time=0.5)
+        scene.play(Create(self.p2), run_time=0.5)
+        scene.play(Create(self.p3), run_time=0.5)
+        self.points = [self.p0, self.p1, self.p2, self.p3]
         for i in range(4):
-            scene.play(Indicate(self.number_sequence_smaller[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.9)
+            scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), run_time=0.3)
+            point = self.points[i] 
+            point.label[1].set_color_by_gradient([WHITE, HIGHLIGHT2_COLOR, HIGHLIGHT_COLOR])
+
+        scene.wait(1)
+        for i in range(4):
+            point = self.points[i] 
+            point.label[3].set_color_by_gradient([TEAL_C, PURPLE_A])
+            self.number_sequence_smaller[2*i+1].set_color_by_gradient([TEAL_C, PURPLE_A])
             
-        scene.wait(2)
-        scene.play(Create(self.p0), run_time=0.4)
-        scene.play(Create(self.p1), run_time=0.4)
-        scene.play(Create(self.p2), run_time=0.4)
-        scene.play(Create(self.p3), run_time=0.4)
-        for i in range(4):
-            scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), run_time=0.2)
-        scene.play(Indicate(self.p0.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p1.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p2.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p3.label[1], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.wait(0.1)
-        scene.play(Indicate(self.p0.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p1.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p2.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p3.label[3], color = [WHITE, PRIMARY_COLOR, SECONDARY_COLOR], scale_factor=1.3), run_time=0.4)
-        
         self.new_subsection(scene, "poly of degree 3", "data/sound/e5/slide3-1a.mp3")
-        scene.play(FadeOut(self.number_sequence_smaller_indeces[3*i+2], self.number_sequence_smaller_indeces[3*i+1]), run_time=1)
+        for i in range(4):
+            scene.play(FadeOut(self.number_sequence_smaller_indeces[3*i+2], self.number_sequence_smaller_indeces[3*i+1]), run_time=0.2)
         scene.play(Create(self.chart.graph))
         scene.play(FadeIn(self.polynomial))
         scene.wait(2)
         
         self.new_subsection(scene, "Lagrange interpolation", "data/sound/e5/slide3-1b.mp3")
-        scene.wait(6)
+        scene.wait(1)
+        scene.play(Write(self.lagrange_interpolation))
+        scene.wait(3)
         scene.play(Indicate(self.polynomial[3], color = HIGHLIGHT_COLOR, scale_factor=1.6))
         scene.play(Indicate(self.p0, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         scene.play(Indicate(self.p1, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
@@ -99,13 +99,14 @@ class VectorCommitments(SlideBase):
         scene.play(Indicate(self.p3, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
-        scene.play(FadeOut(self.number_sequence_smaller), FadeIn(self.number_sequence100))
+        scene.play(FadeOut(self.number_sequence_smaller, self.lagrange_interpolation), FadeIn(self.number_sequence100))
         scene.wait(0.2)
         scene.play(FadeOut(self.polynomial), FadeIn(self.polynomial_eqn_100), FadeOut(self.p0, self.p1, self.p2, self.p3))
 
         self.change_chart_axes(scene, self.chart)
         scene.wait(5.5)
         scene.play(FadeOut(self.polynomial_eqn_100), FadeIn(self.polynomial_eqn_4096), FadeOut(self.number_sequence100), FadeIn(self.number_sequence))
+        self.change_chart_axes_to4096(scene, self.chart)
 
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
         scene.wait(1.8)
@@ -148,6 +149,38 @@ class VectorCommitments(SlideBase):
             Transform(chart.ax, new_axes),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/100)**2) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                color=SECONDARY_COLOR
+            )), 
+            run_time=2)
+
+    def change_chart_axes_to4096(self, scene, chart):
+        new_axes = Axes(
+            x_range=[-4.7, 4096, 1000],
+            y_range=[-5.5, 4096, 1000],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        )
+
+
+        new_axes.scale(0.7).shift(LEFT*3.5)
+        chart.labels[0].generate_target()
+        chart.labels[0].target.next_to(new_axes[0], UP+RIGHT, buff = 0.1)
+        chart.labels[1].generate_target()
+        chart.labels[1].target.next_to(new_axes[1], UP+RIGHT, buff = 0.1)
+        
+        scene.play(
+            MoveToTarget(chart.labels[0]),
+            MoveToTarget(chart.labels[1]),
+            Transform(chart.ax, new_axes),  
+            Transform(chart.graph, new_axes.plot_implicit_curve(
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/100)**2) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k**k/ np.math.factorial(k) for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)

@@ -1,7 +1,9 @@
-from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, TransformMatchingShapes, 
-Indicate, Group, Square, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, BulletedList, ApplyWave)
+from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
+Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, BulletedList, ApplyWave)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
+SCROLL_COLOR_BACKGROUND = "#FCEFCC"
+SCROLL_COLOR = "#E4C495"
 
 class Layer2(SlideBase):
     def __init__(self) -> None:
@@ -34,7 +36,7 @@ class Layer2(SlideBase):
 
         self.layer2_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3) for _ in range(4)]
         for i in range(4):
-            self.layer2_blocks[i].set_color_by_gradient([WHITE, HIGHLIGHT_COLOR, PRIMARY_COLOR])
+            self.layer2_blocks[i].set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR])
 
         self.layer2_group = VGroup(*self.layer2_blocks).arrange(RIGHT, buff=0.5).shift(UP*0.67)
         self.brace_tx = Brace(self.tx_group, DOWN, color = PRIMARY_COLOR)
@@ -62,9 +64,9 @@ class Layer2(SlideBase):
         self.finalized_blocks[1].next_to(self.finalized_blocks[0], RIGHT, buff = 0.5)
         self.rollup_text = Text("rollup", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
                                 font_size = 22).next_to(self.rollup_brace, RIGHT).shift(DOWN*0.3+LEFT)
-        self.rollup_batch_text = Text("rollup batch", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
-                                font_size = 22).next_to(self.rollup_brace, RIGHT).shift(DOWN*0.3)
-        self.pricey_dollars_rollup = Text("$$$", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 22).next_to(self.rollup_brace, LEFT)
+        self.rollup_batch_text = Text("transactions batch", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
+                                font_size = 22).next_to(self.rollup_brace, DOWN)
+        self.pricey_dollars_rollup = Text("$$$", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 22).next_to(self.rollup_batch_text, LEFT)
         self.proof_of_correctness = Text("ZK proof", color = HIGHLIGHT_COLOR, font= PRIMARY_FONT, font_size = 22)
         
         self.transactions = Text("transactions", color = WHITE, font = PRIMARY_FONT, 
@@ -94,7 +96,7 @@ class Layer2(SlideBase):
                                  self.arrow_layer1, self.arrow_layer2, self.arrow_txs, self.brace_tx, self.pricey_dollars_rollup)
         self.block_chain.shift(LEFT)
         self.arrow_proof_of_correctness = Arrow(self.layer2_blocks[1].get_bottom(), self.finalized_blocks[1].get_top(), tip_shape=StealthTip, 
-                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY])
+                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(DOWN*0.1)
         self.proof_of_correctness.next_to(self.arrow_proof_of_correctness, LEFT)
 
         

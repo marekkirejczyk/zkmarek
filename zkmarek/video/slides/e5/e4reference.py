@@ -1,6 +1,7 @@
-from manim import FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip
+from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, 
+Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE)
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 
@@ -49,7 +50,7 @@ class Episode4Recap(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.395)
-        self.ethereum_logo = ImageMobject("data/images/ethereum_logo.png").scale(0.5)
+        self.ethereum_logo = ImageMobject("data/images/ethereum_logo.png").scale(0.3)
         self.envelope_body.next_to(self.committer, RIGHT+DOWN, buff = 0.4)
         self.envelope_body_closed.next_to(self.committer, RIGHT+DOWN, buff = 0.4)
 
@@ -86,7 +87,8 @@ class Episode4Recap(SlideBase):
 
         scene.play(MoveToTarget(commitment_sent), run_time=1)
         speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, 
+                                           color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)
         bubble_verifier.shift(UP) 
         speech_text_verifier.move_to(bubble_verifier.get_center())
         tail_verifier = Polygon(
@@ -136,15 +138,16 @@ class Episode4Recap(SlideBase):
         scene.play(MoveToTarget(self.commitment))
         scene.wait(2)
         scene.play(Indicate(self.opening, color = [HIGHLIGHT_COLOR, WHITE]))
-        scene.wait(1)
+        scene.wait(2)
         scene.play(Indicate(self.proof, color = [HIGHLIGHT_COLOR, WHITE]))
         scene.wait(0.5)
         scene.play(Indicate(self.commitment, color = [HIGHLIGHT_COLOR, WHITE]))
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
-        scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, self.committer, self.committer_label, self.opening, self.proof))
-        block1 = Rectangle(width=2, height=3)
-        block1.set_color_by_gradient([WHITE, HIGHLIGHT_COLOR, PRIMARY_COLOR])
+        scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, 
+                           self.committer, self.committer_label, self.opening, self.proof))
+        block1 = Rectangle(width=1.6, height=1.2, fill_opacity = 0.3)
+        block1.set_color_by_gradient([WHITE, PURPLE, HIGHLIGHT2_COLOR])
         self.ethereum_logo.move_to(block1.get_center())
         self.block1_group = Group(block1, self.ethereum_logo)
         self.block1_group.shift(LEFT * 4)
