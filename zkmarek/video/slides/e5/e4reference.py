@@ -126,11 +126,20 @@ class Episode4Recap(SlideBase):
         self.opening.target.next_to(self.verifier_label, DOWN) 
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
+        
+        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
         scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof))
         self.commitment.generate_target()
         self.commitment.target.next_to(self.proof, DOWN)
+        
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(MoveToTarget(self.commitment))
+        scene.wait(2)
+        scene.play(Indicate(self.opening, color = [HIGHLIGHT_COLOR, WHITE]))
+        scene.wait(1)
+        scene.play(Indicate(self.proof, color = [HIGHLIGHT_COLOR, WHITE]))
+        scene.wait(0.5)
+        scene.play(Indicate(self.commitment, color = [HIGHLIGHT_COLOR, WHITE]))
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, self.committer, self.committer_label, self.opening, self.proof))
@@ -162,6 +171,9 @@ class Episode4Recap(SlideBase):
         scene.play(FadeIn(self.block2_group))
         scene.play(GrowArrow(self.arrow2))
         scene.play(FadeIn(self.block3_group))
+        
+        self.new_subsection(scene, "blobs", "data/sound/e5/slide0-4.mp3")
+        scene.wait(3)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.arrow, self.arrow2, self.block1_group, self.block2_group, self.block3_group, self.title_label))
