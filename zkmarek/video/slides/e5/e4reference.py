@@ -137,11 +137,11 @@ class Episode4Recap(SlideBase):
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(MoveToTarget(self.commitment))
         scene.wait(2)
-        scene.play(Indicate(self.opening, color = [HIGHLIGHT_COLOR, WHITE]))
+        scene.play(Indicate(self.opening, color = [PURPLE, WHITE]))
         scene.wait(2)
-        scene.play(Indicate(self.proof, color = [HIGHLIGHT_COLOR, WHITE]))
+        scene.play(Indicate(self.proof, color = [PURPLE, WHITE]))
         scene.wait(0.5)
-        scene.play(Indicate(self.commitment, color = [HIGHLIGHT_COLOR, WHITE]))
+        scene.play(Indicate(self.commitment, color = [PURPLE, WHITE]))
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, 

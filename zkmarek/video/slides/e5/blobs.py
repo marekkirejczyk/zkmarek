@@ -1,4 +1,4 @@
-from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ApplyWave, VGroup, Rectangle, WHITE, Indicate, Brace, GREY_A, Write, MoveToTarget
+from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ApplyWave, VGroup, Rectangle, WHITE, Indicate, Brace, GREY_A, Write, MoveToTarget, PURPLE_A
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
@@ -65,7 +65,12 @@ class Blobs(SlideBase):
         scene.play(Create(self.kilo_bytes_of_ec), Create(self.kilo_bytes_of_ec_eqn))
         scene.wait(2)
         
+        self.new_subsection(scene, "temporary space", "data/sound/e5/slide2-5.mp3")
+        scene.play(FadeOut(self.kilo_bytes_of_ec_eqn))
+        scene.wait(0.5)
+        scene.play(Indicate(self.kilo_bytes_of_ec, color = PURPLE_A))
+        scene.wait(6)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.brace_blob, self.kilo_bytes_of_ec_eqn, self.chart, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))
+        scene.play(FadeOut(self.brace_blob, self.chart, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))
         

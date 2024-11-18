@@ -64,7 +64,7 @@ class VectorCommitments(SlideBase):
         self.new_subsection(scene, "[30, 9, -4, 15] - points on xy plane", "data/sound/e5/slide3-1.mp3")
         scene.wait(1)
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
-        scene.wait(1)
+        scene.wait(2)
         scene.play(Create(self.p0), run_time=0.5)
         scene.play(Create(self.p1), run_time=0.5)
         scene.play(Create(self.p2), run_time=0.5)
@@ -75,7 +75,7 @@ class VectorCommitments(SlideBase):
             point = self.points[i] 
             point.label[1].set_color_by_gradient([WHITE, HIGHLIGHT2_COLOR, HIGHLIGHT_COLOR])
 
-        scene.wait(1)
+        scene.wait(2)
         for i in range(4):
             point = self.points[i] 
             point.label[3].set_color_by_gradient([TEAL_C, PURPLE_A])
@@ -180,7 +180,7 @@ class VectorCommitments(SlideBase):
             MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/100)**2) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k**k/ np.math.factorial(k) for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.abs(np.sin(k*np.pi*x/2000))) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k**k/ np.math.factorial(k) for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
