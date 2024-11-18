@@ -71,7 +71,7 @@ class Layer2(SlideBase):
         
         self.transactions = Text("transactions", color = WHITE, font = PRIMARY_FONT, 
                                  font_size = 22).next_to(self.tx_circle8, RIGHT).shift(RIGHT*2.5)
-        self.layer2 = Text("L2: ZK rollups", color = WHITE, font=PRIMARY_FONT, 
+        self.layer2 = Text("L2: ZK rollup", color = WHITE, font=PRIMARY_FONT, 
                            font_size = 22).next_to(self.layer2_blocks[3], RIGHT).shift(RIGHT*1.5)
         self.layer1_ethereum = Text("L1: Ethereum", color = WHITE, font = PRIMARY_FONT, 
                                     font_size = 22).next_to(self.finalized_blocks[3], RIGHT).shift(RIGHT*1.5)
@@ -119,8 +119,11 @@ class Layer2(SlideBase):
         self.proof_of_correctness.target.move_to(self.finalized_blocks[1].get_center()).set_opacity(0.2)
         
         scene.play(MoveToTarget(self.proof_of_correctness), FadeOut(self.arrow_proof_of_correctness))
-        scene.wait(1)
+        scene.wait(0.5)
+        scene.play(Indicate(self.layer1_ethereum, color = PURPLE))
         scene.play(FadeOut(self.proof_of_correctness))
+        scene.wait(0.3)
+        scene.play(Indicate(self.layer2, color = PURPLE))
         scene.wait(3)
         scene.play(Create(self.pricey_dollars_rollup), FadeIn(self.rollup_batch_text))
         scene.wait(2.5)

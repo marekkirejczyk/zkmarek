@@ -41,23 +41,23 @@ class Blobs(SlideBase):
         
         self.dots = VGroup(*self.chart.dots)
         scene.wait(2)
-        scene.play(Indicate(self.dots, color = [SECONDARY_COLOR, WHITE, GREY_A]))
+        scene.play(Indicate(self.dots, color = [SECONDARY_COLOR, PURPLE_A, GREY_A]))
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+2], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]), run_time=0.2)
         scene.play(Create(self.less_than_p))
         scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
         
-        scene.wait(1.2)
+        scene.wait(0.5)
              
         self.new_subsection(scene, "32 bytes", "data/sound/e5/slide2-3.mp3")
         self.chart.generate_target()
         self.chart.target.shift(DOWN)
         scene.wait(1)
-        scene.play(FadeOut(self.less_than_p, self.order_p), run_time=0.5)
         self.number_sequence[4].set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
         self.bytes_of_ec.next_to(self.number_sequence[4], UP)
         scene.wait(3)
         scene.play(Create(self.bytes_of_ec))
+        scene.play(FadeOut(self.less_than_p, self.order_p), run_time=0.5)
         
         self.new_subsection(scene, "128 k bytes", "data/sound/e5/slide2-4.mp3")
         scene.play(MoveToTarget(self.chart))
@@ -69,7 +69,7 @@ class Blobs(SlideBase):
         scene.play(FadeOut(self.kilo_bytes_of_ec_eqn))
         scene.wait(0.5)
         scene.play(Indicate(self.kilo_bytes_of_ec, color = PURPLE_A))
-        scene.wait(6)
+        scene.wait(7.5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.brace_blob, self.chart, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))

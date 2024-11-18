@@ -53,8 +53,7 @@ class VectorCommitments(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")
-        scene.play(Write(self.title_label), run_time=0.7)
-        scene.play(Write(self.number_sequence))
+        scene.play(Write(self.title_label), Write(self.number_sequence), run_time=0.7)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.25)
         scene.play(Create(self.chart.ax), Create(self.chart.labels), run_time=0.8)
@@ -86,7 +85,7 @@ class VectorCommitments(SlideBase):
             scene.play(FadeOut(self.number_sequence_smaller_indeces[3*i+2], self.number_sequence_smaller_indeces[3*i+1]), run_time=0.2)
         scene.play(Create(self.chart.graph))
         scene.play(FadeIn(self.polynomial))
-        scene.wait(2)
+        scene.wait(3)
         
         self.new_subsection(scene, "Lagrange interpolation", "data/sound/e5/slide3-1b.mp3")
         scene.wait(1)

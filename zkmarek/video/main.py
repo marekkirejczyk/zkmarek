@@ -71,6 +71,7 @@ from zkmarek.video.slides.e5.e4reference import Episode4Recap
 from zkmarek.video.slides.e5.layer2 import Layer2
 from zkmarek.video.slides.e5.blobs import Blobs
 from zkmarek.video.slides.e5.vectorcommitments import VectorCommitments
+from zkmarek.video.slides.e5.kzg import KZGBlobs
 config.width = 16
 config.height = 9
 
@@ -200,6 +201,7 @@ EPISODE5 = [
     Blobs(),
     TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
     VectorCommitments(),
+    KZGBlobs(),
 ]
 
 EPISODE6 = [
