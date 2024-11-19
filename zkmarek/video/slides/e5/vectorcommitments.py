@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, PURPLE_A, TEAL_C)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, MAROON_A, PURPLE)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -19,7 +19,7 @@ class VectorCommitments(SlideBase):
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller_indeces = MathTex(r"\left[ {{a}}{{_0}}, {{a}}{{_1}}, {{a}}{{_2}}, {{a}}{{_3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
         for i in range(4):
-            self.number_sequence_smaller_indeces[3*i+2].set_color_by_gradient([WHITE, HIGHLIGHT2_COLOR, HIGHLIGHT_COLOR])
+            self.number_sequence_smaller_indeces[3*i+2].set_color(PURPLE)
         self.arrow_number_indeces = Arrow(self.number_sequence_smaller_indeces.get_top(), self.number_sequence_smaller.get_bottom(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
         self.p0 = ValueTracker(0)
@@ -29,6 +29,7 @@ class VectorCommitments(SlideBase):
         self.p1_1 = ValueTracker(1)
         a1_1 = Curve.from_x(self.p1_1.get_value())
         self.p1 = DotOnCurve(self.chart.ax, "({{1}}, {{9}})", a1_1)
+        self.p1.label.shift(LEFT*0.1)
 
         self.p2_10 = ValueTracker(2)
         a2_10 = Curve.from_x(self.p2_10.get_value())
@@ -49,13 +50,13 @@ class VectorCommitments(SlideBase):
         self.polynomial_eqn_4096 = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial_eqn_100 = MathTex(r"P(x) = {{a_{100}}}\cdot {{x^{100}}} + {{a_{99}}} \cdot {{x^{99}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
-        self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24).next_to(self.chart, RIGHT).shift(DOWN).set_color_by_gradient([PRIMARY_COLOR, PURPLE_A])
+        self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24).next_to(self.chart, RIGHT).shift(DOWN).set_color_by_gradient([PRIMARY_COLOR, MAROON_A])
 
     def animate_in(self, scene):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")
         scene.play(Write(self.title_label), Write(self.number_sequence), run_time=0.7)
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.25)
+            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, MAROON_A], scale_factor=1.2), run_time=0.25)
         scene.play(Create(self.chart.ax), Create(self.chart.labels), run_time=0.8)
         scene.play(Create(self.chart.graph), GrowArrow(self.arrow_number_chart), Create(self.question_mark))
         
@@ -72,13 +73,13 @@ class VectorCommitments(SlideBase):
         for i in range(4):
             scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), run_time=0.3)
             point = self.points[i] 
-            point.label[1].set_color_by_gradient([WHITE, HIGHLIGHT2_COLOR, HIGHLIGHT_COLOR])
+            point.label[1].set_color(PURPLE)
 
         scene.wait(2)
         for i in range(4):
             point = self.points[i] 
-            point.label[3].set_color_by_gradient([TEAL_C, PURPLE_A])
-            self.number_sequence_smaller[2*i+1].set_color_by_gradient([TEAL_C, PURPLE_A])
+            point.label[3].set_color(MAROON_A)
+            self.number_sequence_smaller[2*i+1].set_color_by_gradient(MAROON_A)
             
         self.new_subsection(scene, "poly of degree 3", "data/sound/e5/slide3-1a.mp3")
         for i in range(4):
@@ -111,6 +112,7 @@ class VectorCommitments(SlideBase):
         scene.wait(1.8)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
+        scene.wait(3)
         
         self.new_subsection(scene, "kzg", "data/sound/e5/slide3-4.mp3")
         scene.wait(3)
@@ -178,8 +180,4 @@ class VectorCommitments(SlideBase):
             MoveToTarget(chart.labels[0]),
             MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes),  
-            Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.abs(np.sin(k*np.pi*x/2000))) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k**k/ np.math.factorial(k) for k in range(1, 101)) - y,
-                color=SECONDARY_COLOR
-            )), 
             run_time=2)

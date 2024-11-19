@@ -195,7 +195,7 @@ EPISODE4 = [
 EPISODE5 = [
     # Sponsored(),
     Episode4Recap(),
-    TitleSlide("Layer 2", subtitle="ZK rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=2),
+    TitleSlide("Layer 2", subtitle="ZK rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=3),
     Layer2(),
     TitleSlide("Blobs", subtitle="Binary Large OBject", sound="data/sound/e5/slide1-3.mp3", wait_time=2),
     Blobs(),
