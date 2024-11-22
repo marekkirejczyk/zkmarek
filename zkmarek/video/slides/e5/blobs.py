@@ -46,7 +46,6 @@ class Blobs(SlideBase):
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+2], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]), run_time=0.2)
         scene.play(Create(self.less_than_p))
-        scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
         
         scene.wait(0.5)
              
@@ -54,6 +53,7 @@ class Blobs(SlideBase):
         self.chart.generate_target()
         self.chart.target.shift(DOWN)
         scene.wait(1)
+        scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
         self.number_sequence[4].set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
         self.bytes_of_ec.next_to(self.number_sequence[4], UP)
         scene.wait(3)

@@ -64,18 +64,18 @@ class VectorCommitments(SlideBase):
         self.new_subsection(scene, "[30, 9, -4, 15] - points on xy plane", "data/sound/e5/slide3-1.mp3")
         scene.wait(1)
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
-        scene.wait(2)
-        scene.play(Create(self.p0), run_time=0.5)
-        scene.play(Create(self.p1), run_time=0.5)
-        scene.play(Create(self.p2), run_time=0.5)
-        scene.play(Create(self.p3), run_time=0.5)
         self.points = [self.p0, self.p1, self.p2, self.p3]
         for i in range(4):
             scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), run_time=0.3)
             point = self.points[i] 
             point.label[1].set_color(PURPLE)
+        scene.wait(0.7)
+        scene.play(Create(self.p0), run_time=0.5)
+        scene.play(Create(self.p1), run_time=0.5)
+        scene.play(Create(self.p2), run_time=0.5)
+        scene.play(Create(self.p3), run_time=0.5)
 
-        scene.wait(2)
+        scene.wait(3)
         for i in range(4):
             point = self.points[i] 
             point.label[3].set_color(MAROON_A)
@@ -99,23 +99,30 @@ class VectorCommitments(SlideBase):
         scene.play(Indicate(self.p3, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
-        scene.play(FadeOut(self.number_sequence_smaller, self.lagrange_interpolation), FadeIn(self.number_sequence100))
+        scene.play(FadeOut(self.number_sequence_smaller, self.lagrange_interpolation), FadeIn(self.number_sequence))
         scene.wait(0.2)
-        scene.play(FadeOut(self.polynomial), FadeIn(self.polynomial_eqn_100), FadeOut(self.p0, self.p1, self.p2, self.p3))
+        scene.play(FadeOut(self.polynomial), FadeIn(self.polynomial_eqn_4096), FadeOut(self.p0, self.p1, self.p2, self.p3))
 
         self.change_chart_axes(scene, self.chart)
         scene.wait(5.5)
-        scene.play(FadeOut(self.polynomial_eqn_100), FadeIn(self.polynomial_eqn_4096), FadeOut(self.number_sequence100), FadeIn(self.number_sequence))
+
         self.change_chart_axes_to4096(scene, self.chart, True)
+        scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096[1], color = PURPLE), Indicate(self.polynomial_eqn_4096[3], color = PURPLE))
 
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")
-        
-        self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
         scene.wait(1.8)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
         scene.wait(3)
         
+        self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
+        scene.wait(1.8)
+        for i in range(4):
+            scene.play(Indicate(self.polynomial_eqn_4096[2*i+3], color = PURPLE))
+            
+        for i in range(5):
+            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
+            
         self.new_subsection(scene, "kzg", "data/sound/e5/slide3-4.mp3")
         scene.wait(3)
         
@@ -126,8 +133,8 @@ class VectorCommitments(SlideBase):
 
     def change_chart_axes(self, scene, chart):
         new_axes = Axes(
-            x_range=[-4.7, 100, 20],
-            y_range=[-5.5, 100, 20],
+            x_range=[-4.7, 20, 20],
+            y_range=[-5.5, 20, 20],
             x_length=7,
             axis_config={
                 "include_numbers": False,
@@ -140,7 +147,7 @@ class VectorCommitments(SlideBase):
         )
         new_axes4096 = Axes(
             x_range=[-4.7, 4096, 4096],
-            y_range=[-5.5, 4096, 1000],
+            y_range=[-5.5, 4096, 4096],
             x_length=7,
             axis_config={
                 "include_numbers": False,
@@ -153,25 +160,26 @@ class VectorCommitments(SlideBase):
         )
 
         new_axes.scale(0.7).shift(LEFT*3.5)
+        new_axes4096.scale(0.7).shift(LEFT*3.5)
         chart.labels[0].generate_target()
-        chart.labels[0].target.next_to(new_axes[0], UP+RIGHT, buff = 0.1)
+        chart.labels[0].target.next_to(new_axes4096[0], UP+RIGHT, buff = 0.1)
         chart.labels[1].generate_target()
-        chart.labels[1].target.next_to(new_axes[1], UP+RIGHT, buff = 0.1)
+        chart.labels[1].target.next_to(new_axes4096[1], UP+RIGHT, buff = 0.1)
         
         scene.play(
             MoveToTarget(chart.labels[0]),
             MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/100)**2) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)**2-5) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
 
     def change_chart_axes_to4096(self, scene, chart, include_numebrs):
         new_axes = Axes(
-            x_range=[-4.7, 4096, 4096],
-            y_range=[-5.5, 4096, 4096],
+            x_range=[-4.7, 4095, 4095],
+            y_range=[-5.5, 4095, 4095],
             x_length=7,
             axis_config={
                 "include_numbers": include_numebrs,
