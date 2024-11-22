@@ -1,8 +1,8 @@
-from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, FadeOut, PURPLE_A, 
-                   Group, RoundedRectangle, MoveToTarget, MathTex, Circle, Indicate, Rectangle, GREY_A, WHITE, 
+from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, Text, Write, FadeOut, PURPLE_A, 
+                   Group, RoundedRectangle, MoveToTarget, MathTex, Circle, Indicate, 
                    BLUE, PURPLE, PINK)
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
@@ -12,9 +12,10 @@ class KZGBlobs2(SlideBase):
         super().__init__("KZG in blobs")
 
     def construct(self):
-        self.title_text_kzg = Text("KZG", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
+        self.title_text_kzg = Text("KZG in blobs", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
         self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5+DOWN*0.5).scale(0.6)
-        self.commiter = Rectangle(width=3, height=2, fill_opacity=0.3).set_color_by_gradient([PRIMARY_COLOR, GREY_A, WHITE]).shift(LEFT*2+DOWN*0.5).scale(0.6)
+        # self.commiter = Rectangle(width=3, height=2, fill_opacity=0.3).set_color_by_gradient([PRIMARY_COLOR, GREY_A, WHITE]).shift(LEFT*2+DOWN*0.5).scale(0.6)
+        self.commiter = ImageMobject("data/images/blob.png").scale(0.6).shift(LEFT*2+DOWN*0.5)
         self.commiter_label = Text("Blob", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
@@ -87,14 +88,15 @@ class KZGBlobs2(SlideBase):
         self.circle_full = Circle(radius = 0.1, color = HIGHLIGHT2_COLOR, fill_opacity = 1).next_to(self.blob_data, DOWN, buff=-1).shift(LEFT*0.42+UP*0.28)
         scene.wait(1)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
-
+        
+        self.new_subsection(scene, "for selected positions", "data/sound/e5/slide5-4.mp3")
         scene.play(FadeIn(self.opening, bubble_opening, tail))
         scene.wait(0.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), FadeOut(self.circle_full), run_time=0.5)
         
-        self.new_subsection(scene, "commitment and proof", "data/sound/e5/slide5-3.mp3")
+        self.new_subsection(scene, "commitment and proof", "data/sound/e5/slide5-5.mp3")
         scene.play(FadeIn(self.commitment))
 
         scene.wait(2)

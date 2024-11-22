@@ -1,5 +1,6 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
-Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, BulletedList, ApplyWave)
+Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave,
+BLUE_E, GREEN_E, TEAL_E, RoundedRectangle)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 SCROLL_COLOR_BACKGROUND = "#FCEFCC"
@@ -79,21 +80,36 @@ class Layer2(SlideBase):
         self.arrow_txs = Arrow(self.tx_circle8.get_right(), self.transactions.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY])
         self.arrow_layer2 = Arrow(self.layer2_blocks[3].get_right(), self.layer2.get_left(), tip_shape=StealthTip, 
-                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([GREY, HIGHLIGHT2_COLOR])
-        self.arrow_layer1 = Arrow(self.finalized_blocks[3].get_right(), self.layer1_ethereum.get_left(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY])
+        self.arrow_layer1 = Arrow(self.finalized_blocks[3].get_right(), self.layer1_ethereum.get_left(), tip_shape=StealthTip, 
+                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(LEFT*0.06)
         
-        self.blobs = Text("EIP-4844 blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*2.5+UP*1.5)
-        self.blist = BulletedList("Cheap temporary storage", "Smart contracts accessible data...", "...even post removal", 
-                                  height=5, width=5).next_to(self.blobs, DOWN).shift(DOWN)
-        self.blist.set_color_by_tex("Cheap temporary storage", SECONDARY_COLOR)
-        self.blist.set_color_by_tex("Smart contracts accessible data...", HIGHLIGHT_COLOR)
-        self.blist.set_color_by_tex("...even post removal", PRIMARY_COLOR)
         
+        self.arrow_layer2_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
+                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR]) for _ in range(3)]
+        for i in range(3):
+            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.7)
+        self.arrow_layer2_group = VGroup(*self.arrow_layer2_blocks)
+        
+        self.arrow_layer1_blocks = [Arrow(self.finalized_blocks[0].get_right(), self.finalized_blocks[1].get_left(), tip_shape=StealthTip, 
+                                  stroke_width=2, max_tip_length_to_length_ratio=0.15) for _ in range(3)]
+        for i in range(3):
+            self.arrow_layer1_blocks[i].next_to(self.finalized_blocks[i], RIGHT, buff=0).scale(0.7)
+        self.arrow_layer1_group = VGroup(*self.arrow_layer1_blocks)
+        
+        self.blobs = Text("EIP-4844 blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*3.3+UP*1.5)
+
+        self.cheap_storage = Text("Cheap temporary storage", color = BLUE_E, font = PRIMARY_FONT, font_size = 28).next_to(self.blobs, DOWN).shift(DOWN*0.5)
+        self.smart_contracts = Text("Smart contracts accessible...", font = PRIMARY_FONT, color = GREEN_E, font_size = 28).next_to(self.cheap_storage, DOWN)
+        self.post_removal = Text("...even post removal", font = PRIMARY_FONT, color = TEAL_E, font_size = 28).next_to(self.smart_contracts, DOWN)   
+        self.rounded_rectangle = RoundedRectangle(corner_radius=0.5, width=self.smart_contracts.width + 0.5, height=self.smart_contracts.height + 3.5).set_color_by_gradient([PRIMARY_COLOR, GREEN_E, HIGHLIGHT2_COLOR])
+        self.rounded_rectangle.move_to(self.smart_contracts.get_center())
         self.block_chain = Group(self.tx_group, self.layer1_ethereum, self.layer2, self.ethereum, 
                                  self.ethereum2, self.ethereum3, self.ethereum4, self.transactions,
                                  self.layer2_group, self.finalized_group, self.rollup_brace, self.rollup_batch_text, 
-                                 self.arrow_layer1, self.arrow_layer2, self.arrow_txs, self.brace_tx, self.pricey_dollars_rollup)
+                                 self.arrow_layer1, self.arrow_layer2, self.arrow_txs, self.brace_tx, self.pricey_dollars_rollup, 
+                                 self.arrow_layer1_group, 
+                                 self.arrow_layer2_group)
         self.block_chain.shift(LEFT)
         self.arrow_proof_of_correctness = Arrow(self.layer2_blocks[1].get_bottom(), self.finalized_blocks[1].get_top(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(DOWN*0.1)
@@ -104,14 +120,15 @@ class Layer2(SlideBase):
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
         scene.play(FadeIn(self.tx_group, self.title_text), Create(self.transactions), GrowArrow(self.arrow_txs), run_time=0.8)
 
-        scene.play(Create(self.layer2_group), Write(self.brace_tx), run_time=0.7)
+        scene.play(Create(self.layer2_group), FadeIn(self.arrow_layer2_group), Write(self.brace_tx), run_time=0.7)
         scene.play(Create(self.layer2), GrowArrow(self.arrow_layer2), run_time=0.7)
         
         scene.play(ApplyWave(self.tx_group), run_time=1)
 
         scene.play(FadeIn(self.rollup_brace))
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum))
-        scene.play(Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
+        scene.play(Create(self.finalized_group), FadeIn(self.arrow_layer1_group), 
+                   Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         
         scene.wait(0.5)
         scene.play(Create(self.proof_of_correctness), GrowArrow(self.arrow_proof_of_correctness))
@@ -122,12 +139,12 @@ class Layer2(SlideBase):
         scene.wait(0.5)
         scene.play(Indicate(self.layer1_ethereum, color = PURPLE))
         scene.play(FadeOut(self.proof_of_correctness))
-        scene.play(Indicate(self.layer2, color = PURPLE))
-        scene.wait(0.3)
-        scene.play(Indicate(self.transactions, color = PURPLE))
-        scene.wait(3)
-        scene.play(Create(self.pricey_dollars_rollup), FadeIn(self.rollup_batch_text))
-        scene.wait(2.5)
+        scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE))
+        scene.wait(0.5)
+        scene.play(FadeIn(self.rollup_batch_text))
+        scene.wait(2)
+        scene.play(Create(self.pricey_dollars_rollup))
+        scene.wait(1.5)
         
         self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-2.mp3")
 
@@ -136,21 +153,21 @@ class Layer2(SlideBase):
         scene.play(MoveToTarget(self.block_chain))
         self.box = SurroundingRectangle(self.block_chain, buff = 0.2).set_color_by_gradient([PRIMARY_COLOR, GREY, WHITE])
         scene.wait()
-        scene.play(AddTextLetterByLetter(self.blobs))#, Create(self.box))
+        scene.play(AddTextLetterByLetter(self.blobs), Create(self.rounded_rectangle))
         for i in range(8):
             if i!=3:
                 scene.play(Indicate(self.blobs[i], color = SECONDARY_COLOR), run_time=0.2)
         
         self.new_subsection(scene, "blobs are cheaper", "data/sound/e5/slide1-2a.mp3")
 
-        scene.play(Write(self.blist[0]))
+        scene.play(Write(self.cheap_storage))
         
         self.new_subsection(scene, "still can access specific data", "data/sound/e5/slide1-2b.mp3")
-        scene.play(Write(self.blist[1]))
+        scene.play(Write(self.smart_contracts))
         scene.wait(4)
-        scene.play(Write(self.blist[2]))
+        scene.play(Write(self.post_removal))
         scene.wait(4)
         
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.blist))
+        scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.cheap_storage, self.smart_contracts, self.post_removal, self.rounded_rectangle))

@@ -106,8 +106,10 @@ class VectorCommitments(SlideBase):
         self.change_chart_axes(scene, self.chart)
         scene.wait(5.5)
         scene.play(FadeOut(self.polynomial_eqn_100), FadeIn(self.polynomial_eqn_4096), FadeOut(self.number_sequence100), FadeIn(self.number_sequence))
-        self.change_chart_axes_to4096(scene, self.chart)
+        self.change_chart_axes_to4096(scene, self.chart, True)
 
+        self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")
+        
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
         scene.wait(1.8)
         for i in range(5):
@@ -128,7 +130,7 @@ class VectorCommitments(SlideBase):
             y_range=[-5.5, 100, 20],
             x_length=7,
             axis_config={
-                "include_numbers": True,
+                "include_numbers": False,
                 "color": PRIMARY_COLOR,
                 "decimal_number_config": {
                     "color": PRIMARY_COLOR,
@@ -136,7 +138,19 @@ class VectorCommitments(SlideBase):
                 }
             }
         )
-
+        new_axes4096 = Axes(
+            x_range=[-4.7, 4096, 4096],
+            y_range=[-5.5, 4096, 1000],
+            x_length=7,
+            axis_config={
+                "include_numbers": False,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        )
 
         new_axes.scale(0.7).shift(LEFT*3.5)
         chart.labels[0].generate_target()
@@ -147,20 +161,20 @@ class VectorCommitments(SlideBase):
         scene.play(
             MoveToTarget(chart.labels[0]),
             MoveToTarget(chart.labels[1]),
-            Transform(chart.ax, new_axes),  
+            Transform(chart.ax, new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/100)**2) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
 
-    def change_chart_axes_to4096(self, scene, chart):
+    def change_chart_axes_to4096(self, scene, chart, include_numebrs):
         new_axes = Axes(
-            x_range=[-4.7, 4096, 1000],
-            y_range=[-5.5, 4096, 1000],
+            x_range=[-4.7, 4096, 4096],
+            y_range=[-5.5, 4096, 4096],
             x_length=7,
             axis_config={
-                "include_numbers": True,
+                "include_numbers": include_numebrs,
                 "color": PRIMARY_COLOR,
                 "decimal_number_config": {
                     "color": PRIMARY_COLOR,
