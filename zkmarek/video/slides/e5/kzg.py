@@ -17,12 +17,12 @@ class KZGBlobs(SlideBase):
         self.number_sequence_kilo_bytes = Text("128 kB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=24)
         self.brace_number.put_at_tip(self.number_sequence_kilo_bytes)
         
-        self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.verifier, RIGHT).shift(RIGHT)
+        self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.committer, RIGHT).shift(RIGHT)
         self.opening = MathTex(r"p(x_0) = y_0", color = TEAL_E).next_to(self.polynomial, UP).shift(UP)
         self.arrow_opening_poly = Arrow(self.polynomial.get_top(), self.opening.get_bottom(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
         
-        self.arrow_opening_verifier = Arrow(self.verifier.get_right(), self.polynomial.get_left(), tip_shape=StealthTip, 
+        self.arrow_opening_committer = Arrow(self.committer.get_right(), self.polynomial.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
         
         self.commitment = MathTex(r"{{C}} = {{p}}({{\tau}}) \cdot {{G_1}}").set_color_by_gradient([BLUE_E, TEAL_E]).next_to(self.polynomial, RIGHT).shift(RIGHT)
@@ -40,11 +40,13 @@ class KZGBlobs(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "remember, kzg", "data/sound/e5/slide4-1.mp3")
         scene.play(Write(self.title_text))
-        scene.play(FadeIn(self.verifier), Write(self.opening))
-        scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_poly), GrowArrow(self.arrow_opening_verifier))
-        scene.wait(1.5)
+        scene.play(FadeIn(self.verifier, self.committer), Write(self.opening))
+        scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_poly), GrowArrow(self.arrow_opening_committer))
+        scene.wait(0.3)
+        scene.play(Write(self.verifier_label), Write(self.committer_label))
+        scene.wait(1.2)
         scene.play(Indicate(self.opening, color = [PURPLE, TEAL_E]))
-        scene.wait(2)
+        scene.wait(0.7)
         scene.play(GrowArrow(self.arrow_poly_commitment))
         scene.play(Write(self.commitment))
         scene.play(GrowArrow(self.arrow_poly_proof))
@@ -52,7 +54,7 @@ class KZGBlobs(SlideBase):
         
         
         self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
-        scene.play(FadeOut(self.opening, self.arrow_opening_poly, self.arrow_opening_verifier))
+        scene.play(FadeOut(self.opening, self.arrow_opening_poly, self.arrow_opening_committer))
         self.group_poly = Group(self.polynomial, self.arrow_poly_commitment, self.arrow_poly_proof, self.proof, self.commitment)
         self.group_poly.generate_target()
         self.group_poly.target.next_to(self.number_sequence, DOWN).shift(DOWN)
@@ -62,7 +64,6 @@ class KZGBlobs(SlideBase):
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR))
         scene.play(Write(self.number_sequence))
 
-        scene.wait(1)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.25)
         scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
@@ -81,4 +82,5 @@ class KZGBlobs(SlideBase):
         scene.play(FadeOut(self.title_text, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  
                            self.arrow_poly_proof, self.proof_bytes,self.brace_proof, 
                            self.commitment_bytes, self.brace_commitment, 
-                           self.brace_number, self.commitment, self.proof, self.verifier))
+                           self.brace_number, self.commitment, self.proof, self.verifier, self.committer,
+                           self.committer_label, self.verifier_label))

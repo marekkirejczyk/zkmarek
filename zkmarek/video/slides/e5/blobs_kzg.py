@@ -1,6 +1,5 @@
 from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, Text, Write, FadeOut, PURPLE_A, 
-                   Group, RoundedRectangle, MoveToTarget, MathTex, Indicate, 
-                   BLUE, PURPLE, PINK, RemoveTextLetterByLetter)
+                   Group, RoundedRectangle, MoveToTarget, MathTex, Indicate, PURPLE, RemoveTextLetterByLetter)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -13,7 +12,7 @@ class KZGBlobs2(SlideBase):
 
     def construct(self):
         self.title_text_kzg = Text("KZG in blobs", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5+DOWN*0.5).scale(0.6).shift(UP)
+        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5+DOWN*0.5).scale(0.8)
         self.commiter = ImageMobject("data/images/blob.png").scale(0.6).shift(LEFT*2+DOWN*0.5)
         self.commiter_label = Text("Blob", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
@@ -21,7 +20,7 @@ class KZGBlobs2(SlideBase):
         self.thumb = ImageMobject("data/images/Thumb_up.png").scale(0.4)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR, font_size = 28).next_to(self.commiter, DOWN+RIGHT)
         self.blob_data = MathTex(r"\left[ {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2)
-        self.envelope = ImageMobject("data/images/Envelope.png").set_opacity(0.4)
+        self.envelope = ImageMobject("data/images/Envelope.png").set_opacity(0.4).scale(1.2)
         self.envelope.move_to(self.commitment.get_center())
 
     def animate_in(self, scene):
@@ -72,19 +71,19 @@ class KZGBlobs2(SlideBase):
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         scene.play(FadeIn(self.lock))
-        scene.wait(1.5)
-        for i in range(5):
-            scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
-            
+        scene.wait(1)
 
         self.new_subsection(scene, "for selected positions", "data/sound/e5/slide5-2.mp3")
 
-        self.blob_data[3].set_color_by_gradient([PURPLE, BLUE, PINK])
+        # self.blob_data[3].set_color_by_gradient([PURPLE, BLUE, PINK])
         self.blob_committer = Group(self.blob_data, bubble_committer, self.lock)
         self.blob_committer.generate_target()
         self.blob_committer.target.scale(0.6).shift(LEFT*1.5)
         scene.play(MoveToTarget(self.blob_committer))
-        
+        scene.wait(4)
+        for i in range(5):
+            scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
+            
 
         scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier2))
@@ -95,7 +94,6 @@ class KZGBlobs2(SlideBase):
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         
         scene.play(FadeIn(self.opening, bubble_opening, tail))
-        scene.wait(0.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), run_time=0.5)
@@ -104,14 +102,14 @@ class KZGBlobs2(SlideBase):
         scene.play(FadeIn(self.envelope))
         self.commitment_sent = Group(self.envelope, self.commitment)
         self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.verifier, UP)
+        self.commitment_sent.target.next_to(self.verifier, UP, buff = 0)
         self.opening.generate_target()
-        self.opening.target.next_to(self.verifier, UP).shift(UP)
+        self.opening.target.next_to(self.verifier, UP, buff = 0).shift(UP*0.5)
         self.proof.generate_target()
-        self.proof.target.next_to(self.verifier, UP).shift(UP*2)
+        self.proof.target.next_to(self.verifier, UP, buff = 0).shift(UP)
         scene.play(FadeOut(bubble_opening, tail))
-        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.opening), MoveToTarget(self.proof))
-        scene.play(FadeOut(self.envelope))
+        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.opening), MoveToTarget(self.proof), FadeOut(self.envelope))
+
         
         self.new_subsection(scene, "commitment and proof", "data/sound/e5/slide5-5.mp3")
 

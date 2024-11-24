@@ -91,8 +91,9 @@ class Layer2(SlideBase):
             self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.7)
         self.arrow_layer2_group = VGroup(*self.arrow_layer2_blocks)
         
-        self.arrow_layer1_blocks = [Arrow(self.finalized_blocks[0].get_right(), self.finalized_blocks[1].get_left(), tip_shape=StealthTip, 
-                                  stroke_width=2, max_tip_length_to_length_ratio=0.15) for _ in range(3)]
+        self.arrow_layer1_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
+                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]) for _ in range(3)]
+
         for i in range(3):
             self.arrow_layer1_blocks[i].next_to(self.finalized_blocks[i], RIGHT, buff=0).scale(0.7)
         self.arrow_layer1_group = VGroup(*self.arrow_layer1_blocks)
@@ -127,7 +128,8 @@ class Layer2(SlideBase):
 
         scene.play(FadeIn(self.rollup_brace))
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum))
-        scene.play(Create(self.finalized_group), FadeIn(self.arrow_layer1_group), 
+        scene.play(FadeIn(self.arrow_layer1_group))
+        scene.play(Create(self.finalized_group), 
                    Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         
         scene.wait(0.5)

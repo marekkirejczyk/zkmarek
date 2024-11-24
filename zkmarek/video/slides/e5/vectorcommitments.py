@@ -113,7 +113,7 @@ class VectorCommitments(SlideBase):
         scene.wait(1.8)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
-        scene.wait(3)
+        scene.wait(2)
         
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
         scene.wait(1.8)
@@ -134,7 +134,7 @@ class VectorCommitments(SlideBase):
     def change_chart_axes(self, scene, chart):
         new_axes = Axes(
             x_range=[-4.7, 20, 20],
-            y_range=[-5.5, 20, 20],
+            y_range=[-45, 6, 20],
             x_length=7,
             axis_config={
                 "include_numbers": False,
@@ -146,8 +146,8 @@ class VectorCommitments(SlideBase):
             }
         )
         new_axes4096 = Axes(
-            x_range=[-4.7, 4096, 4096],
-            y_range=[-5.5, 4096, 4096],
+            x_range=[-4.7, 5000, 4096],
+            y_range=[-45, 5000, 4096],
             x_length=7,
             axis_config={
                 "include_numbers": False,
@@ -160,7 +160,7 @@ class VectorCommitments(SlideBase):
         )
 
         new_axes.scale(0.7).shift(LEFT*3.5)
-        new_axes4096.scale(0.7).shift(LEFT*3.5)
+        new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3)
         chart.labels[0].generate_target()
         chart.labels[0].target.next_to(new_axes4096[0], UP+RIGHT, buff = 0.1)
         chart.labels[1].generate_target()
@@ -171,15 +171,15 @@ class VectorCommitments(SlideBase):
             MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)**2-5) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
 
     def change_chart_axes_to4096(self, scene, chart, include_numebrs):
         new_axes = Axes(
-            x_range=[-4.7, 4095, 4095],
-            y_range=[-5.5, 4095, 4095],
+            x_range=[-4.7, 5000, 4095],
+            y_range=[-45, 5000, 4095],
             x_length=7,
             axis_config={
                 "include_numbers": include_numebrs,
@@ -192,14 +192,12 @@ class VectorCommitments(SlideBase):
         )
 
 
-        new_axes.scale(0.7).shift(LEFT*3.5)
+        new_axes.scale(0.7).shift(LEFT*3.4+UP*0.28)
         chart.labels[0].generate_target()
         chart.labels[0].target.next_to(new_axes[0], UP+RIGHT, buff = 0.1)
         chart.labels[1].generate_target()
         chart.labels[1].target.next_to(new_axes[1], UP+RIGHT, buff = 0.1)
         
         scene.play(
-            MoveToTarget(chart.labels[0]),
-            MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes),  
-            run_time=2)
+            run_time=0.2)
