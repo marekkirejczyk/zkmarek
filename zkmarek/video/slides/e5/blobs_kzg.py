@@ -19,7 +19,7 @@ class KZGBlobs2(SlideBase):
         self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
         self.thumb = ImageMobject("data/images/Thumb_up.png").scale(0.4)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR, font_size = 28).next_to(self.commiter, DOWN+RIGHT)
-        self.blob_data = MathTex(r"\left[ {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2)
+        self.blob_data = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2)
         self.envelope = ImageMobject("data/images/Envelope.png").set_opacity(0.4).scale(1.2)
         self.envelope.move_to(self.commitment.get_center())
 
@@ -63,14 +63,10 @@ class KZGBlobs2(SlideBase):
         self.new_subsection(scene, "sampling - random positions", "data/sound/e5/slide5-1.mp3")
         scene.play(FadeIn(self.commiter, self.title_text_kzg), run_time=0.7)
         scene.play(FadeIn(self.verifier))
-        scene.play(Write(self.commiter_label), Write(self.verifier_label))
-        scene.wait(1)
-        scene.play(Create(self.blob_data))
+        scene.play(Write(self.commiter_label), Write(self.verifier_label), Create(self.blob_data))
         self.lock.next_to(self.blob_data, RIGHT, buff = 0).shift(UP)
-        scene.play(Create(bubble_committer), run_time=0.7)
+        scene.play(Create(bubble_committer), FadeIn(self.lock), run_time=0.7)
         self.opening.move_to(bubble_opening.get_center())
-        self.opening.shift(UP*0.3)
-        scene.play(FadeIn(self.lock))
         scene.wait(1)
 
         self.new_subsection(scene, "for selected positions", "data/sound/e5/slide5-2.mp3")
@@ -80,23 +76,25 @@ class KZGBlobs2(SlideBase):
         self.blob_committer.generate_target()
         self.blob_committer.target.scale(0.6).shift(LEFT*1.5)
         scene.play(MoveToTarget(self.blob_committer))
-        scene.wait(4)
+        scene.play(Create(bubble_verifier), Create(tail_verifier))
+        scene.play(Create(speech_text_verifier2))
+        scene.wait(2)
         for i in range(5):
             scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
             
 
-        scene.play(Create(bubble_verifier), Create(tail_verifier))
-        scene.play(Create(speech_text_verifier2))
 
-        scene.wait(1)
-        scene.play(FadeOut(speech_text_verifier2), FadeIn(speech_text_verifier))
-        scene.wait(1.5)
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         
         scene.play(FadeIn(self.opening, bubble_opening, tail))
+        scene.wait(1)
+        scene.play(FadeOut(speech_text_verifier2), FadeIn(speech_text_verifier))
+        scene.wait(1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), run_time=0.5)
+        
+        self.new_subsection(scene, "for selected position we receive", "data/sound/e5/slide5-3.mp3")
         
         self.new_subsection(scene, "together with kzg commitment", "data/sound/e5/slide5-4.mp3")
         scene.play(FadeIn(self.envelope))

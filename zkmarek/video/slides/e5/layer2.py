@@ -88,7 +88,7 @@ class Layer2(SlideBase):
         self.arrow_layer2_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR]) for _ in range(3)]
         for i in range(3):
-            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.7)
+            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.67).shift(LEFT*0.05)
         self.arrow_layer2_group = VGroup(*self.arrow_layer2_blocks)
         
         self.arrow_layer1_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
@@ -115,7 +115,7 @@ class Layer2(SlideBase):
         self.arrow_proof_of_correctness = Arrow(self.layer2_blocks[1].get_bottom(), self.finalized_blocks[1].get_top(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(DOWN*0.1)
         self.proof_of_correctness.next_to(self.arrow_proof_of_correctness, LEFT)
-
+        self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
@@ -154,7 +154,7 @@ class Layer2(SlideBase):
         self.block_chain.target.scale(0.5).shift(RIGHT*2.5+UP)
         scene.play(MoveToTarget(self.block_chain))
         self.box = SurroundingRectangle(self.block_chain, buff = 0.2).set_color_by_gradient([PRIMARY_COLOR, GREY, WHITE])
-        scene.wait()
+        scene.play(FadeIn(self.blob_image), run_time=1)
         scene.play(AddTextLetterByLetter(self.blobs), Create(self.rounded_rectangle))
         for i in range(8):
             if i!=3:
@@ -168,8 +168,9 @@ class Layer2(SlideBase):
         scene.play(Write(self.smart_contracts))
         scene.wait(4)
         scene.play(Write(self.post_removal))
-        scene.wait(4)
+        scene.wait(2)
         
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.cheap_storage, self.smart_contracts, self.post_removal, self.rounded_rectangle))
+        scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.cheap_storage, self.smart_contracts, self.post_removal, 
+                           self.rounded_rectangle, self.blob_image))

@@ -206,6 +206,7 @@ EPISODE5 = [
     KZGBlobs(),
     TitleSlide("KZG in blobs", sound = "data/sound/e5/slide5-0.mp3", wait_time=2),
     KZGBlobs2(),
+    TitleSlide("Blobs in solidity", sound = "data/sound/e5/slide6-0.mp3", wait_time=3),
     BlobsSolidity(),
 ]
 

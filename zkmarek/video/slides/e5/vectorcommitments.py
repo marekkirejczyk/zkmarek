@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, MAROON_A, PURPLE)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, MAROON_A, PURPLE, PINK)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -14,10 +14,10 @@ class VectorCommitments(SlideBase):
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
-        self.number_sequence = MathTex(r"\left[ {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
-        self.number_sequence100 = MathTex(r"\left[ {{a_0}}, {{a_1}}, {{a_2}}, {{\cdots}}, {{a_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
+        self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
+        self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
-        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{a}}{{_0}}, {{a}}{{_1}}, {{a}}{{_2}}, {{a}}{{_3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
+        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{y}}{{_0}}, {{y}}{{_1}}, {{y}}{{_2}}, {{y}}{{_3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
         for i in range(4):
             self.number_sequence_smaller_indeces[3*i+2].set_color(PURPLE)
         self.arrow_number_indeces = Arrow(self.number_sequence_smaller_indeces.get_top(), self.number_sequence_smaller.get_bottom(), tip_shape=StealthTip, 
@@ -86,7 +86,9 @@ class VectorCommitments(SlideBase):
             scene.play(FadeOut(self.number_sequence_smaller_indeces[3*i+2], self.number_sequence_smaller_indeces[3*i+1]), run_time=0.2)
         scene.play(Create(self.chart.graph))
         scene.play(FadeIn(self.polynomial))
-        scene.wait(3)
+        scene.wait(1.5)
+        scene.play(Indicate(self.polynomial[3], color = PINK), run_time=0.7)
+        scene.wait(0.8)
         
         self.new_subsection(scene, "Lagrange interpolation", "data/sound/e5/slide3-1b.mp3")
         scene.wait(1)
@@ -161,6 +163,7 @@ class VectorCommitments(SlideBase):
 
         new_axes.scale(0.7).shift(LEFT*3.5)
         new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3)
+        new_axes4096[0].shift(UP)
         chart.labels[0].generate_target()
         chart.labels[0].target.next_to(new_axes4096[0], UP+RIGHT, buff = 0.1)
         chart.labels[1].generate_target()
@@ -193,11 +196,7 @@ class VectorCommitments(SlideBase):
 
 
         new_axes.scale(0.7).shift(LEFT*3.4+UP*0.28)
-        chart.labels[0].generate_target()
-        chart.labels[0].target.next_to(new_axes[0], UP+RIGHT, buff = 0.1)
-        chart.labels[1].generate_target()
-        chart.labels[1].target.next_to(new_axes[1], UP+RIGHT, buff = 0.1)
-        
+        new_axes[0].shift(UP)
         scene.play(
             Transform(chart.ax, new_axes),  
             run_time=0.2)
