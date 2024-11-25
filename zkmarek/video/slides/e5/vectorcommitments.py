@@ -109,6 +109,7 @@ class VectorCommitments(SlideBase):
         scene.wait(5.5)
 
         self.change_chart_axes_to4096(scene, self.chart, True)
+        scene.wait(1.5)
         scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096[1], color = PURPLE), Indicate(self.polynomial_eqn_4096[3], color = PURPLE))
 
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")
@@ -119,8 +120,8 @@ class VectorCommitments(SlideBase):
         
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
         scene.wait(1.8)
-        for i in range(4):
-            scene.play(Indicate(self.polynomial_eqn_4096[2*i+3], color = PURPLE))
+        for i in range(3):
+            scene.play(Indicate(self.polynomial_eqn_4096[4*i+3], color = PURPLE), run_time=0.4)
             
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
@@ -195,7 +196,7 @@ class VectorCommitments(SlideBase):
         )
 
 
-        new_axes.scale(0.7).shift(LEFT*3.4+UP*0.28)
+        new_axes.scale(0.7).shift(LEFT*3.42+UP*0.17)
         new_axes[0].shift(UP)
         scene.play(
             Transform(chart.ax, new_axes),  

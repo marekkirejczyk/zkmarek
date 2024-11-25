@@ -199,7 +199,7 @@ EPISODE5 = [
     Episode4Recap(),
     TitleSlide("Layer 2", subtitle="ZK rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=3),
     Layer2(),
-    TitleSlide("Blobs", subtitle="Binary Large OBjectS", sound="data/sound/e5/slide1-3.mp3", wait_time=2),
+    TitleSlide("Blobs", subtitle="Binary Large OBjectS", sound="data/sound/e5/slide1-3.mp3", wait_time=0.5),
     Blobs(),
     TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
     VectorCommitments(),

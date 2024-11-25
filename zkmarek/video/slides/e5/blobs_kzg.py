@@ -1,5 +1,5 @@
 from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, Text, Write, FadeOut, PURPLE_A, 
-                   Group, RoundedRectangle, MoveToTarget, MathTex, Indicate, PURPLE, RemoveTextLetterByLetter)
+                   Group, RoundedRectangle, MoveToTarget, MathTex, Indicate, PURPLE, RemoveTextLetterByLetter, PINK)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -20,8 +20,30 @@ class KZGBlobs2(SlideBase):
         self.thumb = ImageMobject("data/images/Thumb_up.png").scale(0.4)
         self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR, font_size = 28).next_to(self.commiter, DOWN+RIGHT)
         self.blob_data = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2)
-        self.envelope = ImageMobject("data/images/Envelope.png").set_opacity(0.4).scale(1.2)
-        self.envelope.move_to(self.commitment.get_center())
+        self.envelope_body_closed = Polygon(
+            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
+        ).scale(0.4)
+
+        self.envelope_flap_closed = Polygon(
+            [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
+            fill_color=PINK, fill_opacity=0.5
+        ).scale(0.39)
+
+        self.envelope_body = Polygon(
+            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
+        ).scale(0.4)
+        self.envelope_flap = Polygon(
+            [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
+            fill_color=PINK, fill_opacity=0.5
+        ).scale(0.395)
+        self.envelope_body.next_to(self.commiter, LEFT+DOWN, buff = 0.6)
+        self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN, buff = 0.6)
+
+        self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
+        self.commitment.move_to(self.envelope_body_closed.get_center())
 
     def animate_in(self, scene):
         speech_text_verifier2 = MathTex(r"a_{x_0}", font_size=32, color = SECONDARY_COLOR)
@@ -66,47 +88,46 @@ class KZGBlobs2(SlideBase):
         scene.play(Write(self.commiter_label), Write(self.verifier_label), Create(self.blob_data))
         self.lock.next_to(self.blob_data, RIGHT, buff = 0).shift(UP)
         scene.play(Create(bubble_committer), FadeIn(self.lock), run_time=0.7)
-        self.opening.move_to(bubble_opening.get_center())
+        self.opening.move_to(bubble_opening.get_center()).shift(UP*0.4)
+        scene.play(FadeIn(self.commitment, self.envelope_body_closed, self.envelope_flap_closed))
         scene.wait(1)
 
         self.new_subsection(scene, "for selected positions", "data/sound/e5/slide5-2.mp3")
 
-        # self.blob_data[3].set_color_by_gradient([PURPLE, BLUE, PINK])
         self.blob_committer = Group(self.blob_data, bubble_committer, self.lock)
         self.blob_committer.generate_target()
         self.blob_committer.target.scale(0.6).shift(LEFT*1.5)
         scene.play(MoveToTarget(self.blob_committer))
         scene.play(Create(bubble_verifier), Create(tail_verifier))
-        scene.play(Create(speech_text_verifier2))
+        scene.play(Create(speech_text_verifier))
         scene.wait(2)
         for i in range(5):
             scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
-            
-
 
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         
+        
+        self.new_subsection(scene, "for selected position we receive", "data/sound/e5/slide5-3.mp3")
         scene.play(FadeIn(self.opening, bubble_opening, tail))
-        scene.wait(1)
-        scene.play(FadeOut(speech_text_verifier2), FadeIn(speech_text_verifier))
         scene.wait(1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Write(self.proof), run_time=0.5)
-        
-        self.new_subsection(scene, "for selected position we receive", "data/sound/e5/slide5-3.mp3")
+        scene.wait(2.5)
+        scene.play(Indicate(self.opening, color = PINK))
+        scene.wait(1.5)
+        scene.play(Indicate(self.proof, color = PURPLE))
         
         self.new_subsection(scene, "together with kzg commitment", "data/sound/e5/slide5-4.mp3")
-        scene.play(FadeIn(self.envelope))
-        self.commitment_sent = Group(self.envelope, self.commitment)
+        self.commitment_sent = Group(self.envelope_flap_closed, self.envelope_body_closed, self.commitment)
         self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.verifier, UP, buff = 0)
+        self.commitment_sent.target.next_to(self.verifier, UP, buff = 0).shift(UP*0.75)
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP, buff = 0).shift(UP*0.5)
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP, buff = 0).shift(UP)
         scene.play(FadeOut(bubble_opening, tail))
-        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.opening), MoveToTarget(self.proof), FadeOut(self.envelope))
+        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.opening), MoveToTarget(self.proof), FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
 
         
         self.new_subsection(scene, "commitment and proof", "data/sound/e5/slide5-5.mp3")
@@ -114,9 +135,9 @@ class KZGBlobs2(SlideBase):
         scene.wait(1)
         scene.play(RemoveTextLetterByLetter(self.blob_data), run_time=1.3)
         scene.play(FadeOut(bubble_committer, self.lock))
-        scene.wait(1)
-        scene.play(Indicate(self.commitment, color = PURPLE))
+        scene.wait(0.2)
         scene.play(Indicate(self.proof, color = PURPLE))
+        scene.play(Indicate(self.commitment, color = PURPLE))
   
         scene.wait(1.7)
 

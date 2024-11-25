@@ -1,4 +1,4 @@
-from manim import (DOWN, UP, FadeIn, Write, Indicate, Scene, Text, PURPLE_C, PINK, TEAL_E, RIGHT, MoveToTarget, 
+from manim import (DOWN, FadeIn, Write, Indicate, Scene, Text, PURPLE_C, PINK, TEAL_E, RIGHT, MoveToTarget, 
                    LEFT, ORIGIN, Arrow, StealthTip, GREY_A, FadeOut, GrowArrow, UP)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
@@ -28,10 +28,10 @@ class BlobsSolidity(CodeSlide):
         self.blobhash = "blobhash"
         self.commitmentHash = "bytes32 commitmentHash"
         
-        self.ec_to_hash = Text("bytes 48 EC point", color = PRIMARY_COLOR, font = PRIMARY_FONT).shift(LEFT*2).scale(0.5)
-        self.hash_func = Text("SHA256", font = PRIMARY_FONT).set_color_by_gradient([SECONDARY_COLOR, PURPLE_C, PINK]).shift(3*LEFT).scale(0.5)
-        self.ec_commitment = Text("bytes 32 EC hash", color = PRIMARY_COLOR, font = PRIMARY_FONT).scale(0.5)
-        self.arrow_hash_ec = Arrow(self.ec_commitment.get_right(), self.hash_func.get_left(), tip_shape=StealthTip, 
+        self.ec_to_hash = Text("bytes 48 EC point", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=24).shift(LEFT*3+DOWN)
+        self.hash_func = Text("SHA256", font = PRIMARY_FONT, font_size=24).set_color_by_gradient([SECONDARY_COLOR, PURPLE_C, PINK]).shift(6*LEFT+DOWN)
+        self.ec_commitment = Text("bytes 32 EC hash", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=24).shift(DOWN+RIGHT*1.5)
+        self.arrow_hash_ec = Arrow(self.ec_to_hash.get_right(), self.ec_commitment.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY_A])
         
         self.false_if = "if (commitmentHash == bytes32(0)) return false;"
