@@ -38,8 +38,8 @@ class KZGBlobs2(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
             fill_color=PINK, fill_opacity=0.5
         ).scale(0.395)
-        self.envelope_body.next_to(self.commiter, LEFT+DOWN, buff = 0.6)
-        self.envelope_body_closed.next_to(self.commiter, LEFT+DOWN, buff = 0.6)
+        self.envelope_body.next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
+        self.envelope_body_closed.next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
@@ -98,30 +98,30 @@ class KZGBlobs2(SlideBase):
         self.blob_committer.generate_target()
         self.blob_committer.target.scale(0.6).shift(LEFT*1.5)
         scene.play(MoveToTarget(self.blob_committer))
-        scene.play(Create(bubble_verifier), Create(tail_verifier))
-        scene.play(Create(speech_text_verifier))
-        scene.wait(2)
+        scene.wait(3)
         for i in range(5):
             scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
+        scene.play(Create(bubble_verifier), Create(tail_verifier))
+        scene.play(Create(speech_text_verifier))
 
-        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         
         
         self.new_subsection(scene, "for selected position we receive", "data/sound/e5/slide5-3.mp3")
+        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
         scene.play(FadeIn(self.opening, bubble_opening, tail))
         scene.wait(1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.play(Write(self.proof), run_time=0.5)
         scene.wait(2.5)
         scene.play(Indicate(self.opening, color = PINK))
         scene.wait(1.5)
+        scene.play(Write(self.proof), run_time=0.5)
         scene.play(Indicate(self.proof, color = PURPLE))
         
         self.new_subsection(scene, "together with kzg commitment", "data/sound/e5/slide5-4.mp3")
         self.commitment_sent = Group(self.envelope_flap_closed, self.envelope_body_closed, self.commitment)
         self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.verifier, UP, buff = 0).shift(UP*0.75)
+        self.commitment_sent.target.next_to(self.verifier, UP, buff = 0).shift(UP*1.25)
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier, UP, buff = 0).shift(UP*0.5)
         self.proof.generate_target()
@@ -136,10 +136,10 @@ class KZGBlobs2(SlideBase):
         scene.play(RemoveTextLetterByLetter(self.blob_data), run_time=1.3)
         scene.play(FadeOut(bubble_committer, self.lock))
         scene.wait(0.2)
-        scene.play(Indicate(self.proof, color = PURPLE))
         scene.play(Indicate(self.commitment, color = PURPLE))
+        scene.play(Indicate(self.proof, color = PURPLE))
   
-        scene.wait(1.7)
+        scene.wait(1)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.commiter, self.title_text_kzg, self.commiter_label, self.verifier, 

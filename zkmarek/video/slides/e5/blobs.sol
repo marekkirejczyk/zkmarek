@@ -7,7 +7,7 @@ contract KZGBlobVerifier {
         bytes48 commitment,
         bytes32 x,
         bytes32 y,
-        bytes48 proof
+        bytes48 proof,
         uint256 blobIndex,
     ) public view returns (bool) {
 

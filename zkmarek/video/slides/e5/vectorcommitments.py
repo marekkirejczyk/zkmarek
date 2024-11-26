@@ -196,8 +196,8 @@ class VectorCommitments(SlideBase):
         )
 
 
-        new_axes.scale(0.7).shift(LEFT*3.42+UP*0.17)
-        new_axes[0].shift(UP)
+        new_axes.scale(0.7).shift(LEFT*3.39+UP*0.21)
+        new_axes[0].shift(UP*1.15)
         scene.play(
             Transform(chart.ax, new_axes),  
             run_time=0.2)

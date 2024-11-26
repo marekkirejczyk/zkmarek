@@ -57,7 +57,7 @@ class KZGBlobs(SlideBase):
         self.group_poly = Group(self.polynomial, self.arrow_poly_commitment, self.arrow_poly_proof, self.proof, self.commitment)
         self.group_poly.generate_target()
         self.group_poly.target.next_to(self.number_sequence, DOWN).shift(DOWN)
-        scene.play(MoveToTarget(self.group_poly), FadeOut(self.opening))
+        scene.play(MoveToTarget(self.group_poly))
 
         scene.play(Indicate(self.commitment, color = SECONDARY_COLOR))
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR))

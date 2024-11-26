@@ -115,7 +115,7 @@ class Layer2(SlideBase):
         self.arrow_proof_of_correctness = Arrow(self.layer2_blocks[1].get_bottom(), self.finalized_blocks[1].get_top(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(DOWN*0.1)
         self.proof_of_correctness.next_to(self.arrow_proof_of_correctness, LEFT)
-        self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT)
+        self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT*2.5)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
