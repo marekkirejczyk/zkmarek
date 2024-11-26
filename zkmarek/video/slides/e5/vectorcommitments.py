@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, MAROON_A, PURPLE, PINK)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, MAROON_A, PURPLE, PINK, TransformMatchingShapes)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -51,6 +51,11 @@ class VectorCommitments(SlideBase):
         self.polynomial_eqn_100 = MathTex(r"P(x) = {{a_{100}}}\cdot {{x^{100}}} + {{a_{99}}} \cdot {{x^{99}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24).next_to(self.chart, RIGHT).shift(DOWN).set_color_by_gradient([PRIMARY_COLOR, MAROON_A])
+        
+        self.poly_number0 = MathTex(r"P({{0}}) = {{30}}", color = PINK, font_size = 28).to_edge(RIGHT).shift(UP)
+        self.poly_number1 = MathTex(r"P({{1}}) = {{9}}", color = PINK, font_size = 28).next_to(self.poly_number0, DOWN)
+        self.poly_number2 = MathTex(r"P({{2}}) = {{-4}}", color = PINK, font_size = 28).next_to(self.poly_number1, DOWN)
+        self.poly_number3 = MathTex(r"P({{3}}) = {{15}}", color = PINK, font_size = 28).next_to(self.poly_number2, DOWN)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")
@@ -100,8 +105,16 @@ class VectorCommitments(SlideBase):
         scene.play(Indicate(self.p2, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         scene.play(Indicate(self.p3, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         
+        self.new_subsection(scene, "P(0), P(1)", "data/sound/e5/slide3-1c.mp3")
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.p0.copy(), self.poly_number0))
+        scene.wait(0.7)
+        scene.play(TransformMatchingShapes(self.p1.copy(), self.poly_number1))
+        scene.play(TransformMatchingShapes(self.p2.copy(), self.poly_number2))
+        scene.play(TransformMatchingShapes(self.p3.copy(), self.poly_number3))
+        
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
-        scene.play(FadeOut(self.number_sequence_smaller, self.lagrange_interpolation), FadeIn(self.number_sequence))
+        scene.play(FadeOut(self.number_sequence_smaller, self.lagrange_interpolation, self.poly_number3, self.poly_number0, self.poly_number2, self.poly_number1), FadeIn(self.number_sequence))
         scene.wait(0.2)
         scene.play(FadeOut(self.polynomial), FadeIn(self.polynomial_eqn_4096), FadeOut(self.p0, self.p1, self.p2, self.p3))
 
@@ -118,13 +131,6 @@ class VectorCommitments(SlideBase):
             scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
         scene.wait(2)
         
-        self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3a.mp3")
-        scene.wait(1.8)
-        for i in range(3):
-            scene.play(Indicate(self.polynomial_eqn_4096[4*i+3], color = PURPLE), run_time=0.4)
-            
-        for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
             
         self.new_subsection(scene, "kzg", "data/sound/e5/slide3-4.mp3")
         scene.wait(3)

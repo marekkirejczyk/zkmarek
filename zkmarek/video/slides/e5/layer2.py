@@ -33,25 +33,25 @@ class Layer2(SlideBase):
 
         self.tx_group = VGroup(self.tx_circle8, self.tx_circle6, self.tx_circle7, self.tx_circle5, self.tx_circle4, self.tx_circle3, 
                                self.tx_circle2, self.tx_circle, self.tx_label, self.tx_label2, self.tx_label3, self.tx_label4, 
-                               self.tx_label5, self.tx_label6, self.tx_label7, self.tx_label8).shift(UP * 2.2+RIGHT*1.06)
+                               self.tx_label5, self.tx_label6, self.tx_label7, self.tx_label8).shift(DOWN * 1.9+RIGHT*1.06)
 
         self.layer2_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3) for _ in range(4)]
         for i in range(4):
             self.layer2_blocks[i].set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR])
 
-        self.layer2_group = VGroup(*self.layer2_blocks).arrange(RIGHT, buff=0.5).shift(UP*0.67)
-        self.brace_tx = Brace(self.tx_group, DOWN, color = PRIMARY_COLOR)
+        self.layer2_group = VGroup(*self.layer2_blocks).arrange(RIGHT, buff=0.5).next_to(self.tx_group, UP)
+        self.brace_tx = Brace(self.tx_group, UP, color = PRIMARY_COLOR)
         self.brace_tx.put_at_tip(self.layer2_blocks[1])
         
         
-        self.layer2_blocks[0].shift(0.03*LEFT)
-        self.layer2_blocks[2].shift(LEFT*0.15)
-        self.layer2_blocks[3].shift(LEFT*0.2)
+        self.layer2_blocks[0].shift(RIGHT+0.5*UP)
+        self.layer2_blocks[2].shift(RIGHT+0.5*UP)
+        self.layer2_blocks[3].shift(RIGHT+0.5*UP)
         
         self.finalized_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3) for _ in range(4)]
         for i in range(4):
             self.finalized_blocks[i].set_color_by_gradient([WHITE, PURPLE, HIGHLIGHT2_COLOR])
-        self.finalized_group = VGroup(*self.finalized_blocks).arrange(RIGHT, buff=0.5).shift(DOWN *1.7+LEFT*0.07)
+        self.finalized_group = VGroup(*self.finalized_blocks).arrange(RIGHT, buff=0.5).next_to(self.layer2_group, UP).shift(UP)
         self.ethereum = ImageMobject("data/images/ethereum_logo.png").scale(0.2)
         self.ethereum.move_to(self.finalized_blocks[1])
         self.ethereum2 = self.ethereum.copy()
@@ -60,7 +60,7 @@ class Layer2(SlideBase):
         self.ethereum3.move_to(self.finalized_blocks[2])
         self.ethereum4 = self.ethereum.copy()
         self.ethereum4.move_to(self.finalized_blocks[3])
-        self.rollup_brace = Brace(self.layer2_blocks[1], DOWN, color = PRIMARY_COLOR)
+        self.rollup_brace = Brace(self.layer2_blocks[1], UP, color = PRIMARY_COLOR)
         self.rollup_brace.put_at_tip(self.finalized_blocks[1])
         self.finalized_blocks[1].next_to(self.finalized_blocks[0], RIGHT, buff = 0.5)
         self.rollup_text = Text("rollup", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
@@ -68,8 +68,7 @@ class Layer2(SlideBase):
         self.rollup_batch_text = Text("transactions batch", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
                                 font_size = 22).next_to(self.rollup_brace, DOWN)
         self.pricey_dollars_rollup = Text("$$$", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 22).next_to(self.rollup_batch_text, LEFT)
-        self.proof_of_correctness = Text("ZK proof", color = HIGHLIGHT_COLOR, font= PRIMARY_FONT, font_size = 22)
-        
+
         self.transactions = Text("transactions", color = WHITE, font = PRIMARY_FONT, 
                                  font_size = 22).next_to(self.tx_circle8, RIGHT).shift(RIGHT*2.5)
         self.layer2 = Text("L2: ZK rollup", color = WHITE, font=PRIMARY_FONT, 
@@ -112,9 +111,7 @@ class Layer2(SlideBase):
                                  self.arrow_layer1_group, 
                                  self.arrow_layer2_group)
         self.block_chain.shift(LEFT)
-        self.arrow_proof_of_correctness = Arrow(self.layer2_blocks[1].get_bottom(), self.finalized_blocks[1].get_top(), tip_shape=StealthTip, 
-                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(DOWN*0.1)
-        self.proof_of_correctness.next_to(self.arrow_proof_of_correctness, LEFT)
+
         self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT*2.5)
         
     def animate_in(self, scene):
@@ -133,14 +130,10 @@ class Layer2(SlideBase):
                    Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         
         scene.wait(0.5)
-        scene.play(Create(self.proof_of_correctness), GrowArrow(self.arrow_proof_of_correctness))
-        self.proof_of_correctness.generate_target()
-        self.proof_of_correctness.target.move_to(self.finalized_blocks[1].get_center()).set_opacity(0.2)
-        
-        scene.play(MoveToTarget(self.proof_of_correctness), FadeOut(self.arrow_proof_of_correctness))
+
         scene.wait(0.5)
         scene.play(Indicate(self.layer1_ethereum, color = PURPLE))
-        scene.play(FadeOut(self.proof_of_correctness))
+
         scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE))
         scene.wait(0.5)
         scene.play(FadeIn(self.rollup_batch_text))
@@ -151,7 +144,7 @@ class Layer2(SlideBase):
         self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-2.mp3")
 
         self.block_chain.generate_target()
-        self.block_chain.target.scale(0.5).shift(RIGHT*2.5+UP)
+        self.block_chain.target.scale(0.5).to_edge(UP+RIGHT).shift(DOWN*1.5+LEFT)
         scene.play(MoveToTarget(self.block_chain))
         self.box = SurroundingRectangle(self.block_chain, buff = 0.2).set_color_by_gradient([PRIMARY_COLOR, GREY, WHITE])
         scene.play(FadeIn(self.blob_image), run_time=1)

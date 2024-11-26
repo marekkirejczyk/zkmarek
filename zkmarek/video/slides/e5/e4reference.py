@@ -1,5 +1,5 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, 
-Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE)
+Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE, PINK)
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -119,29 +119,28 @@ class Episode4Recap(SlideBase):
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Create(bubble_opening), Create(tail))
         scene.play(FadeIn(self.opening, self.proof))
-        scene.wait(0.5)
         self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
+        
+        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
         scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
         scene.play(FadeOut(bubble_opening, tail))
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier_label, DOWN) 
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
-        
-        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
         scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof))
         self.commitment.generate_target()
         self.commitment.target.next_to(self.proof, DOWN)
         
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.play(MoveToTarget(self.commitment))
-        scene.wait(2)
-        scene.play(Indicate(self.opening, color = [PURPLE, WHITE]))
-        scene.wait(2)
-        scene.play(Indicate(self.proof, color = [PURPLE, WHITE]))
+        scene.play(MoveToTarget(self.commitment), Indicate(self.commitment, color = PINK))
+        scene.wait(1.5)
+        scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
         scene.wait(0.5)
-        scene.play(Indicate(self.commitment, color = [PURPLE, WHITE]))
+        scene.play(Indicate(self.proof, color = [PURPLE, PINK]))
+        scene.wait(0.5)
+        scene.play(Indicate(self.commitment, color = [PURPLE, PINK]))
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, 
@@ -176,7 +175,7 @@ class Episode4Recap(SlideBase):
         scene.play(FadeIn(self.block3_group))
         
         self.new_subsection(scene, "blobs", "data/sound/e5/slide0-4.mp3")
-        scene.wait(3)
+        scene.wait(2.3)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.arrow, self.arrow2, self.block1_group, self.block2_group, self.block3_group, self.title_label))
