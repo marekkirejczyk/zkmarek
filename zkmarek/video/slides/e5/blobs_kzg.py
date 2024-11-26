@@ -83,26 +83,26 @@ class KZGBlobs2(SlideBase):
         self.blob_data.move_to(bubble_committer.get_center())
 
         self.new_subsection(scene, "sampling - random positions", "data/sound/e5/slide5-1.mp3")
-        scene.play(FadeIn(self.commiter, self.title_text_kzg), run_time=0.7)
-        scene.play(FadeIn(self.verifier))
-        scene.play(Write(self.commiter_label), Write(self.verifier_label), Create(self.blob_data))
+        scene.play(FadeIn(self.commiter, self.title_text_kzg, self.verifier), run_time=0.7)
+        scene.play(Write(self.commiter_label), Write(self.verifier_label))
         self.lock.next_to(self.blob_data, RIGHT, buff = 0).shift(UP)
-        scene.play(Create(bubble_committer), FadeIn(self.lock), run_time=0.7)
         self.opening.move_to(bubble_opening.get_center()).shift(UP*0.4)
         scene.play(FadeIn(self.commitment, self.envelope_body_closed, self.envelope_flap_closed))
-        scene.wait(1)
+        scene.wait(1.7)
 
         self.new_subsection(scene, "for selected positions", "data/sound/e5/slide5-2.mp3")
+        scene.play(Create(bubble_committer), FadeIn(self.lock), Create(self.blob_data), run_time=1)
 
         self.blob_committer = Group(self.blob_data, bubble_committer, self.lock)
         self.blob_committer.generate_target()
         self.blob_committer.target.scale(0.6).shift(LEFT*1.5)
         scene.play(MoveToTarget(self.blob_committer))
-        scene.wait(3)
-        for i in range(5):
-            scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
+        scene.wait(2)
         scene.play(Create(bubble_verifier), Create(tail_verifier))
         scene.play(Create(speech_text_verifier))
+        scene.wait(1.7)
+        for i in range(5):
+            scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
 
         
         
@@ -112,7 +112,6 @@ class KZGBlobs2(SlideBase):
         scene.wait(1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.wait(2.5)
         scene.play(Indicate(self.opening, color = PINK))
         scene.wait(1.5)
         scene.play(Write(self.proof), run_time=0.5)

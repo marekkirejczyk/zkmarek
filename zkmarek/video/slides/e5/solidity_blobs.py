@@ -94,9 +94,10 @@ class BlobsSolidity(CodeSlide):
         
         self.new_subsection(scene, "pack into byte array", "data/sound/e5/slide6-2.mp3")
         kzg_input = [self.x, self.y, self.commitment, self.proof]
+        scene.wait(1)
         for input in kzg_input:
             self.indicate_code(scene, self.code, input, 0, run_time=0.4, color = MAROON_C)
-        scene.wait(1.5)
+        scene.wait(0.5)
         self.indicate_code(scene, self.code, self.input_data, 0, run_time=1)
         
         self.new_subsection(scene, "matching 0x0a", "data/sound/e5/slide6-3.mp3")
@@ -104,10 +105,12 @@ class BlobsSolidity(CodeSlide):
         self.indicate_code(scene, self.code, self.assembly, 1, run_time=0.9, color = PURPLE_C)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.precompile, 0, run_time=0.8, color = TEAL_E)
+        scene.wait(0.5)
         self.indicate_code(scene, self.code, self.address, 1, run_time=0.9, color = TEAL_E)
         scene.wait(3.5)
         self.indicate_code(scene, self.code, self.success, 1, run_time=0.9)
         self.indicate_code(scene, self.code, self.success, 0, run_time=0.9)
+        scene.wait(5.5)
         
         self.new_subsection(scene, "blobhash()", "data/sound/e5/slide6-4.mp3")
         scene.wait(1)
@@ -120,7 +123,7 @@ class BlobsSolidity(CodeSlide):
         scene.play(Write(self.blob_hash_text), FadeIn(self.blob))
         
         self.new_subsection(scene, "blobindex - 32 bytes", "data/sound/e5/slide6-4a.mp3")
-        scene.wait(1.5)
+        scene.wait(1.2)
         scene.play(Indicate(self.blob_hash_text[9:18], color = PINK))
         scene.play(Write(self.version_hash), GrowArrow(self.arrow_hash_ec))
         scene.wait(1)
@@ -129,7 +132,9 @@ class BlobsSolidity(CodeSlide):
         
         self.new_subsection(scene, "SHA256", "data/sound/e5/slide6-4b.mp3")
         scene.play(Write(self.text_version), Write(self.text_hash))
-        scene.wait(2.5)
+        scene.wait(0.5)
+        scene.play(Indicate(self.text_version, color = PRIMARY_COLOR), run_time=0.7)
+        scene.wait(1.3)
         scene.play(Indicate(self.text_hash, color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.version_hash[4:10], color = MAROON_C))
@@ -148,9 +153,8 @@ class BlobsSolidity(CodeSlide):
         self.indicate_code(scene, self.code, self.verify_blobhash, 0, run_time=0.9, color = TEAL_E)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.commitment_real, 6, run_time=0.9, color = PINK)
-        
         scene.wait(2)
-        self.indicate_code(scene, self.code, self.smart_contract_1, 0, run_time=1)
+        self.indicate_code(scene, self.code, self.commitmentHash2, 2, run_time=1)
         scene.wait(3.5)
         self.indicate_code(scene, self.code, self.return_success, 0, run_time=0.9)
         scene.wait(3)
