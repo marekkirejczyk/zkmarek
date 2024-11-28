@@ -101,8 +101,7 @@ class Episode4Recap(SlideBase):
 
         
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
-        scene.play(Create(bubble_verifier), Create(tail_verifier))
-        scene.play(Create(speech_text_verifier))
+        scene.play(Create(bubble_verifier), Create(tail_verifier), Create(speech_text_verifier))
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, 
                                           height=self.opening.height + 1.5, 
                                           color = PRIMARY_COLOR).next_to(self.committer, RIGHT, buff = -0.3).shift(RIGHT*0.7+DOWN*0.5)
@@ -117,8 +116,7 @@ class Episode4Recap(SlideBase):
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.play(Create(bubble_opening), Create(tail))
-        scene.play(FadeIn(self.opening, self.proof))
+        scene.play(Create(bubble_opening), Create(tail), FadeIn(self.opening, self.proof))
         self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         
@@ -133,14 +131,13 @@ class Episode4Recap(SlideBase):
         self.commitment.generate_target()
         self.commitment.target.next_to(self.proof, DOWN)
         
-        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.play(MoveToTarget(self.commitment), Indicate(self.commitment, color = PINK))
+        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), MoveToTarget(self.commitment))
+        scene.play(Indicate(self.commitment, color = PINK))
         scene.wait(1.5)
         scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
         scene.wait(0.5)
         scene.play(Indicate(self.proof, color = [PURPLE, PINK]))
-        scene.wait(0.5)
-        scene.play(Indicate(self.commitment, color = [PURPLE, PINK]))
+        scene.wait(1)
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, 

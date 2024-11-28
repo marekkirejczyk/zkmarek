@@ -71,7 +71,7 @@ class Blobs(SlideBase):
         scene.play(FadeOut(self.kilo_bytes_of_ec_eqn))
         scene.wait(0.5)
         scene.play(Indicate(self.kilo_bytes_of_ec, color = PURPLE_C))
-        scene.wait(7.5)
+        scene.wait(9)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.brace_blob, self.chart, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))

@@ -1,5 +1,5 @@
 from manim import (FadeIn, FadeOut, MathTex, Text, LEFT, RIGHT, DOWN, UP, Write, PURPLE, BLUE_E, Group, TEAL_E, Brace, MAROON_E, Arrow, 
-                   StealthTip, GrowArrow, Indicate, PURPLE_A, ImageMobject, MoveToTarget)
+                   StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -38,33 +38,27 @@ class KZGBlobs(SlideBase):
         
     def animate_in(self, scene):
         self.new_subsection(scene, "remember, kzg", "data/sound/e5/slide4-1.mp3")
-        scene.play(Write(self.title_text))
-        scene.play(FadeIn(self.verifier, self.committer), Write(self.opening))
-        scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer))
-        scene.wait(0.3)
-        scene.play(Write(self.verifier_label), Write(self.committer_label))
-        scene.wait(1.2)
-        scene.play(Indicate(self.opening, color = [PURPLE, TEAL_E]))
+        scene.play(Write(self.title_text), FadeIn(self.verifier, self.committer), run_time=0.7)
+        scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), Write(self.verifier_label), Write(self.committer_label), run_time=0.7)
         scene.wait(0.7)
-        scene.play(GrowArrow(self.arrow_poly_commitment))
-        scene.play(Write(self.commitment))
+        scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))
+        scene.wait(2.5)
         scene.play(GrowArrow(self.arrow_poly_proof))
         scene.play(Write(self.proof))
+        scene.wait(1.5)
+        scene.play(Write(self.opening))
+        scene.wait(2.5)
         
-        
-        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
         scene.play(FadeOut(self.opening, self.arrow_opening_committer))
         self.group_poly = Group(self.polynomial, self.arrow_poly_commitment, self.arrow_poly_proof, self.proof, self.commitment)
         self.group_poly.generate_target()
         self.group_poly.target.next_to(self.number_sequence, DOWN).shift(DOWN)
         scene.play(MoveToTarget(self.group_poly))
-
-        scene.play(Indicate(self.commitment, color = SECONDARY_COLOR))
-        scene.play(Indicate(self.proof, color = SECONDARY_COLOR))
+        
+        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
         scene.play(Write(self.number_sequence))
-
-        for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.25)
+        scene.play(Indicate(self.polynomial, color = PINK))
+        scene.wait(2)
         scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
         scene.play(Indicate(self.number_sequence_kilo_bytes, color = HIGHLIGHT_COLOR))
         scene.wait(1)
@@ -75,7 +69,9 @@ class KZGBlobs(SlideBase):
         self.brace_commitment.put_at_tip(self.commitment_bytes)
         self.brace_proof.put_at_tip(self.proof_bytes)
         scene.play(FadeIn(self.brace_commitment, self.commitment_bytes))
+        scene.wait(2)
         scene.play(FadeIn(self.brace_proof, self.proof_bytes))
+        scene.wait(2)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_text, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  

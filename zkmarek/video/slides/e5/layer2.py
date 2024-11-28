@@ -44,9 +44,9 @@ class Layer2(SlideBase):
         self.brace_tx.put_at_tip(self.layer2_blocks[1])
         
         
-        self.layer2_blocks[0].shift(RIGHT+0.5*UP)
-        self.layer2_blocks[2].shift(RIGHT+0.5*UP)
-        self.layer2_blocks[3].shift(RIGHT+0.5*UP)
+        self.layer2_blocks[0].shift(RIGHT+0.5*UP*0.9)
+        self.layer2_blocks[2].shift(RIGHT+0.5*UP*0.9)
+        self.layer2_blocks[3].shift(RIGHT+0.5*UP*0.9)
         
         self.finalized_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3) for _ in range(4)]
         for i in range(4):
@@ -66,7 +66,7 @@ class Layer2(SlideBase):
         self.rollup_text = Text("rollup", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
                                 font_size = 22).next_to(self.rollup_brace, RIGHT).shift(DOWN*0.3+LEFT)
         self.rollup_batch_text = Text("transactions batch", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
-                                font_size = 22).next_to(self.rollup_brace, DOWN)
+                                font_size = 22).next_to(self.rollup_brace, UP)
         self.pricey_dollars_rollup = Text("$$$", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 22).next_to(self.rollup_batch_text, LEFT)
 
         self.transactions = Text("transactions", color = WHITE, font = PRIMARY_FONT, 
@@ -87,14 +87,14 @@ class Layer2(SlideBase):
         self.arrow_layer2_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR]) for _ in range(3)]
         for i in range(3):
-            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.67).shift(LEFT*0.05)
+            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.67).shift(RIGHT*0.05)
         self.arrow_layer2_group = VGroup(*self.arrow_layer2_blocks)
         
         self.arrow_layer1_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]) for _ in range(3)]
 
         for i in range(3):
-            self.arrow_layer1_blocks[i].next_to(self.finalized_blocks[i], RIGHT, buff=0).scale(0.7)
+            self.arrow_layer1_blocks[i].next_to(self.finalized_blocks[i], RIGHT, buff=0).scale(0.7).shift(RIGHT*0.02)
         self.arrow_layer1_group = VGroup(*self.arrow_layer1_blocks)
         
         self.blobs = Text("EIP-4844 blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*3.3+UP*1.5)
@@ -111,6 +111,7 @@ class Layer2(SlideBase):
                                  self.arrow_layer1_group, 
                                  self.arrow_layer2_group)
         self.block_chain.shift(LEFT)
+        self.layer2_blocks[1].shift(DOWN*0.05+RIGHT*0.04)
 
         self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT*2.5)
         
@@ -121,25 +122,20 @@ class Layer2(SlideBase):
         scene.play(Create(self.layer2_group), FadeIn(self.arrow_layer2_group), Write(self.brace_tx), run_time=0.7)
         scene.play(Create(self.layer2), GrowArrow(self.arrow_layer2), run_time=0.7)
         
-        scene.play(ApplyWave(self.tx_group), run_time=1)
 
         scene.play(FadeIn(self.rollup_brace))
-        scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum))
-        scene.play(FadeIn(self.arrow_layer1_group))
-        scene.play(Create(self.finalized_group), 
-                   Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
-        
-        scene.wait(0.5)
+        scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
+                   Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
 
-        scene.wait(0.5)
-        scene.play(Indicate(self.layer1_ethereum, color = PURPLE))
+        scene.play(ApplyWave(self.tx_group), run_time=1)
 
         scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE))
+
         scene.wait(0.5)
         scene.play(FadeIn(self.rollup_batch_text))
         scene.wait(2)
         scene.play(Create(self.pricey_dollars_rollup))
-        scene.wait(1.5)
+        scene.wait(3.2)
         
         self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-2.mp3")
 

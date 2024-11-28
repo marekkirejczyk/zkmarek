@@ -50,7 +50,7 @@ class VectorCommitments(SlideBase):
         self.polynomial_eqn_4096 = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial_eqn_100 = MathTex(r"P(x) = {{a_{100}}}\cdot {{x^{100}}} + {{a_{99}}} \cdot {{x^{99}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
-        self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24).next_to(self.chart, RIGHT).shift(DOWN).set_color_by_gradient([PRIMARY_COLOR, MAROON_A])
+        self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24, color = PRIMARY_COLOR).next_to(self.chart, RIGHT).shift(DOWN)
         
         self.poly_number0 = MathTex(r"P({{0}}) = {{30}}", color = PINK, font_size = 28).to_edge(RIGHT).shift(UP)
         self.poly_number1 = MathTex(r"P({{1}}) = {{9}}", color = PINK, font_size = 28).next_to(self.poly_number0, DOWN)
@@ -104,9 +104,10 @@ class VectorCommitments(SlideBase):
         scene.play(Indicate(self.p1, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         scene.play(Indicate(self.p2, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
         scene.play(Indicate(self.p3, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(FadeOut(self.lagrange_interpolation))
         
         self.new_subsection(scene, "P(0), P(1)", "data/sound/e5/slide3-1c.mp3")
-        scene.wait(2)
+        scene.wait(4)
         scene.play(TransformMatchingShapes(self.p0.copy(), self.poly_number0))
         scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.p1.copy(), self.poly_number1))
@@ -114,7 +115,7 @@ class VectorCommitments(SlideBase):
         scene.play(TransformMatchingShapes(self.p3.copy(), self.poly_number3))
         
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
-        scene.play(FadeOut(self.number_sequence_smaller, self.lagrange_interpolation, self.poly_number3, self.poly_number0, self.poly_number2, self.poly_number1), FadeIn(self.number_sequence))
+        scene.play(FadeOut(self.number_sequence_smaller, self.poly_number3, self.poly_number0, self.poly_number2, self.poly_number1), FadeIn(self.number_sequence))
         scene.wait(0.2)
         scene.play(FadeOut(self.polynomial), FadeIn(self.polynomial_eqn_4096), FadeOut(self.p0, self.p1, self.p2, self.p3))
 
@@ -133,7 +134,7 @@ class VectorCommitments(SlideBase):
         
             
         self.new_subsection(scene, "kzg", "data/sound/e5/slide3-4.mp3")
-        scene.wait(3)
+        scene.wait(5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.chart.ax, self.chart.graph, self.chart.labels, self.number_sequence, self.title_label, self.number_sequence, self.polynomial_eqn_4096, self.arrow_number_chart))
