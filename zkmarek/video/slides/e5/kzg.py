@@ -39,8 +39,9 @@ class KZGBlobs(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "remember, kzg", "data/sound/e5/slide4-1.mp3")
         scene.play(Write(self.title_text), FadeIn(self.verifier, self.committer), run_time=0.7)
-        scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), Write(self.verifier_label), Write(self.committer_label), run_time=0.7)
-        scene.wait(0.7)
+        scene.play(Write(self.verifier_label), Write(self.committer_label))
+        scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), run_time=0.7)
+        scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))
         scene.wait(2.5)
         scene.play(GrowArrow(self.arrow_poly_proof))
@@ -57,9 +58,9 @@ class KZGBlobs(SlideBase):
         
         self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
         scene.play(Write(self.number_sequence))
-        scene.play(Indicate(self.polynomial, color = PINK))
-        scene.wait(2)
         scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
+        scene.play(Indicate(self.polynomial, color = PINK), Indicate(self.number_sequence, color = PINK))
+        scene.wait(2)
         scene.play(Indicate(self.number_sequence_kilo_bytes, color = HIGHLIGHT_COLOR))
         scene.wait(1)
         self.proof_bytes = Text("48 B", font = PRIMARY_FONT, font_size=24).set_color_by_gradient([TEAL_E, HIGHLIGHT_COLOR])

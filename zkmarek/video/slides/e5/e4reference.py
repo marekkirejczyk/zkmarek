@@ -66,9 +66,8 @@ class Episode4Recap(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "In previous episode...", "data/sound/e5/slide0-1.mp3")
-        scene.play(Write(self.title_label))
-        scene.play(FadeIn(self.committer, self.committer_label))
-        scene.play(FadeIn(self.verifier, self.verifier_label))
+        scene.play(Write(self.title_label), run_time=0.7)
+        scene.play(FadeIn(self.committer, self.committer_label), FadeIn(self.verifier, self.verifier_label), run_time=0.7)
         self.chart.gen_points()
         scene.play(Create(self.chart))
         self.dots = VGroup(*self.chart.dots)
@@ -79,13 +78,13 @@ class Episode4Recap(SlideBase):
         self.commitment.target.move_to(self.envelope_body_closed.get_center())
 
         scene.play(FadeOut(self.envelope_flap), FadeIn(self.envelope_flap_closed), 
-                   MoveToTarget(self.commitment), run_time=2)
+                   MoveToTarget(self.commitment), run_time=0.7)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
         commitment_sent.target.shift(5.5*RIGHT+DOWN*2)
         self.envelope_flap.shift(5.5*RIGHT+DOWN*2)
 
-        scene.play(MoveToTarget(commitment_sent), run_time=1)
+        scene.play(MoveToTarget(commitment_sent), run_time=0.7)
         speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, 
                                            color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)

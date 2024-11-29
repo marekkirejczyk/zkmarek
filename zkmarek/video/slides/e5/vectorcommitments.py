@@ -52,10 +52,10 @@ class VectorCommitments(SlideBase):
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24, color = PRIMARY_COLOR).next_to(self.chart, RIGHT).shift(DOWN)
         
-        self.poly_number0 = MathTex(r"P({{0}}) = {{30}}", color = PINK, font_size = 28).to_edge(RIGHT).shift(UP)
-        self.poly_number1 = MathTex(r"P({{1}}) = {{9}}", color = PINK, font_size = 28).next_to(self.poly_number0, DOWN)
-        self.poly_number2 = MathTex(r"P({{2}}) = {{-4}}", color = PINK, font_size = 28).next_to(self.poly_number1, DOWN)
-        self.poly_number3 = MathTex(r"P({{3}}) = {{15}}", color = PINK, font_size = 28).next_to(self.poly_number2, DOWN)
+        self.poly_number0 = MathTex(r"P({{0}}) = {{30}}", color = PINK, font_size = 32).next_to(self.number_sequence_smaller, UP).shift(LEFT)
+        self.poly_number1 = MathTex(r"P({{1}}) = {{9}}", color = PINK, font_size = 32).next_to(self.poly_number0, RIGHT)
+        self.poly_number2 = MathTex(r"P({{2}}) = {{-4}}", color = PINK, font_size = 32).next_to(self.number_sequence_smaller, DOWN).shift(LEFT)
+        self.poly_number3 = MathTex(r"P({{3}}) = {{15}}", color = PINK, font_size = 32).next_to(self.poly_number2, RIGHT)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")

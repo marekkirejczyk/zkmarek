@@ -116,7 +116,7 @@ class Layer2(SlideBase):
         self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT*2.5)
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
+        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
         scene.play(FadeIn(self.tx_group, self.title_text), Create(self.transactions), GrowArrow(self.arrow_txs), run_time=0.8)
 
         scene.play(Create(self.layer2_group), FadeIn(self.arrow_layer2_group), Write(self.brace_tx), run_time=0.7)
@@ -128,12 +128,14 @@ class Layer2(SlideBase):
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
 
         scene.play(ApplyWave(self.tx_group), run_time=1)
+        
+        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
 
         scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE))
 
-        scene.wait(0.5)
+        scene.wait(5.5)
         scene.play(FadeIn(self.rollup_batch_text))
-        scene.wait(2)
+        scene.wait(1)
         scene.play(Create(self.pricey_dollars_rollup))
         scene.wait(3.2)
         
