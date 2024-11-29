@@ -73,7 +73,7 @@ from zkmarek.video.slides.e5.blobs import Blobs
 from zkmarek.video.slides.e5.vectorcommitments import VectorCommitments
 from zkmarek.video.slides.e5.kzg import KZGBlobs
 from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
-from zkmarek.video.slides.e5.blobs_kzg import BlobsBlockchain
+from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
 
 config.width = 16
 config.height = 9
@@ -205,7 +205,7 @@ EPISODE5 = [
     TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
     VectorCommitments(),
     KZGBlobs(),
-    TitleSlide("Blobs in Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=2),
+    TitleSlide("Blobs in Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=0.7),
     BlobsBlockchain(),
     BlobsSolidity(),
 ]
