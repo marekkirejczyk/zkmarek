@@ -1,10 +1,11 @@
 from manim import (DOWN, FadeIn, Write, Indicate, Scene, Text, PINK, TEAL_E, RIGHT, MoveToTarget, 
-                   LEFT, Arrow, StealthTip, GREY_A, FadeOut, GrowArrow, UP, ImageMobject, MAROON_C, Brace)
+                   TransformMatchingShapes, LEFT, Arrow, StealthTip, GREY_A, FadeOut, GrowArrow, UP, 
+                   ImageMobject, MAROON_C, Brace, Create, ORIGIN)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
-
+from zkmarek.video.mobjects.verkle_tree import VerkleTree
 class BlobsSolidity(CodeSlide):
 
 
@@ -102,8 +103,7 @@ class BlobsSolidity(CodeSlide):
         scene.wait(1.5)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.precompile, 0, run_time=0.8, color = TEAL_E)
-        scene.wait(0.5)
-        scene.wait(3.5)
+        scene.wait(4)
         self.indicate_code(scene, self.code, self.success, 0, run_time=0.9)
         scene.wait(5.5)
         
@@ -153,10 +153,30 @@ class BlobsSolidity(CodeSlide):
         scene.wait(3.5)
         self.indicate_code(scene, self.code, self.return_success, 0, run_time=0.9)
         scene.wait(3)
+        scene.play(FadeOut(self.code))
+        
+        self.summary(scene)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.code, self.title_text))
+        scene.play(FadeOut(self.title_tezt_summary))
         
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=0.5, color = SECONDARY_COLOR):
         chars = find_in_code(code, fragment)
         scene.play(Indicate(chars[index]), color=color, run_time=run_time)
+    
+    def summary(self, scene):
+        self.new_subsection(scene, "summary", "data/sound/e5/slide6-6.mp3")
+        self.title_tezt_summary = Text("Up next...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP).shift(DOWN)
+        self.blob.move_to(ORIGIN)
+        self.blob1 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0)
+        self.blob2 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0)
+        scene.play(TransformMatchingShapes(self.title_text, self.title_tezt_summary), FadeIn(self.blob))
+        tree = VerkleTree().scale(0.7).shift(UP)
+        scene.play(FadeIn(self.blob1), run_time=0.5)
+        scene.play(FadeIn(self.blob2), run_time=0.5)
+        scene.wait(1.5)
+        scene.play(FadeOut(self.blob, self.blob1, self.blob2), run_time=0.5)
+        scene.play(Create(tree), run_time=2)
+        scene.wait(1)
+        scene.play(FadeOut(tree))
+        
