@@ -1,146 +1,128 @@
-from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, Text, Write, FadeOut, PURPLE_A, 
-                   Group, RoundedRectangle, MoveToTarget, MathTex, Indicate, PURPLE, RemoveTextLetterByLetter, PINK)
-
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
+from manim import (FadeOut, Text, RIGHT, DOWN, UP, MathTex, RemoveTextLetterByLetter, BLUE_E, ImageMobject, WHITE, Indicate, 
+Transform, Write, MoveToTarget, ORIGIN, FadeIn, GrowArrow, Rectangle, Tex, PURPLE, Group, Arrow, LEFT, StealthTip, PINK, Polygon, GREEN_C, GREEN_E)
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 
-class KZGBlobs2(SlideBase):
 
-    def __init__(self):
-        super().__init__("KZG in blobs")
-
+class BlobsBlockchain(SlideBase):
+    def __init__(self) -> None:
+        super().__init__(title="Blobs in Ethereum")
+        
     def construct(self):
-        self.title_text_kzg = Text("KZG in blobs", font_size=40, color = PRIMARY_COLOR, font = PRIMARY_FONT).to_edge(UP)
-        self.verifier = ImageMobject("data/images/person.png").shift(RIGHT*5+DOWN*0.5).scale(0.8)
-        self.commiter = ImageMobject("data/images/blob.png").scale(0.6).shift(LEFT*2+DOWN*0.5)
-        self.commiter_label = Text("Blob", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.commiter, DOWN, buff = 0.4)
-        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font=PRIMARY_FONT).scale(0.6).next_to(self.verifier, DOWN, buff = 0.4)
-        self.lock = ImageMobject("data/images/Locked@2x.png").scale(0.2)
-        self.thumb = ImageMobject("data/images/Thumb_up.png").scale(0.4)
-        self.commitment = MathTex(r"{{C = }} p({{\tau}})\cdot {{G_1}}", color = PRIMARY_COLOR, font_size = 28).next_to(self.commiter, DOWN+RIGHT)
-        self.blob_data = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2)
-        self.envelope_body_closed = Polygon(
-            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
-            fill_color=PRIMARY_COLOR, fill_opacity=0.5
-        ).scale(0.4)
+        self.title_text = Text("Blobs in Ethereum", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
+        self.block1 = Rectangle(width=5.5, height=4.5, fill_opacity = 0.1)
+        self.block1.set_color_by_gradient([WHITE, PURPLE, HIGHLIGHT2_COLOR])
+        self.blob = ImageMobject("data/images/blob.png").move_to(self.block1)
+        
+        self.block2 = self.block1.copy().scale(0.3).next_to(self.block1, LEFT).shift(LEFT)
+        self.block3 = self.block1.copy().scale(0.3).next_to(self.block1, RIGHT).shift(RIGHT)
+        
+        self.ethereum_logo = ImageMobject("data/images/ethereum_logo.png").scale(0.4)
+        self.ethereum_logo.move_to(self.block2.get_center())
+        self.block2_group = Group(self.block2, self.ethereum_logo)
 
-        self.envelope_flap_closed = Polygon(
-            [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
-            fill_color=PINK, fill_opacity=0.5
-        ).scale(0.39)
+        self.ethereum_logo3 = self.ethereum_logo.copy()
+        self.ethereum_logo3.move_to(self.block3.get_center())
+        self.block3_group = Group(self.block3, self.ethereum_logo3)
+        
 
-        self.envelope_body = Polygon(
-            [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
-            fill_color=PRIMARY_COLOR, fill_opacity=0.5
-        ).scale(0.4)
-        self.envelope_flap = Polygon(
-            [-3, 1, 0], [3, 1, 0], [0, 3, 0], 
-            fill_color=PINK, fill_opacity=0.5
-        ).scale(0.395)
-        self.envelope_body.next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
-        self.envelope_body_closed.next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
+        self.arrow = Arrow(self.block2.get_right(), self.block1.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip, 
+                           stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([SECONDARY_COLOR, WHITE])
+        self.arrow2 = Arrow(self.block1.get_right(), self.block3.get_left(), color=SECONDARY_COLOR, tip_shape=StealthTip, 
+                            stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([SECONDARY_COLOR, WHITE])
+        
+        self.commitment = Text("commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.commitment_hash = Text("SHA256(C)", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.commitment.move_to(self.blob.get_bottom()).shift(UP)
+        self.commitment_hash.move_to(self.blob.get_bottom()).shift(UP)
+        self.blobIndex = Tex(r"\texttt{blobIndex = 1}", color = PRIMARY_COLOR, font_size = 20)
+        self.blobIndex.move_to(self.blob.get_center())
+        
+        
+        self.vector = MathTex(r"\left[ {{y_0}}, {{y_1}}, \cdots {{y_{4095}}}   \right]", color = PINK, font_size = 50).next_to(self.block1, UP)
+        
+        # time accelerating animation = back in time
+        self.polygon1 = Polygon(ORIGIN, UP*0.5+RIGHT, DOWN*0.5+RIGHT, fill_opacity = 0.4).set_color_by_gradient([PRIMARY_COLOR, BLUE_E, HIGHLIGHT2_COLOR]).scale(0.6)
+        self.polygon2 = self.polygon1.copy()
+        self.polygon3 = self.polygon1.copy()
+        
+        self.polygon1.to_edge(UP+LEFT).shift(DOWN+RIGHT)
+        self.polygon2.next_to(self.polygon1, RIGHT, buff = 0.1)
+        self.polygon3.next_to(self.polygon2, RIGHT, buff = 0.1)
+        
+        self.two_weeks = Text("over two weeks ago...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).next_to(self.polygon2, DOWN)
+        
+        # time accelerating = future
+        self.polygon1_future = Polygon(ORIGIN, DOWN, DOWN*0.5+RIGHT, fill_opacity = 0.4).set_color_by_gradient([GREEN_E, GREEN_C, HIGHLIGHT_COLOR]).scale(0.6)
+        self.polygon2_future = self.polygon1_future.copy()
+        self.polygon3_future = self.polygon1_future.copy()
+        
+        self.polygon1_future.to_edge(UP+LEFT).shift(DOWN+RIGHT)
+        self.polygon2_future.next_to(self.polygon1_future, RIGHT, buff = 0.1)
+        self.polygon3_future.next_to(self.polygon2_future, RIGHT, buff = 0.1)
+        
+        self.two_weeks_future = Text("over two weeks in...", font = PRIMARY_FONT, font_size = 24, color = GREEN_C).next_to(self.polygon2_future, DOWN)
+        
+        self.blob2 = self.blob.copy().scale(0.5).move_to(self.block1.get_left()).shift(UP+RIGHT)
+        self.blobIndex2 = Tex(r"\texttt{blobIndex = 2}", color = GREEN_C, font_size = 20).move_to(self.blob2.get_center())
+        self.blob3 = self.blob.copy().scale(0.5).move_to(self.block1.get_right()).shift(DOWN+LEFT)
+        self.blobIndex3 = Tex(r"\texttt{blobIndex = 0}", color = PINK, font_size = 20).move_to(self.blob3.get_center())
 
-        self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
-        self.commitment.move_to(self.envelope_body_closed.get_center())
-
+        
     def animate_in(self, scene):
-        speech_text_verifier2 = MathTex(r"a_{x_0}", font_size=32, color = SECONDARY_COLOR)
-        speech_text_verifier = MathTex(r"a_{x_{0}} = ?", font_size=32, color = SECONDARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, 
-                                           height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR
-                                           ).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(LEFT*0.37)
-
-        speech_text_verifier.move_to(bubble_verifier.get_center())
-        speech_text_verifier2.move_to(bubble_verifier.get_center())
-        tail_verifier = Polygon(
-            [0.2, 0.05, 0], 
-            [-0.56, -0.67, 0], 
-            [0.78, -1.1, 0], 
-            color=SECONDARY_COLOR,
-            fill_opacity=0.4
-        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
-        bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.blob_data.width + 1, 
-                                            height=self.blob_data.height + 0.5, color = PRIMARY_COLOR
-                                            ).next_to(self.commiter, UP).shift(LEFT*0.6).set_color_by_gradient([PRIMARY_COLOR, PURPLE, PURPLE_A])
-        bubble_committer.set_fill(color=[PRIMARY_COLOR, PURPLE, PURPLE_A], opacity=0.4) 
-        self.opening = MathTex(r"{{a}} {{_{x_0}}} = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
-        self.proof = MathTex(r"\pi = \mathrm{proof}", font_size=32, color = PRIMARY_COLOR)
-        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, 
-                                          height=self.opening.height + 1.5, color = PRIMARY_COLOR
-                                          ).next_to(self.commiter, UP+RIGHT).shift(DOWN)
-        tail = Polygon(
-            [0.08, 0.08, 0], 
-            [-0.35, -1.2, 0], 
-            [0.93, -0.63, 0], 
-            color=PRIMARY_COLOR,
-            fill_opacity=0.4
-        ).next_to(bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.03+DOWN*0.15)
-        self.opening.move_to(bubble_opening.get_center())
-        self.opening.shift(UP*0.3)
-        self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        self.blob_data.move_to(bubble_committer.get_center())
-
-        self.new_subsection(scene, "sampling - random positions", "data/sound/e5/slide5-1.mp3")
-        scene.play(FadeIn(self.commiter, self.title_text_kzg, self.verifier), run_time=0.7)
-        scene.play(Write(self.commiter_label), Write(self.verifier_label))
-        self.lock.next_to(self.blob_data, RIGHT, buff = 0).shift(UP)
-        self.opening.move_to(bubble_opening.get_center()).shift(UP*0.4)
-        scene.play(FadeIn(self.commitment, self.envelope_body_closed, self.envelope_flap_closed))
-        scene.wait(1.7)
-
-        self.new_subsection(scene, "for selected positions", "data/sound/e5/slide5-2.mp3")
-        scene.play(Create(bubble_committer), FadeIn(self.lock), Create(self.blob_data), run_time=1)
-
-        self.blob_committer = Group(self.blob_data, bubble_committer, self.lock)
-        self.blob_committer.generate_target()
-        self.blob_committer.target.scale(0.6).shift(LEFT*1.5)
-        scene.play(MoveToTarget(self.blob_committer))
+        self.new_subsection(scene, "Eth blockchain", "data/sound/e5/slide5-0.mp3")
+        scene.play(Write(self.title_text), run_time=0.7)
+        scene.play(FadeIn(self.block1, self.block2_group, self.block3_group))
+        scene.play(GrowArrow(self.arrow), GrowArrow(self.arrow2))
+        
+        self.new_subsection(scene, "Block on L1", "data/sound/e5/slide5-1.mp3")
+        scene.play(FadeIn(self.blob))
+        scene.play(FadeIn(self.commitment, self.vector))
+        self.vector.generate_target()
+        self.vector.target.move_to(self.blob.get_top()).shift(DOWN).scale(0.6)
+        scene.wait(0.5)
+        scene.play(MoveToTarget(self.vector))
+        
+        self.new_subsection(scene, "commitment ... hash Commitment", "data/sound/e5/slide5-2.mp3")
         scene.wait(2)
-        scene.play(Create(bubble_verifier), Create(tail_verifier))
-        scene.play(Create(speech_text_verifier))
-        scene.wait(1.7)
-        for i in range(5):
-            scene.play(Indicate(self.blob_data[2*i+1], color = [HIGHLIGHT2_COLOR, PURPLE_A], scale_factor=1.2), run_time=0.4)
-
+        scene.play(Indicate(self.commitment, color = PINK))
+        scene.wait(2)
+        scene.play(Transform(self.commitment, self.commitment_hash))
         
-        
-        self.new_subsection(scene, "for selected position we receive", "data/sound/e5/slide5-3.mp3")
-        scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
-        scene.play(FadeIn(self.opening, bubble_opening, tail))
+        self.new_subsection(scene, "pruning after over 2 weeks", "data/sound/e5/slide5-3.mp3")
         scene.wait(1.5)
-        self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", color = PRIMARY_COLOR, font_size=32)
-        self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.play(Indicate(self.opening, color = PINK))
-        scene.wait(1.5)
-        scene.play(Write(self.proof), run_time=0.5)
-        scene.play(Indicate(self.proof, color = PURPLE))
+        scene.play(RemoveTextLetterByLetter(self.vector))
         
-        self.new_subsection(scene, "together with kzg commitment", "data/sound/e5/slide5-4.mp3")
-        self.commitment_sent = Group(self.envelope_flap_closed, self.envelope_body_closed, self.commitment)
-        self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.verifier, UP, buff = 0).shift(UP*1.25)
-        self.opening.generate_target()
-        self.opening.target.next_to(self.verifier, UP, buff = 0).shift(UP*0.5)
-        self.proof.generate_target()
-        self.proof.target.next_to(self.verifier, UP, buff = 0).shift(UP)
-        scene.play(FadeOut(bubble_opening, tail))
-        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.opening), MoveToTarget(self.proof), FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
-
+        self.new_subsection(scene, "Before pruning", "data/sound/e5/slide5-4.mp3")
+        self.vector1 = self.vector.copy()
+        scene.play(FadeIn(self.polygon1), FadeIn(self.polygon2), FadeIn(self.polygon3), Write(self.two_weeks), run_time=0.7)
+        scene.play(Indicate(self.polygon3, color = BLUE_E, scale_factor=1), run_time=0.6)
+        scene.play(Indicate(self.polygon2, color = BLUE_E, scale_factor=1), FadeIn(self.vector1), run_time=0.6)
+        scene.play(Indicate(self.polygon1, color = BLUE_E, scale_factor=1), run_time=0.6)
+        scene.wait(0.5)
+        scene.play(FadeOut(self.polygon1, self.polygon2, self.polygon3, self.two_weeks))
         
-        self.new_subsection(scene, "commitment and proof", "data/sound/e5/slide5-5.mp3")
-
+        self.new_subsection(scene, "After pruning", "data/sound/e5/slide5-5.mp3")
+        scene.play(FadeIn(self.polygon1_future), FadeIn(self.polygon2_future), FadeIn(self.polygon3_future), Write(self.two_weeks_future), run_time=0.7)
+        scene.play(Indicate(self.polygon1_future, color = GREEN_E, scale_factor=1), run_time=0.6)
+        scene.play(Indicate(self.polygon2_future, color = GREEN_E, scale_factor=1), FadeOut(self.vector1), run_time=0.6)
+        scene.play(Indicate(self.polygon3_future, color = GREEN_E, scale_factor=1), Indicate(self.commitment_hash, color = SECONDARY_COLOR), run_time=0.6)
+        scene.wait(0.5)
+        scene.play(FadeOut(self.polygon1_future, self.polygon2_future, self.polygon3_future, self.two_weeks_future))
+        
+        self.new_subsection(scene, "hash of the commitment", "data/sound/e5/slide5-6.mp3")
+        scene.wait(2)
+        scene.play(Indicate(self.commitment_hash, color = PINK))
+        scene.wait(2)
+        
+        self.new_subsection(scene, "blockindex", "data/sound/e5/slide5-7.mp3")
+        self.blob1 = Group(self.blob, self.commitment_hash)
+        self.blob1.generate_target()
+        self.blob1.target.scale(0.5)
         scene.wait(1)
-        scene.play(RemoveTextLetterByLetter(self.blob_data), run_time=1.3)
-        scene.play(FadeOut(bubble_committer, self.lock))
-        scene.wait(0.2)
-        scene.play(Indicate(self.commitment, color = PURPLE))
-        scene.play(Indicate(self.proof, color = PURPLE))
-  
-        scene.wait(1)
+        scene.play(MoveToTarget(self.blob1), FadeIn(self.blob2, self.blob3))
+        scene.play(FadeIn(self.blobIndex, self.blobIndex2, self.blobIndex3))
+        
+        self.new_subsection(scene, "blobhash", "data/sound/e5/slide5-8.mp3")
 
-    def animate_out(self, scene):
-        scene.play(FadeOut(self.commiter, self.title_text_kzg, self.commiter_label, self.verifier, 
-                           self.verifier_label, self.commitment, self.opening, 
-                           self.proof))
