@@ -8,10 +8,10 @@ SCROLL_COLOR = "#E4C495"
 
 class Layer2(SlideBase):
     def __init__(self) -> None:
-        super().__init__(title="ZK rollups")
+        super().__init__(title="rollups")
         
     def construct(self):
-        self.title_text = Text("Layer 2: ZK rollups", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
+        self.title_text = Text("Layer 2: rollups", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.tx_circle = Circle(radius=0.3, color = BLACK).set_fill([WHITE, HIGHLIGHT_COLOR], opacity=0.2).shift(LEFT*5)
         self.tx_label = Text("tx", font_size=18, font = PRIMARY_FONT, color = PRIMARY_COLOR)
         self.tx_label.move_to(self.tx_circle.get_center())
@@ -71,7 +71,7 @@ class Layer2(SlideBase):
 
         self.transactions = Text("transactions", color = WHITE, font = PRIMARY_FONT, 
                                  font_size = 22).next_to(self.tx_circle8, RIGHT).shift(RIGHT*2.5)
-        self.layer2 = Text("L2: ZK rollup", color = WHITE, font=PRIMARY_FONT, 
+        self.layer2 = Text("L2: rollup", color = WHITE, font=PRIMARY_FONT, 
                            font_size = 22).next_to(self.layer2_blocks[3], RIGHT).shift(RIGHT*1.5)
         self.layer1_ethereum = Text("L1: Ethereum", color = WHITE, font = PRIMARY_FONT, 
                                     font_size = 22).next_to(self.finalized_blocks[3], RIGHT).shift(RIGHT*1.5)
@@ -114,6 +114,10 @@ class Layer2(SlideBase):
         self.layer2_blocks[1].shift(DOWN*0.05+RIGHT*0.04)
 
         self.blob_image = ImageMobject("data/images/blob.png").scale(0.5).to_edge(DOWN+RIGHT).shift(LEFT*2.5)
+        self.blob_image_1 = self.blob_image.copy()
+        self.blob_image_1.scale(0.5).next_to(self.blob_image, RIGHT, buff = 0)
+        self.blob_image_2 = self.blob_image.copy()
+        self.blob_image_2.scale(0.5).next_to(self.blob_image, LEFT, buff = 0)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
@@ -145,7 +149,9 @@ class Layer2(SlideBase):
         self.block_chain.target.scale(0.5).to_edge(UP+RIGHT).shift(DOWN*1.5+LEFT)
         scene.play(MoveToTarget(self.block_chain))
         self.box = SurroundingRectangle(self.block_chain, buff = 0.2).set_color_by_gradient([PRIMARY_COLOR, GREY, WHITE])
-        scene.play(FadeIn(self.blob_image), run_time=1)
+        scene.play(FadeIn(self.blob_image), run_time=0.35)
+        scene.play(FadeIn(self.blob_image_1), run_time=0.35)
+        scene.play(FadeIn(self.blob_image_2), run_time=0.35)
         scene.play(AddTextLetterByLetter(self.blobs), Create(self.rounded_rectangle))
         for i in range(8):
             if i!=3:
@@ -164,4 +170,4 @@ class Layer2(SlideBase):
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.cheap_storage, self.smart_contracts, self.post_removal, 
-                           self.rounded_rectangle, self.blob_image))
+                           self.rounded_rectangle, self.blob_image, self.blob_image_1, self.blob_image_2))

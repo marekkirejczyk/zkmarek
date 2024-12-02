@@ -9,17 +9,18 @@ class DiscreetePolynomialChart(VGroup):
     ax: Axes
     p: int
 
-    def __init__(self, p, f):
+    def __init__(self, p, f, label = None, include_numbers = True):
         super().__init__()
         self.f = f
         self.p = p
+        self.label = label if label is not None else p
         self.dots = []
         if self.p>10:
             self.ax = Axes(
                 x_range=[0, p, 10],
                 y_range=[0, p, 10],
                 x_length=7,
-                axis_config={"include_numbers": True},
+                axis_config={"include_numbers": include_numbers},
             )
         else:
             self.ax = Axes(
@@ -33,7 +34,7 @@ class DiscreetePolynomialChart(VGroup):
 
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
-        field_label = r"$\mathbb{F}_{" + str(self.p) + "}$"
+        field_label = r"$\mathbb{F}_{" + str(self.label) + "}$"
         self.labels = self.ax.get_axis_labels(
             Tex(field_label, tex_template=template, font_size=26, color=PRIMARY_COLOR),
             Tex(field_label, tex_template=template, font_size=26, color=PRIMARY_COLOR),

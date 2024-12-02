@@ -13,12 +13,13 @@ class Blobs(SlideBase):
         
     def construct(self):
         self.title_text = Text("Blobs", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
-        # self.blob_container = Rectangle(width=3, height=2, fill_opacity=0.3).set_color_by_gradient([PRIMARY_COLOR, GREY_A, WHITE])
         self.blob_container = ImageMobject("data/images/blob.png").scale(0.7)
         self.number_sequence = MathTex(r"{{\left[}} {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}}  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
-        self.chart = DiscreetePolynomialChart(41, poly).scale(0.5).shift(DOWN)
+        
+        self.chart = DiscreetePolynomialChart(41, poly, label = "p", include_numbers=False).scale(0.5).shift(DOWN)
         self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.blob_container)
+        
         self.less_than_p = MathTex(r"<p", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
         self.order_p = MathTex(r"p \rightarrow 2^{256}", color = SECONDARY_COLOR, font_size = 40).next_to(self.chart.ax[0], RIGHT+UP).shift(UP)
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])

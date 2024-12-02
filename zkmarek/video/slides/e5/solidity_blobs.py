@@ -1,6 +1,6 @@
 from manim import (DOWN, FadeIn, Write, Indicate, Scene, Text, PINK, TEAL_E, RIGHT, MoveToTarget, 
                    TransformMatchingShapes, LEFT, Arrow, StealthTip, GREY_A, FadeOut, GrowArrow, UP, 
-                   ImageMobject, MAROON_C, Brace, Create, ORIGIN)
+                   ImageMobject, MAROON_C, Brace, Create, ORIGIN, GOLD_E)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.code_slide import CodeSlide
@@ -40,7 +40,7 @@ class BlobsSolidity(CodeSlide):
         self.blob = ImageMobject("data/images/blob.png").scale(0.5).shift(UP*0.7+LEFT*3)
         self.blobIndex_text = Text("blobIndex", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).move_to(self.blob.get_center())
         
-        self.blob_hash_text = Text("blobhash(blobIndex)", font_size= 28, font = PRIMARY_FONT).set_color_by_gradient([TEAL_E, PRIMARY_COLOR, HIGHLIGHT2_COLOR]).next_to(self.blob, DOWN).shift(DOWN+LEFT*1)
+        self.blob_hash_text = Text("blobhash(blobIndex)", font_size= 28, font = PRIMARY_FONT).set_color(GOLD_E).next_to(self.blob, DOWN).shift(DOWN+LEFT*1)
         self.version_hash = Text("0x01 SHA 256 (KZG commitment)", font=PRIMARY_FONT, font_size=28).next_to(self.blob_hash_text, RIGHT).shift(RIGHT*2)
         self.arrow_hash_ec = Arrow(self.blob_hash_text.get_right(), self.version_hash.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY_A])
@@ -79,17 +79,17 @@ class BlobsSolidity(CodeSlide):
         self.new_subsection(scene, "blobIndex", "data/sound/e5/slide6-1d.mp3")
         scene.wait(1)
         self.indicate_code(scene, self.code, self.blobIndex, 0, run_time=0.9)
-        scene.wait(4.5)
+        scene.wait(2.3)
         
-        self.new_subsection(scene, "bytes 32 - not 48", "data/sound/e5/slide6-1e.mp3")
-        scene.wait(1)
-        self.indicate_code(scene, self.code, self.commitment, 0, run_time=0.8, color = PINK)
-        self.indicate_code(scene, self.code, self.proof, 0, run_time=0.8, color = PINK)
+        # self.new_subsection(scene, "bytes 32 - not 48", "data/sound/e5/slide6-1e.mp3")
+        # scene.wait(1)
+        # self.indicate_code(scene, self.code, self.commitment, 0, run_time=0.8, color = PINK)
+        # self.indicate_code(scene, self.code, self.proof, 0, run_time=0.8, color = PINK)
         
-        scene.wait(1)
-        self.indicate_code(scene, self.code, self.x, 0, run_time=0.8, color = PINK)
-        self.indicate_code(scene, self.code, self.y, 0, run_time=0.8, color = PINK)
-        scene.wait(1.5)
+        # scene.wait(1)
+        # self.indicate_code(scene, self.code, self.x, 0, run_time=0.8, color = PINK)
+        # self.indicate_code(scene, self.code, self.y, 0, run_time=0.8, color = PINK)
+        # scene.wait(1.5)
         
         self.new_subsection(scene, "pack into byte array", "data/sound/e5/slide6-2.mp3")
         kzg_input = [self.x, self.y, self.commitment, self.proof]
@@ -99,13 +99,12 @@ class BlobsSolidity(CodeSlide):
         scene.wait(0.5)
         self.indicate_code(scene, self.code, self.input_data, 0, run_time=1)
         
-        self.new_subsection(scene, "matching 0x0a", "data/sound/e5/slide6-3.mp3")
+        self.new_subsection(scene, "bool - success", "data/sound/e5/slide6-3.mp3")
         scene.wait(1.5)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.precompile, 0, run_time=0.8, color = TEAL_E)
         scene.wait(4)
         self.indicate_code(scene, self.code, self.success, 0, run_time=0.9)
-        scene.wait(5.5)
         
         self.new_subsection(scene, "blobhash()", "data/sound/e5/slide6-4.mp3")
         scene.wait(1)
@@ -148,11 +147,9 @@ class BlobsSolidity(CodeSlide):
         self.indicate_code(scene, self.code, self.verify_blobhash, 0, run_time=0.9, color = TEAL_E)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.commitment_real, 5, run_time=0.9, color = PINK)
-        scene.wait(2)
-        self.indicate_code(scene, self.code, self.commitmentHash2, 2, run_time=1)
         scene.wait(3.5)
         self.indicate_code(scene, self.code, self.return_success, 0, run_time=0.9)
-        scene.wait(3)
+        scene.wait(1)
         scene.play(FadeOut(self.code))
         
         self.summary(scene)
@@ -174,7 +171,7 @@ class BlobsSolidity(CodeSlide):
         tree = VerkleTree().scale(0.7).shift(UP)
         scene.play(FadeIn(self.blob1), run_time=0.5)
         scene.play(FadeIn(self.blob2), run_time=0.5)
-        scene.wait(1.5)
+        scene.wait(4.5)
         scene.play(FadeOut(self.blob, self.blob1, self.blob2), run_time=0.5)
         scene.play(Create(tree), run_time=2)
         scene.wait(1)
