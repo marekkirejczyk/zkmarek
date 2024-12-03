@@ -61,7 +61,7 @@ class VectorCommitments(SlideBase):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")
         scene.play(Write(self.title_label), Write(self.number_sequence), run_time=0.7)
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, MAROON_A], scale_factor=1.2), run_time=0.25)
+            scene.play(Indicate(self.number_sequence[2*i+1], color = HIGHLIGHT2_COLOR, scale_factor=1.2), run_time=0.25)
         scene.play(Create(self.chart.ax), Create(self.chart.labels), run_time=0.8)
         scene.play(Create(self.chart.graph), GrowArrow(self.arrow_number_chart), Create(self.question_mark))
         

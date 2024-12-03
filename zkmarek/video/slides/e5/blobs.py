@@ -22,7 +22,7 @@ class Blobs(SlideBase):
         
         self.less_than_p = MathTex(r"<p", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
         self.order_p = MathTex(r"p \rightarrow 2^{256}", color = SECONDARY_COLOR, font_size = 40).next_to(self.chart.ax[0], RIGHT+UP).shift(UP)
-        self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
+        self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
         self.kilo_bytes_of_ec = MathTex(r"\approx 128 \ \mathrm{kB}", font_size = 35).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.bytes_of_ec)
         self.kilo_bytes_of_ec.shift(UP*0.55)
@@ -34,7 +34,7 @@ class Blobs(SlideBase):
         scene.play(FadeIn(self.blob_container))
         scene.play(Create(self.number_sequence), Create(self.brace_blob))
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+2], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]), run_time=0.3)
+            scene.play(Indicate(self.number_sequence[2*i+2], color = HIGHLIGHT_COLOR), run_time=0.3)
         
         self.new_subsection(scene, "field elements", "data/sound/e5/slide2-2.mp3")
         scene.play(FadeOut(self.blob_container))
@@ -43,9 +43,9 @@ class Blobs(SlideBase):
         
         self.dots = VGroup(*self.chart.dots)
         scene.wait(2)
-        scene.play(Indicate(self.dots, color = [SECONDARY_COLOR, PURPLE_C, TEAL_C]))
+        scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+2], color = [HIGHLIGHT_COLOR, PRIMARY_COLOR]), run_time=0.2)
+            scene.play(Indicate(self.number_sequence[2*i+2], color = PRIMARY_COLOR), run_time=0.2)
         scene.play(Create(self.less_than_p))
         
         scene.wait(0.5)
@@ -56,7 +56,7 @@ class Blobs(SlideBase):
         scene.wait(1)
         scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
         scene.wait(2)
-        self.number_sequence[4].set_color_by_gradient([WHITE, HIGHLIGHT_COLOR])
+        self.number_sequence[4].set_color(HIGHLIGHT_COLOR)
         self.bytes_of_ec.next_to(self.number_sequence[4], UP)
         scene.wait(1)
         scene.play(Create(self.bytes_of_ec))
@@ -72,7 +72,10 @@ class Blobs(SlideBase):
         scene.play(FadeOut(self.kilo_bytes_of_ec_eqn))
         scene.wait(0.5)
         scene.play(Indicate(self.kilo_bytes_of_ec, color = PURPLE_C))
-        scene.wait(9)
+        scene.wait(3.5)
+        
+        self.new_subsection(scene, "make it accessable", "data/sound/e5/slide2-5a.mp3")
+        scene.wait(4.5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.brace_blob, self.chart, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))

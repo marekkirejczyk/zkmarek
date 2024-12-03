@@ -44,7 +44,7 @@ class Layer2(SlideBase):
         self.brace_tx.put_at_tip(self.layer2_blocks[1])
         
         
-        self.layer2_blocks[0].shift(RIGHT+0.5*UP*0.9)
+        self.layer2_blocks[0].shift(RIGHT*0.93+0.5*UP*0.85)
         self.layer2_blocks[2].shift(RIGHT+0.5*UP*0.9)
         self.layer2_blocks[3].shift(RIGHT+0.5*UP*0.9)
         
@@ -81,16 +81,16 @@ class Layer2(SlideBase):
         self.arrow_layer2 = Arrow(self.layer2_blocks[3].get_right(), self.layer2.get_left(), tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY])
         self.arrow_layer1 = Arrow(self.finalized_blocks[3].get_right(), self.layer1_ethereum.get_left(), tip_shape=StealthTip, 
-                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(LEFT*0.06)
+                                  stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]).shift(LEFT*0.08)
         
         
-        self.arrow_layer2_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
+        self.arrow_layer2_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left()+DOWN*0.05, tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR]) for _ in range(3)]
         for i in range(3):
             self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.67).shift(RIGHT*0.05)
         self.arrow_layer2_group = VGroup(*self.arrow_layer2_blocks)
         
-        self.arrow_layer1_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left(), tip_shape=StealthTip, 
+        self.arrow_layer1_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left()+DOWN*0.05, tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY]) for _ in range(3)]
 
         for i in range(3):
@@ -118,6 +118,7 @@ class Layer2(SlideBase):
         self.blob_image_1.scale(0.5).next_to(self.blob_image, RIGHT, buff = 0)
         self.blob_image_2 = self.blob_image.copy()
         self.blob_image_2.scale(0.5).next_to(self.blob_image, LEFT, buff = 0)
+        self.arrow_layer2_blocks[1].shift(0.08*RIGHT+0.05*DOWN)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
