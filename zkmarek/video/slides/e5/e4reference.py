@@ -72,19 +72,6 @@ class Episode4Recap(SlideBase):
         scene.play(Create(self.chart))
         self.dots = VGroup(*self.chart.dots)
         
-        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed, self.commitment))
-        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
-        self.commitment.generate_target()
-        self.commitment.target.move_to(self.envelope_body_closed.get_center())
-
-        scene.play(FadeOut(self.envelope_flap), FadeIn(self.envelope_flap_closed), 
-                   MoveToTarget(self.commitment), run_time=0.7)
-        commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
-        commitment_sent.generate_target()
-        commitment_sent.target.shift(5.5*RIGHT+DOWN*2)
-        self.envelope_flap.shift(5.5*RIGHT+DOWN*2)
-
-        scene.play(MoveToTarget(commitment_sent), run_time=0.7)
         speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, 
                                            color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)
@@ -119,7 +106,20 @@ class Episode4Recap(SlideBase):
         self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         
+        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed, self.commitment))
+        scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
+        self.commitment.generate_target()
+        self.commitment.target.move_to(self.envelope_body_closed.get_center())
+
+        scene.play(FadeOut(self.envelope_flap), FadeIn(self.envelope_flap_closed), 
+                   MoveToTarget(self.commitment), run_time=0.7)
+        commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
+        commitment_sent.generate_target()
+        commitment_sent.target.shift(5.5*RIGHT+DOWN*2)
+        self.envelope_flap.shift(5.5*RIGHT+DOWN*2)
+
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
+        scene.play(MoveToTarget(commitment_sent), run_time=0.7)
         scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
         scene.play(FadeOut(bubble_opening, tail))
         self.opening.generate_target()
@@ -136,7 +136,7 @@ class Episode4Recap(SlideBase):
         scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
         scene.wait(0.5)
         scene.play(Indicate(self.proof, color = [PURPLE, PINK]))
-        scene.wait(1)
+        scene.wait(2)
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")
         scene.play(FadeOut(self.chart, self.verifier, self.verifier_label, self.commitment, 

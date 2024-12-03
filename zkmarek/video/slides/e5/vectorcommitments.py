@@ -6,7 +6,13 @@ from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e4.curve import Curve
 import numpy as np
+from zkmarek.crypto.field_element import FieldElement
+from zkmarek.video.slides.e4.discreete_polynomial_chart import (
+    DiscreetePolynomialChart,
+)
 
+def poly(x):
+    return FieldElement(1, x.order) * x ** 100 + FieldElement(1, x.order) * x ** 99 + FieldElement(1, x.order) * x ** 98 + FieldElement(1, x.order) * x ** 97 + FieldElement(1, x.order) * x ** 96
 class VectorCommitments(SlideBase):
     def __init__(self) -> None:
         super().__init__(title="Layer 2")
@@ -14,10 +20,11 @@ class VectorCommitments(SlideBase):
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
+        self.chart_discrete = DiscreetePolynomialChart(101, poly, include_numbers=False).scale(0.7).shift(LEFT*3.5)
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
-        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{y}}{{_0}}, {{y}}{{_1}}, {{y}}{{_2}}, {{y}}{{_3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
+        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{ \}}{{0}}, {{ \}}{{1}}, {{ \}}{{ 2}}, {{\}}{{3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
         for i in range(4):
             self.number_sequence_smaller_indeces[3*i+2].set_color(PURPLE)
         self.arrow_number_indeces = Arrow(self.number_sequence_smaller_indeces.get_top(), self.number_sequence_smaller.get_bottom(), tip_shape=StealthTip, 
@@ -126,7 +133,11 @@ class VectorCommitments(SlideBase):
         self.change_chart_axes_to4096(scene, self.chart, True)
         scene.wait(1.5)
         scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096[1], color = PURPLE), Indicate(self.polynomial_eqn_4096[3], color = PURPLE))
-
+        
+        self.new_subsection(scene, "polynomial - not on real numbers, but on prime field", "data/sound/e5/slide3-2a.mp3")
+        scene.wait(1)
+        self.transforming_poly_into_field(scene)
+        
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")
         scene.wait(1.8)
         for i in range(5):
@@ -138,7 +149,7 @@ class VectorCommitments(SlideBase):
         scene.wait(5)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart.ax, self.chart.graph, self.chart.labels, self.number_sequence, self.title_label, self.number_sequence, self.polynomial_eqn_4096, self.arrow_number_chart))
+        scene.play(FadeOut(self.chart_discrete, self.number_sequence, self.title_label, self.number_sequence, self.polynomial_eqn_4096, self.arrow_number_chart))
 
         
 
@@ -209,3 +220,8 @@ class VectorCommitments(SlideBase):
         scene.play(
             Transform(chart.ax, new_axes),  
             run_time=0.2)
+
+
+    def transforming_poly_into_field(self, scene):
+            self.chart_discrete.gen_points()
+            scene.play(FadeOut(self.chart.ax, self.chart.graph, self.chart.labels), FadeIn(self.chart_discrete))

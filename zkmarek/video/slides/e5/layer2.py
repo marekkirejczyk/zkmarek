@@ -67,7 +67,7 @@ class Layer2(SlideBase):
                                 font_size = 22).next_to(self.rollup_brace, RIGHT).shift(DOWN*0.3+LEFT)
         self.rollup_batch_text = Text("transactions batch", color = PRIMARY_COLOR, font = PRIMARY_FONT, 
                                 font_size = 22).next_to(self.rollup_brace, UP)
-        self.pricey_dollars_rollup = Text("$$$", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 22).next_to(self.rollup_batch_text, LEFT)
+        self.pricey_dollars_rollup = Text("???", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 22).next_to(self.rollup_batch_text, LEFT)
 
         self.transactions = Text("transactions", color = WHITE, font = PRIMARY_FONT, 
                                  font_size = 22).next_to(self.tx_circle8, RIGHT).shift(RIGHT*2.5)
@@ -122,22 +122,30 @@ class Layer2(SlideBase):
         
     def animate_in(self, scene):
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
-        scene.play(FadeIn(self.tx_group, self.title_text), Create(self.transactions), GrowArrow(self.arrow_txs), run_time=0.8)
+        scene.play(FadeIn(self.tx_group, self.title_text), run_time=0.8)
 
-        scene.play(Create(self.layer2_group), FadeIn(self.arrow_layer2_group), Write(self.brace_tx), run_time=0.7)
+        scene.play(Create(self.layer2_group), run_time=0.7)
+        scene.play(FadeIn(self.arrow_layer2_group))
         scene.play(Create(self.layer2), GrowArrow(self.arrow_layer2), run_time=0.7)
         
+
+        
+        self.new_subsection(scene, "L2 rollups correctness", "data/sound/e5/slide1-0a.mp3")
+        scene.wait(2)
+        scene.play(Write(self.brace_tx))
+        scene.play(Create(self.transactions), GrowArrow(self.arrow_txs))
+        scene.wait(3)
+
+        
+        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
+
+        scene.play(ApplyWave(self.tx_group), Indicate(self.layer2, color = PURPLE), run_time=1)
 
         scene.play(FadeIn(self.rollup_brace))
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
 
-        scene.play(ApplyWave(self.tx_group), run_time=1)
-        
-        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
-
-        scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE))
-
+        self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-1a.mp3")
         scene.wait(5.5)
         scene.play(FadeIn(self.rollup_batch_text))
         scene.wait(1)

@@ -1,7 +1,6 @@
-from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ApplyWave, VGroup, ImageMobject, Indicate, Brace, Write, MoveToTarget, PURPLE_C, FadeIn, TEAL_C
+from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ImageMobject, Indicate, Brace, Write, MoveToTarget, PURPLE_C, FadeIn, TEAL_C
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7
@@ -16,12 +15,11 @@ class Blobs(SlideBase):
         self.blob_container = ImageMobject("data/images/blob.png").scale(0.7)
         self.number_sequence = MathTex(r"{{\left[}} {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}}  {{\right]}}", color = SECONDARY_COLOR).next_to(self.blob_container, UP)
         
-        self.chart = DiscreetePolynomialChart(41, poly, label = "p", include_numbers=False).scale(0.5).shift(DOWN)
         self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.blob_container)
         
         self.less_than_p = MathTex(r"<p", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
-        self.order_p = MathTex(r"p \rightarrow 2^{256}", color = SECONDARY_COLOR, font_size = 40).next_to(self.chart.ax[0], RIGHT+UP).shift(UP)
+        self.order_p = MathTex(r"p \approx 2^{256}=32 \ B", color = SECONDARY_COLOR, font_size = 40).next_to(self.blob_container, RIGHT+DOWN).shift(UP)
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
         self.kilo_bytes_of_ec = MathTex(r"\approx 128 \ \mathrm{kB}", font_size = 35).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.bytes_of_ec)
@@ -37,13 +35,7 @@ class Blobs(SlideBase):
             scene.play(Indicate(self.number_sequence[2*i+2], color = HIGHLIGHT_COLOR), run_time=0.3)
         
         self.new_subsection(scene, "field elements", "data/sound/e5/slide2-2.mp3")
-        scene.play(FadeOut(self.blob_container))
-        self.chart.gen_points()
-        scene.play(Create(self.chart))
-        
-        self.dots = VGroup(*self.chart.dots)
-        scene.wait(2)
-        scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
+        scene.wait(4)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+2], color = PRIMARY_COLOR), run_time=0.2)
         scene.play(Create(self.less_than_p))
@@ -51,10 +43,8 @@ class Blobs(SlideBase):
         scene.wait(0.5)
              
         self.new_subsection(scene, "32 bytes", "data/sound/e5/slide2-3.mp3")
-        self.chart.generate_target()
-        self.chart.target.shift(DOWN)
         scene.wait(1)
-        scene.play(ApplyWave(self.chart.labels), Write(self.order_p))   
+        scene.play(Write(self.order_p))   
         scene.wait(2)
         self.number_sequence[4].set_color(HIGHLIGHT_COLOR)
         self.bytes_of_ec.next_to(self.number_sequence[4], UP)
@@ -63,7 +53,9 @@ class Blobs(SlideBase):
         scene.play(FadeOut(self.less_than_p, self.order_p), run_time=0.5)
         
         self.new_subsection(scene, "128 k bytes", "data/sound/e5/slide2-4.mp3")
-        scene.play(MoveToTarget(self.chart))
+        self.blob_container.generate_target()
+        self.blob_container.target.to_edge(DOWN)
+        scene.play(MoveToTarget(self.blob_container))
         scene.wait(2)
         scene.play(Create(self.kilo_bytes_of_ec), Create(self.kilo_bytes_of_ec_eqn))
         scene.wait(2)
@@ -78,5 +70,5 @@ class Blobs(SlideBase):
         scene.wait(4.5)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.brace_blob, self.chart, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))
+        scene.play(FadeOut(self.brace_blob, self.blob_container, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))
         

@@ -5,10 +5,10 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 class KZGBlobs(SlideBase):
     def __init__(self) -> None:
-        super().__init__(title="KZG")
+        super().__init__(title="KZG as a vector commitment")
         
     def construct(self):
-        self.title_text = Text("KZG in practice", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
+        self.title_text = Text("KZG as a vector commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.committer = ImageMobject("data/images/person.png").scale(0.7).shift(LEFT*5)
         self.committer_label = Text("Committer", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.committer, DOWN)
         self.verifier = ImageMobject("data/images/person_blue.png").scale(0.7).shift(RIGHT*5)
