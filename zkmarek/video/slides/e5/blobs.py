@@ -1,4 +1,4 @@
-from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ApplyWave, VGroup, ImageMobject, WHITE, Indicate, Brace, Write, MoveToTarget, PURPLE_C, FadeIn, TEAL_C
+from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ApplyWave, VGroup, ImageMobject, Indicate, Brace, Write, MoveToTarget, PURPLE_C, FadeIn, TEAL_C
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart

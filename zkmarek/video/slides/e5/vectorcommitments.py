@@ -113,6 +113,7 @@ class VectorCommitments(SlideBase):
         scene.play(TransformMatchingShapes(self.p1.copy(), self.poly_number1))
         scene.play(TransformMatchingShapes(self.p2.copy(), self.poly_number2))
         scene.play(TransformMatchingShapes(self.p3.copy(), self.poly_number3))
+        scene.wait(0.9)
         
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
         scene.play(FadeOut(self.number_sequence_smaller, self.poly_number3, self.poly_number0, self.poly_number2, self.poly_number1), FadeIn(self.number_sequence))
