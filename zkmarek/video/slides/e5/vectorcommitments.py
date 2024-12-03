@@ -20,7 +20,7 @@ class VectorCommitments(SlideBase):
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
-        self.chart_discrete = DiscreetePolynomialChart(101, poly, include_numbers=False).scale(0.7).shift(LEFT*3.5)
+        self.chart_discrete = DiscreetePolynomialChart(101, poly, label="p", include_numbers=False).scale(0.7).shift(LEFT*3.5)
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
@@ -41,6 +41,7 @@ class VectorCommitments(SlideBase):
         self.p2_10 = ValueTracker(2)
         a2_10 = Curve.from_x(self.p2_10.get_value())
         self.p2 = DotOnCurve(self.chart.ax, "({{2}},{{-4}})", a2_10)
+        self.p2.label.shift(DOWN*0.5)
 
         self.p3_23 = ValueTracker(3)
         a3_23 = Curve.from_x(self.p3_23.get_value())
@@ -69,7 +70,7 @@ class VectorCommitments(SlideBase):
         scene.play(Write(self.title_label), Write(self.number_sequence), run_time=0.7)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = HIGHLIGHT2_COLOR, scale_factor=1.2), run_time=0.25)
-        scene.play(Create(self.chart.ax), Create(self.chart.labels), run_time=0.8)
+        scene.play(Create(self.chart.ax), run_time=0.8)
         scene.play(Create(self.chart.graph), GrowArrow(self.arrow_number_chart), Create(self.question_mark))
         
         
@@ -135,7 +136,7 @@ class VectorCommitments(SlideBase):
         scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096[1], color = PURPLE), Indicate(self.polynomial_eqn_4096[3], color = PURPLE))
         
         self.new_subsection(scene, "polynomial - not on real numbers, but on prime field", "data/sound/e5/slide3-2a.mp3")
-        scene.wait(1)
+        scene.wait(2.5)
         self.transforming_poly_into_field(scene)
         
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")

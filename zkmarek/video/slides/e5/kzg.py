@@ -44,10 +44,13 @@ class KZGBlobs(SlideBase):
         scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))
         scene.wait(2.5)
+        
+        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
+        scene.wait(1.8)
+        scene.play(Write(self.opening))
+        scene.wait(2.5)
         scene.play(GrowArrow(self.arrow_poly_proof))
         scene.play(Write(self.proof))
-        scene.wait(1.5)
-        scene.play(Write(self.opening))
         scene.wait(2.5)
         
         scene.play(FadeOut(self.opening, self.arrow_opening_committer))

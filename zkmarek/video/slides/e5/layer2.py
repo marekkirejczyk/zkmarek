@@ -121,8 +121,8 @@ class Layer2(SlideBase):
         self.arrow_layer2_blocks[1].shift(0.08*RIGHT+0.05*DOWN)
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
-        scene.play(FadeIn(self.tx_group, self.title_text), run_time=0.8)
+        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-0a.mp3")
+        scene.play(FadeIn(self.title_text), run_time=0.8)
 
         scene.play(Create(self.layer2_group), run_time=0.7)
         scene.play(FadeIn(self.arrow_layer2_group))
@@ -130,14 +130,14 @@ class Layer2(SlideBase):
         
 
         
-        self.new_subsection(scene, "L2 rollups correctness", "data/sound/e5/slide1-0a.mp3")
+        self.new_subsection(scene, "L2 rollups correctness", "data/sound/e5/slide1-1.mp3")
         scene.wait(2)
-        scene.play(Write(self.brace_tx))
+        scene.play(Write(self.brace_tx), FadeIn(self.tx_group))
         scene.play(Create(self.transactions), GrowArrow(self.arrow_txs))
         scene.wait(3)
 
         
-        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1.mp3")
+        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
 
         scene.play(ApplyWave(self.tx_group), Indicate(self.layer2, color = PURPLE), run_time=1)
 
@@ -145,7 +145,6 @@ class Layer2(SlideBase):
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
 
-        self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-1a.mp3")
         scene.wait(5.5)
         scene.play(FadeIn(self.rollup_batch_text))
         scene.wait(1)

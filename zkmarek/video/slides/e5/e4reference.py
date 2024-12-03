@@ -51,8 +51,8 @@ class Episode4Recap(SlideBase):
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.395)
         self.ethereum_logo = ImageMobject("data/images/ethereum_logo.png").scale(0.3)
-        self.envelope_body.next_to(self.committer, RIGHT+DOWN, buff = 0.4)
-        self.envelope_body_closed.next_to(self.committer, RIGHT+DOWN, buff = 0.4)
+        self.envelope_body.next_to(self.committer, RIGHT+DOWN, buff = 0.4).shift(DOWN)
+        self.envelope_body_closed.next_to(self.committer, RIGHT+DOWN, buff = 0.4).shift(DOWN)
 
         self.envelope_flap.next_to(self.envelope_body, UP, buff= 0)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
@@ -60,8 +60,8 @@ class Episode4Recap(SlideBase):
         self.commitment = MathTex(r"{{C}} = {{p(\tau)}} \cdot {{G_1}}", font_size = 32, color=PRIMARY_COLOR)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} \cdot {{G_1}}", font_size=32, color=PRIMARY_COLOR)
         self.proof.next_to(self.verifier_label, DOWN)
-        self.opening = MathTex(r"p(x_0)=y_0", font_size=32, color = SECONDARY_COLOR).next_to(self.commitment, DOWN)
-        self.commitment.next_to(self.committer, RIGHT, buff = 0)
+        self.opening = MathTex(r"p(x_0)=y_0", font_size=32, color = SECONDARY_COLOR)
+
         self.chart.next_to(self.committer_label, DOWN, buff = -1).scale(0.3).shift(UP)
 
     def animate_in(self, scene):
@@ -85,8 +85,6 @@ class Episode4Recap(SlideBase):
             fill_opacity=0.4
         ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4).shift(0.58*RIGHT)
 
-        
-        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
         scene.play(Create(bubble_verifier), Create(tail_verifier), Create(speech_text_verifier))
         bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, 
                                           height=self.opening.height + 1.5, 
@@ -101,8 +99,13 @@ class Episode4Recap(SlideBase):
 
         self.opening.move_to(bubble_opening.get_center())
         self.opening.shift(UP*0.3)
+        self.commitment.next_to(self.opening, UP)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(Create(bubble_opening), Create(tail), FadeIn(self.opening, self.proof))
+        
+        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
+        scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
+        scene.play(FadeOut(bubble_opening, tail))
         self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         
@@ -115,13 +118,12 @@ class Episode4Recap(SlideBase):
                    MoveToTarget(self.commitment), run_time=0.7)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(5.5*RIGHT+DOWN*2)
-        self.envelope_flap.shift(5.5*RIGHT+DOWN*2)
+        commitment_sent.target.shift(5.5*RIGHT+DOWN)
+        self.envelope_flap.shift(5.5*RIGHT+DOWN)
 
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
         scene.play(MoveToTarget(commitment_sent), run_time=0.7)
-        scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
-        scene.play(FadeOut(bubble_opening, tail))
+
         self.opening.generate_target()
         self.opening.target.next_to(self.verifier_label, DOWN) 
         self.proof.generate_target()

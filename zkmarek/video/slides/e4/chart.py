@@ -12,7 +12,7 @@ class Chart(VGroup):
     def __init__(self, include_details=True, **kwargs):
         super().__init__(**kwargs)
         self.include_details = include_details
-        step = 10 if include_details else 20
+        step = 10 if include_details else 10
         self.ax = Axes(
             x_range=[-4.7, 5, 1],
             y_range=[-5.5, 42, step],
