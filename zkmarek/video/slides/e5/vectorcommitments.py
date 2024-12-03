@@ -100,10 +100,10 @@ class VectorCommitments(SlideBase):
         scene.play(Write(self.lagrange_interpolation))
         scene.wait(3)
         scene.play(Indicate(self.polynomial[3], color = HIGHLIGHT_COLOR, scale_factor=1.6))
-        scene.play(Indicate(self.p0, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p1, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p2, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
-        scene.play(Indicate(self.p3, color = [SECONDARY_COLOR, WHITE, HIGHLIGHT2_COLOR], scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p0, color = SECONDARY_COLOR, scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p1, color = SECONDARY_COLOR, scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p2, color = SECONDARY_COLOR, scale_factor=1.3), run_time=0.4)
+        scene.play(Indicate(self.p3, color = SECONDARY_COLOR, scale_factor=1.3), run_time=0.4)
         scene.play(FadeOut(self.lagrange_interpolation))
         
         self.new_subsection(scene, "P(0), P(1)", "data/sound/e5/slide3-1c.mp3")
@@ -129,7 +129,7 @@ class VectorCommitments(SlideBase):
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")
         scene.wait(1.8)
         for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = [HIGHLIGHT2_COLOR, WHITE]), run_time=0.4)
+            scene.play(Indicate(self.number_sequence[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.4)
         scene.wait(2)
         
             

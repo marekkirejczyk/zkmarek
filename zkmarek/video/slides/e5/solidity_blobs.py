@@ -46,16 +46,19 @@ class BlobsSolidity(CodeSlide):
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY_A])
         self.version_hash_part1 = self.version_hash[0:4]
         self.version_hash_part1.set_color_by_gradient([TEAL_E, PRIMARY_COLOR])
-        self.brace_version = Brace(self.version_hash_part1, DOWN).set_color_by_gradient([PINK, MAROON_C])
+        self.brace_version = Brace(self.version_hash_part1, DOWN).set_color(HIGHLIGHT2_COLOR)
         self.version_hash_part2 = self.version_hash[4:25]
-        self.version_hash_part2.set_color_by_gradient([SECONDARY_COLOR, MAROON_C, PINK])
-        self.brace_hash = Brace(self.version_hash_part2, DOWN).set_color_by_gradient([SECONDARY_COLOR, MAROON_C, PINK])
+        self.version_hash_part2.set_color(SECONDARY_COLOR)
+        self.brace_hash = Brace(self.version_hash_part2, DOWN).set_color(SECONDARY_COLOR)
         self.text_version = Text("version", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24)
         self.brace_version.put_at_tip(self.text_version)
         self.text_hash = Text("last 31 bytes", color = MAROON_C, font= PRIMARY_FONT, font_size = 24)
         self.brace_hash.put_at_tip(self.text_hash)
         
         self.commitment_real = "commitment"
+        self.brace_32B = Brace(self.version_hash, UP, color = PRIMARY_COLOR)
+        self.brace_32b_text = Text("32 bytes", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 26)
+        self.brace_32B.put_at_tip(self.brace_32b_text)
         
         
     def animate_in(self, scene):
@@ -119,27 +122,26 @@ class BlobsSolidity(CodeSlide):
         self.new_subsection(scene, "blobindex - 32 bytes", "data/sound/e5/slide6-4a.mp3")
         scene.wait(1.2)
         scene.play(Indicate(self.blob_hash_text[9:18], color = PINK))
-        scene.play(Write(self.version_hash), GrowArrow(self.arrow_hash_ec))
-        scene.wait(1)
-        scene.play(FadeIn(self.brace_hash, self.brace_version))
+        scene.play(Write(self.version_hash), GrowArrow(self.arrow_hash_ec), FadeIn(self.brace_32B, self.brace_32b_text))
+        scene.wait(1.3)
 
         
         self.new_subsection(scene, "SHA256", "data/sound/e5/slide6-4b.mp3")
-        scene.play(Write(self.text_version), Write(self.text_hash))
+        scene.play(FadeIn(self.brace_hash, self.brace_version), FadeOut(self.brace_32B, self.brace_32b_text), Write(self.text_version), Write(self.text_hash))
         scene.wait(0.5)
         scene.play(Indicate(self.text_version, color = PRIMARY_COLOR), run_time=0.7)
-        scene.wait(1.3)
+        scene.wait(0.8)
         scene.play(Indicate(self.text_hash, color = PRIMARY_COLOR))
         scene.wait(1)
         scene.play(Indicate(self.version_hash[4:10], color = MAROON_C))
-        scene.wait(2)
+        scene.wait(1.3)
         scene.play(FadeOut(self.blob, self.text_hash, self.text_version, self.version_hash, self.brace_hash, self.brace_version, self.arrow_hash_ec, self.blob_hash_text))
         self.code.generate_target()
         self.code.target.scale(1/0.4).next_to(self.title_text, DOWN, buff = 0).shift(DOWN*0.1)
         scene.play(MoveToTarget(self.code))
-        scene.wait(1.5)
+        scene.wait(1)
         self.indicate_code(scene, self.code, self.false_if, 0, run_time=1)
-        scene.wait(2.5)
+        scene.wait(1.5)
         
         
         self.new_subsection(scene, "verifyBlobHash", "data/sound/e5/slide6-5.mp3")
@@ -147,9 +149,7 @@ class BlobsSolidity(CodeSlide):
         self.indicate_code(scene, self.code, self.verify_blobhash, 0, run_time=0.9, color = TEAL_E)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.commitment_real, 5, run_time=0.9, color = PINK)
-        scene.wait(3.5)
-        self.indicate_code(scene, self.code, self.return_success, 0, run_time=0.9)
-        scene.wait(1)
+        scene.wait(7.5)
         scene.play(FadeOut(self.code))
         
         self.summary(scene)
@@ -163,7 +163,7 @@ class BlobsSolidity(CodeSlide):
     
     def summary(self, scene):
         self.new_subsection(scene, "summary", "data/sound/e5/slide6-6.mp3")
-        self.title_tezt_summary = Text("Up next...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP).shift(DOWN)
+        self.title_tezt_summary = Text("Up next...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP).shift(DOWN*0.5)
         self.blob.move_to(ORIGIN)
         self.blob1 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0)
         self.blob2 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0)
