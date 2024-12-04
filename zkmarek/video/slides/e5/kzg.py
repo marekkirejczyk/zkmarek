@@ -37,15 +37,26 @@ class KZGBlobs(SlideBase):
         
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "remember, kzg", "data/sound/e5/slide4-1.mp3")
-        scene.play(Write(self.title_text), FadeIn(self.verifier, self.committer), run_time=0.7)
+        self.new_subsection(scene, "two prime fields", "data/sound/e5/slide4-0.mp3")
+        scene.play(Write(self.title_text), run_time=0.7)
+        
+        
+        self.new_subsection(scene, "y_k belong to p1", "data/sound/e5/slide4-0a.mp3")
+        scene.play(Write(self.number_sequence))
+        scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
+
+        self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
+        
+        
+        self.new_subsection(scene, "rput it all together", "data/sound/e5/slide4-2.mp3")
         scene.play(Write(self.verifier_label), Write(self.committer_label))
+        scene.play(FadeIn(self.verifier, self.committer))
         scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), run_time=0.7)
         scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))
         scene.wait(2.5)
         
-        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-1a.mp3")
+        self.new_subsection(scene, "put it all together", "data/sound/e5/slide4-2a.mp3")
         scene.wait(1.8)
         scene.play(Write(self.opening))
         scene.wait(2.5)
@@ -59,9 +70,7 @@ class KZGBlobs(SlideBase):
         self.group_poly.target.next_to(self.number_sequence, DOWN).shift(DOWN)
         scene.play(MoveToTarget(self.group_poly))
         
-        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
-        scene.play(Write(self.number_sequence))
-        scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
+        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-3.mp3")
         scene.play(Indicate(self.polynomial, color = PINK), Indicate(self.number_sequence, color = PINK))
         scene.wait(2)
         scene.play(Indicate(self.number_sequence_kilo_bytes, color = HIGHLIGHT_COLOR))
