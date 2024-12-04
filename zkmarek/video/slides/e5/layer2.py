@@ -127,29 +127,26 @@ class Layer2(SlideBase):
         scene.play(Create(self.layer2_group), run_time=0.7)
         scene.play(FadeIn(self.arrow_layer2_group))
         scene.play(Create(self.layer2), GrowArrow(self.arrow_layer2), run_time=0.7)
-        
-
+        scene.wait(1.5)
+        scene.play(Write(self.brace_tx), FadeIn(self.tx_group))
+        scene.play(Create(self.transactions), GrowArrow(self.arrow_txs))
         
         self.new_subsection(scene, "L2 rollups correctness", "data/sound/e5/slide1-1.mp3")
         scene.wait(2)
-        scene.play(Write(self.brace_tx), FadeIn(self.tx_group))
-        scene.play(Create(self.transactions), GrowArrow(self.arrow_txs))
-        scene.wait(3)
-
-        
-        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
-
-        scene.play(ApplyWave(self.tx_group), Indicate(self.layer2, color = PURPLE), run_time=1)
-
-        scene.play(FadeIn(self.rollup_brace))
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
+        scene.wait(1.5)
+        scene.play(ApplyWave(self.tx_group), Indicate(self.layer2, color = PURPLE), run_time=1)
+        scene.wait(1.5)
+        
+        self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
+        scene.wait(1.5)
+        scene.play(FadeIn(self.rollup_brace))
 
-        scene.wait(5.5)
         scene.play(FadeIn(self.rollup_batch_text))
         scene.wait(1)
         scene.play(Create(self.pricey_dollars_rollup))
-        scene.wait(3.2)
+        scene.wait(2)
         
         self.new_subsection(scene, "blobs provide space", "data/sound/e5/slide1-2.mp3")
 

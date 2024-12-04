@@ -109,6 +109,7 @@ class Episode4Recap(SlideBase):
         self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         
+        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed, self.commitment))
         scene.play(FadeOut(self.envelope_flap_closed), FadeIn(self.envelope_flap))
         self.commitment.generate_target()
@@ -121,7 +122,6 @@ class Episode4Recap(SlideBase):
         commitment_sent.target.shift(5.5*RIGHT+DOWN)
         self.envelope_flap.shift(5.5*RIGHT+DOWN)
 
-        self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
         scene.play(MoveToTarget(commitment_sent), run_time=0.7)
 
         self.opening.generate_target()

@@ -24,7 +24,7 @@ class VectorCommitments(SlideBase):
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
-        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{ \}}{{0}}, {{ \}}{{1}}, {{ \}}{{ 2}}, {{\}}{{3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
+        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{ }}{{0}}, {{ \}}{{1}}, {{ \}}{{ 2}}, {{\}}{{3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
         for i in range(4):
             self.number_sequence_smaller_indeces[3*i+2].set_color(PURPLE)
         self.arrow_number_indeces = Arrow(self.number_sequence_smaller_indeces.get_top(), self.number_sequence_smaller.get_bottom(), tip_shape=StealthTip, 
@@ -41,7 +41,7 @@ class VectorCommitments(SlideBase):
         self.p2_10 = ValueTracker(2)
         a2_10 = Curve.from_x(self.p2_10.get_value())
         self.p2 = DotOnCurve(self.chart.ax, "({{2}},{{-4}})", a2_10)
-        self.p2.label.shift(DOWN*0.5)
+        self.p2.label.shift(LEFT*0.3+DOWN*0.3)
 
         self.p3_23 = ValueTracker(3)
         a3_23 = Curve.from_x(self.p3_23.get_value())
@@ -121,7 +121,7 @@ class VectorCommitments(SlideBase):
         scene.play(TransformMatchingShapes(self.p1.copy(), self.poly_number1))
         scene.play(TransformMatchingShapes(self.p2.copy(), self.poly_number2))
         scene.play(TransformMatchingShapes(self.p3.copy(), self.poly_number3))
-        scene.wait(0.9)
+        scene.wait(1.4)
         
         self.new_subsection(scene, "extend to larger n/o of points", "data/sound/e5/slide3-2.mp3")
         scene.play(FadeOut(self.number_sequence_smaller, self.poly_number3, self.poly_number0, self.poly_number2, self.poly_number1), FadeIn(self.number_sequence))

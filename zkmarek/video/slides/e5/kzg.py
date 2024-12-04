@@ -45,7 +45,7 @@ class KZGBlobs(SlideBase):
         scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))
         scene.wait(2.5)
         
-        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-2.mp3")
+        self.new_subsection(scene, "compresses 128 kB data", "data/sound/e5/slide4-1a.mp3")
         scene.wait(1.8)
         scene.play(Write(self.opening))
         scene.wait(2.5)
@@ -75,7 +75,7 @@ class KZGBlobs(SlideBase):
         scene.play(FadeIn(self.brace_commitment, self.commitment_bytes))
         scene.wait(2)
         scene.play(FadeIn(self.brace_proof, self.proof_bytes))
-        scene.wait(2)
+        scene.wait(3.5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_text, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  
