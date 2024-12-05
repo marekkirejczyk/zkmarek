@@ -2,6 +2,14 @@ from manim import (FadeIn, FadeOut, MathTex, Text, LEFT, RIGHT, DOWN, UP, Write,
                    StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
+from zkmarek.crypto.field_element import FieldElement
+
+def poly(x):
+    output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
+    return output
+
 
 class KZGBlobs(SlideBase):
     def __init__(self) -> None:
@@ -34,7 +42,8 @@ class KZGBlobs(SlideBase):
         self.arrow_poly_proof = Arrow(self.polynomial.get_bottom(), self.proof.get_top(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
 
-        
+        self.chart_ec = PolynomialOnCurve(polynomial=poly).scale(0.6).shift(LEFT*2.5+DOWN)
+        self.chart = DiscreetePolynomialChart(41, poly).scale(0.6).shift(RIGHT*2.5+DOWN)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "two prime fields", "data/sound/e5/slide4-0.mp3")
@@ -44,11 +53,18 @@ class KZGBlobs(SlideBase):
         self.new_subsection(scene, "y_k belong to p1", "data/sound/e5/slide4-0a.mp3")
         scene.play(Write(self.number_sequence))
         scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
+        scene.wait(1)
+        self.chart.gen_points()
+        scene.play(FadeIn(self.chart))
 
         self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
+        self.chart_ec.gen_points()
+        scene.play(FadeIn(self.chart_ec))
+        scene.wait(1)
+        scene.wait(9)
+        scene.play(FadeOut(self.chart, self.chart_ec))
         
-        
-        self.new_subsection(scene, "rput it all together", "data/sound/e5/slide4-2.mp3")
+        self.new_subsection(scene, "put it all together", "data/sound/e5/slide4-2.mp3")
         scene.play(Write(self.verifier_label), Write(self.committer_label))
         scene.play(FadeIn(self.verifier, self.committer))
         scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), run_time=0.7)

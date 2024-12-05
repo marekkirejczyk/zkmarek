@@ -24,7 +24,7 @@ class VectorCommitments(SlideBase):
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
-        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{ }}{{0}}, {{ \}}{{1}}, {{ \}}{{ 2}}, {{\}}{{3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, UP)
+        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{\ }}{{0}}, \quad {{ \}}{{1}}, {{ \quad}}{{ 2}}, \quad {{\}}{{3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, DOWN).scale(0.6)
         for i in range(4):
             self.number_sequence_smaller_indeces[3*i+2].set_color(PURPLE)
         self.arrow_number_indeces = Arrow(self.number_sequence_smaller_indeces.get_top(), self.number_sequence_smaller.get_bottom(), tip_shape=StealthTip, 
@@ -60,10 +60,12 @@ class VectorCommitments(SlideBase):
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24, color = PRIMARY_COLOR).next_to(self.chart, RIGHT).shift(DOWN)
         
-        self.poly_number0 = MathTex(r"P({{0}}) = {{30}}", color = PINK, font_size = 32).next_to(self.number_sequence_smaller, UP).shift(LEFT)
+        self.poly_number0 = MathTex(r"P({{0}}) = {{30}}", color = PINK, font_size = 32).next_to(self.number_sequence_smaller, DOWN).shift(LEFT)
         self.poly_number1 = MathTex(r"P({{1}}) = {{9}}", color = PINK, font_size = 32).next_to(self.poly_number0, RIGHT)
-        self.poly_number2 = MathTex(r"P({{2}}) = {{-4}}", color = PINK, font_size = 32).next_to(self.number_sequence_smaller, DOWN).shift(LEFT)
+        self.poly_number2 = MathTex(r"P({{2}}) = {{-4}}", color = PINK, font_size = 32).next_to(self.poly_number0, DOWN)
         self.poly_number3 = MathTex(r"P({{3}}) = {{15}}", color = PINK, font_size = 32).next_to(self.poly_number2, RIGHT)
+        for i in range(4):
+            self.number_sequence_smaller[2*i+1].set_color_by_gradient(MAROON_A)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "vector commitments - data", "data/sound/e5/slide3-0.mp3")
@@ -79,7 +81,8 @@ class VectorCommitments(SlideBase):
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
         self.points = [self.p0, self.p1, self.p2, self.p3]
         for i in range(4):
-            scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), run_time=0.3)
+            scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), 
+                       Indicate(self.number_sequence_smaller_indeces[3*i+2], color = PINK), Indicate(self.number_sequence_smaller_indeces[3*i+1], color = PINK), run_time=0.3)
             point = self.points[i] 
             point.label[1].set_color(PURPLE)
         scene.wait(0.7)
@@ -92,7 +95,7 @@ class VectorCommitments(SlideBase):
         for i in range(4):
             point = self.points[i] 
             point.label[3].set_color(MAROON_A)
-            self.number_sequence_smaller[2*i+1].set_color_by_gradient(MAROON_A)
+            scene.play(Indicate(self.number_sequence_smaller[2*i+1], color = PINK))
             
         self.new_subsection(scene, "poly of degree 3", "data/sound/e5/slide3-1a.mp3")
         for i in range(4):
@@ -100,7 +103,7 @@ class VectorCommitments(SlideBase):
         scene.play(Create(self.chart.graph))
         scene.play(FadeIn(self.polynomial))
         scene.wait(1.5)
-        scene.play(Indicate(self.polynomial[3], color = PINK), run_time=0.7)
+        scene.play(Indicate(self.polynomial, color = PINK), run_time=0.7)
         scene.wait(0.8)
         
         self.new_subsection(scene, "Lagrange interpolation", "data/sound/e5/slide3-1b.mp3")
@@ -141,8 +144,7 @@ class VectorCommitments(SlideBase):
         
         self.new_subsection(scene, "poly - wrapper around blob data", "data/sound/e5/slide3-3.mp3")
         scene.wait(1.8)
-        for i in range(5):
-            scene.play(Indicate(self.number_sequence[2*i+1], color = HIGHLIGHT2_COLOR), run_time=0.4)
+        scene.play(Indicate(self.number_sequence))
         scene.wait(2)
         
             

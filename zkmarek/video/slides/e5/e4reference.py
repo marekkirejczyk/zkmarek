@@ -1,6 +1,5 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, 
 Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE, PINK)
-from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
@@ -25,12 +24,7 @@ class Episode4Recap(SlideBase):
         self.committer_label.next_to(self.committer, DOWN)
         self.verifier_label.next_to(self.verifier, DOWN)
         self.chart = DiscreetePolynomialChart(41, poly)
-        self.tau = FieldElement(33, 41)
-        self.value_at_tau = poly(self.tau)
-        self.z = FieldElement(13, 41)
-        self.y = poly(self.z)
-        self.chart_label_x0 = self.chart.add_xaxis_label(self.z.value, r"x_0")
-        self.chart_label_tau = self.chart.add_xaxis_label(self.tau.value, r"\tau")
+
 
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
@@ -106,7 +100,6 @@ class Episode4Recap(SlideBase):
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
         scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
         scene.play(FadeOut(bubble_opening, tail))
-        self.chart.indicate_xaxis_label(scene, self.chart_label_x0)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
@@ -134,7 +127,7 @@ class Episode4Recap(SlideBase):
         
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), MoveToTarget(self.commitment))
         scene.play(Indicate(self.commitment, color = PINK))
-        scene.wait(1.5)
+        scene.wait(0.7)
         scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
         scene.wait(0.5)
         scene.play(Indicate(self.proof, color = [PURPLE, PINK]))

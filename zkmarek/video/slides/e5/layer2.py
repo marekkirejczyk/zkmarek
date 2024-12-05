@@ -87,7 +87,7 @@ class Layer2(SlideBase):
         self.arrow_layer2_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left()+DOWN*0.05, tip_shape=StealthTip, 
                                   stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR]) for _ in range(3)]
         for i in range(3):
-            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.67).shift(RIGHT*0.05)
+            self.arrow_layer2_blocks[i].next_to(self.layer2_blocks[i], RIGHT, buff=0).scale(0.67).shift(RIGHT*0.02)
         self.arrow_layer2_group = VGroup(*self.arrow_layer2_blocks)
         
         self.arrow_layer1_blocks = [Arrow(self.layer2_blocks[0].get_right(), self.layer2_blocks[1].get_left()+DOWN*0.05, tip_shape=StealthTip, 
@@ -130,13 +130,14 @@ class Layer2(SlideBase):
         scene.wait(1.5)
         scene.play(Write(self.brace_tx), FadeIn(self.tx_group))
         scene.play(Create(self.transactions), GrowArrow(self.arrow_txs))
+        scene.play(ApplyWave(self.tx_group))
         
         self.new_subsection(scene, "L2 rollups correctness", "data/sound/e5/slide1-1.mp3")
         scene.wait(2)
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         scene.wait(1.5)
-        scene.play(ApplyWave(self.tx_group), Indicate(self.layer2, color = PURPLE), run_time=1)
+        scene.play(Indicate(self.layer2, color = PURPLE), run_time=1)
         scene.wait(1.5)
         
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
@@ -162,7 +163,7 @@ class Layer2(SlideBase):
             if i!=3:
                 scene.play(Indicate(self.blobs[i], color = SECONDARY_COLOR), run_time=0.2)
         
-        self.new_subsection(scene, "blobs are cheaper", "data/sound/e5/slide1-2a.mp3")
+        scene.wait(2)
 
         scene.play(Write(self.cheap_storage))
         
