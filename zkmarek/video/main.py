@@ -206,11 +206,11 @@ EPISODE5 = [
     TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
     VectorCommitments(),
     KZGBlobs(),
-    # TitleSlide("Blobs in Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=0.7),
-    # BlobsBlockchain(),
-    # BlobsSolidity(),
-#     Subscribe("data/sound/episode1/s28.wav"),
-#     CreditsE4(),
+    TitleSlide("Blobs in Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=0.7),
+    BlobsBlockchain(),
+    BlobsSolidity(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    CreditsE4(),
 ]
 
 EPISODE6 = [

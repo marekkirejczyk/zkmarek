@@ -2,9 +2,9 @@ from manim import (FadeIn, FadeOut, MathTex, Text, LEFT, RIGHT, DOWN, UP, Write,
                    StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
 from zkmarek.crypto.field_element import FieldElement
+from zkmarek.crypto.weierstrass_curve import BN254
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -43,7 +43,10 @@ class KZGBlobs(SlideBase):
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
 
         self.chart_ec = PolynomialOnCurve(polynomial=poly).scale(0.6).shift(LEFT*2.5+DOWN)
-        self.chart = DiscreetePolynomialChart(41, poly).scale(0.6).shift(RIGHT*2.5+DOWN)
+        self.chart_field = PolynomialOnCurve(polynomial=poly, curve=BN254, dot_color = HIGHLIGHT_COLOR).scale(0.6).shift(RIGHT*2.5+DOWN)
+        
+        self.p1 = MathTex(r"{{p_1}} \approx 2^{256}", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.chart_field, RIGHT)
+        self.p2 = MathTex(r"{{p_2}} \approx 2^{381}", color = SECONDARY_COLOR, font_size = 32).next_to(self.chart_ec, LEFT)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "two prime fields", "data/sound/e5/slide4-0.mp3")
@@ -54,19 +57,19 @@ class KZGBlobs(SlideBase):
         scene.play(Write(self.number_sequence))
         scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
         scene.wait(1)
-        self.chart.gen_points()
-        scene.play(FadeIn(self.chart))
+        self.chart_field.gen_points()
+        scene.play(FadeIn(self.chart_field, self.p1))
 
         self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
         self.chart_ec.gen_points()
-        scene.play(FadeIn(self.chart_ec))
+        scene.play(FadeIn(self.chart_ec, self.p2))
         scene.wait(1)
         scene.wait(9)
-        scene.play(FadeOut(self.chart, self.chart_ec))
+        scene.play(FadeOut(self.chart_field, self.chart_ec, self.p1, self.p2))
         
         self.new_subsection(scene, "put it all together", "data/sound/e5/slide4-2.mp3")
-        scene.play(Write(self.verifier_label), Write(self.committer_label))
         scene.play(FadeIn(self.verifier, self.committer))
+        scene.play(Write(self.verifier_label), Write(self.committer_label))
         scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), run_time=0.7)
         scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))

@@ -24,7 +24,7 @@ class VectorCommitments(SlideBase):
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
-        self.number_sequence_smaller_indeces = MathTex(r"\left[ {{\ }}{{0}}, \quad {{ \}}{{1}}, {{ \quad}}{{ 2}}, \quad {{\}}{{3}} \right]", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, DOWN).scale(0.6)
+        self.number_sequence_smaller_indeces = MathTex(r" {{\ }}{{0}} \quad {{ \}}{{1}} {{ \quad}}{{ 2}} \quad {{\}}{{3}} ", color = SECONDARY_COLOR).next_to(self.number_sequence_smaller, DOWN).scale(0.6)
         for i in range(4):
             self.number_sequence_smaller_indeces[3*i+2].set_color(PURPLE)
         self.arrow_number_indeces = Arrow(self.number_sequence_smaller_indeces.get_top(), self.number_sequence_smaller.get_bottom(), tip_shape=StealthTip, 
@@ -80,9 +80,9 @@ class VectorCommitments(SlideBase):
         scene.wait(1)
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
         self.points = [self.p0, self.p1, self.p2, self.p3]
-        for i in range(4):
-            scene.play(Create(self.number_sequence_smaller_indeces[3*i+2]), Create(self.number_sequence_smaller_indeces[3*i+1]), 
-                       Indicate(self.number_sequence_smaller_indeces[3*i+2], color = PINK), Indicate(self.number_sequence_smaller_indeces[3*i+1], color = PINK), run_time=0.3)
+        scene.play(Create(self.number_sequence_smaller_indeces))
+        for i in range(11):
+            scene.play(Indicate(self.number_sequence_smaller_indeces[i], color = PINK), run_time=0.3)
             point = self.points[i] 
             point.label[1].set_color(PURPLE)
         scene.wait(0.7)
