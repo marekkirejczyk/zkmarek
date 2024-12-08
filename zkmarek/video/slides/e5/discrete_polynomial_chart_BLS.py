@@ -1,4 +1,4 @@
-from manim import Axes, Dot, VGroup, RED, TexTemplate, Tex
+from manim import Axes, Dot, VGroup, TexTemplate, Tex
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import BLS12381
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR

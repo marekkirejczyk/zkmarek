@@ -132,7 +132,7 @@ class BlobsBlockchain(SlideBase):
         
         self.new_subsection(scene, "hash of the commitment", "data/sound/e5/slide5-5.mp3")
         scene.play(Indicate(self.commitment_hash, color = PINK), Indicate(self.commitment, color = PINK))
-        scene.wait(5.5)
+        scene.wait(6.7)
         
         self.new_subsection(scene, "blockindex", "data/sound/e5/slide5-6.mp3")
         scene.wait(5)

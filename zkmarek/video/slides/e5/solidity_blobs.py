@@ -1,8 +1,8 @@
 from manim import (DOWN, FadeIn, Write, Indicate, Scene, Text, PINK, TEAL_E, RIGHT, MoveToTarget, 
                    TransformMatchingShapes, LEFT, Arrow, StealthTip, GREY_A, FadeOut, GrowArrow, UP, 
-                   ImageMobject, MAROON_C, Brace, Create, ORIGIN, GOLD_E)
+                   ImageMobject, MAROON_C, Brace, Create, ORIGIN)
 
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT2_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.utils import find_in_code
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
@@ -40,7 +40,7 @@ class BlobsSolidity(CodeSlide):
         self.blob = ImageMobject("data/images/blob.png").scale(0.5).shift(UP*0.7+LEFT*3)
         self.blobIndex_text = Text("blobIndex", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).move_to(self.blob.get_center())
         
-        self.blob_hash_text = Text("blobhash(blobIndex)", font_size= 28, font = PRIMARY_FONT).set_color(GOLD_E).next_to(self.blob, DOWN).shift(DOWN+LEFT*1)
+        self.blob_hash_text = Text("blobhash(blobIndex)", font_size= 28, font = PRIMARY_FONT).set_color(HIGHLIGHT_COLOR).next_to(self.blob, DOWN).shift(DOWN+LEFT*1)
         self.version_hash = Text("0x01 SHA 256 (KZG commitment)", font=PRIMARY_FONT, font_size=28).next_to(self.blob_hash_text, RIGHT).shift(RIGHT*2)
         self.arrow_hash_ec = Arrow(self.blob_hash_text.get_right(), self.version_hash.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY_A])
@@ -65,6 +65,7 @@ class BlobsSolidity(CodeSlide):
         self.new_subsection(scene, "pseudo code: inputs", "data/sound/e5/slide6-1.mp3")
         scene.play(Write(self.title_text))
         scene.play(FadeIn(self.code))
+        scene.wait(7.5)
         
         self.new_subsection(scene, "commitment", "data/sound/e5/slide6-1a.mp3")
         scene.wait(0.5)
@@ -110,9 +111,7 @@ class BlobsSolidity(CodeSlide):
         self.indicate_code(scene, self.code, self.success, 0, run_time=0.9)
         
         self.new_subsection(scene, "blobhash()", "data/sound/e5/slide6-4.mp3")
-        scene.wait(1)
-        self.indicate_code(scene, self.code, self.commitmentHash, 0, run_time=0.9)
-        scene.wait(4.5)
+        scene.wait(6)
         self.indicate_code(scene, self.code, self.blobhash, run_time=0.9, color = PINK)
         self.code.generate_target()
         self.code.target.scale(0.4).shift(RIGHT*3+UP)
@@ -139,7 +138,7 @@ class BlobsSolidity(CodeSlide):
         self.code.generate_target()
         self.code.target.scale(1/0.4).next_to(self.title_text, DOWN, buff = 0).shift(DOWN*0.1)
         scene.play(MoveToTarget(self.code))
-        scene.wait(1)
+        scene.wait(0.2)
         self.indicate_code(scene, self.code, self.false_if, 0, run_time=1)
         scene.wait(1.5)
         
@@ -147,9 +146,7 @@ class BlobsSolidity(CodeSlide):
         self.new_subsection(scene, "verifyBlobHash", "data/sound/e5/slide6-5.mp3")
         scene.wait(1)
         self.indicate_code(scene, self.code, self.verify_blobhash, 0, run_time=0.9, color = TEAL_E)
-        scene.wait(1)
-        self.indicate_code(scene, self.code, self.commitment_real, 5, run_time=0.9, color = PINK)
-        scene.wait(7.5)
+        scene.wait(9.5)
         scene.play(FadeOut(self.code))
         
         self.summary(scene)

@@ -6,13 +6,14 @@ from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e4.curve import Curve
 import numpy as np
+from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.slides.e4.discreete_polynomial_chart import (
-    DiscreetePolynomialChart,
-)
+from zkmarek.crypto.weierstrass_curve import BN254
 
 def poly(x):
-    return FieldElement(1, x.order) * x ** 100 + FieldElement(1, x.order) * x ** 99 + FieldElement(1, x.order) * x ** 98 + FieldElement(1, x.order) * x ** 97 + FieldElement(1, x.order) * x ** 96
+    output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
+    return output
+
 class VectorCommitments(SlideBase):
     def __init__(self) -> None:
         super().__init__(title="Layer 2")
@@ -20,7 +21,8 @@ class VectorCommitments(SlideBase):
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
-        self.chart_discrete = DiscreetePolynomialChart(101, poly, label="p", include_numbers=False).scale(0.7).shift(LEFT*3.5)
+        self.chart_discrete = PolynomialOnCurve(polynomial=poly, curve=BN254, dot_color = SECONDARY_COLOR).scale(0.7).shift(LEFT*3.5)
+
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence_smaller = MathTex(r"\left[ {{30}}, {{9}}, {{-4}}, {{15}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
@@ -84,7 +86,7 @@ class VectorCommitments(SlideBase):
         for i in range(0,4):
             point = self.points[i] 
             point.label[1].set_color(PURPLE)
-        scene.wait(2)
+        scene.wait(2.6)
         scene.play(Create(self.p0), Indicate(self.number_sequence_smaller_indeces[2], color = PINK), run_time=0.5)
         scene.play(Create(self.p1), Indicate(self.number_sequence_smaller_indeces[5], color = PINK), run_time=0.5)
         scene.play(Create(self.p2), Indicate(self.number_sequence_smaller_indeces[8], color = PINK), run_time=0.5)
@@ -95,6 +97,8 @@ class VectorCommitments(SlideBase):
             point = self.points[i] 
             point.label[3].set_color(MAROON_A)
             scene.play(Indicate(self.number_sequence_smaller[2*i+1], color = PINK), run_time=0.5)
+            
+        scene.wait(1)
             
         self.new_subsection(scene, "poly of degree 3", "data/sound/e5/slide3-1a.mp3")
         for i in range(4):
@@ -170,8 +174,8 @@ class VectorCommitments(SlideBase):
             }
         )
         new_axes4096 = Axes(
-            x_range=[-4.7, 5000, 4096],
-            y_range=[-45, 5000, 4096],
+            x_range=[-4.7, 5500, 4096],
+            y_range=[-45, 5500, 4096],
             x_length=7,
             axis_config={
                 "include_numbers": False,
@@ -203,8 +207,8 @@ class VectorCommitments(SlideBase):
 
     def change_chart_axes_to4096(self, scene, chart, include_numebrs):
         new_axes = Axes(
-            x_range=[-4.7, 5000, 4095],
-            y_range=[-45, 5000, 4095],
+            x_range=[-4.7, 5500, 4095],
+            y_range=[-45, 5500, 4095],
             x_length=7,
             axis_config={
                 "include_numbers": include_numebrs,

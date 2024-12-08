@@ -15,7 +15,7 @@ class Blobs(SlideBase):
         self.brace_blob.put_at_tip(self.blob_container)
         
         self.less_than_p = MathTex(r"{{\forall}} {{k:}} {{y_k}} < {{p}}", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
-        self.order_p = MathTex(r"p \approx 2^{256}=32 \ B", color = SECONDARY_COLOR, font_size = 40).next_to(self.less_than_p, DOWN)
+        self.order_p = MathTex(r"p \approx 2^{256}=32 \ \mathrm{B}", color = SECONDARY_COLOR, font_size = 40).next_to(self.less_than_p, DOWN)
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
         self.kilo_bytes_of_ec = MathTex(r"\approx 128 \ \mathrm{kB}", font_size = 35).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.bytes_of_ec)
@@ -64,7 +64,7 @@ class Blobs(SlideBase):
         scene.wait(3.5)
         
         self.new_subsection(scene, "make it accessable", "data/sound/e5/slide2-5a.mp3")
-        scene.wait(4.5)
+        scene.wait(5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.brace_blob, self.blob_container, self.number_sequence, self.kilo_bytes_of_ec, self.bytes_of_ec, self.title_text))

@@ -26,6 +26,16 @@ class Chart(VGroup):
                 }
             }
         )
+        for x in range(-5, 0, 5):
+            tick = self.ax.x_axis.get_tick(x, size=0.1)  
+            self.ax.add(tick) 
+            label = self.ax.x_axis.get_number_mobject(x)  
+            self.ax.add(label)
+
+        for x in range(0, 6, 1):
+            tick = self.ax.x_axis.get_tick(x, size=0.1) 
+            self.ax.add(tick) 
+            self.ax.add(label)
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
         self.graph = self.ax.plot_implicit_curve(

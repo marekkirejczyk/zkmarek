@@ -114,7 +114,7 @@ class KZGBlobs(SlideBase):
         scene.play(Indicate(self.polynomial, color = PINK), Indicate(self.number_sequence, color = PINK))
         scene.wait(2.7)
         scene.play(Indicate(self.number_sequence_kilo_bytes, color = HIGHLIGHT_COLOR))
-        scene.wait(2)
+        scene.wait(3)
         self.proof_bytes = Text("48 B", font = PRIMARY_FONT, font_size=24).set_color_by_gradient([TEAL_E, HIGHLIGHT_COLOR])
         self.commitment_bytes = Text("48 B", font = PRIMARY_FONT, font_size=24).set_color_by_gradient([HIGHLIGHT_COLOR, TEAL_E])
         self.brace_commitment = Brace(self.commitment, RIGHT).set_color_by_gradient([HIGHLIGHT_COLOR, TEAL_E])
@@ -124,7 +124,7 @@ class KZGBlobs(SlideBase):
         self.sim_commitment = MathTex(r"\sim").set_color_by_gradient([HIGHLIGHT_COLOR, TEAL_E]).next_to(self.commitment_bytes, LEFT, buff = 0).scale(0.5).shift(RIGHT*0.05)
         self.sim_proof = MathTex(r"\sim").set_color_by_gradient([TEAL_E, HIGHLIGHT_COLOR]).next_to(self.proof_bytes, LEFT, buff = 0).scale(0.5).shift(RIGHT*0.05)
         scene.play(FadeIn(self.brace_commitment, self.commitment_bytes, self.sim_commitment))
-        scene.wait(2.8)
+        scene.wait(3.2)
         scene.play(FadeIn(self.brace_proof, self.proof_bytes, self.sim_proof))
         scene.wait(3.8) 
         
