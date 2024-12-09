@@ -14,7 +14,7 @@ class Blobs(SlideBase):
         self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.blob_container)
         
-        self.less_than_p = MathTex(r"{{\forall}} {{k:}} {{y_k}} < {{p}}", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
+        self.less_than_p = MathTex(r"{{\forall}} {{k,}} \; {{y_k}} < {{p}}", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
         self.order_p = MathTex(r"p \approx 2^{256}=32 \ \mathrm{B}", color = SECONDARY_COLOR, font_size = 40).next_to(self.less_than_p, DOWN)
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
         self.kilo_bytes_of_ec = MathTex(r"\approx 128 \ \mathrm{kB}", font_size = 35).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])

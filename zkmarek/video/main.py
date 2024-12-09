@@ -196,21 +196,21 @@ EPISODE4 = [
 ]
 
 EPISODE5 = [
-    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
-    Sponsored(),
-    Episode4Recap(),
-    TitleSlide("Layer 2", subtitle="Rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=3),
-    Layer2(),
-    TitleSlide("Blobs", subtitle="Binary Large Objects", sound="data/sound/e5/slide1-3.mp3", wait_time=0.5),
-    Blobs(),
-    TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
+    # Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
+    # Sponsored(),
+    # Episode4Recap(),
+    # TitleSlide("Layer 2", subtitle="Rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=3),
+    # Layer2(),
+    # TitleSlide("Blobs", subtitle="Binary Large Objects", sound="data/sound/e5/slide1-3.mp3", wait_time=0.5),
+    # Blobs(),
+    # TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
     VectorCommitments(),
-    KZGBlobs(),
-    TitleSlide("Blobs in Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=0.7),
-    BlobsBlockchain(),
-    BlobsSolidity(),
-    Subscribe("data/sound/episode1/s28.wav"),
-    CreditsE4(),
+    # KZGBlobs(),
+    # TitleSlide("Blobs in Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=0.7),
+    # BlobsBlockchain(),
+    # BlobsSolidity(),
+    # Subscribe("data/sound/episode1/s28.wav"),
+    # CreditsE4(),
 ]
 
 EPISODE6 = [

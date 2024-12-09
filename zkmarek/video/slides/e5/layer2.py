@@ -138,7 +138,7 @@ class Layer2(SlideBase):
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         scene.wait(1.5)
-        scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions), run_time=1)
+        scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE), run_time=1)
         scene.wait(1.5)
         
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")

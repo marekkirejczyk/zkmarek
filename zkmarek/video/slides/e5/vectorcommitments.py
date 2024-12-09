@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MoveToTarget, MAROON_A, PURPLE, PINK, TransformMatchingShapes)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -20,8 +20,12 @@ class VectorCommitments(SlideBase):
         
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
-        self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
+        self.chart = Chart(include_details=False).scale(0.7).shift(LEFT*3.5)
         self.chart_discrete = PolynomialOnCurve(polynomial=poly, curve=BN254, dot_color = SECONDARY_COLOR).scale(0.7).shift(LEFT*3.5)
+        
+        self.labels = MathTex(r"{{0}} \quad \quad \ {{1}} \quad \quad {{\ \}} \quad \quad {{3}}", color = PRIMARY_COLOR, font_size = 24).next_to(self.chart.ax[0], DOWN, buff = 0).shift(RIGHT*0.15)
+        self.labels[0].shift(LEFT*0.1)
+        self.labels[2].shift(LEFT*0.02)
 
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
         self.number_sequence100 = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{100}}} \right]", color = SECONDARY_COLOR).shift(RIGHT*3)
@@ -74,7 +78,7 @@ class VectorCommitments(SlideBase):
         scene.play(Write(self.title_label), Write(self.number_sequence), run_time=0.7)
         for i in range(5):
             scene.play(Indicate(self.number_sequence[2*i+1], color = HIGHLIGHT2_COLOR, scale_factor=1.2), run_time=0.25)
-        scene.play(Create(self.chart.ax), run_time=0.8)
+        scene.play(Create(self.chart.ax), FadeIn(self.labels), run_time=0.8)
         scene.play(Create(self.chart.graph), GrowArrow(self.arrow_number_chart), Create(self.question_mark))
         
         
@@ -121,7 +125,7 @@ class VectorCommitments(SlideBase):
         scene.play(FadeOut(self.lagrange_interpolation))
         
         self.new_subsection(scene, "P(0), P(1)", "data/sound/e5/slide3-1c.mp3")
-        scene.wait(4)
+        scene.wait(4.6)
         scene.play(TransformMatchingShapes(self.p0.copy(), self.poly_number0), Indicate(self.number_sequence_smaller[1], color = PINK))
         scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.p1.copy(), self.poly_number1), Indicate(self.number_sequence_smaller[3], color = PINK))
@@ -190,19 +194,20 @@ class VectorCommitments(SlideBase):
         new_axes.scale(0.7).shift(LEFT*3.5)
         new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3)
         new_axes4096[0].shift(UP)
-        chart.labels[0].generate_target()
-        chart.labels[0].target.next_to(new_axes4096[0], UP+RIGHT, buff = 0.1)
-        chart.labels[1].generate_target()
-        chart.labels[1].target.next_to(new_axes4096[1], UP+RIGHT, buff = 0.1)
+        # chart.labels[0].generate_target()
+        # chart.labels[0].target.next_to(new_axes4096[0], UP+RIGHT, buff = 0.1)
+        # chart.labels[1].generate_target()
+        # chart.labels[1].target.next_to(new_axes4096[1], UP+RIGHT, buff = 0.1)
         
         scene.play(
-            MoveToTarget(chart.labels[0]),
-            MoveToTarget(chart.labels[1]),
+            # MoveToTarget(chart.labels[0]),
+            # MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
+            FadeOut(self.labels),
             run_time=2)
 
     def change_chart_axes_to4096(self, scene, chart, include_numebrs):
@@ -230,4 +235,4 @@ class VectorCommitments(SlideBase):
 
     def transforming_poly_into_field(self, scene):
             self.chart_discrete.gen_points()
-            scene.play(FadeOut(self.chart.ax, self.chart.graph, self.chart.labels), FadeIn(self.chart_discrete))
+            scene.play(FadeOut(self.chart.ax, self.chart.graph), FadeIn(self.chart_discrete))
