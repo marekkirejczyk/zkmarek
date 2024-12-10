@@ -16,7 +16,7 @@ class DotOnCurve(Dot):
         self.coords = coords
         
 class PolynomialOnCurve(VGroup):
-    def __init__(self, curve=BLS12381, polynomial=None, dot_color=SECONDARY_COLOR):
+    def __init__(self, curve=BLS12381, polynomial=None, dot_color=SECONDARY_COLOR, include_numbers = True, label = None):
         """
         Initialize the PolynomialOnCurve visualization.
         :param curve: WeierstrassCurve instance (e.g., BLS12381)
@@ -27,6 +27,7 @@ class PolynomialOnCurve(VGroup):
         self.curve = curve
         self.polynomial = polynomial
         self.dots = []
+        self.label = curve.p if None else label
         self.dot_color = dot_color
         self.dots = []
         if self.curve.p>10:
@@ -34,24 +35,24 @@ class PolynomialOnCurve(VGroup):
                 x_range=[0, curve.p, 10],
                 y_range=[0, curve.p, 10],
                 x_length=7,
-                axis_config={"include_numbers": True},
+                axis_config={"include_numbers": include_numbers},
             )
         else:
             self.ax = Axes(
                 x_range=[0, curve.p, 1],
                 y_range=[0, curve.p, 1],
                 x_length=7,
-                axis_config={"include_numbers": True},
+                axis_config={"include_numbers": include_numbers},
             )
         self.ax.color = PRIMARY_COLOR
         self.add(self.ax)
 
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
-        field_label = r"$\mathbb{F}_{" + str(curve.p) + "}$"
+        field_label = r"$\mathbb{F}_{" + str(self.label) + "}$"
         self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template, font_size=32, color=PRIMARY_COLOR),
-            Tex(field_label, tex_template=template, font_size=32, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=36, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=36, color=PRIMARY_COLOR),
         )
         self.add(self.labels)
         self.gen_points()

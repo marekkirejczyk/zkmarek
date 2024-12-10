@@ -14,8 +14,8 @@ class Chart(VGroup):
         self.include_details = include_details
         step = 10 if include_details else 10
         self.ax = Axes(
-            x_range=[-2.5, 5, 1],
-            y_range=[-5.5, 42, step],
+            x_range=[-2.5, 5, 6],
+            y_range=[-5.5, 37, step],
             x_length=7,
             axis_config={
                 "include_numbers": include_details,

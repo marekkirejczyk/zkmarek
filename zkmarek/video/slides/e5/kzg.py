@@ -1,10 +1,9 @@
 from manim import (FadeIn, FadeOut, MathTex, Text, LEFT, RIGHT, DOWN, UP, Write, PURPLE, BLUE_E, Group, TEAL_E, Brace, MAROON_E, Arrow, 
-                   StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget, CurvedArrow, PI, GREEN_E)
+                   StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget, CurvedArrow, GREEN_E)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.crypto.weierstrass_curve import BN254
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -43,21 +42,17 @@ class KZGBlobs(SlideBase):
         self.arrow_poly_proof = Arrow(self.polynomial.get_bottom(), self.proof.get_top(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
 
-        self.chart_ec = PolynomialOnCurve(polynomial=poly, dot_color=HIGHLIGHT_COLOR).scale(0.6).shift(LEFT*2.5+DOWN)
-        self.chart_field = PolynomialOnCurve(polynomial=poly, curve=BN254, dot_color = SECONDARY_COLOR).scale(0.6).shift(RIGHT*2.5+DOWN)
-        
-        self.p1 = MathTex(r"{{p_1}} \approx 2^{254}", color = SECONDARY_COLOR, font_size = 32).next_to(self.chart_field, RIGHT)
-        self.p2 = MathTex(r"{{p_2}} \approx 2^{381}", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.chart_ec, LEFT)
-        self.bytes_p1 = MathTex(r"\sim {{32}} \ \mathrm{B}", color = SECONDARY_COLOR, font_size = 32).next_to(self.p1[1], DOWN)
+        self.chart_ec = PolynomialOnCurve(polynomial=poly, dot_color=SECONDARY_COLOR, label = "p", include_numbers=False).scale(0.7).shift(DOWN)
+
+        self.p2 = MathTex(r"{{p}} \approx 2^{381}", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.chart_ec, LEFT)
         self.bytes_p2 = MathTex(r"\sim {{48}} \ \mathrm{B}", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.p2[1], DOWN)
         
-        self.curve_field = Text("BN-254", color = SECONDARY_COLOR, font =  PRIMARY_FONT, font_size=24).next_to(self.chart_field, RIGHT+UP)
-        self.curve_ec = Text("BLS12-381", color = HIGHLIGHT_COLOR, font =  PRIMARY_FONT, font_size=24).next_to(self.chart_ec, LEFT+UP)
-        self.arrow_curve_to_chart_ec = CurvedArrow(self.curve_ec.get_right(), self.chart_ec.get_top()+UP*0.7+LEFT, tip_shape=StealthTip, 
-                               stroke_width=2).rotate(axis=[1,0,0], angle=PI).set_color_by_gradient([GREEN_E, HIGHLIGHT_COLOR]).scale(0.6)
-        self.arrow_curve_to_chart_field = CurvedArrow(self.curve_field.get_left()+RIGHT*0.2, self.chart_field.get_top()+RIGHT*0.75, tip_shape=StealthTip, 
-                               stroke_width=2).set_color_by_gradient([PINK, SECONDARY_COLOR, MAROON_E, PURPLE]).scale(0.6)
-        
+        self.bytes_of_el = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
+        self.bytes_of_el.next_to(self.number_sequence[3], UP)
+        self.curve_ec = Text("BLS12-381", color = HIGHLIGHT_COLOR, font =  PRIMARY_FONT, font_size=24).next_to(self.chart_ec, RIGHT).shift(RIGHT)
+        self.arrow_curve_to_chart_ec = CurvedArrow(self.curve_ec.get_left(), self.chart_ec.get_right(), tip_shape=StealthTip, 
+                               stroke_width=2).set_color_by_gradient([GREEN_E, HIGHLIGHT_COLOR]).scale(0.6)
+
     def animate_in(self, scene):
         self.new_subsection(scene, "two prime fields", "data/sound/e5/slide4-0.mp3")
         scene.play(Write(self.title_text), run_time=0.7)
@@ -65,28 +60,31 @@ class KZGBlobs(SlideBase):
         
         self.new_subsection(scene, "y_k belong to p1", "data/sound/e5/slide4-0a.mp3")
         scene.play(Write(self.number_sequence))
-        scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes, self.sim))
-        scene.wait(1)
-        self.chart_field.gen_points()
-        scene.play(FadeIn(self.chart_field, self.p1))
-        scene.play(Indicate(self.p1, color = PINK))
-        scene.play(FadeIn(self.curve_field), Write(self.arrow_curve_to_chart_field))
-        scene.wait(1)
-        scene.play(FadeIn(self.bytes_p1))
-        scene.wait(1)
-        scene.play(Indicate(self.number_sequence_kilo_bytes, color = PINK))
-
-        self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
         self.chart_ec.gen_points()
-        scene.play(FadeIn(self.chart_ec, self.p2))
-        scene.wait(3)
+        scene.play(FadeIn(self.chart_ec))
         scene.play(FadeIn(self.curve_ec), Write(self.arrow_curve_to_chart_ec))
-        scene.wait(3)
+        scene.play(Write(self.p2))
         scene.play(Indicate(self.p2, color = PINK))
+        scene.wait(1)
+        scene.play(FadeIn(self.brace_number, self.number_sequence_kilo_bytes))
+
+
+        self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-0b.mp3")
+        scene.wait(3)
+        self.number_sequence[3].set_color(HIGHLIGHT_COLOR)
+        scene.play(FadeIn(self.bytes_of_el))
+        scene.wait(2.5)
+        scene.play(Indicate(self.p2, color = PURPLE))
+    
+        self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
+        scene.wait(2)
+        scene.play(Indicate(self.curve_ec, color = PURPLE))
+        scene.wait(1)
         scene.play(FadeIn(self.bytes_p2))
-        scene.wait(3.5)
-        scene.play(FadeOut(self.chart_field, self.chart_ec, self.p1, self.p2, self.arrow_curve_to_chart_ec, self.arrow_curve_to_chart_field,
-                           self.curve_ec, self.curve_field, self.bytes_p1, self.bytes_p2))
+        scene.wait(3)
+        scene.play(FadeOut(self.bytes_of_el, self.bytes_p2, self.curve_ec, self.chart_ec, self.p2, self.arrow_curve_to_chart_ec))
+        self.number_sequence[3].set_color(SECONDARY_COLOR)
+        
         
         self.new_subsection(scene, "put it all together", "data/sound/e5/slide4-2.mp3")
         scene.play(FadeIn(self.verifier, self.committer))

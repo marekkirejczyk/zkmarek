@@ -8,7 +8,7 @@ from zkmarek.video.slides.e4.curve import Curve
 import numpy as np
 from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.crypto.weierstrass_curve import BN254
+from zkmarek.crypto.weierstrass_curve import BLS12381
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -20,10 +20,10 @@ class VectorCommitments(SlideBase):
         
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
-        self.chart = Chart(include_details=False).scale(0.7).shift(LEFT*3.5)
-        self.chart_discrete = PolynomialOnCurve(polynomial=poly, curve=BN254, dot_color = SECONDARY_COLOR).scale(0.7).shift(LEFT*3.5)
+        self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
+        self.chart_discrete = PolynomialOnCurve(polynomial=poly, curve=BLS12381, dot_color = SECONDARY_COLOR, label="p", include_numbers=False).scale(0.7).shift(LEFT*3.5)
         
-        self.labels = MathTex(r"{{0}} \quad \quad \ {{1}} \quad \quad {{\ \}} \quad \quad {{3}}", color = PRIMARY_COLOR, font_size = 24).next_to(self.chart.ax[0], DOWN, buff = 0).shift(RIGHT*0.15)
+        self.labels = MathTex(r"{{0}} \quad \quad \ {{1}} \quad \quad {{\ 2 \}} \quad \quad {{3}}", color = PRIMARY_COLOR, font_size = 24).next_to(self.chart.ax[0], DOWN, buff = 0).shift(RIGHT*0.15)
         self.labels[0].shift(LEFT*0.1)
         self.labels[2].shift(LEFT*0.02)
 
@@ -87,6 +87,7 @@ class VectorCommitments(SlideBase):
         scene.play(FadeOut(self.number_sequence), FadeIn(self.number_sequence_smaller), FadeOut(self.chart.graph, self.question_mark))
         self.points = [self.p0, self.p1, self.p2, self.p3]
         scene.play(Create(self.number_sequence_smaller_indeces))
+        scene.play(Indicate(self.number_sequence_smaller_indeces, color = PINK))
         for i in range(0,4):
             point = self.points[i] 
             point.label[1].set_color(PURPLE)
