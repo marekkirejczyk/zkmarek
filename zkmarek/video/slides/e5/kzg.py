@@ -104,7 +104,7 @@ class KZGBlobs(SlideBase):
         self.number_sequence[3].set_color(GREEN_E)
         
         scene.wait(3)
-        scene.play(FadeOut(line_x_k, line_y_k, self.bytes_of_el, self.label_y_k, self.label_x_k))
+        scene.play(FadeOut(line_x_k, line_y_k, self.bytes_of_el))
         self.number_sequence[3].set_color(SECONDARY_COLOR)
         
         self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
