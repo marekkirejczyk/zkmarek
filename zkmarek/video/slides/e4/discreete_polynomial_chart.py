@@ -1,7 +1,7 @@
-from manim import Axes, Dot, GrowFromPoint, Line, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
+from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
 
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR
+from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 
 
 class DiscreetePolynomialChart(VGroup):
@@ -9,12 +9,13 @@ class DiscreetePolynomialChart(VGroup):
     ax: Axes
     p: int
 
-    def __init__(self, p, f, label = None, include_numbers = True):
+    def __init__(self, p, f, label = None, include_numbers = True, dot_color = HIGHLIGHT_COLOR):
         super().__init__()
         self.f = f
         self.p = p
         self.label = label if label is not None else p
         self.dots = []
+        self.dot_color = dot_color
         if self.p>10:
             self.ax = Axes(
                 x_range=[0, p, 10],
@@ -36,8 +37,8 @@ class DiscreetePolynomialChart(VGroup):
         template.add_to_preamble(r"\usepackage{amsfonts}")
         field_label = r"$\mathbb{F}_{" + str(self.label) + "}$"
         self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template, font_size=26, color=PRIMARY_COLOR),
-            Tex(field_label, tex_template=template, font_size=26, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
         )
         self.add(self.labels)
 
@@ -45,7 +46,7 @@ class DiscreetePolynomialChart(VGroup):
         for i in range(0, self.p):
             x = FieldElement(i, self.p)
             y = self.f(x)
-            dot = Dot(self.ax.coords_to_point(x.value, y.value), color=HIGHLIGHT_COLOR)
+            dot = Dot(self.ax.coords_to_point(x.value, y.value), color=self.dot_color)
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
@@ -88,14 +89,14 @@ class DiscreetePolynomialChart(VGroup):
     def animate_create_vertical_line(self, scene, x, y_top):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, y_top)
-        line = Line(s, e, color=SECONDARY_COLOR, z_index=0)
+        line = DashedLine(s, e, color=HIGHLIGHT2_COLOR, z_index=0)
         scene.play(GrowFromPoint(line, point=s))
         return line
 
     def animate_create_horizontal_line(self, scene, y, x_left, x_right):
         s = self.ax.c2p(x_left, y)
         e = self.ax.c2p(x_right, y)
-        line = DashedLine(s, e, color=SECONDARY_COLOR, z_index=0)
+        line = DashedLine(s, e, color=HIGHLIGHT2_COLOR, z_index=0)
         scene.play(GrowFromPoint(line, point=s))
         scene.wait(1)
         return line

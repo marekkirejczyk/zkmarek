@@ -1,4 +1,4 @@
-from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex,
+from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex, TransformMatchingTex,
 Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -6,9 +6,8 @@ from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e4.curve import Curve
 import numpy as np
-from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
+from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
-from zkmarek.crypto.weierstrass_curve import BLS12381
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -21,7 +20,7 @@ class VectorCommitments(SlideBase):
     def construct(self):
         self.title_label = Text("Vector commitments", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.chart = Chart(include_details=True).scale(0.7).shift(LEFT*3.5)
-        self.chart_discrete = PolynomialOnCurve(polynomial=poly, curve=BLS12381, dot_color = SECONDARY_COLOR, label="p", include_numbers=False).scale(0.7).shift(LEFT*3.5)
+        self.chart_discrete = DiscreetePolynomialChart(f=poly, p=41, dot_color = SECONDARY_COLOR, label="r", include_numbers=False).scale(0.7).shift(LEFT*3.5)
         
         self.labels = MathTex(r"{{0}} \quad \quad \ {{1}} \quad \quad {{\ 2 \}} \quad \quad {{3}}", color = PRIMARY_COLOR, font_size = 24).next_to(self.chart.ax[0], DOWN, buff = 0).shift(RIGHT*0.15)
         self.labels[0].shift(LEFT*0.1)
@@ -62,6 +61,7 @@ class VectorCommitments(SlideBase):
         self.question_mark = Text("?", font = PRIMARY_FONT).set_color_by_gradient([WHITE, HIGHLIGHT2_COLOR]).next_to(self.arrow_number_chart, UP, buff = 0.1)
         self.polynomial_eqn = MathTex(r"P(x) = {{a_3}}\cdot {{x^3}} +{{a_2}} \cdot {{x^2}} + {{a_{1} }}\cdot {{x }} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial_eqn_4096 = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
+        self.polynomial_eqn_4096_sum = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}} = {{\sum_{k=0}^{4095}}} {{a_k}} {{x_k}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial_eqn_100 = MathTex(r"P(x) = {{a_{100}}}\cdot {{x^{100}}} + {{a_{99}}} \cdot {{x^{99}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24, color = PRIMARY_COLOR).next_to(self.chart, RIGHT).shift(DOWN)
@@ -143,8 +143,9 @@ class VectorCommitments(SlideBase):
         scene.wait(5.5)
 
         self.change_chart_axes_to4096(scene, self.chart, True)
+        scene.play(TransformMatchingTex(self.polynomial_eqn_4096, self.polynomial_eqn_4096_sum))
         scene.wait(1.5)
-        scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096[1], color = PURPLE), Indicate(self.polynomial_eqn_4096[3], color = PURPLE))
+        scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096_sum[1], color = PURPLE), Indicate(self.polynomial_eqn_4096_sum[3], color = PURPLE))
         
         self.new_subsection(scene, "polynomial - not on real numbers, but on prime field", "data/sound/e5/slide3-2a.mp3")
         scene.wait(2.5)
@@ -160,7 +161,7 @@ class VectorCommitments(SlideBase):
         scene.wait(5)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.chart_discrete, self.number_sequence, self.title_label, self.number_sequence, self.polynomial_eqn_4096, self.arrow_number_chart))
+        scene.play(FadeOut(self.chart_discrete, self.number_sequence, self.title_label, self.number_sequence, self.polynomial_eqn_4096_sum, self.arrow_number_chart))
 
         
 
