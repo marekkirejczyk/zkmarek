@@ -111,7 +111,7 @@ class KZGBlobs(SlideBase):
         scene.wait(1.5)
         self.chart_scalar.indicate_xaxis_label(scene, self.label_y_k)
         
-        scene.wait(3)
+        scene.wait(4.2)
         scene.play(FadeOut(line_x_k, line_y_k, self.bytes_of_el))
         self.number_sequence[3].set_color(SECONDARY_COLOR)
         
@@ -120,26 +120,28 @@ class KZGBlobs(SlideBase):
         scene.play(Indicate(self.chart_ec, scale_factor=1.05, color = PURPLE))
         scene.wait(1)
         scene.play(FadeIn(self.bytes_p2))
-        scene.wait(3.7)
+        scene.wait(5.5)
         
         self.new_subsection(scene, "distinguish - elliptic curve and polynomial", "data/sound/e5/slide4-1a.mp3")
         scene.play(FadeOut(self.base_field, self.scalar_field, self.arrow_base_field, self.arrow_scalar_field, self.curve_ec))
-        scene.wait(1.5)
+        scene.wait(1)
         scene.play(FadeOut(self.chart_ec), FadeIn(self.chart_ec_continuous))
         self.change_chart_axes(scene)
         
         self.new_subsection(scene, "put it all together", "data/sound/e5/slide4-2.mp3")
         scene.play(FadeIn(self.verifier, self.committer))
         scene.play(Write(self.verifier_label), Write(self.committer_label))
+        scene.play(Indicate(self.committer, color = PURPLE, scale_factor=1.05))
+        scene.play(Indicate(self.number_sequence, color = PURPLE, scale_factor=1.05))
         scene.play(Write(self.polynomial), GrowArrow(self.arrow_opening_committer), run_time=0.7)
         scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_commitment), Write(self.commitment))
-        scene.wait(2.1)
+        scene.wait(4)
         
         self.new_subsection(scene, "proof", "data/sound/e5/slide4-2a.mp3")
-        scene.wait(1.8)
+        scene.wait(4.5)
         scene.play(Write(self.opening))
-        scene.wait(2.5)
+        scene.wait(3)
         scene.play(GrowArrow(self.arrow_poly_proof))
         scene.play(Write(self.proof))
         scene.wait(2.5)
@@ -196,19 +198,18 @@ class KZGBlobs(SlideBase):
                 color=SECONDARY_COLOR
             )
         scene.play(
-            FadeOut(self.chart_scalar.ax, self.chart_scalar.labels), FadeIn(new_axes),  
-            FadeOut(self.chart_scalar), FadeIn(self.chart_polynomial_continuous.graph4), 
+            FadeOut(self.chart_scalar), FadeIn(new_axes), FadeIn(self.chart_polynomial_continuous.graph4), 
             run_time=2)
         
-        scene.wait(1)
+        scene.wait(0.2)
         scene.play(Indicate(self.formula_bls, color = PURPLE), run_time=1)
-        scene.play(Indicate(self.formula_polynomial, color = PURPLE), run_time=1)
         scene.wait(1)
-        scene.play(Indicate(self.bytes_p2))
+        scene.play(Indicate(self.formula_polynomial, color = PURPLE), run_time=1)
         scene.wait(1.5)
-        scene.play(Indicate(self.number_sequence))
+        scene.play(Indicate(self.number_sequence, color = PURPLE))
         scene.wait(2)
         
         scene.play(FadeOut(new_axes, self.bytes_p2, self.chart_ec_continuous, self.p, self.r,
-                           self.formula_bls, self.formula_polynomial))
+                           self.formula_bls, self.formula_polynomial,
+                           self.chart_polynomial_continuous.graph4))
         

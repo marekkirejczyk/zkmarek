@@ -1,4 +1,4 @@
-from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ImageMobject, Indicate, Brace, Write, MoveToTarget, PURPLE_C, FadeIn, TEAL_C
+from manim import FadeOut, Text, RIGHT, DOWN, UP, Create, MathTex, ImageMobject, Indicate, Brace, Write, MoveToTarget, PURPLE_C, FadeIn, TEAL_C, LEFT
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 
@@ -19,7 +19,8 @@ class Blobs(SlideBase):
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
         self.kilo_bytes_of_ec_eqn = Text(" 32 B x 4096", font_size = 24, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
         self.kilo_bytes_of_ec_eqn.shift(UP*0.85)
-        self.kilo_bytes_of_ec = Text("= 128 kB", font_size = 28, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec_eqn, DOWN, buff = 0.1).shift(UP*0.3)
+        self.approx = MathTex(r"\approx", font_size=34).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec_eqn, LEFT, buff = 0.1)
+        self.kilo_bytes_of_ec = Text("= 128 kB", font_size = 28, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec_eqn, DOWN, buff = 0.5).shift(UP*0.3)
         self.brace_blob.put_at_tip(self.bytes_of_ec)
         
         
@@ -54,11 +55,11 @@ class Blobs(SlideBase):
         self.blob_container.target.to_edge(DOWN).shift(UP)
         scene.play(MoveToTarget(self.blob_container))
         scene.wait(2)
-        scene.play(Create(self.kilo_bytes_of_ec), Create(self.kilo_bytes_of_ec_eqn))
+        scene.play(Create(self.kilo_bytes_of_ec), Create(self.kilo_bytes_of_ec_eqn), Create(self.approx))
         scene.wait(2)
         
         self.new_subsection(scene, "temporary space", "data/sound/e5/slide2-5.mp3")
-        scene.play(FadeOut(self.kilo_bytes_of_ec_eqn))
+        scene.play(FadeOut(self.kilo_bytes_of_ec_eqn, self.approx))
         scene.wait(0.5)
         scene.play(Indicate(self.kilo_bytes_of_ec, color = PURPLE_C))
         scene.wait(3.5)

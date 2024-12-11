@@ -1,5 +1,5 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, 
-Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE, PINK)
+                   Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE, PINK)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
@@ -19,8 +19,8 @@ class Episode4Recap(SlideBase):
         self.committer_label = Text("Committer", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.7)
         self.verifier_label = Text("Verifier", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.7)
         
-        self.committer.shift(LEFT*4+UP*1.5)
-        self.verifier.shift(RIGHT*4+UP*1.5)
+        self.committer.shift(LEFT*2.5+UP*1.5)
+        self.verifier.shift(RIGHT*2.5+UP*1.5)
         self.committer_label.next_to(self.committer, DOWN)
         self.verifier_label.next_to(self.verifier, DOWN)
         self.chart = DiscreetePolynomialChart(41, poly)
@@ -87,11 +87,11 @@ class Episode4Recap(SlideBase):
 
         self.opening.next_to(self.verifier_label, DOWN) 
         self.proof.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
-        scene.play(FadeIn(self.opening, self.proof))
         self.commitment.generate_target()
         self.commitment.target.next_to(self.proof, DOWN)
         
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), MoveToTarget(self.commitment))
+        scene.play(FadeIn(self.opening, self.proof))
         scene.play(Indicate(self.commitment, color = PINK))
         scene.wait(0.7)
         scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
