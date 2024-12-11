@@ -1,4 +1,4 @@
-from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, RoundedRectangle, 
+from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Polygon, MathTex, 
 Tex, Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE, PINK)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -61,45 +61,13 @@ class Episode4Recap(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "In previous episode...", "data/sound/e5/slide0-1.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
-        scene.play(FadeIn(self.committer, self.committer_label), FadeIn(self.verifier, self.verifier_label), run_time=0.7)
+        scene.play(FadeIn(self.committer, self.committer_label), FadeIn(self.verifier, self.verifier_label), run_time=1.7)
         self.chart.gen_points()
         scene.play(Create(self.chart))
         self.dots = VGroup(*self.chart.dots)
         
-        speech_text_verifier = Tex(r"$p(x_0) = \ ?$", font_size=32, color = SECONDARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, 
-                                           color = SECONDARY_COLOR).next_to(self.verifier, DOWN+LEFT, buff = -1).shift(1.3*LEFT+DOWN*0.5)
-        bubble_verifier.shift(UP) 
-        speech_text_verifier.move_to(bubble_verifier.get_center())
-        tail_verifier = Polygon(
-            [0, 0, 0], 
-            [0, -0.9, 0], 
-            [0.78, 0.1, 0], 
-            color=SECONDARY_COLOR,
-            fill_opacity=0.4
-        ).next_to(bubble_verifier, RIGHT, buff=-0.8).scale(0.4).shift(0.58*RIGHT)
-
-        scene.play(Create(bubble_verifier), Create(tail_verifier), Create(speech_text_verifier))
-        bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 0.7, 
-                                          height=self.opening.height + 1.5, 
-                                          color = PRIMARY_COLOR).next_to(self.committer, RIGHT, buff = -0.3).shift(RIGHT*0.7+DOWN*0.5)
-        tail = Polygon(
-            [0, 0.03, 0], 
-            [-0.9, 0.2, 0], 
-            [0, -1, 0], 
-            color=PRIMARY_COLOR,
-            fill_opacity=0.4
-        ).next_to(bubble_opening, LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.54)
-
-        self.opening.move_to(bubble_opening.get_center())
-        self.opening.shift(UP*0.3)
-        self.commitment.next_to(self.opening, UP)
-        self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        scene.play(Create(bubble_opening), Create(tail), FadeIn(self.opening, self.proof))
-        
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2.mp3")
-        scene.play(FadeOut(bubble_verifier, tail_verifier, bubble_verifier, speech_text_verifier))
-        scene.play(FadeOut(bubble_opening, tail))
+        scene.wait(1.5)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR))
         
         self.new_subsection(scene, "key feature", "data/sound/e5/slide0-2a.mp3")
@@ -117,11 +85,9 @@ class Episode4Recap(SlideBase):
 
         scene.play(MoveToTarget(commitment_sent), run_time=0.7)
 
-        self.opening.generate_target()
-        self.opening.target.next_to(self.verifier_label, DOWN) 
-        self.proof.generate_target()
-        self.proof.target.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
-        scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof))
+        self.opening.next_to(self.verifier_label, DOWN) 
+        self.proof.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
+        scene.play(FadeIn(self.opening, self.proof))
         self.commitment.generate_target()
         self.commitment.target.next_to(self.proof, DOWN)
         

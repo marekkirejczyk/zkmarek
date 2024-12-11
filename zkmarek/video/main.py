@@ -74,6 +74,7 @@ from zkmarek.video.slides.e5.vectorcommitments import VectorCommitments
 from zkmarek.video.slides.e5.kzg import KZGBlobs
 from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
 from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
+from zkmarek.video.slides.e5.credits import Credits as CreditsE5
 
 config.width = 16
 config.height = 9
@@ -210,7 +211,7 @@ EPISODE5 = [
     BlobsBlockchain(),
     BlobsSolidity(),
     Subscribe("data/sound/episode1/s28.wav"),
-    CreditsE4(),
+    CreditsE5(),
 ]
 
 EPISODE6 = [

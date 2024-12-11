@@ -125,20 +125,18 @@ class Layer2(SlideBase):
         scene.play(FadeIn(self.title_text), run_time=0.8)
 
         scene.play(Create(self.layer2_group), run_time=0.7)
-        scene.play(FadeIn(self.arrow_layer2_group))
+        scene.play(FadeIn(self.arrow_layer2_group), run_time=0.7)
         scene.play(Create(self.layer2), GrowArrow(self.arrow_layer2), run_time=0.7)
-        scene.wait(1)
         scene.play(Write(self.brace_tx), FadeIn(self.tx_group))
         scene.play(Create(self.transactions), GrowArrow(self.arrow_txs))
-        scene.play(ApplyWave(self.tx_group))
-        scene.wait(0.4)
+        scene.wait(1.4)
         
         self.new_subsection(scene, "L2 rollups correctness", "data/sound/e5/slide1-1.mp3")
         scene.wait(2)
         scene.play(FadeIn(self.ethereum4, self.ethereum3, self.ethereum2,self.ethereum), FadeIn(self.arrow_layer1_group), 
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         scene.wait(1.5)
-        scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE), run_time=1)
+        scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE), ApplyWave(self.tx_group), run_time=1)
         scene.wait(1.5)
         
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")

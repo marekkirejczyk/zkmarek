@@ -1,11 +1,14 @@
 from manim import (FadeIn, FadeOut, MathTex, Text, LEFT, RIGHT, DOWN, UP, Write, PURPLE, BLUE_E, Group, TEAL_E, Brace, MAROON_E, Arrow, 
-                   StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget, CurvedArrow, GREEN_E, AddTextLetterByLetter, ApplyWave)
+                   StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget, CurvedArrow, GREEN_E, AddTextLetterByLetter, ApplyWave, Axes)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.crypto.weierstrass_curve import BLS12381_137
+from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
+from zkmarek.video.slides.e4.chart import Chart
+import numpy as np
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -62,7 +65,10 @@ class KZGBlobs(SlideBase):
         self.arrow_scalar_field = CurvedArrow(self.scalar_field.get_left()+DOWN*0.05, self.chart_scalar.get_top()+RIGHT*0.3, tip_shape=StealthTip, 
                                stroke_width=2).set_color_by_gradient([SECONDARY_COLOR, PURPLE]).scale(0.6)
         self.formula_bls = MathTex(r"{{y^2}} = {{x^3}} + {{4}}", color = HIGHLIGHT_COLOR, font_size=34).next_to(self.chart_ec, DOWN).shift(DOWN*0.3)
-        self.formula_polynomial = MathTex(r"{{P(x)}} = \sum_{k=0}^{4095} {{a_k}}  {{x_k}}", color = SECONDARY_COLOR, font_size=32).next_to(self.chart_scalar, DOWN)
+        self.formula_polynomial = MathTex(r"{{P(x)}} = \sum_{k=0}^{4095} {{a_k}}  {{x^k}}", color = SECONDARY_COLOR, font_size=32).next_to(self.chart_scalar, DOWN)
+        
+        self.chart_ec_continuous = ContinuousEllipticChart(include_details=False, curve_color=HIGHLIGHT_COLOR, b = 4).scale(0.6).shift(LEFT*3+DOWN*0.5)
+        self.chart_polynomial_continuous = Chart(include_details=False).scale(0.6).shift(RIGHT*3+DOWN*0.5)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "prime fields", "data/sound/e5/slide4-0.mp3")
@@ -115,9 +121,12 @@ class KZGBlobs(SlideBase):
         scene.wait(1)
         scene.play(FadeIn(self.bytes_p2))
         scene.wait(3.7)
-        scene.play(FadeOut(self.chart_scalar, self.bytes_p2, self.curve_ec, self.chart_ec, self.p, self.r,self.base_field, 
-                           self.scalar_field, self.arrow_base_field, self.arrow_scalar_field, self.formula_bls, self.formula_polynomial))
         
+        self.new_subsection(scene, "distinguish - elliptic curve and polynomial", "data/sound/e5/slide4-1a.mp3")
+        scene.play(FadeOut(self.base_field, self.scalar_field, self.arrow_base_field, self.arrow_scalar_field, self.curve_ec))
+        scene.wait(1.5)
+        scene.play(FadeOut(self.chart_ec), FadeIn(self.chart_ec_continuous))
+        self.change_chart_axes(scene)
         
         self.new_subsection(scene, "put it all together", "data/sound/e5/slide4-2.mp3")
         scene.play(FadeIn(self.verifier, self.committer))
@@ -166,3 +175,40 @@ class KZGBlobs(SlideBase):
                            self.commitment_bytes, self.brace_commitment, self.sim, 
                            self.brace_number, self.commitment, self.proof, self.verifier, self.committer,
                            self.committer_label, self.verifier_label, self.sim, self.sim_commitment, self.sim_proof))
+        
+    def change_chart_axes(self, scene):
+        new_axes = Axes(
+            x_range=[0, 20, 20],
+            y_range=[-19, 25, 20],
+            x_length=7,
+            axis_config={
+                "include_numbers": False,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        )
+        new_axes.scale(0.6).shift(RIGHT*3+DOWN*0.5)
+        self.chart_polynomial_continuous.graph4 = new_axes.plot_implicit_curve(
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                color=SECONDARY_COLOR
+            )
+        scene.play(
+            FadeOut(self.chart_scalar.ax, self.chart_scalar.labels), FadeIn(new_axes),  
+            FadeOut(self.chart_scalar), FadeIn(self.chart_polynomial_continuous.graph4), 
+            run_time=2)
+        
+        scene.wait(1)
+        scene.play(Indicate(self.formula_bls, color = PURPLE), run_time=1)
+        scene.play(Indicate(self.formula_polynomial, color = PURPLE), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.bytes_p2))
+        scene.wait(1.5)
+        scene.play(Indicate(self.number_sequence))
+        scene.wait(2)
+        
+        scene.play(FadeOut(new_axes, self.bytes_p2, self.chart_ec_continuous, self.p, self.r,
+                           self.formula_bls, self.formula_polynomial))
+        

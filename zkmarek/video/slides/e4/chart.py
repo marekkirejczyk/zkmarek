@@ -1,5 +1,6 @@
 from manim import Axes, Create, SingleStringMathTex, TexTemplate, VGroup, Write
 from manim.mobject.graphing.functions import ImplicitFunction
+import numpy as np
 
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
 
@@ -41,6 +42,9 @@ class Chart(VGroup):
             lambda x, y: 3*x**3 - 9*x**2 - 15*x + 22 - y,
             color=HIGHLIGHT2_COLOR
         )
+        self.graph4 = self.ax.plot_implicit_curve(
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                color=SECONDARY_COLOR)
         self.add(self.ax)
         if include_details:
             self.labels = self.ax.get_axis_labels(
@@ -53,6 +57,7 @@ class Chart(VGroup):
         self.add(self.graph)
         self.add(self.graph2)
         self.add(self.graph3)
+        self.add(self.graph4)
 
     def animate_in(self, scene):
         if self.include_details:

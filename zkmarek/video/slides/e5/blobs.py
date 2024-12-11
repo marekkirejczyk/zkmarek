@@ -14,13 +14,13 @@ class Blobs(SlideBase):
         self.brace_blob = Brace(self.number_sequence, DOWN).set_color_by_gradient([PRIMARY_COLOR, TEAL_C, HIGHLIGHT_COLOR])
         self.brace_blob.put_at_tip(self.blob_container)
         
-        self.less_than_p = MathTex(r"{{\forall}} {{k}} \in F_r \; {{y_k}} < {{r}}", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
-        self.order_p = MathTex(r"r > 2^{256} =32 \ \mathrm{B}", color = SECONDARY_COLOR, font_size = 40).next_to(self.less_than_p, DOWN)
+        self.less_than_p = MathTex(r"{{\forall}} {{y_k}} \in F_r, \; {{y_k}} < {{r}}", color = PRIMARY_COLOR).next_to(self.brace_blob, RIGHT).shift(DOWN*0.2)
+        self.order_p = MathTex(r"r \approx 2^{256} =32 \ \mathrm{B}", color = SECONDARY_COLOR, font_size = 40).next_to(self.less_than_p, DOWN)
         self.bytes_of_ec = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
-        self.kilo_bytes_of_ec = Text("= 128 kB", font_size = 28, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
+        self.kilo_bytes_of_ec_eqn = Text(" 32 B x 4096", font_size = 24, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR])
+        self.kilo_bytes_of_ec_eqn.shift(UP*0.85)
+        self.kilo_bytes_of_ec = Text("= 128 kB", font_size = 28, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec_eqn, DOWN, buff = 0.1).shift(UP*0.3)
         self.brace_blob.put_at_tip(self.bytes_of_ec)
-        self.kilo_bytes_of_ec.shift(UP*0.55)
-        self.kilo_bytes_of_ec_eqn = Text("= 32 B x 4096", font_size = 24, font = PRIMARY_FONT).set_color_by_gradient([TEAL_C, HIGHLIGHT_COLOR]).next_to(self.kilo_bytes_of_ec, DOWN, buff = 0.5).shift(UP*0.3)
         
         
     def animate_in(self, scene):

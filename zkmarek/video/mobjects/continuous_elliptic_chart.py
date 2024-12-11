@@ -9,9 +9,10 @@ class ContinuousEllipticChart(VGroup):
     graph: ImplicitFunction
     include_details: bool
 
-    def __init__(self, include_details=True, **kwargs):
+    def __init__(self, include_details=True, b=None, curve_color = SECONDARY_COLOR, **kwargs):
         super().__init__(**kwargs)
         self.include_details = include_details
+        self.b = 7 if None else b
         step = 2 if include_details else 20
         self.ax = Axes(
             x_range=[-3, 7, step],
@@ -29,8 +30,8 @@ class ContinuousEllipticChart(VGroup):
         template = TexTemplate()
         template.add_to_preamble(r"\usepackage{amsfonts}")
         self.graph = self.ax.plot_implicit_curve(
-            lambda x, y: y**2 - x**3 - 7,
-            color=SECONDARY_COLOR
+            lambda x, y: y**2 - x**3 - self.b,
+            color=curve_color
         )
         self.add(self.ax)
         if include_details:

@@ -61,7 +61,7 @@ class VectorCommitments(SlideBase):
         self.question_mark = Text("?", font = PRIMARY_FONT).set_color_by_gradient([WHITE, HIGHLIGHT2_COLOR]).next_to(self.arrow_number_chart, UP, buff = 0.1)
         self.polynomial_eqn = MathTex(r"P(x) = {{a_3}}\cdot {{x^3}} +{{a_2}} \cdot {{x^2}} + {{a_{1} }}\cdot {{x }} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial_eqn_4096 = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
-        self.polynomial_eqn_4096_sum = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}} = {{\sum_{k=0}^{4095}}} {{a_k}} {{x_k}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
+        self.polynomial_eqn_4096_sum = MathTex(r"P(x) = {{a_{4095}}}\cdot {{x^{4095}}} + {{a_{4094}}} \cdot {{x^{4094}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}} = {{\sum_{k=0}^{4095}}} {{a_k}} {{x^k}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial_eqn_100 = MathTex(r"P(x) = {{a_{100}}}\cdot {{x^{100}}} + {{a_{99}}} \cdot {{x^{99}}} + \cdots + {{a_1}}\cdot {{x}} + {{a_0}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.polynomial = MathTex(r"P({{x}}) = 4 {{x^3}} - 8{{x^2}} - 17 {{x}} + 30 {{}}", color = PRIMARY_COLOR, font_size = 60).to_edge(DOWN).scale(0.7)
         self.lagrange_interpolation = Text("Lagrange interpolation", font = PRIMARY_FONT, font_size = 24, color = PRIMARY_COLOR).next_to(self.chart, RIGHT).shift(DOWN)
@@ -196,14 +196,8 @@ class VectorCommitments(SlideBase):
         new_axes.scale(0.7).shift(LEFT*3.5)
         new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3)
         new_axes4096[0].shift(UP)
-        # chart.labels[0].generate_target()
-        # chart.labels[0].target.next_to(new_axes4096[0], UP+RIGHT, buff = 0.1)
-        # chart.labels[1].generate_target()
-        # chart.labels[1].target.next_to(new_axes4096[1], UP+RIGHT, buff = 0.1)
         
         scene.play(
-            # MoveToTarget(chart.labels[0]),
-            # MoveToTarget(chart.labels[1]),
             Transform(chart.ax, new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
