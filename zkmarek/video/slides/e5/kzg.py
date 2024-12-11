@@ -59,7 +59,7 @@ class KZGBlobs(SlideBase):
         self.arrow_base_field = CurvedArrow(self.base_field.get_right(), self.chart_ec.get_top()+LEFT+UP*0.6, tip_shape=StealthTip, 
                                stroke_width=2).set_color_by_gradient([GREEN_E, HIGHLIGHT_COLOR]).scale(0.6).rotate(angle=3.14, axis = [1, 0, 0])
         self.scalar_field = Text("Scalar field", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 28).next_to(self.chart_scalar, RIGHT+UP, buff = 0).shift(LEFT*0.8)
-        self.arrow_scalar_field = CurvedArrow(self.scalar_field.get_left()+DOWN*0.5, self.chart_scalar.get_top()+RIGHT*0.7, tip_shape=StealthTip, 
+        self.arrow_scalar_field = CurvedArrow(self.scalar_field.get_left()+DOWN*0.05, self.chart_scalar.get_top()+RIGHT*0.3, tip_shape=StealthTip, 
                                stroke_width=2).set_color_by_gradient([SECONDARY_COLOR, PURPLE]).scale(0.6)
         self.formula_bls = MathTex(r"{{y^2}} = {{x^3}} + {{4}}", color = HIGHLIGHT_COLOR, font_size=34).next_to(self.chart_ec, DOWN).shift(DOWN*0.3)
         self.formula_polynomial = MathTex(r"{{P(x)}} = \sum_{k=0}^{4095} {{a_k}}  {{x_k}}", color = SECONDARY_COLOR, font_size=32).next_to(self.chart_scalar, DOWN)
@@ -99,9 +99,11 @@ class KZGBlobs(SlideBase):
             scene, self.x_k.value, self.y_k.value
         )
         line_y_k = self.chart_scalar.animate_create_horizontal_line(scene, self.y_k.value, 0, self.x_k.value)
-        scene.wait(2.8)
+        scene.wait(0.8)
         scene.play(FadeIn(self.bytes_of_el))
         self.number_sequence[3].set_color(GREEN_E)
+        scene.wait(1.5)
+        self.chart_scalar.indicate_xaxis_label(scene, self.label_y_k)
         
         scene.wait(3)
         scene.play(FadeOut(line_x_k, line_y_k, self.bytes_of_el))
