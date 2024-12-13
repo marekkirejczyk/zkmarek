@@ -14,7 +14,7 @@ class BlobsSolidity(CodeSlide):
 
     def construct(self):
         super().construct()
-        self.code.next_to(self.title_text, DOWN, buff = 0).scale(0.9)
+        self.code.next_to(self.title_text, DOWN, buff = 0).scale(0.85)
         self.commitment = "bytes48 commitment"
         self.x = "bytes32 x"
         self.y = "bytes32 y"
@@ -23,19 +23,15 @@ class BlobsSolidity(CodeSlide):
         
         self.input_data = "bytes memory data = abi.encodePacked(commitment, x, y, proof);"
 
-        self.precompile = "data.verifyKZGProof();"
+        self.precompile = "data.verifyKZGProof()"
         
-        self.success = "success"
-        self.blobhash = "blobhash"
+        self.success = "require(data.verifyKZGProof(), 'KZG proof verification failed');"
+
         self.commitmentHash = "bytes32 commitmentHash"
         
-        self.false_if = "if (commitmentHash == bytes32(0)) return false;"
         
-        self.verify_blobhash = "verifyBlobHash"
-        self.smart_contract_1 = "return success && verifyBlobHash(commitmentHash, commitment);"
-        self.commitmentHash2 = "commitmentHash"
-        
-        self.return_success = "return success"
+        self.calc_hash = "bytes32 commitmentHash = sha256(abi.encodePacked(commitment));"
+
         
         self.blob = ImageMobject("data/images/blob.png").scale(0.5).shift(UP*0.7+LEFT*3)
         self.blobIndex_text = Text("blobIndex", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).move_to(self.blob.get_center())
@@ -56,7 +52,7 @@ class BlobsSolidity(CodeSlide):
         self.brace_hash.put_at_tip(self.text_hash)
         
         self.commitment_real = "commitment"
-        self.brace_32B = Brace(self.version_hash, UP, color = PRIMARY_COLOR)
+        self.brace_32B = Brace(self.version_hash, DOWN, color = PRIMARY_COLOR)
         self.brace_32b_text = Text("32 bytes", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 26)
         self.brace_32B.put_at_tip(self.brace_32b_text)
         
@@ -85,16 +81,6 @@ class BlobsSolidity(CodeSlide):
         self.indicate_code(scene, self.code, self.blobIndex, 0, run_time=0.9)
         scene.wait(2.3)
         
-        # self.new_subsection(scene, "bytes 32 - not 48", "data/sound/e5/slide6-1e.mp3")
-        # scene.wait(1)
-        # self.indicate_code(scene, self.code, self.commitment, 0, run_time=0.8, color = PINK)
-        # self.indicate_code(scene, self.code, self.proof, 0, run_time=0.8, color = PINK)
-        
-        # scene.wait(1)
-        # self.indicate_code(scene, self.code, self.x, 0, run_time=0.8, color = PINK)
-        # self.indicate_code(scene, self.code, self.y, 0, run_time=0.8, color = PINK)
-        # scene.wait(1.5)
-        
         self.new_subsection(scene, "pack into byte array", "data/sound/e5/slide6-2.mp3")
         kzg_input = [self.x, self.y, self.commitment, self.proof]
         scene.wait(1)
@@ -112,7 +98,7 @@ class BlobsSolidity(CodeSlide):
         
         self.new_subsection(scene, "blobhash()", "data/sound/e5/slide6-4.mp3")
         scene.wait(6)
-        self.indicate_code(scene, self.code, self.blobhash, run_time=0.9, color = PINK)
+        self.indicate_code(scene, self.code, "blobhash", run_time=0.9, color = PINK)
         self.code.generate_target()
         self.code.target.scale(0.4).shift(RIGHT*3+UP)
         scene.play(MoveToTarget(self.code))
@@ -122,12 +108,12 @@ class BlobsSolidity(CodeSlide):
         scene.wait(1.2)
         scene.play(Indicate(self.blob_hash_text[9:18], color = PINK))
         scene.play(Write(self.version_hash), GrowArrow(self.arrow_hash_ec), FadeIn(self.brace_32B, self.brace_32b_text))
-        scene.wait(1.3)
+        scene.wait(2.3)
 
         
         self.new_subsection(scene, "SHA256", "data/sound/e5/slide6-4b.mp3")
-        scene.play(FadeIn(self.brace_hash, self.brace_version), FadeOut(self.brace_32B, self.brace_32b_text), Write(self.text_version), Write(self.text_hash))
-        scene.wait(0.5)
+        scene.play(FadeOut(self.brace_32B, self.brace_32b_text), run_time=0.5)
+        scene.play(FadeIn(self.brace_hash, self.brace_version), Write(self.text_version), Write(self.text_hash))
         scene.play(Indicate(self.text_version, color = PRIMARY_COLOR), run_time=0.7)
         scene.wait(0.8)
         scene.play(Indicate(self.text_hash, color = PRIMARY_COLOR))
@@ -139,15 +125,23 @@ class BlobsSolidity(CodeSlide):
         self.code.target.scale(1/0.4).next_to(self.title_text, DOWN, buff = 0).shift(DOWN*0.1)
         scene.play(MoveToTarget(self.code))
         scene.wait(0.2)
-        self.indicate_code(scene, self.code, self.false_if, 0, run_time=1)
+
         scene.wait(1.5)
         
         
         self.new_subsection(scene, "verifyBlobHash", "data/sound/e5/slide6-5.mp3")
         scene.wait(1)
-        self.indicate_code(scene, self.code, self.verify_blobhash, 0, run_time=0.9, color = TEAL_E)
-        scene.wait(9.5)
-        scene.play(FadeOut(self.code))
+        self.indicate_code(scene, self.code, self.calc_hash, 0, run_time=0.9, color = TEAL_E)
+        scene.wait(2.4)
+        
+        self.new_subsection(scene, "last 31 bytes", "data/sound/e5/slide6-6.mp3")
+        scene.wait(1)
+
+        self.indicate_code(scene, self.code, "uint256(blobHash) & ((1 << 248) - 1) == uint256(commitmentHash) & ((1 << 248) - 1)", 0, run_time=0.9, color = TEAL_E)
+        scene.wait(3)
+        
+        self.new_subsection(scene, "congratulations", "data/sound/e5/slide6-7.mp3")
+        scene.wait(3)
         
         self.summary(scene)
         
@@ -156,15 +150,17 @@ class BlobsSolidity(CodeSlide):
         
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=0.5, color = SECONDARY_COLOR):
         chars = find_in_code(code, fragment)
-        scene.play(Indicate(chars[index]), color=color, run_time=run_time)
+        scene.play(Indicate(chars[index], color=color, scale_factor=1.05), run_time=run_time)
     
     def summary(self, scene):
-        self.new_subsection(scene, "summary", "data/sound/e5/slide6-6.mp3")
+        self.new_subsection(scene, "summary", "data/sound/e5/slide6-8.mp3")
         self.title_tezt_summary = Text("Up next...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP).shift(DOWN*0.5)
         self.blob.move_to(ORIGIN)
         self.blob1 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0)
         self.blob2 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0)
-        scene.play(TransformMatchingShapes(self.title_text, self.title_tezt_summary), FadeIn(self.blob))
+        scene.play(TransformMatchingShapes(self.title_text, self.title_tezt_summary), FadeOut(self.code))
+        scene.play(FadeIn(self.blob))
+
         tree = VerkleTree().scale(0.7).shift(UP)
         scene.play(FadeIn(self.blob1), run_time=0.5)
         scene.play(FadeIn(self.blob2), run_time=0.5)

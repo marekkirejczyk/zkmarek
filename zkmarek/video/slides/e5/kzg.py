@@ -22,8 +22,9 @@ class KZGBlobs(SlideBase):
     def construct(self):
         self.title_text = Text("KZG as a vector commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.committer = ImageMobject("data/images/person.png").scale(0.7).shift(LEFT*5)
-        self.committer_label = Text("Committer", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.committer, DOWN)
+        self.committer_label = Text("Blob creator", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.committer, DOWN)
         self.verifier = ImageMobject("data/images/person_blue.png").scale(0.7).shift(RIGHT*5)
+        self.contract = ImageMobject("data/images/contract.png").scale(0.7).shift(RIGHT*5)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier, DOWN)
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2.3)
         self.brace_number = Brace(self.number_sequence, RIGHT).set_color_by_gradient([PURPLE, SECONDARY_COLOR])
@@ -32,7 +33,8 @@ class KZGBlobs(SlideBase):
         self.sim = MathTex(r"\sim", color = PRIMARY_COLOR).next_to(self.number_sequence_kilo_bytes, LEFT, buff = 0).scale(0.5).shift(RIGHT*0.05)
         
         self.polynomial = MathTex("p(x)", color = PRIMARY_COLOR).next_to(self.committer, RIGHT).shift(RIGHT)
-        self.opening = MathTex(r"p(x_0) \stackrel{?}{=} y_0", color = TEAL_E).next_to(self.verifier, UP)
+        self.opening = MathTex(r"p(x_0) = ?", color = TEAL_E).next_to(self.verifier, UP)
+        self.true_opening = MathTex(r"p(x_0) = y_0", color = TEAL_E).next_to(self.committer_label, DOWN).shift(DOWN*0.6).scale(0.9)
 
         self.arrow_opening_committer = Arrow(self.committer.get_right(), self.polynomial.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([HIGHLIGHT2_COLOR, SECONDARY_COLOR])
@@ -56,6 +58,7 @@ class KZGBlobs(SlideBase):
         
         self.bytes_of_el = Text("32 B", font=PRIMARY_FONT, font_size = 24).set_color(HIGHLIGHT_COLOR)
         self.bytes_of_el.next_to(self.number_sequence[3], UP)
+        self.sim_32 = MathTex(r"\sim", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.bytes_of_el, LEFT, buff = 0.1)
         self.curve_ec = Text("BLS12-381", color = HIGHLIGHT_COLOR, font =  PRIMARY_FONT, font_size=34).to_edge(DOWN)
         
         self.base_field = Text("Base field", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 28).next_to(self.chart_ec, LEFT+UP).shift(RIGHT*0.3)
@@ -106,13 +109,13 @@ class KZGBlobs(SlideBase):
         )
         line_y_k = self.chart_scalar.animate_create_horizontal_line(scene, self.y_k.value, 0, self.x_k.value)
         scene.wait(0.8)
-        scene.play(FadeIn(self.bytes_of_el))
+        scene.play(FadeIn(self.bytes_of_el, self.sim_32))
         self.number_sequence[3].set_color(GREEN_E)
         scene.wait(1.5)
         self.chart_scalar.indicate_xaxis_label(scene, self.label_y_k)
         
         scene.wait(4.2)
-        scene.play(FadeOut(line_x_k, line_y_k, self.bytes_of_el))
+        scene.play(FadeOut(line_x_k, line_y_k, self.bytes_of_el, self.sim_32))
         self.number_sequence[3].set_color(SECONDARY_COLOR)
         
         self.new_subsection(scene, "kzg setup ec points - BLS", "data/sound/e5/slide4-1.mp3")
@@ -139,9 +142,13 @@ class KZGBlobs(SlideBase):
         scene.wait(4)
         
         self.new_subsection(scene, "proof", "data/sound/e5/slide4-2a.mp3")
-        scene.wait(4.5)
-        scene.play(Write(self.opening))
         scene.wait(3)
+        scene.play(FadeIn(self.contract), FadeOut(self.verifier), run_time=0.5)
+        scene.wait(1)
+        scene.play(Write(self.opening))
+        scene.wait(1)
+        scene.play(FadeIn(self.true_opening), run_time=0.5)
+        scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_proof))
         scene.play(Write(self.proof))
         scene.wait(2.5)
@@ -172,10 +179,10 @@ class KZGBlobs(SlideBase):
         scene.wait(3.8) 
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_text, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  
+        scene.play(FadeOut(self.title_text, self.true_opening, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  
                            self.arrow_poly_proof, self.proof_bytes,self.brace_proof, 
                            self.commitment_bytes, self.brace_commitment, self.sim, 
-                           self.brace_number, self.commitment, self.proof, self.verifier, self.committer,
+                           self.brace_number, self.commitment, self.proof, self.contract, self.committer,
                            self.committer_label, self.verifier_label, self.sim, self.sim_commitment, self.sim_proof))
         
     def change_chart_axes(self, scene):

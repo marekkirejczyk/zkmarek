@@ -8,10 +8,10 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 
 class BlobsBlockchain(SlideBase):
     def __init__(self) -> None:
-        super().__init__(title="Blobs in Ethereum")
+        super().__init__(title="Blobs on Ethereum")
         
     def construct(self):
-        self.title_text = Text("Blobs in Ethereum", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
+        self.title_text = Text("Blobs on Ethereum", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).to_edge(UP)
         self.block1 = Rectangle(width=5.5, height=4.5, fill_opacity = 0.4).scale(0.4)
         self.block1.set_color_by_gradient([WHITE, PURPLE, HIGHLIGHT2_COLOR]).to_edge(DOWN)
         
@@ -37,15 +37,15 @@ class BlobsBlockchain(SlideBase):
         
         self.blob_field = RoundedRectangle(corner_radius=0.5, width = 4.5, height = 4, fill_opacity = 0.4)
         self.blob_field.set_color_by_gradient([GOLD_E, GREEN_E, BLUE_E]).next_to(self.block1_group, UP, buff = 0.2)
-        self.blob = ImageMobject("data/images/blob.png").move_to(self.blob_field).scale(0.8).shift(UP*0.4)
+        self.blob = ImageMobject("data/images/blob.png").move_to(self.blob_field).scale(0.6)
         
         self.commitment = Text("commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.commitment_hash = Text("hash(C)", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24)
         self.commitment.move_to(self.blob_field.get_bottom()).shift(UP*0.6)
-        self.commitment_hash.move_to(self.blob.get_bottom()).next_to(self.commitment, UP, buff=0.1).shift(LEFT*0.8)
+        self.commitment_hash.move_to(self.block1.get_top()).shift(DOWN*0.2)
         
         
-        self.vector = MathTex(r"\boldsymbol{\left[ {{y_0}}, {{y_1}}, \cdots {{y_{4095}}}   \right]}", color = RED_D, font_size = 50).next_to(self.blob, UP).shift(DOWN*0.07)
+        self.vector = MathTex(r"\boldsymbol{\left[ {{y_0}}, {{y_1}}, \cdots {{y_{4095}}}   \right]}", color = RED_D, font_size = 50).next_to(self.blob, UP)
         
         # time accelerating animation = back in time
         self.polygon1 = Polygon(ORIGIN, UP*0.5+RIGHT, DOWN*0.5+RIGHT, fill_opacity = 0.4).set_color_by_gradient([PRIMARY_COLOR, BLUE_E, HIGHLIGHT2_COLOR]).scale(0.4)
@@ -81,23 +81,15 @@ class BlobsBlockchain(SlideBase):
         
         scene.play(FadeIn(self.commitment, self.vector))
 
-        self.vector.generate_target()
-        self.vector.target.move_to(self.blob.get_bottom()).shift(UP*0.9).scale(0.6)
-
         
         self.new_subsection(scene, "commitment ... hash Commitment", "data/sound/e5/slide5-2.mp3")
-        scene.play(MoveToTarget(self.vector), run_time=1)
-        scene.wait(1)
+        scene.wait(2)
 
         scene.play(Indicate(self.commitment, color = PINK))
         scene.wait(0.6)
 
         scene.play(TransformMatchingShapes(self.commitment.copy(), self.commitment_hash), run_time=1)
-        scene.wait(1)
-        self.commitment_hash.generate_target()
-        self.commitment_hash.target.move_to(self.block1.get_top()).shift(DOWN*0.2)
-        scene.play(MoveToTarget(self.commitment_hash))
-        scene.wait(1.7)
+        scene.wait(3.2)
         
         self.new_subsection(scene, "available for 4096 epochs", "data/sound/e5/slide5-3.mp3")
         scene.wait(1.5)
@@ -120,19 +112,16 @@ class BlobsBlockchain(SlideBase):
             else: 
                     scene.play(Indicate(polygons[i], color = WHITE, scale_factor=1), run_time=0.7)
         scene.wait(0.5)
-        self.blob_field.generate_target()
-        self.blob_field.target.scale(0.5)
-        self.commitment.generate_target()
-        self.commitment.target.scale(0.75).shift(UP*0.3)
-        scene.play(MoveToTarget(self.blob_field), MoveToTarget(self.commitment), FadeOut(self.blob))
-        scene.play(FadeOut(self.polygon1_future, self.polygon2_future, self.polygon3_future, self.two_weeks_future))
+        self.blob.generate_target()
+        self.blob.target.to_edge(RIGHT+UP).shift(DOWN).set_opacity(0.4).scale(0.75)
+        scene.play(FadeOut(self.blob_field), FadeOut(self.commitment), MoveToTarget(self.blob))
         self.blocks = Group(self.block1_group, self.block2_group, self.block3_group, self.arrow, self.arrow2, self.commitment_hash)
         self.blocks.generate_target()
-        self.blocks.target.next_to(self.blob_field, DOWN, buff = 0.1)
-        scene.play(MoveToTarget(self.blocks))
+        self.blocks.target.move_to(ORIGIN)
+        scene.play(FadeOut(self.polygon1_future, self.polygon2_future, self.polygon3_future, self.two_weeks_future), MoveToTarget(self.blocks))
         
         self.new_subsection(scene, "hash of the commitment", "data/sound/e5/slide5-5.mp3")
-        scene.play(Indicate(self.commitment_hash, color = PINK), Indicate(self.commitment, color = PINK))
+        scene.play(Indicate(self.commitment_hash, color = PINK))
         scene.wait(6.7)
         
         self.new_subsection(scene, "blockindex", "data/sound/e5/slide5-6.mp3")
@@ -140,5 +129,5 @@ class BlobsBlockchain(SlideBase):
 
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.blob_field, self.commitment, self.title_text, self.blocks))
+        scene.play(FadeOut(self.title_text, self.blocks, self.blob))
 
