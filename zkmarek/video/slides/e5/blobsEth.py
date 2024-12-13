@@ -37,11 +37,11 @@ class BlobsBlockchain(SlideBase):
         
         self.blob_field = RoundedRectangle(corner_radius=0.5, width = 4.5, height = 4, fill_opacity = 0.4)
         self.blob_field.set_color_by_gradient([GOLD_E, GREEN_E, BLUE_E]).next_to(self.block1_group, UP, buff = 0.2)
-        self.blob = ImageMobject("data/images/blob.png").move_to(self.blob_field)
+        self.blob = ImageMobject("data/images/blob.png").move_to(self.blob_field).scale(0.8).shift(UP*0.4)
         
         self.commitment = Text("commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.commitment_hash = Text("hash(C)", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24)
-        self.commitment.move_to(self.blob.get_bottom()).shift(UP)
+        self.commitment.move_to(self.blob_field.get_bottom()).shift(UP*0.6)
         self.commitment_hash.move_to(self.blob.get_bottom()).next_to(self.commitment, UP, buff=0.1).shift(LEFT*0.8)
         
         
@@ -82,7 +82,7 @@ class BlobsBlockchain(SlideBase):
         scene.play(FadeIn(self.commitment, self.vector))
 
         self.vector.generate_target()
-        self.vector.target.move_to(self.blob.get_top()).shift(DOWN*1.5).scale(0.6)
+        self.vector.target.move_to(self.blob.get_bottom()).shift(UP*0.9).scale(0.6)
 
         
         self.new_subsection(scene, "commitment ... hash Commitment", "data/sound/e5/slide5-2.mp3")
@@ -90,13 +90,14 @@ class BlobsBlockchain(SlideBase):
         scene.wait(1)
 
         scene.play(Indicate(self.commitment, color = PINK))
-        scene.wait(1.5)
+        scene.wait(0.6)
 
         scene.play(TransformMatchingShapes(self.commitment.copy(), self.commitment_hash), run_time=1)
-        scene.wait(2)
+        scene.wait(1)
         self.commitment_hash.generate_target()
         self.commitment_hash.target.move_to(self.block1.get_top()).shift(DOWN*0.2)
         scene.play(MoveToTarget(self.commitment_hash))
+        scene.wait(1.7)
         
         self.new_subsection(scene, "available for 4096 epochs", "data/sound/e5/slide5-3.mp3")
         scene.wait(1.5)

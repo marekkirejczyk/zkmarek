@@ -80,18 +80,15 @@ class Episode4Recap(SlideBase):
                    MoveToTarget(self.commitment), run_time=0.7)
         commitment_sent = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         commitment_sent.generate_target()
-        commitment_sent.target.shift(5.5*RIGHT+DOWN)
-        self.envelope_flap.shift(5.5*RIGHT+DOWN)
+        commitment_sent.target.next_to(self.verifier_label, DOWN).shift(DOWN*0.8)
+        self.envelope_flap.next_to(self.verifier_label, DOWN).shift(DOWN*0.8)
 
         scene.play(MoveToTarget(commitment_sent), run_time=0.7)
 
         self.opening.next_to(self.verifier_label, DOWN) 
         self.proof.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
-        self.commitment.generate_target()
-        self.commitment.target.next_to(self.proof, DOWN)
         
-        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), MoveToTarget(self.commitment))
-        scene.play(FadeIn(self.opening, self.proof))
+        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), FadeIn(self.opening, self.proof))
         scene.play(Indicate(self.commitment, color = PINK))
         scene.wait(0.7)
         scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
