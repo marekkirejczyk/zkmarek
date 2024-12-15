@@ -197,7 +197,7 @@ EPISODE4 = [
 ]
 
 EPISODE5 = [
-    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e4/background.mp3",),
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e5/background.mp3",),
     Sponsored(),
     Episode4Recap(),
     TitleSlide("Layer 2", subtitle="Rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=3),

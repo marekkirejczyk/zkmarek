@@ -23,7 +23,7 @@ class Episode4Recap(SlideBase):
         self.verifier.shift(RIGHT*2.5+UP*1.5)
         self.committer_label.next_to(self.committer, DOWN)
         self.verifier_label.next_to(self.verifier, DOWN)
-        self.chart = DiscreetePolynomialChart(41, poly)
+        self.chart = DiscreetePolynomialChart(41, poly, "r", include_numbers=False, dot_color=SECONDARY_COLOR)
 
 
         self.envelope_body_closed = Polygon(

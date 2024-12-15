@@ -142,7 +142,8 @@ class VectorCommitments(SlideBase):
         self.change_chart_axes(scene, self.chart)
         scene.wait(5.5)
 
-        self.change_chart_axes_to4096(scene, self.chart, True)
+        # self.change_chart_axes_to4096(scene, self.chart, True)
+        scene.wait(0.2)
         scene.play(TransformMatchingTex(self.polynomial_eqn_4096, self.polynomial_eqn_4096_sum))
         scene.wait(1.5)
         scene.play(Indicate(self.number_sequence[9], color = PURPLE), Indicate(self.polynomial_eqn_4096_sum[1], color = PURPLE), Indicate(self.polynomial_eqn_4096_sum[3], color = PURPLE))
@@ -168,10 +169,10 @@ class VectorCommitments(SlideBase):
     def change_chart_axes(self, scene, chart):
         new_axes = Axes(
             x_range=[-4.7, 20, 20],
-            y_range=[-45, 6, 20],
+            y_range=[-45, 5.5, 20],
             x_length=7,
             axis_config={
-                "include_numbers": False,
+                "include_numbers": True,
                 "color": PRIMARY_COLOR,
                 "decimal_number_config": {
                     "color": PRIMARY_COLOR,
@@ -179,12 +180,12 @@ class VectorCommitments(SlideBase):
                 }
             }
         )
-        new_axes4096 = Axes(
-            x_range=[-4.7, 5500, 4096],
-            y_range=[-45, 5500, 4096],
+        self.new_axes4096 = Axes(
+            x_range=[-4.7, 5500, 4095],
+            y_range=[-45, 5500, 5596],
             x_length=7,
             axis_config={
-                "include_numbers": False,
+                "include_numbers": True,
                 "color": PRIMARY_COLOR,
                 "decimal_number_config": {
                     "color": PRIMARY_COLOR,
@@ -194,16 +195,16 @@ class VectorCommitments(SlideBase):
         )
 
         new_axes.scale(0.7).shift(LEFT*3.5)
-        new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3)
-        new_axes4096[0].shift(UP)
+        self.new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3)
+        self.new_axes4096[0].shift(UP)
         
         scene.play(
-            Transform(chart.ax, new_axes4096),  
+            FadeOut(self.labels),
+            FadeOut(chart.ax, run_time=0.5), FadeIn(self.new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
-            FadeOut(self.labels),
             run_time=2)
 
     def change_chart_axes_to4096(self, scene, chart, include_numebrs):
@@ -231,4 +232,4 @@ class VectorCommitments(SlideBase):
 
     def transforming_poly_into_field(self, scene):
             self.chart_discrete.gen_points()
-            scene.play(FadeOut(self.chart.ax, self.chart.graph), FadeIn(self.chart_discrete))
+            scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))

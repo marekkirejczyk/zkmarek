@@ -188,7 +188,7 @@ class KZGBlobs(SlideBase):
     def change_chart_axes(self, scene):
         new_axes = Axes(
             x_range=[0, 20, 20],
-            y_range=[-19, 25, 20],
+            y_range=[-19, 25, 30],
             x_length=7,
             axis_config={
                 "include_numbers": False,
