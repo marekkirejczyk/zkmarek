@@ -7,3 +7,4 @@ pycryptodome
 cryptography
 manim_editor
 setuptools
+numpy

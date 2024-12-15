@@ -67,7 +67,14 @@ from zkmarek.video.slides.e4.e3_reference import Episode3Reference
 from zkmarek.video.slides.e4.credits import Credits as CreditsE4
 from zkmarek.video.slides.e4.security import Security
 from zkmarek.video.slides.e4.kzg import KZG
-
+from zkmarek.video.slides.e5.e4reference import Episode4Recap
+from zkmarek.video.slides.e5.layer2 import Layer2
+from zkmarek.video.slides.e5.blobs import Blobs
+from zkmarek.video.slides.e5.vectorcommitments import VectorCommitments
+from zkmarek.video.slides.e5.kzg import KZGBlobs
+from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
+from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
+from zkmarek.video.slides.e5.credits import Credits as CreditsE5
 
 config.width = 16
 config.height = 9
@@ -190,6 +197,24 @@ EPISODE4 = [
 ]
 
 EPISODE5 = [
+    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e5/background.mp3",),
+    Sponsored(),
+    Episode4Recap(),
+    TitleSlide("Layer 2", subtitle="Rollups", sound="data/sound/e5/slide1-0.mp3", wait_time=3),
+    Layer2(),
+    TitleSlide("Blobs", subtitle="Binary Large Objects", sound="data/sound/e5/slide1-3.mp3", wait_time=0.5),
+    Blobs(),
+    TitleSlide("Vector commitments", sound = "data/sound/e5/slide3-0a.mp3"),
+    VectorCommitments(),
+    KZGBlobs(),
+    TitleSlide("Blobs on Ethereum", sound = "data/sound/e5/slide5-0.mp3", wait_time=0.7),
+    BlobsBlockchain(),
+    BlobsSolidity(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    CreditsE5(),
+]
+
+EPISODE6 = [
     SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     TexSlide("Sources", "data/schnorr/sources.tex"),
@@ -204,12 +229,13 @@ DECKS = {
     "E3": EPISODE3,
     "E4": EPISODE4,
     "E5": EPISODE5,
+    "E6": EPISODE6,
 }
 
-DEFAULT_DECK = "E4"
+DEFAULT_DECK = "E5"
 
 
-class Episode4(Scene):
+class Episode5(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
