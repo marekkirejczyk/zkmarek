@@ -37,7 +37,7 @@ class BlobsSolidity(CodeSlide):
         self.blobIndex_text = Text("blobIndex", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).move_to(self.blob.get_center())
         
         self.blob_hash_text = Text("blobhash(blobIndex)", font_size= 28, font = PRIMARY_FONT).set_color(HIGHLIGHT_COLOR).next_to(self.blob, DOWN).shift(DOWN+LEFT*1)
-        self.version_hash = Text("0x01 SHA 256 (KZG commitment)", font=PRIMARY_FONT, font_size=28).next_to(self.blob_hash_text, RIGHT).shift(RIGHT*2)
+        self.version_hash = Text("0x01 SHA-256 (KZG commitment)", font=PRIMARY_FONT, font_size=28).next_to(self.blob_hash_text, RIGHT).shift(RIGHT*2)
         self.arrow_hash_ec = Arrow(self.blob_hash_text.get_right(), self.version_hash.get_left(), tip_shape=StealthTip, 
                                stroke_width=2, max_tip_length_to_length_ratio=0.15).scale(0.7).set_color_by_gradient([HIGHLIGHT2_COLOR, GREY_A])
         self.version_hash_part1 = self.version_hash[0:4]
@@ -93,7 +93,7 @@ class BlobsSolidity(CodeSlide):
         scene.wait(1.5)
         scene.wait(1)
         self.indicate_code(scene, self.code, self.precompile, 0, run_time=0.8, color = TEAL_E)
-        scene.wait(4)
+        scene.wait(2.8)
         self.indicate_code(scene, self.code, self.success, 0, run_time=0.9)
         
         self.new_subsection(scene, "blobhash()", "data/sound/e5/slide6-4.mp3")
@@ -115,11 +115,10 @@ class BlobsSolidity(CodeSlide):
         scene.play(FadeOut(self.brace_32B, self.brace_32b_text), run_time=0.5)
         scene.play(FadeIn(self.brace_hash, self.brace_version), Write(self.text_version), Write(self.text_hash))
         scene.play(Indicate(self.text_version, color = PRIMARY_COLOR), run_time=0.7)
-        scene.wait(0.8)
-        scene.play(Indicate(self.text_hash, color = PRIMARY_COLOR))
         scene.wait(1)
-        scene.play(Indicate(self.version_hash[4:10], color = MAROON_C))
-        scene.wait(1.3)
+        scene.play(Indicate(self.text_hash, color = PRIMARY_COLOR))
+        scene.play(Indicate(self.version_hash[4:11], color = MAROON_C))
+        scene.wait(1.8)
         scene.play(FadeOut(self.blob, self.text_hash, self.text_version, self.version_hash, self.brace_hash, self.brace_version, self.arrow_hash_ec, self.blob_hash_text))
         self.code.generate_target()
         self.code.target.scale(1/0.4).next_to(self.title_text, DOWN, buff = 0).shift(DOWN*0.1)

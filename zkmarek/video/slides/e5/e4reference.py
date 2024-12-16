@@ -88,12 +88,12 @@ class Episode4Recap(SlideBase):
         self.opening.next_to(self.verifier_label, DOWN) 
         self.proof.next_to(self.verifier_label, DOWN).shift(DOWN*0.5)
         
-        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), FadeIn(self.opening, self.proof))
+        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(Indicate(self.commitment, color = PINK))
-        scene.wait(0.7)
-        scene.play(Indicate(self.opening, color = [PURPLE, PINK]))
         scene.wait(0.5)
-        scene.play(Indicate(self.proof, color = [PURPLE, PINK]))
+        scene.play(FadeIn(self.opening, color = [PURPLE, PINK]))
+        scene.wait(1.0)
+        scene.play(FadeIn(self.proof, color = [PURPLE, PINK]))
         scene.wait(2)
         
         self.new_subsection(scene, "biggest scalling challenges", "data/sound/e5/slide0-3.mp3")

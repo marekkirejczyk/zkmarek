@@ -26,6 +26,8 @@ class KZGBlobs(SlideBase):
         self.verifier = ImageMobject("data/images/person_blue.png").scale(0.7).shift(RIGHT*5)
         self.contract = ImageMobject("data/images/contract.png").scale(0.7).shift(RIGHT*5)
         self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier, DOWN)
+        self.smart_text = Text("Smart", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier, DOWN, buff = 0.1)
+        self.contract_text = Text("contract", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.smart_text, DOWN, buff = 0.1)
         self.number_sequence = MathTex(r"\left[ {{y_0}}, {{y_1}}, {{y_2}}, {{\cdots}}, {{y_{4095}}} \right]", color = SECONDARY_COLOR).scale(1.2).shift(UP*2.3)
         self.brace_number = Brace(self.number_sequence, RIGHT).set_color_by_gradient([PURPLE, SECONDARY_COLOR])
         self.number_sequence_kilo_bytes = Text("128 kB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=24)
@@ -143,7 +145,7 @@ class KZGBlobs(SlideBase):
         
         self.new_subsection(scene, "proof", "data/sound/e5/slide4-2a.mp3")
         scene.wait(3)
-        scene.play(FadeIn(self.contract), FadeOut(self.verifier), run_time=0.5)
+        scene.play(FadeIn(self.contract, self.smart_text, self.contract_text), FadeOut(self.verifier, self.verifier_label), run_time=0.5)
         scene.wait(1)
         scene.play(Write(self.opening))
         scene.wait(1)
@@ -151,9 +153,9 @@ class KZGBlobs(SlideBase):
         scene.wait(1.5)
         scene.play(GrowArrow(self.arrow_poly_proof))
         scene.play(Write(self.proof))
-        scene.wait(2.5)
+        scene.wait(1.8)
         
-        scene.play(FadeOut(self.opening, self.arrow_opening_committer))
+        scene.play(FadeOut(self.opening, self.arrow_opening_committer, self.true_opening))
         self.group_poly = Group(self.polynomial, self.arrow_poly_commitment, self.arrow_poly_proof, self.proof, self.commitment)
         self.group_poly.generate_target()
         self.group_poly.target.next_to(self.number_sequence, DOWN).shift(DOWN)
@@ -179,11 +181,11 @@ class KZGBlobs(SlideBase):
         scene.wait(3.8) 
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_text, self.true_opening, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  
+        scene.play(FadeOut(self.title_text, self.number_sequence, self.number_sequence_kilo_bytes, self.polynomial, self.arrow_poly_commitment,  
                            self.arrow_poly_proof, self.proof_bytes,self.brace_proof, 
                            self.commitment_bytes, self.brace_commitment, self.sim, 
                            self.brace_number, self.commitment, self.proof, self.contract, self.committer,
-                           self.committer_label, self.verifier_label, self.sim, self.sim_commitment, self.sim_proof))
+                           self.committer_label, self.smart_text, self.contract_text, self.sim, self.sim_commitment, self.sim_proof))
         
     def change_chart_axes(self, scene):
         new_axes = Axes(
@@ -210,11 +212,11 @@ class KZGBlobs(SlideBase):
         
         scene.wait(0.2)
         scene.play(Indicate(self.formula_bls, color = PURPLE), run_time=1)
-        scene.wait(1)
+        scene.wait(2.8)
         scene.play(Indicate(self.formula_polynomial, color = PURPLE), run_time=1)
-        scene.wait(1.5)
+        scene.wait(0.5)
         scene.play(Indicate(self.number_sequence, color = PURPLE))
-        scene.wait(2)
+        scene.wait(1)
         
         scene.play(FadeOut(new_axes, self.bytes_p2, self.chart_ec_continuous, self.p, self.r,
                            self.formula_bls, self.formula_polynomial,
