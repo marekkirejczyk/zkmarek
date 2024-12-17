@@ -137,7 +137,8 @@ class Layer2(SlideBase):
                    Create(self.finalized_group), Create(self.layer1_ethereum), GrowArrow(self.arrow_layer1))
         scene.wait(1.5)
         scene.play(Indicate(self.layer2, color = PURPLE), Indicate(self.transactions, color = PURPLE), ApplyWave(self.tx_group), run_time=1)
-        scene.wait(1.5)
+        scene.wait(0.6)
+        scene.play(ApplyWave(self.finalized_group))
         
         self.new_subsection(scene, "rollup", "data/sound/e5/slide1-1a.mp3")
         scene.wait(1.5)
