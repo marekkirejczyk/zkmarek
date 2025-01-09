@@ -1,11 +1,12 @@
-from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject
+from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject, Axes
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
-from zkmarek.video.slides.e4.curve import Curve
+from zkmarek.video.slides.e6.curve import Curve
+import numpy as np
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -17,9 +18,9 @@ class Previously(SlideBase):
     def construct(self):
         self.title_label = Text("Previously on zkmarek", font = PRIMARY_FONT, color = PRIMARY_COLOR).to_edge(UP)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT)
-        self.polynomial_label = MathTex(r"p(x)", color = PRIMARY_COLOR).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT)
+        self.polynomial_label = MathTex(r"p(x)", color = PRIMARY_COLOR).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
 
-        self.polynomial_opening_label = MathTex(r"p(x) - y_0", color = PRIMARY_COLOR).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT)
+        self.polynomial_opening_label = MathTex(r"p(x) - y_0", color = PRIMARY_COLOR).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
         self.quotient_deriviation_0 = MathTex(r"{{a}}{{(x_0-x_1)}}{{(x_0-x_2)}}{{(x_0 - x_0)}} = {{p(x_0)}} - {{y_0}}", color = PRIMARY_COLOR, font_size = 30).shift(UP*1.5+RIGHT*2.5)
         self.brace_0 = Brace(self.quotient_deriviation_0[3], direction = UP, color = PRIMARY_COLOR)
         self.brace_0.shift(DOWN*0.1)
@@ -43,20 +44,25 @@ class Previously(SlideBase):
         self.y = poly(self.z)
         
         self.chart_interpolation = Chart(include_details=True)
-        # self.chart_interpolation.ax = Axes(
-        #     x_range=[0, 11, 1],
-        #     y_range=[-6, 10, 5],
-        #     x_length=7,
-        #     axis_config={
-        #         "include_numbers": True,
-        #         "color": PRIMARY_COLOR,
-        #         "decimal_number_config": {
-        #             "color": PRIMARY_COLOR,
-        #             "num_decimal_places": 0
-        #         }
-        #     }
-        # )
+        self.chart_interpolation.ax = Axes(
+            x_range=[0, 11, 1],
+            y_range=[-6, 10, 5],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        )
         self.chart_interpolation.scale(0.7).shift(LEFT*3.5)
+        self.chart_interpolation.ax.scale(0.7).shift(LEFT*3.5)
+        self.chart_interpolation.labels.scale(0.7).shift(LEFT*3.5)
+        self.chart_interpolation.graph4 = self.chart_interpolation.ax.plot_implicit_curve(
+                lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                color=SECONDARY_COLOR)
         self.vector_values = MathTex(r"\left[{{3, }}{{4, }}{{2, }}{{-1, }}{{-2, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5)
         
         self.blob = ImageMobject("data/images/blob.png")
@@ -79,12 +85,11 @@ class Previously(SlideBase):
         line_z = self.polynomial_chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
-        scene.play(FadeIn(line_z), run_time=1)
         self.polynomial_chart.animate_shift_dots_with_fade(scene, self.y.value)
+        scene.play(TransformMatchingShapes(self.polynomial_label, self.polynomial_opening_label))
         scene.play(FadeOut(line_z))
         self.polynomial_chart.remove(line_z)
         self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value)
-        scene.play(TransformMatchingShapes(self.polynomial_label, self.polynomial_opening_label))
         scene.play(FadeIn(self.quotient_deriviation_0))
         scene.play(FadeIn(self.brace_0, self.brace_text))
         scene.wait(1)
@@ -119,10 +124,10 @@ class Previously(SlideBase):
         
         self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
         scene.wait(1)
-        scene.play(Create(self.chart_interpolation.graph))
+        scene.play(Create(self.chart_interpolation.graph4))
         
         self.new_subsection(scene, "blobs", "data/sound/e6/slide1-3.mp3")
-        scene.play(FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation.graph, self.vector_values))
+        scene.play(FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation.graph4, self.vector_values))
         scene.play(FadeOut(self.point))
 
         scene.play(FadeIn(self.blob))
@@ -187,12 +192,12 @@ class Previously(SlideBase):
         a9 = Curve.from_x(point9.get_value())
         self.p9 = DotOnCurve(self.chart_interpolation.ax, "", a9)
 
-        scene.play(Create(self.p0), FadeIn(self.vector_values[1], run_time=0.2))
-        scene.play(Create(self.p1), FadeIn(self.vector_values[2], run_time=0.2))
-        scene.play(Create(self.p2), FadeIn(self.vector_values[3], run_time=0.2))
-        scene.play(Create(self.p3), FadeIn(self.vector_values[4], run_time=0.2))
-        scene.play(Create(self.p4), FadeIn(self.vector_values[5], run_time=0.2))
-        scene.play(Create(self.p5), FadeIn(self.vector_values[6], run_time=0.2))
+        scene.play(Create(self.p0), FadeIn(self.vector_values[1], self.vector_values[0]), run_time=0.2)
+        scene.play(Create(self.p1), FadeIn(self.vector_values[2]), run_time=0.2)
+        scene.play(Create(self.p2), FadeIn(self.vector_values[3]), run_time=0.2)
+        scene.play(Create(self.p3), FadeIn(self.vector_values[4]), run_time=0.2)
+        scene.play(Create(self.p4), FadeIn(self.vector_values[5]), run_time=0.2)
+        scene.play(Create(self.p5), FadeIn(self.vector_values[6], self.vector_values[7]), run_time=0.2)
         scene.play(Create(self.p6), run_time=0.2)
         scene.play(Create(self.p7), run_time=0.2)
         scene.play(Create(self.p8), run_time=0.2)
