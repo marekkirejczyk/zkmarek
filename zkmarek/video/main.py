@@ -75,6 +75,7 @@ from zkmarek.video.slides.e5.kzg import KZGBlobs
 from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
 from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
 from zkmarek.video.slides.e5.credits import Credits as CreditsE5
+from zkmarek.video.slides.e6.previously import Previously as PreviouslyE6
 
 config.width = 16
 config.height = 9
@@ -215,6 +216,10 @@ EPISODE5 = [
 ]
 
 EPISODE6 = [
+    PreviouslyE6(),
+]
+
+EPISODE7 = [
     SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     TexSlide("Sources", "data/schnorr/sources.tex"),
@@ -230,12 +235,13 @@ DECKS = {
     "E4": EPISODE4,
     "E5": EPISODE5,
     "E6": EPISODE6,
+    "E7": EPISODE6,
 }
 
-DEFAULT_DECK = "E5"
+DEFAULT_DECK = "E6"
 
 
-class Episode5(Scene):
+class Episode6(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 

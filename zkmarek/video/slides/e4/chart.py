@@ -43,7 +43,7 @@ class Chart(VGroup):
             color=HIGHLIGHT2_COLOR
         )
         self.graph4 = self.ax.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR)
         self.add(self.ax)
         if include_details:
