@@ -1,4 +1,5 @@
 from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject, Axes, Arrow, StealthTip, GrowArrow, Transform
+from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -15,10 +16,10 @@ def poly(x):
     return output
 class Previously(SlideBase):
     def __init__(self) -> None:
-        super().__init__("Previously on zkmarek")
+        super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("Previously on zkmarek", font = PRIMARY_FONT, color = PRIMARY_COLOR).to_edge(UP)
+        self.title_label = Text("Previously on zkMarek...", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*0.2)
         self.polynomial_label = MathTex(r"p(x)", color = PRIMARY_COLOR).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
 
@@ -31,20 +32,20 @@ class Previously(SlideBase):
         self.brace_text.shift(DOWN*0.1)
         
         self.quotient_deriviation_1 = MathTex(r"{{a}}{{(x-x_1)}}{{(x-x_2)}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 30, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_0, DOWN, buff = 0.5)
-        self.quotient_deriviation_1[0:4].set_color(SECONDARY_COLOR)
+        self.quotient_deriviation_1[0:4].set_color(YELLOW_E)
         
         self.quotient_deriviation_2 = MathTex(r"{{q(x)}}{{\cdot}}{{}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
-        self.quotient_deriviation_2[0].set_color(SECONDARY_COLOR)
+        self.quotient_deriviation_2[0].set_color(YELLOW_E)
         
         self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
         
-        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)
-        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)        
-        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)       
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)        
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)       
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} ({{\tau}}-x_0) = p({{\tau}}) - {{y_0}}",
-            color=SECONDARY_COLOR,
+            color=LIGHT_BROWN,
         ).to_edge(DOWN).shift(RIGHT+UP*0.5)    
 
 
@@ -76,18 +77,19 @@ class Previously(SlideBase):
                 color=SECONDARY_COLOR)
         self.vector_values = MathTex(r"\left[{{3, }}{{4, }}{{2, }}{{-1, }}{{-2, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5)
         
-        self.data_points = Text("data points", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).shift(UP*1.5+RIGHT*2)
-        self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.data_points, DOWN, buff = 1.5)
-        self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.interpolation, DOWN, buff = 1.5)
+        self.data_points = Text("data points", font = PRIMARY_FONT, color = BLUE_D, font_size = 30).shift(UP*1.5+RIGHT*2)
+        self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = GREEN_E, font_size = 30).next_to(self.data_points, DOWN, buff = 1.5)
+        self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = MAROON_E, font_size = 30).next_to(self.interpolation, DOWN, buff = 1.5)
         
-        self.arrow_data_interpolation = Arrow(self.data_points.get_bottom(), self.interpolation.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip)
-        self.arrow_interpolation_vector = Arrow(self.interpolation.get_bottom(), self.vector_commitment.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip)
+        self.arrow_data_interpolation = Arrow(self.data_points.get_bottom(), self.interpolation.get_top(), tip_shape = StealthTip).set_color_by_gradient([BLUE_D, GREEN_E])
+        self.arrow_interpolation_vector = Arrow(self.interpolation.get_bottom(), self.vector_commitment.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip).set_color_by_gradient([GREEN_E, MAROON_E])
 
         self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT*2.5)
         self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
         self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
         
         self.layer2 = Layer2()
+        self.layer2.construct()
         
         self.tree = VerkleTree().scale(0.5).shift(RIGHT*2.5+UP*1.5)
         
@@ -128,13 +130,11 @@ class Previously(SlideBase):
         scene.play(Write(self.commitment), Write(self.proof))
         scene.play(Write(self.pairing_verifiaction_0))
         scene.wait(1)
-        scene.play(Indicate(self.commitment, color = SECONDARY_COLOR))
-        scene.play(Indicate(self.proof, color = SECONDARY_COLOR))
-        scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = SECONDARY_COLOR))
-        scene.wait(0.5)
-        scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = SECONDARY_COLOR))
+        scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = LIGHT_BROWN))
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = LIGHT_BROWN))
         scene.wait(1.5)
-        scene.play(TransformMatchingShapes(self.pairing_verifiaction_2, self.pairing_verifiaction_3))
+        scene.play(FadeOut(self.pairing_verifiaction_2), FadeIn(self.pairing_verifiaction_3))
         
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
         scene.wait(1.5)
@@ -161,12 +161,12 @@ class Previously(SlideBase):
         scene.play(FadeIn(self.blob), run_time=0.5)
         scene.play(FadeIn(self.blob_1), run_time=0.5)
         scene.play(FadeIn(self.blob_2), run_time=0.5)
-        # self.layer2.mini_blockchain_e6(scene)
+        self.layer2.miniature(scene)
         
         self.new_subsection(scene, "verkle trees", "data/sound/e6/slide1-3a.mp3")
         scene.play(FadeOut(self.blob, self.blob_1, self.blob_2), run_time=0.5)
         self.vast_data(scene)
-        scene.play(Create(self.tree), run_time=1.5)
+
         scene.wait(1)
         
     def animate_out(self, scene):
@@ -175,16 +175,16 @@ class Previously(SlideBase):
         
         
     def bullet_list(self, scene):
-        bullet1 = Text("(1)", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).shift(RIGHT+UP*1.5)
-        bullet2 = Text("(2)", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(bullet1, DOWN)
-        bullet3 = Text("(3)", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(bullet2, DOWN)
-        item1 = Text("Polynomial", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(bullet1, RIGHT)
-        item2 = Text("Quotient", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(bullet2, RIGHT)
-        item3 = Text("Trusted setup", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(bullet3, RIGHT)
+        bullet1 = Text("(1)", font = PRIMARY_FONT, color = GREEN_E, font_size = 30).shift(RIGHT+UP*1.5)
+        bullet2 = Text("(2)", font = PRIMARY_FONT, color = YELLOW_E, font_size = 30).next_to(bullet1, DOWN)
+        bullet3 = Text("(3)", font = PRIMARY_FONT, color = BLUE_D, font_size = 30).next_to(bullet2, DOWN)
+        item1 = Text("Polynomial", font = PRIMARY_FONT, color = GREEN_E, font_size = 30).next_to(bullet1, RIGHT)
+        item2 = Text("Quotient", font = PRIMARY_FONT, color = YELLOW_E, font_size = 30).next_to(bullet2, RIGHT)
+        item3 = Text("Trusted setup", font = PRIMARY_FONT, color = BLUE_D, font_size = 30).next_to(bullet3, RIGHT)
         
-        polynomial_label = MathTex(r"p(x)", color = PRIMARY_COLOR, font_size = 40).next_to(item1, RIGHT)
-        quotient_label = MathTex(r"q(x)", color = PRIMARY_COLOR, font_size = 40).next_to(item2, RIGHT)
-        trusted_setup_label = MathTex(r"p(\tau) \cdot G_1, \quad q(\tau) \cdot G_1", font_size = 35, color = PRIMARY_COLOR).next_to(item3, DOWN)
+        polynomial_label = MathTex(r"p(x)", color = GREEN_E, font_size = 40).next_to(item1, RIGHT)
+        quotient_label = MathTex(r"q(x)", color = YELLOW_E, font_size = 40).next_to(item2, RIGHT)
+        trusted_setup_label = MathTex(r"p(\tau) \cdot G_1, \quad q(\tau) \cdot G_1", font_size = 35, color = BLUE_D).next_to(item3, DOWN)
         
         self.item1 = VGroup(bullet1, item1, polynomial_label)
         self.item2 = VGroup(bullet2, item2, quotient_label)
@@ -240,7 +240,6 @@ class Previously(SlideBase):
         scene.play(Create(self.p9), run_time=0.2)
         self.point = VGroup(self.p0, self.p1, self.p2, self.p3, self.p4, self.p5, self.p6, self.p7, self.p8, self.p9)
 
-        scene.wait(1)
         
     def vast_data(self, scene):
         import random
@@ -256,7 +255,7 @@ class Previously(SlideBase):
         self.binary_matrix.move_to(LEFT*2)
         scene.add(self.binary_matrix)
 
-        for _ in range(20):  
+        for _ in range(25):  
             new_rows = VGroup(*[
                 VGroup(*[
                     Text(str(random.choice([0, 1])), font_size=24)
@@ -265,8 +264,14 @@ class Previously(SlideBase):
                 for _ in range(rows)
             ]).arrange(DOWN, buff=0.2).move_to(LEFT*2)
 
-            scene.play(*[
-                Transform(self.binary_matrix[i], new_rows[i])
-                for i in range(rows)
-            ], run_time=0.1)
+            if _ == 10:
+                scene.play(*[
+                    Transform(self.binary_matrix[i], new_rows[i])
+                    for i in range(rows)
+                ], Create(self.tree), run_time=0.1)
+            else:
+                scene.play(*[
+                    Transform(self.binary_matrix[i], new_rows[i])
+                    for i in range(rows)
+                ], run_time=0.1)
             

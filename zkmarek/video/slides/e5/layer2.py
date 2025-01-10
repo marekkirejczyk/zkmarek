@@ -1,5 +1,5 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
-Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave,
+Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave, MathTex,
 BLUE_E, GREEN_E, TEAL_E, RoundedRectangle)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -172,31 +172,30 @@ class Layer2(SlideBase):
         scene.wait(4)
         scene.play(Write(self.post_removal))
         scene.wait(2)
-        
-    def mini_blockchain_e6(self, scene):
-
-        self.add(self.tx_circle8, self.tx_circle6, self.tx_circle7, self.tx_circle5, self.tx_circle4, self.tx_circle3, 
-                               self.tx_circle2, self.tx_circle, self.tx_label, self.tx_label2, self.tx_label3, self.tx_label4, 
-                               self.tx_label5, self.tx_label6, self.tx_label7, self.tx_label8, self.layer1_ethereum, self.layer2, self.ethereum, 
-                                 self.ethereum2, self.ethereum3, self.ethereum4, self.transactions,
-                                 self.layer2_group, self.finalized_group, self.rollup_brace, self.rollup_batch_text, 
-                                 self.arrow_layer1, self.arrow_layer2, self.arrow_txs, self.brace_tx, self.pricey_dollars_rollup, 
-                                 self.arrow_layer1_group, 
-                                 self.arrow_layer2_group)
-        self.tx_group = VGroup(self.tx_circle8, self.tx_circle6, self.tx_circle7, self.tx_circle5, self.tx_circle4, self.tx_circle3, 
-                               self.tx_circle2, self.tx_circle, self.tx_label, self.tx_label2, self.tx_label3, self.tx_label4, 
-                               self.tx_label5, self.tx_label6, self.tx_label7, self.tx_label8).shift(DOWN * 1.9+RIGHT*1.06)
-        self.block_chain = Group(self.tx_group, self.layer1_ethereum, self.layer2, self.ethereum, 
-                                 self.ethereum2, self.ethereum3, self.ethereum4, self.transactions,
-                                 self.layer2_group, self.finalized_group, self.rollup_brace, self.rollup_batch_text, 
-                                 self.arrow_layer1, self.arrow_layer2, self.arrow_txs, self.brace_tx, self.pricey_dollars_rollup, 
-                                 self.arrow_layer1_group, 
-                                 self.arrow_layer2_group)
-        scene.play(FadeIn(self.block_chain), run_time=0.7)
-        scene.wait(2)
-        scene.play(FadeOut(self.block_chain), run_time=0.5)
-        
+         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.cheap_storage, self.smart_contracts, self.post_removal, 
                            self.rounded_rectangle, self.blob_image, self.blob_image_1, self.blob_image_2))
         
+    def miniature(self, scene):
+        
+        self.block_chain = VGroup(
+            self.tx_group, self.layer1_ethereum, self.layer2, self.transactions,
+            self.layer2_group, self.finalized_group, self.arrow_layer1, self.arrow_layer2,
+            self.arrow_txs, self.brace_tx,
+            self.arrow_layer1_group, self.arrow_layer2_group
+        )
+
+        scene.add(self.ethereum, self.ethereum2, self.ethereum3, self.ethereum4)
+        self.block_chain.scale(0.5).to_edge(UP+RIGHT).shift(DOWN*1.5)
+        self.ethereum.scale(0.5).move_to(self.finalized_blocks[0])
+        self.ethereum2.scale(0.5).move_to(self.finalized_blocks[1])
+        self.ethereum3.scale(0.5).move_to(self.finalized_blocks[2])
+        self.ethereum4.scale(0.5).move_to(self.finalized_blocks[3])
+
+        scene.play(FadeIn(self.block_chain))  
+        scene.wait(2)
+
+        scene.play(FadeOut(self.block_chain), FadeOut(self.ethereum), 
+                FadeOut(self.ethereum2), FadeOut(self.ethereum3), 
+                FadeOut(self.ethereum4))
