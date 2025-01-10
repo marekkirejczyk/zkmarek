@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject, Axes
+from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject, Axes, Arrow, StealthTip, GrowArrow
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -6,6 +6,8 @@ from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e6.curve import Curve
+from zkmarek.video.slides.e5.layer2 import Layer2
+from zkmarek.video.mobjects.verkle_tree import VerkleTree
 import numpy as np
 
 def poly(x):
@@ -17,20 +19,22 @@ class Previously(SlideBase):
         
     def construct(self):
         self.title_label = Text("Previously on zkmarek", font = PRIMARY_FONT, color = PRIMARY_COLOR).to_edge(UP)
-        self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT)
+        self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*0.2)
         self.polynomial_label = MathTex(r"p(x)", color = PRIMARY_COLOR).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
 
         self.polynomial_opening_label = MathTex(r"p(x) - y_0", color = PRIMARY_COLOR).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
         self.quotient_deriviation_0 = MathTex(r"{{a}}{{(x_0-x_1)}}{{(x_0-x_2)}}{{(x_0 - x_0)}} = {{p(x_0)}} - {{y_0}}", color = PRIMARY_COLOR, font_size = 30).shift(UP*1.5+RIGHT*2.5)
         self.brace_0 = Brace(self.quotient_deriviation_0[3], direction = UP, color = PRIMARY_COLOR)
         self.brace_0.shift(DOWN*0.1)
-        self.brace_text = Text("0", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25)
+        self.brace_text = Text("0", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20)
         self.brace_0.put_at_tip(self.brace_text)
+        self.brace_text.shift(DOWN*0.1)
         
         self.quotient_deriviation_1 = MathTex(r"{{a}}{{(x-x_1)}}{{(x-x_2)}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 30, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_0, DOWN, buff = 0.5)
         self.quotient_deriviation_1[0:4].set_color(SECONDARY_COLOR)
         
-        self.quotient_deriviation_2 = MathTex(r"{{q(x)}} {{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
+        self.quotient_deriviation_2 = MathTex(r"{{q(x)}}{{\cdot}}{{}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
+        self.quotient_deriviation_2[0].set_color(SECONDARY_COLOR)
         
         self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
@@ -46,7 +50,7 @@ class Previously(SlideBase):
         self.chart_interpolation = Chart(include_details=True)
         self.chart_interpolation.ax = Axes(
             x_range=[0, 11, 1],
-            y_range=[-6, 10, 5],
+            y_range=[-13, 10, 5],
             x_length=7,
             axis_config={
                 "include_numbers": True,
@@ -59,15 +63,27 @@ class Previously(SlideBase):
         )
         self.chart_interpolation.scale(0.7).shift(LEFT*3.5)
         self.chart_interpolation.ax.scale(0.7).shift(LEFT*3.5)
-        self.chart_interpolation.labels.scale(0.7).shift(LEFT*3.5)
+        self.chart_interpolation.labels[0].next_to(self.chart_interpolation.ax[0], RIGHT+UP, buff = 0.0)
+        self.chart_interpolation.labels[1].next_to(self.chart_interpolation.ax[1], RIGHT+UP, buff = 0.0)
         self.chart_interpolation.graph4 = self.chart_interpolation.ax.plot_implicit_curve(
                 lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR)
         self.vector_values = MathTex(r"\left[{{3, }}{{4, }}{{2, }}{{-1, }}{{-2, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5)
         
-        self.blob = ImageMobject("data/images/blob.png")
+        self.data_points = Text("data points", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).shift(UP*1.5+RIGHT*2)
+        self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.data_points, DOWN, buff = 1.5)
+        self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.interpolation, DOWN, buff = 1.5)
+        
+        self.arrow_data_interpolation = Arrow(self.data_points.get_bottom(), self.interpolation.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip)
+        self.arrow_interpolation_vector = Arrow(self.interpolation.get_bottom(), self.vector_commitment.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip)
+
+        self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT*2.5)
         self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
         self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
+        
+        self.layer2 = Layer2()
+        
+        self.tree = VerkleTree().scale(0.5).shift(RIGHT*2.5+UP*1.5)
         
         
     def animate_in(self, scene):
@@ -106,35 +122,48 @@ class Previously(SlideBase):
         scene.play(Write(self.commitment), Write(self.proof))
         scene.play(Write(self.pairing_verifiaction_0))
         scene.wait(1)
+        scene.play(Indicate(self.commitment, color = SECONDARY_COLOR))
+        scene.play(Indicate(self.proof, color = SECONDARY_COLOR))
         scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.commitment.copy(), self.pairing_verifiaction_0), self.pairing_verifiaction_1))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2))
-        scene.wait(1)
-        scene.play(Indicate(self.pairing_verifiaction_2))
-        scene.play(Indicate(self.quotient_deriviation_2))
+        scene.wait(1.5)
         
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
+        scene.wait(1.5)
         scene.play(FadeOut(self.quotient_deriviation_2, self.pairing_verifiaction_2, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label))
+        scene.play(FadeIn(self.chart_interpolation.ax, self.chart_interpolation.labels))
         
         self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2a.mp3")
     
-        scene.play(FadeIn(self.chart_interpolation.ax, self.chart_interpolation.labels))
-        scene.wait(1)
+        scene.wait(1.5)
         self.dots_defining(scene)
+        scene.play(Create(self.chart_interpolation.graph4))
         
         self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
         scene.wait(1)
-        scene.play(Create(self.chart_interpolation.graph4))
+        scene.play(Write(self.data_points))
+        scene.play(GrowArrow(self.arrow_data_interpolation))
+        scene.play(Write(self.interpolation))
+        scene.play(GrowArrow(self.arrow_interpolation_vector))
+        scene.play(Write(self.vector_commitment))
         
         self.new_subsection(scene, "blobs", "data/sound/e6/slide1-3.mp3")
-        scene.play(FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation.graph4, self.vector_values))
-        scene.play(FadeOut(self.point))
+        scene.play(FadeOut(self.point), FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation.graph4, self.vector_values, self.interpolation, self.vector_commitment, self.data_points, self.arrow_data_interpolation, self.arrow_interpolation_vector))
 
-        scene.play(FadeIn(self.blob))
-        scene.play(FadeIn(self.blob_1))
-        scene.play(FadeIn(self.blob_2))
+        scene.play(FadeIn(self.blob), run_time=0.5)
+        scene.play(FadeIn(self.blob_1), run_time=0.5)
+        scene.play(FadeIn(self.blob_2), run_time=0.5)
+        # self.layer2.mini_blockchain_e6(scene)
         
         self.new_subsection(scene, "verkle trees", "data/sound/e6/slide1-3a.mp3")
+        scene.play(FadeOut(self.blob, self.blob_1, self.blob_2), run_time=0.5)
+        self.vast_data(scene)
+        scene.play(Create(self.tree), run_time=1.5)
+        scene.wait(1)
+        
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.title_label, self.tree, self.binary_matrix))
         
         
         
@@ -148,7 +177,7 @@ class Previously(SlideBase):
         
         polynomial_label = MathTex(r"p(x)", color = PRIMARY_COLOR, font_size = 40).next_to(item1, RIGHT)
         quotient_label = MathTex(r"q(x)", color = PRIMARY_COLOR, font_size = 40).next_to(item2, RIGHT)
-        trusted_setup_label = MathTex(r"p(\tau) \cdot G_1, \quad q(\tau) \cdot G_1", font_size = 35, color = PRIMARY_COLOR).next_to(item3, DOWN).shift(RIGHT)
+        trusted_setup_label = MathTex(r"p(\tau) \cdot G_1, \quad q(\tau) \cdot G_1", font_size = 35, color = PRIMARY_COLOR).next_to(item3, DOWN)
         
         self.item1 = VGroup(bullet1, item1, polynomial_label)
         self.item2 = VGroup(bullet2, item2, quotient_label)
@@ -205,3 +234,29 @@ class Previously(SlideBase):
         self.point = VGroup(self.p0, self.p1, self.p2, self.p3, self.p4, self.p5, self.p6, self.p7, self.p8, self.p9)
 
         scene.wait(1)
+        
+    def vast_data(self, scene):
+        import random
+        rows, cols = 10, 16 
+        self.binary_matrix = VGroup(*[
+            VGroup(*[
+                Text(str(random.choice([0, 1])), font_size=24)
+                for _ in range(cols)
+            ]).arrange(RIGHT, buff=0.1)
+            for _ in range(rows)
+        ]).arrange(DOWN, buff=0.1)
+
+        self.binary_matrix.move_to(LEFT * 3.5)
+        scene.add(self.binary_matrix)
+
+        for _ in range(20):  
+            new_row = VGroup(*[
+                Text(str(random.choice([0, 1])), font_size=24)
+                for _ in range(cols)
+            ]).arrange(RIGHT, buff=0.1)
+
+            scene.play(self.binary_matrix.animate.shift(DOWN * 0.4), run_time=0.2)
+
+            self.binary_matrix.add(new_row.move_to(self.binary_matrix[0].get_top() + UP * 0.4))
+            self.binary_matrix.remove(self.binary_matrix[0]) 
+            self.binary_matrix.submobjects = self.binary_matrix.submobjects[-rows:]
