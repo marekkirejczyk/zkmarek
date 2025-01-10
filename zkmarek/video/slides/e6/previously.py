@@ -1,4 +1,4 @@
-from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject, Axes, Arrow, StealthTip, GrowArrow
+from manim import FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, ImageMobject, Axes, Arrow, StealthTip, GrowArrow, Transform
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -123,16 +123,16 @@ class Previously(SlideBase):
         self.new_subsection(scene, "comparing two pairings", "data/sound/e6/slide1-1.mp3")
         scene.play(FadeOut(self.quotient_deriviation_0, self.quotient_deriviation_1))
         self.quotient_deriviation_2.generate_target()
-        self.quotient_deriviation_2.target.next_to(self.proof, DOWN, buff = 0.5)
+        self.quotient_deriviation_2.target.next_to(self.proof, DOWN, buff = 0.5).set_color(PRIMARY_COLOR)
         scene.play(MoveToTarget(self.quotient_deriviation_2))
         scene.play(Write(self.commitment), Write(self.proof))
         scene.play(Write(self.pairing_verifiaction_0))
         scene.wait(1)
         scene.play(Indicate(self.commitment, color = SECONDARY_COLOR))
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR))
-        scene.play(TransformMatchingShapes(VGroup(self.commitment.copy(), self.pairing_verifiaction_0), self.pairing_verifiaction_1))
+        scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = SECONDARY_COLOR))
         scene.wait(0.5)
-        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.pairing_verifiaction_1), self.pairing_verifiaction_2))
+        scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = SECONDARY_COLOR))
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_2, self.pairing_verifiaction_3))
         
@@ -251,19 +251,22 @@ class Previously(SlideBase):
                 for _ in range(cols)
             ]).arrange(RIGHT, buff=0.1)
             for _ in range(rows)
-        ]).arrange(DOWN, buff=0.1)
+        ]).arrange(DOWN, buff=0.2)
 
-        self.binary_matrix.move_to(LEFT * 3.5+UP)
+        self.binary_matrix.move_to(LEFT*2)
         scene.add(self.binary_matrix)
 
         for _ in range(20):  
-            new_row = VGroup(*[
-                Text(str(random.choice([0, 1])), font_size=24)
-                for _ in range(cols)
-            ]).arrange(RIGHT, buff=0.1)
+            new_rows = VGroup(*[
+                VGroup(*[
+                    Text(str(random.choice([0, 1])), font_size=24)
+                    for _ in range(cols)
+                ]).arrange(RIGHT, buff=0.1)
+                for _ in range(rows)
+            ]).arrange(DOWN, buff=0.2).move_to(LEFT*2)
 
-            scene.play(self.binary_matrix.animate.shift(DOWN * 0.4), run_time=0.2)
-
-            self.binary_matrix.add(new_row.move_to(self.binary_matrix[0].get_top() + UP * 0.4))
-            self.binary_matrix.remove(self.binary_matrix[0]) 
-            self.binary_matrix.submobjects = self.binary_matrix.submobjects[-rows:]
+            scene.play(*[
+                Transform(self.binary_matrix[i], new_rows[i])
+                for i in range(rows)
+            ], run_time=0.1)
+            
