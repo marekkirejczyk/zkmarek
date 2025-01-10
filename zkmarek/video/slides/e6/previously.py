@@ -39,9 +39,15 @@ class Previously(SlideBase):
         self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
         
-        self.pairing_verifiaction_0 = MathTex(r"e({{\pi}} {{}}, {{(\tau - x_0)}}\cdot {{G_2}}) = e({{C}} - {{y_0}}\cdot {{G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)
-        self.pairing_verifiaction_1 = MathTex(r"e({{q(\tau)}} {{}} {{\cdot G_1}}, {{(\tau - x_0)}}\cdot {{G_2}}) = e({{p(\tau)}} {{\cdot G_1}} - {{y_0}}\cdot {{G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)        
-        self.pairing_verifiaction_2 = MathTex(r"{{q(\tau)}} {{\cdot}} {{(\tau - x_0)}} {{}} = {{p(\tau)}} {{}} - {{y_0}} {{}} {{}}", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)        
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)        
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = SECONDARY_COLOR).to_edge(DOWN).shift(RIGHT+UP*0.5)       
+        self.pairing_verifiaction_3 = MathTex(
+            r"q({{\tau}}) {{\cdot}} ({{\tau}}-x_0) = p({{\tau}}) - {{y_0}}",
+            color=SECONDARY_COLOR,
+        ).to_edge(DOWN).shift(RIGHT+UP*0.5)    
+
+
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
         self.z = FieldElement(13, 41)
@@ -124,14 +130,15 @@ class Previously(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.commitment, color = SECONDARY_COLOR))
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR))
-        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.commitment.copy(), self.pairing_verifiaction_0), self.pairing_verifiaction_1))
-        scene.wait(1)
-        scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2))
+        scene.play(TransformMatchingShapes(VGroup(self.commitment.copy(), self.pairing_verifiaction_0), self.pairing_verifiaction_1))
+        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(VGroup(self.proof.copy(), self.pairing_verifiaction_1), self.pairing_verifiaction_2))
         scene.wait(1.5)
+        scene.play(TransformMatchingShapes(self.pairing_verifiaction_2, self.pairing_verifiaction_3))
         
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
         scene.wait(1.5)
-        scene.play(FadeOut(self.quotient_deriviation_2, self.pairing_verifiaction_2, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label))
+        scene.play(FadeOut(self.quotient_deriviation_2, self.pairing_verifiaction_3, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label))
         scene.play(FadeIn(self.chart_interpolation.ax, self.chart_interpolation.labels))
         
         self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2a.mp3")
@@ -246,7 +253,7 @@ class Previously(SlideBase):
             for _ in range(rows)
         ]).arrange(DOWN, buff=0.1)
 
-        self.binary_matrix.move_to(LEFT * 3.5)
+        self.binary_matrix.move_to(LEFT * 3.5+UP)
         scene.add(self.binary_matrix)
 
         for _ in range(20):  
