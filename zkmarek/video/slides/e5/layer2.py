@@ -1,8 +1,9 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
-Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave, MathTex,
-BLUE_E, GREEN_E, TEAL_E, RoundedRectangle)
+Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave,
+BLUE_E, GREEN_E, TEAL_E, RoundedRectangle, Transform)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.mobjects.verkle_tree import VerkleTree
 SCROLL_COLOR_BACKGROUND = "#FCEFCC"
 SCROLL_COLOR = "#E4C495"
 
@@ -178,7 +179,12 @@ class Layer2(SlideBase):
                            self.rounded_rectangle, self.blob_image, self.blob_image_1, self.blob_image_2))
         
     def miniature(self, scene):
-        
+        self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT*2.5)
+        self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
+        self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
+        scene.play(FadeIn(self.blob), run_time=0.5)
+        scene.play(FadeIn(self.blob_1), run_time=0.5)
+        scene.play(FadeIn(self.blob_2), run_time=0.5)
         self.block_chain = VGroup(
             self.tx_group, self.layer1_ethereum, self.layer2, self.transactions,
             self.layer2_group, self.finalized_group, self.arrow_layer1, self.arrow_layer2,
@@ -194,8 +200,41 @@ class Layer2(SlideBase):
         self.ethereum4.scale(0.5).move_to(self.finalized_blocks[3])
 
         scene.play(FadeIn(self.block_chain))  
-        scene.wait(2)
+        scene.wait(1)
+        
+        self.new_subsection(scene, "verkle trees", "data/sound/e6/slide1-3a.mp3")
+        scene.play(FadeOut(self.blob, self.blob_1, self.blob_2), run_time=0.5)
+        
+        import random
+        rows, cols = 10, 16 
+        self.binary_matrix = VGroup(*[
+            VGroup(*[
+                Text(str(random.choice([0, 1])), font_size=24)
+                for _ in range(cols)
+            ]).arrange(RIGHT, buff=0.1)
+            for _ in range(rows)
+        ]).arrange(DOWN, buff=0.2)
 
+        self.binary_matrix.move_to(LEFT*3)
+        scene.add(self.binary_matrix)
+        self.tree = VerkleTree().scale(0.5).shift(LEFT*2.5+UP*1.5)
+        for _ in range(20):  
+            new_rows = VGroup(*[
+                VGroup(*[
+                    Text(str(random.choice([0, 1])), font_size=24)
+                    for _ in range(cols)
+                ]).arrange(RIGHT, buff=0.1)
+                for _ in range(rows)
+            ]).arrange(DOWN, buff=0.2).move_to(LEFT*3)
+
+            scene.play(*[
+                Transform(self.binary_matrix[i], new_rows[i])
+                for i in range(rows)
+            ], run_time=0.1)
+        scene.play(FadeOut(self.binary_matrix), Create(self.tree), run_time=0.5)
+        scene.wait(2)
+            
         scene.play(FadeOut(self.block_chain), FadeOut(self.ethereum), 
                 FadeOut(self.ethereum2), FadeOut(self.ethereum3), 
-                FadeOut(self.ethereum4))
+                FadeOut(self.ethereum4, self.tree))
+        
