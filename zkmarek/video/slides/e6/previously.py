@@ -86,8 +86,8 @@ class Previously(SlideBase):
         self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = GREEN_E, font_size = 30).next_to(self.data_points, DOWN, buff = 1.5)
         self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = MAROON_E, font_size = 30).next_to(self.interpolation, DOWN, buff = 1.5)
         
-        self.arrow_data_interpolation = Arrow(self.data_points.get_bottom(), self.interpolation.get_top(), tip_shape = StealthTip).set_color_by_gradient([BLUE_D, GREEN_E])
-        self.arrow_interpolation_vector = Arrow(self.interpolation.get_bottom(), self.vector_commitment.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip).set_color_by_gradient([GREEN_E, MAROON_E])
+        self.arrow_data_interpolation = Arrow(self.data_points.get_bottom(), self.interpolation.get_top(), tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([BLUE_D, GREEN_E])
+        self.arrow_interpolation_vector = Arrow(self.interpolation.get_bottom(), self.vector_commitment.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([GREEN_E, MAROON_E])
 
         self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT*2.5)
         self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
@@ -106,7 +106,7 @@ class Previously(SlideBase):
         scene.play(FadeIn(self.polynomial_chart), Write(self.polynomial_label))
         
         self.new_subsection(scene, "kzg commitment scheme", "data/sound/e6/slide1-0a.mp3")
-        scene.wait(3)
+        scene.wait(4)
         self.bullet_list(scene)
         
         self.new_subsection(scene, "proof", "data/sound/e6/slide1-0b.mp3")
@@ -190,11 +190,11 @@ class Previously(SlideBase):
         self.item3 = VGroup(bullet3, item3, trusted_setup_label)
         
         scene.play(Write(self.item1), run_time=1)
-        scene.wait(1)
+        scene.wait(2)
         scene.play(Write(self.item2), run_time=1)
-        scene.wait(4)
-        scene.play(Write(self.item3), run_time=1.5)
-        scene.wait(7)
+        scene.wait(5.5)
+        scene.play(Write(self.item3), run_time=2)
+        scene.wait(3.2)
         
     def dots_defining(self, scene):
         point0 = ValueTracker(0)  
