@@ -218,7 +218,7 @@ class Layer2(SlideBase):
         self.binary_matrix.move_to(LEFT*3)
         scene.add(self.binary_matrix)
         self.tree = VerkleTree().scale(0.5).shift(LEFT*2.5+UP*1.5)
-        for _ in range(20):  
+        for _ in range(30):  
             new_rows = VGroup(*[
                 VGroup(*[
                     Text(str(random.choice([0, 1])), font_size=24)
@@ -231,8 +231,9 @@ class Layer2(SlideBase):
                 Transform(self.binary_matrix[i], new_rows[i])
                 for i in range(rows)
             ], run_time=0.1)
-        scene.play(FadeOut(self.binary_matrix), Create(self.tree), run_time=0.5)
-        scene.wait(2)
+        scene.play(FadeOut(self.binary_matrix), run_time=0.3)
+        scene.play(Create(self.tree), run_time=1)
+        scene.wait(2.2)
             
         scene.play(FadeOut(self.block_chain), FadeOut(self.ethereum), 
                 FadeOut(self.ethereum2), FadeOut(self.ethereum3), 

@@ -32,7 +32,7 @@ class Previously(SlideBase):
         self.brace_text.shift(DOWN*0.1)
         
         self.quotient_deriviation_1 = MathTex(r"{{a}}{{(x-x_1)}}{{(x-x_2)}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 30, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*2.5)
-        self.quotient_deriviation_1[0:4].set_color(YELLOW_E)
+        self.quotient_deriviation_1[0:3].set_color(YELLOW_E)
         
         self.quotient_deriviation_2 = MathTex(r"{{q(x)}}{{\cdot}}{{}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
         self.quotient_deriviation_2[0].set_color(YELLOW_E)
@@ -167,8 +167,6 @@ class Previously(SlideBase):
 
 
         self.layer2.miniature(scene)
-
-        scene.wait(1)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label))
@@ -191,11 +189,12 @@ class Previously(SlideBase):
         self.item2 = VGroup(bullet2, item2, quotient_label)
         self.item3 = VGroup(bullet3, item3, trusted_setup_label)
         
-        scene.play(Write(self.item1))
-        scene.wait(1.5)
-        scene.play(Write(self.item2))
-        scene.wait(1.5)
-        scene.play(Write(self.item3))
+        scene.play(Write(self.item1), run_time=1)
+        scene.wait(1)
+        scene.play(Write(self.item2), run_time=1)
+        scene.wait(4)
+        scene.play(Write(self.item3), run_time=1.5)
+        scene.wait(7)
         
     def dots_defining(self, scene):
         point0 = ValueTracker(0)  
