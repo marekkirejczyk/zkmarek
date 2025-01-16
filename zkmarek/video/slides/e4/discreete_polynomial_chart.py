@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
+from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut, FadeIn
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
@@ -90,7 +90,7 @@ class DiscreetePolynomialChart(VGroup):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, y_top)
         line = DashedLine(s, e, color=HIGHLIGHT2_COLOR, z_index=0)
-        scene.play(GrowFromPoint(line, point=s))
+        scene.play(GrowFromPoint(line, point=s), run_time=0.2)
         return line
 
     def animate_create_horizontal_line(self, scene, y, x_left, x_right):
@@ -112,7 +112,7 @@ class DiscreetePolynomialChart(VGroup):
                 animations.append(a)
         scene.play(*animations)
 
-    def animate_shift_dots_wrap_fix(self, scene, y_shift):
+    def animate_shift_dots_wrap_fix(self, scene, y_shift, runtime=0.7):
         animations = []
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
@@ -120,12 +120,12 @@ class DiscreetePolynomialChart(VGroup):
             yy = y.value - y_shift
             if yy < 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)))
-        scene.play(*animations)
+        scene.play(*animations, run_time=runtime)
         for d in self.dots:
             if d.get_fill_opacity() < 1:
                 d.set_fill(opacity=1)
                 
-    def animate_shift_dots_with_fade(self, scene, y_shift):
+    def animate_shift_dots_with_fade(self, scene, y_shift, runtime=0.7):
         animations = []
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
@@ -134,8 +134,8 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
             else:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.4))
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.0))
 
     
-        scene.play(*animations)
+        scene.play(*animations, run_time=runtime)
 
