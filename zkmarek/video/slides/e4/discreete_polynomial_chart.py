@@ -78,8 +78,8 @@ class DiscreetePolynomialChart(VGroup):
         self.add(label)
         return label
     
-    def indicate_xaxis_label(self, scene, label):
-        scene.play(Indicate(label, scale_factor=1.7, color=HIGHLIGHT_COLOR))
+    def indicate_xaxis_label(self, scene, label, runtime=0.7):
+        scene.play(Indicate(label, scale_factor=1.7, color=HIGHLIGHT_COLOR, run_time=runtime))
 
     def add_yaxis_label(self, y, label):
         label = MathTex(label, color=PRIMARY_COLOR)
@@ -135,6 +135,20 @@ class DiscreetePolynomialChart(VGroup):
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
             else:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.0))
+
+    
+        scene.play(*animations, run_time=runtime)
+        
+    def animate_shift_dots_with_fadeout(self, scene, y_shift, runtime=0.7):
+        animations = []
+        for i, d in enumerate(self.dots):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            yy = y.value - y_shift
+            if yy >= 0:
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
+            else:
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)))
 
     
         scene.play(*animations, run_time=runtime)

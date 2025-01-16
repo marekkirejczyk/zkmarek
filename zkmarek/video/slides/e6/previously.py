@@ -2,7 +2,7 @@ from manim import (FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, U
 ImageMobject, Axes, Arrow, StealthTip, GrowArrow, Transform, Polygon)
 from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -52,7 +52,7 @@ class Previously(SlideBase):
         self.pairing_verifiaction_4 = MathTex(
             r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}",
             color=LIGHT_BROWN,
-        ).to_edge(DOWN).shift(RIGHT*1.5+UP*0.5)    
+        ).to_edge(DOWN).shift(RIGHT*2.5+UP*0.5)    
 
 
         self.tau = FieldElement(33, 41)
@@ -108,40 +108,49 @@ class Previously(SlideBase):
         
         self.new_subsection(scene, "kzg commitment scheme", "data/sound/e6/slide1-0a.mp3")
         self.y0_x0(scene)
-        
-        self.new_subsection(scene, "proof", "data/sound/e6/slide1-0b.mp3")
-        scene.play(FadeOut(self.verifier, self.verifier_label, self.prover, self.commiter_label))
+        self.prover.generate_target()
+        self.prover.target.scale(0.5).set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
+        self.verifier.generate_target()
+        self.verifier.target.scale(0.5).set_opacity(0.5).shift(RIGHT*0.3+UP*0.3)
+        scene.play(FadeOut(self.verifier_label, self.commiter_label), MoveToTarget(self.prover), MoveToTarget(self.verifier))
         self.ec_points = VGroup(self.commitment, self.proof, self.opening)
         self.commitment.generate_target()
         self.commitment.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.5)
         self.proof.generate_target()
-        self.proof.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.5+DOWN)
+        self.proof.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.5+DOWN*0.5)
         self.opening.generate_target()
-        self.opening.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.5+DOWN*2)
+        self.opening.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.6+DOWN)
         scene.play(MoveToTarget(self.commitment), MoveToTarget(self.proof), MoveToTarget(self.opening)) 
         scene.wait(1)
-        self.opening2 = MathTex(r"{{0}} = {{p(x_0)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 0.5)
-        self.opening3 = MathTex(r"{{a}}{{(x_0-x_1)}}{{x_0 - x_2}}{{(x_0-x_0)}} = {{p(x_0)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.5)
-        self.brace_0 = Brace(self.opening3[3], direction = DOWN, color = PRIMARY_COLOR)
-        self.brace_0.shift(UP*0.1)
-        self.brace_text = Text("0", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20)
-        self.brace_0.put_at_tip(self.brace_text)
-        self.brace_text.shift(UP*0.1)
-        self.dots = MathTex(r"\cdots", color = PRIMARY_COLOR).next_to(self.opening3, DOWN, buff = 0.5)
-        scene.play(TransformMatchingShapes(self.opening.copy(), self.opening2))
         
+        self.new_subsection(scene, "proof", "data/sound/e6/slide1-0b.mp3")
+        self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 0.2)
+        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=18, font = PRIMARY_FONT).next_to(self.opening2, LEFT+DOWN, buff = 0.2)
+        self.opening3 = MathTex(r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.2)
+        self.x_one = FieldElement(0, 41)
+        self.x_two = FieldElement(37, 41)
+        self.value_at_x_one = poly(self.x_one)
+        self.value_at_x_two = poly(self.x_two)
+        self.dots = MathTex(r"\cdots", color = PRIMARY_COLOR).next_to(self.opening3, DOWN, buff = 0.2)
+        scene.play(TransformMatchingShapes(self.opening.copy(), self.opening2), FadeIn(self.new_polynomial_label))
         line_z = self.polynomial_chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
         )
         scene.play(TransformMatchingShapes(self.polynomial_label, self.polynomial_opening_label))
         scene.play(FadeOut(line_z))
         self.polynomial_chart.remove(line_z)
-        self.polynomial_chart.animate_shift_dots_with_fade(scene, self.y.value, runtime=0.05)
-        self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value, runtime=0.05)
-        scene.play(TransformMatchingShapes(self.opening2.copy(), self.opening3), FadeIn(self.brace_0, self.brace_text))
-        scene.play(FadeIn(self.dots), FadeOut(self.brace_0, self.brace_text))
+        self.polynomial_chart.animate_shift_dots_with_fadeout(scene, self.y.value, runtime=0.5)
+        labelx1 = self.polynomial_chart.add_xaxis_label(self.x_one.value, r"x_1")
+        labelx2 = self.polynomial_chart.add_xaxis_label(self.x_two.value, r"x_2")
+        self.polynomial_chart.remove(self.label_y)
+        scene.play(TransformMatchingShapes(self.opening2.copy(), self.opening3), FadeOut(self.new_polynomial_label))
+        for i in range(3):
+            labels = [self.label_x, labelx1, labelx2]
+            self.polynomial_chart.indicate_xaxis_label(scene, labels[i], runtime=0.4)
+        scene.play(FadeIn(self.dots))
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff = 0.2)
         scene.play(Write(self.quotient_deriviation_3))
+        scene.wait(1)
         
         self.new_subsection(scene, "comparing two pairings", "data/sound/e6/slide1-1.mp3")
         scene.play(FadeOut(self.opening3, self.dots, self.opening2, self.opening))    
@@ -149,8 +158,8 @@ class Previously(SlideBase):
         self.quotient_deriviation_3.target.next_to(self.proof, DOWN, buff = 0.2).set_color(PRIMARY_COLOR)
         scene.play(MoveToTarget(self.quotient_deriviation_3))
 
-        scene.play(Write(self.pairing_verifiaction_0))
-        scene.wait(1)
+        scene.play(Write(self.pairing_verifiaction_0), Indicate(self.verifier, color = PRIMARY_COLOR))
+        scene.wait(3)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = LIGHT_BROWN))
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = LIGHT_BROWN))
@@ -158,6 +167,9 @@ class Previously(SlideBase):
         scene.play(FadeOut(self.pairing_verifiaction_2), FadeIn(self.pairing_verifiaction_3))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_3, self.pairing_verifiaction_4))
+        scene.play(Indicate(self.quotient_deriviation_3, color = LIGHT_BROWN), run_time=0.5)
+        scene.play(Indicate(self.pairing_verifiaction_4, color = LIGHT_BROWN), run_time=0.5)
+        
         
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
         scene.wait(1.5)
@@ -203,7 +215,7 @@ class Previously(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
             fill_color=MAROON_E, fill_opacity=0.5
         ).scale(0.39)
-        self.envelope_body_closed.next_to(self.prover, LEFT+DOWN, buff = 0.6)
+        self.envelope_body_closed.next_to(self.prover, DOWN, buff = 0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
 
         self.opening = MathTex(r"{{}} {{p(x_0)}} {{}} = {{y_0}}", font_size=32, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.2)
@@ -216,18 +228,19 @@ class Previously(SlideBase):
         scene.wait(2)
         scene.play(FadeIn(self.prover, self.verifier))
         scene.play(Write(self.verifier_label), Write(self.commiter_label))
-        self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
+        scene.wait(2.5)
         scene.play(Write(self.opening))
+        self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
+        scene.wait(1)
         self.label_x = self.polynomial_chart.add_xaxis_label(self.x_zero.value, r"x_0")
         scene.wait(1.5)
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(FadeIn(self.commitment))
         self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.proof, DOWN, buff = 0.2)
+        self.commitment_sent.target.next_to(self.proof, DOWN, buff = 0.0)
         scene.play(MoveToTarget(self.commitment_sent), FadeIn(self.proof))
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.wait(1)
         scene.play(Indicate(self.commitment, color = LIGHT_BROWN))
         scene.play(Indicate(self.proof, color = LIGHT_BROWN))
         

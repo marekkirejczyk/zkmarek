@@ -209,7 +209,7 @@ class Layer2(SlideBase):
         rows, cols = 10, 16 
         self.binary_matrix = VGroup(*[
             VGroup(*[
-                Text(str(random.choice([0, 1])), font_size=24)
+                Text(str(random.choice([0, 1])), font_size=24, line_spacing=3)
                 for _ in range(cols)
             ]).arrange(RIGHT, buff=0.1)
             for _ in range(rows)
@@ -217,7 +217,7 @@ class Layer2(SlideBase):
 
         self.binary_matrix.move_to(LEFT*3)
         scene.add(self.binary_matrix)
-        self.tree = VerkleTree().scale(0.5).shift(LEFT*2.5+UP*1.5)
+        self.tree = VerkleTree().scale(0.5).shift(LEFT*2.5+UP*2.5)
         for _ in range(30):  
             new_rows = VGroup(*[
                 VGroup(*[
