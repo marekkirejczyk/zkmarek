@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut, FadeIn
+from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR

@@ -209,7 +209,7 @@ class Layer2(SlideBase):
         rows, cols = 10, 16 
         self.binary_matrix = VGroup(*[
             VGroup(*[
-                Text(str(random.choice([0, 1])), font_size=24, line_spacing=3)
+                Text(str(random.choice([0, 1])), font_size=24)
                 for _ in range(cols)
             ]).arrange(RIGHT, buff=0.1)
             for _ in range(rows)
