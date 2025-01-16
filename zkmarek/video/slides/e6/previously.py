@@ -13,6 +13,7 @@ from zkmarek.video.mobjects.verkle_tree import VerkleTree
 import numpy as np
 
 def poly(x):
+    
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
     return output
 class Previously(SlideBase):
