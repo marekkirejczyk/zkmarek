@@ -158,13 +158,14 @@ class Previously(SlideBase):
         self.quotient_deriviation_3.generate_target()
         self.quotient_deriviation_3.target.next_to(self.proof, DOWN, buff = 0.2).set_color(PRIMARY_COLOR)
         scene.play(MoveToTarget(self.quotient_deriviation_3))
-
-        scene.play(Write(self.pairing_verifiaction_0), Indicate(self.verifier, color = PRIMARY_COLOR))
-        scene.wait(3)
+        self.verifier.generate_target()
+        self.verifier.target.set_opacity(0.9)
+        scene.play(Write(self.pairing_verifiaction_0), MoveToTarget(self.verifier))
+        scene.wait(2.5)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = LIGHT_BROWN))
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = LIGHT_BROWN))
-        scene.wait(1.5)
+        scene.wait(1.2)
         scene.play(FadeOut(self.pairing_verifiaction_2), FadeIn(self.pairing_verifiaction_3))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_3, self.pairing_verifiaction_4))
@@ -174,7 +175,7 @@ class Previously(SlideBase):
         
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
         scene.wait(1.5)
-        scene.play(FadeOut(self.quotient_deriviation_3, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label))
+        scene.play(FadeOut(self.quotient_deriviation_3, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label, self.verifier, self.prover))
         scene.play(FadeIn(self.chart_interpolation.ax, self.chart_interpolation.labels))
         
         self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2a.mp3")
