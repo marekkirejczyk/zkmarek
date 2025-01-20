@@ -49,7 +49,7 @@ class MerkleTree(SlideBase):
         
         self.new_subsection(scene, "Full node 15 TB", "data/sound/e6/slide2-0a.mp3")
         side_block1 = Group(self.finalized_blocks[0], self.ethereum2)
-        side_block2 = Group(self.finalized_blocks[3], self.ethereum3)
+        side_block2 = Group(self.finalized_blocks[2], self.ethereum3)
         main_block = Group(self.finalized_blocks[1], self.ethereum.set_opacity(0.3))
         side_block1.generate_target()
         side_block1.target.scale(0.4).shift(LEFT*2+DOWN)
