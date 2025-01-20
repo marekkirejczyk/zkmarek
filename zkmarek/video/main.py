@@ -217,7 +217,7 @@ EPISODE5 = [
 ]
 
 EPISODE6 = [
-    PreviouslyE6(),
+    # PreviouslyE6(),
     MerkleTree(),
 ]
 
