@@ -182,9 +182,9 @@ class Layer2(SlideBase):
         self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT*2.5)
         self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
         self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
-        scene.play(FadeIn(self.blob), run_time=0.5)
-        scene.play(FadeIn(self.blob_1), run_time=0.5)
-        scene.play(FadeIn(self.blob_2), run_time=0.5)
+        scene.play(FadeIn(self.blob), run_time=0.3)
+        scene.play(FadeIn(self.blob_1), run_time=0.3)
+        scene.play(FadeIn(self.blob_2), run_time=0.3)
         self.block_chain = VGroup(
             self.tx_group, self.layer1_ethereum, self.layer2, self.transactions,
             self.layer2_group, self.finalized_group, self.arrow_layer1, self.arrow_layer2,
@@ -200,7 +200,7 @@ class Layer2(SlideBase):
         self.ethereum4.scale(0.5).move_to(self.finalized_blocks[3])
 
         scene.play(FadeIn(self.block_chain))  
-        scene.wait(1)
+        scene.wait(0.3)
         
         self.new_subsection(scene, "verkle trees", "data/sound/e6/slide1-3a.mp3")
         scene.play(FadeOut(self.blob, self.blob_1, self.blob_2), run_time=0.5)
