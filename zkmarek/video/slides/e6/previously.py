@@ -1,6 +1,6 @@
 from manim import (FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, 
 ImageMobject, Axes, Arrow, StealthTip, GrowArrow, Transform, Polygon)
-from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN
+from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN, PURPLE_B
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -44,18 +44,18 @@ class Previously(SlideBase):
         self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
         self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
         
-        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)
-        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)        
-        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)       
-        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = LIGHT_BROWN).to_edge(DOWN).shift(RIGHT+UP*0.5)       
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = PURPLE_B).to_edge(DOWN).shift(RIGHT+UP*0.5)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = PURPLE_B).to_edge(DOWN).shift(RIGHT+UP*0.5)        
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = PURPLE_B).to_edge(DOWN).shift(RIGHT+UP*0.5)       
+        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = PURPLE_B).to_edge(DOWN).shift(RIGHT+UP*0.5)       
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 40,
             color=BLUE_D,
-        ).next_to(self.pairing_verifiaction_2, UP, buff = 0.5).shift(RIGHT*1.3)   
+        ).next_to(self.pairing_verifiaction_2, UP, buff = 0.5).shift(RIGHT*1.4)   
         self.pairing_verifiaction_4 = MathTex(
             r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 40,
             color=BLUE_D,
-        ).next_to(self.pairing_verifiaction_2, UP, buff = 0.5).shift(RIGHT*1.3)   
+        ).next_to(self.pairing_verifiaction_2, UP, buff = 0.5).shift(RIGHT*1.4)   
 
         self.tau = FieldElement(33, 41)
         self.value_at_tau = poly(self.tau)
@@ -143,10 +143,10 @@ class Previously(SlideBase):
         self.proof.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.5+DOWN*0.5)
         self.opening.generate_target()
         self.opening.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.6+DOWN)
-        scene.play(MoveToTarget(self.commitment), MoveToTarget(self.proof), MoveToTarget(self.opening)) 
-        scene.wait(1)
         
         self.new_subsection(scene, "proof", "data/sound/e6/slide1-0b.mp3")
+        scene.play(MoveToTarget(self.commitment), MoveToTarget(self.proof), MoveToTarget(self.opening)) 
+        scene.wait(0.5)
         self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 0.2)
         self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=18, font = PRIMARY_FONT).next_to(self.opening2, LEFT+DOWN, buff = 0.2)
         self.opening3 = MathTex(r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.2)
@@ -171,7 +171,7 @@ class Previously(SlideBase):
             labels = [self.label_x, labelx1, labelx2]
             roots = [self.opening3[3], self.opening3[1], self.opening3[2]]
             self.polynomial_chart.indicate_xaxis_label(scene, labels[i], runtime=0.5)
-            scene.play(Indicate(roots[i], color = YELLOW_E), run_time=0.5)
+            scene.play(Indicate(roots[i], color = GREEN_E, scale_factor=1.3), run_time=0.5)
         scene.play(FadeIn(self.dots))
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff = 0.2)
         scene.play(Write(self.quotient_deriviation_3))
@@ -185,7 +185,7 @@ class Previously(SlideBase):
         self.verifier.generate_target()
         self.verifier.target.set_opacity(0.9).scale(1.2)
         scene.play(Write(self.pairing_verifiaction_0), MoveToTarget(self.verifier))
-        scene.wait(2.5)
+        scene.wait(2)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = LIGHT_BROWN))
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = LIGHT_BROWN))
@@ -193,7 +193,7 @@ class Previously(SlideBase):
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_2, self.pairing_verifiaction_2a))
         colors = VGroup(self.pairing_verifiaction_2a[1:4], self.pairing_verifiaction_2a[8:11])
         colors.set_color(BLUE_D)    
-        scene.wait(0.5)
+        scene.wait(1)
         scene.play(TransformMatchingShapes(VGroup(colors.copy()), self.pairing_verifiaction_3))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_3, self.pairing_verifiaction_4))

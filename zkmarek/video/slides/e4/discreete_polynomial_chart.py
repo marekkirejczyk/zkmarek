@@ -79,7 +79,7 @@ class DiscreetePolynomialChart(VGroup):
         return label
     
     def indicate_xaxis_label(self, scene, label, runtime=0.7):
-        scene.play(Indicate(label, scale_factor=1.7, color=HIGHLIGHT_COLOR, run_time=runtime))
+        scene.play(Indicate(label, scale_factor=1.4, color=HIGHLIGHT_COLOR, run_time=runtime))
 
     def add_yaxis_label(self, y, label):
         label = MathTex(label, color=PRIMARY_COLOR)
