@@ -48,7 +48,7 @@ class MerkleTree(SlideBase):
         self.account_group = VGroup(*self.account_vector_rectangles).arrange(RIGHT, buff=0.5).next_to(self.account_data_vector, DOWN)
         self.vec0 = MathTex("3", color = GREEN_D, font_size = 35).move_to(self.account_vector_rectangles[0])
         self.vec1 = MathTex("4", color = GREEN_D, font_size = 35).move_to(self.account_vector_rectangles[1])
-        self.dots_vec = MathTex(r"\boldsymbol{\cdots}", color = GREEN_D, font_size = 35).next_to(self.account_vector_rectangles[1], RIGHT, buff = 0.1).scale(0.8)
+        self.dots_vec = MathTex(r"\boldsymbol{\cdots}", color = GREEN_D, font_size = 35).next_to(self.account_vector_rectangles[1], RIGHT, buff = 0.06).scale(0.8)
         self.vec2 = MathTex("8", color = GREEN_D, font_size = 35).move_to(self.account_vector_rectangles[2])
         self.vec3 = MathTex("3", color = GREEN_D, font_size = 35).move_to(self.account_vector_rectangles[3])
         self.vecs = VGroup(self.vec0, self.vec1, self.dots_vec, self.vec2, self.vec3)
@@ -115,30 +115,36 @@ class MerkleTree(SlideBase):
         self.dots2.scale(1/2).next_to(self.transaction_data1, DOWN, buff = 0.2)
         self.dots3.scale(1/2).next_to(self.transaction_data2, DOWN, buff = 0.2)
         scene.play(Write(self.account_data1), Write(self.account_data2), Write(self.transaction_data1), Write(self.transaction_data2), Write(self.dots2), Write(self.dots3))  
-        scene.wait(0.5)
         scene.play(FadeIn(self.computer))
-        all_vecs = VGroup(self.account_data1, self.account_data2, self.transaction_data1, self.transaction_data2, self.account_data, self.transaction_data)
+        scene.wait(0.5)
+        all_vecs = VGroup(self.account_data1, self.account_data, self.account_data2, self.transaction_data1, self.transaction_data, self.transaction_data2)
         for i in range(len(all_vecs)):
-            scene.play(Indicate(all_vecs[i], color = PURPLE_B), run_time=0.3)
+            scene.play(Indicate(all_vecs[i], color = PURPLE_B, scale_factor=1.2), run_time=0.3)
         
         self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
         scene.wait(3)
         self.account_data2.set_color(PURPLE)
         
         self.new_subsection(scene, "merkle trees", "data/sound/e6/slide2-1.mp3")
-        scene.wait(1)
+        scene.wait(3)
         scene.play(FadeOut(self.computer, main_block, side_block1, side_block2, self.finalized_group, self.eth_logos, self.transaction_data1, self.transaction_data2, self.account_data1, self.account_data2, self.dots3, self.dots2))
         
         self.new_subsection(scene, "data-> tree", "data/sound/e6/slide2-1a.mp3")
+        node1_0 = self.markle_tree_2_3.get_node(1, 0)
+        node2_1 = self.markle_tree_2_3.get_node(2, 1)
+        self.dots_vec_node = self.dots_vec.copy()
+        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*0.15).scale(0.7)
+        self.dots_vec_node1 = self.dots_vec.copy()
+        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.15).scale(0.7)
         scene.play(Create(self.account_data_vector))
         scene.play(Create(self.account_vector_rectangles[0]), Write(self.vec0), run_time=0.2)
         scene.play(Create(self.account_vector_rectangles[1]), Write(self.vec1), Write(self.dots_vec), run_time=0.2)
         scene.play(Create(self.account_vector_rectangles[2]), Write(self.vec2), run_time=0.2)
         scene.play(Create(self.account_vector_rectangles[3]), Write(self.vec3), run_time=0.2)
         scene.wait(2)
-        scene.play(Create(self.markle_tree_2_3))
-        scene.wait(2.5)
-        scene.play(FadeOut(self.account_group, self.vecs, self.markle_tree_2_3))
+        scene.play(Create(self.markle_tree_2_3), Create(self.dots_vec_node1), Create(self.dots_vec_node))
+        scene.wait(5)
+        scene.play(FadeOut(self.account_group, self.vecs, self.markle_tree_2_3, self.dots_vec_node, self.dots_vec_node1))
         
         
         self.new_subsection(scene, "8 element vector", "data/sound/e6/slide2-2.mp3")
@@ -153,15 +159,12 @@ class MerkleTree(SlideBase):
         self.rect_copy = self.account_group_8_elements.copy()
         for i in range(8):
             self.vec_copy[2*i+1].generate_target()
-            self.vec_copy[2*i+1].target.next_to(self.merkle_tree_2_4, DOWN+LEFT, buff = 0.3).shift(i*RIGHT*1.25+RIGHT*0.7+DOWN*0.06)
+            self.vec_copy[2*i+1].target.next_to(self.merkle_tree_2_4, DOWN+LEFT, buff = 0.3).shift(i*RIGHT*1.25+RIGHT*0.71+DOWN*0.06)
             self.rect_copy[i].generate_target()
             self.rect_copy[i].target.next_to(self.merkle_tree_2_4, DOWN+LEFT, buff = 0.3).shift(i*RIGHT*1.25+RIGHT*0.95)
             
             scene.play(MoveToTarget(self.vec_copy[2*i+1]), MoveToTarget(self.rect_copy[i]), run_time=0.2)
-        scene.wait(1)
-        for i in range(8):
-            scene.play(Indicate(self.vec_copy[2*i+1], color = PURPLE_B), run_time=0.3)
-            
+
         self.hashes_of_8_element(scene)
 
         
@@ -180,12 +183,11 @@ class MerkleTree(SlideBase):
             levels.set_color_by_gradient([GREEN_E, TEAL_E])
             
         scene.play(FadeOut(self.account_data_vector, self.account_group_8_elements, self.vector_8element))
-        merkle_shift = Group(self.merkle_tree_2_4, self.rect_copy, self.vec_copy, self.all_hashes)
-        merkle_shift.generate_target()
-        merkle_shift.target.shift(LEFT*1.5)
-        scene.play(MoveToTarget(merkle_shift))
-        
-        self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
+        # merkle_shift = Group(self.merkle_tree_2_4, self.rect_copy, self.vec_copy, self.all_hashes)
+        # merkle_shift.generate_target()
+        # merkle_shift.target.shift(LEFT*1.5)
+        # scene.play(MoveToTarget(merkle_shift))
+        self.rect_copy[0].set_color_by_gradient([BLUE_B, PURPLE_B])
         self.merkle_proof(scene)
         
         self.new_subsection(scene, "logarithmically", "data/sound/e6/slide2-4.mp3")
@@ -255,12 +257,14 @@ class MerkleTree(SlideBase):
         for i in range(2):
             scene.play(Create(self.level_1_hashes[i]), run_time=0.2)
         scene.play(Create(self.level_0_hashes), run_time=0.5)
+        scene.wait(5)
+        scene.play(Indicate(self.level_0_hashes, color = PURPLE_B))
         
         
     def update_nodes(self, scene):
         index_of_the_node = 0
         new_value = 9
-        new_numerical_value = Text(str(new_value), color = GREEN_D, font_size = 35).move_to(self.rect_copy[0].get_center())
+        new_numerical_value = Text(str(new_value), color = GREEN_D, font_size = 30).move_to(self.rect_copy[0].get_center())
         self.rect_copy[0].set_color(YELLOW_D)
         scene.play(Transform(self.vec_copy[2*index_of_the_node+1], new_numerical_value))
         self.new_hashes = [Text("1958...", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 16), Text("3c82...", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 16), 
@@ -302,18 +306,26 @@ class MerkleTree(SlideBase):
         for node in nodes_needed_to_proof:
             node.set_color(PURPLE_B)
             
+        self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
+        scene.wait(1)
+        scene.play(Indicate(node_prove, color = YELLOW_D))
+        scene.wait(3)
+        scene.play(Indicate(node_prove, color = YELLOW_D), run_time=0.4)
+        scene.play(Indicate(nodes_needed_to_proof[0], color = YELLOW_D), run_time=0.4)
+        scene.play(Indicate(nodes_needed_to_proof[1], color = YELLOW_D), run_time=0.4)
+            
         
             
     def logarithmically_size(self, scene):
         scene.wait(2)
-        self.proof_formula = MathTex(r"\text{Proof size} = \log_2({{n}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.merkle_tree_2_4, LEFT+UP).shift(RIGHT*2+DOWN*2)
+        self.proof_formula = MathTex(r"\text{Proof size} = \log_2({{n}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.merkle_tree_2_4, LEFT+UP).shift(RIGHT*3.5+DOWN*2)
         scene.play(Create(self.proof_formula))
         transform_zero_to_8 = [MathTex(r"1", color = PRIMARY_COLOR, font_size = 35), MathTex(r"2", color = PRIMARY_COLOR, font_size = 35), 
                                MathTex(r"3", color = PRIMARY_COLOR, font_size = 35), MathTex(r"4", color = PRIMARY_COLOR, font_size = 35),
                                MathTex(r"5", color = PRIMARY_COLOR, font_size = 35), MathTex(r"6", color = PRIMARY_COLOR, font_size = 35),
                                MathTex(r"7", color = PRIMARY_COLOR, font_size = 35), MathTex(r"8", color = PRIMARY_COLOR, font_size = 35),]
         for number in transform_zero_to_8:
-            number.move_to(self.proof_formula[2].get_center())
+            number.move_to(self.proof_formula[2].get_center()).shift(LEFT*0.2)
         scene.wait(1)
         prev_number = self.proof_formula[1]
         for i in range(8):
