@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.special import factorial
 class Curve:
     x: float
     y: float
@@ -9,7 +10,7 @@ class Curve:
 
     @staticmethod
     def from_x(x, sgn = 1):
-        y = sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101))
+        y = sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101))
         return Curve(x, -y) if sgn < 0 else Curve(x, y)
 
     def __neg__(self):
