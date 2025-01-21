@@ -11,6 +11,7 @@ from zkmarek.video.slides.e6.curve import Curve
 from zkmarek.video.slides.e5.layer2 import Layer2
 from zkmarek.video.mobjects.verkle_tree import VerkleTree
 import numpy as np
+from scipy.special import factorial
 
 def poly(x):
     
@@ -81,7 +82,7 @@ class Previously(SlideBase):
         self.chart_interpolation.labels[0].next_to(self.chart_interpolation.ax[0], RIGHT+UP, buff = 0.0)
         self.chart_interpolation.labels[1].next_to(self.chart_interpolation.ax[1], RIGHT+UP, buff = 0.0)
         self.chart_interpolation_graph4 = self.chart_interpolation.ax.plot_implicit_curve(
-                lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR)
         self.vector_values = MathTex(r"\left[{{3, }}{{4, }}{{2, }}{{-1, }}{{-2, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5)
         
