@@ -246,7 +246,7 @@ class Previously(SlideBase):
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
         
         
-        self.new_subsection(scene, "opening - proof pi", "data/sound/e6/slide1-1b.mp3")
+        self.new_subsection(scene, "opening - proof pi", "data/sound/e6/slide1-0b.mp3")
         scene.play(Write(self.opening))
         self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
         scene.wait(1.7)
