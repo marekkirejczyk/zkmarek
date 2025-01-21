@@ -75,8 +75,8 @@ from zkmarek.video.slides.e5.kzg import KZGBlobs
 from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
 from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
 from zkmarek.video.slides.e5.credits import Credits as CreditsE5
-# from zkmarek.video.slides.e6.previously import Previously as PreviouslyE6
-from zkmarek.video.slides.e6.merkle import MerkleTree
+from zkmarek.video.slides.e6.previously import Previously as PreviouslyE6
+# from zkmarek.video.slides.e6.merkle import MerkleTree
 
 config.width = 16
 config.height = 9
@@ -217,8 +217,8 @@ EPISODE5 = [
 ]
 
 EPISODE6 = [
-    # PreviouslyE6(),
-    MerkleTree(),
+    PreviouslyE6(),
+    # MerkleTree(),
 ]
 
 EPISODE7 = [
