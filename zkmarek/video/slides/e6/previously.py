@@ -80,7 +80,7 @@ class Previously(SlideBase):
         self.chart_interpolation.ax.scale(0.7).shift(LEFT*3.5)
         self.chart_interpolation.labels[0].next_to(self.chart_interpolation.ax[0], RIGHT+UP, buff = 0.0)
         self.chart_interpolation.labels[1].next_to(self.chart_interpolation.ax[1], RIGHT+UP, buff = 0.0)
-        self.chart_interpolation.graph4 = self.chart_interpolation.ax.plot_implicit_curve(
+        self.chart_interpolation_graph4 = self.chart_interpolation.ax.plot_implicit_curve(
                 lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR)
         self.vector_values = MathTex(r"\left[{{3, }}{{4, }}{{2, }}{{-1, }}{{-2, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5)
@@ -210,7 +210,7 @@ class Previously(SlideBase):
     
         scene.wait(1.5)
         self.dots_defining(scene)
-        scene.play(Create(self.chart_interpolation.graph4))
+        scene.play(Create(self.chart_interpolation_graph4))
         
         self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
         scene.wait(1)
@@ -221,7 +221,7 @@ class Previously(SlideBase):
         scene.play(Write(self.vector_commitment))
         
         self.new_subsection(scene, "blobs", "data/sound/e6/slide1-3.mp3")
-        scene.play(FadeOut(self.point), FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation.graph4, self.vector_values, self.interpolation, self.vector_commitment, self.data_points, self.arrow_data_interpolation, self.arrow_interpolation_vector))
+        scene.play(FadeOut(self.point), FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation_graph4, self.vector_values, self.interpolation, self.vector_commitment, self.data_points, self.arrow_data_interpolation, self.arrow_interpolation_vector))
 
 
         self.layer2.miniature(scene)

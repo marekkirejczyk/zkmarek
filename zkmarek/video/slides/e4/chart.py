@@ -56,7 +56,6 @@ class Chart(VGroup):
         self.add(self.graph)
         self.add(self.graph2)
         self.add(self.graph3)
-        self.add(self.graph4)
 
     def animate_in(self, scene):
         if self.include_details:
