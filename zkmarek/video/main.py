@@ -217,6 +217,7 @@ EPISODE5 = [
 ]
 
 EPISODE6 = [
+    TitleSlide("Previously on zkMarek...", sound="data/sound/e6/slide1-0.mp3", wait_time=2),
     PreviouslyE6(),
     # MerkleTree(),
 ]

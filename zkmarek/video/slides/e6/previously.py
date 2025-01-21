@@ -124,12 +124,11 @@ class Previously(SlideBase):
         self.value_at_x_zero = poly(self.x_zero)      
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "last time...", "data/sound/e6/slide1-0.mp3")
-        scene.play(Write(self.title_label))
-        self.polynomial_chart.gen_points()
-        scene.play(FadeIn(self.polynomial_chart), Write(self.polynomial_label))
-        
         self.new_subsection(scene, "kzg commitment scheme", "data/sound/e6/slide1-0a.mp3")
+        scene.play(Write(self.title_label))
+        scene.wait(0.5)
+        scene.play(FadeIn(self.prover, self.verifier))
+        scene.play(Write(self.verifier_label), Write(self.commiter_label))
         self.y0_x0(scene)
         self.prover.generate_target()
         self.prover.target.scale(0.5).set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
@@ -144,7 +143,7 @@ class Previously(SlideBase):
         self.opening.generate_target()
         self.opening.target.next_to(self.polynomial_chart, RIGHT+UP).shift(RIGHT*2.6+DOWN)
         
-        self.new_subsection(scene, "proof", "data/sound/e6/slide1-0b.mp3")
+        self.new_subsection(scene, "proof", "data/sound/e6/slide1-0c.mp3")
         scene.play(MoveToTarget(self.commitment), MoveToTarget(self.proof), MoveToTarget(self.opening)) 
         scene.wait(0.5)
         self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=32, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 0.2)
@@ -160,6 +159,8 @@ class Previously(SlideBase):
             scene, self.z.value, self.y.value
         )
         scene.play(TransformMatchingShapes(self.polynomial_label, self.polynomial_opening_label))
+        
+        self.new_subsection(scene, "toots", "data/sound/e6/slide1-0d.mp3")
         scene.play(FadeOut(line_z))
         self.polynomial_chart.remove(line_z)
         self.polynomial_chart.animate_shift_dots_with_fadeout(scene, self.y.value, runtime=0.5)
@@ -231,26 +232,30 @@ class Previously(SlideBase):
         
         
     def y0_x0(self, scene):
-        scene.wait(2)
-        scene.play(FadeIn(self.prover, self.verifier))
-        scene.play(Write(self.verifier_label), Write(self.commiter_label))
         scene.wait(2.5)
-        scene.play(Write(self.opening))
+        self.polynomial_chart.gen_points()
+        scene.play(FadeIn(self.polynomial_chart), Write(self.polynomial_label))
         scene.wait(0.5)
+        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
+        scene.play(FadeIn(self.commitment))
+        self.commitment_sent.generate_target()
+        self.commitment_sent.target.next_to(self.proof, DOWN, buff = 0.1)
+        scene.play(MoveToTarget(self.commitment_sent))
+        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
+        
+        
+        self.new_subsection(scene, "opening - proof pi", "data/sound/e6/slide1-3.mp3")
+        scene.play(Write(self.opening))
+        self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
         scene.wait(1.7)
         self.label_x = self.polynomial_chart.add_xaxis_label(self.x_zero.value, r"x_0")
         scene.wait(1)
-        scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
-        scene.play(FadeIn(self.commitment))
-        self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
-        self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.proof, DOWN, buff = 0.1)
-        scene.play(MoveToTarget(self.commitment_sent), FadeIn(self.proof), run_time=0.5)
-        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
-        scene.play(Indicate(self.commitment, color = LIGHT_BROWN))
-        scene.play(Indicate(self.proof, color = LIGHT_BROWN))
-        
+        self.proof.next_to(self.prover, DOWN)
+        scene.play(FadeIn(self.proof), run_time=0.5)
+        self.proof.generate_target()
+        self.proof.target.next_to(self.commitment, UP, buff = 0.5)
+        scene.play(MoveToTarget(self.proof))
         
     def dots_defining(self, scene):
         point0 = ValueTracker(0)  
