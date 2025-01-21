@@ -36,7 +36,7 @@ class MerkleTree(VGroup):
     def __init__(self, num_children=2, num_levels=3, include_labels=True):
         super().__init__()
 
-        if num_children < 2 or num_children > 16:
+        if num_children < 2 or num_children > 17:
             raise ValueError("Number of children per node must be between 2 and 16.")
         if num_levels < 1 or num_levels > 4:
             raise ValueError("Number of levels must be between 1 and 4.")
