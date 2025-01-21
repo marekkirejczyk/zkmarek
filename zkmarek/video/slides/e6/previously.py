@@ -233,21 +233,21 @@ class Previously(SlideBase):
         
         
     def y0_x0(self, scene):
-        scene.wait(2.5)
-        self.polynomial_chart.gen_points()
-        scene.play(FadeIn(self.polynomial_chart), Write(self.polynomial_label))
         scene.wait(0.5)
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         scene.play(FadeIn(self.commitment))
+        self.polynomial_chart.gen_points()
+        scene.play(FadeIn(self.polynomial_chart), Write(self.polynomial_label))
+        self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         self.commitment_sent.generate_target()
         self.commitment_sent.target.next_to(self.proof, DOWN, buff = 0.1)
+        scene.wait(1)
         scene.play(MoveToTarget(self.commitment_sent))
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
         
         
-        self.new_subsection(scene, "opening - proof pi", "data/sound/e6/slide1-3.mp3")
+        self.new_subsection(scene, "opening - proof pi", "data/sound/e6/slide1-1b.mp3")
         scene.play(Write(self.opening))
-        self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
         scene.wait(1.7)
         self.label_x = self.polynomial_chart.add_xaxis_label(self.x_zero.value, r"x_0")
