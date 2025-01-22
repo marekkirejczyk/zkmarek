@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
+from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut, FadeIn
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
@@ -139,17 +139,15 @@ class DiscreetePolynomialChart(VGroup):
     
         scene.play(*animations, run_time=runtime)
         
-    def animate_shift_dots_with_fadeout(self, scene, y_shift, runtime=0.7):
-        animations = []
+    def animate_shift_dots_with_fadeout_in(self, scene, y_shift, runtime=0.7):
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
             y = self.f(x)
             yy = y.value - y_shift
-            if yy >= 0:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
-            else:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)))
-
-    
-        scene.play(*animations, run_time=runtime)
-
+            new_position = self.ax.c2p(x.value, yy % self.p if yy < 0 else yy)
+            
+            scene.play(FadeOut(d), run_time=runtime / 40)
+            
+            d.move_to(new_position)
+            
+            scene.play(FadeIn(d), run_time=runtime / 40)
