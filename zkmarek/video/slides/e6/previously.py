@@ -166,7 +166,7 @@ class Previously(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.opening, color = GREEN_E))
         self.polynomial_chart.remove(line_z)
-        self.polynomial_chart.animate_shift_dots_with_fadeout_in(scene, self.y.value, runtime=0.5)
+        self.polynomial_chart.animate_shift_dots_with_fadeout_in_all(scene, self.y.value, runtime=0.5)
         
         self.new_subsection(scene, "roots", "data/sound/e6/slide1-0d.mp3")
         labelx1 = self.polynomial_chart.add_xaxis_label(self.x_one.value, r"x_1")

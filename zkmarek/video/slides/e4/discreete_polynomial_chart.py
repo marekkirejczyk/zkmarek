@@ -139,15 +139,18 @@ class DiscreetePolynomialChart(VGroup):
     
         scene.play(*animations, run_time=runtime)
         
-    def animate_shift_dots_with_fadeout_in(self, scene, y_shift, runtime=0.7):
+    def animate_shift_dots_with_fadeout_in_all(self, scene, y_shift, runtime=0.7):
+        fade_out_animations = [FadeOut(d) for d in self.dots]
+
+        scene.play(*fade_out_animations, run_time=runtime / 2)
+
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
             y = self.f(x)
             yy = y.value - y_shift
             new_position = self.ax.c2p(x.value, yy % self.p if yy < 0 else yy)
-            
-            scene.play(FadeOut(d), run_time=runtime / 40)
-            
             d.move_to(new_position)
-            
-            scene.play(FadeIn(d), run_time=runtime / 40)
+
+        fade_in_animations = [FadeIn(d) for d in self.dots]
+
+        scene.play(*fade_in_animations, run_time=runtime / 2)
