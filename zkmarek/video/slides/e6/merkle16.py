@@ -8,8 +8,8 @@ class Node(VGroup):
             color=PRIMARY_COLOR,
             fill_color=BACKGROUND_COLOR,
             fill_opacity=0.3,
-            width=1.2,
-            height=1,
+            width=1.7,
+            height=1.2,
         ).set_color_by_gradient([GREEN_E, TEAL_E])
         text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
         self.value = value
@@ -28,7 +28,7 @@ def create_arrow(start, end, stroke_width=1):
         end=end.get_top(),
         color=PRIMARY_COLOR,
         buff=0,
-        max_tip_length_to_length_ratio=0.1,
+        # max_tip_length_to_length_ratio=0.1,
         max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
     )
@@ -93,7 +93,7 @@ class SelectiveMerkleTree(VGroup):
 
             spacing = 0.8
             for i, child in enumerate(children):
-                child.next_to(current_node, DOWN, buff=1).shift(RIGHT * (i - (self.num_children - 1) / 2) * spacing)
+                child.next_to(current_node, DOWN, buff=1.4).shift(1.3*RIGHT * (i - (self.num_children - 1) / 2) * spacing)
             for i, child in enumerate(children):
                 arrow = create_arrow(current_node, children[i])
                 self.add(arrow)

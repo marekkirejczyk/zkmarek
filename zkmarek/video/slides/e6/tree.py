@@ -28,7 +28,7 @@ def create_arrow(start, end, stroke_width=1):
         end=end.get_top(),
         color=PRIMARY_COLOR,
         buff=0,
-        max_tip_length_to_length_ratio=0.1,
+        # max_tip_length_to_length_ratio=0.1,
         max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
     )
