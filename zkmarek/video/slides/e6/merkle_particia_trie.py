@@ -1,4 +1,4 @@
-from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, Arrow, RoundedRectangle
+from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, Arrow, RoundedRectangle, StealthTip
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 
 
@@ -69,7 +69,7 @@ class MerklePatriciaTrie(VGroup):
         self.root = MPTNode(
             "ROOT: Extension Node", {"shared nibble(s)": "a7", "next node": ""}
         )
-        values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
+        values = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
         self.branch1 = MPTBranchNode({i: "" for i in values})
         self.leaf1 = MPTNode(
             "Leaf Node", {"key-end": "1355", "value": "45.0 ETH"}
@@ -80,7 +80,7 @@ class MerklePatriciaTrie(VGroup):
         self.leaf2 = MPTNode(
             "Leaf Node", {"key-end": "9365", "value": "1.1 ETH"}
         )
-        self.branch2 = MPTBranchNode({i: "" for i in range(16)})
+        self.branch2 = MPTBranchNode({i: "" for i in values})
         self.leaf3 = MPTNode(
             "Leaf Node", {"key-end": "7", "value": "0.12 ETH"}
         )
@@ -98,9 +98,9 @@ class MerklePatriciaTrie(VGroup):
         self.leaf4.next_to(self.branch2, DOWN, buff=0.7).shift(RIGHT*3.5)
         
         self.arrow = create_arrow(self.root, self.branch1)
-        self.arrow2 = create_arrow(self.branch1, self.leaf1)
-        self.arrow3 = create_arrow(self.branch1, self.extension2)
-        self.arrow4 = create_arrow(self.branch1, self.leaf2)
+        self.arrow2 = create_arrow(self.branch1, self.leaf1).shift(UP*0.3)
+        self.arrow3 = create_arrow(self.branch1, self.extension2).shift(UP*0.3)
+        self.arrow4 = create_arrow(self.branch1, self.leaf2).shift(UP*0.3)
         self.arrow5 = create_arrow(self.extension2, self.branch2)
         self.arrow6 = create_arrow(self.branch2, self.leaf3)
         self.arrow7 = create_arrow(self.branch2, self.leaf4)
@@ -117,8 +117,8 @@ def create_arrow(start, end, stroke_width=1):
         start=start.get_bottom(),
         end=end.get_top(),
         color=PRIMARY_COLOR,
-        buff=0,
-        # max_tip_length_to_length_ratio=0.1,
+        buff=0.5,
         max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
+        tip_shape = StealthTip,
     )
