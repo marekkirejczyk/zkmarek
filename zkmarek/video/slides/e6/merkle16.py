@@ -1,4 +1,4 @@
-from manim import VGroup, RIGHT, DOWN, RoundedRectangle, GREEN_E, TEAL_E, Arrow, Text, StealthTip
+from manim import VGroup, RIGHT, DOWN, RoundedRectangle, GREEN_E, TEAL_E, Arrow, Text, StealthTip, UP, GREY
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 
 class Node(VGroup):
@@ -22,16 +22,17 @@ class Node(VGroup):
         self.text.text = str(value)
 
 
-def create_arrow(start, end, stroke_width=1):
+def create_arrow(start, end, stroke_width=2):
     return Arrow(
         start=start.get_bottom(),
-        end=end.get_top(),
-        color=PRIMARY_COLOR,
+        end=end.get_top()+UP*0.1,
+        color=GREY,
         buff=0,
-        # max_tip_length_to_length_ratio=0.1,
-        max_stroke_width_to_length_ratio=1,
+        max_tip_length_to_length_ratio=0.1,
+        # max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
         tip_shape = StealthTip,
+        tip_length=0.1,
     )
 
 

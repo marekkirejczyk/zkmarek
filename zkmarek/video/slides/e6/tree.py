@@ -1,4 +1,4 @@
-from manim import VGroup, DOWN, Arrow, Text, RoundedRectangle, GREEN_E, TEAL_E, RIGHT, StealthTip
+from manim import VGroup, DOWN, Arrow, Text, RoundedRectangle, GREEN_E, TEAL_E, RIGHT, StealthTip, UP
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 
 class Node(VGroup):
@@ -22,16 +22,17 @@ class Node(VGroup):
         self.text.text = str(value)
 
 
-def create_arrow(start, end, stroke_width=1):
+def create_arrow(start, end, stroke_width=1.8):
     return Arrow(
         start=start.get_bottom(),
-        end=end.get_top(),
+        end=end.get_top()+UP*0.1,
         color=PRIMARY_COLOR,
         buff=0,
-        # max_tip_length_to_length_ratio=0.1,
-        max_stroke_width_to_length_ratio=1,
+        max_tip_length_to_length_ratio=0.1,
+        # max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
         tip_shape = StealthTip,
+        tip_length=0.2,
     )
 
 
@@ -68,12 +69,12 @@ class MerkleTree(VGroup):
                 level_group.arrange(RIGHT, buff=8)
                 level_group.next_to(self.nodes[i - 1][0], DOWN, buff=1)
             elif i == 2:
-                level_group.arrange(RIGHT, buff=3.6)
+                level_group.arrange(RIGHT, buff=3.55)
                 level_group.next_to(self.nodes[i - 1][0], DOWN, buff=1)
                 level_group.shift(RIGHT*5.13)
             elif i == 3:
                 level_group.next_to(self.nodes[i - 1][0], DOWN, buff=1)
-                level_group.shift(RIGHT*8.25)
+                level_group.shift(RIGHT*8.3)
             self.add(level_group)
 
         for i in range(1, num_levels):

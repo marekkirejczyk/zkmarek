@@ -1,9 +1,9 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
 Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave,
-BLUE_E, GREEN_E, TEAL_E, RoundedRectangle, Transform)
+BLUE_E, GREEN_E, TEAL_E, RoundedRectangle, Transform, MathTex)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.mobjects.verkle_tree import VerkleTree
+from zkmarek.video.slides.e6.tree import MerkleTree
 SCROLL_COLOR_BACKGROUND = "#FCEFCC"
 SCROLL_COLOR = "#E4C495"
 
@@ -217,7 +217,14 @@ class Layer2(SlideBase):
 
         self.binary_matrix.move_to(LEFT*3)
         scene.add(self.binary_matrix)
-        self.tree = VerkleTree().scale(0.5).shift(LEFT*2.5+UP*2.5)
+        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(LEFT*2.5+UP*2).scale(0.3)
+        self.tree.stretch(2, dim=1)
+        node1_0 = self.tree.get_node(1, 0)
+        node2_1 = self.tree.get_node(2, 1)
+        self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
+        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
+        self.dots_vec_node1 = self.dots_vec_node.copy()
+        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
         for _ in range(30):  
             new_rows = VGroup(*[
                 VGroup(*[
@@ -232,10 +239,10 @@ class Layer2(SlideBase):
                 for i in range(rows)
             ], run_time=0.1)
         scene.play(FadeOut(self.binary_matrix), run_time=0.3)
-        scene.play(Create(self.tree), run_time=1)
+        scene.play(Create(self.tree), FadeIn(self.dots_vec_node, self.dots_vec_node1), run_time=1)
         scene.wait(2.2)
             
         scene.play(FadeOut(self.block_chain), FadeOut(self.ethereum), 
                 FadeOut(self.ethereum2), FadeOut(self.ethereum3), 
-                FadeOut(self.ethereum4, self.tree))
+                FadeOut(self.ethereum4, self.tree, self.dots_vec_node, self.dots_vec_node1))
         

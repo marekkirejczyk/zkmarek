@@ -1,15 +1,15 @@
 from manim import (FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, 
-ImageMobject, Axes, Arrow, StealthTip, GrowArrow, Transform, Polygon)
-from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN, PURPLE_B, TEAL_C
+ImageMobject, Axes, Arrow, StealthTip, GrowArrow, Polygon)
+from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN, PURPLE_B
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e4.chart import Chart
 from zkmarek.video.slides.e6.curve import Curve
 from zkmarek.video.slides.e5.layer2 import Layer2
-from zkmarek.video.mobjects.verkle_tree import VerkleTree
+from zkmarek.video.slides.e6.tree import MerkleTree
 import numpy as np
 from scipy.special import factorial
 
@@ -27,7 +27,6 @@ class Previously(SlideBase):
         self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=35).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
 
         self.polynomial_opening_label = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR, font_size=35).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
-        # self.polynomial_opening_label = MathTex(r"p(x) - y_0", color = PRIMARY_COLOR).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.3+LEFT*2)
         self.quotient_deriviation_0 = MathTex(r"{{a}}{{(x_0-x_1)}}{{(x_0-x_2)}}{{(x_0 - x_0)}} = {{p(x_0)}} - {{y_0}}", color = PRIMARY_COLOR, font_size = 30).shift(UP*1.5+RIGHT*2.5)
         self.brace_0 = Brace(self.quotient_deriviation_0[3], direction = UP, color = PRIMARY_COLOR)
         self.brace_0.shift(DOWN*0.1)
@@ -66,7 +65,7 @@ class Previously(SlideBase):
         self.chart_interpolation = Chart(include_details=True)
         self.chart_interpolation.ax = Axes(
             x_range=[0, 11, 1],
-            y_range=[-13, 10, 5],
+            y_range=[-13, 10, 10],
             x_length=7,
             axis_config={
                 "include_numbers": True,
@@ -100,27 +99,34 @@ class Previously(SlideBase):
         self.layer2 = Layer2()
         self.layer2.construct()
         
-        self.tree = VerkleTree().scale(0.5).shift(RIGHT*2.5+UP*1.5)
+        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(RIGHT*2.5+UP*1.5).scale(0.3)
+        self.tree.stretch(2, dim=1)
+        node1_0 = self.tree.get_node(1, 0)
+        node2_1 = self.tree.get_node(2, 1)
+        self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
+        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
+        self.dots_vec_node1 = self.dots_vec_node.copy()
+        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
         self.prover = ImageMobject("data/images/person.png").scale(0.5).next_to(self.polynomial_chart, RIGHT).shift(UP)
         self.verifier = ImageMobject("data/images/person_blue.png").scale(0.5).next_to(self.prover, RIGHT).shift(RIGHT*3.5)
         self.commiter_label = Text("Prover", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28).next_to(self.prover, DOWN)
         self.verifier_label = Text("Verifier", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28).next_to(self.verifier, DOWN)
         self.envelope_body_closed = Polygon(
             [-3, -1, 0], [3, -1, 0], [3, 1, 0], [-3, 1, 0],
-            fill_color=TEAL_C, fill_opacity=0.5
+            fill_color=PRIMARY_COLOR, fill_opacity=0.5
         ).scale(0.4)
 
         self.envelope_flap_closed = Polygon(
             [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
-            fill_color=TEAL_C, fill_opacity=0.5
+            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.39)
         self.envelope_body_closed.next_to(self.prover, DOWN, buff = 0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
 
-        self.opening = MathTex(r"{{}} {{p(x_0)}} {{}} = {{y_0}}", font_size=32, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.2)
+        self.opening = MathTex(r"{{}} {{p(x_0)}} {{}} = {{y_0}}", font_size=32, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.2).shift(DOWN*0.7)
 
-        self.commitment = MathTex(r"C = p(\tau) \cdot G_1", font_size=35, color=GREEN_E).move_to(self.envelope_body_closed.get_center())
-        self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", font_size=35, color=GREEN_E).next_to(self.opening, DOWN, buff=0.2)
+        self.commitment = MathTex(r"C = p(\tau) \cdot G_1", font_size=35, color=PRIMARY_COLOR).move_to(self.envelope_body_closed.get_center())
+        self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", font_size=35, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff=0.2)
         self.x_zero = FieldElement(13, 41)
         self.value_at_x_zero = poly(self.x_zero)      
         
@@ -247,7 +253,7 @@ class Previously(SlideBase):
         label_tau = self.polynomial_chart.add_xaxis_label(self.tau.value, r"\tau")
         self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.proof, DOWN, buff = 0.1)
+        self.commitment_sent.target.next_to(self.verifier_label, DOWN, buff = 0.1)
         scene.play(MoveToTarget(self.commitment_sent))
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
         
@@ -265,7 +271,7 @@ class Previously(SlideBase):
         self.proof.next_to(self.commiter_label, DOWN)
         scene.play(FadeIn(self.proof), run_time=0.5)
         self.proof.generate_target()
-        self.proof.target.next_to(self.commitment, UP, buff = 0.3)
+        self.proof.target.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(MoveToTarget(self.proof))
         
     def dots_defining(self, scene):
@@ -313,37 +319,3 @@ class Previously(SlideBase):
         self.point = VGroup(self.p0, self.p1, self.p2, self.p3, self.p4, self.p5, self.p6, self.p7, self.p8, self.p9)
 
         
-    def vast_data(self, scene):
-        import random
-        rows, cols = 10, 16 
-        self.binary_matrix = VGroup(*[
-            VGroup(*[
-                Text(str(random.choice([0, 1])), font_size=24)
-                for _ in range(cols)
-            ]).arrange(RIGHT, buff=0.1)
-            for _ in range(rows)
-        ]).arrange(DOWN, buff=0.2)
-
-        self.binary_matrix.move_to(LEFT*3)
-        scene.add(self.binary_matrix)
-
-        for _ in range(25):  
-            new_rows = VGroup(*[
-                VGroup(*[
-                    Text(str(random.choice([0, 1])), font_size=24)
-                    for _ in range(cols)
-                ]).arrange(RIGHT, buff=0.1)
-                for _ in range(rows)
-            ]).arrange(DOWN, buff=0.2).move_to(LEFT*3)
-
-            if _ == 10:
-                scene.play(*[
-                    Transform(self.binary_matrix[i], new_rows[i])
-                    for i in range(rows)
-                ], Create(self.tree), run_time=0.1)
-            else:
-                scene.play(*[
-                    Transform(self.binary_matrix[i], new_rows[i])
-                    for i in range(rows)
-                ], run_time=0.1)
-            
