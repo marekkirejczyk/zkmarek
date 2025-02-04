@@ -94,27 +94,27 @@ class MerklePatriciaTrie(VGroup):
         self.extension2.next_to(self.branch1, DOWN, buff=0.7)
         self.leaf2.next_to(self.branch1, RIGHT+DOWN, buff=0.7)
         self.branch2.next_to(self.extension2, DOWN, buff=0.7)
-        self.leaf3.next_to(self.branch2, DOWN, buff=0.7).shift(LEFT*3.5)
-        self.leaf4.next_to(self.branch2, DOWN, buff=0.7).shift(RIGHT*3.5)
+        self.leaf3.next_to(self.branch2, DOWN, buff=0.7).shift(LEFT*5.5)
+        self.leaf4.next_to(self.branch2, DOWN, buff=0.7).shift(RIGHT*5.5)
         
-        self.arrow = create_arrow(self.root, self.branch1).scale(1.8).shift(RIGHT+UP*0.6)
+        self.arrow = create_arrow(self.root, self.branch1).scale(2).shift(RIGHT+UP*0.5)
         self.arrow2 = Arrow(self.branch1.get_left()+RIGHT+DOWN*0.5, self.leaf1.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2)
-        self.arrow3 = create_arrow(self.branch1, self.extension2).shift(UP*0.3+LEFT*0.2)
+        self.arrow3 = create_arrow(self.branch1, self.extension2).shift(UP*0.3+LEFT*0.3)
         self.arrow4 = Arrow(self.branch1.get_right()+LEFT*0.3+DOWN*0.5, self.leaf2.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1.5, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2)
-        self.arrow5 = create_arrow(self.extension2, self.branch2).scale(1.8).shift(RIGHT+UP*0.6)
+        self.arrow5 = create_arrow(self.extension2, self.branch2).scale(2).shift(RIGHT+UP*0.5)
         self.arrow6 = Arrow(self.branch2.get_left()+RIGHT*1.7+DOWN*0.5, self.leaf3.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1.5, stroke_width=2, tip_shape=StealthTip, tip_length = 0.2)
         self.arrow7 = Arrow(self.branch2.get_bottom()+RIGHT*0.2+UP*0.3, self.leaf4.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1.5, stroke_width=2, tip_shape=StealthTip, tip_length = 0.2)
         
 
+
+        self.add(self.root, self.branch1, self.leaf1, self.extension2, self.leaf2, self.branch2, self.leaf3, self.leaf4)
         self.add(
             self.arrow, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7
         )
-
-        self.add(self.root, self.branch1, self.leaf1, self.extension2, self.leaf2, self.branch2, self.leaf3, self.leaf4)
 
 def create_arrow(start, end, stroke_width=1.8):
     return Arrow(

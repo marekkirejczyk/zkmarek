@@ -85,6 +85,7 @@ class DiscreetePolynomialChart(VGroup):
         label = MathTex(label, color=PRIMARY_COLOR)
         label.move_to(self.ax.coords_to_point(-5.5, y))
         self.add(label)
+        return label
 
     def animate_create_vertical_line(self, scene, x, y_top):
         s = self.ax.c2p(x, -1)

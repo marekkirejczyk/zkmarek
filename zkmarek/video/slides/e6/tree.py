@@ -62,19 +62,19 @@ class MerkleTree(VGroup):
 
         for i, level_nodes in enumerate(self.nodes):
             level_group = VGroup(*level_nodes)
-            level_group.arrange(RIGHT, buff=3 if i == 0 else 0.9)
+            level_group.arrange(RIGHT, buff=3 if i == 0 else 0.75)
             if i == 0:
                 level_group.move_to(0.5 * DOWN)
             elif i == 1:
                 level_group.arrange(RIGHT, buff=8)
                 level_group.next_to(self.nodes[i - 1][0], DOWN, buff=1)
             elif i == 2:
-                level_group.arrange(RIGHT, buff=3.55)
+                level_group.arrange(RIGHT, buff=3.2)
                 level_group.next_to(self.nodes[i - 1][0], DOWN, buff=1)
-                level_group.shift(RIGHT*5.13)
+                level_group.shift(RIGHT*5.08)
             elif i == 3:
                 level_group.next_to(self.nodes[i - 1][0], DOWN, buff=1)
-                level_group.shift(RIGHT*8.3)
+                level_group.shift(RIGHT*7.5)
             self.add(level_group)
 
         for i in range(1, num_levels):
