@@ -37,8 +37,8 @@ class DiscreetePolynomialChart(VGroup):
         template.add_to_preamble(r"\usepackage{amsfonts}")
         field_label = r"$\mathbb{F}_{" + str(self.label) + "}$"
         self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
-            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=55, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=55, color=PRIMARY_COLOR),
         )
         self.add(self.labels)
 

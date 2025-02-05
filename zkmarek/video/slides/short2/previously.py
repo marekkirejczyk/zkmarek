@@ -21,8 +21,8 @@ class Previously(SlideBase):
         super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("Previously on zkMarek...", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 40).to_edge(UP)
-        self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*0.2)
+        self.title_label = Text("Previously on zkMarek...", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*3)
+        self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*2.2)
         self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=35).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2)
 
         self.polynomial_opening_label = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR, font_size=35).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2)
@@ -33,20 +33,20 @@ class Previously(SlideBase):
         self.brace_0.put_at_tip(self.brace_text)
         self.brace_text.shift(DOWN*0.1)
         
-        self.quotient_deriviation_1 = MathTex(r"{{a}}{{(x-x_1)}}{{(x-x_2)}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 30, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*2.5)
+        self.quotient_deriviation_1 = MathTex(r"{{a}}{{(x-x_1)}}{{(x-x_2)}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 45, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*2.5)
         self.quotient_deriviation_1[0:3].set_color(YELLOW_E)
         
-        self.quotient_deriviation_2 = MathTex(r"{{q(x)}}{{\cdot}}{{}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
+        self.quotient_deriviation_2 = MathTex(r"{{q(x)}}{{\cdot}}{{}}{{(x - x_0)}} = {{p(x)}} - {{y_0}}", font_size = 45, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
         self.quotient_deriviation_2[0].set_color(YELLOW_E)
-        self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 35, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
+        self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 45, color = PRIMARY_COLOR).next_to(self.quotient_deriviation_1, DOWN, buff = 0.5)
         
-        self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
-        self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 35, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
+        self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 45, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
+        self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 45, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
         
-        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(RIGHT+UP*0.5)
-        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(RIGHT+UP*0.5)        
-        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(RIGHT+UP*0.5)       
-        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(RIGHT+UP*0.5)       
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).next_to(self.polynomial_chart, DOWN).shift(DOWN)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).next_to(self.polynomial_chart, DOWN).shift(DOWN)        
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).next_to(self.polynomial_chart, DOWN).shift(DOWN)
+        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).next_to(self.polynomial_chart, DOWN).shift(DOWN)       
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 44,
             color=PURPLE_B,
@@ -113,7 +113,7 @@ class Previously(SlideBase):
         self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
         self.dots_vec_node1 = self.dots_vec_node.copy()
         self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
-        self.prover = ImageMobject("data/images/person.png").scale(0.5).next_to(self.polynomial_chart, RIGHT).shift(UP)
+        self.prover = ImageMobject("data/images/person.png").scale(0.5).next_to(self.polynomial_chart, UP).shift(UP*0.5)
         self.verifier = ImageMobject("data/images/person_blue.png").scale(0.5).next_to(self.prover, RIGHT).shift(RIGHT*3.5)
         self.commiter_label = Text("Prover", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28).next_to(self.prover, DOWN)
         self.verifier_label = Text("Verifier", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28).next_to(self.verifier, DOWN)
@@ -126,13 +126,13 @@ class Previously(SlideBase):
             [-3, 1, 0], [3, 1, 0], [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
         ).scale(0.39)
-        self.envelope_body_closed.next_to(self.prover, DOWN, buff = 0.6)
+        self.envelope_body_closed.next_to(self.prover, RIGHT, buff = 0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
 
         self.opening = MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=32, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.2).shift(DOWN*0.7)
 
-        self.commitment = MathTex(r"C = p(\tau) \cdot G_1", font_size=35, color=PRIMARY_COLOR).move_to(self.envelope_body_closed.get_center())
-        self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", font_size=35, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff=0.2)
+        self.commitment = MathTex(r"C = p(\tau) \cdot G_1", font_size=55, color=PRIMARY_COLOR).move_to(self.envelope_body_closed.get_center())
+        self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", font_size=55, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff=0.2)
         self.x_zero = FieldElement(13, 41)
         self.value_at_x_zero = poly(self.x_zero)      
         
