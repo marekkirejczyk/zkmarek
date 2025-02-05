@@ -1,6 +1,6 @@
 import os
 
-from manim import Scene, config
+from manim import Scene
 from manimpango import register_font
 from presentation import Presentation
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
@@ -75,11 +75,11 @@ from zkmarek.video.slides.e5.kzg import KZGBlobs
 from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
 from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
 from zkmarek.video.slides.e5.credits import Credits as CreditsE5
-from zkmarek.video.slides.e6.previously import Previously as PreviouslyE6
+from zkmarek.video.slides.short2.previously import Previously as PreviouslyE6
 from zkmarek.video.slides.e6.merkle import MerkleTree
 
-config.width = 16
-config.height = 9
+# config.width = 16
+# config.height = 9
 
 
 TEASER = [
@@ -242,9 +242,10 @@ DECKS = {
     "E5": EPISODE5,
     "E6": EPISODE6,
     "E7": EPISODE6,
+    "SHORT2": SHORT2,
 }
 
-DEFAULT_DECK = "E6"
+DEFAULT_DECK = "SHORT2"
 
 
 class Episode6(Scene):
