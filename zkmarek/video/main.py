@@ -217,10 +217,12 @@ EPISODE5 = [
 ]
 
 EPISODE6 = [
-    # TitleSlide("Previously on zkMarek...", sound="data/sound/e6/slide1-0.mp3", wait_time=3.7),
-    PreviouslyE6(),
     TitleSlide("Merkle trees", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
     MerkleTree(),
+]
+
+SHORT2 = [
+    PreviouslyE6(),
 ]
 
 EPISODE7 = [
