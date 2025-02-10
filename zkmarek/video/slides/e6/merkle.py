@@ -364,7 +364,7 @@ class MerkleTree(SlideBase):
     def update_nodes(self, scene):
         index_of_the_node = 0
         new_value = 9
-        new_numerical_value = Text(str(new_value), color = GREEN_D, font_size = 30).move_to(self.account_group_8_elements[0].get_center())
+        new_numerical_value = Text(str(new_value), color = GREEN_D, font_size = 30, font=PRIMARY_FONT).move_to(self.account_group_8_elements[0].get_center())
         self.account_group_8_elements[0].set_color(YELLOW_D)
         scene.play(Transform(self.vector_8element[index_of_the_node], new_numerical_value))
         self.new_hashes = [Text("19581...", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 16), Text("3c825...", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 16), 
