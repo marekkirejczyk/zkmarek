@@ -21,7 +21,7 @@ class Previously(SlideBase):
         super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("KZG in 60 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*4)
+        self.title_label = Text("KZG in 60 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*3.2)
         self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=45).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2.3)
         self.prover = ImageMobject("data/images/person.png").scale(0.8).next_to(self.polynomial_chart, UP).shift(UP*2.5)
@@ -51,11 +51,11 @@ class Previously(SlideBase):
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*3)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*4.5+UP)
         self.pairing_verifiaction_4 = MathTex(
             r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*3)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*4.5+UP)
 
         self.tau = FieldElement(20, 41)
         self.value_at_tau = poly(self.tau)
@@ -122,7 +122,7 @@ class Previously(SlideBase):
 
         self.envelope_flap_closed = Polygon(
             [-3.5, 1, 0], [3.5, 1, 0], [0, -0.6, 0],
-            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.5
+            fill_color=HIGHLIGHT_COLOR, fill_opacity=0.3
         ).scale(0.39)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff = 0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
