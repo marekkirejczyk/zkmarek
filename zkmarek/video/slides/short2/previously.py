@@ -1,5 +1,5 @@
 from manim import (FadeIn, FadeOut, Text, MathTex, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, 
-ImageMobject, Axes, Arrow, StealthTip, Polygon)
+ImageMobject, Axes, Arrow, StealthTip, Polygon, GrowArrow)
 from manim import BLUE_D, GREEN_E, MAROON_E, LIGHT_BROWN, PURPLE_B
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
@@ -76,8 +76,8 @@ class Previously(SlideBase):
                 }
             }
         )
-        self.chart_interpolation.scale(0.7).shift(LEFT*3.5)
-        self.chart_interpolation.ax.scale(0.7).shift(LEFT*3.5)
+        self.chart_interpolation.scale(0.85)
+        self.chart_interpolation.ax.scale(0.7)
         self.chart_interpolation.labels[0].next_to(self.chart_interpolation.ax[0], RIGHT+UP, buff = 0.0)
         self.chart_interpolation.labels[1].next_to(self.chart_interpolation.ax[1], RIGHT+UP, buff = 0.0)
         self.chart_interpolation_graph4 = self.chart_interpolation.ax.plot_implicit_curve(
@@ -92,9 +92,9 @@ class Previously(SlideBase):
                 self.indeces_over_vector[i].next_to(self.vector_values[i+1], UP, buff = 0.45)
 
         
-        self.data_points = Text("data vector", font = PRIMARY_FONT, color = BLUE_D, font_size = 30).shift(UP*1.5+RIGHT*2)
-        self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = GREEN_E, font_size = 30).next_to(self.data_points, DOWN, buff = 1.5)
-        self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = MAROON_E, font_size = 30).next_to(self.interpolation, DOWN, buff = 1.5)
+        self.data_points = Text("data vector", font = PRIMARY_FONT, color = BLUE_D, font_size = 35).shift(UP*3.5+RIGHT*2)
+        self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = GREEN_E, font_size = 35).next_to(self.data_points, DOWN, buff = 1.5)
+        self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = MAROON_E, font_size = 35).next_to(self.interpolation, DOWN, buff = 1.5)
         
         self.arrow_data_interpolation = Arrow(self.data_points.get_bottom(), self.interpolation.get_top(), tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([BLUE_D, GREEN_E])
         self.arrow_interpolation_vector = Arrow(self.interpolation.get_bottom(), self.vector_commitment.get_top(), color = PRIMARY_COLOR, tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([GREEN_E, MAROON_E])
@@ -210,31 +210,37 @@ class Previously(SlideBase):
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_3, self.pairing_verifiaction_4))
         scene.wait(2)
         
-        # self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
-        # scene.wait(1.5)
-        # scene.play(FadeOut(self.quotient_deriviation_3, self.pairing_verifiaction_2a, self.opening, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label, self.verifier, self.prover))
-        # scene.play(FadeIn(self.chart_interpolation.ax, self.chart_interpolation.labels))
+        self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
+        scene.wait(1.5)
+        scene.play(FadeOut(self.quotient_deriviation_3, self.pairing_verifiaction_2a, self.opening, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label, self.verifier, self.prover))
+        scene.play(FadeIn(self.chart_interpolation.ax, self.chart_interpolation.labels))
         
-        # self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2a.mp3")
+        self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2a.mp3")
     
-        # scene.wait(1.5)
-        # self.dots_defining(scene)
-        # scene.play(Create(self.chart_interpolation_graph4))
+        scene.wait(1.5)
+        self.dots_defining(scene)
+        scene.play(Create(self.chart_interpolation_graph4))
         
-        # self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
-        # scene.wait(1)
-        # scene.play(Write(self.data_points))
-        # scene.play(GrowArrow(self.arrow_data_interpolation))
-        # scene.play(Write(self.interpolation))
-        # scene.play(GrowArrow(self.arrow_interpolation_vector))
-        # scene.play(Write(self.vector_commitment))
+        self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
+        self.chart_interpolation.generate_target()
+        self.chart_interpolation.target.shift(DOWN*3)
+        self.vector_values.generate_target()
+        self.vector_values.target.shift(DOWN*3)
+        self.indeces_over_vector.generate_target()
+        self.indeces_over_vector.target.shift(DOWN*3)
+        scene.play(MoveToTarget(self.chart_interpolation), MoveToTarget(self.vector_values), MoveToTarget(self.indeces_over_vector), run_time=1)  
+        scene.play(Write(self.data_points))
+        scene.play(GrowArrow(self.arrow_data_interpolation))
+        scene.play(Write(self.interpolation))
+        scene.play(GrowArrow(self.arrow_interpolation_vector))
+        scene.play(Write(self.vector_commitment))
         
-        # self.new_subsection(scene, "blobs", "data/sound/e6/slide1-3.mp3")
-        # scene.play(FadeOut(self.point), FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation_graph4, self.vector_values, self.interpolation, 
-        #                                         self.vector_commitment, self.data_points, self.arrow_data_interpolation, self.arrow_interpolation_vector, self.indeces_over_vector))
+        self.new_subsection(scene, "blobs", "data/sound/e6/slide1-3.mp3")
+        scene.play(FadeOut(self.point), FadeOut(self.chart_interpolation.ax, self.chart_interpolation.labels, self.chart_interpolation_graph4, self.vector_values, self.interpolation, 
+                                                self.vector_commitment, self.data_points, self.arrow_data_interpolation, self.arrow_interpolation_vector, self.indeces_over_vector))
 
 
-        # self.layer2.miniature(scene)
+        self.layer2.miniature(scene)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.label_y, self.quotient_deriviation_3, self.pairing_verifiaction_2a, self.opening, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label, self.verifier, self.prover))

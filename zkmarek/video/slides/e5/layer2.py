@@ -179,7 +179,7 @@ class Layer2(SlideBase):
                            self.rounded_rectangle, self.blob_image, self.blob_image_1, self.blob_image_2))
         
     def miniature(self, scene):
-        self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT*2.5)
+        self.blob = ImageMobject("data/images/blob.png").scale(0.9).shift(UP*1.5)
         self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
         self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
         scene.play(FadeIn(self.blob), run_time=0.3)
@@ -193,7 +193,7 @@ class Layer2(SlideBase):
         )
 
         scene.add(self.ethereum, self.ethereum2, self.ethereum3, self.ethereum4)
-        self.block_chain.scale(0.5).to_edge(UP+RIGHT).shift(DOWN*1.5)
+        self.block_chain.scale(0.75).shift(DOWN*1.5)
         self.ethereum.scale(0.5).move_to(self.finalized_blocks[0])
         self.ethereum2.scale(0.5).move_to(self.finalized_blocks[1])
         self.ethereum3.scale(0.5).move_to(self.finalized_blocks[2])
