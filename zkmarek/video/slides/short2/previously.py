@@ -1,6 +1,6 @@
-from manim import (FadeIn, FadeOut, Text, MathTex, Brace, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, 
+from manim import (FadeIn, FadeOut, Text, MathTex, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, 
 ImageMobject, Axes, Arrow, StealthTip, Polygon)
-from manim import BLUE_D, GREEN_E, YELLOW_E, MAROON_E, LIGHT_BROWN, PURPLE_B
+from manim import BLUE_D, GREEN_E, MAROON_E, LIGHT_BROWN, PURPLE_B
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -21,20 +21,20 @@ class Previously(SlideBase):
         super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("Previously on zkMarek...", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*4)
+        self.title_label = Text("KZG in 60 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*4)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*3.2)
-        self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=35).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2)
-        self.prover = ImageMobject("data/images/person.png").scale(0.8).next_to(self.polynomial_chart, UP).shift(UP*1.5)
-        self.verifier = ImageMobject("data/images/person_blue.png").scale(0.8).to_edge(RIGHT).shift(LEFT+UP*1.5)
+        self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=45).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2.3)
+        self.prover = ImageMobject("data/images/person.png").scale(0.8).next_to(self.polynomial_chart, UP).shift(UP*2.5)
+        self.verifier = ImageMobject("data/images/person_blue.png").scale(0.8).to_edge(RIGHT).shift(LEFT+UP*2.85)
         self.commiter_label = Text("Prover", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28).next_to(self.prover, DOWN)
         self.verifier_label = Text("Verifier", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28).next_to(self.verifier, DOWN)
 
-        self.polynomial_opening_label = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR, font_size=35).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2)
+        self.polynomial_opening_label = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}}", color = PRIMARY_COLOR, font_size=45).next_to(self.polynomial_chart, RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2.3)
         
-        self.opening = MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=45, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.2).shift(DOWN*0.7)
+        self.opening = MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=45, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.7).shift(DOWN*0.7)
 
-        self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 1.2)
-        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=21, font = PRIMARY_FONT).next_to(self.opening2, LEFT+DOWN, buff = 0.2)
+        self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 1.2)   
+        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=21, font = PRIMARY_FONT).next_to(self.opening2, LEFT, buff = 0.7)
         self.opening3 = MathTex(r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.2).shift(LEFT*1.2)
         self.x_one = FieldElement(3, 41)
         self.x_two = FieldElement(33, 41)
@@ -44,21 +44,18 @@ class Previously(SlideBase):
 
         self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 45, color = PRIMARY_COLOR).next_to(self.dots, DOWN, buff = 0.5)
         
-        self.commitment = MathTex(r"{{C}} = {{p(\tau)}} {{\cdot G_1}}", font_size = 45, color = PRIMARY_COLOR).shift(UP*1.5+RIGHT*1.5)
-        self.proof = MathTex(r"{{\pi}} = {{q(\tau)}} {{\cdot G_1}}", font_size = 45, color = PRIMARY_COLOR).next_to(self.commitment, DOWN, buff = 0.5)
-        
-        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN)
-        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN)       
-        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN)
-        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN)       
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)       
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)
+        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)       
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.quotient_deriviation_3, DOWN, buff = 1)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5)
         self.pairing_verifiaction_4 = MathTex(
             r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.quotient_deriviation_3, DOWN, buff = 1)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5)
 
         self.tau = FieldElement(20, 41)
         self.value_at_tau = poly(self.tau)
@@ -141,19 +138,21 @@ class Previously(SlideBase):
         scene.play(FadeIn(self.prover), Write(self.commiter_label))
         self.y0_x0(scene)
         self.prover.generate_target()
-        self.prover.target.scale(0.6).set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
+        self.prover.target.set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
         self.verifier.generate_target()
-        self.verifier.target.scale(0.6).set_opacity(0.5).shift(RIGHT*0.3+UP*0.3)
+        self.verifier.target.set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
         scene.play(FadeOut(self.verifier_label, self.commiter_label), MoveToTarget(self.prover), MoveToTarget(self.verifier))
 
+        self.commitment.generate_target()
+        self.commitment.target.shift(LEFT*0.3)
         self.proof.generate_target()
-        self.proof.target.next_to(self.commitment, DOWN, buff = 0.2)
+        self.proof.target.next_to(self.commitment, DOWN, buff = 0.2).shift(LEFT*0.3)
         self.opening.generate_target()
-        self.opening.target.move_to(self.proof.get_center())
+        self.opening.target.move_to(self.proof.get_center()).shift(LEFT*0.3)
         scene.wait(1)
         
         self.new_subsection(scene, "proof", "data/sound/e6/slide1-0c.mp3")
-        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening)) 
+        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), MoveToTarget(self.commitment)) 
         scene.wait(0.5)
         self.opening2.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(TransformMatchingShapes(self.opening.copy(), self.opening2), FadeIn(self.new_polynomial_label))
@@ -255,7 +254,7 @@ class Previously(SlideBase):
         scene.play(FadeIn(label_tau), run_time=0.5)
         self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         self.commitment_sent.generate_target()
-        self.commitment_sent.target.next_to(self.verifier_label, DOWN, buff = 0.1)
+        self.commitment_sent.target.next_to(self.verifier_label, DOWN, buff = 0.5)
         scene.play(MoveToTarget(self.commitment_sent))
         scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
         
