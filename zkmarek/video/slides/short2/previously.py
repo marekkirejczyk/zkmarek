@@ -34,13 +34,13 @@ class Previously(SlideBase):
         self.opening = MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=45, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.7).shift(DOWN*0.7)
 
         self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 1.2)   
-        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=21, font = PRIMARY_FONT).next_to(self.opening2, LEFT, buff = 1.2).shift(UP*0.2)
+        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=21, font = PRIMARY_FONT).next_to(self.opening2, LEFT, buff = 1.5).shift(UP*0.14)
         self.opening3 = MathTex(r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.2).shift(LEFT*1.2)
         self.x_one = FieldElement(3, 41)
         self.x_two = FieldElement(33, 41)
         self.value_at_x_one = poly(self.x_one)
         self.value_at_x_two = poly(self.x_two)
-        self.dots = MathTex(r"\cdots", color = PRIMARY_COLOR).next_to(self.opening3, DOWN, buff = 0.2)
+        self.dots = MathTex(r"\cdots", color = PRIMARY_COLOR).next_to(self.opening3, DOWN, buff = 0.2).shift(LEFT)
 
         self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 45, color = PRIMARY_COLOR).next_to(self.dots, DOWN, buff = 0.5)
         
@@ -152,19 +152,19 @@ class Previously(SlideBase):
         self.prover.target.set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
         self.verifier.generate_target()
         self.verifier.target.set_opacity(0.5).shift(LEFT*1+UP*0.3)
-        scene.play(FadeOut(self.verifier_label, self.commiter_label), MoveToTarget(self.prover), MoveToTarget(self.verifier))
 
         self.commitment.generate_target()
-        self.commitment.target.shift(LEFT*1)
+        self.commitment.target.shift(LEFT*1.5)
         self.proof.generate_target()
-        self.proof.target.next_to(self.commitment, DOWN, buff = 0.2).shift(LEFT*1)
+        self.proof.target.next_to(self.commitment, DOWN, buff = 0.2).shift(LEFT*1.5)
         self.opening.generate_target()
-        self.opening.target.move_to(self.proof.get_center()).shift(LEFT*1)
+        self.opening.target.move_to(self.proof.get_center()).shift(LEFT*1.5)
+        scene.play(FadeOut(self.verifier_label, self.commiter_label), MoveToTarget(self.prover), MoveToTarget(self.verifier),
+                   MoveToTarget(self.proof), MoveToTarget(self.opening), MoveToTarget(self.commitment))
         scene.wait(1)
         
         self.new_subsection(scene, "proof", "data/sound/e6/slide1-0c.mp3")
-        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), MoveToTarget(self.commitment)) 
-        scene.wait(0.5)
+        scene.wait(1)
         self.opening2.next_to(self.opening, DOWN, buff = 0.3)
         scene.play(TransformMatchingShapes(self.opening.copy(), self.opening2), FadeIn(self.new_polynomial_label))
         scene.play(TransformMatchingShapes(self.polynomial_label, self.polynomial_opening_label))
@@ -172,11 +172,12 @@ class Previously(SlideBase):
         self.dots_poly = VGroup(*self.polynomial_chart.dots)
         scene.play(Indicate(self.dots_poly, color = GREEN_E, scale_factor=1.3))
 
-        scene.play(Indicate(self.opening[4], color = GREEN_E))
+        scene.play(Indicate(self.opening[4], color = GREEN_E), FadeOut(self.line_correct_y))
         scene.wait(1.3)
         self.polynomial_chart.animate_shift_dots_with_fade(scene, self.y.value)
         scene.play(Indicate(self.opening[1], color = GREEN_E))
         self.polynomial_chart.remove(self.line_z)
+        self.polynomial_chart.remove(self.line_correct_y)
         self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.wait(1)
         
@@ -244,7 +245,7 @@ class Previously(SlideBase):
                                 self.point, self.poly_eval0, self.poly_eval1, self.poly_eval2, self.poly_eval3)
         interpolation.generate_target()
         interpolation.target.shift(DOWN*4.5)
-        scene.play(MoveToTarget(interpolation), FadeOut(self.indeces_over_vector), MoveToTarget(self.chart_interpolation.ax), MoveToTarget(self.chart_interpolation.labels), run_time=1)  
+        scene.play(MoveToTarget(interpolation), FadeOut(self.indeces_over_vector), run_time=1)  
         scene.play(Write(self.data_points))
         scene.play(GrowArrow(self.arrow_data_interpolation))
         scene.play(Write(self.interpolation))
@@ -252,8 +253,8 @@ class Previously(SlideBase):
         scene.play(Write(self.vector_commitment))
         
         self.new_subsection(scene, "blobs", "data/sound/e6/slide1-2c.mp3")
-        scene.play(FadeOut(self.point), FadeOut(interpolation, self.interpolation, 
-                                                self.vector_commitment, self.data_points, self.arrow_data_interpolation, self.arrow_interpolation_vector))
+        scene.play(FadeOut(interpolation, self.interpolation, self.vector_commitment, self.data_points, self.arrow_data_interpolation, 
+                           self.arrow_interpolation_vector))
         
         self.application(scene)
         self.click_button(scene)
@@ -361,17 +362,17 @@ class Previously(SlideBase):
         scene.wait(1)
         blobs = Group(self.blob, self.blob_1, self.blob_2)
         blobs.generate_target()
-        blobs.target.shift(DOWN*5)
+        blobs.target.shift(DOWN*6.5)
         scene.play(MoveToTarget(blobs), run_time=0.7)
         
-        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(UP*5).scale(0.4)
+        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(UP*6).scale(0.4)
         self.tree.stretch(2, dim=1)
         node1_0 = self.tree.get_node(1, 0)
         node2_1 = self.tree.get_node(2, 1)
         self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
-        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
+        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.6)
         self.dots_vec_node1 = self.dots_vec_node.copy()
-        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
+        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.63)
         scene.play(Create(self.tree), FadeIn(self.dots_vec_node, self.dots_vec_node1), run_time=1)
         
         scene.wait(1)
@@ -383,10 +384,11 @@ class Previously(SlideBase):
         self.button_clicked = ImageMobject(
             "data/subscribe/clicked.png", z_index=1
         ).scale(0.4)
+        self.logo = ImageMobject("data/brand/logo.png").scale(1.5)
         self.button.shift(DOWN * 5)
         self.button_clicked.shift(DOWN * 5)
-        scene.add_fixed_in_frame_mobjects(self.button, self.button_clicked)
-        scene.add_fixed_in_frame_mobjects(self.logo)
+        scene.add(self.button, self.button_clicked)
+        scene.add(self.logo)
         scene.play(FadeIn(self.button), run_time=0.5)
 
         # Source of sound under Creative Commons 0 License.

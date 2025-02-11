@@ -222,7 +222,7 @@ EPISODE6 = [
 ]
 
 SHORT2 = [
-    TitleSlide("KZG vector commitment", sound = "data/sound/e6/slide1-0.mp3", wait_time=2),
+    TitleSlide("KZG vector commitment", sound = "data/sound/e6/slide1-0.mp3", wait_time=1),
     PreviouslyE6(),
 ]
 
