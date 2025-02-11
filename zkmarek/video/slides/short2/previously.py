@@ -21,7 +21,7 @@ class Previously(SlideBase):
         super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("Vector commitment in 90 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
+        self.title_label = Text("Vector commitment in 96 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*3.2)
         self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=45).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2.3)
         self.prover = ImageMobject("data/images/person.png").scale(0.8).next_to(self.polynomial_chart, UP).shift(UP*2.5)
@@ -34,8 +34,8 @@ class Previously(SlideBase):
         self.opening = MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=45, color=PRIMARY_COLOR).next_to(self.verifier_label, DOWN, buff = 0.7).shift(DOWN*0.7)
 
         self.opening2 = MathTex(r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff = 1.2)   
-        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=21, font = PRIMARY_FONT).next_to(self.opening2, LEFT, buff = 1.5).shift(UP*0.14)
-        self.opening3 = MathTex(r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.2).shift(LEFT*1.2)
+        self.new_polynomial_label = Text("new polynomial", color = GREEN_E, font_size=21, font = PRIMARY_FONT).next_to(self.opening2, LEFT, buff = 1.7).shift(UP*0.14)
+        self.opening3 = MathTex(r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}", font_size=42, color=PRIMARY_COLOR).next_to(self.opening2, DOWN, buff = 0.2).shift(LEFT*1.7)
         self.x_one = FieldElement(3, 41)
         self.x_two = FieldElement(33, 41)
         self.value_at_x_one = poly(self.x_one)
@@ -51,11 +51,11 @@ class Previously(SlideBase):
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*5+UP)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*6+UP)
         self.pairing_verifiaction_4 = MathTex(
             r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*4.5+UP)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*5+UP)
 
         self.tau = FieldElement(20, 41)
         self.value_at_tau = poly(self.tau)
@@ -133,15 +133,15 @@ class Previously(SlideBase):
         
         self.poly_eval0 = MathTex(r"P(0)=2", color = PRIMARY_COLOR).next_to(self.vector_values[1], DOWN, buff = 0.5)
         self.poly_eval1 = MathTex(r"P(1)=3", color = PRIMARY_COLOR).next_to(self.poly_eval0, RIGHT, buff = 0.5)
-        self.poly_eval2 = MathTex(r"P(2)=1", color = PRIMARY_COLOR).next_to(self.poly_eval1, DOWN, buff = 0.5)
+        self.poly_eval2 = MathTex(r"P(2)=1", color = PRIMARY_COLOR).next_to(self.poly_eval0, DOWN, buff = 0.5)
         self.poly_eval3 = MathTex(r"P(3)=-3", color = PRIMARY_COLOR).next_to(self.poly_eval2, RIGHT, buff = 0.5)
 
         self.vlayer = ImageMobject(
             "data/images/Logo_304_color_on_dark.png"
-        ).scale(0.4).to_edge(RIGHT+DOWN).shift(DOWN*5+LEFT)
+        ).scale(0.8).to_edge(RIGHT+DOWN).shift(DOWN*5+LEFT*2)
         self.ecosystem = ImageMobject(
             "data/images/ecosystem_support_program.png"
-        ).scale(0.1).next_to(self.vlayer, UP, buff = 0.2)
+        ).scale(0.2).next_to(self.vlayer, UP, buff = 0.2)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "kzg commitment scheme", "data/sound/e6/slide1-0a.mp3")
@@ -151,7 +151,7 @@ class Previously(SlideBase):
         self.prover.generate_target()
         self.prover.target.set_opacity(0.5).shift(LEFT*0.3+UP*0.3)
         self.verifier.generate_target()
-        self.verifier.target.set_opacity(0.5).shift(LEFT*1+UP*0.3)
+        self.verifier.target.set_opacity(0.5).shift(LEFT*1.5+UP*0.3)
 
         self.commitment.generate_target()
         self.commitment.target.shift(LEFT*1.5)
@@ -201,11 +201,11 @@ class Previously(SlideBase):
         self.quotient_deriviation_3.target.next_to(self.opening, DOWN, buff = 0.2).set_color(PRIMARY_COLOR)
         scene.play(FadeOut(self.opening3, self.dots, self.opening2), MoveToTarget(self.quotient_deriviation_3), run_time=0.5)    
         scene.play(FadeIn(self.pairing_verifiaction_0))
-        scene.play(Indicate(self.commitment, color = LIGHT_BROWN), Indicate(self.pairing_verifiaction_0[11], color = LIGHT_BROWN))
+        scene.play(Indicate(self.commitment, color = LIGHT_BROWN), Indicate(self.pairing_verifiaction_0[9], color = LIGHT_BROWN))
         scene.play(Indicate(self.proof, color = LIGHT_BROWN), Indicate(self.pairing_verifiaction_0[1], color = LIGHT_BROWN))
         # scene.wait(0.5)
         scene.play(Indicate(self.opening[1], color = PURPLE_B), Indicate(self.pairing_verifiaction_0[5], color = PURPLE_B), run_time=0.7)
-        scene.play(Indicate(self.opening[4], color = PURPLE_B), Indicate(self.pairing_verifiaction_0[9], color = PURPLE_B), run_time=0.7)
+        scene.play(Indicate(self.opening[4], color = PURPLE_B), Indicate(self.pairing_verifiaction_0[11], color = PURPLE_B), run_time=0.7)
         self.verifier.generate_target()
         self.verifier.target.set_opacity(0.9).scale(1.3)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = LIGHT_BROWN), MoveToTarget(self.verifier))
@@ -286,13 +286,13 @@ class Previously(SlideBase):
         scene.wait(1.5)
         scene.play(Write(self.opening), FadeOut(label_tau))
         self.polynomial_chart.remove(label_tau)
-        scene.wait(1.5)
+        scene.wait(1)
         self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
         self.line_correct_y = self.polynomial_chart.animate_create_horizontal_line(
             scene, self.y.value, 0, self.z.value
         )
         scene.play(FadeIn(self.label_y, self.line_correct_y), run_time=0.5)
-        scene.wait(1.2)
+        scene.wait(1)
         self.label_x = self.polynomial_chart.add_xaxis_label(self.x_zero.value, r"x_0")
         self.line_z = self.polynomial_chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
