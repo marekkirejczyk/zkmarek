@@ -21,7 +21,7 @@ class Previously(SlideBase):
         super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("KZG in 60 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
+        self.title_label = Text("Vector commitment in 90 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*3.2)
         self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=45).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2.3)
         self.prover = ImageMobject("data/images/person.png").scale(0.8).next_to(self.polynomial_chart, UP).shift(UP*2.5)
@@ -51,7 +51,7 @@ class Previously(SlideBase):
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 44,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*4.5+UP)
+        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*5+UP)
         self.pairing_verifiaction_4 = MathTex(
             r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 44,
             color=PURPLE_B,
@@ -92,7 +92,7 @@ class Previously(SlideBase):
                 self.indeces_over_vector[i].next_to(self.vector_values[i+1], UP, buff = 0.45)
 
         
-        self.data_points = Text("data vector", font = PRIMARY_FONT, color = BLUE_D, font_size = 35).shift(UP*3.5+RIGHT*2)
+        self.data_points = Text("data vector", font = PRIMARY_FONT, color = BLUE_D, font_size = 35).shift(UP*5.5)
         self.interpolation = Text("interplolation", font = PRIMARY_FONT, color = GREEN_E, font_size = 35).next_to(self.data_points, DOWN, buff = 1.5)
         self.vector_commitment = Text("vector commitment", font = PRIMARY_FONT, color = MAROON_E, font_size = 35).next_to(self.interpolation, DOWN, buff = 1.5)
         
@@ -173,7 +173,7 @@ class Previously(SlideBase):
         labelx1 = self.polynomial_chart.add_xaxis_label(self.x_one.value, r"x_1")
         labelx2 = self.polynomial_chart.add_xaxis_label(self.x_two.value, r"x_2")
         scene.play(FadeOut(self.line_z))
-        self.polynomial_chart.remove(self.label_y)
+        # self.polynomial_chart.remove(self.label_y)
         scene.play(TransformMatchingShapes(self.opening2.copy(), self.opening3), FadeOut(self.new_polynomial_label))
         for i in range(3):
             labels = [self.label_x, labelx1, labelx2]
@@ -222,13 +222,15 @@ class Previously(SlideBase):
         scene.play(Create(self.chart_interpolation_graph4))
         
         self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
-        self.chart_interpolation.generate_target()
-        self.chart_interpolation.target.shift(DOWN*3)
+        self.chart_interpolation.ax.generate_target()
+        self.chart_interpolation.ax.target.shift(DOWN*4.5)
+        self.chart_interpolation_graph4.generate_target()
+        self.chart_interpolation_graph4.target.shift(DOWN*4.5)
+        self.chart_interpolation.labels.generate_target()
+        self.chart_interpolation.labels.target.shift(DOWN*4.5)
         self.vector_values.generate_target()
-        self.vector_values.target.shift(DOWN*3)
-        self.indeces_over_vector.generate_target()
-        self.indeces_over_vector.target.shift(DOWN*3)
-        scene.play(MoveToTarget(self.chart_interpolation), MoveToTarget(self.vector_values), MoveToTarget(self.indeces_over_vector), run_time=1)  
+        self.vector_values.target.shift(DOWN*4.5)
+        scene.play(MoveToTarget(self.chart_interpolation_graph4), MoveToTarget(self.vector_values), FadeOut(self.indeces_over_vector), MoveToTarget(self.chart_interpolation.ax), MoveToTarget(self.chart_interpolation.labels), run_time=1)  
         scene.play(Write(self.data_points))
         scene.play(GrowArrow(self.arrow_data_interpolation))
         scene.play(Write(self.interpolation))
@@ -243,8 +245,8 @@ class Previously(SlideBase):
         self.layer2.miniature(scene)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.label_y, self.quotient_deriviation_3, self.pairing_verifiaction_2a, self.opening, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label, self.verifier, self.prover))
-        
+        # scene.play(FadeOut(self.title_label, self.label_y, self.quotient_deriviation_3, self.pairing_verifiaction_2a, self.opening, self.pairing_verifiaction_4, self.proof, self.commitment, self.polynomial_chart, self.polynomial_opening_label, self.verifier, self.prover))
+        scene.play(FadeOut(self.title_label))
         
         
     def y0_x0(self, scene):

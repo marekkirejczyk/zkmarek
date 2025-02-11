@@ -179,7 +179,7 @@ class Layer2(SlideBase):
                            self.rounded_rectangle, self.blob_image, self.blob_image_1, self.blob_image_2))
         
     def miniature(self, scene):
-        self.blob = ImageMobject("data/images/blob.png").scale(0.9).shift(UP*1.5)
+        self.blob = ImageMobject("data/images/blob.png").scale(0.9).shift(UP*3.5)
         self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
         self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
         scene.play(FadeIn(self.blob), run_time=0.3)
@@ -193,7 +193,7 @@ class Layer2(SlideBase):
         )
 
         scene.add(self.ethereum, self.ethereum2, self.ethereum3, self.ethereum4)
-        self.block_chain.scale(0.75).shift(DOWN*1.5)
+        self.block_chain.scale(0.75).shift(DOWN*2.5)
         self.ethereum.scale(0.5).move_to(self.finalized_blocks[0])
         self.ethereum2.scale(0.5).move_to(self.finalized_blocks[1])
         self.ethereum3.scale(0.5).move_to(self.finalized_blocks[2])
@@ -215,9 +215,9 @@ class Layer2(SlideBase):
             for _ in range(rows)
         ]).arrange(DOWN, buff=0.2)
 
-        self.binary_matrix.move_to(LEFT*3)
+        self.binary_matrix.move_to(UP*3.5)
         scene.add(self.binary_matrix)
-        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(LEFT*2.5+UP*2).scale(0.3)
+        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(UP*5).scale(0.4)
         self.tree.stretch(2, dim=1)
         node1_0 = self.tree.get_node(1, 0)
         node2_1 = self.tree.get_node(2, 1)
