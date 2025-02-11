@@ -21,7 +21,7 @@ class Previously(SlideBase):
         super().__init__("Previously on zkMarek")
         
     def construct(self):
-        self.title_label = Text("Vector commitment in 96 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
+        self.title_label = Text("Vector commitment in 95 s", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 50).to_edge(UP).shift(UP*5)
         self.polynomial_chart = DiscreetePolynomialChart(p = 41, f = poly, label = "r", include_numbers=False, dot_color=SECONDARY_COLOR).scale(0.6).shift(3.7*LEFT+DOWN*3.2)
         self.polynomial_label = MathTex(r"{{}} {{p(x)}} {{}}", color = PRIMARY_COLOR, font_size=45).next_to(self.polynomial_chart, direction = RIGHT+UP, buff = 0).shift(DOWN*0.1+LEFT*2.3)
         self.prover = ImageMobject("data/images/person.png").scale(0.8).next_to(self.polynomial_chart, UP).shift(UP*2.5)
@@ -40,7 +40,7 @@ class Previously(SlideBase):
         self.x_two = FieldElement(33, 41)
         self.value_at_x_one = poly(self.x_one)
         self.value_at_x_two = poly(self.x_two)
-        self.dots = MathTex(r"\cdots", color = PRIMARY_COLOR).next_to(self.opening3, DOWN, buff = 0.2).shift(LEFT)
+        self.dots = MathTex(r"\cdots", color = PRIMARY_COLOR).next_to(self.opening3, DOWN, buff = 0.2)
 
         self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 45, color = PRIMARY_COLOR).next_to(self.dots, DOWN, buff = 0.5)
         
@@ -138,10 +138,10 @@ class Previously(SlideBase):
 
         self.vlayer = ImageMobject(
             "data/images/Logo_304_color_on_dark.png"
-        ).scale(0.8).to_edge(RIGHT+DOWN).shift(DOWN*5+LEFT*2)
+        ).scale(0.8).to_edge(RIGHT+DOWN).shift(DOWN*4.5+LEFT*2)
         self.ecosystem = ImageMobject(
             "data/images/ecosystem_support_program.png"
-        ).scale(0.2).next_to(self.vlayer, UP, buff = 0.2)
+        ).scale(0.17).next_to(self.vlayer, DOWN, buff = 0.0)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "kzg commitment scheme", "data/sound/e6/slide1-0a.mp3")
@@ -291,8 +291,7 @@ class Previously(SlideBase):
         self.line_correct_y = self.polynomial_chart.animate_create_horizontal_line(
             scene, self.y.value, 0, self.z.value
         )
-        scene.play(FadeIn(self.label_y, self.line_correct_y), run_time=0.5)
-        scene.wait(1)
+        scene.wait(0.7)
         self.label_x = self.polynomial_chart.add_xaxis_label(self.x_zero.value, r"x_0")
         self.line_z = self.polynomial_chart.animate_create_vertical_line(
             scene, self.z.value, self.y.value
