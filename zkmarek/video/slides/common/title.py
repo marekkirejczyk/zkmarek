@@ -14,6 +14,7 @@ class TitleSlide(SlideBase):
     sound: Optional[str]
     pre_wait_time: int
     wait_time: int
+    font_size = Optional[int] 
 
     def __init__(
         self,
@@ -22,19 +23,21 @@ class TitleSlide(SlideBase):
         sound: Optional[str] = None,
         pre_wait_time: Optional[int] = 0,
         wait_time: Optional[int] = 0,
+        font_size: Optional[int] = 48,
     ) -> None:
         super().__init__(title)
         self.subtitle = subtitle
         self.sound = sound
         self.pre_wait_time = pre_wait_time
         self.wait_time = wait_time
+        self.font_size = font_size 
 
     def __str__(self):
         return f"{self.title} (TITLE)"
 
     def construct(self):
         self.title_text = Text(
-            self.title, should_center=True, font=PRIMARY_FONT, color=PRIMARY_COLOR
+            self.title, should_center=True, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=self.font_size
         )
         self.add(self.title_text)
         if self.subtitle is not None:
