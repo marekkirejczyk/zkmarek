@@ -106,7 +106,7 @@ class MerkleTree(SlideBase):
         self.account_data_more.next_to(self.account_data[23], DOWN, buff = 0.2)
         self.transaction_data.next_to(self.account_data, DOWN, buff = 1.5)  
         data_vecs = VGroup(self.transaction_data, self.account_data, self.account_data_more)
-        self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).to_edge(DOWN).shift(UP)
+        self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).shift(UP)
         scene.play(Write(self.account_data))
         scene.play(Create(self.account_data_more), Write(self.transaction_data), run_time=0.5)
         side_block1.generate_target()
@@ -234,13 +234,13 @@ class MerkleTree(SlideBase):
         for i in indications:
             scene.play(Indicate(i, color = PURPLE_B, scale_factor=1.1), run_time=0.5)
             
-        self.MPT.leaf1.generate_target()
-        self.MPT.leaf1.target.shift(RIGHT*3.5+UP*1).scale(2.5)
+        # self.MPT.leaf1.generate_target()
+        # self.MPT.leaf1.target.shift(RIGHT*3.5+UP*1).scale(2.5)
         everything_but_leaf = VGroup(self.MPT.root, self.MPT.branch1, self.MPT.extension2, self.MPT.branch2, self.MPT.leaf2, self.MPT.leaf3, self.MPT.leaf4,
                                      self.MPT.arrow, self.MPT.arrow2, self.MPT.arrow3, self.MPT.arrow4, self.MPT.arrow5, self.MPT.arrow6, self.MPT.arrow7)
-        everything_but_leaf.generate_target()
-        everything_but_leaf.target.shift(RIGHT*15)
-        scene.play(MoveToTarget(everything_but_leaf), MoveToTarget(self.MPT.leaf1))
+        # everything_but_leaf.generate_target()
+        # everything_but_leaf.target.shift(RIGHT*15)
+        # scene.play(MoveToTarget(everything_but_leaf), MoveToTarget(self.MPT.leaf1))
         scene.wait(1)
         scene.play(Indicate(self.MPT.leaf1.field_group[0], color = PURPLE_B))
         scene.wait(1)
