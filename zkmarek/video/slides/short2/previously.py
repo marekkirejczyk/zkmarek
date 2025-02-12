@@ -172,13 +172,14 @@ class Previously(SlideBase):
         scene.play(Indicate(self.opening[1], color = GREEN_E))
         self.polynomial_chart.remove(self.line_z)
         self.polynomial_chart.remove(self.line_correct_y)
+        scene.play(FadeOut(self.line_z))
         self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value)
-        scene.wait(1)
+        scene.wait(0.6)
         
         self.new_subsection(scene, "roots", "data/sound/e6/slide1-0d.mp3")
         labelx1 = self.polynomial_chart.add_xaxis_label(self.x_one.value, r"x_1")
         labelx2 = self.polynomial_chart.add_xaxis_label(self.x_two.value, r"x_2")
-        scene.play(FadeOut(self.line_z))
+        scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.opening2.copy(), self.opening3), FadeOut(self.new_polynomial_label))
         for i in range(3):
             labels = [self.label_x, labelx1, labelx2]
