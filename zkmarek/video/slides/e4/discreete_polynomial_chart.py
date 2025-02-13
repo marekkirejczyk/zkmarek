@@ -113,7 +113,7 @@ class DiscreetePolynomialChart(VGroup):
                 animations.append(a)
         scene.play(*animations)
 
-    def animate_shift_dots_wrap_fix(self, scene, y_shift, runtime=0.7):
+    def animate_shift_dots_wrap_fix(self, scene, y_shift, runtime=0.4):
         animations = []
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
@@ -124,7 +124,10 @@ class DiscreetePolynomialChart(VGroup):
         scene.play(*animations, run_time=runtime)
         for d in self.dots:
             if d.get_fill_opacity() < 1:
-                d.set_fill(opacity=1)
+                d.generate_target()
+                d.target.set_fill(opacity=1)
+        move_to_target = [d.animate.move_to(d.target.get_center()) for d in self.dots]
+        scene.play(*move_to_target, run_time=runtime)
                 
     def animate_shift_dots_with_fade(self, scene, y_shift, runtime=0.7):
         animations = []
