@@ -165,7 +165,7 @@ class Commitment(SlideBase):
 
 
     def animate_miniature(self, scene):
-        rectangle = RoundedRectangle(corner_radius=0.5, color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(UP).set_color_by_gradient(PRIMARY_COLOR, HIGHLIGHT2_COLOR)
+        rectangle = RoundedRectangle(corner_radius=0.5, color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(UP).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
         text = Text("Polynomial commitments", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=50).scale(0.65).next_to(rectangle, UP, buff = 0.4)
 
@@ -187,9 +187,9 @@ class Commitment(SlideBase):
                  self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier, self.tail).scale(0.65).shift(UP)
         self.chart.gen_points()
         scene.play(FadeIn(self.commiter, self.commiter_label, self.bubble_opening, self.verifier, self.verifier_label, self.chart, 
-                 self.envelope_body_closed, self.envelope_flap_closed, text, rectangle))
-        scene.play(FadeIn(tail_verifier, bubble_verifier, speech_text_verifier))
-        scene.wait(0.5)
-        scene.play(FadeIn(self.bubble_committer, self.tail), Write(self.opening))
+                 self.envelope_body_closed, self.envelope_flap_closed, text, rectangle), run_time=0.3)
+        scene.play(FadeIn(tail_verifier, bubble_verifier, speech_text_verifier), run_time=0.3)
+        scene.wait(0.3)
+        scene.play(FadeIn(self.bubble_committer, self.tail), Write(self.opening), run_time=0.5)
         
         

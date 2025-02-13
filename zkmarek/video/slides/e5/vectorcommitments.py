@@ -236,7 +236,7 @@ class VectorCommitments(SlideBase):
             scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
 
     def animate_miniature(self, scene):
-        rectangle = RoundedRectangle(corner_radius=0.5, color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*6).set_color_by_gradient(PRIMARY_COLOR, HIGHLIGHT2_COLOR)
+        rectangle = RoundedRectangle(corner_radius=0.5, color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*6).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
         text = Text("Vector commitments", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).next_to(rectangle, UP, buff = 0.4)
         self.new_axes4096 = Axes(
@@ -281,7 +281,7 @@ class VectorCommitments(SlideBase):
         scene.play(FadeIn(self.polynomial_graph, rectangle, self.new_axes4096, text, self.number_sequence, self.arrow_number_chart, self.polynomial_eqn_4096_sum), run_time=0.5)
         scene.wait(1)
         self.chart_discrete.gen_points()
-        scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete))
-        scene.play(ApplyWave(self.number_sequence))
+        scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete), run_time=0.4)
+        scene.play(ApplyWave(self.number_sequence), run_time=0.4)
 
         
