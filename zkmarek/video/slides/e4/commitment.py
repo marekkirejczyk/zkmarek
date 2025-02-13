@@ -1,5 +1,5 @@
 from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, 
-                   MoveToTarget, ReplacementTransform, MathTex, Circle, Group, CurvedArrow)
+                   MoveToTarget, ReplacementTransform, MathTex, Circle, Group, CurvedArrow, Rectangle)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -165,12 +165,13 @@ class Commitment(SlideBase):
 
 
     def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).shift(UP*4)
         text = Text("Polynomial commitments", color=SECONDARY_COLOR,
-            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(UP)
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).shift(UP)
 
-        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR)
-        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN+LEFT*0.3)
-        bubble_verifier.shift(UP) 
+        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR).scale(0.65)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN+LEFT*0.3).scale(0.65)
+        bubble_verifier.shift(UP)
         speech_text_verifier.move_to(bubble_verifier.get_center())
         tail_verifier = Polygon(
             [0.2, 0.05, 0], 
@@ -180,12 +181,11 @@ class Commitment(SlideBase):
             fill_opacity=0.4
         ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
 
-        # self.add(rectangle, self.commiter_label, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
-        #          self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier)
         self.scale(0.65)
         self.add(text)
+        self.all_mobjects = Group(self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
+                 self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier).scale(0.65)
         self.chart.gen_points()
-        scene.play(FadeIn(text, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
-                 self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier))
+        scene.play(FadeIn(self.all_mobjects, text, rectangle))
         
         

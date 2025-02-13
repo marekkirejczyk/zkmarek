@@ -1,4 +1,3 @@
-from manim import FadeIn, ImageMobject, FadeOut, LEFT, RIGHT, DOWN
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode3.ceremony import Ceremony
 from zkmarek.video.slides.e4.commitment import Commitment

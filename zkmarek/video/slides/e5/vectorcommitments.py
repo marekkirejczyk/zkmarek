@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex, TransformMatchingTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes, Rectangle)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -236,9 +236,9 @@ class VectorCommitments(SlideBase):
             scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
 
     def animate_miniature(self, scene):
-        text = Text("Polynomial commitments", color=SECONDARY_COLOR,
-            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN)
-
+        text = Text("Vector commitments", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).shift(DOWN*5)
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).shift(DOWN*5)
         self.new_axes4096 = Axes(
             x_range=[-4.7, 5500, 4095],
             y_range=[-45, 5500, 5596],
@@ -253,23 +253,23 @@ class VectorCommitments(SlideBase):
             }
         )
 
-        self.new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3).shift(DOWN*6)
+        self.new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3).shift(DOWN*5).scale(0.65)
         self.new_axes4096[0].shift(UP)
-        self.polynomial_graph = self.chart.ax.plot_implicit_curve(
+        self.polynomial_graph = self.new_axes4096.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )
-        self.chart_discrete.shift(DOWN*6)
-        self.arrow_number_chart.shift(DOWN*6)
-        self.number_sequence.shift(DOWN*6)
-        self.polynomial_eqn_4096_sum.shift(DOWN*6)
-        self.polynomial_eqn_4096.shift(DOWN*6)
+        self.chart_discrete.shift(DOWN*5).scale(0.65)
+        self.arrow_number_chart.shift(DOWN*5).scale(0.65)
+        self.number_sequence.shift(DOWN*5).scale(0.65)
+        self.polynomial_eqn_4096_sum.shift(DOWN*5).scale(0.65)
+        self.polynomial_eqn_4096.shift(DOWN*5).scale(0.65)
         
         self.scale(0.65)
-        self.add(text, self.polynomial_graph, self.new_axes4096, self.chart_discrete, self.arrow_number_chart, self.number_sequence, self.polynomial_eqn_4096_sum, self.polynomial_eqn_4096)
-        scene.play(FadeIn(self.polynomial_graph, self.new_axes4096, text, self.number_sequence, self.arrow_number_chart, self.polynomial_eqn_4096, self.polynomial_eqn_4096_sum), run_time=0.5)
+        self.add(text, rectangle, self.polynomial_graph, self.new_axes4096, self.chart_discrete, self.arrow_number_chart, self.number_sequence, self.polynomial_eqn_4096_sum)
+        scene.play(FadeIn(self.polynomial_graph, rectangle, self.new_axes4096, text, self.number_sequence, self.arrow_number_chart, self.polynomial_eqn_4096_sum), run_time=0.5)
         scene.wait(1)
         self.chart_discrete.gen_points()
-        scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
+        scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete))
 
         
