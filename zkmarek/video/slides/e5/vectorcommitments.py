@@ -8,6 +8,7 @@ from zkmarek.video.slides.e4.curve import Curve
 import numpy as np
 from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
+from scipy.special import factorial
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -202,7 +203,7 @@ class VectorCommitments(SlideBase):
             FadeOut(self.labels),
             FadeOut(chart.ax, run_time=0.5), FadeIn(self.new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
@@ -255,7 +256,7 @@ class VectorCommitments(SlideBase):
         self.new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3).shift(DOWN*6)
         self.new_axes4096[0].shift(UP)
         self.polynomial_graph = self.chart.ax.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )
         self.chart_discrete.shift(DOWN*6)
