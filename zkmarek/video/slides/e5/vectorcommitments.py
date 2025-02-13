@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex, TransformMatchingTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes, Rectangle)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes, RoundedRectangle, ApplyWave)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -236,7 +236,7 @@ class VectorCommitments(SlideBase):
             scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
 
     def animate_miniature(self, scene):
-        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*6)
+        rectangle = RoundedRectangle(corner_radius=0.5, color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*6).set_color_by_gradient(PRIMARY_COLOR, HIGHLIGHT2_COLOR)
         text = Text("Vector commitments", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).next_to(rectangle, UP, buff = 0.4)
         self.new_axes4096 = Axes(
@@ -282,5 +282,6 @@ class VectorCommitments(SlideBase):
         scene.wait(1)
         self.chart_discrete.gen_points()
         scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete))
+        scene.play(ApplyWave(self.number_sequence))
 
         

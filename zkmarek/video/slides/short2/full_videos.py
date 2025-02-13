@@ -21,8 +21,6 @@ class FullVideos(SlideBase):
         
     def animate_miniatures(self, scene):
         self.slide1.animate_miniature2(scene)
-        scene.wait(1)
         self.slide2.animate_miniature(scene)
-        scene.wait(1)
         self.slide3.animate_miniature(scene)
         
