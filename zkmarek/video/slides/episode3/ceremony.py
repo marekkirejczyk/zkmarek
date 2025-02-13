@@ -178,10 +178,10 @@ class Ceremony(SlideBase):
         self.tau_0_mini.scale(1.2).shift(UP*3)
         self.tau_1_mini.scale(1.2).shift(UP*3)
         self.tau_k_mini.scale(1.2).shift(UP*3)
-        self.line0 = Line(start = self.tau_0_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_0_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.2)
-        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.3)
-        self.linei = Line(start = self.tau_k_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_k_mini, DOWN, buff = 0.1).shift(RIGHT+UP*1.55)
-        text.next_to(rectangle, DOWN, buff=0.4)
+        self.line0 = Line(start = self.tau_0_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_0_mini, DOWN, buff = 0.1)
+        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.1)
+        self.linei = Line(start = self.tau_k_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_k_mini, DOWN, buff = 0.1)
+        text.next_to(rectangle, UP, buff=0.4)
         self.person.scale(0.65).next_to(self.tau_0_mini, LEFT, buff = 0.6)
         self.person2.scale(0.65).next_to(self.tau_1_mini, LEFT, buff = 0.6)
         self.person3.scale(0.65).next_to(self.tau_k_mini, LEFT, buff = 0.6)
@@ -190,8 +190,6 @@ class Ceremony(SlideBase):
         scene.play(FadeIn(text, rectangle, self.person, self.person2, self.person3, self.tau_0_mini, self.tau_1_mini,
                           self.three_dot, self.tau_k_mini, self.line0, self.line1, self.linei, self.tau_col))
 
-        # scene.wait(1)
-        # scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.three_dot, text, rectangle, self.line0, self.line1, self.linei, self.tau_col))
-        
+
     def animate_out(self, scene):
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))

@@ -236,9 +236,9 @@ class VectorCommitments(SlideBase):
             scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
 
     def animate_miniature(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*6)
         text = Text("Vector commitments", color=SECONDARY_COLOR,
-            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).shift(DOWN*5)
-        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*5)
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).next_to(rectangle, UP, buff = 0.4)
         self.new_axes4096 = Axes(
             x_range=[-4.7, 5500, 4095],
             y_range=[-45, 5500, 5596],
@@ -270,8 +270,8 @@ class VectorCommitments(SlideBase):
         self.polynomial_graph = self.new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
-            ).scale(0.7).shift(LEFT*3).shift(DOWN*6).scale(0.65)
-        self.chart_discrete.shift(DOWN*6).scale(0.65)
+            )
+        self.chart_discrete.shift(DOWN*6+RIGHT).scale(0.65)
         self.arrow_number_chart.shift(DOWN*6).scale(0.65)
         self.number_sequence.shift(DOWN*6).scale(0.65)
         self.polynomial_eqn_4096_sum.shift(DOWN*6).scale(0.65)

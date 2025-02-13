@@ -18,11 +18,11 @@ class FullVideos(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "Full videos", "data/sound/e6/slide1-2d.mp3")
         self.animate_miniatures(scene)
-        scene.wait(1)
-        self.remove(self.slide1, self.slide2, self.slide3)
         
     def animate_miniatures(self, scene):
         self.slide1.animate_miniature2(scene)
+        scene.wait(1)
         self.slide2.animate_miniature(scene)
+        scene.wait(1)
         self.slide3.animate_miniature(scene)
         

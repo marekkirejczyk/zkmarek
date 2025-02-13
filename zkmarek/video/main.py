@@ -224,7 +224,7 @@ EPISODE6 = [
 ]
 
 SHORT2 = [
-    TitleSlide("Vector commitment in 90 s", sound = "data/sound/e6/slide1-0.mp3", wait_time=0.5, font_size=80),
+    TitleSlide("Vector commitment in 90 s", sound = "data/sound/e6/slide1-0.mp3", wait_time=0.5, font_size=70),
     PreviouslyE6(),
     FullVideos(),
     SubscribeSponsors()
