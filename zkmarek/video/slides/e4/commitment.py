@@ -65,20 +65,20 @@ class Commitment(SlideBase):
         self.opening.shift(UP*0.3)
         self.proof.next_to(self.opening, DOWN, buff = 0.3)
         self.chart.move_to(self.bubble_committer.get_center())
-
-    def animate_in(self, scene):
-        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-0.mp3")
-        scene.play(Write(self.title_text))
-        scene.play(FadeIn(self.commiter))
-        scene.play(Write(self.commiter_label))
-
-        tail = Polygon(
+        self.tail = Polygon(
             [0.06, 0.08, 0], 
             [-0.35, -1.2, 0], 
             [0.93, -0.63, 0], 
             color=PRIMARY_COLOR,
             fill_opacity=0.4
         ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.01+DOWN*0.14)
+
+
+    def animate_in(self, scene):
+        self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-0.mp3")
+        scene.play(Write(self.title_text))
+        scene.play(FadeIn(self.commiter))
+        scene.play(Write(self.commiter_label))
 
 
         scene.play(Create(self.bubble_committer))
@@ -140,7 +140,7 @@ class Commitment(SlideBase):
         self.circle_full.generate_target()
         self.circle_full.target.next_to(self.opening, LEFT, buff = 0.1)
         self.lock_open = ImageMobject("data/images/Lock_Open.png").scale(0.2).move_to(self.envelope_body_closed.get_center())
-        scene.play(FadeIn(self.opening, self.bubble_opening, tail), MoveToTarget(self.circle_full), ReplacementTransform(self.lock_copy, self.lock_open))
+        scene.play(FadeIn(self.opening, self.bubble_opening, self.tail), MoveToTarget(self.circle_full), ReplacementTransform(self.lock_copy, self.lock_open))
 
         self.new_subsection(scene, "request to open", "data/sound/e4/slide2-3.mp3")
         scene.play(FadeOut(bubble_verifier, speech_text_verifier, tail_verifier))
@@ -150,7 +150,7 @@ class Commitment(SlideBase):
         self.opening.target.next_to(self.verifier, UP)
         self.proof.generate_target()
         self.proof.target.next_to(self.verifier, UP).shift(UP)
-        scene.play(FadeOut(self.bubble_opening, tail), FadeOut(self.circle_full))
+        scene.play(FadeOut(self.bubble_opening, self.tail), FadeOut(self.circle_full))
         scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=1.5)
         scene.wait(0.5)
         self.arrow_check_opening = CurvedArrow(self.proof.get_left(), self.opening.get_left(), color = HIGHLIGHT_COLOR)
@@ -165,9 +165,9 @@ class Commitment(SlideBase):
 
 
     def animate_miniature(self, scene):
-        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).shift(UP*4)
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(UP)
         text = Text("Polynomial commitments", color=SECONDARY_COLOR,
-            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).shift(UP)
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).shift(UP*1.5)
 
         speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR).scale(0.65)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN+LEFT*0.3).scale(0.65)
@@ -179,12 +179,12 @@ class Commitment(SlideBase):
             [0.78, -1.1, 0], 
             color=SECONDARY_COLOR,
             fill_opacity=0.4
-        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.3).shift(RIGHT*0.06+DOWN*0.17)
 
         self.scale(0.65)
         self.add(text)
-        self.all_mobjects = Group(self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
-                 self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier).scale(0.65)
+        self.all_mobjects = Group(self.commiter, self.commiter_label, self.bubble_opening, self.verifier, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
+                 self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier, self.tail).scale(0.65).shift(UP)
         self.chart.gen_points()
         scene.play(FadeIn(self.all_mobjects, text, rectangle))
         

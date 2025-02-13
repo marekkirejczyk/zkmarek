@@ -44,10 +44,10 @@ class Previously(SlideBase):
 
         self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 55, color = PRIMARY_COLOR)
         
-        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)
-        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)       
-        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)
-        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)       
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 55).to_edge(DOWN).shift(DOWN*2)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 55).to_edge(DOWN).shift(DOWN*2)       
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 55).to_edge(DOWN).shift(DOWN*2)
+        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 55).to_edge(DOWN).shift(DOWN*2)       
         self.pairing_verifiaction_3 = MathTex(
             r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 55,
             color=PURPLE_B,
@@ -118,7 +118,7 @@ class Previously(SlideBase):
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.2
         ).scale(0.44)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff = 0.6)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.68)
 
         self.commitment = MathTex(r"C = p(\tau) \cdot G_1", font_size=55, color=PRIMARY_COLOR).move_to(self.envelope_body_closed.get_center())
         self.proof = MathTex(r"\pi = q(\tau) \cdot G_1", font_size=55, color=PRIMARY_COLOR).next_to(self.opening, DOWN, buff=0.2)
@@ -161,7 +161,7 @@ class Previously(SlideBase):
         scene.wait(1)
         self.opening2.next_to(self.opening, DOWN, buff = 0.3)
         self.polynomial_opening_label.next_to(self.polynomial_chart, UP, buff = 0.2)
-        self.new_polynomial_label.next_to(self.opening2, LEFT, buff = 0.8).shift(UP*0.1)
+        self.new_polynomial_label.next_to(self.opening2, LEFT, buff = 0.3)
         self.opening3.next_to(self.opening2, DOWN, buff = 0.2)
         self.dots.next_to(self.opening3, DOWN, buff = 0.2)
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff = 0.5)
@@ -287,7 +287,6 @@ class Previously(SlideBase):
         self.opening.next_to(self.commitment, DOWN, buff = 0.2)
         scene.play(Write(self.opening), FadeOut(label_tau))
         self.polynomial_chart.remove(label_tau)
-        scene.wait(1)
         self.label_y = self.polynomial_chart.add_yaxis_label(self.value_at_x_zero.value, r"y_0")
         self.line_correct_y = self.polynomial_chart.animate_create_horizontal_line(
             scene, self.y.value, 0, self.z.value
@@ -298,7 +297,7 @@ class Previously(SlideBase):
             scene, self.z.value, self.y.value
         )
         scene.play(FadeIn(self.label_x), run_time=0.5)
-        scene.wait(0.5)
+        scene.wait(0.8)
         scene.play(Indicate(self.prover, color = GREEN_E), run_time=0.7)
         self.proof.next_to(self.opening, DOWN)
         scene.play(FadeIn(self.proof), run_time=0.5)

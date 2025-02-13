@@ -238,7 +238,7 @@ class VectorCommitments(SlideBase):
     def animate_miniature(self, scene):
         text = Text("Vector commitments", color=SECONDARY_COLOR,
             font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).shift(DOWN*5)
-        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).shift(DOWN*5)
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*5)
         self.new_axes4096 = Axes(
             x_range=[-4.7, 5500, 4095],
             y_range=[-45, 5500, 5596],
@@ -252,18 +252,29 @@ class VectorCommitments(SlideBase):
                 }
             }
         )
-
-        self.new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3).shift(DOWN*5).scale(0.65)
+        self.new_axes = Axes(
+            x_range=[-4.7, 20, 20],
+            y_range=[-45, 5.5, 20],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        ).scale(0.7).shift(LEFT*3+UP*0.3).shift(DOWN*6).scale(0.65)
+        self.new_axes4096.scale(0.7).shift(LEFT*3+UP*0.3).shift(DOWN*6).scale(0.65)
         self.new_axes4096[0].shift(UP)
-        self.polynomial_graph = self.new_axes4096.plot_implicit_curve(
+        self.polynomial_graph = self.new_axes.plot_implicit_curve(
                 lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
-            )
-        self.chart_discrete.shift(DOWN*5).scale(0.65)
-        self.arrow_number_chart.shift(DOWN*5).scale(0.65)
-        self.number_sequence.shift(DOWN*5).scale(0.65)
-        self.polynomial_eqn_4096_sum.shift(DOWN*5).scale(0.65)
-        self.polynomial_eqn_4096.shift(DOWN*5).scale(0.65)
+            ).scale(0.7).shift(LEFT*3).shift(DOWN*6).scale(0.65)
+        self.chart_discrete.shift(DOWN*6).scale(0.65)
+        self.arrow_number_chart.shift(DOWN*6).scale(0.65)
+        self.number_sequence.shift(DOWN*6).scale(0.65)
+        self.polynomial_eqn_4096_sum.shift(DOWN*6).scale(0.65)
         
         self.scale(0.65)
         self.add(text, rectangle, self.polynomial_graph, self.new_axes4096, self.chart_discrete, self.arrow_number_chart, self.number_sequence, self.polynomial_eqn_4096_sum)
