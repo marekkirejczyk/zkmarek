@@ -1,4 +1,5 @@
-from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, MoveToTarget, ReplacementTransform, MathTex, Circle, Group, CurvedArrow
+from manim import (Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, VGroup, Text, Write, Tex, FadeOut, TransformMatchingShapes, RoundedRectangle, 
+                   MoveToTarget, ReplacementTransform, MathTex, Circle, Group, CurvedArrow)
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -56,6 +57,14 @@ class Commitment(SlideBase):
         self.label_x_0 = self.chart.add_xaxis_label(self.x_zero.value, r"x_0")
         self.label_tau = self.chart.add_xaxis_label(self.tau.value, r"\tau")
         self.chart.scale(0.4)
+        self.bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
+        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
+        self.proof = MathTex(r"\mathrm{proof} \ \pi", font_size=32, color = PRIMARY_COLOR)
+        self.bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
+        self.opening.move_to(self.bubble_opening.get_center())
+        self.opening.shift(UP*0.3)
+        self.proof.next_to(self.opening, DOWN, buff = 0.3)
+        self.chart.move_to(self.bubble_committer.get_center())
 
     def animate_in(self, scene):
         self.new_subsection(scene, "what is commitment", "data/sound/e4/slide2-0.mp3")
@@ -63,10 +72,6 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.commiter))
         scene.play(Write(self.commiter_label))
 
-        self.bubble_committer = RoundedRectangle(corner_radius=0.5, width=self.chart.width + 1, height=self.chart.height + 0.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+LEFT, buff = -1).shift(0.4*DOWN+LEFT*0.6)
-        self.opening = MathTex(r"{{p}} ({{x_0}}) = {{y_0}}", font_size=32, color = PRIMARY_COLOR)
-        self.proof = MathTex(r"\mathrm{proof} \ \pi", font_size=32, color = PRIMARY_COLOR)
-        self.bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, color = PRIMARY_COLOR).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         tail = Polygon(
             [0.06, 0.08, 0], 
             [-0.35, -1.2, 0], 
@@ -75,10 +80,6 @@ class Commitment(SlideBase):
             fill_opacity=0.4
         ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.4).shift(LEFT*0.01+DOWN*0.14)
 
-        self.opening.move_to(self.bubble_opening.get_center())
-        self.opening.shift(UP*0.3)
-        self.proof.next_to(self.opening, DOWN, buff = 0.3)
-        self.chart.move_to(self.bubble_committer.get_center())
 
         scene.play(Create(self.bubble_committer))
         self.chart.gen_points()
@@ -163,4 +164,28 @@ class Commitment(SlideBase):
         scene.play(FadeOut(self.bubble_committer, self.envelope_flap_closed, self.lock, self.envelope_body_closed, self.opening, self.proof, self.arrow_check_opening, self.thumb, self.lock_open, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.title_text, self.chart, self.arrow_check_opening2))
 
 
-     
+    def animate_miniature(self, scene):
+        text = Text("Polynomial commitments", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(UP)
+
+        speech_text_verifier = Tex(r"$p(x_0) = ?$", font_size=32, color = SECONDARY_COLOR)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=speech_text_verifier.width + 1, height=speech_text_verifier.height + 1.2, color = SECONDARY_COLOR).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(0.2*DOWN+LEFT*0.3)
+        bubble_verifier.shift(UP) 
+        speech_text_verifier.move_to(bubble_verifier.get_center())
+        tail_verifier = Polygon(
+            [0.2, 0.05, 0], 
+            [-0.56, -0.67, 0], 
+            [0.78, -1.1, 0], 
+            color=SECONDARY_COLOR,
+            fill_opacity=0.4
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.4).shift(RIGHT*0.06+DOWN*0.17)
+
+        # self.add(rectangle, self.commiter_label, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
+        #          self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier)
+        self.scale(0.65)
+        self.add(text)
+        self.chart.gen_points()
+        scene.play(FadeIn(text, self.commiter, self.commiter_label, self.verifier, self.verifier_label, self.bubble_committer, self.chart, self.lock, 
+                 self.envelope_body_closed, self.envelope_flap_closed, self.opening, tail_verifier, bubble_verifier, speech_text_verifier))
+        
+        

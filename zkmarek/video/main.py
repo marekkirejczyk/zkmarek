@@ -77,6 +77,8 @@ from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
 from zkmarek.video.slides.e5.credits import Credits as CreditsE5
 from zkmarek.video.slides.short2.previously import Previously as PreviouslyE6
 from zkmarek.video.slides.e6.merkle import MerkleTree
+from zkmarek.video.slides.short2.full_videos import FullVideos
+from zkmarek.video.slides.short2.sponsors_subscribe import SubscribeSponsors
 
 # config.width = 16
 # config.height = 9
@@ -224,6 +226,8 @@ EPISODE6 = [
 SHORT2 = [
     TitleSlide("Vector commitment in 90 s", sound = "data/sound/e6/slide1-0.mp3", wait_time=0.5, font_size=80),
     PreviouslyE6(),
+    FullVideos(),
+    SubscribeSponsors()
 ]
 
 EPISODE7 = [

@@ -44,18 +44,18 @@ class Previously(SlideBase):
 
         self.quotient_deriviation_3 = MathTex(r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size = 55, color = PRIMARY_COLOR)
         
-        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)
-        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)       
-        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)
-        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D).to_edge(DOWN).shift(DOWN*3)       
+        self.pairing_verifiaction_0 = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)
+        self.pairing_verifiaction_1 = MathTex(r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)       
+        self.pairing_verifiaction_2 = MathTex(r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)
+        self.pairing_verifiaction_2a = MathTex(r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})", color = BLUE_D, font_size = 50).to_edge(DOWN).shift(DOWN*2)       
         self.pairing_verifiaction_3 = MathTex(
-            r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 50,
+            r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}", font_size = 55,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*6+UP)
+        ).next_to(self.pairing_verifiaction_2, UP, buff = 0.5).shift(UP*2)
         self.pairing_verifiaction_4 = MathTex(
-            r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 50,
+            r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}", font_size = 55,
             color=PURPLE_B,
-        ).next_to(self.pairing_verifiaction_2, UP+RIGHT, buff = 0.5).shift(LEFT*5+UP)
+        ).next_to(self.pairing_verifiaction_2, UP, buff = 0.5).shift(UP*2)
 
         self.tau = FieldElement(20, 41)
         self.value_at_tau = poly(self.tau)
@@ -82,7 +82,7 @@ class Previously(SlideBase):
         self.chart_interpolation_graph4 = self.chart_interpolation.ax.plot_implicit_curve(
                 lambda x, y: sum(((x+1)**k*np.sin(k*np.pi*(x+1)/3)+0.3) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR)
-        self.vector_values = MathTex(r"\left[{{2, }}{{3, }}{{1, }}{{-3, }}{{-4, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5).scale(2)
+        self.vector_values = MathTex(r"\left[{{2, }}{{3, }}{{1, }}{{-3, }}{{-4, }}{{\cdots}} \right]", color = SECONDARY_COLOR).next_to(self.chart_interpolation.ax, DOWN, buff = 0.5).shift(DOWN).scale(1.7)
         
         self.indeces_over_vector = MathTex(r"{{0}}{{1}}{{2}}{{3}}{{4}}{{\cdots}}", color = PRIMARY_COLOR, font_size = 30).scale(2)
         for i in range(len(self.indeces_over_vector)):
@@ -107,22 +107,16 @@ class Previously(SlideBase):
         
         self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(RIGHT*2.5+UP*1.5).scale(0.3)
         self.tree.stretch(2, dim=1)
-        node1_0 = self.tree.get_node(1, 0)
-        node2_1 = self.tree.get_node(2, 1)
-        self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
-        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
-        self.dots_vec_node1 = self.dots_vec_node.copy()
-        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
 
         self.envelope_body_closed = Polygon(
             [-4, -1, 0], [4, -1, 0], [4, 1, 0], [-4, 1, 0],
             fill_color=PRIMARY_COLOR, fill_opacity=0.3
-        ).scale(0.4)
+        ).scale(0.45)
 
         self.envelope_flap_closed = Polygon(
             [-4, 1, 0], [4, 1, 0], [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR, fill_opacity=0.2
-        ).scale(0.39)
+        ).scale(0.44)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff = 0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff = -0.63)
 
@@ -131,10 +125,10 @@ class Previously(SlideBase):
         self.x_zero = FieldElement(13, 41)
         self.value_at_x_zero = poly(self.x_zero)  
         
-        self.poly_eval0 = MathTex(r"P(0)=2", color = PRIMARY_COLOR).next_to(self.vector_values[1], DOWN, buff = 0.5)
-        self.poly_eval1 = MathTex(r"P(1)=3", color = PRIMARY_COLOR).next_to(self.poly_eval0, RIGHT, buff = 0.5)
-        self.poly_eval2 = MathTex(r"P(2)=1", color = PRIMARY_COLOR).next_to(self.poly_eval0, DOWN, buff = 0.5)
-        self.poly_eval3 = MathTex(r"P(3)=-3", color = PRIMARY_COLOR).next_to(self.poly_eval2, RIGHT, buff = 0.5)
+        self.poly_eval0 = MathTex(r"P(0)=2", color = PRIMARY_COLOR, font_size = 40).next_to(self.vector_values[3], DOWN, buff = 0.5)
+        self.poly_eval1 = MathTex(r"P(1)=3", color = PRIMARY_COLOR, font_size = 40).next_to(self.poly_eval0, RIGHT, buff = 0.5)
+        self.poly_eval2 = MathTex(r"P(2)=1", color = PRIMARY_COLOR, font_size = 40).next_to(self.poly_eval0, DOWN, buff = 0.5)
+        self.poly_eval3 = MathTex(r"P(3)=-3", color = PRIMARY_COLOR, font_size = 40).next_to(self.poly_eval2, RIGHT, buff = 0.5)
 
         
     def animate_in(self, scene):
@@ -143,7 +137,7 @@ class Previously(SlideBase):
         scene.play(FadeIn(self.prover), Write(self.commiter_label), run_time=1)
         self.y0_x0(scene)
         self.polynomial_chart.generate_target()
-        self.polynomial_chart.target.to_edge(DOWN).shift(DOWN*5).scale(0.6)
+        self.polynomial_chart.target.to_edge(DOWN).shift(DOWN*6).scale(0.85)
         self.polynomial_label.generate_target()
         self.polynomial_label.target.next_to(self.polynomial_chart.target, UP, buff = 0.2)
         self.prover.generate_target()
@@ -157,7 +151,7 @@ class Previously(SlideBase):
         self.proof.target.next_to(self.commitment.target, DOWN, buff = 0.2)
         self.opening.generate_target()
         self.opening.target.next_to(self.proof.target, DOWN, buff = 0.2)
-        scene.play(FadeOut(self.verifier_label, self.commiter_label), MoveToTarget(self.prover), MoveToTarget(self.verifier),
+        scene.play(FadeOut(self.verifier_label, self.commiter_label, self.line_correct_y, self.line_z), MoveToTarget(self.prover), MoveToTarget(self.verifier),
                    MoveToTarget(self.proof), MoveToTarget(self.opening), MoveToTarget(self.commitment), MoveToTarget(self.polynomial_chart),
                    MoveToTarget(self.polynomial_label), run_time=1)
 
@@ -167,7 +161,7 @@ class Previously(SlideBase):
         scene.wait(1)
         self.opening2.next_to(self.opening, DOWN, buff = 0.3)
         self.polynomial_opening_label.next_to(self.polynomial_chart, UP, buff = 0.5)
-        self.new_polynomial_label.next_to(self.opening2, LEFT, buff = 1.7).shift(UP*0.14)
+        self.new_polynomial_label.next_to(self.opening2, LEFT, buff = 0.8).shift(UP*0.1)
         self.opening3.next_to(self.opening2, DOWN, buff = 0.2)
         self.dots.next_to(self.opening3, DOWN, buff = 0.2)
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff = 0.5)
@@ -177,13 +171,13 @@ class Previously(SlideBase):
         self.dots_poly = VGroup(*self.polynomial_chart.dots)
         scene.play(Indicate(self.dots_poly, color = GREEN_E, scale_factor=1.3))
 
-        scene.play(Indicate(self.opening[4], color = GREEN_E), FadeOut(self.line_correct_y))
+        scene.play(Indicate(self.opening[4], color = GREEN_E))
         scene.wait(1.3)
         self.polynomial_chart.animate_shift_dots_with_fade(scene, self.y.value)
         scene.play(Indicate(self.opening[1], color = GREEN_E))
         self.polynomial_chart.remove(self.line_z)
         self.polynomial_chart.remove(self.line_correct_y)
-        scene.play(FadeOut(self.line_z))
+        # scene.play(FadeOut(self.line_z))
         self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.wait(0.6)
         
@@ -267,11 +261,9 @@ class Previously(SlideBase):
                            self.arrow_interpolation_vector))
         
         self.application(scene)
-        self.click_button(scene)
-
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.vlayer, self.ecosystem))
+        scene.play(FadeOut(self.title_label))
         
         
     def y0_x0(self, scene):
@@ -382,38 +374,15 @@ class Previously(SlideBase):
         
         self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(UP*6).scale(0.4)
         self.tree.stretch(2, dim=1)
-        node1_0 = self.tree.get_node(1, 0)
-        node2_1 = self.tree.get_node(2, 1)
+        node1_0 = self.tree.get_node(2, 0)
+        node2_1 = self.tree.get_node(2, 2)
         self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
-        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.6)
+        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*0.67)
         self.dots_vec_node1 = self.dots_vec_node.copy()
-        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.63)
+        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.67)
         scene.play(Create(self.tree), FadeIn(self.dots_vec_node, self.dots_vec_node1), run_time=1)
         
         scene.wait(1)
         scene.play(FadeOut(self.tree, self.dots_vec_node, self.dots_vec_node1, blobs))
         
         
-    def click_button(self, scene):
-        self.button = ImageMobject("data/subscribe/normal.png").scale(0.4)
-        self.button_clicked = ImageMobject(
-            "data/subscribe/clicked.png", z_index=1
-        ).scale(0.4)
-        self.logo = ImageMobject("data/brand/logo.png").scale(1.5)
-        self.vlayer = ImageMobject(
-            "data/images/Logo_304_color_on_dark.png"
-        ).scale(0.8).next_to(self.logo, RIGHT, buff = 0.2)
-        self.ecosystem = ImageMobject(
-            "data/images/ecosystem_support_program.png"
-        ).scale(0.17).next_to(self.logo, LEFT, buff = 0.2)
-        self.button.shift(DOWN * 5)
-        self.button_clicked.shift(DOWN * 5)
-        scene.add(self.button, self.button_clicked)
-        scene.add(self.logo, self.vlayer, self.ecosystem)
-        scene.play(FadeIn(self.button), run_time=0.5)
-
-        # Source of sound under Creative Commons 0 License.
-        # https://freesound.org/people/joebro10/sounds/219318/
-        scene.add_sound("data/sound/click.wav", gain=20)
-        scene.play(FadeIn(self.button_clicked), run_time=0.2)
-        scene.play(FadeOut(self.button_clicked), run_time=0.2)

@@ -233,3 +233,42 @@ class VectorCommitments(SlideBase):
     def transforming_poly_into_field(self, scene):
             self.chart_discrete.gen_points()
             scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
+
+    def animate_miniature(self, scene):
+        text = Text("Polynomial commitments", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN)
+
+        self.new_axes4096 = Axes(
+            x_range=[-4.7, 5500, 4095],
+            y_range=[-45, 5500, 5596],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        )
+
+        self.new_axes4096.scale(0.7).shift(LEFT*3.5+UP*0.3).shift(DOWN*6)
+        self.new_axes4096[0].shift(UP)
+        self.polynomial_graph = self.chart.ax.plot_implicit_curve(
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                color=SECONDARY_COLOR
+            )
+        self.chart_discrete.shift(DOWN*6)
+        self.arrow_number_chart.shift(DOWN*6)
+        self.number_sequence.shift(DOWN*6)
+        self.polynomial_eqn_4096_sum.shift(DOWN*6)
+        self.polynomial_eqn_4096.shift(DOWN*6)
+        
+        self.scale(0.65)
+        self.add(text, self.polynomial_graph, self.new_axes4096, self.chart_discrete, self.arrow_number_chart, self.number_sequence, self.polynomial_eqn_4096_sum, self.polynomial_eqn_4096)
+        scene.play(FadeIn(self.polynomial_graph, self.new_axes4096, text, self.number_sequence, self.arrow_number_chart, self.polynomial_eqn_4096, self.polynomial_eqn_4096_sum), run_time=0.5)
+        scene.wait(1)
+        self.chart_discrete.gen_points()
+        scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
+
+        

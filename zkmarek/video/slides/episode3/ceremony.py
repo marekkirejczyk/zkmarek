@@ -165,10 +165,33 @@ class Ceremony(SlideBase):
         scene.play(Write(self.linei), run_time=0.3)
 
         scene.play(Write(self.tau_col))
-
-
         scene.wait(1)
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.three_dot, text, rectangle, self.line0, self.line1, self.linei, self.tau_col))
+        
+    def animate_miniature2(self, scene):
+        rectangle = Rectangle(color=PRIMARY_COLOR, width=15, height=8).shift(UP*4)
+        text = Text("Ceremony of the trusted setup", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65).shift(UP*4)
+        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).shift(RIGHT+DOWN*0.2).shift(UP*4)
+        self.add(rectangle, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini)
+        self.scale(0.65).shift(UP*4)
+        self.tau_0_mini.scale(1.2).shift(DOWN*0.2).shift(UP*4)
+        self.tau_1_mini.scale(1.2).shift(DOWN*0.2).shift(UP*4)
+        self.tau_k_mini.scale(1.2).shift(DOWN*0.2).shift(UP*4)
+        self.line0 = Line(start = self.tau_0_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_0_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.2)
+        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.3)
+        self.linei = Line(start = self.tau_k_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.65).next_to(self.tau_k_mini, DOWN, buff = 0.1).shift(RIGHT+UP*1.55)
+        text.next_to(rectangle, DOWN, buff=0.4)
+        self.person.scale(0.65).next_to(self.tau_0_mini, LEFT, buff = 0.6)
+        self.person2.scale(0.65).next_to(self.tau_1_mini, LEFT, buff = 0.6)
+        self.person3.scale(0.65).next_to(self.tau_k_mini, LEFT, buff = 0.6)
+        self.three_dot.scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.4)
+        self.add(text)
+        scene.play(FadeIn(text, rectangle, self.person, self.person2, self.person3, self.tau_0_mini, self.tau_1_mini,
+                          self.three_dot, self.tau_k_mini, self.line0, self.line1, self.linei, self.tau_col))
+
+        # scene.wait(1)
+        # scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.three_dot, text, rectangle, self.line0, self.line1, self.linei, self.tau_col))
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))
