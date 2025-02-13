@@ -274,7 +274,7 @@ class VectorCommitments(SlideBase):
         self.chart_discrete.shift(DOWN*6+RIGHT).scale(0.65)
         self.arrow_number_chart.shift(DOWN*6).scale(0.65)
         self.number_sequence.shift(DOWN*6).scale(0.65)
-        self.polynomial_eqn_4096_sum.shift(DOWN*6).scale(0.65)
+        self.polynomial_eqn_4096_sum.shift(DOWN*5.5).scale(0.65)
         
         self.scale(0.65)
         self.add(text, rectangle, self.polynomial_graph, self.new_axes4096, self.chart_discrete, self.arrow_number_chart, self.number_sequence, self.polynomial_eqn_4096_sum)
