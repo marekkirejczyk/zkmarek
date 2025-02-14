@@ -189,7 +189,9 @@ class Ceremony(SlideBase):
         self.add(text)
         scene.play(FadeIn(text, rectangle, self.person, self.person2, self.person3), run_time=0.5)
         scene.play(Write(self.tau_0_mini), Write(self.tau_1_mini), Write(self.three_dot), Write(self.tau_k_mini), run_time=1)
+        scene.wait(0.5)
         scene.play(Write(self.line0), Write(self.line1), Write(self.linei), Write(self.tau_col), run_time=1)
+        scene.wait(0.3)
 
 
     def animate_out(self, scene):
