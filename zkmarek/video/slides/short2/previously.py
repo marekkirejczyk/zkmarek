@@ -311,9 +311,9 @@ class Previously(SlideBase):
         self.proof.target.next_to(self.commitment_sent.target, DOWN, buff = 0.3)
         self.opening.generate_target()
         self.opening.target.next_to(self.proof.target, DOWN, buff = 0.3)
-        scene.wait(1)
-        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=0.4)
-        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.3)
+        scene.wait(2)
+        scene.play(MoveToTarget(self.commitment_sent), MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=0.7)
+        scene.play(FadeOut(self.envelope_body_closed, self.envelope_flap_closed), run_time=0.5)
         
         
     def dots_defining(self, scene):

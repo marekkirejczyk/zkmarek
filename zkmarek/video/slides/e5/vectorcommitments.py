@@ -281,7 +281,7 @@ class VectorCommitments(SlideBase):
         scene.play(FadeIn(self.polynomial_graph, rectangle, self.new_axes4096, text, self.number_sequence, self.arrow_number_chart, self.polynomial_eqn_4096_sum), run_time=0.5)
         scene.wait(1)
         self.chart_discrete.gen_points()
-        scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete), run_time=0.4)
-        scene.play(ApplyWave(self.number_sequence), run_time=0.7)
+        scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete), run_time=0.5)
+        scene.play(ApplyWave(self.number_sequence), run_time=1)
 
         

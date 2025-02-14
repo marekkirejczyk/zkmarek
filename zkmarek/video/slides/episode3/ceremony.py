@@ -1,4 +1,4 @@
-from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Unwrite, Line, ImageMobject, FadeIn, FadeOut, Indicate, Rectangle, ApplyWave, RoundedRectangle
+from manim import LEFT, DOWN, UP, RIGHT, MathTex, Tex, Text, Write, Unwrite, Line, ImageMobject, FadeIn, FadeOut, Indicate, Rectangle, RoundedRectangle
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.mobjects.tex_array import TexArray
@@ -179,7 +179,7 @@ class Ceremony(SlideBase):
         self.tau_1_mini.scale(1.2).shift(UP*3)
         self.tau_k_mini.scale(1.2).shift(UP*3)
         self.line0 = Line(start = self.tau_0_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_0_mini, DOWN, buff = 0.1).shift(RIGHT)
-        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.3)
+        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.2)
         self.linei = Line(start = self.tau_k_mini.get_right(), end = self.tau_col.get_left(),  color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_k_mini, DOWN, buff = 0.1).shift(RIGHT+UP*1.3)
         text.next_to(rectangle, UP, buff=0.4)
         self.person.scale(0.65).next_to(self.tau_0_mini, LEFT, buff = 0.6)
@@ -187,9 +187,9 @@ class Ceremony(SlideBase):
         self.person3.scale(0.65).next_to(self.tau_k_mini, LEFT, buff = 0.6)
         self.three_dot.scale(0.65).next_to(self.tau_1_mini, DOWN, buff = 0.4)
         self.add(text)
-        scene.play(FadeIn(text, rectangle, self.person, self.person2, self.person3), run_time=0.3)
-        scene.play(Write(self.tau_0_mini), Write(self.tau_1_mini), Write(self.three_dot), Write(self.tau_k_mini), run_time=0.5)
-        scene.play(Write(self.line0), Write(self.line1), Write(self.linei), Write(self.tau_col), run_time=0.7)
+        scene.play(FadeIn(text, rectangle, self.person, self.person2, self.person3), run_time=0.5)
+        scene.play(Write(self.tau_0_mini), Write(self.tau_1_mini), Write(self.three_dot), Write(self.tau_k_mini), run_time=1)
+        scene.play(Write(self.line0), Write(self.line1), Write(self.linei), Write(self.tau_col), run_time=1)
 
 
     def animate_out(self, scene):
