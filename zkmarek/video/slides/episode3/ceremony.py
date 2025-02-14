@@ -179,7 +179,7 @@ class Ceremony(SlideBase):
         self.tau_1_mini.scale(1.2).shift(UP*3)
         self.tau_k_mini.scale(1.2).shift(UP*3)
         self.line0 = Line(start = self.tau_0_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_0_mini, DOWN, buff = 0.1).shift(RIGHT)
-        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.2)
+        self.line1 = Line(start = self.tau_1_mini.get_right(), end = self.tau_col.get_left(), color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_1_mini, DOWN, buff = 0.1).shift(RIGHT+UP*0.18)
         self.linei = Line(start = self.tau_k_mini.get_right(), end = self.tau_col.get_left(),  color = HIGHLIGHT_COLOR).scale(0.7).next_to(self.tau_k_mini, DOWN, buff = 0.1).shift(RIGHT+UP*1.3)
         text.next_to(rectangle, UP, buff=0.4)
         self.person.scale(0.65).next_to(self.tau_0_mini, LEFT, buff = 0.6)
