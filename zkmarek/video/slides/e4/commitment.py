@@ -178,8 +178,8 @@ class Commitment(SlideBase):
             [-0.56, -0.67, 0], 
             [0.78, -1.1, 0], 
             color=SECONDARY_COLOR,
-            fill_opacity=0.4
-        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.3).shift(RIGHT*0.06+DOWN*0.17)
+            fill_opacity=0.2
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.3).shift(RIGHT*0.08+DOWN*0.22)
 
         self.scale(0.65)
         self.add(text)

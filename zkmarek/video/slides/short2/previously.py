@@ -378,16 +378,16 @@ class Previously(SlideBase):
         self.tree.stretch(2, dim=1)
         node2_0 = self.tree.get_node(2, 0)
         node2_1 = self.tree.get_node(2, 2)
-        node1_0 = self.tree.get_node(1, 0)
+        node0_0 = self.tree.get_node(0, 0)
         self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
         self.dots_vec_node.move_to(node2_0.get_right()).shift(RIGHT*0.67)
         self.dots_vec_node1 = self.dots_vec_node.copy()
         self.dots_vec_node2 = self.dots_vec_node.copy()
         self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.67)
-        self.dots_vec_node2.move_to(node1_0.get_right()).shift(RIGHT*1.2)
-        scene.play(Create(self.tree), FadeIn(self.dots_vec_node, self.dots_vec_node1), run_time=1)
+        self.dots_vec_node2.next_to(node0_0, DOWN, buff = 1.0).shift(DOWN*0.2)
+        scene.play(Create(self.tree), FadeIn(self.dots_vec_node, self.dots_vec_node1, self.dots_vec_node2), run_time=1)
         
         scene.wait(1)
-        scene.play(FadeOut(self.tree, self.dots_vec_node, self.dots_vec_node1, blobs))
+        scene.play(FadeOut(self.tree, self.dots_vec_node, self.dots_vec_node1, self.dots_vec_node2, blobs))
         
         
