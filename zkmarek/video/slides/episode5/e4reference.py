@@ -2,7 +2,7 @@ from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, W
                    Create, MoveToTarget, VGroup, Rectangle, GrowArrow, Arrow, WHITE, Indicate, Group, StealthTip, PURPLE, PINK)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7

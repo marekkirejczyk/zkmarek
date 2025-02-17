@@ -3,10 +3,10 @@ Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPL
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
-from zkmarek.video.slides.e4.chart import Chart
-from zkmarek.video.slides.e4.curve import Curve
+from zkmarek.video.slides.episode4.chart import Chart
+from zkmarek.video.slides.episode4.curve import Curve
 import numpy as np
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 
 def poly(x):

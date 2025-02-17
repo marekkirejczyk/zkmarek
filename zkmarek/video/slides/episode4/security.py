@@ -1,7 +1,7 @@
 from manim import FadeIn, FadeOut, MathTex, Arrow, Text, LEFT, DOWN, UP, RIGHT, Write, Create, MoveToTarget, Brace, Indicate, Line, TransformMatchingShapes
 
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import (
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import (
     DiscreetePolynomialChart,
 )
 from zkmarek.crypto.field_element import FieldElement

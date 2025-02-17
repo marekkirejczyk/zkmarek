@@ -24,7 +24,7 @@ from manim import (
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 
 def poly(x):
     return x * x * x - x * x * 2 + x * 3 + 7

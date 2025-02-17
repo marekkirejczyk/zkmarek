@@ -2,7 +2,7 @@ from manim import Create, DOWN, ImageMobject, RIGHT, LEFT, UP, FadeIn, Polygon, 
 
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 
 def poly(x):

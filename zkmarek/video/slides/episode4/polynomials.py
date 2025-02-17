@@ -4,9 +4,9 @@ from numpy import linspace
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
-from zkmarek.video.slides.e4.chart import Chart
-from zkmarek.video.slides.e4.curve import Curve
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode4.chart import Chart
+from zkmarek.video.slides.episode4.curve import Curve
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 
 def poly(x):

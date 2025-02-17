@@ -4,8 +4,8 @@ from zkmarek.video.utils import load
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
-from zkmarek.video.slides.e4.chart import Chart
-from zkmarek.video.slides.e4.curve import Curve
+from zkmarek.video.slides.episode4.chart import Chart
+from zkmarek.video.slides.episode4.curve import Curve
 
 class PolynomialCommitment(SlideBase):
     chart: Chart

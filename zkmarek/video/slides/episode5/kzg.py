@@ -2,12 +2,12 @@ from manim import (FadeIn, FadeOut, MathTex, Text, LEFT, RIGHT, DOWN, UP, Write,
                    StealthTip, GrowArrow, Indicate, PINK, ImageMobject, MoveToTarget, CurvedArrow, GREEN_E, AddTextLetterByLetter, ApplyWave, Axes)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e5.discrete_polynomial_chart_BLS import PolynomialOnCurve
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode5.discrete_polynomial_chart_BLS import PolynomialOnCurve
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.crypto.weierstrass_curve import BLS12381_137
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
-from zkmarek.video.slides.e4.chart import Chart
+from zkmarek.video.slides.episode4.chart import Chart
 import numpy as np
 
 def poly(x):
