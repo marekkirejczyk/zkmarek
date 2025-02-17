@@ -15,6 +15,7 @@ class TitleSlide(SlideBase):
     pre_wait_time: int
     wait_time: int
     font_size = Optional[int] 
+    background_sound = Optional[str]
 
     def __init__(
         self,
@@ -24,6 +25,7 @@ class TitleSlide(SlideBase):
         pre_wait_time: Optional[int] = 0,
         wait_time: Optional[int] = 0,
         font_size: Optional[int] = 48,
+        background_sound: Optional[str] = None,
     ) -> None:
         super().__init__(title)
         self.subtitle = subtitle
@@ -31,6 +33,7 @@ class TitleSlide(SlideBase):
         self.pre_wait_time = pre_wait_time
         self.wait_time = wait_time
         self.font_size = font_size 
+        self.background_sound = background_sound
 
     def __str__(self):
         return f"{self.title} (TITLE)"
@@ -48,7 +51,10 @@ class TitleSlide(SlideBase):
             self.add(self.subtitle_text)
 
     def animate_in(self, scene):
+        if self.background_sound is not None:
+           self.play_music(scene, self.background_sound)
         self.new_subsection(scene, self.title, sound=self.sound)
+
         if self.pre_wait_time > 0:
             scene.wait(self.pre_wait_time)
         scene.play(Write(self.title_text))
