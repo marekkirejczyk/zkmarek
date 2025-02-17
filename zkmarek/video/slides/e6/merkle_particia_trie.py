@@ -41,24 +41,32 @@ class MPTNode(VGroup):
 
         self.add(self.rect, self.title_text, self.field_group)
 
-
 class MPTBranchNode(MPTNode):
     """Specialized class for a Branch Node with rectangular child slots."""
-    def __init__(self, content, width=11, height=1.8, child_width=0.5, child_height=0.9, font_size=24):
+    def __init__(self, content, width=12, height=1.8, child_width=0.5, child_height=0.9, font_size=24):
         super().__init__("Branch Node", {}, width=width, height=height, font_size=font_size)
-        
+
         self.child_slots = VGroup()
+        self.child_slot_map = {} 
+
         for i, value in enumerate(content.keys()):
             slot = Rectangle(
                 width=child_width, height=child_height, 
                 color="#88C0D0", fill_opacity=0.4, stroke_width=1.5
             )
-            label = Text(str(value), font_size=font_size, font = PRIMARY_FONT).move_to(slot.get_center())
+            label = Text(str(value), font_size=font_size, font=PRIMARY_FONT).move_to(slot.get_center())
             slot_group = VGroup(slot, label)
+            
+            self.child_slot_map[value] = slot_group
             self.child_slots.add(slot_group)
 
-        self.child_slots.arrange(RIGHT, buff=0.2).move_to(self.rect.get_center()).shift(DOWN*0.1)
+        self.child_slots.arrange(RIGHT, buff=0.2).move_to(self.rect.get_center()).shift(DOWN * 0.1)
         self.add(self.child_slots)
+
+    def get_child_slot(self, value):
+        """Retrieve a specific child slot by its label (e.g., '4')."""
+        return self.child_slot_map.get(str(value), None)
+
 
 
 class MerklePatriciaTrie(VGroup):
@@ -98,16 +106,16 @@ class MerklePatriciaTrie(VGroup):
         self.leaf4.next_to(self.branch2, DOWN, buff=0.7).shift(RIGHT*5.5)
         
         self.arrow = create_arrow(self.root, self.branch1).scale(2).shift(RIGHT+UP*0.5)
-        self.arrow2 = Arrow(self.branch1.get_left()+RIGHT+DOWN*0.5, self.leaf1.get_top(), color=PRIMARY_COLOR, buff=0.2, 
-                            max_stroke_width_to_length_ratio=1, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2)
+        self.arrow2 = Arrow(self.branch1.get_child_slot("1"), self.leaf1.get_top(), color=PRIMARY_COLOR, buff=0.2, 
+                            max_stroke_width_to_length_ratio=1, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2).shift(RIGHT*0.4)
         self.arrow3 = create_arrow(self.branch1, self.extension2).shift(UP*0.3+LEFT*0.3)
-        self.arrow4 = Arrow(self.branch1.get_right()+LEFT*0.3+DOWN*0.5, self.leaf2.get_top(), color=PRIMARY_COLOR, buff=0.2, 
+        self.arrow4 = Arrow(self.branch1.get_right()+LEFT*0.9+DOWN*0.5, self.leaf2.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1.5, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2)
-        self.arrow5 = create_arrow(self.extension2, self.branch2).scale(2).shift(RIGHT+UP*0.5)
-        self.arrow6 = Arrow(self.branch2.get_left()+RIGHT*1.7+DOWN*0.5, self.leaf3.get_top(), color=PRIMARY_COLOR, buff=0.2, 
-                            max_stroke_width_to_length_ratio=1.5, stroke_width=2, tip_shape=StealthTip, tip_length = 0.2)
+        self.arrow5 = create_arrow(self.extension2, self.branch2).scale(2).shift(RIGHT*1+UP*0.5)
+        self.arrow6 = Arrow(self.branch2.get_child_slot("3"), self.leaf3.get_top(), color=PRIMARY_COLOR, buff=0.2, 
+                            max_stroke_width_to_length_ratio=1.5, stroke_width=2, tip_shape=StealthTip, tip_length = 0.2).shift(RIGHT*0.42+UP*0.05)
         self.arrow7 = Arrow(self.branch2.get_bottom()+RIGHT*0.2+UP*0.3, self.leaf4.get_top(), color=PRIMARY_COLOR, buff=0.2, 
-                            max_stroke_width_to_length_ratio=1.5, stroke_width=2, tip_shape=StealthTip, tip_length = 0.2)
+                            max_stroke_width_to_length_ratio=1.5, stroke_width=2, tip_shape=StealthTip, tip_length = 0.2).shift(UP*0.05)
         
 
 

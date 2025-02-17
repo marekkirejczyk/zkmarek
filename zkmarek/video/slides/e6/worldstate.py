@@ -30,9 +30,9 @@ class SimplifiedWorldState(VGroup):
         self.values_table.next_to(self.keys_table, RIGHT, buff=0.1)
         
         self.keys_header = Text("Keys", font = PRIMARY_FONT).scale(0.5).next_to(self.keys_table, UP).scale(0.5)
-        self.values_header = Text("Values").scale(0.5).next_to(self.values_table, UP).scale(0.5)
+        self.values_header = Text("Values", font = PRIMARY_FONT).scale(0.5).next_to(self.values_table, UP).scale(0.5)
 
-        self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.7).next_to(self.keys_header, UP, buff = 0.0).scale(0.5)
+        self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.7).next_to(self.keys_header, UP, buff = 0.0).scale(0.5).shift(RIGHT*0.4)
         
         
     def show_table(self, scene):
