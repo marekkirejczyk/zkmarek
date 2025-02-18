@@ -129,7 +129,7 @@ class Previously(SlideBase):
         self.poly_eval1 = MathTex(r"P(1)=3", color = PRIMARY_COLOR, font_size = 50).next_to(self.poly_eval0, RIGHT, buff = 0.5)
         self.poly_eval2 = MathTex(r"P(2)=1", color = PRIMARY_COLOR, font_size = 50).next_to(self.poly_eval0, DOWN, buff = 0.2)
         self.poly_eval3 = MathTex(r"P(3)=-3", color = PRIMARY_COLOR, font_size = 50).next_to(self.poly_eval2, RIGHT, buff = 0.5)
-        self.dots_poly_eval = MathTex(r"\cdots", color = PRIMARY_COLOR, font_size = 60).next_to(self.poly_eval3, LEFT+DOWN, buff = 0.5)
+        self.dots_poly_eval = MathTex(r"\cdots", color = PRIMARY_COLOR, font_size = 60).next_to(self.poly_eval3, LEFT+DOWN, buff = 0.5).shift(RIGHT)
 
         
     def animate_in(self, scene):
@@ -241,8 +241,8 @@ class Previously(SlideBase):
         self.verifier.target.scale(1/1.3)
         scene.play(MoveToTarget(self.polynomial_chart), MoveToTarget(self.verifier), run_time=0.8)
         scene.wait(1)
-        vector_commitment_text = Text("Vector commitment?", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 35).shift(DOWN*5.5)
-        arrow_vector_commitment = Arrow(self.polynomial_chart.get_bottom(), vector_commitment_text.get_top(), tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, MAROON_E])
+        vector_commitment_text = Text("Vector commitment?", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 45).shift(DOWN*7.5)
+        arrow_vector_commitment = Arrow(self.polynomial_chart.get_bottom(), DOWN*6.5, tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, MAROON_E])
         scene.play(Write(vector_commitment_text), GrowArrow(arrow_vector_commitment), run_time=0.7)
         scene.wait(1.5)
         scene.play(FadeOut(vector_commitment_text, arrow_vector_commitment, rest))
@@ -293,13 +293,13 @@ class Previously(SlideBase):
         scene.wait(1)
         scene.play(FadeIn(self.commitment))
         scene.wait(1.5)
-        scene.play(Indicate(self.commitment[4], color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.commitment[4], color = SECONDARY_COLOR), run_time=0.9)
         self.dots_poly = VGroup(*self.polynomial_chart.dots)
-        scene.wait(1.8)
+        scene.wait(1.4)
         scene.play(Indicate(self.dots_poly, color = GREEN_E, scale_factor=1.3))
         scene.wait(1)
         label_tau = self.polynomial_chart.add_xaxis_label(self.tau.value, r"\tau")
-        scene.play(FadeIn(label_tau), Indicate(self.commitment[2], color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(FadeIn(label_tau), Indicate(self.commitment[2], color = SECONDARY_COLOR), run_time=0.8)
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         
