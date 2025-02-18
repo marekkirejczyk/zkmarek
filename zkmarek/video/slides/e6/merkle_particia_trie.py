@@ -4,7 +4,7 @@ from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
 
 class MPTNode(VGroup):
     """Base class for nodes in the Merkle Patricia Trie."""
-    def __init__(self, title, fields, width=6, height=2.5, font_size=24):
+    def __init__(self, title, fields, width=6, height=2.5, font_size=26):
         super().__init__()
         self.title = title
         self.fields = fields
@@ -25,7 +25,7 @@ class MPTNode(VGroup):
         self.field_group = VGroup()
         for i, (key, value) in enumerate(self.fields.items()):
             field_rect = Rectangle(
-                width=width * 0.9, height=0.4, color="#88C0D0", stroke_width=1.5
+                width=width * 0.9, height=0.7, color="#88C0D0", stroke_width=1.5
             )
             field_text = Text(
                 f"{key}: {value}",
@@ -34,7 +34,7 @@ class MPTNode(VGroup):
                 font = PRIMARY_FONT
             ).move_to(field_rect.get_center())
 
-            field_rect.next_to(self.title_text, DOWN, buff=(0.4 + 0.5 * i))
+            field_rect.next_to(self.title_text, DOWN, buff=(0.2 + 0.8 * i))
             field_text.move_to(field_rect.get_center())
 
             self.field_group.add(VGroup(field_rect, field_text))
@@ -108,7 +108,7 @@ class MerklePatriciaTrie(VGroup):
         self.arrow = create_arrow(self.root, self.branch1).scale(2).shift(RIGHT+UP*0.5)
         self.arrow2 = Arrow(self.branch1.get_child_slot("1"), self.leaf1.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2).shift(RIGHT*0.4)
-        self.arrow3 = create_arrow(self.branch1, self.extension2).shift(UP*0.3+LEFT*0.3)
+        self.arrow3 = create_arrow(self.branch1, self.extension2).shift(UP*0.3+LEFT*0.33)
         self.arrow4 = Arrow(self.branch1.get_right()+LEFT*0.9+DOWN*0.5, self.leaf2.get_top(), color=PRIMARY_COLOR, buff=0.2, 
                             max_stroke_width_to_length_ratio=1.5, stroke_width=1.5, tip_shape=StealthTip, tip_length = 0.2)
         self.arrow5 = create_arrow(self.extension2, self.branch2).scale(2).shift(RIGHT*1+UP*0.5)

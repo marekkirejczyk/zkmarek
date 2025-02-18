@@ -234,13 +234,14 @@ class MerkleTree(SlideBase):
             scene.play(Indicate(i, color = PURPLE_B, scale_factor=1.1), run_time=0.5)
             
         scene.wait(1)
-        scene.play(Indicate(self.MPT.leaf1.field_group[0], color = PURPLE_B))
+        scene.play(Indicate(self.MPT.leaf1.field_group[0], color = PURPLE_B), Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5))
         scene.wait(1)
-        scene.play(Indicate(self.MPT.leaf1.field_group[1], color = PURPLE_B))
+        scene.play(Indicate(self.MPT.leaf1.field_group[1], color = PURPLE_B), Indicate(self.worldState.values_table.get_rows()[0], color = PRIMARY_COLOR))
         
         self.new_subsection(scene, "8-10 levels", "data/sound/e6/slide2-7.mp3")
         self.brace_levels_16_children.next_to(self.MPT, RIGHT, buff = 0.1)
         self.brace_text_levels.next_to(self.brace_levels_16_children, RIGHT, buff = 0.1)
+        scene.wait(1.5)
         self.worldState.remove_table(scene)
         scene.play(FadeIn(self.brace_levels_16_children, self.brace_text_levels))
         
@@ -252,7 +253,7 @@ class MerkleTree(SlideBase):
         self.size_proof_mpt = MathTex(r"\sim 5 \  \mathrm{kB}", color = SECONDARY_COLOR, font_size = 30).next_to(self.proof_formula3, DOWN, buff = 0.2)
         scene.play(Create(self.size_proof_mpt))
         
-        self.new_subsection(scene, "1000 accounr balances", "data/sound/e6/slide2-7b.mp3")
+        self.new_subsection(scene, "1000 account balances", "data/sound/e6/slide2-7b.mp3")
         scene.wait(2)
         self.proof_formula3.generate_target()
         self.proof_formula3.target.shift(RIGHT*0.7)
@@ -459,7 +460,6 @@ class MerkleTree(SlideBase):
         for node in nodes_of_the_root:
             scene.play(Indicate(node, color = SECONDARY_COLOR), run_time=0.15)
             
-            
         
     def size_16children(self, scene):
         self.siblings = [self.merkle_tree_16_4.get_node(1, 0), self.merkle_tree_16_4.get_node(1, 1), self.merkle_tree_16_4.get_node(1, 2), self.merkle_tree_16_4.get_node(1, 3),
@@ -481,7 +481,6 @@ class MerkleTree(SlideBase):
         scene.play(Write(self.size_of_one_hash))
         scene.wait(1.5)
         
-        
         scene.play(FadeIn(self.proof_formula2))
         scene.wait(1.7)
         
@@ -491,31 +490,50 @@ class MerkleTree(SlideBase):
     
     def merkle_particia_trie(self, scene):
         self.title_mpt = Text("Merkle Patricia Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
-        
+        from manim import PURE_GREEN
         self.MPT = MPT().shift(UP*2.9+LEFT*1).scale(0.45)
         self.worldState = SimplifiedWorldState()
         self.worldState.construct()
-        self.worldState.scale(1.4).next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*3.4)
+        self.worldState.next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*4)
         scene.play(TransformMatchingShapes(self.title_label, self.title_mpt), FadeOut(self.size_of_one_hash, self.merkle_tree_16_4, self.proof_formula3))
         scene.play(Create(self.MPT))
         self.worldState.show_table(scene)
         scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.75)
         self.worldState.keys_table.get_rows()[0].set_color(PRIMARY_COLOR)
         path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
+        a7_label = None
+        for field in self.MPT.root.field_group:
+            _, text = field 
+            if "a7" in text.text:
+                a7_label = text[16:18]
+                break
+        if a7_label:
+            scene.play(a7_label.animate.set_color(PURE_GREEN).scale(1.2)) 
         for item in path0:
             item.generate_target()
             item.target.set_color(PRIMARY_COLOR)
             scene.play(MoveToTarget(item), run_time=0.5)
             
-        path1 = [self.MPT.branch1.get_child_slot("7"), self.MPT.branch2.get_child_slot("3"), self.MPT.leaf3.field_group[0]]
-        scene.play(Indicate(self.worldState.keys_table.get_rows()[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.75)
+        path1 = [self.MPT.branch2.get_child_slot("3"), self.MPT.leaf3.field_group[0]]
+        d3_label = None
+        for field in self.MPT.extension2.field_group:
+            _, text = field 
+            if "d3" in text.text:
+                d3_label = text[16:18]
+                break
+
         self.worldState.keys_table.get_rows()[1].set_color(SECONDARY_COLOR)
+        scene.play(Indicate(self.worldState.keys_table.get_rows()[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.75)
+        scene.play(Indicate(a7_label, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(self.MPT.branch1.get_child_slot("7").animate.set_color(SECONDARY_COLOR), run_time=0.5)
+        if d3_label:
+            scene.play(d3_label.animate.set_color(SECONDARY_COLOR).scale(1.2)) 
         for item in path1:
             item.generate_target()
             item.target.set_color(SECONDARY_COLOR)
             scene.play(MoveToTarget(item), run_time=0.5)
-            
-        scene.wait(0.6)
+    
+        scene.wait(0.2)
         scene.play(Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1))
         scene.play(Indicate(self.MPT.branch1, color = SECONDARY_COLOR, scale_factor=1.1))
         leaves = [self.MPT.leaf1, self.MPT.leaf2, self.MPT.leaf3, self.MPT.leaf4]
