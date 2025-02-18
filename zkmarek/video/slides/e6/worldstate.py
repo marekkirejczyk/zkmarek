@@ -35,13 +35,10 @@ class SimplifiedWorldState(VGroup):
         self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.7).next_to(self.keys_header, UP, buff = 0.0).scale(0.5).shift(RIGHT*0.4)
         
         
-    def show_table(self, scene):
-        scene.play(Write(self.title))
-        scene.play(Create(self.keys_table))
-        scene.play(Create(self.values_table))
-        scene.play(Write(self.keys_header), Write(self.values_header))
+    def show_table(self, scene, runtime=1):
+        scene.play(Write(self.title), Create(self.keys_table), Create(self.values_table), Write(self.keys_header), Write(self.values_header), run_time = runtime)
 
-        scene.wait()
+        # scene.wait()
 
     def remove_table(self, scene):
         scene.play(FadeOut(*[self.title, self.keys_table, self.values_table, self.keys_header, self.values_header]))

@@ -130,7 +130,7 @@ class MerkleTree(SlideBase):
         scene.wait(2.5)
         
         self.new_subsection(scene, "computer", "data/sound/e6/slide2-0b.mp3")
-        scene.play(FadeIn(self.computer))
+        scene.play(FadeIn(self.computer), FadeOut(self.data_size))
         scene.wait(2.5)
         all_vecs = VGroup(self.transaction_data1, self.transaction_data, self.transaction_data2)
         for i in range(len(all_vecs)):
@@ -146,10 +146,10 @@ class MerkleTree(SlideBase):
         self.new_subsection(scene, "merkle trees", "data/sound/e6/slide2-1.mp3")
         scene.wait(2)
         scene.play(FadeOut(self.computer, main_block, side_block1, side_block2, self.finalized_group, self.eth_logos, self.transaction_data1, 
-                           self.transaction_data2, self.account_data1, self.account_data2, self.data_size, self.arrow_0_1, self.arrow_1_2))
+                           self.transaction_data2, self.account_data1, self.account_data2, self.arrow_0_1, self.arrow_1_2))
         
         self.new_subsection(scene, "data-> tree", "data/sound/e6/slide2-1a.mp3")
-        node1_0 = self.markle_tree_2_3.get_node(1, 0)
+        node0_0 = self.markle_tree_2_3.get_node(0, 0)
         node2_1 = self.markle_tree_2_3.get_node(2, 1)
         node2_0 = self.markle_tree_2_3.get_node(2, 0)
         node2_2 = self.markle_tree_2_3.get_node(2, 2)
@@ -158,9 +158,9 @@ class MerkleTree(SlideBase):
         for i in range(4):
             nodes_down[i].set_color_by_gradient([BLUE_B, PURPLE_B])
         self.dots_vec_node = self.dots_vec.copy()
-        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
+        self.dots_vec_node.next_to(node0_0, DOWN, buff = 1.0)
         self.dots_vec_node1 = self.dots_vec.copy()
-        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
+        self.dots_vec_node1.next_to(node0_0, DOWN, buff = 1.0).shift(DOWN*1.2)
         scene.play(Create(self.account_data_vector))
         scene.play(Create(self.account_vector_rectangles[0]), Write(self.vec0), run_time=0.2)
         scene.play(Create(self.account_vector_rectangles[1]), Write(self.vec1), Write(self.dots_vec), run_time=0.2)
@@ -247,9 +247,9 @@ class MerkleTree(SlideBase):
         self.new_subsection(scene, "single merkle proof", "data/sound/e6/slide2-7a.mp3")
         scene.wait(0.5)
         self.proof_formula4 = MathTex(r"\mathrm{Proof size} = 15 \cdot \mathrm{depth} \cdot \mathrm{Hash size}", color = PRIMARY_COLOR, font_size = 30)
-        self.proof_formula4.to_edge(LEFT+UP).shift(DOWN+RIGHT*0.7)
+        self.proof_formula4.to_edge(LEFT+UP).shift(DOWN*0.8+RIGHT*0.7)
         scene.play(Indicate(self.proof_formula3, color = PURPLE_B))
-        self.size_proof_mpt = MathTex(r"\sim 5 \  \mathrm{kB}", color = SECONDARY_COLOR, font_size = 30).next_to(self.proof_formula, DOWN, buff = 0.2)
+        self.size_proof_mpt = MathTex(r"\sim 5 \  \mathrm{kB}", color = SECONDARY_COLOR, font_size = 30).next_to(self.proof_formula3, DOWN, buff = 0.2)
         scene.play(Create(self.size_proof_mpt))
         
         self.new_subsection(scene, "1000 accounr balances", "data/sound/e6/slide2-7b.mp3")
@@ -468,9 +468,9 @@ class MerkleTree(SlideBase):
                          self.merkle_tree_16_4.get_node(1, 13), self.merkle_tree_16_4.get_node(1, 14), self.merkle_tree_16_4.get_node(1, 15)]
         self.size_of_one_hash = Text("32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).next_to(self.merkle_tree_16_4.get_node(1, 0), UP)
         self.proof_formula2 = MathTex(r"\text{Proof size} = 15 \cdot \mathrm{depth} \cdot \mathrm{HashSize}", color = PRIMARY_COLOR, font_size = 35)
-        self.proof_formula2.to_edge(LEFT+UP).shift(DOWN)
+        self.proof_formula2.to_edge(LEFT+UP).shift(DOWN*0.7)
         self.proof_formula3 = MathTex(r"\text{Proof size} = 15 \cdot \mathrm{depth} \cdot 32 \ \mathrm{B}", color = PRIMARY_COLOR, font_size = 35)
-        self.proof_formula3.to_edge(LEFT+UP).shift(DOWN)
+        self.proof_formula3.to_edge(LEFT+UP).shift(DOWN*0.7)
         self.brace_levels_16_children = Brace(self.merkle_tree_16_4, direction=RIGHT)
         self.brace_text_levels_810 = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 28)
         self.brace_text_levels = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 28)
@@ -495,30 +495,32 @@ class MerkleTree(SlideBase):
         self.MPT = MPT().shift(UP*2.9+LEFT*1).scale(0.45)
         self.worldState = SimplifiedWorldState()
         self.worldState.construct()
-        self.worldState.next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*3.4)
+        self.worldState.scale(1.4).next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*3.4)
         scene.play(TransformMatchingShapes(self.title_label, self.title_mpt), FadeOut(self.size_of_one_hash, self.merkle_tree_16_4, self.proof_formula3))
         scene.play(Create(self.MPT))
         self.worldState.show_table(scene)
-        scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.1), run_time=0.5)
+        scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.75)
         self.worldState.keys_table.get_rows()[0].set_color(PRIMARY_COLOR)
         path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
         for item in path0:
             item.generate_target()
             item.target.set_color(PRIMARY_COLOR)
-            scene.play(MoveToTarget(item), run_time=0.3)
+            scene.play(MoveToTarget(item), run_time=0.5)
             
         path1 = [self.MPT.branch1.get_child_slot("7"), self.MPT.branch2.get_child_slot("3"), self.MPT.leaf3.field_group[0]]
-        scene.play(Indicate(self.worldState.keys_table.get_rows()[1], color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.5)
+        scene.play(Indicate(self.worldState.keys_table.get_rows()[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.75)
         self.worldState.keys_table.get_rows()[1].set_color(SECONDARY_COLOR)
         for item in path1:
             item.generate_target()
             item.target.set_color(SECONDARY_COLOR)
-            scene.play(MoveToTarget(item), run_time=0.3)
+            scene.play(MoveToTarget(item), run_time=0.5)
             
-        
+        scene.wait(0.6)
         scene.play(Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1))
         scene.play(Indicate(self.MPT.branch1, color = SECONDARY_COLOR, scale_factor=1.1))
         leaves = [self.MPT.leaf1, self.MPT.leaf2, self.MPT.leaf3, self.MPT.leaf4]
         for i in range(4):
             scene.play(Indicate(leaves[i], color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.4)
+            
+        scene.wait(1)
         
