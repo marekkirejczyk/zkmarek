@@ -218,6 +218,7 @@ class Previously(SlideBase):
         scene.play(Indicate(self.opening[4], color = PURPLE_B), Indicate(self.pairing_verifiaction_0[11], color = PURPLE_B), run_time=0.7)
         self.verifier.generate_target()
         self.verifier.target.set_opacity(0.9).scale(1.3)
+        scene.wait(1.1)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_0, self.pairing_verifiaction_1), Indicate(self.commitment, color = LIGHT_BROWN), MoveToTarget(self.verifier))
         scene.wait(0.5)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_1, self.pairing_verifiaction_2), Indicate(self.proof, color = LIGHT_BROWN))
@@ -229,7 +230,7 @@ class Previously(SlideBase):
         scene.play(TransformMatchingShapes(VGroup(colors.copy()), self.pairing_verifiaction_3))
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.pairing_verifiaction_3, self.pairing_verifiaction_4))
-        scene.wait(2)
+        scene.wait(0.7)
         
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
         scene.wait(0.5)
@@ -299,7 +300,8 @@ class Previously(SlideBase):
         scene.play(Indicate(self.dots_poly, color = GREEN_E, scale_factor=1.3))
         scene.wait(1)
         label_tau = self.polynomial_chart.add_xaxis_label(self.tau.value, r"\tau")
-        scene.play(FadeIn(label_tau), Indicate(self.commitment[2], color = SECONDARY_COLOR), run_time=0.8)
+        scene.play(Indicate(self.commitment[2], color = SECONDARY_COLOR), run_time = 0.8)
+        scene.play(FadeIn(label_tau), run_time=0.5)
         scene.play(FadeIn(self.envelope_body_closed, self.envelope_flap_closed))
         self.commitment_sent = VGroup(self.commitment, self.envelope_body_closed, self.envelope_flap_closed)
         
