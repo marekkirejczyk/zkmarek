@@ -129,7 +129,7 @@ class Previously(SlideBase):
         self.poly_eval1 = MathTex(r"P(1)=3", color = PRIMARY_COLOR, font_size = 50).next_to(self.poly_eval0, RIGHT, buff = 0.5)
         self.poly_eval2 = MathTex(r"P(2)=1", color = PRIMARY_COLOR, font_size = 50).next_to(self.poly_eval0, DOWN, buff = 0.2)
         self.poly_eval3 = MathTex(r"P(3)=-3", color = PRIMARY_COLOR, font_size = 50).next_to(self.poly_eval2, RIGHT, buff = 0.5)
-        self.dots_poly_eval = MathTex(r"\cdots", color = PRIMARY_COLOR, font_size = 60).next_to(self.poly_eval3, LEFT+DOWN, buff = 0.5).shift(RIGHT)
+        self.dots_poly_eval = MathTex(r"\cdots", color = PRIMARY_COLOR, font_size = 60).next_to(self.poly_eval3, LEFT+DOWN, buff = 0.5).shift(RIGHT*0.7)
 
         
     def animate_in(self, scene):
@@ -242,7 +242,7 @@ class Previously(SlideBase):
         scene.play(MoveToTarget(self.polynomial_chart), MoveToTarget(self.verifier), run_time=0.8)
         scene.wait(1)
         vector_commitment_text = Text("Vector commitment?", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 45).shift(DOWN*7.5)
-        arrow_vector_commitment = Arrow(self.polynomial_chart.get_bottom(), DOWN*6.5, tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, MAROON_E])
+        arrow_vector_commitment = Arrow(DOWN*4, DOWN*7, tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, MAROON_E])
         scene.play(Write(vector_commitment_text), GrowArrow(arrow_vector_commitment), run_time=0.7)
         scene.wait(1.5)
         scene.play(FadeOut(vector_commitment_text, arrow_vector_commitment, rest))
