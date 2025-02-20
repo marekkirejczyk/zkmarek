@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut
+from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut, FadeIn, MoveToTarget
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
@@ -37,8 +37,8 @@ class DiscreetePolynomialChart(VGroup):
         template.add_to_preamble(r"\usepackage{amsfonts}")
         field_label = r"$\mathbb{F}_{" + str(self.label) + "}$"
         self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
-            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=55, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=55, color=PRIMARY_COLOR),
         )
         self.add(self.labels)
 
@@ -78,19 +78,20 @@ class DiscreetePolynomialChart(VGroup):
         self.add(label)
         return label
     
-    def indicate_xaxis_label(self, scene, label):
-        scene.play(Indicate(label, scale_factor=1.7, color=HIGHLIGHT_COLOR))
+    def indicate_xaxis_label(self, scene, label, runtime=0.7):
+        scene.play(Indicate(label, scale_factor=1.4, color=HIGHLIGHT_COLOR, run_time=runtime))
 
     def add_yaxis_label(self, y, label):
         label = MathTex(label, color=PRIMARY_COLOR)
         label.move_to(self.ax.coords_to_point(-5.5, y))
         self.add(label)
+        return label
 
     def animate_create_vertical_line(self, scene, x, y_top):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, y_top)
         line = DashedLine(s, e, color=HIGHLIGHT2_COLOR, z_index=0)
-        scene.play(GrowFromPoint(line, point=s))
+        scene.play(GrowFromPoint(line, point=s), run_time=0.2)
         return line
 
     def animate_create_horizontal_line(self, scene, y, x_left, x_right):
@@ -112,7 +113,7 @@ class DiscreetePolynomialChart(VGroup):
                 animations.append(a)
         scene.play(*animations)
 
-    def animate_shift_dots_wrap_fix(self, scene, y_shift):
+    def animate_shift_dots_wrap_fix(self, scene, y_shift, runtime=0.4):
         animations = []
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
@@ -120,12 +121,15 @@ class DiscreetePolynomialChart(VGroup):
             yy = y.value - y_shift
             if yy < 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy % self.p)))
-        scene.play(*animations)
+        scene.play(*animations, run_time=runtime)
         for d in self.dots:
             if d.get_fill_opacity() < 1:
-                d.set_fill(opacity=1)
+                d.generate_target()
+                d.target.set_fill(opacity=1)
+        move_to_target = [MoveToTarget(d) for d in self.dots]
+        scene.play(*move_to_target, run_time=runtime)
                 
-    def animate_shift_dots_with_fade(self, scene, y_shift):
+    def animate_shift_dots_with_fade(self, scene, y_shift, runtime=0.7):
         animations = []
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
@@ -134,8 +138,23 @@ class DiscreetePolynomialChart(VGroup):
             if yy >= 0:
                 animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)))
             else:
-                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.4))
+                animations.append(d.animate.move_to(self.ax.c2p(x.value, yy)).set_opacity(0.0))
 
     
-        scene.play(*animations)
+        scene.play(*animations, run_time=runtime)
+        
+    def animate_shift_dots_with_fadeout_in_all(self, scene, y_shift, runtime=0.7):
+        fade_out_animations = [FadeOut(d) for d in self.dots]
 
+        scene.play(*fade_out_animations, run_time=runtime / 2)
+
+        for i, d in enumerate(self.dots):
+            x = FieldElement(i, self.p)
+            y = self.f(x)
+            yy = y.value - y_shift
+            new_position = self.ax.c2p(x.value, yy % self.p if yy < 0 else yy)
+            d.move_to(new_position)
+
+        fade_in_animations = [FadeIn(d) for d in self.dots]
+
+        scene.play(*fade_in_animations, run_time=runtime / 2)

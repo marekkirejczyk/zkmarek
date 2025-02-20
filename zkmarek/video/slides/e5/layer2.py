@@ -1,8 +1,9 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
 Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave,
-BLUE_E, GREEN_E, TEAL_E, RoundedRectangle)
+BLUE_E, GREEN_E, TEAL_E, RoundedRectangle, Transform, MathTex)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.slides.e6.tree import MerkleTree
 SCROLL_COLOR_BACKGROUND = "#FCEFCC"
 SCROLL_COLOR = "#E4C495"
 
@@ -172,8 +173,76 @@ class Layer2(SlideBase):
         scene.wait(4)
         scene.play(Write(self.post_removal))
         scene.wait(2)
-        
-        
+         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_text, self.block_chain, self.blobs, self.cheap_storage, self.smart_contracts, self.post_removal, 
                            self.rounded_rectangle, self.blob_image, self.blob_image_1, self.blob_image_2))
+        
+    def miniature(self, scene):
+        self.blob = ImageMobject("data/images/blob.png").scale(0.9).shift(UP*3.5)
+        self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff = 0.0)
+        self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff = 0.0)
+        scene.play(FadeIn(self.blob), run_time=0.3)
+        scene.play(FadeIn(self.blob_1), run_time=0.3)
+        scene.play(FadeIn(self.blob_2), run_time=0.3)
+        self.block_chain = VGroup(
+            self.tx_group, self.layer1_ethereum, self.layer2, self.transactions,
+            self.layer2_group, self.finalized_group, self.arrow_layer1, self.arrow_layer2,
+            self.arrow_txs, self.brace_tx,
+            self.arrow_layer1_group, self.arrow_layer2_group
+        )
+
+        scene.add(self.ethereum, self.ethereum2, self.ethereum3, self.ethereum4)
+        self.block_chain.scale(0.75).shift(DOWN*2.5)
+        self.ethereum.scale(0.5).move_to(self.finalized_blocks[0])
+        self.ethereum2.scale(0.5).move_to(self.finalized_blocks[1])
+        self.ethereum3.scale(0.5).move_to(self.finalized_blocks[2])
+        self.ethereum4.scale(0.5).move_to(self.finalized_blocks[3])
+
+        scene.play(FadeIn(self.block_chain))  
+        scene.wait(0.3)
+        
+        self.new_subsection(scene, "verkle trees", "data/sound/e6/slide1-3a.mp3")
+        scene.play(FadeOut(self.blob, self.blob_1, self.blob_2), run_time=0.5)
+        
+        import random
+        rows, cols = 10, 16 
+        self.binary_matrix = VGroup(*[
+            VGroup(*[
+                Text(str(random.choice([0, 1])), font_size=24)
+                for _ in range(cols)
+            ]).arrange(RIGHT, buff=0.1)
+            for _ in range(rows)
+        ]).arrange(DOWN, buff=0.2)
+
+        self.binary_matrix.move_to(UP*3.5)
+        scene.add(self.binary_matrix)
+        self.tree = MerkleTree(num_children=2, num_levels=3, include_labels=False).shift(UP*5).scale(0.4)
+        self.tree.stretch(2, dim=1)
+        node1_0 = self.tree.get_node(1, 0)
+        node2_1 = self.tree.get_node(2, 1)
+        self.dots_vec_node = MathTex(r"\cdots", color = PRIMARY_COLOR)
+        self.dots_vec_node.move_to(node1_0.get_right()).shift(RIGHT*1.2)
+        self.dots_vec_node1 = self.dots_vec_node.copy()
+        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT*0.53)
+        for _ in range(30):  
+            new_rows = VGroup(*[
+                VGroup(*[
+                    Text(str(random.choice([0, 1])), font_size=24)
+                    for _ in range(cols)
+                ]).arrange(RIGHT, buff=0.1)
+                for _ in range(rows)
+            ]).arrange(DOWN, buff=0.2).move_to(LEFT*3)
+
+            scene.play(*[
+                Transform(self.binary_matrix[i], new_rows[i])
+                for i in range(rows)
+            ], run_time=0.1)
+        scene.play(FadeOut(self.binary_matrix), run_time=0.3)
+        scene.play(Create(self.tree), FadeIn(self.dots_vec_node, self.dots_vec_node1), run_time=1)
+        scene.wait(2.2)
+            
+        scene.play(FadeOut(self.block_chain), FadeOut(self.ethereum), 
+                FadeOut(self.ethereum2), FadeOut(self.ethereum3), 
+                FadeOut(self.ethereum4, self.tree, self.dots_vec_node, self.dots_vec_node1))
+        

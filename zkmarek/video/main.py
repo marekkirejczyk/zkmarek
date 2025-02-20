@@ -1,6 +1,6 @@
 import os
 
-from manim import Scene, config
+from manim import Scene
 from manimpango import register_font
 from presentation import Presentation
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
@@ -75,9 +75,13 @@ from zkmarek.video.slides.e5.kzg import KZGBlobs
 from zkmarek.video.slides.e5.solidity_blobs import BlobsSolidity
 from zkmarek.video.slides.e5.blobsEth import BlobsBlockchain
 from zkmarek.video.slides.e5.credits import Credits as CreditsE5
+from zkmarek.video.slides.short2.previously import Previously as PreviouslyE6
+from zkmarek.video.slides.e6.merkle import MerkleTree
+from zkmarek.video.slides.short2.full_videos import FullVideos
+from zkmarek.video.slides.short2.sponsors_subscribe import SubscribeSponsors
 
-config.width = 16
-config.height = 9
+# config.width = 16
+# config.height = 9
 
 
 TEASER = [
@@ -215,6 +219,19 @@ EPISODE5 = [
 ]
 
 EPISODE6 = [
+    TitleSlide("Merkle trees", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
+    MerkleTree(),
+]
+
+SHORT2 = [
+    TitleSlide("Vector commitment in 90 s", sound = "data/sound/e6/slide1-0.mp3", wait_time=0.5, font_size=70,
+               background_sound="data/sound/e6/background_short.mp3"),
+    PreviouslyE6(),
+    FullVideos(),
+    SubscribeSponsors()
+]
+
+EPISODE7 = [
     SchnorrSlide(),
     CodeSlide("Verify Schnorr signature with ECRecover ", "data/schnorr/schnorr.sol"),
     TexSlide("Sources", "data/schnorr/sources.tex"),
@@ -230,12 +247,14 @@ DECKS = {
     "E4": EPISODE4,
     "E5": EPISODE5,
     "E6": EPISODE6,
+    "E7": EPISODE6,
+    "SHORT2": SHORT2,
 }
 
-DEFAULT_DECK = "E5"
+DEFAULT_DECK = "SHORT2"
 
 
-class Episode5(Scene):
+class Episode6(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
