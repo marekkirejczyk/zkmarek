@@ -10,6 +10,7 @@ class Node(VGroup):
             fill_opacity=0.3,
             width=2,
             height=1.2,
+            stroke_width = 0.0,
         ).set_color_by_gradient([GREEN_E, TEAL_E])
         text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
         self.value = value
@@ -29,7 +30,6 @@ def create_arrow(start, end, stroke_width=1.8):
         color=PRIMARY_COLOR,
         buff=0,
         max_tip_length_to_length_ratio=0.1,
-        # max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
         tip_shape = StealthTip,
         tip_length=0.2,
