@@ -215,8 +215,15 @@ class MerkleTree(SlideBase):
 
         self.account_group_8_elements[0].set_color(PRIMARY_COLOR)
         self.merkle_proof(scene)
+        scene.wait(1)
 
+        self.merkle_tree_all = Group(self.merkle_tree_2_4, self.vector_8element, self.account_group_8_elements, self.all_hashes)
+        self.merkle_tree_all.generate_target()
+        self.merkle_tree_all.target.scale(0.7).shift(LEFT*2+DOWN*1.5)
+        scene.play(MoveToTarget(self.merkle_tree_all))
+        
         self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3b.mp3")
+        self.calculate_merkle_proof(scene)
         
     #     self.new_subsection(scene, "logarithmically", "data/sound/e6/slide2-4.mp3")
     #     self.logarithmically_size(scene)
@@ -421,6 +428,31 @@ class MerkleTree(SlideBase):
         scene.play(Indicate(nodes_needed_to_proof[0], color = SECONDARY_COLOR), run_time=0.4)
         scene.play(Indicate(nodes_needed_to_proof[1], color = SECONDARY_COLOR), run_time=0.4)
         scene.play(Indicate(nodes_needed_to_proof[2], color = SECONDARY_COLOR), run_time=0.4)
+        
+    def calculate_merkle_proof(self, scene):
+        sibling_formula = Text("c1d04...", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
+        hash_sibling_leaf = Text("hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
+        parent_hash = Text("ae5a7... = hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
+        parent_sibling_hash = Text("hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
+        grandparent_hash = Text("9c493... = hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
+        grandparent_sibling_hash = Text("hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
+        root_hash = Text("3d13e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*3.5)
+        
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), run_time=0.5)
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(VGroup(sibling_formula, self.level_3_hashes[3].copy()), hash_sibling_leaf), run_time=0.7)
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(VGroup(hash_sibling_leaf, self.level_2_hashes[1].copy()), parent_hash), run_time=0.7)
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(VGroup(parent_hash, self.level_2_hashes[0].copy()), parent_sibling_hash), run_time=0.7)
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(VGroup(parent_sibling_hash, self.level_1_hashes[0].copy()), grandparent_hash), run_time=0.7)
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(VGroup(grandparent_hash, self.level_1_hashes[1].copy()), grandparent_sibling_hash), run_time=0.7)
+        scene.wait(0.2)
+        scene.play(TransformMatchingShapes(VGroup(grandparent_sibling_hash, self.level_0_hashes.copy()), root_hash), run_time=0.7)
+        
             
         
             
