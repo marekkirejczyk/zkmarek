@@ -2,7 +2,7 @@ from manim import (VGroup, Group, Rectangle, Text, ImageMobject, UP, LEFT, RIGHT
                    FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Brace, Arrow, StealthTip, GrowArrow)
 from manim import PURPLE_B, GREEN_D, YELLOW_D, GREEN_E, TEAL_E
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.e6.tree import MerkleTree as Tree
 from zkmarek.video.slides.e6.merkle16 import SelectiveMerkleTree as Tree16
 from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
@@ -329,8 +329,9 @@ class MerkleTree(SlideBase):
         self.level_0_hashes.move_to(level.get_center())
         
         for i in range(8):
-            scene.play(Create(self.level3_hashes_not_numerical[i]), run_time=0.2)
-        scene.wait(1.5)
+            scene.play(Create(self.level3_hashes_not_numerical[i]), run_time=0.17)
+        scene.play(Indicate(self.vector_8element, color = HIGHLIGHT_COLOR), Indicate(self.account_group_8_elements, color = HIGHLIGHT_COLOR), run_time=0.5)
+        scene.wait(0.7)
         scene.play(TransformMatchingShapes(self.level3_hashes_not_numerical[0], self.level_3_hashes[0]), TransformMatchingShapes(self.level3_hashes_not_numerical[1], self.level_3_hashes[1]), 
                     TransformMatchingShapes(self.level3_hashes_not_numerical[2], self.level_3_hashes[2]), TransformMatchingShapes(self.level3_hashes_not_numerical[3], self.level_3_hashes[3]), 
                     TransformMatchingShapes(self.level3_hashes_not_numerical[4], self.level_3_hashes[4]), TransformMatchingShapes(self.level3_hashes_not_numerical[5], self.level_3_hashes[5]), 
@@ -388,9 +389,10 @@ class MerkleTree(SlideBase):
         scene.wait(2.5)
 
 
-    def merkle_proof(self, scene):        
+    def merkle_proof(self, scene):     
+        self.title_merkle_proof = Text("Merkle proof", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=40).to_edge(UP) 
         node_prove = self.merkle_tree_2_4.get_node(3, 3)
-        scene.play(Indicate(node_prove, color = YELLOW_D), Indicate(self.account_group_8_elements[3], color = YELLOW_D))
+        scene.play(Indicate(node_prove, color = YELLOW_D), Indicate(self.account_group_8_elements[3], color = YELLOW_D), TransformMatchingShapes(self.title_label, self.title_merkle_proof))
         node_prove.set_color(YELLOW_D)
         self.account_group_8_elements[3].set_color(YELLOW_D)
         nodes_unused = [self.merkle_tree_2_4.get_node(3, 0), self.merkle_tree_2_4.get_node(3, 1), self.merkle_tree_2_4.get_node(3, 4), self.merkle_tree_2_4.get_node(3, 5), 
@@ -438,17 +440,17 @@ class MerkleTree(SlideBase):
         grandparent_sibling_hash = Text("hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         root_hash = Text("3d13e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         
-        scene.wait(1)
-        scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), Indicate(self.level_3_hashes[2], color = SECONDARY_COLOR), run_time=0.5)
         scene.wait(0.2)
-        scene.play(TransformMatchingShapes(VGroup(sibling_formula, self.level_3_hashes[3].copy()), hash_sibling_leaf), Indicate(self.level_3_hashes[3], color = SECONDARY_COLOR), run_time=0.7)
-        scene.wait(1)
-        scene.play(TransformMatchingShapes(VGroup(hash_sibling_leaf, self.level_2_hashes[1].copy()), parent_hash), Indicate(self.level_2_hashes[1], color = SECONDARY_COLOR), run_time=0.7)
+        scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), Indicate(self.level_3_hashes[2], color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(0.2)
+        scene.play(TransformMatchingShapes(VGroup(sibling_formula, self.level_3_hashes[3].copy()), hash_sibling_leaf), Indicate(self.level_3_hashes[3], color = SECONDARY_COLOR), run_time=0.9)
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(VGroup(hash_sibling_leaf, self.level_2_hashes[1].copy()), parent_hash), Indicate(self.level_2_hashes[1], color = SECONDARY_COLOR), run_time=0.9)
+        scene.wait(0.4)
         parent_hash.generate_target()
         parent_hash.target.shift(DOWN*0.5)
         scene.play(TransformMatchingShapes(VGroup(parent_hash.copy(), self.new_hashes[1].copy()), parent_sibling_hash), Indicate(self.new_hashes[1], color = SECONDARY_COLOR), MoveToTarget(parent_hash), run_time=0.7)
-        scene.wait(0.2)
+        scene.wait(0.4)
         scene.play(TransformMatchingShapes(VGroup(parent_sibling_hash, self.new_hashes[2].copy()), grandparent_hash), Indicate(self.new_hashes[2], color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(0.2)
         grandparent_hash.generate_target()
