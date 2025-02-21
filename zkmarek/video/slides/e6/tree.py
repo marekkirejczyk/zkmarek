@@ -1,5 +1,5 @@
-from manim import VGroup, DOWN, Arrow, Text, RoundedRectangle, GREEN_E, TEAL_E, RIGHT, StealthTip, UP
-from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
+from manim import VGroup, DOWN, Arrow, Text, RoundedRectangle, RIGHT, StealthTip, UP
+from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 
 class Node(VGroup):
     def __init__(self, value=None, font_size=32):
@@ -11,7 +11,7 @@ class Node(VGroup):
             width=2,
             height=1.2,
             stroke_width = 0.0,
-        ).set_color_by_gradient([GREEN_E, TEAL_E])
+        ).set_color(HIGHLIGHT_COLOR)
         text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
         self.value = value
         self.text = text

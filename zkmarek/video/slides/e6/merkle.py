@@ -219,7 +219,7 @@ class MerkleTree(SlideBase):
 
         self.merkle_tree_all = Group(self.merkle_tree_2_4, self.vector_8element, self.account_group_8_elements, self.all_hashes)
         self.merkle_tree_all.generate_target()
-        self.merkle_tree_all.target.scale(0.7).shift(LEFT*2+DOWN*1.5)
+        self.merkle_tree_all.target.scale(0.9).shift(LEFT)
         scene.play(MoveToTarget(self.merkle_tree_all))
         
         self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3b.mp3")
@@ -403,9 +403,9 @@ class MerkleTree(SlideBase):
             node = nodes_unused[i]
             hash = self.hashes_unused[i]
             node.generate_target()
-            node.target.set_opacity(0.2)
+            node.target.set_opacity(0.1)
             hash.generate_target()
-            hash.target.set_opacity(0.2)
+            hash.target.set_opacity(0.1)
             scene.play(MoveToTarget(node), MoveToTarget(hash), run_time=0.2)
         scene.wait(1)
         for i in range(len(nodes_directly_used)):
@@ -430,28 +430,34 @@ class MerkleTree(SlideBase):
         scene.play(Indicate(nodes_needed_to_proof[2], color = SECONDARY_COLOR), run_time=0.4)
         
     def calculate_merkle_proof(self, scene):
-        sibling_formula = Text("c1d04...", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
-        hash_sibling_leaf = Text("hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
-        parent_hash = Text("ae5a7... = hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
-        parent_sibling_hash = Text("hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
-        grandparent_hash = Text("9c493... = hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
-        grandparent_sibling_hash = Text("hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*2.5)
-        root_hash = Text("3d13e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=16).shift(RIGHT*4+UP*3.5)
+        sibling_formula = Text("c1d04...", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        hash_sibling_leaf = Text("hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        parent_hash = Text("ae5a7... = hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        parent_sibling_hash = Text("hash(ae5a7..., 3c825...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        grandparent_hash = Text("9c493... = hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        grandparent_sibling_hash = Text("hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        root_hash = Text("3d13e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         
         scene.wait(1)
-        scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), run_time=0.5)
+        scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), Indicate(self.level_3_hashes[2], color = SECONDARY_COLOR), run_time=0.5)
         scene.wait(0.2)
-        scene.play(TransformMatchingShapes(VGroup(sibling_formula, self.level_3_hashes[3].copy()), hash_sibling_leaf), run_time=0.7)
+        scene.play(TransformMatchingShapes(VGroup(sibling_formula, self.level_3_hashes[3].copy()), hash_sibling_leaf), Indicate(self.level_3_hashes[3], color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(1)
-        scene.play(TransformMatchingShapes(VGroup(hash_sibling_leaf, self.level_2_hashes[1].copy()), parent_hash), run_time=0.7)
+        scene.play(TransformMatchingShapes(VGroup(hash_sibling_leaf, self.level_2_hashes[1].copy()), parent_hash), Indicate(self.level_2_hashes[1], color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(0.2)
-        scene.play(TransformMatchingShapes(VGroup(parent_hash, self.level_2_hashes[0].copy()), parent_sibling_hash), run_time=0.7)
+        parent_hash.generate_target()
+        parent_hash.target.shift(DOWN*0.5)
+        scene.play(TransformMatchingShapes(VGroup(parent_hash.copy(), self.new_hashes[1].copy()), parent_sibling_hash), Indicate(self.new_hashes[1], color = SECONDARY_COLOR), MoveToTarget(parent_hash), run_time=0.7)
         scene.wait(0.2)
-        scene.play(TransformMatchingShapes(VGroup(parent_sibling_hash, self.level_1_hashes[0].copy()), grandparent_hash), run_time=0.7)
+        scene.play(TransformMatchingShapes(VGroup(parent_sibling_hash, self.new_hashes[2].copy()), grandparent_hash), Indicate(self.new_hashes[2], color = SECONDARY_COLOR), run_time=0.7)
         scene.wait(0.2)
-        scene.play(TransformMatchingShapes(VGroup(grandparent_hash, self.level_1_hashes[1].copy()), grandparent_sibling_hash), run_time=0.7)
+        grandparent_hash.generate_target()
+        grandparent_hash.target.shift(DOWN*0.5)
+        parent_hash.generate_target()
+        parent_hash.target.shift(DOWN*0.5)
+        scene.play(TransformMatchingShapes(VGroup(grandparent_hash.copy(), self.level_1_hashes[1].copy()), grandparent_sibling_hash), Indicate(self.level_1_hashes[1], color = SECONDARY_COLOR), MoveToTarget(parent_hash), MoveToTarget(grandparent_hash), run_time=0.7)
         scene.wait(0.2)
-        scene.play(TransformMatchingShapes(VGroup(grandparent_sibling_hash, self.level_0_hashes.copy()), root_hash), run_time=0.7)
+        scene.play(TransformMatchingShapes(VGroup(grandparent_sibling_hash, self.new_hashes[3].copy()), root_hash), Indicate(self.new_hashes[3], color = SECONDARY_COLOR), run_time=0.7)
         
             
         
