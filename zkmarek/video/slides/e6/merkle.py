@@ -1,12 +1,12 @@
 from manim import (VGroup, Group, Rectangle, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, FadeIn, MoveToTarget, Indicate, 
-                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Brace, Arrow, StealthTip, GrowArrow)
+                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, GrowArrow)
 from manim import PURPLE_B, GREEN_D, YELLOW_D, GREEN_E, TEAL_E
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.e6.tree import MerkleTree as Tree
-from zkmarek.video.slides.e6.merkle16 import SelectiveMerkleTree as Tree16
 from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
 from zkmarek.video.slides.e6.worldstate import SimplifiedWorldState 
+from zkmarek.video.slides.e6.bin_mpt import BinaryMPT as BinMPT
 
 class MerkleTree(SlideBase):
     def __init__(self) -> None:
@@ -225,14 +225,8 @@ class MerkleTree(SlideBase):
         self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3b.mp3")
         self.calculate_merkle_proof(scene)
         
-    #     self.new_subsection(scene, "logarithmically", "data/sound/e6/slide2-4.mp3")
-    #     self.logarithmically_size(scene)
-        
-    #     self.new_subsection(scene, "16 children 10 levels", "data/sound/e6/slide2-5.mp3")
-    #     self.sixteen_children(scene)
-        
-    #     self.new_subsection(scene, "32 bytes big -> formula for size", "data/sound/e6/slide2-5a.mp3")
-    #     self.size_16children(scene)
+        self.new_subsection(scene, "key-value pairs", "data/sound/e6/slide2-4.mp3")
+        self.key_value_pairs(scene)
         
     #     self.new_subsection(scene, "MPT -> ext, branches, leaves", "data/sound/e6/slide2-6.mp3")
     #     self.merkle_particia_trie(scene)
@@ -438,7 +432,7 @@ class MerkleTree(SlideBase):
         parent_sibling_hash = Text("hash(ae5a7..., 3c825...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         grandparent_hash = Text("9c493... = hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         grandparent_sibling_hash = Text("hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
-        root_hash = Text("3d13e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        root_hash = Text("d313e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         
         scene.wait(0.2)
         scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), Indicate(self.level_3_hashes[2], color = SECONDARY_COLOR), run_time=0.7)
@@ -461,83 +455,44 @@ class MerkleTree(SlideBase):
         scene.wait(0.2)
         scene.play(TransformMatchingShapes(VGroup(grandparent_sibling_hash, self.new_hashes[3].copy()), root_hash), Indicate(self.new_hashes[3], color = SECONDARY_COLOR), run_time=0.7)
         
-            
-        
-            
-    def logarithmically_size(self, scene):
-        scene.wait(2)
-        self.proof_formula = MathTex(r"\text{Proof size} = \log_2({{n}}) \cdot \mathrm{HashSize}", color = PRIMARY_COLOR, font_size = 35)
-        self.proof_formula.to_edge(LEFT+UP).shift(DOWN)
-
-        scene.play(Create(self.proof_formula))
-        transform_zero_to_8 = [MathTex(r"1", color = PRIMARY_COLOR, font_size = 35), MathTex(r"2", color = PRIMARY_COLOR, font_size = 35), 
-                               MathTex(r"3", color = PRIMARY_COLOR, font_size = 35), MathTex(r"4", color = PRIMARY_COLOR, font_size = 35),
-                               MathTex(r"5", color = PRIMARY_COLOR, font_size = 35), MathTex(r"6", color = PRIMARY_COLOR, font_size = 35),
-                               MathTex(r"7", color = PRIMARY_COLOR, font_size = 35), MathTex(r"8", color = PRIMARY_COLOR, font_size = 35),]
-        for number in transform_zero_to_8:
-            number.move_to(self.proof_formula[1].get_center())
         scene.wait(1)
-        prev_number = self.proof_formula[1]
-        for i in range(8):
-            scene.play(Indicate(self.vector_8element[i], color = PURPLE_B), Indicate(self.account_vector_rectangles_8_elements[i], color = SECONDARY_COLOR), TransformMatchingShapes(prev_number, transform_zero_to_8[i]), run_time=0.3)
-            prev_number = transform_zero_to_8[i]
-        scene.wait(0.7)
-        scene.play(TransformMatchingShapes(transform_zero_to_8[7], self.proof_formula[1]))
-            
-    def sixteen_children(self, scene):
-        self.merkle_tree_16_4 = Tree16(focused_node_path=[7, 8, 7], num_levels=4).shift(UP*3.2).scale(0.7)
+        scene.play(FadeOut(parent_hash, grandparent_hash, root_hash,
+                           self.merkle_tree_all))
         
-        scene.play(FadeOut(self.merkle_tree_2_4, self.vector_8element, self.account_group_8_elements, self.all_hashes, self.proof_formula))
-        scene.play(Create(self.merkle_tree_16_4))
-        proof_needed_hashes = [self.merkle_tree_16_4.get_node(0, 0), self.merkle_tree_16_4.get_node(1, 7), self.merkle_tree_16_4.get_node(2, 8), self.merkle_tree_16_4.get_node(3, 7)]
-        for node in proof_needed_hashes:
-            node.generate_target()
-            node.target.set_color(PRIMARY_COLOR)
-            scene.play(MoveToTarget(node), run_time=0.3)
-        scene.wait(2.8)
-        nodes_of_the_root = [self.merkle_tree_16_4.get_node(1, 0), self.merkle_tree_16_4.get_node(1, 1), self.merkle_tree_16_4.get_node(1, 2), self.merkle_tree_16_4.get_node(1, 3),
-                             self.merkle_tree_16_4.get_node(1, 4), self.merkle_tree_16_4.get_node(1, 5), self.merkle_tree_16_4.get_node(1, 6), self.merkle_tree_16_4.get_node(1, 7),
-                             self.merkle_tree_16_4.get_node(1, 8), self.merkle_tree_16_4.get_node(1, 9), self.merkle_tree_16_4.get_node(1, 10), self.merkle_tree_16_4.get_node(1, 11),
-                             self.merkle_tree_16_4.get_node(1, 12), self.merkle_tree_16_4.get_node(1, 13), self.merkle_tree_16_4.get_node(1, 14), self.merkle_tree_16_4.get_node(1, 15)]
-        for node in nodes_of_the_root:
-            scene.play(Indicate(node, color = SECONDARY_COLOR), run_time=0.15)
-            
+    def key_value_pairs(self, scene):
+        node = RoundedRectangle(width=4, height=1.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity=0.2)
+        key = RoundedRectangle(width=1.5, height=0.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity = 0.3).move_to(node.get_center()+UP*0.35)
+        value = RoundedRectangle(width=1.5, height=0.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity = 0.3).move_to(node.get_center()+DOWN*0.35)
+        key_text = Text("key", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).move_to(key.get_center())
+        value_text = Text("value", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).move_to(value.get_center())
         
-    def size_16children(self, scene):
-        self.siblings = [self.merkle_tree_16_4.get_node(1, 0), self.merkle_tree_16_4.get_node(1, 1), self.merkle_tree_16_4.get_node(1, 2), self.merkle_tree_16_4.get_node(1, 3),
-                         self.merkle_tree_16_4.get_node(1, 4), self.merkle_tree_16_4.get_node(1, 5), self.merkle_tree_16_4.get_node(1, 6), self.merkle_tree_16_4.get_node(1, 8),
-                         self.merkle_tree_16_4.get_node(1, 9), self.merkle_tree_16_4.get_node(1, 10), self.merkle_tree_16_4.get_node(1, 11), self.merkle_tree_16_4.get_node(1, 12),
-                         self.merkle_tree_16_4.get_node(1, 13), self.merkle_tree_16_4.get_node(1, 14), self.merkle_tree_16_4.get_node(1, 15)]
-        self.size_of_one_hash = Text("32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).next_to(self.merkle_tree_16_4.get_node(1, 0), UP)
-        self.proof_formula2 = MathTex(r"\text{Proof size} = 15 \cdot \mathrm{depth} \cdot \mathrm{HashSize}", color = PRIMARY_COLOR, font_size = 35)
-        self.proof_formula2.to_edge(LEFT+UP).shift(DOWN*0.7)
-        self.proof_formula3 = MathTex(r"\text{Proof size} = 15 \cdot \mathrm{depth} \cdot 32 \ \mathrm{B}", color = PRIMARY_COLOR, font_size = 35)
-        self.proof_formula3.to_edge(LEFT+UP).shift(DOWN*0.7)
-        self.brace_levels_16_children = Brace(self.merkle_tree_16_4, direction=RIGHT)
-        self.brace_text_levels_810 = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 28)
-        self.brace_text_levels = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 28)
-        self.brace_levels_16_children.put_at_tip(self.brace_text_levels)
-        self.brace_text_levels_810.move_to(self.brace_levels_16_children.get_center()+RIGHT*0.2)
+        key_explanation = Text("account address", color=HIGHLIGHT2_COLOR, font=PRIMARY_FONT, font_size=20).next_to(key, RIGHT, buff = 2.0)
+        value_explanation = Text("account balance", color=HIGHLIGHT2_COLOR, font=PRIMARY_FONT, font_size=20).next_to(value, RIGHT, buff = 2.0)
         
-        scene.wait(4.5)
-        scene.play(Write(self.size_of_one_hash))
-        scene.wait(1.5)
+        scene.play(Create(node))
+        scene.play(Create(key), Write(key_text))
+        scene.play(Create(value), Write(value_text))
+        scene.wait(2)
+        scene.play(Write(key_explanation))
+        scene.wait(1)
+        scene.play(Write(value_explanation))
+        scene.wait(2)
         
-        scene.play(FadeIn(self.proof_formula2))
-        scene.wait(1.7)
+        self.new_subsection(scene, "MT->MPT", "data/sound/e6/slide2-4a.mp3")
+        scene.play(FadeOut(key_explanation, value_explanation, node, key, value, key_text, value_text))
+        self.bin_mpt = BinMPT()
+        self.title_mpt = Text("Merkle Patricia Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
+        scene.play(TransformMatchingShapes(self.title_merkle_proof, self.title_mpt))
+        scene.play(Create(self.bin_mpt), run_time=1.5)
         
-        scene.play(TransformMatchingShapes(self.proof_formula2, self.proof_formula3))
-        scene.wait(2.6)
-        
+        self.new_subsection(scene, "key suffixes indexing", "data/sound/e6/slide2-4b.mp3")
     
     def merkle_particia_trie(self, scene):
-        self.title_mpt = Text("Merkle Patricia Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         from manim import PURE_GREEN
         self.MPT = MPT().shift(UP*2.9+LEFT*1).scale(0.45)
         self.worldState = SimplifiedWorldState()
         self.worldState.construct()
         self.worldState.next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*4)
-        scene.play(TransformMatchingShapes(self.title_label, self.title_mpt), FadeOut(self.size_of_one_hash, self.merkle_tree_16_4, self.proof_formula3))
         scene.play(Create(self.MPT))
         self.worldState.show_table(scene)
         scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.75)
