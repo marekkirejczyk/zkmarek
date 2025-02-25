@@ -6,7 +6,7 @@ class MPTNode(VGroup):
     def __init__(self, title, fields, width=2.8, height=0.9, font_size=15, color = PRIMARY_COLOR):
         super().__init__()
         self.title = title
-        self.fields = fields
+        self.fields = fields if fields is not None else {} 
         self.color = color
 
         self.rect = RoundedRectangle(
@@ -62,53 +62,57 @@ class BinaryMPT(VGroup):
     def __init__(self):
         super().__init__()
         
-        self.root_branch = MPTNode("Branch node (root)", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
-        self.branch1 = MPTNode("Branch node", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
-        self.branch2 = MPTNode("Branch node", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
-        self.branch3 = MPTNode("Branch node", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
+        self.root_branch = MPTNode("T", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
+        self.branch1 = MPTNode("R", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
+        self.branch2 = MPTNode("O", {"left child": "", "right child": ""}, color=HIGHLIGHT_COLOR)
+        self.branch3 = MPTNode("I", fields=None, color=SECONDARY_COLOR)
+        self.branch4 = MPTNode("A", fields=None, color=SECONDARY_COLOR)
         
-        self.leaf1 = MPTNode("Leaf node", {"key": "b0100", "value": "0x5678"})
-        self.leaf2 = MPTNode("Leaf node", {"key": "f1734", "value": "0x5678"})
-        self.leaf3 = MPTNode("Leaf node", {"key": "d364d", "value": "0x5678"})
+        self.branch5 = MPTNode("K", fields=None, color=SECONDARY_COLOR)
         
-        self.empty_leaf1 = MPTNode("Empty leaf", {"": "", "": ""}, color = SECONDARY_COLOR)
-        self.empty_leaf2 = MPTNode("Empty leaf", {"": "", "": ""}, color = SECONDARY_COLOR)
+        self.leaf1 = MPTNode("E", {"key": "TRIE", "value": "737a7f"})
+        self.leaf2 = MPTNode("N", {"key": "TRAN", "value": "36ad52"})
+        self.leaf3 = MPTNode("EN", {"key": "TOKEN", "value": "ae356a"})
+        self.leaf4 = MPTNode("W", {"key": "TOW", "value": "d2ee45"})
         
         self.root_branch.to_edge(UP).shift(DOWN*0.8)
         buff = 0.37
-        self.branch1.next_to(self.root_branch, DOWN+LEFT, buff = buff).shift(RIGHT*1.5)
-        self.empty_leaf1.next_to(self.root_branch, RIGHT+DOWN, buff = buff).shift(LEFT*1.5)
-        self.branch2.next_to(self.branch1, DOWN+RIGHT, buff = buff).shift(LEFT*1.5)
-        self.leaf1.next_to(self.branch1, DOWN+LEFT, buff = buff).shift(RIGHT*1.5)
-        self.branch3.next_to(self.branch2, DOWN+LEFT, buff = buff).shift(RIGHT*1.5)
-        self.empty_leaf2.next_to(self.branch2, DOWN+RIGHT, buff = buff).shift(LEFT*1.5)
-        self.leaf2.next_to(self.branch3, DOWN+LEFT, buff = buff).shift(RIGHT*1.5)
-        self.leaf3.next_to(self.branch3, DOWN+RIGHT, buff = buff).shift(LEFT*1.5)
+        self.branch1.next_to(self.root_branch, LEFT+DOWN, buff=buff).shift(RIGHT*1.5)
+        self.branch2.next_to(self.root_branch, RIGHT+DOWN, buff=buff).shift(LEFT*1.5)
+        self.branch3.next_to(self.branch1, LEFT+DOWN, buff=buff).shift(RIGHT*1.5)
+        
+        self.leaf1.next_to(self.branch3, DOWN+LEFT, buff=buff).shift(RIGHT*1.5)
+        
+        self.branch4.next_to(self.branch1, RIGHT+DOWN, buff=buff).shift(LEFT*1.5)
+        self.leaf2.next_to(self.branch4, DOWN+LEFT, buff=buff).shift(RIGHT*1.5)
+        
+        self.branch5.next_to(self.branch2, RIGHT+DOWN, buff=buff).shift(LEFT*1.5)
+        self.leaf4.next_to(self.branch5, DOWN+LEFT, buff=buff).shift(RIGHT*1.5)
+        self.leaf3.next_to(self.branch5, DOWN+RIGHT, buff=buff).shift(LEFT*1.5)
         
         self.arrow1 = create_arrow(self.root_branch, self.branch1)
-        self.arrow2 = create_arrow(self.root_branch, self.empty_leaf1)
-        self.arrow3 = create_arrow(self.branch1, self.branch2)
-        self.arrow4 = create_arrow(self.branch1, self.leaf1)
-        self.arrow5 = create_arrow(self.branch2, self.branch3)
-        self.arrow6 = create_arrow(self.branch2, self.empty_leaf2)
-        self.arrow7 = create_arrow(self.branch3, self.leaf2)
-        self.arrow8 = create_arrow(self.branch3, self.leaf3)
+        self.arrow2 = create_arrow(self.root_branch, self.branch2)
+        self.arrow3 = create_arrow(self.branch1, self.branch3)
+        self.arrow4 = create_arrow(self.branch1, self.branch4)
+        self.arrow5 = create_arrow(self.branch4, self.leaf2)
+        self.arrow6 = create_arrow(self.branch2, self.branch5)
+        self.arrow7 = create_arrow(self.branch2, self.leaf4)
+        self.arrow8 = create_arrow(self.branch5, self.leaf3)
+        self.arrow9 = create_arrow(self.branch3, self.leaf1)
         
-        shift = 0.3+DOWN*0.8
+        # shift = 0.3+DOWN*0.8
         
-        one = Text("1", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT).move_to(self.arrow2.get_center()+LEFT*shift+DOWN*0.05)
-        branch1_branch2 = one.copy().move_to(self.arrow3.get_center()+LEFT*shift+DOWN*0.05)
-        branch2_empty = one.copy().move_to(self.arrow6.get_center()+LEFT*shift+DOWN*0.05)
-        branch3_leaf3 = one.copy().move_to(self.arrow8.get_center()+LEFT*shift+DOWN*0.05)
+        # one = Text("1", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT).move_to(self.arrow2.get_center()+LEFT*shift+DOWN*0.05)
+        # branch1_branch2 = one.copy().move_to(self.arrow3.get_center()+LEFT*shift+DOWN*0.05)
+        # branch2_empty = one.copy().move_to(self.arrow6.get_center()+LEFT*shift+DOWN*0.05)
+        # branch3_leaf3 = one.copy().move_to(self.arrow8.get_center()+LEFT*shift+DOWN*0.05)
         
-        zero = Text("0", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT).move_to(self.arrow1.get_center()+RIGHT*shift+DOWN*0.05)
-        branch1_leaf1 = zero.copy().move_to(self.arrow4.get_center()+RIGHT*shift+DOWN*0.05)
-        branch2_branch3 = zero.copy().move_to(self.arrow5.get_center()+RIGHT*shift+DOWN*0.05)
-        branch3_leaf2 = zero.copy().move_to(self.arrow7.get_center()+RIGHT*shift+DOWN*0.05)
+        # zero = Text("0", font_size=15, color=PRIMARY_COLOR, font = PRIMARY_FONT).move_to(self.arrow1.get_center()+RIGHT*shift+DOWN*0.05)
+        # branch1_leaf1 = zero.copy().move_to(self.arrow4.get_center()+RIGHT*shift+DOWN*0.05)
+        # branch2_branch3 = zero.copy().move_to(self.arrow5.get_center()+RIGHT*shift+DOWN*0.05)
+        # branch3_leaf2 = zero.copy().move_to(self.arrow7.get_center()+RIGHT*shift+DOWN*0.05)
         
         
         
-        self.add(self.root_branch, self.branch1, self.branch2, self.branch3, self.leaf1, self.leaf2, self.leaf3, self.empty_leaf1, self.empty_leaf2)
-        self.add(self.arrow1, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7, self.arrow8)
-        self.add(one, zero, branch1_branch2, branch2_empty, branch3_leaf3, branch1_leaf1, branch2_branch3, branch3_leaf2)
-        
+        self.add(self.root_branch, self.branch1, self.branch2, self.branch3, self.leaf1, self.leaf2, self.leaf3, self.leaf4, self.branch4, self.branch5)
+        self.add(self.arrow1, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7, self.arrow8, self.arrow9)

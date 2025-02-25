@@ -1,5 +1,5 @@
 from manim import (VGroup, Group, Rectangle, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, FadeIn, MoveToTarget, Indicate, 
-                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, GrowArrow)
+                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, GrowArrow, Brace)
 from manim import PURPLE_B, GREEN_D, YELLOW_D, GREEN_E, TEAL_E
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
@@ -7,6 +7,8 @@ from zkmarek.video.slides.e6.tree import MerkleTree as Tree
 from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
 from zkmarek.video.slides.e6.worldstate import SimplifiedWorldState 
 from zkmarek.video.slides.e6.bin_mpt import BinaryMPT as BinMPT
+from zkmarek.video.slides.e6.table import TableKeyValue
+from zkmarek.video.slides.e6.merkle16 import SelectiveMerkleTree as MT16 
 
 class MerkleTree(SlideBase):
     def __init__(self) -> None:
@@ -227,6 +229,10 @@ class MerkleTree(SlideBase):
         
         self.new_subsection(scene, "key-value pairs", "data/sound/e6/slide2-4.mp3")
         self.key_value_pairs(scene)
+        
+        self.new_subsection(scene, "300m addresses - bin/hex", "data/sound/e6/slide2-5.mp3")
+        self.brace_levels(scene)
+        
         
     #     self.new_subsection(scene, "MPT -> ext, branches, leaves", "data/sound/e6/slide2-6.mp3")
     #     self.merkle_particia_trie(scene)
@@ -478,14 +484,70 @@ class MerkleTree(SlideBase):
         scene.play(Write(value_explanation))
         scene.wait(2)
         
-        self.new_subsection(scene, "MT->MPT", "data/sound/e6/slide2-4a.mp3")
-        scene.play(FadeOut(key_explanation, value_explanation, node, key, value, key_text, value_text))
-        self.bin_mpt = BinMPT()
+        self.new_subsection(scene, "Table key-value", "data/sound/e6/slide2-4a.mp3")
         self.title_mpt = Text("Merkle Patricia Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
+        scene.play(FadeOut(key_explanation, value_explanation, node, key, value, key_text, value_text))
         scene.play(TransformMatchingShapes(self.title_merkle_proof, self.title_mpt))
-        scene.play(Create(self.bin_mpt), run_time=1.5)
+
+        table_key_value = TableKeyValue().scale(0.7).shift(DOWN*1)
+        scene.play(Create(table_key_value))
         
-        self.new_subsection(scene, "key suffixes indexing", "data/sound/e6/slide2-4b.mp3")
+        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
+        
+        self.new_subsection(scene, "TABLE->MPT", "data/sound/e6/slide2-4c.mp3")
+        self.bin_mpt = BinMPT().shift(LEFT*2.5).scale(0.7)
+        table_key_value.generate_target()
+        table_key_value.target.scale(0.75).shift(RIGHT*4.5)
+        scene.wait(2)
+        scene.play(MoveToTarget(table_key_value))
+        scene.play(Create(self.bin_mpt), run_time=2)
+        
+        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4d.mp3")
+        scene.play(FadeOut(table_key_value))
+        self.bin_mpt.generate_target()
+        self.bin_mpt.target.scale(1/0.75).shift(RIGHT*2.5)
+        scene.play(MoveToTarget(self.bin_mpt))
+        scene.wait(3)
+        scene.play(FadeOut(self.bin_mpt))
+        
+        
+    def brace_levels(self, scene):
+        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3+LEFT*1)
+        self.merkle_tree_hexary = MT16(num_levels=4, focused_node_path=[7,7,7], include_labels=False).scale(0.6).shift(UP*3+LEFT)
+        scene.play(Create(self.merkle_tree_binary))
+        self.brace_28_levels = Brace(self.merkle_tree_binary, direction=RIGHT, color=PRIMARY_COLOR)
+        self.brace_text_levels28 = Text("28 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_28_levels, RIGHT, buff = 0.1)
+        self.brace_7_levels = Brace(self.merkle_tree_hexary, direction=RIGHT, color=PRIMARY_COLOR)
+        self.brace_text_levels7 = Text("7 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_7_levels, RIGHT, buff = 0.1)
+        scene.wait(3)
+        scene.play(Create(self.brace_28_levels), Write(self.brace_text_levels28))
+        scene.wait(2)
+        
+        self.new_subsection(scene, "bin->hex", "data/sound/e6/slide2-5a.mp3")
+        scene.wait(1)
+        scene.play(FadeOut(self.merkle_tree_binary, self.brace_28_levels, self.brace_text_levels28))
+        scene.play(Create(self.merkle_tree_hexary))
+        
+        self.new_subsection(scene, "300m ->7 lev", "data/sound/e6/slide2-5b.mp3")
+        scene.wait(1)
+        scene.play(Create(self.brace_7_levels), Write(self.brace_text_levels7))
+        scene.wait(2)
+        
+        self.new_subsection(scene, "15 siblings", "data/sound/e6/slide2-5c.mp3")
+        scene.wait(1)
+        nodes = [self.merkle_tree_hexary.get_node(1, 0), self.merkle_tree_hexary.get_node(1, 1), self.merkle_tree_hexary.get_node(1, 2), self.merkle_tree_hexary.get_node(1, 3),
+                 self.merkle_tree_hexary.get_node(1, 4), self.merkle_tree_hexary.get_node(1, 5), self.merkle_tree_hexary.get_node(1, 6), self.merkle_tree_hexary.get_node(1, 7),
+                 self.merkle_tree_hexary.get_node(1, 8), self.merkle_tree_hexary.get_node(1, 9), self.merkle_tree_hexary.get_node(1, 10), self.merkle_tree_hexary.get_node(1, 11),
+                 self.merkle_tree_hexary.get_node(1, 12), self.merkle_tree_hexary.get_node(1, 13), self.merkle_tree_hexary.get_node(1, 14), self.merkle_tree_hexary.get_node(1, 15)]
+        for i in range(16):
+            scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.3)
+            
+        self.new_subsection(scene, "MPT->ETH MPT", "data/sound/e6/slide2-5d.mp3")
+        scene.wait(1)
+        self.title_ETH_MPT = Text("Ethereum MPT", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
+        scene.play(TransformMatchingShapes(self.title_mpt, self.title_ETH_MPT))
+        scene.wait(2)        
+        
     
     def merkle_particia_trie(self, scene):
         from manim import PURE_GREEN

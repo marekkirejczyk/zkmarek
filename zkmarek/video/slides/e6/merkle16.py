@@ -1,5 +1,5 @@
-from manim import VGroup, RIGHT, DOWN, RoundedRectangle, GREEN_E, TEAL_E, Arrow, Text, StealthTip, UP, GREY
-from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
+from manim import VGroup, RIGHT, DOWN, RoundedRectangle, Arrow, Text, StealthTip, UP
+from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 
 class Node(VGroup):
     def __init__(self, value=None, font_size=32):
@@ -10,7 +10,8 @@ class Node(VGroup):
             fill_opacity=0.3,
             width=1.7,
             height=1.2,
-        ).set_color_by_gradient([GREEN_E, TEAL_E])
+            stroke_width = 0.0
+        ).set_color(HIGHLIGHT_COLOR)
         text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
         self.value = value
         self.text = text
@@ -26,7 +27,7 @@ def create_arrow(start, end, stroke_width=2):
     return Arrow(
         start=start.get_bottom(),
         end=end.get_top()+UP*0.1,
-        color=GREY,
+        color=PRIMARY_COLOR,
         buff=0,
         max_tip_length_to_length_ratio=0.1,
         # max_stroke_width_to_length_ratio=1,
@@ -74,7 +75,7 @@ class SelectiveMerkleTree(VGroup):
 
     def _create_selective_tree(self):
         """Generate the selective tree by focusing on the specified path."""
-        root = Node("Root" if self.include_labels else None)
+        root = Node("root" if self.include_labels else None)
         root.move_to(0.5 * DOWN)
         self.nodes.append([root])
         self.add(root)
@@ -82,9 +83,9 @@ class SelectiveMerkleTree(VGroup):
         current_node = root
         for level_idx in range(1, self.num_levels):
             child_index = self.focused_node_path[level_idx - 1]
-
+            indeces = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
             children = [
-                Node(f"{level_idx}-{i}" if self.include_labels else None).scale(0.5)
+                Node(indeces[i] if self.include_labels else None).scale(0.5)
                 for i in range(self.num_children)
             ]
 
