@@ -96,7 +96,7 @@ class SelectiveMerkleTree(VGroup):
 
             spacing = 0.8
             for i, child in enumerate(children):
-                child.next_to(current_node, DOWN, buff=1.4).shift(1.3*RIGHT * (i - (self.num_children - 1) / 2) * spacing)
+                child.next_to(current_node, DOWN, buff=2).shift(1.3*RIGHT * (i - (self.num_children - 1) / 2) * spacing)
             for i, child in enumerate(children):
                 arrow = create_arrow(current_node, children[i])
                 self.add(arrow)

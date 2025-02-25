@@ -1,6 +1,6 @@
-from manim import (VGroup, Group, Rectangle, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, FadeIn, MoveToTarget, Indicate, 
-                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, GrowArrow, Brace)
-from manim import PURPLE_B, GREEN_D, YELLOW_D, GREEN_E, TEAL_E
+from manim import (VGroup, Group, Rectangle, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, MoveToTarget, Indicate, 
+                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, Brace)
+from manim import PURPLE_B, GREEN_D, YELLOW_D
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.e6.tree import MerkleTree as Tree
@@ -79,153 +79,154 @@ class MerkleTree(SlideBase):
             self.vector_8element[i].move_to(self.account_vector_rectangles_8_elements[i].get_center())
         
         self.seal_of_authenticity = ImageMobject("data/images/Badge.png").scale(0.3)
+        self.title_merkle_proof = Text("Merkle proof", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=40).to_edge(UP) 
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "big amount of data", "data/sound/e6/slide2-0.mp3")
-        scene.play(Write(self.title_label))
-        scene.play(Create(self.finalized_group), GrowArrow(self.arrow_0_1), GrowArrow(self.arrow_1_2))
-        for i in range(3):
-            scene.play(FadeIn(self.eth_logos[i]))
+        # self.new_subsection(scene, "big amount of data", "data/sound/e6/slide2-0.mp3")
+        # scene.play(Write(self.title_label))
+        # scene.play(Create(self.finalized_group), GrowArrow(self.arrow_0_1), GrowArrow(self.arrow_1_2))
+        # for i in range(3):
+        #     scene.play(FadeIn(self.eth_logos[i]))
         
         
-        self.new_subsection(scene, "Full node 15 TB", "data/sound/e6/slide2-0a.mp3")
-        side_block1 = Group(self.finalized_blocks[0], self.ethereum2.set_opacity(0.3))
-        side_block2 = Group(self.finalized_blocks[2], self.ethereum3.set_opacity(0.3))
-        main_block = Group(self.finalized_blocks[1], self.ethereum.set_opacity(0.3))
-        side_block1.generate_target()
-        side_block1.target.scale(0.4).shift(LEFT*2)
-        side_block2.generate_target()
-        side_block2.target.scale(0.4).shift(RIGHT*2)
-        main_block.generate_target()
-        main_block.target.scale(2)
-        self.arrow_0_1.generate_target()
-        self.arrow_0_1.target.scale(1.5).shift(LEFT*2.3)
-        self.arrow_1_2.generate_target()
-        self.arrow_1_2.target.scale(1.5).shift(RIGHT*2.3)
-        scene.play(MoveToTarget(side_block1), MoveToTarget(side_block2), MoveToTarget(self.arrow_0_1), MoveToTarget(self.arrow_1_2)) 
-        scene.play(MoveToTarget(main_block))
-        self.account_data.move_to(self.finalized_blocks[1].get_top()+DOWN)
-        self.account_data_more.next_to(self.account_data[23], DOWN, buff = 0.2)
-        self.transaction_data.next_to(self.account_data, DOWN, buff = 1.5)  
-        data_vecs = VGroup(self.transaction_data, self.account_data, self.account_data_more)
-        self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).shift(UP)
-        scene.play(Write(self.account_data))
-        scene.play(Create(self.account_data_more), Write(self.transaction_data), run_time=0.5)
-        side_block1.generate_target()
-        side_block1.target.scale(1/0.4).shift(RIGHT*1.5+DOWN)
-        side_block2.generate_target()
-        side_block2.target.scale(1/0.4).shift(LEFT*1.5+DOWN)
-        main_block = Group(main_block, data_vecs)
-        main_block.generate_target()
-        main_block.target.scale(1/2).shift(DOWN)
-        self.arrow_0_1.generate_target()
-        self.arrow_0_1.target.shift(RIGHT*2.07+DOWN).scale(1/1.5)
-        self.arrow_1_2.generate_target()
-        self.arrow_1_2.target.shift(LEFT*2+DOWN).scale(1/1.5)
-        scene.play(MoveToTarget(main_block), MoveToTarget(side_block1), MoveToTarget(side_block2), MoveToTarget(self.arrow_0_1), MoveToTarget(self.arrow_1_2)) 
-        self.account_data1.scale(1/2).move_to(self.finalized_blocks[0].get_top()+DOWN*0.85)
-        self.account_data2.scale(1/2).move_to(self.finalized_blocks[2].get_top()+DOWN*0.85)
-        self.transaction_data1.scale(1/2).next_to(self.account_data1, DOWN, buff = 0.1)
-        self.transaction_data2.scale(1/2).next_to(self.account_data2, DOWN, buff = 0.1)
-        scene.play(Write(self.account_data1), Write(self.account_data2), Write(self.transaction_data1), Write(self.transaction_data2))
-        scene.play(FadeIn(self.data_size))
-        scene.wait(2.5)
+        # self.new_subsection(scene, "Full node 15 TB", "data/sound/e6/slide2-0a.mp3")
+        # side_block1 = Group(self.finalized_blocks[0], self.ethereum2.set_opacity(0.3))
+        # side_block2 = Group(self.finalized_blocks[2], self.ethereum3.set_opacity(0.3))
+        # main_block = Group(self.finalized_blocks[1], self.ethereum.set_opacity(0.3))
+        # side_block1.generate_target()
+        # side_block1.target.scale(0.4).shift(LEFT*2)
+        # side_block2.generate_target()
+        # side_block2.target.scale(0.4).shift(RIGHT*2)
+        # main_block.generate_target()
+        # main_block.target.scale(2)
+        # self.arrow_0_1.generate_target()
+        # self.arrow_0_1.target.scale(1.5).shift(LEFT*2.3)
+        # self.arrow_1_2.generate_target()
+        # self.arrow_1_2.target.scale(1.5).shift(RIGHT*2.3)
+        # scene.play(MoveToTarget(side_block1), MoveToTarget(side_block2), MoveToTarget(self.arrow_0_1), MoveToTarget(self.arrow_1_2)) 
+        # scene.play(MoveToTarget(main_block))
+        # self.account_data.move_to(self.finalized_blocks[1].get_top()+DOWN)
+        # self.account_data_more.next_to(self.account_data[23], DOWN, buff = 0.2)
+        # self.transaction_data.next_to(self.account_data, DOWN, buff = 1.5)  
+        # data_vecs = VGroup(self.transaction_data, self.account_data, self.account_data_more)
+        # self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).shift(UP)
+        # scene.play(Write(self.account_data))
+        # scene.play(Create(self.account_data_more), Write(self.transaction_data), run_time=0.5)
+        # side_block1.generate_target()
+        # side_block1.target.scale(1/0.4).shift(RIGHT*1.5+DOWN)
+        # side_block2.generate_target()
+        # side_block2.target.scale(1/0.4).shift(LEFT*1.5+DOWN)
+        # main_block = Group(main_block, data_vecs)
+        # main_block.generate_target()
+        # main_block.target.scale(1/2).shift(DOWN)
+        # self.arrow_0_1.generate_target()
+        # self.arrow_0_1.target.shift(RIGHT*2.07+DOWN).scale(1/1.5)
+        # self.arrow_1_2.generate_target()
+        # self.arrow_1_2.target.shift(LEFT*2+DOWN).scale(1/1.5)
+        # scene.play(MoveToTarget(main_block), MoveToTarget(side_block1), MoveToTarget(side_block2), MoveToTarget(self.arrow_0_1), MoveToTarget(self.arrow_1_2)) 
+        # self.account_data1.scale(1/2).move_to(self.finalized_blocks[0].get_top()+DOWN*0.85)
+        # self.account_data2.scale(1/2).move_to(self.finalized_blocks[2].get_top()+DOWN*0.85)
+        # self.transaction_data1.scale(1/2).next_to(self.account_data1, DOWN, buff = 0.1)
+        # self.transaction_data2.scale(1/2).next_to(self.account_data2, DOWN, buff = 0.1)
+        # scene.play(Write(self.account_data1), Write(self.account_data2), Write(self.transaction_data1), Write(self.transaction_data2))
+        # scene.play(FadeIn(self.data_size))
+        # scene.wait(2.5)
         
-        self.new_subsection(scene, "computer", "data/sound/e6/slide2-0b.mp3")
-        scene.play(FadeIn(self.computer), FadeOut(self.data_size))
-        scene.wait(2.5)
-        all_vecs = VGroup(self.transaction_data1, self.transaction_data, self.transaction_data2)
-        for i in range(len(all_vecs)):
-            scene.play(Indicate(all_vecs[i], color = PURPLE_B, scale_factor=1.2), run_time=0.3)
+        # self.new_subsection(scene, "computer", "data/sound/e6/slide2-0b.mp3")
+        # scene.play(FadeIn(self.computer), FadeOut(self.data_size))
+        # scene.wait(2.5)
+        # all_vecs = VGroup(self.transaction_data1, self.transaction_data, self.transaction_data2)
+        # for i in range(len(all_vecs)):
+        #     scene.play(Indicate(all_vecs[i], color = PURPLE_B, scale_factor=1.2), run_time=0.3)
         
-        self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
-        scene.wait(3)
-        account_indications = [self.account_data1_more[20:38], self.account_data[13:26], self.account_data2_more[20:38]]
-        for acc in account_indications:
-            scene.play(Indicate(acc, color = PURPLE_B), run_time=0.5)
-        scene.wait(1)
+        # self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
+        # scene.wait(3)
+        # account_indications = [self.account_data1_more[20:38], self.account_data[13:26], self.account_data2_more[20:38]]
+        # for acc in account_indications:
+        #     scene.play(Indicate(acc, color = PURPLE_B), run_time=0.5)
+        # scene.wait(1)
         
-        self.new_subsection(scene, "merkle trees", "data/sound/e6/slide2-1.mp3")
-        scene.wait(2)
-        scene.play(FadeOut(self.computer, main_block, side_block1, side_block2, self.finalized_group, self.eth_logos, self.transaction_data1, 
-                           self.transaction_data2, self.account_data1, self.account_data2, self.arrow_0_1, self.arrow_1_2))
+        # self.new_subsection(scene, "merkle trees", "data/sound/e6/slide2-1.mp3")
+        # scene.wait(2)
+        # scene.play(FadeOut(self.computer, main_block, side_block1, side_block2, self.finalized_group, self.eth_logos, self.transaction_data1, 
+        #                    self.transaction_data2, self.account_data1, self.account_data2, self.arrow_0_1, self.arrow_1_2))
         
-        self.new_subsection(scene, "data-> tree", "data/sound/e6/slide2-1a.mp3")
-        node0_0 = self.markle_tree_2_3.get_node(0, 0)
-        node2_1 = self.markle_tree_2_3.get_node(2, 1)
-        node2_0 = self.markle_tree_2_3.get_node(2, 0)
-        node2_2 = self.markle_tree_2_3.get_node(2, 2)
-        node2_3 = self.markle_tree_2_3.get_node(2, 3)
-        nodes_down = [node2_1, node2_0, node2_2, node2_3]
-        for i in range(4):
-            nodes_down[i].set_color(PRIMARY_COLOR)
-        self.dots_vec_node = self.dots_vec.copy()
-        self.dots_vec_node.next_to(node0_0, DOWN, buff = 1.0)
-        self.dots_vec_node1 = self.dots_vec.copy()
-        self.dots_vec_node1.next_to(node0_0, DOWN, buff = 1.0).shift(DOWN*1.2)
-        scene.play(Create(self.account_data_vector))
-        scene.play(Create(self.account_vector_rectangles[0]), Write(self.vec0), run_time=0.2)
-        scene.play(Create(self.account_vector_rectangles[1]), Write(self.vec1), Write(self.dots_vec), run_time=0.2)
-        scene.play(Create(self.account_vector_rectangles[2]), Write(self.vec2), run_time=0.2)
-        scene.play(Create(self.account_vector_rectangles[3]), Write(self.vec3), run_time=0.2)
-        scene.wait(2)
-        scene.play(Create(self.markle_tree_2_3), Create(self.dots_vec_node1), Create(self.dots_vec_node))
-        scene.wait(1)
-        self.sel_node = self.markle_tree_2_3.get_node(2, 1)
-        self.sel_node.set_color(SECONDARY_COLOR)
-        scene.play(GrowArrow(self.arrow_acc_tree), run_time=0.5)
-        scene.wait(1)
-        self.other_nodes = [self.markle_tree_2_3.get_node(2, 0), self.markle_tree_2_3.get_node(2, 2), self.markle_tree_2_3.get_node(2, 3)]
-        for node in self.other_nodes: 
-            node.set_opacity(0.3)
-        scene.wait(4)
-        scene.play(FadeOut(self.account_group, self.vecs, self.markle_tree_2_3, self.dots_vec_node, self.dots_vec_node1, self.arrow_acc_tree, self.account_data_vector))
+        # self.new_subsection(scene, "data-> tree", "data/sound/e6/slide2-1a.mp3")
+        # node0_0 = self.markle_tree_2_3.get_node(0, 0)
+        # node2_1 = self.markle_tree_2_3.get_node(2, 1)
+        # node2_0 = self.markle_tree_2_3.get_node(2, 0)
+        # node2_2 = self.markle_tree_2_3.get_node(2, 2)
+        # node2_3 = self.markle_tree_2_3.get_node(2, 3)
+        # nodes_down = [node2_1, node2_0, node2_2, node2_3]
+        # for i in range(4):
+        #     nodes_down[i].set_color(PRIMARY_COLOR)
+        # self.dots_vec_node = self.dots_vec.copy()
+        # self.dots_vec_node.next_to(node0_0, DOWN, buff = 1.0)
+        # self.dots_vec_node1 = self.dots_vec.copy()
+        # self.dots_vec_node1.next_to(node0_0, DOWN, buff = 1.0).shift(DOWN*1.2)
+        # scene.play(Create(self.account_data_vector))
+        # scene.play(Create(self.account_vector_rectangles[0]), Write(self.vec0), run_time=0.2)
+        # scene.play(Create(self.account_vector_rectangles[1]), Write(self.vec1), Write(self.dots_vec), run_time=0.2)
+        # scene.play(Create(self.account_vector_rectangles[2]), Write(self.vec2), run_time=0.2)
+        # scene.play(Create(self.account_vector_rectangles[3]), Write(self.vec3), run_time=0.2)
+        # scene.wait(2)
+        # scene.play(Create(self.markle_tree_2_3), Create(self.dots_vec_node1), Create(self.dots_vec_node))
+        # scene.wait(1)
+        # self.sel_node = self.markle_tree_2_3.get_node(2, 1)
+        # self.sel_node.set_color(SECONDARY_COLOR)
+        # scene.play(GrowArrow(self.arrow_acc_tree), run_time=0.5)
+        # scene.wait(1)
+        # self.other_nodes = [self.markle_tree_2_3.get_node(2, 0), self.markle_tree_2_3.get_node(2, 2), self.markle_tree_2_3.get_node(2, 3)]
+        # for node in self.other_nodes: 
+        #     node.set_opacity(0.3)
+        # scene.wait(4)
+        # scene.play(FadeOut(self.account_group, self.vecs, self.markle_tree_2_3, self.dots_vec_node, self.dots_vec_node1, self.arrow_acc_tree, self.account_data_vector))
         
         
-        self.new_subsection(scene, "8 element vector", "data/sound/e6/slide2-2.mp3")
-        self.merkle24_nodes_level3 = [self.merkle_tree_2_4.get_node(3, 0), self.merkle_tree_2_4.get_node(3, 1), self.merkle_tree_2_4.get_node(3, 2), 
-                                      self.merkle_tree_2_4.get_node(3, 3), self.merkle_tree_2_4.get_node(3, 4), self.merkle_tree_2_4.get_node(3, 5), 
-                                      self.merkle_tree_2_4.get_node(3, 6), self.merkle_tree_2_4.get_node(3, 7)]
-        for i in range(8):
-            self.account_group_8_elements[i].next_to(self.merkle24_nodes_level3[i], DOWN, buff = 0.3)
-            self.vector_8element[i].move_to(self.account_group_8_elements[i].get_center())
-        for i in range(8):
-            scene.play(Write(self.vector_8element[i]), Create(self.account_group_8_elements[i]), run_time=0.07)
-        scene.wait(2)
-        scene.play(Create(self.merkle_tree_2_4))
+        # self.new_subsection(scene, "8 element vector", "data/sound/e6/slide2-2.mp3")
+        # self.merkle24_nodes_level3 = [self.merkle_tree_2_4.get_node(3, 0), self.merkle_tree_2_4.get_node(3, 1), self.merkle_tree_2_4.get_node(3, 2), 
+        #                               self.merkle_tree_2_4.get_node(3, 3), self.merkle_tree_2_4.get_node(3, 4), self.merkle_tree_2_4.get_node(3, 5), 
+        #                               self.merkle_tree_2_4.get_node(3, 6), self.merkle_tree_2_4.get_node(3, 7)]
+        # for i in range(8):
+        #     self.account_group_8_elements[i].next_to(self.merkle24_nodes_level3[i], DOWN, buff = 0.3)
+        #     self.vector_8element[i].move_to(self.account_group_8_elements[i].get_center())
+        # for i in range(8):
+        #     scene.play(Write(self.vector_8element[i]), Create(self.account_group_8_elements[i]), run_time=0.07)
+        # scene.wait(2)
+        # scene.play(Create(self.merkle_tree_2_4))
             
 
         
-        self.new_subsection(scene, "leaf: value+hash", "data/sound/e6/slide2-2a.mp3")
+        # self.new_subsection(scene, "leaf: value+hash", "data/sound/e6/slide2-2a.mp3")
 
-        self.hashes_of_8_element(scene)
+        # self.hashes_of_8_element(scene)
 
         
-        self.new_subsection(scene, "root hash - immutable", "data/sound/e6/slide2-2c.mp3")
-        scene.wait(1)
-        self.seal_of_authenticity.next_to(self.merkle24_nodes_level0, LEFT, buff = 0.3)
-        scene.play(FadeIn(self.seal_of_authenticity))
-        scene.wait(1)
-        scene.play(FadeOut(self.seal_of_authenticity))
-        self.update_nodes(scene)
+        # self.new_subsection(scene, "root hash - immutable", "data/sound/e6/slide2-2c.mp3")
+        # scene.wait(1)
+        # self.seal_of_authenticity.next_to(self.merkle24_nodes_level0, LEFT, buff = 0.3)
+        # scene.play(FadeIn(self.seal_of_authenticity))
+        # scene.wait(1)
+        # scene.play(FadeOut(self.seal_of_authenticity))
+        # self.update_nodes(scene)
         
-        self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3.mp3")
-        level = [self.merkle24_nodes_level3[0], self.merkle24_nodes_level2[0], self.merkle24_nodes_level1[0], self.merkle24_nodes_level0]
-        for i in range(4):
-            levels = level[i]
-            levels.set_color_by_gradient([GREEN_E, TEAL_E])
+        # self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3.mp3")
+        # level = [self.merkle24_nodes_level3[0], self.merkle24_nodes_level2[0], self.merkle24_nodes_level1[0], self.merkle24_nodes_level0]
+        # for i in range(4):
+        #     levels = level[i]
+        #     levels.set_color(HIGHLIGHT_COLOR)
 
-        self.account_group_8_elements[0].set_color(PRIMARY_COLOR)
-        self.merkle_proof(scene)
-        scene.wait(1)
+        # self.account_group_8_elements[0].set_color(PRIMARY_COLOR)
+        # self.merkle_proof(scene)
+        # scene.wait(1)
 
-        self.merkle_tree_all = Group(self.merkle_tree_2_4, self.vector_8element, self.account_group_8_elements, self.all_hashes)
-        self.merkle_tree_all.generate_target()
-        self.merkle_tree_all.target.scale(0.9).shift(LEFT)
-        scene.play(MoveToTarget(self.merkle_tree_all))
+        # self.merkle_tree_all = Group(self.merkle_tree_2_4, self.vector_8element, self.account_group_8_elements, self.all_hashes)
+        # self.merkle_tree_all.generate_target()
+        # self.merkle_tree_all.target.scale(0.9).shift(LEFT)
+        # scene.play(MoveToTarget(self.merkle_tree_all))
         
-        self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3b.mp3")
-        self.calculate_merkle_proof(scene)
+        # self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3b.mp3")
+        # self.calculate_merkle_proof(scene)
         
         self.new_subsection(scene, "key-value pairs", "data/sound/e6/slide2-4.mp3")
         self.key_value_pairs(scene)
@@ -390,7 +391,6 @@ class MerkleTree(SlideBase):
 
 
     def merkle_proof(self, scene):     
-        self.title_merkle_proof = Text("Merkle proof", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=40).to_edge(UP) 
         node_prove = self.merkle_tree_2_4.get_node(3, 3)
         scene.play(Indicate(node_prove, color = YELLOW_D), Indicate(self.account_group_8_elements[3], color = YELLOW_D), TransformMatchingShapes(self.title_label, self.title_merkle_proof))
         node_prove.set_color(YELLOW_D)
@@ -493,7 +493,18 @@ class MerkleTree(SlideBase):
         scene.play(Create(table_key_value))
         
         self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
-        
+        prefixes1 = [table_key_value.keys_table.get_entries((1, 1)), 
+                     table_key_value.keys_table.get_entries((2, 1)), 
+                     table_key_value.keys_table.get_entries((3, 1)), 
+                     table_key_value.keys_table.get_entries((4, 1)), 
+                     table_key_value.keys_table.get_entries((5, 1)), 
+                     table_key_value.keys_table.get_entries((6, 1))]
+        for i in range(len(prefixes1)):
+            pref = prefixes1[i]
+            if i != (4, 5):
+                scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
+            else:
+                scene.play(Indicate(pref[0:3], color = SECONDARY_COLOR), run_time=0.3)
         self.new_subsection(scene, "TABLE->MPT", "data/sound/e6/slide2-4c.mp3")
         self.bin_mpt = BinMPT().shift(LEFT*2.5).scale(0.7)
         table_key_value.generate_target()
@@ -507,17 +518,36 @@ class MerkleTree(SlideBase):
         self.bin_mpt.generate_target()
         self.bin_mpt.target.scale(1/0.75).shift(RIGHT*2.5)
         scene.play(MoveToTarget(self.bin_mpt))
-        scene.wait(6)
+        indeces_nodes = [self.bin_mpt.root_branch.title_text, self.bin_mpt.branch1.title_text, self.bin_mpt.branch3.title_text, self.bin_mpt.leaf1.title_text]
+        for indeces in indeces_nodes:
+            scene.play(Indicate(indeces, color = HIGHLIGHT2_COLOR), run_time=0.45)
+        scene.wait(0.5)
+        scene.play(Indicate(self.bin_mpt.leaf1.field_group[0], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.play(Indicate(self.bin_mpt.leaf2.field_group[0], color = HIGHLIGHT2_COLOR), run_time=0.5)
+        scene.play(Indicate(self.bin_mpt.leaf4.field_group[0], color = HIGHLIGHT2_COLOR), run_time=0.5)
+        scene.play(Indicate(self.bin_mpt.leaf3.field_group[0], color = HIGHLIGHT2_COLOR), run_time=0.5)
+        scene.play(Indicate(self.bin_mpt.leaf1.field_group[1], color = HIGHLIGHT2_COLOR), run_time=1)
+        scene.play(Indicate(self.bin_mpt.leaf2.field_group[1], color = HIGHLIGHT2_COLOR), run_time=0.5)
+        scene.play(Indicate(self.bin_mpt.leaf4.field_group[1], color = HIGHLIGHT2_COLOR), run_time=0.5)
+        scene.play(Indicate(self.bin_mpt.leaf3.field_group[1], color = HIGHLIGHT2_COLOR), run_time=0.5)
         scene.play(FadeOut(self.bin_mpt))
         
         
     def brace_levels(self, scene):
-        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3+LEFT*1)
-        self.merkle_tree_hexary = MT16(num_levels=4, focused_node_path=[7,7,7], include_labels=False).scale(0.6).shift(UP*3+LEFT)
+        self.merkle_tree_binary = Tree(num_levels=4).scale(0.5).shift(UP*3.7+LEFT*1)
+        self.dots_bin_merkle1 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 0), DOWN, buff = 1.0).shift(DOWN*0.2)
+        self.dots_bin_merkle2 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 1), DOWN, buff = 1.0).shift(DOWN*0.2)
+        self.dots_bin_merkle3 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 2), DOWN, buff = 1.0).shift(DOWN*0.2)
+        self.dots_bin_merkle4 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 3), DOWN, buff = 1.0).shift(DOWN*0.2)
+        self.merkle_tree_binary = VGroup(self.merkle_tree_binary, self.dots_bin_merkle1, self.dots_bin_merkle2, self.dots_bin_merkle3, self.dots_bin_merkle4)
         scene.play(Create(self.merkle_tree_binary))
         self.brace_28_levels = Brace(self.merkle_tree_binary, direction=RIGHT, color=PRIMARY_COLOR)
+        
+        self.merkle_tree_hexary = MT16(num_levels=4, focused_node_path=[7,8,7]).scale(0.6).shift(UP*4+LEFT)
+        self.dots_hex_merkle = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_hexary, DOWN, buff = 0.3)
+        
         self.brace_text_levels28 = Text("28 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_28_levels, RIGHT, buff = 0.1)
-        self.brace_7_levels = Brace(self.merkle_tree_hexary, direction=RIGHT, color=PRIMARY_COLOR)
+        self.brace_7_levels = Brace(self.merkle_tree_hexary, direction=RIGHT, color=PRIMARY_COLOR).scale(1.2).shift(DOWN*0.3)
         self.brace_text_levels7 = Text("7 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_7_levels, RIGHT, buff = 0.1)
         scene.wait(3)
         scene.play(Create(self.brace_28_levels), Write(self.brace_text_levels28))
@@ -530,7 +560,7 @@ class MerkleTree(SlideBase):
                  self.merkle_tree_hexary.get_node(1, 12), self.merkle_tree_hexary.get_node(1, 13), self.merkle_tree_hexary.get_node(1, 14), self.merkle_tree_hexary.get_node(1, 15)]
         scene.wait(1)
         scene.play(FadeOut(self.merkle_tree_binary, self.brace_28_levels, self.brace_text_levels28))
-        scene.play(Create(self.merkle_tree_hexary))
+        scene.play(Create(self.merkle_tree_hexary), Write(self.dots_hex_merkle))
         for i in range(16):
             scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.15)
             
@@ -542,14 +572,18 @@ class MerkleTree(SlideBase):
         
         self.new_subsection(scene, "15 siblings", "data/sound/e6/slide2-5c.mp3")
         scene.wait(1)
-        for i in range(16):
-            scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.3)
+        scene.play(
+            *[Indicate(nodes[i], color = SECONDARY_COLOR) for i in range(16)],
+            run_time=0.8
+        )
             
         self.new_subsection(scene, "MPT->ETH MPT", "data/sound/e6/slide2-5d.mp3")
         scene.wait(1)
         self.title_ETH_MPT = Text("Ethereum MPT", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         scene.play(TransformMatchingShapes(self.title_mpt, self.title_ETH_MPT))
-        scene.wait(2)        
+        scene.wait(2)  
+        
+        scene.play(FadeOut(self.merkle_tree_hexary, self.brace_7_levels, self.brace_text_levels7, self.dots_hex_merkle))     
         
     
     def merkle_particia_trie(self, scene):

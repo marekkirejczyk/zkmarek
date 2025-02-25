@@ -22,11 +22,13 @@ class MPTNode(VGroup):
         self.title_text = Text(
             self.title, font_size=font_size + 3, color=self.color, font = PRIMARY_FONT
         ).move_to(self.rect.get_top() + 0.15 * DOWN)
+        if fields is None:
+            self.title_text.move_to(self.rect.get_center())
 
         self.field_group = VGroup()
         for i, (key, value) in enumerate(self.fields.items()):
             field_rect = RoundedRectangle(
-                width=width * 0.45, height=0.5, color=self.color, stroke_width=0.0, fill_opacity=0.25, corner_radius=0.05
+                width=width * 0.475, height=0.5, color=self.color, stroke_width=0.0, fill_opacity=0.25, corner_radius=0.05
             )
             field_text = Text(
                 f"{key}: {value}",
@@ -35,11 +37,11 @@ class MPTNode(VGroup):
                 font = PRIMARY_FONT
             ).move_to(field_rect.get_center())
 
-            field_rect.next_to(self.title_text, DOWN, buff=(0.2))
+            field_rect.next_to(self.title_text, DOWN, buff=(0.15))
             if i == 0:
-                field_rect.shift(LEFT*0.65)
+                field_rect.shift(LEFT*0.68)
             else:
-                field_rect.shift(RIGHT*0.65)
+                field_rect.shift(RIGHT*0.68)
             field_text.move_to(field_rect.get_center())
 
             self.field_group.add(VGroup(field_rect, field_text))
@@ -70,25 +72,25 @@ class BinaryMPT(VGroup):
         
         self.branch5 = MPTNode("K", fields=None, color=SECONDARY_COLOR)
         
-        self.leaf1 = MPTNode("E", {"key": "TRIE", "value": "737a7f"})
-        self.leaf2 = MPTNode("N", {"key": "TRAN", "value": "36ad52"})
-        self.leaf3 = MPTNode("EN", {"key": "TOKEN", "value": "ae356a"})
-        self.leaf4 = MPTNode("W", {"key": "TOW", "value": "d2ee45"})
+        self.leaf1 = MPTNode("E", {"key": "'TRIE'", "value": "737a7f..."})
+        self.leaf2 = MPTNode("N", {"key": "'TRAN'", "value": "36ad52..."})
+        self.leaf3 = MPTNode("EN", {"key": "'TOKEN'", "value": "ae356a..."})
+        self.leaf4 = MPTNode("W", {"key": "'TOW'", "value": "d2ee45..."})
         
         self.root_branch.to_edge(UP).shift(DOWN*0.8)
-        buff = 0.37
-        self.branch1.next_to(self.root_branch, LEFT+DOWN, buff=buff).shift(RIGHT*1.5)
-        self.branch2.next_to(self.root_branch, RIGHT+DOWN, buff=buff).shift(LEFT*1.5)
-        self.branch3.next_to(self.branch1, LEFT+DOWN, buff=buff).shift(RIGHT*1.5)
+        buff = 0.5
+        self.branch1.next_to(self.root_branch, LEFT+DOWN, buff=buff).shift(RIGHT*1.8+DOWN*0.2)
+        self.branch2.next_to(self.root_branch, RIGHT+DOWN, buff=buff).shift(LEFT*1.8+DOWN*0.2)
+        self.branch3.next_to(self.branch1, LEFT+DOWN, buff=buff).shift(RIGHT*1.8+DOWN*0.2)
         
-        self.leaf1.next_to(self.branch3, DOWN+LEFT, buff=buff).shift(RIGHT*1.5)
+        self.leaf1.next_to(self.branch3, DOWN+LEFT, buff=buff).shift(RIGHT*1.8+DOWN*0.2)
         
-        self.branch4.next_to(self.branch1, RIGHT+DOWN, buff=buff).shift(LEFT*1.5)
-        self.leaf2.next_to(self.branch4, DOWN+LEFT, buff=buff).shift(RIGHT*1.5)
+        self.branch4.next_to(self.branch1, RIGHT+DOWN, buff=buff).shift(LEFT*1.8+DOWN*0.2)
+        self.leaf2.next_to(self.branch4, DOWN+LEFT, buff=buff).shift(RIGHT*1.8+DOWN*0.2)
         
-        self.branch5.next_to(self.branch2, RIGHT+DOWN, buff=buff).shift(LEFT*1.5)
-        self.leaf4.next_to(self.branch5, DOWN+LEFT, buff=buff).shift(RIGHT*1.5)
-        self.leaf3.next_to(self.branch5, DOWN+RIGHT, buff=buff).shift(LEFT*1.5)
+        self.branch5.next_to(self.branch2, RIGHT+DOWN, buff=buff).shift(LEFT*1.8+DOWN*0.2)
+        self.leaf4.next_to(self.branch5, DOWN+LEFT, buff=buff).shift(RIGHT*1.8+DOWN*0.2)
+        self.leaf3.next_to(self.branch5, DOWN+RIGHT, buff=buff).shift(LEFT*1.8+DOWN*0.2)
         
         self.arrow1 = create_arrow(self.root_branch, self.branch1)
         self.arrow2 = create_arrow(self.root_branch, self.branch2)
