@@ -489,7 +489,7 @@ class MerkleTree(SlideBase):
         scene.play(FadeOut(key_explanation, value_explanation, node, key, value, key_text, value_text))
         scene.play(TransformMatchingShapes(self.title_merkle_proof, self.title_mpt))
 
-        table_key_value = TableKeyValue().scale(0.7).shift(DOWN*1)
+        table_key_value = TableKeyValue().scale(0.7)
         scene.play(Create(table_key_value))
         
         self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
@@ -507,7 +507,7 @@ class MerkleTree(SlideBase):
         self.bin_mpt.generate_target()
         self.bin_mpt.target.scale(1/0.75).shift(RIGHT*2.5)
         scene.play(MoveToTarget(self.bin_mpt))
-        scene.wait(3)
+        scene.wait(6)
         scene.play(FadeOut(self.bin_mpt))
         
         
@@ -524,9 +524,16 @@ class MerkleTree(SlideBase):
         scene.wait(2)
         
         self.new_subsection(scene, "bin->hex", "data/sound/e6/slide2-5a.mp3")
+        nodes = [self.merkle_tree_hexary.get_node(1, 0), self.merkle_tree_hexary.get_node(1, 1), self.merkle_tree_hexary.get_node(1, 2), self.merkle_tree_hexary.get_node(1, 3),
+                 self.merkle_tree_hexary.get_node(1, 4), self.merkle_tree_hexary.get_node(1, 5), self.merkle_tree_hexary.get_node(1, 6), self.merkle_tree_hexary.get_node(1, 7),
+                 self.merkle_tree_hexary.get_node(1, 8), self.merkle_tree_hexary.get_node(1, 9), self.merkle_tree_hexary.get_node(1, 10), self.merkle_tree_hexary.get_node(1, 11),
+                 self.merkle_tree_hexary.get_node(1, 12), self.merkle_tree_hexary.get_node(1, 13), self.merkle_tree_hexary.get_node(1, 14), self.merkle_tree_hexary.get_node(1, 15)]
         scene.wait(1)
         scene.play(FadeOut(self.merkle_tree_binary, self.brace_28_levels, self.brace_text_levels28))
         scene.play(Create(self.merkle_tree_hexary))
+        for i in range(16):
+            scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.15)
+            
         
         self.new_subsection(scene, "300m ->7 lev", "data/sound/e6/slide2-5b.mp3")
         scene.wait(1)
@@ -535,10 +542,6 @@ class MerkleTree(SlideBase):
         
         self.new_subsection(scene, "15 siblings", "data/sound/e6/slide2-5c.mp3")
         scene.wait(1)
-        nodes = [self.merkle_tree_hexary.get_node(1, 0), self.merkle_tree_hexary.get_node(1, 1), self.merkle_tree_hexary.get_node(1, 2), self.merkle_tree_hexary.get_node(1, 3),
-                 self.merkle_tree_hexary.get_node(1, 4), self.merkle_tree_hexary.get_node(1, 5), self.merkle_tree_hexary.get_node(1, 6), self.merkle_tree_hexary.get_node(1, 7),
-                 self.merkle_tree_hexary.get_node(1, 8), self.merkle_tree_hexary.get_node(1, 9), self.merkle_tree_hexary.get_node(1, 10), self.merkle_tree_hexary.get_node(1, 11),
-                 self.merkle_tree_hexary.get_node(1, 12), self.merkle_tree_hexary.get_node(1, 13), self.merkle_tree_hexary.get_node(1, 14), self.merkle_tree_hexary.get_node(1, 15)]
         for i in range(16):
             scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.3)
             
