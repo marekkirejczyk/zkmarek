@@ -6,12 +6,10 @@ class TableKeyValue(VGroup):
         super().__init__()
         
         self.keys_values_data = [
-            ["'TRIE'",  "737a7f..."],  
-            ["'TRAIN'", "171caa..."],  
-            ["'TRAM'",  "034197..."],  
-            ["'TRAN'",  "36ad52..."],  
-            ["'TOW'",   "d2ee45..."],  
-            ["'TOKEN'", "ae356a..."],  
+            ["'TRIE'",  "7"],  
+            ["'TRAN'",  "9"],  
+            ["'TOW'",   "1"],  
+            ["'TOKEN'", "7"],  
         ]
 
         self.keys_table = Table(

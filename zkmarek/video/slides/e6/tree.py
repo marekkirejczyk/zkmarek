@@ -42,8 +42,8 @@ class MerkleTree(VGroup):
 
         if num_children < 2 or num_children > 16:
             raise ValueError("Number of children per node must be between 2 and 16.")
-        if num_levels < 1 or num_levels > 5:
-            raise ValueError("Number of levels must be between 1 and 5.")
+        if num_levels < 1 or num_levels > 4:
+            raise ValueError("Number of levels must be between 1 and 4.")
 
         self.num_children = num_children
         self.num_levels = num_levels

@@ -489,35 +489,37 @@ class MerkleTree(SlideBase):
         scene.play(FadeOut(key_explanation, value_explanation, node, key, value, key_text, value_text))
         scene.play(TransformMatchingShapes(self.title_merkle_proof, self.title_mpt))
 
-        table_key_value = TableKeyValue().scale(0.7)
+        table_key_value = TableKeyValue().scale(0.85)
         scene.play(Create(table_key_value))
         
-        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
+        self.new_subsection(scene, "table->tree?", "data/sound/e6/slide2-4b.mp3")
+        self.bin_mpt = BinMPT(include_labels=False).shift(LEFT*2.5).scale(0.7)
+        self.bin_mpt_labels = BinMPT(include_labels=True)
+        table_key_value.generate_target()
+        table_key_value.target.scale(0.75).shift(RIGHT*4.5)
+        scene.wait(1)
+        scene.play(MoveToTarget(table_key_value))
+        scene.play(Create(self.bin_mpt), run_time=2)
+                
+        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4c.mp3")
         prefixes1 = [table_key_value.keys_table.get_entries((1, 1)), 
                      table_key_value.keys_table.get_entries((2, 1)), 
                      table_key_value.keys_table.get_entries((3, 1)), 
-                     table_key_value.keys_table.get_entries((4, 1)), 
-                     table_key_value.keys_table.get_entries((5, 1)), 
-                     table_key_value.keys_table.get_entries((6, 1))]
+                     table_key_value.keys_table.get_entries((4, 1))]
         for i in range(len(prefixes1)):
             pref = prefixes1[i]
             if i != (4, 5):
                 scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
             else:
                 scene.play(Indicate(pref[0:3], color = SECONDARY_COLOR), run_time=0.3)
-        self.new_subsection(scene, "TABLE->MPT", "data/sound/e6/slide2-4c.mp3")
-        self.bin_mpt = BinMPT().shift(LEFT*2.5).scale(0.7)
-        table_key_value.generate_target()
-        table_key_value.target.scale(0.75).shift(RIGHT*4.5)
-        scene.wait(2)
-        scene.play(MoveToTarget(table_key_value))
-        scene.play(Create(self.bin_mpt), run_time=2)
         
-        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4d.mp3")
+        self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4d.mp3")
         scene.play(FadeOut(table_key_value))
         self.bin_mpt.generate_target()
-        self.bin_mpt.target.scale(1/0.75).shift(RIGHT*2.5)
+        self.bin_mpt.target.scale(1/0.7).shift(RIGHT*2.5)
         scene.play(MoveToTarget(self.bin_mpt))
+        scene.play(TransformMatchingShapes(self.bin_mpt, self.bin_mpt_labels))
+        self.bin_mpt = self.bin_mpt_labels
         indeces_nodes = [self.bin_mpt.root_branch.title_text, self.bin_mpt.branch1.title_text, self.bin_mpt.branch3.title_text, self.bin_mpt.leaf1.title_text]
         for indeces in indeces_nodes:
             scene.play(Indicate(indeces, color = HIGHLIGHT2_COLOR), run_time=0.45)
@@ -530,8 +532,35 @@ class MerkleTree(SlideBase):
         scene.play(Indicate(self.bin_mpt.leaf2.field_group[1], color = HIGHLIGHT2_COLOR), run_time=0.5)
         scene.play(Indicate(self.bin_mpt.leaf4.field_group[1], color = HIGHLIGHT2_COLOR), run_time=0.5)
         scene.play(Indicate(self.bin_mpt.leaf3.field_group[1], color = HIGHLIGHT2_COLOR), run_time=0.5)
-        scene.play(FadeOut(self.bin_mpt))
         
+        self.new_subsection(scene, "MPT->hashing all the nodes", "data/sound/e6/slide2-4e.mp3")
+        new_nodes = ["4f91a60b9c9...", "2351854a3b85...", "06f5593c25e0c...", "c8d53dc0edb03c...", "559aead08264d5...", "36d4e6c8f3df", "f4b9ec30ad9f6", "19628c344bb8af", "265d18c0bca5db3", "1fdd78c428dff82"]
+        values_hashes = ["value: 737a7f...", "value: 36ad52...","value: d2ee45...", "value: ae356a..."]
+        values_mpt_bin = [self.bin_mpt.leaf1.field_group[1][1], self.bin_mpt.leaf2.field_group[1][1], self.bin_mpt.leaf3.field_group[1][1], self.bin_mpt.leaf4.field_group[1][1]]
+        nodes = [self.bin_mpt.root_branch, self.bin_mpt.branch1, self.bin_mpt.branch3, self.bin_mpt.branch2, self.bin_mpt.branch4, self.bin_mpt.branch5, self.bin_mpt.leaf1, self.bin_mpt.leaf2, self.bin_mpt.leaf3, self.bin_mpt.leaf4]
+        new_hashes = []
+        for i in range(len(new_nodes)):
+            text = new_nodes[i]
+            new_hashes.append(Text(text, color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=14))
+            new_hashes[i].move_to(nodes[i].title_text.get_center())
+        
+        values_text = []
+        for i in range(len(values_hashes)):
+            text = values_hashes[i]
+            values_text.append(Text(text, color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=14))
+            values_text[i].move_to(values_mpt_bin[i].get_center())
+            
+        scene.wait(3)
+        for i in range(len(nodes)):
+            scene.play(TransformMatchingShapes(nodes[i].title_text, new_hashes[i]), run_time=0.2)
+            
+        for i in range(len(values_mpt_bin)):
+            scene.play(TransformMatchingShapes(values_mpt_bin[i], values_text[i]), run_time=0.2)
+        
+        
+        self.new_subsection(scene, "path hashed down the trie", "data/sound/e6/slide2-4f.mp3")
+        scene.wait(4)
+        scene.play(FadeOut(self.bin_mpt, values_text, new_hashes))
         
     def brace_levels(self, scene):
         self.merkle_tree_binary = Tree(num_levels=4).scale(0.5).shift(UP*3.7+LEFT*1)
@@ -548,7 +577,7 @@ class MerkleTree(SlideBase):
         
         self.brace_text_levels28 = Text("28 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_28_levels, RIGHT, buff = 0.1)
         self.brace_7_levels = Brace(self.merkle_tree_hexary, direction=RIGHT, color=PRIMARY_COLOR).scale(1.2).shift(DOWN*0.3)
-        self.brace_text_levels7 = Text("7 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_7_levels, RIGHT, buff = 0.1)
+        self.brace_text_levels7 = Text("8 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_7_levels, RIGHT, buff = 0.1)
         scene.wait(3)
         scene.play(Create(self.brace_28_levels), Write(self.brace_text_levels28))
         scene.wait(2)
@@ -565,7 +594,7 @@ class MerkleTree(SlideBase):
             scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.15)
             
         
-        self.new_subsection(scene, "300m ->7 lev", "data/sound/e6/slide2-5b.mp3")
+        self.new_subsection(scene, "300m ->8 levels", "data/sound/e6/slide2-5b.mp3")
         scene.wait(1)
         scene.play(Create(self.brace_7_levels), Write(self.brace_text_levels7))
         scene.wait(2)
