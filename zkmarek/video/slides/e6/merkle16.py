@@ -1,14 +1,13 @@
-from manim import VGroup, RIGHT, DOWN, RoundedRectangle, Text, StealthTip
+from manim import VGroup, RIGHT, DOWN, RoundedRectangle, Text, StealthTip, DashedVMobject, Arrow, UP
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
-from zkmarek.video.mobjects.dotted_line import DottedLine
 class Node(VGroup):
-    def __init__(self, value=None, font_size=32):
+    def __init__(self, value=None, font_size=40):
         super().__init__()
         square = RoundedRectangle(
             color=PRIMARY_COLOR,
             fill_color=BACKGROUND_COLOR,
             fill_opacity=0.3,
-            width=1.7,
+            width=1.2,
             height=1.2,
             stroke_width = 0.0,
             corner_radius=0.1,
@@ -24,13 +23,24 @@ class Node(VGroup):
         self.text.text = str(value)
 
 
-def create_arrow(start, end, stroke_width=1.8):
-    return DottedLine(start = end.get_top(), 
-                      end = start.get_bottom(), 
-                      dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(PRIMARY_COLOR)
+# def create_arrow(start, end, stroke_width=1.8):
+#     return DottedLine(start = end.get_top(), 
+#                       end = start.get_bottom(), 
+#                       dot_spacing=0.1, 
+#                       dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
+#                       stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(PRIMARY_COLOR)
 
+def create_arrow(start, end, stroke_width=1.8):
+    return DashedVMobject(Arrow(
+        start=start.get_bottom(),
+        end=end.get_top()+UP*0.1,
+        color=PRIMARY_COLOR,
+        buff=0,
+        max_tip_length_to_length_ratio=0.1,
+        stroke_width=stroke_width,
+        tip_shape = StealthTip,
+        tip_length=0.2,
+    ))
 
 class SelectiveMerkleTree(VGroup):
     def __init__(self, num_children=16, num_levels=3, include_labels=True, focused_node_path=None):

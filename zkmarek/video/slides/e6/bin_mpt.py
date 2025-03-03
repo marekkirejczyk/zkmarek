@@ -1,6 +1,5 @@
-from manim import RoundedRectangle, Text, VGroup, UP, DOWN, RIGHT, LEFT, StealthTip
+from manim import RoundedRectangle, Text, VGroup, UP, DOWN, RIGHT, LEFT, StealthTip, DashedVMobject, Arrow
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
-from zkmarek.video.mobjects.dotted_line import DottedLine
 class MPTNode(VGroup):
     """Base class for nodes in the Merkle Patricia Trie."""
     def __init__(self, title, fields, width=2.8, height=0.7, font_size=15, color=PRIMARY_COLOR, fillopacity=0.18, include_labels=True):
@@ -31,7 +30,7 @@ class MPTNode(VGroup):
             self.field_group = VGroup()
             for i, (key, value) in enumerate(self.fields.items()):
                 field_rect = RoundedRectangle(
-                    width=width * 0.44, height=0.35, color=self.color, stroke_width=0.0, fill_opacity=0.25, corner_radius=0.05
+                    width=width * 0.46, height=0.35, color=self.color, stroke_width=0.0, fill_opacity=0.25, corner_radius=0.05
                 )
                 field_text = Text(
                     f"{key}: {value}",
@@ -42,9 +41,9 @@ class MPTNode(VGroup):
 
                 field_rect.next_to(self.title_text, DOWN, buff=(0.1))
                 if i == 0:
-                    field_rect.shift(LEFT*0.68)
+                    field_rect.shift(LEFT*0.69)
                 else:
-                    field_rect.shift(RIGHT*0.68)
+                    field_rect.shift(RIGHT*0.69)
                 field_text.move_to(field_rect.get_center())
 
                 self.field_group.add(VGroup(field_rect, field_text))
@@ -54,11 +53,16 @@ class MPTNode(VGroup):
             self.add(self.rect)
 
 def create_arrow(start, end, stroke_width=1.8):
-    return DottedLine(start = end.get_top(), 
-                      end = start.get_bottom(), 
-                      dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.15, at_start=True).set_color(PRIMARY_COLOR)
+    return DashedVMobject(Arrow(
+        start=start.get_bottom(),
+        end=end.get_top()+UP*0.1,
+        color=PRIMARY_COLOR,
+        buff=0,
+        max_tip_length_to_length_ratio=0.1,
+        stroke_width=stroke_width,
+        tip_shape = StealthTip,
+        tip_length=0.2,
+    ))
 
 class BinaryMPT(VGroup):
     def __init__(self, include_labels = True):

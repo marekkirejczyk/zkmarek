@@ -51,5 +51,5 @@ class SimplifiedWorldState(VGroup):
         scene.play(Indicate(self.values_table, color = HIGHLIGHT_COLOR))
         scene.wait(1.5)
         self.table.generate_target()
-        self.table.target.shift(RIGHT*3.5+UP*0.7).scale(0.64)
+        self.table.target.shift(RIGHT*4.7+UP*1).scale(0.6)
         scene.play(MoveToTarget(self.table))

@@ -1,4 +1,4 @@
-from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, Arrow, RoundedRectangle, StealthTip
+from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, RoundedRectangle, StealthTip
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.dotted_line import DottedLine
 
@@ -125,10 +125,10 @@ class MerklePatriciaTrie(VGroup):
                       stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
                                                   at_start=True).set_color(PRIMARY_COLOR)
                       
-        self.arrow5 = DottedLine(end = self.extension2.get_bottom()+UP*0.2+RIGHT*0.2, start = self.branch2.get_top()+RIGHT, color=PRIMARY_COLOR, dot_spacing=0.1, 
+        self.arrow5 = DottedLine(end = self.extension2.get_bottom()+UP*0.2+RIGHT*0.2, start = self.branch2.get_top()+RIGHT*0.2, color=PRIMARY_COLOR, dot_spacing=0.1, 
                       dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
                       stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR).shift(RIGHT*1+UP*0.5)
+                                                  at_start=True).set_color(PRIMARY_COLOR)
         self.arrow6 = DottedLine(end = self.branch2.get_child_slot("3"), start = self.leaf3.get_top(), color=PRIMARY_COLOR, dot_spacing=0.1, 
                       dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
                       stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 

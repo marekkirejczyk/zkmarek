@@ -13,7 +13,7 @@ class Node(VGroup):
             stroke_width = 0.0,
             corner_radius=0.1
         ).set_color(HIGHLIGHT_COLOR)
-        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
+        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT, color = PRIMARY_COLOR)
         self.value = value
         self.text = text
         self.add(square, text)
@@ -63,10 +63,10 @@ class MerkleTree(VGroup):
             if i == 0:
                 level_group.move_to(0.5 * DOWN)
             elif i == 1:
-                level_group.arrange(RIGHT, buff=8.6)
+                level_group.arrange(RIGHT, buff=8.8)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1)
             elif i == 2:
-                level_group.arrange(RIGHT, buff=3.45)
+                level_group.arrange(RIGHT, buff=3.55)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*2)
             elif i == 3:
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*4)
