@@ -1,6 +1,6 @@
-from manim import VGroup, RIGHT, DOWN, RoundedRectangle, Arrow, Text, StealthTip, UP
+from manim import VGroup, RIGHT, DOWN, RoundedRectangle, Text, StealthTip
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
-
+from zkmarek.video.mobjects.dotted_line import DottedLine
 class Node(VGroup):
     def __init__(self, value=None, font_size=32):
         super().__init__()
@@ -10,9 +10,10 @@ class Node(VGroup):
             fill_opacity=0.3,
             width=1.7,
             height=1.2,
-            stroke_width = 0.0
+            stroke_width = 0.0,
+            corner_radius=0.1,
         ).set_color(HIGHLIGHT_COLOR)
-        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
+        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT, color = PRIMARY_COLOR)
         self.value = value
         self.text = text
         self.add(square, text)
@@ -23,18 +24,12 @@ class Node(VGroup):
         self.text.text = str(value)
 
 
-def create_arrow(start, end, stroke_width=2):
-    return Arrow(
-        start=start.get_bottom(),
-        end=end.get_top()+UP*0.1,
-        color=PRIMARY_COLOR,
-        buff=0,
-        max_tip_length_to_length_ratio=0.1,
-        # max_stroke_width_to_length_ratio=1,
-        stroke_width=stroke_width,
-        tip_shape = StealthTip,
-        tip_length=0.1,
-    )
+def create_arrow(start, end, stroke_width=1.8):
+    return DottedLine(start = end.get_top(), 
+                      end = start.get_bottom(), 
+                      dot_spacing=0.1, 
+                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
+                      stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(PRIMARY_COLOR)
 
 
 class SelectiveMerkleTree(VGroup):

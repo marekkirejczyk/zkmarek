@@ -1,5 +1,5 @@
-from manim import Table, Text, VGroup, LEFT, Write, Create, RIGHT, UP, FadeOut, GREEN_D
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
+from manim import Table, Text, VGroup, LEFT, Write, Create, RIGHT, UP, FadeOut, Indicate, MoveToTarget
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 
 class SimplifiedWorldState(VGroup):
     def __init__(self, keys_data=None, font_size=32):
@@ -19,21 +19,22 @@ class SimplifiedWorldState(VGroup):
         self.keys_table = Table(
             self.keys_data,
             include_outer_lines=True,
-        ).scale(0.5).scale(0.64).set_color(GREEN_D)
+        ).scale(0.5).set_color(HIGHLIGHT_COLOR)
 
         self.values_table = Table(
             [[value] for value in values_data],
             include_outer_lines=True,
-        ).scale(0.5).scale(0.64).set_color(GREEN_D)
+        ).scale(0.5).set_color(HIGHLIGHT_COLOR)
             
-        self.keys_table.shift(LEFT * 3.2).shift(RIGHT*7+UP*1)
+        self.keys_table.shift(LEFT * 1.2)
         self.values_table.next_to(self.keys_table, RIGHT, buff=0.1)
         
         self.keys_header = Text("Keys", font = PRIMARY_FONT).scale(0.5).next_to(self.keys_table, UP).scale(0.64)
         self.values_header = Text("Values", font = PRIMARY_FONT).scale(0.5).next_to(self.values_table, UP).scale(0.64)
 
-        self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.6).next_to(self.keys_header, UP, buff = 0.0).scale(0.64).shift(RIGHT*0.4)
+        self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.75).next_to(self.keys_header, UP, buff = 0.0).scale(0.64).shift(RIGHT*0.4)
         
+        self.table = VGroup(self.keys_table, self.values_table, self.keys_header, self.values_header, self.title)
         
     def show_table(self, scene, runtime=1):
         scene.play(Write(self.title), Create(self.keys_table), Create(self.values_table), Write(self.keys_header), Write(self.values_header), run_time = runtime)
@@ -41,3 +42,14 @@ class SimplifiedWorldState(VGroup):
 
     def remove_table(self, scene):
         scene.play(FadeOut(*[self.title, self.keys_table, self.values_table, self.keys_header, self.values_header]))
+
+
+    def appear_table(self, scene):
+        scene.play(Create(self.title), Create(self.keys_table), Create(self.values_table), Create(self.keys_header), Create(self.values_header))
+        scene.wait(1)
+        scene.play(Indicate(self.keys_table, color = PRIMARY_COLOR))
+        scene.play(Indicate(self.values_table, color = HIGHLIGHT_COLOR))
+        scene.wait(1.5)
+        self.table.generate_target()
+        self.table.target.shift(RIGHT*3.5+UP*0.7).scale(0.64)
+        scene.play(MoveToTarget(self.table))

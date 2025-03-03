@@ -18,7 +18,7 @@ class TableKeyValue(VGroup):
             element_to_mobject=lambda text: Text(text, font=PRIMARY_FONT) 
         ).set_color(HIGHLIGHT_COLOR).scale(0.7)
         
-        self.keys_header = Text("Keys", font = PRIMARY_FONT, font_size = 30, color=PRIMARY_COLOR).next_to(self.keys_table, UP).shift(LEFT*1.2+DOWN*0.05)
+        self.keys_header = Text("Keys", font = PRIMARY_FONT, font_size = 30, color=PRIMARY_COLOR).next_to(self.keys_table, UP).shift(LEFT*0.55+DOWN*0.05)
         self.values_header = Text("Values", font = PRIMARY_FONT, font_size = 30, color=PRIMARY_COLOR).next_to(self.keys_table, UP).shift(RIGHT*1.2)
         
         self.add(self.keys_table, self.keys_header, self.values_header)
