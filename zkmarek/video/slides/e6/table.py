@@ -31,8 +31,8 @@ class TableKeyValue(VGroup):
         key_header.next_to(self.background.get_top(), DOWN).shift(LEFT * (cell_width / 2 + 0.2))
         value_header.next_to(self.background.get_top(), DOWN).shift(RIGHT * (cell_width / 2 + 0.2))
 
-        key_cells = VGroup()
-        value_cells = VGroup()
+        self.key_cells = VGroup()
+        self.value_cells = VGroup()
 
         for i, (key, value) in enumerate(zip(keys, values)):
             key_cell = RoundedRectangle(
@@ -42,14 +42,14 @@ class TableKeyValue(VGroup):
                 fill_opacity=0.3,
                 color=PRIMARY_COLOR,
                 stroke_width = 0.0
-            ).move_to(self.background.get_top()).shift(DOWN * (i + 1) * (cell_height + spacing)+LEFT)
+            ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing)+LEFT*1.55)
 
             value_cell = key_cell.copy().shift(RIGHT * (cell_width + 0.3))
 
             key_text = Text(key, font=PRIMARY_FONT, font_size=30, color=PRIMARY_COLOR).move_to(key_cell)
             value_text = Text(value, font=PRIMARY_FONT, font_size=30, color=PRIMARY_COLOR).move_to(value_cell)
 
-            key_cells.add(VGroup(key_cell, key_text))
-            value_cells.add(VGroup(value_cell, value_text))
+            self.key_cells.add(VGroup(key_cell, key_text))
+            self.value_cells.add(VGroup(value_cell, value_text))
 
-        self.add(self.background, key_header, value_header, key_cells, value_cells)
+        self.add(self.background, key_header, value_header, self.key_cells, self.value_cells)

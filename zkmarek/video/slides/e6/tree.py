@@ -1,6 +1,5 @@
-from manim import VGroup, DOWN, Text, RoundedRectangle, RIGHT, StealthTip
+from manim import VGroup, DOWN, Text, RoundedRectangle, RIGHT, StealthTip, Arrow, DashedVMobject, UP
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
-from zkmarek.video.mobjects.dotted_line import DottedLine
 class Node(VGroup):
     def __init__(self, value=None, font_size=32):
         super().__init__()
@@ -24,13 +23,23 @@ class Node(VGroup):
         self.text.text = str(value)
 
 
-def create_arrow(start, end, stroke_width=1.8):
-    return DottedLine(start = end.get_top(), 
-                      end = start.get_bottom(), 
-                      dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.03, "color": PRIMARY_COLOR}, 
-                      stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(PRIMARY_COLOR)
+def create_arrow(start, end, stroke_width=1.8, dash_density=2):
+    arrow = Arrow(
+        start=start.get_bottom(),
+        end=end.get_top() + UP * 0.1,
+        color=PRIMARY_COLOR,
+        buff=0,
+        max_tip_length_to_length_ratio=0.1,
+        stroke_width=stroke_width,
+        tip_shape=StealthTip,
+        tip_length=0.15,
+    )
 
+    arrow_length = arrow.get_length()
+
+    num_dashes = max(2, int(arrow_length * dash_density)) 
+
+    return DashedVMobject(arrow, num_dashes=num_dashes)
 
 
 class MerkleTree(VGroup):
@@ -63,10 +72,10 @@ class MerkleTree(VGroup):
             if i == 0:
                 level_group.move_to(0.5 * DOWN)
             elif i == 1:
-                level_group.arrange(RIGHT, buff=8.8)
+                level_group.arrange(RIGHT, buff=9)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1)
             elif i == 2:
-                level_group.arrange(RIGHT, buff=3.55)
+                level_group.arrange(RIGHT, buff=3.7)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*2)
             elif i == 3:
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*4)

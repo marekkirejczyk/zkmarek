@@ -1,6 +1,5 @@
-from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, RoundedRectangle, StealthTip
+from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, RoundedRectangle, StealthTip, Arrow, DashedVMobject
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
-from zkmarek.video.mobjects.dotted_line import DottedLine
 
 
 class MPTNode(VGroup):
@@ -107,36 +106,15 @@ class MerklePatriciaTrie(VGroup):
         self.leaf3.next_to(self.branch2, DOWN, buff=0.7).shift(LEFT*5.5)
         self.leaf4.next_to(self.branch2, DOWN, buff=0.7).shift(RIGHT*5.5)
         
-        self.arrow = DottedLine(end = self.root.get_bottom()+UP+RIGHT, start = self.branch1.get_top()+RIGHT, color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR)
-        self.arrow2 = DottedLine(end = self.branch1.get_child_slot("1"), start = self.leaf1.get_top(), color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR).shift(RIGHT*0.4)
+        self.arrow = create_arrow(end = self.root.get_bottom()+UP*0.8+RIGHT, start = self.branch1.get_top()+RIGHT)
+        self.arrow2 = create_arrow(end = self.branch1.get_child_slot("1"), start = self.leaf1.get_top()).shift(RIGHT*0.4)
                       
-        self.arrow3 = DottedLine(end = self.branch1.get_bottom()+UP*0.3+LEFT*0.33, start = self.extension2.get_top()+UP*0.3+LEFT*0.33, color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR)
-        self.arrow4 = DottedLine(end = self.branch1.get_right()+LEFT*0.9+DOWN*0.5, start = self.leaf2.get_top(), color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR)
+        self.arrow3 = create_arrow(end = self.branch1.get_bottom()+UP*0.3+LEFT*0.33, start = self.extension2.get_top()+UP*0.3+LEFT*0.33)
+        self.arrow4 = create_arrow(end = self.branch1.get_right()+LEFT*0.9+DOWN*0.5, start = self.leaf2.get_top())
                       
-        self.arrow5 = DottedLine(end = self.extension2.get_bottom()+UP*0.2+RIGHT*0.2, start = self.branch2.get_top()+RIGHT*0.2, color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR)
-        self.arrow6 = DottedLine(end = self.branch2.get_child_slot("3"), start = self.leaf3.get_top(), color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR).shift(RIGHT*0.42+UP*0.05)
-        self.arrow7 = DottedLine(end = self.branch2.get_bottom()+RIGHT*0.2+UP*0.3, start = self.leaf4.get_top(), color=PRIMARY_COLOR, dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width = 1.7).add_tip(tip_shape = StealthTip, tip_length=0.2, 
-                                                  at_start=True).set_color(PRIMARY_COLOR).shift(UP*0.05)
+        self.arrow5 = create_arrow(end = self.extension2.get_bottom()+UP*0.8+RIGHT*1, start = self.branch2.get_top()+RIGHT*1)
+        self.arrow6 = create_arrow(end = self.branch2.get_child_slot("3").get_bottom()+LEFT*0.2, start = self.leaf3.get_top()).shift(RIGHT*0.42+UP*0.01)
+        self.arrow7 = create_arrow(end = self.branch2.get_bottom()+RIGHT*0.3+UP*0.3, start = self.leaf4.get_top()).shift(UP*0.01)
         
 
 
@@ -145,9 +123,20 @@ class MerklePatriciaTrie(VGroup):
             self.arrow, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7
         )
 
-def create_arrow(start, end, stroke_width=1.8):
-    return DottedLine(start = end.get_top(), 
-                      end = start.get_bottom(), 
-                      dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(PRIMARY_COLOR)
+def create_arrow(start, end, stroke_width=1.8, dash_density=2):
+    arrow = Arrow(
+        start=end,
+        end=start + UP * 0.1,
+        color=PRIMARY_COLOR,
+        buff=0,
+        max_tip_length_to_length_ratio=0.1,
+        stroke_width=stroke_width,
+        tip_shape=StealthTip,
+        tip_length=0.15,
+    )
+
+    arrow_length = arrow.get_length()
+
+    num_dashes = max(2, int(arrow_length * dash_density)) 
+
+    return DashedVMobject(arrow, num_dashes=num_dashes)

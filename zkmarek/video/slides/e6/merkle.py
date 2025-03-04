@@ -1,6 +1,6 @@
-from manim import (VGroup, Group, Rectangle, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, MoveToTarget, Indicate, 
-                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, Brace, ReplacementTransform,
-                   ChangeDecimalToValue, Integer, FadeIn, DashedVMobject, GrowArrow)
+from manim import (VGroup, Group, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, MoveToTarget, Indicate, 
+                   FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, Brace,
+                   ChangeDecimalToValue, Integer, FadeIn, DashedVMobject, ReplacementTransform)
 from manim import PURPLE_B
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
@@ -10,7 +10,6 @@ from zkmarek.video.slides.e6.worldstate import SimplifiedWorldState
 from zkmarek.video.slides.e6.bin_mpt import BinaryMPT as BinMPT
 from zkmarek.video.slides.e6.table import TableKeyValue
 from zkmarek.video.slides.e6.merkle16 import SelectiveMerkleTree as MT16 
-from zkmarek.video.mobjects.dotted_line import DottedLine
 import hashlib
 
 class MerkleTree(SlideBase):
@@ -25,12 +24,13 @@ class MerkleTree(SlideBase):
             self.finalized_blocks[i].set_color(PRIMARY_COLOR)
         self.finalized_group = VGroup(*self.finalized_blocks).arrange(RIGHT, buff=0.5)
         self.arrow_0_1 = Arrow(LEFT*0.4, RIGHT*0.5, color = PRIMARY_COLOR, tip_shape = StealthTip, stroke_width=2, 
-                               max_tip_length_to_length_ratio=0.15).set_color(HIGHLIGHT2_COLOR).next_to(self.finalized_blocks[0], RIGHT, buff = 0.05)
-        self.arrow_0_1 = DashedVMobject(self.arrow_0_1, num_dashes=10)
+                               max_tip_length_to_length_ratio=0.15).set_color(PRIMARY_COLOR).next_to(self.finalized_blocks[0], RIGHT, buff = 0.05)
+        self.arrow_0_1 = DashedVMobject(self.arrow_0_1, num_dashes=3)
         self.arrow_1_2 = Arrow(LEFT*0.4, RIGHT*0.5, color = PRIMARY_COLOR, tip_shape = StealthTip, stroke_width=2,
-                               max_tip_length_to_length_ratio=0.15).set_color(HIGHLIGHT2_COLOR).next_to(self.finalized_group[1], RIGHT, buff = 0.05)
+                               max_tip_length_to_length_ratio=0.15).set_color(PRIMARY_COLOR).next_to(self.finalized_group[1], RIGHT, buff = 0.05)
+        self.arrow_1_2 = DashedVMobject(self.arrow_1_2, num_dashes=3)
         
-        self.ethereum = ImageMobject("data/images/new_ethereum.png").scale(0.5)
+        self.ethereum = ImageMobject("data/images/new_ethereum.png").scale(0.75)
         self.ethereum.move_to(self.finalized_blocks[1])
         self.ethereum2 = self.ethereum.copy()
         self.ethereum2.move_to(self.finalized_blocks[0])
@@ -39,17 +39,17 @@ class MerkleTree(SlideBase):
         self.eth_logos = Group(self.ethereum, self.ethereum2, self.ethereum3)
         
         self.account_data = Text("account data: [0x1298...1872: 0.1 ETH ", font = PRIMARY_FONT, font_size = 28)
-        self.account_data_more = Text("0x9132...3817: 0.4 ETH \n 0x9712...1386: 2 ETH \n 0x2651...8137: 1 ETH \n ...]", font = PRIMARY_FONT, font_size = 28)
+        self.account_data_more = Text("0x9132...3817: 0.4 ETH \n 0x9712...1386: 2.0 ETH \n 0x2651...8137: 1.0 ETH \n ...]", font = PRIMARY_FONT, font_size = 28)
         self.transaction_data = Text("transaction data", font = PRIMARY_FONT, font_size = 28)
         
         self.transaction_data1 = Text("transaction data",  font = PRIMARY_FONT, font_size = 28)
         self.transaction_data2 = Text("transaction data", font = PRIMARY_FONT, font_size = 28)
         
         self.account_data1 = Text("account data: [0x1234...1234: 0.5 ETH", font=PRIMARY_FONT, font_size = 28)
-        self.account_data1_more = Text("0x3791...2468: 0.8 ETH \n 0x2651...8137: 3 ETH \n 0x9132...3817: 0.2 ETH \n ...]", font=PRIMARY_FONT, font_size = 28).next_to(self.account_data1[23], DOWN, buff = 0.2)
+        self.account_data1_more = Text("0x3791...2468: 0.8 ETH \n 0x2651...8137: 3.0 ETH \n 0x9132...3817: 0.2 ETH \n ...]", font=PRIMARY_FONT, font_size = 28).next_to(self.account_data1[23], DOWN, buff = 0.2)
         self.account_data1 = VGroup(self.account_data1, self.account_data1_more)
-        self.account_data2 = Text("account data: [0x8167...7316: 1 ETH", font=PRIMARY_FONT, font_size = 28)
-        self.account_data2_more = Text("0x0124...1265: 0.9 ETH \n 0x3791...2468: 2 ETH \n 0x9712...1386: 1.1 ETH \n ...]", font=PRIMARY_FONT, font_size = 28).next_to(self.account_data2[23], DOWN, buff = 0.2)
+        self.account_data2 = Text("account data: [0x8167...7316: 1.0 ETH", font=PRIMARY_FONT, font_size = 28)
+        self.account_data2_more = Text("0x0124...1265: 0.9 ETH \n 0x3791...2468: 2.0 ETH \n 0x9712...1386: 1.1 ETH \n ...]", font=PRIMARY_FONT, font_size = 28).next_to(self.account_data2[23], DOWN, buff = 0.2)
         self.account_data2 = VGroup(self.account_data2, self.account_data2_more)
         
         self.computer = ImageMobject("data/images/Laptop2x.png").scale(0.75).shift(UP)
@@ -58,10 +58,11 @@ class MerkleTree(SlideBase):
         self.markle_tree_2_3.stretch(2, dim=1)
         
         self.account_data_vector = Text("Account Data Vector", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=30).shift(LEFT*3.5+UP)
-        self.arrow_acc_tree = DottedLine(end = self.account_data_vector.get_right()+DOWN*0.2+RIGHT*1, start = RIGHT*1.3+UP*0.8, color = SECONDARY_COLOR,
-                      dot_spacing=0.1, 
-                      dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-                      stroke_width=1.5).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(SECONDARY_COLOR)
+        self.arrow_acc_tree = Arrow(self.account_data_vector.get_right()+DOWN*0.2+RIGHT*1, RIGHT*1.3+UP*0.8, color = SECONDARY_COLOR,
+                              stroke_width=1.5,
+                              tip_shape=StealthTip,
+                              tip_length=0.15)
+        self.arrow_acc_tree = DashedVMobject(self.arrow_acc_tree, num_dashes=5)
 
 
         self.account_vector_rectangles = [RoundedRectangle(width=2, height=0.8, fill_opacity=0.3, stroke_width = 0.0, corner_radius=0.1) for _ in range(4)]
@@ -72,7 +73,7 @@ class MerkleTree(SlideBase):
         self.account_group[2].shift(RIGHT*0.2)
         self.vec0 = Text("1 ETH", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 16).move_to(self.account_vector_rectangles[0])
         self.vec1 = Text("0.1 ETH", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 16).move_to(self.account_vector_rectangles[1])
-        self.dots_vec = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 35).next_to(self.account_data_vector, DOWN).scale(0.8).shift(DOWN*0.3)
+        self.dots_vec = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 35).next_to(self.account_data_vector, DOWN).scale(0.8).shift(DOWN*0.2)
         self.vec2 = Text("0.8 ETH", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 16).move_to(self.account_vector_rectangles[2])
         self.vec3 = Text("1.1 ETH", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 16).move_to(self.account_vector_rectangles[3])
         self.vecs = VGroup(self.vec0, self.vec1, self.dots_vec, self.vec2, self.vec3)
@@ -93,7 +94,7 @@ class MerkleTree(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "big amount of data", "data/sound/e6/slide2-0.mp3")
         scene.play(Write(self.title_label))
-        scene.play(Create(self.finalized_group), Write(self.arrow_0_1), GrowArrow(self.arrow_1_2))
+        scene.play(Create(self.finalized_group), Write(self.arrow_0_1), Write(self.arrow_1_2))
         for i in range(3):
             scene.play(FadeIn(self.eth_logos[i]))
         
@@ -109,7 +110,7 @@ class MerkleTree(SlideBase):
         self.finalized_blocks[1].generate_target()
         self.finalized_blocks[1].target.scale(2)
         self.ethereum.generate_target()
-        self.ethereum.target.scale(0.75).move_to(self.finalized_blocks[1].target.get_bottom()+LEFT*2+UP*0.5)
+        self.ethereum.target.scale(2).move_to(self.finalized_blocks[1].target.get_bottom()+LEFT*2+UP)
         self.arrow_0_1.generate_target()
         self.arrow_0_1.target.scale(1.5).shift(LEFT*2.3)
         self.arrow_1_2.generate_target()
@@ -133,7 +134,7 @@ class MerkleTree(SlideBase):
         side_block2.target.scale(1/0.4).shift(LEFT*1.5+DOWN)
         main_block = Group(main_block, data_vecs)
         main_block.generate_target()
-        main_block.target.scale(1/2).shift(DOWN)
+        main_block.target.scale(1/2).shift(DOWN*0.98)
         self.arrow_0_1.generate_target()
         self.arrow_0_1.target.shift(RIGHT*2.07+DOWN).scale(1/1.5)
         self.arrow_1_2.generate_target()
@@ -186,7 +187,7 @@ class MerkleTree(SlideBase):
         self.dots_vec_node = self.dots_vec.copy()
         self.dots_vec_node.next_to(node0_0, DOWN, buff = 0.9)
         self.dots_vec_node1 = self.dots_vec.copy()
-        self.dots_vec_node1.next_to(node0_0, DOWN, buff = 0.9).shift(DOWN*1)
+        self.dots_vec_node1.next_to(node0_0, DOWN, buff = 0.9).shift(DOWN*1.2)
         scene.play(Create(self.account_data_vector))
         scene.play(Create(self.account_vector_rectangles[0]), Write(self.vec0), run_time=0.2)
         scene.play(Create(self.account_vector_rectangles[1]), Write(self.vec1), Write(self.dots_vec), run_time=0.2)
@@ -347,7 +348,7 @@ class MerkleTree(SlideBase):
             scene.play(Create(self.level_1_hashes[i]), run_time=0.5)
         scene.play(Create(self.level_0_hashes), run_time=0.8)
         scene.wait(0.5)
-        scene.play(Indicate(self.level_0_hashes, color = PURPLE_B), Indicate(self.merkle_tree_2_4.get_node(0,0)))
+        scene.play(Indicate(self.level_0_hashes, color = SECONDARY_COLOR), Indicate(self.merkle_tree_2_4.get_node(0,0), color = SECONDARY_COLOR))
         
         
     def update_nodes(self, scene):
@@ -455,7 +456,7 @@ class MerkleTree(SlideBase):
                            self.merkle_tree_all))
         
     def key_value_pairs(self, scene):
-        node = RoundedRectangle(width=4, height=2.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity=0.25)
+        node = RoundedRectangle(width=4, height=2.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity=0.27)
         node = DashedVMobject(node, num_dashes=60)
         key = RoundedRectangle(width=1.5, height=0.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity = 0.27, stroke_width = 0.0).move_to(node.get_center()+UP*0.35)
         value = RoundedRectangle(width=1.5, height=0.5, corner_radius=0.1, color=PRIMARY_COLOR, fill_opacity = 0.27, stroke_width = 0.0).move_to(node.get_center()+DOWN*0.35)
@@ -465,19 +466,18 @@ class MerkleTree(SlideBase):
         key_explanation = Text("account address", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(key, RIGHT, buff = 2.0)
         value_explanation = Text("account balance", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(value, RIGHT, buff = 2.0)
         
-        scene.play(Create(node))
+        self.title_pt = Text("Patricia Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
+        scene.play(TransformMatchingShapes(self.title_merkle_proof, self.title_pt), Create(node))
         scene.play(Create(key), Write(key_text))
         scene.play(Create(value), Write(value_text))
-        scene.wait(2)
+        scene.wait(2.5)
         scene.play(Write(key_explanation))
-        scene.wait(1)
+        scene.wait(1.5)
         scene.play(Write(value_explanation))
         scene.wait(2)
         
         self.new_subsection(scene, "Table key-value", "data/sound/e6/slide2-4a.mp3")
-        self.title_pt = Text("Patricia Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         scene.play(FadeOut(key_explanation, value_explanation, node, key, value, key_text, value_text))
-        scene.play(TransformMatchingShapes(self.title_merkle_proof, self.title_pt))
 
         table_key_value = TableKeyValue().scale(0.85)
         scene.play(Create(table_key_value))
@@ -573,13 +573,13 @@ class MerkleTree(SlideBase):
         
     def brace_levels(self, scene):
         self.block = RoundedRectangle(width=5.5, height=3, color=PRIMARY_COLOR, fill_opacity=0.17, stroke_width = 0.0)
-        ethereum = ImageMobject("data/images/new_ethereum.png").scale(0.5).move_to(self.block.get_bottom()+LEFT*2+UP*0.8)
+        ethereum = ImageMobject("data/images/new_ethereum.png").scale(1).move_to(self.block.get_bottom()+LEFT*2+UP*0.8)
         self.block = Group(self.block, ethereum)
-        number = Integer(100000000, color = PRIMARY_COLOR).move_to(self.block.get_center()).shift(RIGHT)
-        addresses = Text("addresses", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=25).next_to(number, LEFT, buff = 0.3).shift(UP*0.2)
-        brace_addresses = Brace(self.block, RIGHT, color=PRIMARY_COLOR).next_to(addresses, RIGHT, buff = 0).scale(0.7)
+        number = Integer(100000000, color = PRIMARY_COLOR).move_to(self.block.get_center()).shift(RIGHT+UP*0.3)
+        addresses = Text("addresses", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=25).next_to(number, LEFT, buff = 0.3).shift(UP*0.1)
+        brace_addresses = Brace(self.block, RIGHT, color=PRIMARY_COLOR).next_to(addresses, RIGHT, buff = 0).scale(0.5)
         scene.play(FadeIn(self.block, addresses, brace_addresses))
-        scene.play(ChangeDecimalToValue(number, 308105039), run_time=4)
+        scene.play(ChangeDecimalToValue(number, 308105039), run_time=3)
         scene.play(FadeOut(self.block, number, addresses, brace_addresses))
         
         self.merkle_tree_binary = Tree(num_levels=4).scale(0.5).shift(UP*3.7+LEFT*1)
@@ -597,9 +597,9 @@ class MerkleTree(SlideBase):
         self.brace_text_levels28 = Text("28 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_28_levels, RIGHT, buff = 0.1)
         self.brace_7_levels = Brace(self.merkle_tree_hexary, direction=RIGHT, color=PRIMARY_COLOR).scale(1.2).shift(DOWN*0.3)
         self.brace_text_levels7 = Text("8 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_7_levels, RIGHT, buff = 0.1)
-        scene.wait(3)
+        scene.wait(1.5)
         scene.play(Create(self.brace_28_levels), Write(self.brace_text_levels28))
-        scene.wait(2)
+        scene.wait(1.5)
         
         self.new_subsection(scene, "bin->hex", "data/sound/e6/slide2-5a.mp3")
         nodes = [self.merkle_tree_hexary.get_node(1, 0), self.merkle_tree_hexary.get_node(1, 1), self.merkle_tree_hexary.get_node(1, 2), self.merkle_tree_hexary.get_node(1, 3),
@@ -619,7 +619,7 @@ class MerkleTree(SlideBase):
         scene.wait(2)
         
         self.new_subsection(scene, "15 siblings", "data/sound/e6/slide2-5c.mp3")
-        scene.wait(1)
+        scene.wait(2)
         scene.play(
             *[Indicate(nodes[i], color = SECONDARY_COLOR) for i in range(16)],
             run_time=0.8
@@ -646,7 +646,7 @@ class MerkleTree(SlideBase):
         
         self.new_subsection(scene, "MPT: ext, branches, leaves", "data/sound/e6/slide2-6a.mp3")
         scene.play(Create(self.MPT), run_time=2.5)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1))
         scene.play(Indicate(self.MPT.branch1, color = SECONDARY_COLOR, scale_factor=1.1))
         leaves = [self.MPT.leaf1, self.MPT.leaf2, self.MPT.leaf3, self.MPT.leaf4]
@@ -655,9 +655,9 @@ class MerkleTree(SlideBase):
             
         scene.wait(1)
         
-        self.new_subsection(scene, "each extention", "data/sound/e6/slide2-6b.mp3")
+        self.new_subsection(scene, "each extension", "data/sound/e6/slide2-6b.mp3")
         scene.wait(1)
-        scene.play(Indicate(self.MPT.root, color = SECONDARY_COLOR, scale_factor=1.1))
+        scene.play(Indicate(self.MPT.root, color = SECONDARY_COLOR, scale_factor=1.1), Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.8)
         a7_label = None
         for field in self.MPT.root.field_group:
             _, text = field 
@@ -665,8 +665,8 @@ class MerkleTree(SlideBase):
                 a7_label = text[16:18]
                 break
         if a7_label:
-            scene.play(a7_label.animate.set_color(HIGHLIGHT_COLOR).scale(1.2)) 
-        scene.play(Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1))
+            scene.play(a7_label.animate.set_color(PRIMARY_COLOR).scale(1.2)) 
+            
         d3_label = None
         for field in self.MPT.extension2.field_group:
             _, text = field 
@@ -677,29 +677,30 @@ class MerkleTree(SlideBase):
             scene.play(d3_label.animate.set_color(SECONDARY_COLOR).scale(1.2)) 
             
         scene.wait(1)
-        scene.play(Indicate(self.MPT.branch1, color=SECONDARY_COLOR, scale_factor=1.1))
-        scene.play(Indicate(self.MPT.branch2, color=SECONDARY_COLOR, scale_factor=1.1))
-        for slot_group in self.MPT.branch1.child_slot_map.values():
-            scene.play(Indicate(slot_group, color = SECONDARY_COLOR), run_time=0.2)
-            
+        scene.play(Indicate(self.MPT.branch1, color=SECONDARY_COLOR, scale_factor=1.1), Indicate(self.MPT.branch2, color=SECONDARY_COLOR, scale_factor=1.1), run_time=0.8)
+
+        scene.play(*[Indicate(slot_group, color = SECONDARY_COLOR) for slot_group in self.MPT.branch1.child_slot_map.values()], run_time=1)
+        
+        
         self.new_subsection(scene, "leaf", "data/sound/e6/slide2-6c.mp3")
         scene.wait(1)
         for i in range(4):
             scene.play(Indicate(leaves[i], color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.4)
-        scene.wait(1)
+        scene.wait(0.2)
         scene.play(Indicate(self.MPT.leaf1.field_group[0], color = PURPLE_B), Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5))
         scene.wait(1)
         scene.play(Indicate(self.MPT.leaf1.field_group[1], color = PURPLE_B), Indicate(self.worldState.values_table.get_rows()[0], color = PRIMARY_COLOR))
         
         self.new_subsection(scene, "Simplified world state", "data/sound/e6/slide2-6d.mp3")
+        scene.wait(1)
+        path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
+        for item in path0:
+            item.generate_target()
+            item.target.set_color(PRIMARY_COLOR)
+            scene.play(MoveToTarget(item), Indicate(item, color = SECONDARY_COLOR), run_time=0.5)
         
         
         
-        # path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
-        # for item in path0:
-        #     item.generate_target()
-        #     item.target.set_color(PRIMARY_COLOR)
-        #     scene.play(MoveToTarget(item), run_time=0.5)
             
         # path1 = [self.MPT.branch2.get_child_slot("3"), self.MPT.leaf3.field_group[0]]
 

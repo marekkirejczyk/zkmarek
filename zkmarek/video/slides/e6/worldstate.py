@@ -29,8 +29,8 @@ class SimplifiedWorldState(VGroup):
         self.keys_table.shift(LEFT * 1.2)
         self.values_table.next_to(self.keys_table, RIGHT, buff=0.1)
         
-        self.keys_header = Text("Keys", font = PRIMARY_FONT).scale(0.5).next_to(self.keys_table, UP).scale(0.64)
-        self.values_header = Text("Values", font = PRIMARY_FONT).scale(0.5).next_to(self.values_table, UP).scale(0.64)
+        self.keys_header = Text("Keys", font = PRIMARY_FONT).scale(0.5).next_to(self.keys_table, UP)
+        self.values_header = Text("Values", font = PRIMARY_FONT).scale(0.5).next_to(self.values_table, UP)
 
         self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.75).next_to(self.keys_header, UP, buff = 0.0).scale(0.64).shift(RIGHT*0.4)
         
@@ -46,7 +46,7 @@ class SimplifiedWorldState(VGroup):
 
     def appear_table(self, scene):
         scene.play(Create(self.title), Create(self.keys_table), Create(self.values_table), Create(self.keys_header), Create(self.values_header))
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(Indicate(self.keys_table, color = PRIMARY_COLOR))
         scene.play(Indicate(self.values_table, color = HIGHLIGHT_COLOR))
         scene.wait(1.5)

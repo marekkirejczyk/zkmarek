@@ -22,25 +22,24 @@ class Node(VGroup):
         self.value = value
         self.text.text = str(value)
 
-
-# def create_arrow(start, end, stroke_width=1.8):
-#     return DottedLine(start = end.get_top(), 
-#                       end = start.get_bottom(), 
-#                       dot_spacing=0.1, 
-#                       dot_kwargs={"radius": 0.02, "color": PRIMARY_COLOR}, 
-#                       stroke_width=stroke_width).add_tip(tip_shape = StealthTip, tip_length=0.2, at_start=True).set_color(PRIMARY_COLOR)
-
-def create_arrow(start, end, stroke_width=1.8):
-    return DashedVMobject(Arrow(
+def create_arrow(start, end, stroke_width=1.8, dash_density=3.5):
+    arrow = Arrow(
         start=start.get_bottom(),
-        end=end.get_top()+UP*0.1,
+        end=end.get_top() + UP * 0.1,
         color=PRIMARY_COLOR,
         buff=0,
         max_tip_length_to_length_ratio=0.1,
         stroke_width=stroke_width,
-        tip_shape = StealthTip,
-        tip_length=0.2,
-    ))
+        tip_shape=StealthTip,
+        tip_length=0.15,
+    )
+
+    arrow_length = arrow.get_length()
+
+    num_dashes = max(2, int(arrow_length * dash_density)) 
+
+    return DashedVMobject(arrow, num_dashes=num_dashes)
+
 
 class SelectiveMerkleTree(VGroup):
     def __init__(self, num_children=16, num_levels=3, include_labels=True, focused_node_path=None):
