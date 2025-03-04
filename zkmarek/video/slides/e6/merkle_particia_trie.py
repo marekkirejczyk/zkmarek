@@ -123,7 +123,7 @@ class MerklePatriciaTrie(VGroup):
             self.arrow, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7
         )
 
-def create_arrow(start, end, stroke_width=1.8, dash_density=2):
+def create_arrow(start, end, stroke_width=1.8, dash_density=3):
     arrow = Arrow(
         start=end,
         end=start + UP * 0.1,

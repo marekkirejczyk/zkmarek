@@ -42,7 +42,7 @@ class TableKeyValue(VGroup):
                 fill_opacity=0.3,
                 color=PRIMARY_COLOR,
                 stroke_width = 0.0
-            ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing)+LEFT*1.55)
+            ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing)+LEFT*1.6)
 
             value_cell = key_cell.copy().shift(RIGHT * (cell_width + 0.3))
 

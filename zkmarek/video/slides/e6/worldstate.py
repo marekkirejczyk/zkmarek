@@ -32,7 +32,7 @@ class SimplifiedWorldState(VGroup):
         self.keys_header = Text("Keys", font = PRIMARY_FONT).scale(0.5).next_to(self.keys_table, UP)
         self.values_header = Text("Values", font = PRIMARY_FONT).scale(0.5).next_to(self.values_table, UP)
 
-        self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.75).next_to(self.keys_header, UP, buff = 0.0).scale(0.64).shift(RIGHT*0.4)
+        self.title = Text("Simplified World State", font = PRIMARY_FONT, color = PRIMARY_COLOR).scale(0.75).next_to(self.keys_header, UP, buff = 0.0).shift(RIGHT*0.4)
         
         self.table = VGroup(self.keys_table, self.values_table, self.keys_header, self.values_header, self.title)
         

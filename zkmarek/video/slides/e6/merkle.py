@@ -1,7 +1,6 @@
 from manim import (VGroup, Group, Text, ImageMobject, UP, LEFT, RIGHT, DOWN, Write, Create, MoveToTarget, Indicate, 
                    FadeOut, MathTex, RoundedRectangle, Transform, TransformMatchingShapes, Arrow, StealthTip, Brace,
                    ChangeDecimalToValue, Integer, FadeIn, DashedVMobject, ReplacementTransform)
-from manim import PURPLE_B
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.e6.tree import MerkleTree as Tree
@@ -134,7 +133,7 @@ class MerkleTree(SlideBase):
         side_block2.target.scale(1/0.4).shift(LEFT*1.5+DOWN)
         main_block = Group(main_block, data_vecs)
         main_block.generate_target()
-        main_block.target.scale(1/2).shift(DOWN*0.98)
+        main_block.target.scale(1/2).shift(DOWN*1)
         self.arrow_0_1.generate_target()
         self.arrow_0_1.target.shift(RIGHT*2.07+DOWN).scale(1/1.5)
         self.arrow_1_2.generate_target()
@@ -161,13 +160,13 @@ class MerkleTree(SlideBase):
         scene.wait(2.5)
         all_vecs = VGroup(self.transaction_data1, self.transaction_data, self.transaction_data2)
         for i in range(len(all_vecs)):
-            scene.play(Indicate(all_vecs[i], color = PURPLE_B, scale_factor=1.2), run_time=0.3)
+            scene.play(Indicate(all_vecs[i], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.3)
         
         self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
         scene.wait(3)
         account_indications = [self.account_data1_more[20:38], self.account_data[13:26], self.account_data2_more[20:38]]
         for acc in account_indications:
-            scene.play(Indicate(acc, color = PURPLE_B), run_time=0.5)
+            scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
         scene.wait(1)
         
         self.new_subsection(scene, "merkle trees", "data/sound/e6/slide2-1.mp3")
@@ -492,16 +491,12 @@ class MerkleTree(SlideBase):
         scene.play(Create(self.bin_mpt), run_time=2)
                 
         self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4c.mp3")
-        # prefixes1 = [table_key_value.keys_table.get_entries((1, 1)), 
-        #              table_key_value.keys_table.get_entries((2, 1)), 
-        #              table_key_value.keys_table.get_entries((3, 1)), 
-        #              table_key_value.keys_table.get_entries((4, 1))]
-        # for i in range(len(prefixes1)):
-        #     pref = prefixes1[i]
-        #     if i != (4, 5):
-        #         scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
-        #     else:
-        #         scene.play(Indicate(pref[0:3], color = SECONDARY_COLOR), run_time=0.3)
+        prefixes1 = [table_key_value.key_cells[0][0], table_key_value.key_cells[1][0], table_key_value.key_cells[2][0],
+                     table_key_value.key_cells[3][0], table_key_value.key_cells[4][0],]
+        for i in range(len(prefixes1)):
+            pref = prefixes1[i]
+            scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
+
         
         self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4d.mp3")
         scene.play(FadeOut(table_key_value))
@@ -639,8 +634,6 @@ class MerkleTree(SlideBase):
         self.worldState = SimplifiedWorldState()
         self.worldState.construct()
         self.worldState.next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*4)
-        # self.worldState.show_table(scene)
-        # scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.75)
         self.worldState.appear_table(scene)
         self.worldState.keys_table.get_rows()[0].set_color(PRIMARY_COLOR)
         
@@ -687,30 +680,17 @@ class MerkleTree(SlideBase):
         for i in range(4):
             scene.play(Indicate(leaves[i], color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.4)
         scene.wait(0.2)
-        scene.play(Indicate(self.MPT.leaf1.field_group[0], color = PURPLE_B), Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5))
+        scene.play(Indicate(self.MPT.leaf1.field_group[0], color = SECONDARY_COLOR), Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5))
         scene.wait(1)
-        scene.play(Indicate(self.MPT.leaf1.field_group[1], color = PURPLE_B), Indicate(self.worldState.values_table.get_rows()[0], color = PRIMARY_COLOR))
+        scene.play(Indicate(self.MPT.leaf1.field_group[1], color = SECONDARY_COLOR), Indicate(self.worldState.values_table.get_rows()[0], color = PRIMARY_COLOR))
         
         self.new_subsection(scene, "Simplified world state", "data/sound/e6/slide2-6d.mp3")
         scene.wait(1)
         path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
         for item in path0:
+            scene.play(Indicate(item, color = PRIMARY_COLOR), run_time=0.5)
             item.generate_target()
             item.target.set_color(PRIMARY_COLOR)
-            scene.play(MoveToTarget(item), Indicate(item, color = SECONDARY_COLOR), run_time=0.5)
+            scene.play(MoveToTarget(item), run_time=0.5)
         
-        
-        
-            
-        # path1 = [self.MPT.branch2.get_child_slot("3"), self.MPT.leaf3.field_group[0]]
-
-        # self.worldState.keys_table.get_rows()[1].set_color(SECONDARY_COLOR)
-        # scene.play(Indicate(self.worldState.keys_table.get_rows()[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.75)
-        # scene.play(Indicate(a7_label, color = SECONDARY_COLOR), run_time=0.5)
-        # scene.play(self.MPT.branch1.get_child_slot("7").animate.set_color(SECONDARY_COLOR), run_time=0.5)
-        # for item in path1:
-        #     item.generate_target()
-        #     item.target.set_color(SECONDARY_COLOR)
-        #     scene.play(MoveToTarget(item), run_time=0.5)
     
-        # scene.wait(0.2)

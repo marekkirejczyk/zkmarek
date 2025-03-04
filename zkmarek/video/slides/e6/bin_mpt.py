@@ -52,7 +52,7 @@ class MPTNode(VGroup):
         else:
             self.add(self.rect)
 
-def create_arrow(start, end, stroke_width=1.8, dash_density=2.5):
+def create_arrow(start, end, stroke_width=1.8, dash_density=3.5):
     arrow = Arrow(
         start=start.get_bottom(),
         end=end.get_top() + UP * 0.1,
