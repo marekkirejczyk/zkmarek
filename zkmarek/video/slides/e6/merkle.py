@@ -492,7 +492,7 @@ class MerkleTree(SlideBase):
                 
         self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4c.mp3")
         prefixes1 = [table_key_value.key_cells[0][0], table_key_value.key_cells[1][0], table_key_value.key_cells[2][0],
-                     table_key_value.key_cells[3][0], table_key_value.key_cells[4][0],]
+                     table_key_value.key_cells[3][0]]
         for i in range(len(prefixes1)):
             pref = prefixes1[i]
             scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
