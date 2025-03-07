@@ -335,7 +335,7 @@ class MerkleTree(SlideBase):
         scene.wait(1)
         
         self.new_subsection(scene, "if the hash equals", "data/sound/e6/slide2-3c.mp3")
-        scene.wait(1.5)
+        scene.wait(3.5)
         scene.play(FadeOut(parent_hash, grandparent_hash, root_hash))
         
     

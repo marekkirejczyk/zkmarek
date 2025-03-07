@@ -5,8 +5,8 @@ class TableKeyValue(VGroup):
     def __init__(self):
         super().__init__()
 
-        keys = ["'TRIE'", "'TRAN'", "'TOW'", "'TOKEN'"]
-        values = ["737A7f...", "36ad52...", "d2ee45...", "ae356a..."]
+        keys = ["TRIE", "TRAN", "TOW", "TOKEN'"]
+        values = ["7", "9", "1", "7"]
 
         cell_width = 3
         cell_height = 0.8

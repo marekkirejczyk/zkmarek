@@ -1,4 +1,5 @@
-from manim import *
+from manim import (Text, RoundedRectangle, Arrow, StealthTip, DashedVMobject, Group, ImageMobject, VGroup, ORIGIN, UP, RIGHT, LEFT, DOWN, Create, 
+                   FadeIn, FadeOut, MoveToTarget, Indicate, Write)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 
@@ -116,7 +117,7 @@ class EthBalances(SlideBase):
         account_indications = [self.account_data1_more[20:38], self.account_data[13:26], self.account_data2_more[20:38]]
         for acc in account_indications:
             scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
-        scene.wait(3)
+        scene.wait(2)
         
         self.main_block = main_block
         self.side_block1 = side_block1
