@@ -100,7 +100,7 @@ class PatriciaTries(SlideBase):
         self.block = RoundedRectangle(width=8.5, height=3, color=PRIMARY_COLOR, fill_opacity=0.17, stroke_width = 0.0)
         ethereum = ImageMobject("data/images/new_ethereum.png").scale(1).move_to(self.block.get_bottom()+LEFT*3+UP*0.8)
         self.block = Group(self.block, ethereum)
-        number = Integer(0, color = PRIMARY_COLOR).move_to(self.block.get_center()).shift(RIGHT*3+UP*0.3)
+        number = Integer(0, color = PRIMARY_COLOR).move_to(self.block.get_center()).shift(RIGHT+UP*0.3)
         addresses = VGroup(self.addresses, self.more_addresses, self.dots).next_to(number, LEFT, buff = 0.8)
         brace_addresses = Brace(addresses, RIGHT, color=PRIMARY_COLOR).next_to(addresses, RIGHT, buff = 0.3)
         
@@ -121,7 +121,7 @@ class PatriciaTries(SlideBase):
         scene.play(FadeOut(self.addresses, length_brace, length_text_bytes, self.block))
         
         
-        self.merkle_tree_binary = Tree(num_levels=4).scale(0.5).shift(UP*3.7+LEFT*1)
+        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7+LEFT*1)
         self.dots_bin_merkle1 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 0), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle2 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 1), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle3 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 2), DOWN, buff = 1.0).shift(DOWN*0.2)

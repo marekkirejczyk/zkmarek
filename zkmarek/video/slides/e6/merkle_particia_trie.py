@@ -101,6 +101,7 @@ class MerklePatriciaTrie(VGroup):
             "Root: Extension node", {"shared nibble": "a7", "next": ""})
 
         self.root.move_to(2 * UP)
+        self.root_replace.move_to(LEFT+DOWN)
         self.branch1.next_to(self.root, DOWN, buff=0.7)
         self.leaf1.next_to(self.branch1, LEFT+DOWN, buff=0.7)
         self.extension2.next_to(self.branch1, DOWN, buff=0.7)
