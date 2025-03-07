@@ -1,6 +1,6 @@
-from manim import VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, RoundedRectangle, StealthTip, Arrow, DashedVMobject
+from manim import (VGroup, Rectangle, Text, RIGHT, DOWN, LEFT, UP, RoundedRectangle, StealthTip, Arrow, DashedVMobject,
+                    ReplacementTransform)
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
-
 
 class MPTNode(VGroup):
     """Base class for nodes in the Merkle Patricia Trie."""
@@ -96,6 +96,9 @@ class MerklePatriciaTrie(VGroup):
         self.leaf4 = MPTNode(
             "Leaf Node", {"key-end": "7", "value": "1.00 WEI"}, color = PRIMARY_COLOR
         )
+        
+        self.root_replace = MPTNode(
+            "Root: Extension node", {"shared nibble": "a7", "next": ""})
 
         self.root.move_to(2 * UP)
         self.branch1.next_to(self.root, DOWN, buff=0.7)
@@ -122,6 +125,8 @@ class MerklePatriciaTrie(VGroup):
         self.add(
             self.arrow, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7
         )
+    def replace_root(self, scene):
+        scene.play(ReplacementTransform(self.root, self.root_replace), run_time=1)
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=3):
     arrow = Arrow(
@@ -140,3 +145,4 @@ def create_arrow(start, end, stroke_width=1.8, dash_density=3):
     num_dashes = max(2, int(arrow_length * dash_density)) 
 
     return DashedVMobject(arrow, num_dashes=num_dashes)
+

@@ -1,4 +1,4 @@
-from manim import (Text, RoundedRectangle, DashedVMobject, Create, Write, FadeIn, FadeOut, ReplacementTransform, Indicate, Brace, MathTex, TransformMatchingShapes, 
+from manim import (Text, RoundedRectangle, DashedVMobject, Create, Write, FadeIn, FadeOut, ReplacementTransform, Indicate, Brace, MathTex, 
                    VGroup, ImageMobject, Integer, MoveToTarget, Group, RIGHT, UP, LEFT, DOWN, ChangeDecimalToValue)
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -165,7 +165,7 @@ class PatriciaTries(SlideBase):
         )
         scene.wait(6)
         
-        self.play_sound(scene, "MPT->ETH MPT", "data/sound/e6/slide2-5d.mp3")
+        self.play_sound(scene, "data/sound/e6/slide2-5d.mp3")
         scene.wait(2)  
         
         scene.play(FadeOut(self.merkle_tree_hexary, self.brace_7_levels, self.brace_text_levels7, self.dots_hex_merkle))     

@@ -1,9 +1,10 @@
-from manim import Indicate, Create, UP, LEFT, RIGHT, DOWN, MoveToTarget, Write, ReplacementTransform, Text
+from manim import Indicate, Create, UP, LEFT, RIGHT, DOWN, MoveToTarget, Write
 
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
 from zkmarek.video.slides.e6.worldstate import SimplifiedWorldState 
+
 class ETHPatriciaMerkleTrie(SlideBase):
     def __init__(self)-> None:
         super().__init__("Ethereum Patricia Merkle Trie")
@@ -14,10 +15,8 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.worldState.construct()
         self.worldState.next_to(self.MPT, RIGHT+UP, buff = 0).shift(DOWN*2+LEFT*4)
         
-
     def animate_in(self, scene):
         self.merkle_particia_trie(scene)
-        
     
     def merkle_particia_trie(self, scene):
         self.new_subsection(scene, "Simplified world state", "data/sound/e6/slide2-6.mp3")
@@ -27,6 +26,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.new_subsection(scene, "MPT in a single node", "data/sound/e6/slide2-6a.mp3")
         scene.play(Create(self.MPT.root.scale(2).shift(LEFT+DOWN)), run_time=2.5)
         scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5))
+        self.MPT.replace_root(scene)
         scene.wait(3)
         for row in self.worldState.keys_table.get_rows():
             scene.play(Indicate(row, color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
@@ -35,11 +35,11 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.MPT.root.target.shift(RIGHT+UP).scale(1/2)
         
         self.new_subsection(scene, "branches", "data/sound/e6/slide2-6b.mp3")
-        fields = Text("key: a7", color = HIGHLIGHT_COLOR).move_to(self.MPT.root.field_group[1][0].get_center())
-        scene.play(MoveToTarget(self.MPT.root), ReplacementTransform(self.MPT.root.field_group[1][0], fields), run_time=1)
+        scene.play(MoveToTarget(self.MPT.root), run_time=1)
         scene.play(Create(self.MPT.branch1), Write(self.MPT.arrow), run_time=1)
         scene.wait(1)
         scene.play(*[Indicate(slot_group, color = SECONDARY_COLOR) for slot_group in self.MPT.branch1.child_slot_map.values()], run_time=1)
+        
         self.new_subsection(scene, "extensions", "data/sound/e6/slide2-6c.mp3")
         scene.play(Create(self.MPT.extension2), Write(self.MPT.arrow3), run_time=1)
         scene.wait(1)
