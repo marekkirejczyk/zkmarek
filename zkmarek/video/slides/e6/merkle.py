@@ -61,8 +61,8 @@ class MerkleTree(SlideBase):
             self.vector_8element[i].move_to(self.account_group_8_elements[i].get_center())
         for i in range(8):
             scene.play(Write(self.vector_8element[i]), Create(self.account_group_8_elements[i]), run_time=0.07)
-        scene.wait(2)
-        scene.play(Create(self.merkle_tree_2_4))
+        scene.wait(1.5)
+        scene.play(Create(self.merkle_tree_2_4), run_time=2)
         
         self.new_subsection(scene, "leaf: value+hash", "data/sound/e6/slide2-2a.mp3")
 
@@ -272,10 +272,13 @@ class MerkleTree(SlideBase):
         sibling_formula = Text("c1d04...", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         hash_sibling_leaf = Text("hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         parent_hash = Text("ae5a7... = hash(c1d04..., eccbd...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        parent_hash[0:8].set_color(SECONDARY_COLOR)
         parent_sibling_hash = Text("hash(ae5a7..., 3c825...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         grandparent_hash = Text("9c493... = hash(3c825..., ae5a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        grandparent_hash[0:8].set_color(SECONDARY_COLOR)
         grandparent_sibling_hash = Text("hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
         root_hash = Text("d313e... = hash(9c493..., 913a7...)", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
+        root_hash[0:8].set_color(SECONDARY_COLOR)
         
         scene.wait(0.2)
         scene.play(TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula), Indicate(self.level_3_hashes[2], color = SECONDARY_COLOR), run_time=0.7)

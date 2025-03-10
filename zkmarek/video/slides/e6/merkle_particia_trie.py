@@ -35,14 +35,14 @@ class MPTNode(VGroup):
             ).move_to(field_rect.get_center())
 
             
-            if self.title == None:
-                shifts = [UP, DOWN]
-                field_rect.move_to(self.rect.get_center()).shift(shifts[i] * 0.5)
-                field_text.move_to(field_rect.get_center())
-            else:
+            if self.title is not None:
                 field_rect.next_to(self.title_text, DOWN, buff=(0.2 + 0.8 * i))
                 field_text.move_to(field_rect.get_center())
                 self.add(self.title_text)
+            else:
+                shifts = [UP, DOWN]
+                field_rect.move_to(self.rect.get_center()).shift(shifts[i] * 0.5)
+                field_text.move_to(field_rect.get_center())
                 
 
             self.field_group.add(VGroup(field_rect, field_text))
@@ -72,6 +72,9 @@ class MPTBranchNode(MPTNode):
         self.child_slots.arrange(RIGHT, buff=0.2).move_to(self.rect.get_center()).shift(DOWN * 0.1)
         self.add(self.child_slots)
 
+        if self.title is not None:
+            self.add(self.title_text)
+
     def get_child_slot(self, value):
         """Retrieve a specific child slot by its label (e.g., '4')."""
         return self.child_slot_map.get(str(value), None)
@@ -87,7 +90,7 @@ class MerklePatriciaTrie(VGroup):
             "Root: extension node", {"key": "a7", "next node": ""}
         )
         values = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
-        self.branch1 = MPTBranchNode(title = "Branch", content={i: "" for i in values})
+        self.branch1 = MPTBranchNode({i: "" for i in values})
         self.leaf1 = MPTNode(
             title=None, fields = {"key": "a711355", "value": "45.0 ETH"}, color = PRIMARY_COLOR
         )
@@ -97,7 +100,7 @@ class MerklePatriciaTrie(VGroup):
         self.leaf2 = MPTNode(
             "Leaf Node", {"key": "9365", "value": "1.1 ETH"}, color = PRIMARY_COLOR
         )
-        self.branch2 = MPTBranchNode(title = "Branch", content={i: "" for i in values})
+        self.branch2 = MPTBranchNode({i: "" for i in values})
         self.leaf3 = MPTNode(
             "Leaf Node", {"key": "7", "value": "0.12 ETH"}, color = PRIMARY_COLOR
         )

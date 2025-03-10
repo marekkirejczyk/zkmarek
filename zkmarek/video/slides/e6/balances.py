@@ -74,7 +74,7 @@ class EthBalances(SlideBase):
         self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).shift(UP)
         
         scene.play(Write(self.account_data))
-        scene.play(Create(self.account_data_more), Write(self.transaction_data), run_time=0.5)
+        scene.play(Create(self.account_data_more), Write(self.transaction_data), run_time=1)
         
         side_block1.shift(LEFT*0.5+DOWN)
         side_block2.shift(RIGHT*0.5+DOWN)
