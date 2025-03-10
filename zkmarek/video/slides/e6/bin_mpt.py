@@ -84,10 +84,10 @@ class BinaryMPT(VGroup):
         self.branch4 = MPTNode("A", fields=None, color=HIGHLIGHT_COLOR, fillopacity=0.12, include_labels=self.include_labels)
         self.branch5 = MPTNode("K", fields=None, color=HIGHLIGHT_COLOR, fillopacity=0.12, include_labels=self.include_labels)
         
-        self.leaf1 = MPTNode("E", {"key": "'TRIE'", "value": "7"}, include_labels=self.include_labels)
-        self.leaf2 = MPTNode("N", {"key": "'TRAN'", "value": "9"}, include_labels=self.include_labels)
-        self.leaf3 = MPTNode("EN", {"key": "'TOKEN'", "value": "7"}, include_labels=self.include_labels)
-        self.leaf4 = MPTNode("W", {"key": "'TOW'", "value": "1"}, include_labels=self.include_labels)
+        self.leaf1 = MPTNode("E", fields=None, include_labels=self.include_labels)
+        self.leaf2 = MPTNode("N", fields=None, include_labels=self.include_labels)
+        self.leaf3 = MPTNode("EN", fields=None, include_labels=self.include_labels)
+        self.leaf4 = MPTNode("W", fields=None, include_labels=self.include_labels)
         
         self.root_branch.to_edge(UP).shift(DOWN*0.8)
         buff = 0.5

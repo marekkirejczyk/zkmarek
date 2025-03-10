@@ -31,7 +31,7 @@ class EthBalances(SlideBase):
         
         self.account_data = Text("account data: \n\n 0x1293...1877: 0.1 ETH ", font = PRIMARY_FONT, font_size = 28)
         self.account_data_more = Text(" 0x9132...3817: 0.4 ETH \n 0x9712...1386: 2.0 ETH \n 0x2651...8137: 1.0 ETH \n ...", font = PRIMARY_FONT, font_size = 28)
-        self.transaction_data = Text("transaction data", font = PRIMARY_FONT, font_size = 28)
+        self.transaction_data = Text("transaction data \n receipt data", font = PRIMARY_FONT, font_size = 28)
         
         self.transaction_data1 = Text("transaction data \n receipt data",  font = PRIMARY_FONT, font_size = 28)
         self.transaction_data2 = Text("transaction data \n receipt data", font = PRIMARY_FONT, font_size = 28)
@@ -88,7 +88,7 @@ class EthBalances(SlideBase):
         
         self.arrow_1_2.shift(DOWN+RIGHT*0.27)
         
-        scene.wait(1.5)
+        scene.wait(2)
         
         scene.play(MoveToTarget(main_block))
         scene.play(FadeIn(side_block1), FadeIn(side_block2), Write(self.arrow_0_1), Write(self.arrow_1_2)) 

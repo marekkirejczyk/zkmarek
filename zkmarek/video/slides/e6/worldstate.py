@@ -10,8 +10,8 @@ class SimplifiedWorldState(VGroup):
     def construct(self):
         self.keys_data = [
             ["a", "7", "1", "1", "3", "5", "5"],  
-            ["a", "7", "7", "d", "3", "3", "7"],  
             ["a", "7", "f", "9", "3", "6", "5"],  
+            ["a", "7", "7", "d", "3", "3", "7"],  
             ["a", "7", "7", "d", "3", "8", "7"],  
         ]
         values_data = ["45.0 ETH", "1.00 WEI", "1.1 ETH", "0.12 ETH"] 

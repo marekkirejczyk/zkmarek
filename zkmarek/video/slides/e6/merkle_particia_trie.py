@@ -17,10 +17,10 @@ class MPTNode(VGroup):
             fill_opacity=0.15,
             stroke_width=0.0,
         )
-
-        self.title_text = Text(
-            self.title, font_size=font_size + 5, color=PRIMARY_COLOR, font = PRIMARY_FONT
-        ).move_to(self.rect.get_top() + 0.3 * DOWN)
+        if self.title is not None:
+            self.title_text = Text(
+                self.title, font_size=font_size + 5, color=PRIMARY_COLOR, font = PRIMARY_FONT
+            ).move_to(self.rect.get_top() + 0.3 * DOWN)
 
         self.field_group = VGroup()
         for i, (key, value) in enumerate(self.fields.items()):
@@ -34,12 +34,20 @@ class MPTNode(VGroup):
                 font = PRIMARY_FONT
             ).move_to(field_rect.get_center())
 
-            field_rect.next_to(self.title_text, DOWN, buff=(0.2 + 0.8 * i))
-            field_text.move_to(field_rect.get_center())
+            
+            if self.title == None:
+                shifts = [UP, DOWN]
+                field_rect.move_to(self.rect.get_center()).shift(shifts[i] * 0.5)
+                field_text.move_to(field_rect.get_center())
+            else:
+                field_rect.next_to(self.title_text, DOWN, buff=(0.2 + 0.8 * i))
+                field_text.move_to(field_rect.get_center())
+                self.add(self.title_text)
+                
 
             self.field_group.add(VGroup(field_rect, field_text))
 
-        self.add(self.rect, self.title_text, self.field_group)
+        self.add(self.rect, self.field_group)
 
 class MPTBranchNode(MPTNode):
     """Specialized class for a Branch Node with rectangular child slots."""
@@ -79,26 +87,28 @@ class MerklePatriciaTrie(VGroup):
             "Root: extension node", {"key": "a7", "next node": ""}
         )
         values = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
-        self.branch1 = MPTBranchNode({i: "" for i in values})
+        self.branch1 = MPTBranchNode(title = "Branch", content={i: "" for i in values})
         self.leaf1 = MPTNode(
-            "", {"key-end": "a711355", "value": "45.0 ETH"}, color = PRIMARY_COLOR
+            title=None, fields = {"key": "a711355", "value": "45.0 ETH"}, color = PRIMARY_COLOR
         )
         self.extension2 = MPTNode(
             "Extension Node", {"shared nibble(s)": "d3", "next node": ""}
         )
         self.leaf2 = MPTNode(
-            "Leaf Node", {"key-end": "9365", "value": "1.1 ETH"}, color = PRIMARY_COLOR
+            "Leaf Node", {"key": "9365", "value": "1.1 ETH"}, color = PRIMARY_COLOR
         )
-        self.branch2 = MPTBranchNode({i: "" for i in values})
+        self.branch2 = MPTBranchNode(title = "Branch", content={i: "" for i in values})
         self.leaf3 = MPTNode(
-            "Leaf Node", {"key-end": "7", "value": "0.12 ETH"}, color = PRIMARY_COLOR
+            "Leaf Node", {"key": "7", "value": "0.12 ETH"}, color = PRIMARY_COLOR
         )
         self.leaf4 = MPTNode(
-            "Leaf Node", {"key-end": "7", "value": "1.00 WEI"}, color = PRIMARY_COLOR
+            "Leaf Node", {"key": "7", "value": "1.00 WEI"}, color = PRIMARY_COLOR
         )
         
         self.leaf_replace = MPTNode(
-            "Leaf", {"key": "1335", "value": "45.0 ETH"})
+            title=None, fields={"key": "11335", "value": "45.0 ETH"}, color = PRIMARY_COLOR)
+        self.leaf_replace2 = MPTNode(
+            "Leaf", {"key": "1335", "value": "45.0 ETH"}, color = PRIMARY_COLOR)
 
         self.root.move_to(2 * UP)
         self.leaf_replace.move_to(LEFT+DOWN)
@@ -126,8 +136,13 @@ class MerklePatriciaTrie(VGroup):
         self.add(
             self.arrow, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7
         )
-    def replace_root(self, scene):
-        scene.play(ReplacementTransform(self.root, self.leaf_replace), run_time=1)
+    def replace_leaf1(self, scene):
+        self.leaf_replace.move_to(self.leaf1.get_center())
+        scene.play(ReplacementTransform(self.leaf1, self.leaf_replace), run_time=1)
+            
+    def replace_leaf2(self, scene):
+        self.leaf_replace2.move_to(self.leaf_replace.get_center())
+        scene.play(ReplacementTransform(self.leaf_replace, self.leaf_replace2), run_time=1)
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=3):
     arrow = Arrow(
