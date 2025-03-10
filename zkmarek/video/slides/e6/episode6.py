@@ -16,6 +16,6 @@ EPISODE6 = [
     MerkleTree(),
     TitleSlide("Patricia Tries", sound = "data/sound/e6/slide2-4.mp3", wait_time=4),
     PatriciaTries(),
-    TitleSlide("Ethereum's Merkle Patricia Tries", wait_time=4),
+    TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
     ETHPatriciaMerkleTrie(),
 ]

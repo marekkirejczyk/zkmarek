@@ -298,9 +298,9 @@ class MerkleTree(SlideBase):
             hash = self.hashes_on_path[i]
             node.generate_target()
             node.target.set_opacity(0.3)
-            hash.generate_target()
-            hash.target.set_opacity(1.0)
-            scene.play(MoveToTarget(node), MoveToTarget(hash), run_time=0.35)
+            # hash.generate_target()
+            # hash.target.set_opacity(1.0)
+            scene.play(MoveToTarget(node), run_time=0.35)
             
     def calculate_merkle_proof(self, scene):
         sibling_formula = Text("c1d04...", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)

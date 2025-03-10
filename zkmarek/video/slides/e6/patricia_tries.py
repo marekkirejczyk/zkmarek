@@ -98,7 +98,7 @@ class PatriciaTries(SlideBase):
         
     def brace_levels(self, scene):
         self.block = RoundedRectangle(width=8.5, height=3, color=PRIMARY_COLOR, fill_opacity=0.17, stroke_width = 0.0)
-        ethereum = ImageMobject("data/images/new_ethereum.png").scale(1).move_to(self.block.get_bottom()+LEFT*3+UP*0.8)
+        ethereum = ImageMobject("data/images/new_ethereum.png").scale(1).move_to(self.block.get_bottom()+RIGHT*3+UP*0.8)
         self.block = Group(self.block, ethereum)
         number = Integer(0, color = PRIMARY_COLOR).move_to(self.block.get_center()).shift(RIGHT+UP*0.3)
         addresses = VGroup(self.addresses, self.more_addresses, self.dots).next_to(number, LEFT, buff = 0.8)

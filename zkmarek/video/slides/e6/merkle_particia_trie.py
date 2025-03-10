@@ -76,12 +76,12 @@ class MerklePatriciaTrie(VGroup):
         super().__init__()
 
         self.root = MPTNode(
-            "Node", {"key": "a711355", "value": "45.0 ETH"}
+            "Root: extension node", {"key": "a7", "next node": ""}
         )
         values = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
         self.branch1 = MPTBranchNode({i: "" for i in values})
         self.leaf1 = MPTNode(
-            "Leaf Node", {"key-end": "1355", "value": "45.0 ETH"}, color = PRIMARY_COLOR
+            "", {"key-end": "a711355", "value": "45.0 ETH"}, color = PRIMARY_COLOR
         )
         self.extension2 = MPTNode(
             "Extension Node", {"shared nibble(s)": "d3", "next node": ""}
@@ -97,11 +97,11 @@ class MerklePatriciaTrie(VGroup):
             "Leaf Node", {"key-end": "7", "value": "1.00 WEI"}, color = PRIMARY_COLOR
         )
         
-        self.root_replace = MPTNode(
-            "Root: Extension node", {"shared nibble": "a7", "next": ""})
+        self.leaf_replace = MPTNode(
+            "Leaf", {"key": "1335", "value": "45.0 ETH"})
 
         self.root.move_to(2 * UP)
-        self.root_replace.move_to(LEFT+DOWN)
+        self.leaf_replace.move_to(LEFT+DOWN)
         self.branch1.next_to(self.root, DOWN, buff=0.7)
         self.leaf1.next_to(self.branch1, LEFT+DOWN, buff=0.7)
         self.extension2.next_to(self.branch1, DOWN, buff=0.7)
@@ -127,7 +127,7 @@ class MerklePatriciaTrie(VGroup):
             self.arrow, self.arrow2, self.arrow3, self.arrow4, self.arrow5, self.arrow6, self.arrow7
         )
     def replace_root(self, scene):
-        scene.play(ReplacementTransform(self.root, self.root_replace), run_time=1)
+        scene.play(ReplacementTransform(self.root, self.leaf_replace), run_time=1)
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=3):
     arrow = Arrow(

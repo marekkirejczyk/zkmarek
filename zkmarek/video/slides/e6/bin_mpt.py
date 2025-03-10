@@ -2,7 +2,7 @@ from manim import RoundedRectangle, Text, VGroup, UP, DOWN, RIGHT, LEFT, Stealth
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 class MPTNode(VGroup):
     """Base class for nodes in the Merkle Patricia Trie."""
-    def __init__(self, title, fields, width=2.8, height=0.7, font_size=15, color=PRIMARY_COLOR, fillopacity=0.18, include_labels=True):
+    def __init__(self, title, fields, width=2, height=0.7, font_size=15, color=PRIMARY_COLOR, fillopacity=0.18, include_labels=True):
         super().__init__()
         self.title = title
         self.fields = fields if fields is not None else {} 

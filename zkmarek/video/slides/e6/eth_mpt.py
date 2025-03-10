@@ -26,29 +26,33 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.worldState.keys_table.get_rows()[0].set_color(PRIMARY_COLOR)
         
         self.new_subsection(scene, "MPT in a single node", "data/sound/e6/slide2-6a.mp3")
-        scene.play(Create(self.MPT.root.scale(2).shift(LEFT+DOWN)), run_time=2.5)
+        scene.play(Create(self.MPT.leaf1.scale(2).shift(RIGHT)), run_time=2.5)
         scene.play(Indicate(self.worldState.keys_table.get_rows()[0], color = PRIMARY_COLOR, scale_factor=1.5))
+        self.MPT.leaf_replace.scale(2).shift(RIGHT)
         self.MPT.replace_root(scene)
         scene.wait(3)
         for row in self.worldState.keys_table.get_rows():
             scene.play(Indicate(row, color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.wait(1)
-        self.MPT.root_replace.generate_target()
-        self.MPT.root_replace.target.shift(RIGHT+UP).scale(1/2)
+        self.MPT.leaf_replace.generate_target()
+        self.MPT.leaf_replace.target.shift(LEFT).scale(1/2)
         
-        self.new_subsection(scene, "branches", "data/sound/e6/slide2-6b.mp3")
-        scene.play(MoveToTarget(self.MPT.root_replace), run_time=1)
+        self.new_subsection(scene, "root extension", "data/sound/e6/slide2-6b.mp3")
+        scene.play(MoveToTarget(self.MPT.leaf_replace), run_time=1)
+        scene.play(Create(self.MPT.root))
+        
+        self.new_subsection(scene, "branches", "data/sound/e6/slide2-6c.mp3")
         scene.play(Create(self.MPT.branch1), Write(self.MPT.arrow), run_time=1)
         scene.wait(1)
         scene.play(*[Indicate(slot_group, color = SECONDARY_COLOR) for slot_group in self.MPT.branch1.child_slot_map.values()], run_time=1)
         
-        self.new_subsection(scene, "extensions", "data/sound/e6/slide2-6c.mp3")
+        self.new_subsection(scene, "extensions", "data/sound/e6/slide2-6d.mp3")
         scene.play(Create(self.MPT.extension2), Write(self.MPT.arrow3), run_time=1)
         scene.wait(1)
         scene.play(Create(self.MPT.branch2), Write(self.MPT.arrow5), run_time=1)
         scene.wait(1)
         a7_label = None
-        for field in self.MPT.root_replace.field_group:
+        for field in self.MPT.root.field_group:
             _, text = field 
             if "a7" in text.text:
                 a7_label = text[16:18]
@@ -65,13 +69,13 @@ class ETHPatriciaMerkleTrie(SlideBase):
         if d3_label:
             scene.play(d3_label.animate.set_color(SECONDARY_COLOR).scale(1.2)) 
             
-        self.new_subsection(scene, "leaves", "data/sound/e6/slide2-6d.mp3")
+        self.new_subsection(scene, "leaves", "data/sound/e6/slide2-6e.mp3")
         scene.play(Create(self.MPT.leaf1), Write(self.MPT.arrow2), run_time=1)
         scene.play(Create(self.MPT.leaf2), Write(self.MPT.arrow4), run_time=1)
         scene.play(Create(self.MPT.leaf3), Write(self.MPT.arrow6), run_time=1)
         scene.play(Create(self.MPT.leaf4), Write(self.MPT.arrow7), run_time=1)
             
-        self.new_subsection(scene, "4 level mpt", "data/sound/e6/slide2-6e.mp3")
+        self.new_subsection(scene, "4 level mpt", "data/sound/e6/slide2-6f.mp3")
         scene.wait(4.5)
         scene.play(Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1))
         scene.play(Indicate(self.MPT.branch1, color = SECONDARY_COLOR, scale_factor=1.1))
