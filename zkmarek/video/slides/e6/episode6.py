@@ -10,7 +10,7 @@ from zkmarek.video.slides.common.title import TitleSlide
 EPISODE6 = [
     # Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e5/background.mp3",),
     Sponsored(),
-    TitleSlide("Merkle trees", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
+    TitleSlide("Merkle trees", subtitle="as data management", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
     EthBalances(),
     TitleSlide("Merkle trees", sound = "data/sound/e6/slide2-1.mp3", wait_time=2),
     MerkleTree(),

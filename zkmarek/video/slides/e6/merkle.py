@@ -150,18 +150,18 @@ class MerkleTree(SlideBase):
         self.merkle24_nodes_level0 = self.merkle_tree_2_4.get_node(0, 0)
         level = self.merkle24_nodes_level0
         self.level_0_hashes.move_to(level.get_center())
-        
-        for i in range(8):
-            scene.play(Create(self.level3_hashes_not_numerical[i]), run_time=0.1)
+        scene.wait(0.6)
         scene.play(Indicate(self.vector_8element, color = HIGHLIGHT_COLOR), Indicate(self.account_group_8_elements, color = HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(0.5)
+        for i in range(8):
+            scene.play(Create(self.level3_hashes_not_numerical[i]), run_time=0.1)
         scene.play(TransformMatchingShapes(self.level3_hashes_not_numerical[0], self.level_3_hashes[0]), TransformMatchingShapes(self.level3_hashes_not_numerical[1], self.level_3_hashes[1]), 
                     TransformMatchingShapes(self.level3_hashes_not_numerical[2], self.level_3_hashes[2]), TransformMatchingShapes(self.level3_hashes_not_numerical[3], self.level_3_hashes[3]), 
                     TransformMatchingShapes(self.level3_hashes_not_numerical[4], self.level_3_hashes[4]), TransformMatchingShapes(self.level3_hashes_not_numerical[5], self.level_3_hashes[5]), 
                     TransformMatchingShapes(self.level3_hashes_not_numerical[6], self.level_3_hashes[6]), TransformMatchingShapes(self.level3_hashes_not_numerical[7], self.level_3_hashes[7]), 
                    run_time=0.5)
             
-        scene.wait(1)
+        scene.wait(0.2)
         
         self.new_subsection(scene, "children hashes", "data/sound/e6/slide2-2b.mp3")
         scene.play(
@@ -247,7 +247,7 @@ class MerkleTree(SlideBase):
             node.generate_target()
             node.target.set_color(HIGHLIGHT2_COLOR)
             scene.play(MoveToTarget(node), run_time=0.3)
-        scene.wait(1.5)
+        scene.wait(2.2)
             
         self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
         scene.wait(1)
@@ -258,15 +258,7 @@ class MerkleTree(SlideBase):
         scene.play(Indicate(nodes_needed_to_proof[2], color = SECONDARY_COLOR), run_time=0.4)
         
         scene.wait(1.5)
-        
-        # for i in range(len(nodes_directly_used)):
-        #     node = nodes_directly_used[i]
-        #     hash = self.hashes_on_path[i]
-        #     node.generate_target()
-        #     node.target.set_opacity(0.3)
-        #     hash.generate_target()
-        #     hash.target.set_opacity(0.0)
-        #     scene.play(MoveToTarget(node), run_time=0.35)
+    
             
     def calculate_merkle_proof(self, scene):
         sibling_formula = Text("c1d04...", color=PRIMARY_COLOR, font = PRIMARY_FONT, font_size=20).shift(RIGHT*4+UP*2.5)
@@ -304,7 +296,10 @@ class MerkleTree(SlideBase):
         scene.wait(1)
         
         self.new_subsection(scene, "if the hash equals", "data/sound/e6/slide2-3c.mp3")
-        scene.wait(3.5)
+        scene.wait(0.5)
+        scene.play(Indicate(root_hash[0:8], color = PRIMARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.new_hashes[3], color = PRIMARY_COLOR), run_time=0.7)
+        scene.wait(1.6)
         scene.play(FadeOut(parent_hash, grandparent_hash, root_hash))
         
     

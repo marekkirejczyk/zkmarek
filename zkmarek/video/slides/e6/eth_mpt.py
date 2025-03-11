@@ -26,9 +26,9 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.worldState.appear_table(scene)
         
         self.new_subsection(scene, "MPT in a single node", "data/sound/e6/slide2-6a.mp3")
+        scene.play(self.worldState.key_cells[0:7].animate.set_color(HIGHLIGHT_COLOR))
         self.MPT.leaf_replace.scale(0.45).scale(2).move_to(ORIGIN)
         scene.play(Create(self.MPT.leaf_replace), run_time=2.5)
-        scene.play(Indicate(self.worldState.key_cells[0:7], color = HIGHLIGHT_COLOR, scale_factor=1.5))
         scene.play(self.worldState.key_cells[0:7].animate.set_color(HIGHLIGHT_COLOR))
         scene.wait(5)
         key_cells_shared = [self.worldState.key_cells[0], self.worldState.key_cells[1], 
@@ -103,8 +103,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
 
      
         path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
-        for item in path0:
-            scene.play(Indicate(item, color = PRIMARY_COLOR), item.animate.set_color(PRIMARY_COLOR), run_time=0.5)
+        scene.play(Indicate(path0[0], color = PRIMARY_COLOR), path0[0].animate.set_color(PRIMARY_COLOR), run_time=0.5)
 
         
     

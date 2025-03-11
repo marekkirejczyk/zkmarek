@@ -125,13 +125,13 @@ class MerklePatriciaTrie(VGroup):
         self.leaf4.next_to(self.branch2, DOWN, buff=0.7).shift(RIGHT*5.5)
         
         self.arrow = create_arrow(end = self.root.get_bottom()+UP*0.8+RIGHT, start = self.branch1.get_top()+RIGHT)
-        self.arrow2 = create_arrow(end = self.branch1.get_child_slot("1"), start = self.leaf1.get_top()).shift(RIGHT*0.4)
+        self.arrow2 = create_arrow(end = self.branch1.get_child_slot("1").get_bottom()+LEFT*0.3, start = self.leaf1.get_top()).shift(RIGHT*0.4)
                       
-        self.arrow3 = create_arrow(end = self.branch1.get_bottom()+UP*0.3+LEFT*0.33, start = self.extension2.get_top()+UP*0.3+LEFT*0.33)
-        self.arrow4 = create_arrow(end = self.branch1.get_right()+LEFT*0.9+DOWN*0.5, start = self.leaf2.get_top())
+        self.arrow3 = create_arrow(end = self.branch1.get_bottom()+UP*0.3+LEFT*0.33, start = self.extension2.get_top()+UP*0.1+LEFT*0.33)
+        self.arrow4 = create_arrow(end = self.branch1.get_right()+LEFT*0.75+DOWN*0.53, start = self.leaf2.get_top())
                       
         self.arrow5 = create_arrow(end = self.extension2.get_bottom()+UP*0.8+RIGHT*1, start = self.branch2.get_top()+RIGHT*1)
-        self.arrow6 = create_arrow(end = self.branch2.get_child_slot("3").get_bottom()+LEFT*0.2, start = self.leaf3.get_top()).shift(RIGHT*0.42+UP*0.01)
+        self.arrow6 = create_arrow(end = self.branch2.get_child_slot("3").get_bottom()+LEFT*0.4, start = self.leaf3.get_top()).shift(RIGHT*0.42+UP*0.01)
         self.arrow7 = create_arrow(end = self.branch2.get_bottom()+RIGHT*0.3+UP*0.3, start = self.leaf4.get_top()).shift(UP*0.01)
         
 

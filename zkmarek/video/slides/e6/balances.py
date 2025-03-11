@@ -31,10 +31,10 @@ class EthBalances(SlideBase):
         
         self.account_data = Text("account data: \n\n 0x1293...1877: 0.1 ETH ", font = PRIMARY_FONT, font_size = 28)
         self.account_data_more = Text(" 0x9132...3817: 0.4 ETH \n 0x9712...1386: 2.0 ETH \n 0x2651...8137: 1.0 ETH \n ...", font = PRIMARY_FONT, font_size = 28)
-        self.transaction_data = Text("transaction data \n receipt data", font = PRIMARY_FONT, font_size = 28)
+        self.transaction_data = Text("transaction data \n ... \n receipt data \n ...", font = PRIMARY_FONT, font_size = 28)
         
-        self.transaction_data1 = Text("transaction data \n receipt data",  font = PRIMARY_FONT, font_size = 28)
-        self.transaction_data2 = Text("transaction data \n receipt data", font = PRIMARY_FONT, font_size = 28)
+        self.transaction_data1 = Text("transaction data \n ... \n receipt data \n ...",  font = PRIMARY_FONT, font_size = 28)
+        self.transaction_data2 = Text("transaction data \n ... \n receipt data \n ...", font = PRIMARY_FONT, font_size = 28)
         
         self.account_data1 = Text("account data: \n\n 0x1234...1234: 0.5 ETH", font=PRIMARY_FONT, font_size = 28)
         self.account_data1_more = Text(" 0x3791...2468: 0.8 ETH \n 0x2651...8137: 3.0 ETH \n 0x9132...3817: 0.2 ETH \n ...", font=PRIMARY_FONT, font_size = 28).next_to(self.account_data1[22], DOWN, buff = 0.2).shift(0.1*RIGHT)
@@ -71,7 +71,7 @@ class EthBalances(SlideBase):
         
         self.account_data.move_to(self.finalized_blocks[1].get_top()+DOWN*0.98+LEFT*1.5)
         self.account_data_more.next_to(self.account_data[22], DOWN, buff = 0.2).shift(0.1*RIGHT)
-        self.transaction_data.next_to(self.account_data[11], RIGHT, buff = 1.0).shift(RIGHT*0.6)
+        self.transaction_data.next_to(self.account_data[11], RIGHT, buff = 1.0).shift(RIGHT*0.6+DOWN*0.4)
         data_vecs = VGroup(self.transaction_data, self.account_data, self.account_data_more)
         self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).shift(UP)
         
@@ -97,8 +97,8 @@ class EthBalances(SlideBase):
         
         self.account_data1.scale(1/2).move_to(self.finalized_blocks[0].get_top()+DOWN*0.9+LEFT*0.8)
         self.account_data2.scale(1/2).move_to(self.finalized_blocks[2].get_top()+DOWN*0.9+LEFT*0.8)
-        self.transaction_data1.scale(1/2).next_to(self.account_data1[0], RIGHT, buff = 0.1).shift(UP*0.18)
-        self.transaction_data2.scale(1/2).next_to(self.account_data2[0], RIGHT, buff = 0.1).shift(UP*0.18)
+        self.transaction_data1.scale(1/2).next_to(self.account_data1[0], RIGHT, buff = 0.1).shift(DOWN*0.12)
+        self.transaction_data2.scale(1/2).next_to(self.account_data2[0], RIGHT, buff = 0.1).shift(DOWN*0.12)
         
         self.ethereum3.generate_target()
         self.ethereum3.target.move_to(self.finalized_group[2].get_bottom()+RIGHT*1.5+UP*0.5)
@@ -121,7 +121,7 @@ class EthBalances(SlideBase):
         
         self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
         scene.wait(3)
-        account_indications = [self.account_data1_more[20:38], self.account_data[13:26], self.account_data2_more[20:38]]
+        account_indications = [self.account_data1_more[20:40], self.account_data[13:28], self.account_data2_more[20:40]]
         for acc in account_indications:
             scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
         scene.wait(2)
