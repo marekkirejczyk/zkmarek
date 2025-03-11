@@ -45,6 +45,8 @@ class EthBalances(SlideBase):
         
         self.computer = ImageMobject("data/images/Laptop2x.png").scale(0.75).shift(UP)
         
+        self.question_mark = Text("?", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28)
+        
     def animate_in(self, scene):
         self.new_subsection(scene, "big amount of data", "data/sound/e6/slide2-0.mp3")
         scene.play(Write(self.title_label))
@@ -109,10 +111,13 @@ class EthBalances(SlideBase):
         
         self.new_subsection(scene, "computer", "data/sound/e6/slide2-0b.mp3")
         scene.play(FadeIn(self.computer), FadeOut(self.data_size))
-        scene.wait(2.5)
+        scene.play(Write(self.question_mark.next_to(self.computer, RIGHT, buff = 0.1)), run_time=0.8)
+        scene.wait(1.7)
         all_vecs = VGroup(self.transaction_data1, self.transaction_data, self.transaction_data2)
         for i in range(len(all_vecs)):
             scene.play(Indicate(all_vecs[i], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.3)
+        scene.wait(1)
+        scene.play(Indicate(self.question_mark, color = SECONDARY_COLOR))
         
         self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
         scene.wait(3)
@@ -127,4 +132,4 @@ class EthBalances(SlideBase):
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.computer, self.main_block, self.side_block1, self.side_block2, self.finalized_group, self.eth_logos, self.transaction_data1, 
-                           self.transaction_data2, self.account_data1, self.account_data2, self.arrow_0_1, self.arrow_1_2))
+                           self.transaction_data2, self.account_data1, self.account_data2, self.arrow_0_1, self.arrow_1_2, self.question_mark, self.title_label))

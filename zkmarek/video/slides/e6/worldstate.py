@@ -70,7 +70,8 @@ class SimplifiedWorldState(VGroup):
 
             self.value_cells.add(VGroup(value_cell, value_text))
         self.title = title
-
+        self.value_header = value_header
+        self.key_header = key_header
         self.add(self.background, key_header, value_header, self.key_cells, self.value_cells, self.title)
 
     def show_table(self, scene, runtime=1):
@@ -85,7 +86,7 @@ class SimplifiedWorldState(VGroup):
         scene.play(FadeOut(*self.submobjects))
 
     def appear_table(self, scene):
-        scene.play(Create(self.background), Create(self.key_cells), Create(self.value_cells), run_time=1)
+        scene.play(Create(self.background), Create(self.key_cells), Create(self.value_cells), Create(self.key_header), Create(self.value_header), Create(self.title), run_time=1)
         scene.wait(0.5)
         scene.play(Indicate(self.key_cells, color=PRIMARY_COLOR))
         scene.play(Indicate(self.value_cells, color=PRIMARY_COLOR))

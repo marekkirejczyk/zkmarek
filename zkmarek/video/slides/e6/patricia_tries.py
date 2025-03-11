@@ -82,13 +82,16 @@ class PatriciaTries(SlideBase):
             scene.play(Write(self.keys_on_nodes[j]), run_time=0.5)
         scene.play(Write(self.leaf_keys[0]))
         scene.play(Indicate(prefixes1[1], color = HIGHLIGHT2_COLOR), run_time=1)
-        scene.play(Write(self.keys_on_nodes[3]), Write(self.leaf_keys[1]), run_time=0.5)
+        scene.play(Write(self.keys_on_nodes[3]), run_time=0.5)
+        scene.play(Write(self.leaf_keys[1]), run_time=0.5)
         
         scene.play(Indicate(prefixes1[2], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.keys_on_nodes[4]), Write(self.leaf_keys[2]), run_time=0.5)
+        scene.play(Write(self.keys_on_nodes[4]), run_time=0.4)
+        scene.play(Write(self.leaf_keys[2]), run_time=0.4)
         
         scene.play(Indicate(prefixes1[3], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.keys_on_nodes[5]), Write(self.leaf_keys[3]), run_time=0.5)
+        scene.play(Write(self.keys_on_nodes[5]), run_time=0.4)
+        scene.play(Write(self.leaf_keys[3]), run_time=0.4)
                 
         self.new_subsection(scene, "300 mln addresses", "data/sound/e6/slide2-5.mp3")
         scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys))
@@ -141,10 +144,7 @@ class PatriciaTries(SlideBase):
         scene.wait(3)
         
         self.new_subsection(scene, "bin->hex", "data/sound/e6/slide2-5a.mp3")
-        nodes = [self.merkle_tree_hexary.get_node(1, 0), self.merkle_tree_hexary.get_node(1, 1), self.merkle_tree_hexary.get_node(1, 2), self.merkle_tree_hexary.get_node(1, 3),
-                 self.merkle_tree_hexary.get_node(1, 4), self.merkle_tree_hexary.get_node(1, 5), self.merkle_tree_hexary.get_node(1, 6), self.merkle_tree_hexary.get_node(1, 7),
-                 self.merkle_tree_hexary.get_node(1, 8), self.merkle_tree_hexary.get_node(1, 9), self.merkle_tree_hexary.get_node(1, 10), self.merkle_tree_hexary.get_node(1, 11),
-                 self.merkle_tree_hexary.get_node(1, 12), self.merkle_tree_hexary.get_node(1, 13), self.merkle_tree_hexary.get_node(1, 14), self.merkle_tree_hexary.get_node(1, 15)]
+        nodes = [self.merkle_tree_hexary.get_node(1, i) for i in range(16)]
         scene.wait(1)
         scene.play(FadeOut(self.merkle_tree_binary, self.brace_28_levels, self.brace_text_levels28))
         scene.play(Create(self.merkle_tree_hexary), Write(self.dots_hex_merkle))
@@ -158,12 +158,24 @@ class PatriciaTries(SlideBase):
         scene.wait(2)
         
         self.new_subsection(scene, "nice optimization but still a lot of calc", "data/sound/e6/slide2-5c.mp3")
-        scene.wait(2)
+        scene.wait(5)
         scene.play(
             *[Indicate(nodes[i], color = SECONDARY_COLOR) for i in range(16)],
             run_time=0.8
         )
-        scene.wait(6)
+        scene.wait(0.2)
+        nodes2 = [self.merkle_tree_hexary.get_node(2, i) for i in range(16)]
+        nodes3 = [self.merkle_tree_hexary.get_node(3, i) for i in range(16)]
+        scene.play(
+            *[Indicate(nodes2[i], color = SECONDARY_COLOR) for i in range(16)],
+            run_time=0.8
+        )
+        scene.wait(0.2)
+        scene.play(
+            *[Indicate(nodes3[i], color = SECONDARY_COLOR) for i in range(16)],
+            run_time=0.8
+        )
+        scene.wait(1)
         
         self.play_sound(scene, "data/sound/e6/slide2-5d.mp3")
         scene.wait(2)  

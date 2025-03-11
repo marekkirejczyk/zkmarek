@@ -1,4 +1,4 @@
-from manim import Indicate, Create, UP, LEFT, RIGHT, MoveToTarget, Write, Text, FadeOut
+from manim import Indicate, Create, UP, LEFT, ORIGIN, MoveToTarget, Write, Text, FadeOut, DOWN, RIGHT
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
@@ -24,33 +24,35 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.new_subsection(scene, "Simplified world state", "data/sound/e6/slide2-6.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
         self.worldState.appear_table(scene)
-        self.worldState.key_cells[0:14].set_color(HIGHLIGHT_COLOR)
         
         self.new_subsection(scene, "MPT in a single node", "data/sound/e6/slide2-6a.mp3")
-        scene.play(Create(self.MPT.leaf1.scale(2).shift(RIGHT)), run_time=2.5)
-        scene.play(Indicate(self.worldState.key_cells[0], color = PRIMARY_COLOR, scale_factor=1.5))
-        scene.wait(3)
+        self.MPT.leaf_replace.scale(0.45).scale(2).move_to(ORIGIN)
+        scene.play(Create(self.MPT.leaf_replace), run_time=2.5)
+        scene.play(Indicate(self.worldState.key_cells[0:7], color = HIGHLIGHT_COLOR, scale_factor=1.5))
+        scene.play(self.worldState.key_cells[0:7].animate.set_color(HIGHLIGHT_COLOR))
+        scene.wait(5)
         key_cells_shared = [self.worldState.key_cells[0], self.worldState.key_cells[1], 
                             self.worldState.key_cells[7], self.worldState.key_cells[8],
                             self.worldState.key_cells[14], self.worldState.key_cells[15],
                             self.worldState.key_cells[21], self.worldState.key_cells[22]]
         for i in range(0,4):
-            scene.play(Indicate(key_cells_shared[2*i], color = PRIMARY_COLOR, scale_factor=1.5), 
-                       Indicate(key_cells_shared[2*i+1]), run_time=0.8)
+            scene.play(Indicate(key_cells_shared[2*i], color = SECONDARY_COLOR, scale_factor=1.5), 
+                       Indicate(key_cells_shared[2*i+1], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
-        self.MPT.leaf1.generate_target()
-        self.MPT.leaf1.target.shift(LEFT).scale(1/2)
+    
+        self.MPT.leaf_replace.generate_target()
+        self.MPT.leaf_replace.target.next_to(self.MPT.branch1, DOWN+LEFT, buff = 0.0).scale(1/2).shift(RIGHT+UP*0.3)
         
         self.new_subsection(scene, "root extension", "data/sound/e6/slide2-6b.mp3")
-        scene.play(MoveToTarget(self.MPT.leaf1), run_time=1)
+        scene.play(MoveToTarget(self.MPT.leaf_replace), run_time=1)
         scene.play(Create(self.MPT.root))
-        self.MPT.leaf_replace.move_to(self.MPT.leaf1.get_center()).scale(0.45)
+        self.MPT.leaf_replace2.move_to(self.MPT.leaf_replace.get_center()).scale(0.45)
         self.MPT.replace_leaf1(scene)
         a7_label = None
         for field in self.MPT.root.field_group:
             _, text = field 
             if "a7" in text.text:
-                a7_label = text[16:18]
+                a7_label = text[10:18]
                 break
         if a7_label:
             scene.play(a7_label.animate.set_color(PRIMARY_COLOR).scale(1.2)) 
@@ -60,12 +62,12 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.wait(1)
         scene.play(*[Indicate(slot_group, color = SECONDARY_COLOR) for slot_group in self.MPT.branch1.child_slot_map.values()], run_time=1)
         scene.wait(4.5)
-        self.MPT.leaf_replace2.move_to(self.MPT.leaf_replace.get_center()).scale(0.45)
+        self.MPT.leaf1.move_to(self.MPT.leaf_replace2.get_center())
         self.MPT.replace_leaf2(scene)
         scene.play(Write(self.MPT.arrow2), run_time=1)
+        scene.play(self.worldState.key_cells[7:14].animate.set_color(HIGHLIGHT_COLOR))
         scene.play(Create(self.MPT.leaf2), Write(self.MPT.arrow4), run_time=1)
         scene.wait(2)
-        scene.play(self.worldState.key_cells[1:7].animate.set_color(HIGHLIGHT_COLOR))
         
         self.new_subsection(scene, "extensions", "data/sound/e6/slide2-6d.mp3")
         scene.play(Create(self.MPT.extension2), Write(self.MPT.arrow3), run_time=1)
@@ -88,23 +90,21 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.play(Create(self.MPT.leaf4), Write(self.MPT.arrow7), run_time=1)
             
         self.new_subsection(scene, "4 level mpt", "data/sound/e6/slide2-6f.mp3")
-        scene.wait(4.5)
+        scene.wait(5.6)
         scene.play(Indicate(self.MPT.extension2, color = SECONDARY_COLOR, scale_factor=1.1))
         scene.play(Indicate(self.MPT.branch1, color = SECONDARY_COLOR, scale_factor=1.1))
-        leaves = [self.MPT.leaf_replace2, self.MPT.leaf2, self.MPT.leaf3, self.MPT.leaf4]
+        leaves = [self.MPT.leaf1, self.MPT.leaf2, self.MPT.leaf3, self.MPT.leaf4]
         for i in range(4):
             scene.play(Indicate(leaves[i], color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.4)
             
-        scene.wait(1)
-        scene.play(Indicate(self.MPT.leaf_replace2.field_group[0], color = SECONDARY_COLOR), Indicate(self.worldState.key_cells[0], color = PRIMARY_COLOR, scale_factor=1.5))
-        scene.wait(1)
-        scene.play(Indicate(self.MPT.leaf_replace2.field_group[1], color = SECONDARY_COLOR), Indicate(self.worldState.value_cells[0], color = PRIMARY_COLOR))
+        scene.wait(2)
+        scene.play(Indicate(self.MPT.leaf1, color = PRIMARY_COLOR, scale_factor=1.1))
+        scene.wait(1.5)
+
      
-        path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf_replace2.field_group[0]]
+        path0 = [self.MPT.branch1.get_child_slot("1"), self.MPT.leaf1.field_group[0]]
         for item in path0:
-            scene.play(Indicate(item, color = PRIMARY_COLOR), run_time=0.5)
-            item.generate_target()
-            item.target.set_color(PRIMARY_COLOR)
-            scene.play(MoveToTarget(item), run_time=0.5)
+            scene.play(Indicate(item, color = PRIMARY_COLOR), item.animate.set_color(PRIMARY_COLOR), run_time=0.5)
+
         
     
