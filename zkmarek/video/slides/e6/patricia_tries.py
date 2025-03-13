@@ -38,8 +38,8 @@ class PatriciaTries(SlideBase):
         self.key_text = Text("key", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).move_to(self.key.get_center())
         self.value_text = Text("value", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).move_to(self.value.get_center())
         
-        self.account_balance = Text("account balance", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.value, UP, buff=1.2)
-        self.account_address = Text("account address", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.key, UP, buff=1.2)
+        self.account_balance = Text("account balance", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.value, RIGHT, buff=1.2)
+        self.account_address = Text("account address", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.key, RIGHT, buff=1.2)
         
         
     def animate_in(self, scene):
@@ -56,7 +56,7 @@ class PatriciaTries(SlideBase):
         prefixes1 = [table_key_value.key_cells[0][0], table_key_value.key_cells[1][0], table_key_value.key_cells[2][0],
                      table_key_value.key_cells[3][0]]
         
-        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4a.mp3")
+        self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
         for i in range(len(prefixes1)):
             pref = prefixes1[i]
             scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
@@ -85,7 +85,7 @@ class PatriciaTries(SlideBase):
         scene.play(Write(self.keys_on_nodes[5]), run_time=0.4)
         scene.play(Write(self.leaf_keys[3]), run_time=0.4)
                 
-        self.new_subsection(scene, "300 mln addresses", "data/sound/e6/slide2-5.mp3")
+        self.new_subsection(scene, "key and value", "data/sound/e6/slide2-5.mp3")
         scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys))
 
         scene.play(Create(self.node), run_time=1)
@@ -110,22 +110,18 @@ class PatriciaTries(SlideBase):
         self.dots_bin_merkle4 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 3), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.merkle_tree_binary = VGroup(self.merkle_tree_binary, self.dots_bin_merkle1, self.dots_bin_merkle2, self.dots_bin_merkle3, self.dots_bin_merkle4)
         scene.play(Create(self.merkle_tree_binary))
-        self.brace_28_levels = Brace(self.merkle_tree_binary, direction=RIGHT, color=PRIMARY_COLOR)
         
         self.merkle_tree_hexary = MT16(num_levels=4, focused_node_path=[7,8,7]).scale(0.6).shift(UP*4+LEFT)
         self.dots_hex_merkle = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_hexary, DOWN, buff = 0.3)
         
-        self.brace_text_levels28 = Text("160 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_28_levels, RIGHT, buff = 0.1)
         self.brace_7_levels = Brace(self.merkle_tree_hexary, direction=RIGHT, color=PRIMARY_COLOR).scale(1.2).shift(DOWN*0.3)
         self.brace_text_levels7 = Text("40 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_7_levels, RIGHT, buff = 0.1)
-        scene.wait(1)
-        scene.play(Create(self.brace_28_levels), Write(self.brace_text_levels28))
-        scene.wait(2)
+        scene.wait(3.8)
         
         self.new_subsection(scene, "bin->hex", "data/sound/e6/slide2-5b.mp3")
         nodes = [self.merkle_tree_hexary.get_node(1, i) for i in range(16)]
         scene.wait(1)
-        scene.play(FadeOut(self.merkle_tree_binary, self.brace_28_levels, self.brace_text_levels28))
+        scene.play(FadeOut(self.merkle_tree_binary))
         scene.play(Create(self.merkle_tree_hexary), Write(self.dots_hex_merkle))
         for i in range(16):
             scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.15)

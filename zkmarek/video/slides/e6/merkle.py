@@ -106,7 +106,7 @@ class MerkleTree(SlideBase):
     #     scene.wait(2)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_merkle_proof, self.merkle_tree_all))
+        scene.play(FadeOut(self.title_merkle_proof, self.merkle_tree_all, self.nodes_copy))
         
         
     def hashes_of_8_element(self, scene):
@@ -198,7 +198,7 @@ class MerkleTree(SlideBase):
             levels = level[i]
             prev_hash = prev_hashes[i]
             levels.set_color(SECONDARY_COLOR)
-            scene.play(TransformMatchingShapes(prev_hash, self.new_hashes[i]), run_time=0.4)
+            scene.play(TransformMatchingShapes(prev_hash, self.new_hashes[i]), run_time=0.8)
 
         self.all_hashes = VGroup(
             *self.new_hashes, 
@@ -225,41 +225,41 @@ class MerkleTree(SlideBase):
         self.hashes_unused = [self.new_hashes[0], self.level_3_hashes[1], self.level_3_hashes[4], self.level_3_hashes[5], self.level_3_hashes[6], 
                               self.level_3_hashes[7], self.level_2_hashes[2], self.level_2_hashes[3]]
         
-        self.hashes_on_path = [self.level_2_hashes[1], self.new_hashes[2], self.new_hashes[3]]
-        # nodes_directly_used = [self.merkle_tree_2_4.get_node(2, 1), self.merkle_tree_2_4.get_node(1, 0), self.merkle_tree_2_4.get_node(0, 0)]
-        # for i in range(len(nodes_unused)):
-        #     node = nodes_unused[i]
-        #     hash = self.hashes_unused[i]
-        #     node.generate_target()
-        #     node.target.set_opacity(0.1)
-        #     hash.generate_target()
-        #     hash.target.set_opacity(0.1)
-        #     scene.play(MoveToTarget(node), MoveToTarget(hash), run_time=0.2)
-        # scene.wait(1)
-        # for i in range(len(nodes_directly_used)):
-        #     node = nodes_directly_used[i]
-        #     hash = self.hashes_on_path[i]
-        #     node.generate_target()
-        #     node.target.set_opacity(0.1)
-        #     hash.generate_target()
-        #     hash.target.set_opacity(0.1)
-        #     scene.play(MoveToTarget(node), MoveToTarget(hash), run_time=0.35)
-        # scene.wait(3)
+        self.hashes_on_path = [self.level_3_hashes[3], self.level_2_hashes[1], self.new_hashes[2], self.new_hashes[3]]
+        nodes_directly_used = [self.merkle_tree_2_4.get_node(3, 3), self.merkle_tree_2_4.get_node(2, 1), self.merkle_tree_2_4.get_node(1, 0), self.merkle_tree_2_4.get_node(0, 0)]
         for i in range(len(all_nodes)):
             node = all_nodes[i]
             hash = all_hashes_in_order[i]
             scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.2)
+        scene.wait(1)
+        for i in range(len(nodes_directly_used)):
+            node = nodes_directly_used[i]
+            hash = self.hashes_on_path[i]
+            scene.play(node.animate.set_opacity(1.0).set_color(SECONDARY_COLOR), hash.animate.set_opacity(1.0).set_color(SECONDARY_COLOR), run_time=0.3)
+            scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.3)
+
+        scene.wait(2)
+        nodes_needed_to_proof = [self.merkle_tree_2_4.get_node(3, 2), self.merkle_tree_2_4.get_node(2, 0), self.merkle_tree_2_4.get_node(1, 1)]
+        hashes_needed_to_proof = [self.level_3_hashes[2], self.level_2_hashes[0], self.level_1_hashes[1]]
+        for i in range(len(nodes_needed_to_proof)):
+            node = nodes_needed_to_proof[i]
+            hash = hashes_needed_to_proof[i]
+            scene.play(node.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR), hash.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR), run_time=0.3)
+            scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.3)
+            
+        scene.wait(1.5)
+        
             
         self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
         scene.wait(1)
-        scene.play(Indicate(node_prove, color = SECONDARY_COLOR))
+        scene.play(node_prove.animate.set_opacity(1.0).set_color(SECONDARY_COLOR))
         scene.wait(3)
         scene.play(Indicate(nodes_needed_to_proof[0], color = SECONDARY_COLOR), run_time=0.4)
         scene.play(Indicate(nodes_needed_to_proof[1], color = SECONDARY_COLOR), run_time=0.4)
         scene.play(Indicate(nodes_needed_to_proof[2], color = SECONDARY_COLOR), run_time=0.4)
         
-        nodes_needed_to_proof = [self.merkle_tree_2_4.get_node(3, 2), self.merkle_tree_2_4.get_node(2, 0), self.merkle_tree_2_4.get_node(1, 1)]
-        hashes_needed_to_proof = [self.level_3_hashes[2], self.level_2_hashes[0], self.level_1_hashes[1]]
+        nodes_copy = []
+        
         for i in range(len(nodes_needed_to_proof)):
             node = nodes_needed_to_proof[i]
             node = node.copy()
@@ -267,10 +267,13 @@ class MerkleTree(SlideBase):
             hash =hashes_needed_to_proof[i]
             hash = hash.copy()
             hash.set_opacity(1.0)
-            node.set_color(HIGHLIGHT2_COLOR).next_to(self.merkle_tree_2_4, DOWN, buff = 0.3).shift(LEFT*2+RIGHT*2*i)
+            node.set_color(HIGHLIGHT2_COLOR).next_to(self.merkle_tree_2_4, DOWN, buff = 1.0).shift(LEFT*2+RIGHT*2*i)
             hash.move_to(node.get_center())
-            scene.play(TransformMatchingShapes(VGroup(nodes_needed_to_proof[i], hashes_needed_to_proof[i]), VGroup(node, hash)), run_time=0.3)
+            scene.play(TransformMatchingShapes(VGroup(nodes_needed_to_proof[i], hashes_needed_to_proof[i]), VGroup(node, hash)), run_time=0.4)
+            nodes_copy.append(node)
+            nodes_copy.append(hash)
         scene.wait(2.2)
+        self.nodes_copy = nodes_copy
     
             
     def calculate_merkle_proof(self, scene):

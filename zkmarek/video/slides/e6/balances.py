@@ -109,7 +109,7 @@ class EthBalances(SlideBase):
         self.new_subsection(scene, "computer", "data/sound/e6/slide2-0b.mp3")
         scene.play(FadeIn(self.computer), FadeOut(self.data_size))
         scene.play(Write(self.question_mark.next_to(self.computer, RIGHT, buff = 0.1)), run_time=0.8)
-        scene.wait(1.7)
+        scene.wait(3.2)
         all_vecs = VGroup(self.transaction_data1, self.transaction_data, self.transaction_data2)
         for i in range(len(all_vecs)):
             scene.play(Indicate(all_vecs[i], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.3)
@@ -118,13 +118,11 @@ class EthBalances(SlideBase):
         
         self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
         scene.wait(3)
-        account_indications = [self.account_data1_more[20:40], self.account_data[13:28], self.account_data2_more[20:40]]
-        # for acc in account_indications:
-        #     scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
-        scene.play(Indicate(account_indications[1], color = SECONDARY_COLOR), run_time=0.8)
-        scene.wait(0.5)
-        scene.play(Indicate(main_block, color = SECONDARY_COLOR), run_time=0.8)
-        scene.wait(2)
+        account_indications = [self.account_data2_more[0:20], self.account_data2_more[20:40], self.account_data2_more[40:60]]
+        for acc in account_indications:
+            scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(side_block2, color = SECONDARY_COLOR), run_time=0.8)
+        scene.wait(1)
         
         self.main_block = main_block
         self.side_block1 = side_block1
