@@ -51,8 +51,8 @@ class EthBalances(SlideBase):
         self.new_subsection(scene, "big amount of data", "data/sound/e6/slide2-0.mp3")
         scene.play(Write(self.title_label))
         scene.play(Create(self.finalized_group[1]))
-        for i in range(0,1):
-            scene.play(FadeIn(self.eth_logos[i]))
+
+        scene.play(FadeIn(self.eth_logos[0]))
         
         self.new_subsection(scene, "Full node 15 TB", "data/sound/e6/slide2-0a.mp3")
         side_block1 = Group(self.finalized_blocks[0], self.ethereum2)
@@ -64,9 +64,6 @@ class EthBalances(SlideBase):
         self.ethereum.generate_target()
         self.ethereum.target.scale(2).move_to(self.finalized_blocks[1].target.get_bottom()+RIGHT*3+UP)
         
-        # self.arrow_0_1.scale(1.5).shift(LEFT*2.3)
-        # self.arrow_1_2.scale(1.5).shift(RIGHT*2.3)
-        
         scene.play(MoveToTarget(self.finalized_blocks[1]), MoveToTarget(self.ethereum))
         
         self.account_data.move_to(self.finalized_blocks[1].get_top()+DOWN*0.98+LEFT*1.5)
@@ -75,7 +72,7 @@ class EthBalances(SlideBase):
         data_vecs = VGroup(self.transaction_data, self.account_data, self.account_data_more)
         self.data_size = Text("15 TB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 24).shift(UP)
         
-        scene.play(Write(self.account_data))
+        scene.play(Write(self.account_data), run_time=1)
         scene.play(Create(self.account_data_more), Write(self.transaction_data), run_time=1)
         
         side_block1.shift(LEFT*0.5+DOWN)
@@ -122,8 +119,11 @@ class EthBalances(SlideBase):
         self.new_subsection(scene, "transaction included", "data/sound/e6/slide2-0c.mp3")
         scene.wait(3)
         account_indications = [self.account_data1_more[20:40], self.account_data[13:28], self.account_data2_more[20:40]]
-        for acc in account_indications:
-            scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
+        # for acc in account_indications:
+        #     scene.play(Indicate(acc, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(account_indications[1], color = SECONDARY_COLOR), run_time=0.8)
+        scene.wait(0.5)
+        scene.play(Indicate(main_block, color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(2)
         
         self.main_block = main_block
