@@ -38,8 +38,8 @@ class PatriciaTries(SlideBase):
         self.key_text = Text("key", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).move_to(self.key.get_center())
         self.value_text = Text("value", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).move_to(self.value.get_center())
         
-        self.account_balance = Text("account balance", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.value, RIGHT, buff=1.2)
-        self.account_address = Text("account address", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.key, RIGHT, buff=1.2)
+        self.account_balance = Text("account balance", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.value, RIGHT, buff=1.8)
+        self.account_address = Text("account address", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.key, RIGHT, buff=1.8)
         
         
     def animate_in(self, scene):
@@ -52,15 +52,20 @@ class PatriciaTries(SlideBase):
         scene.play(Write(self.title_pt), run_time=0.7)
         table_key_value = TableKeyValue().scale(0.85)
         scene.play(Create(table_key_value))
+        scene.wait(0.3)
+        scene.play(Indicate(table_key_value.key_header, color = SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(table_key_value.value_header, color = SECONDARY_COLOR), run_time=1)
         scene.wait(1)
-        prefixes1 = [table_key_value.key_cells[0][0], table_key_value.key_cells[1][0], table_key_value.key_cells[2][0],
-                     table_key_value.key_cells[3][0]]
+        prefixes1 = [table_key_value.key_cells[0][1], table_key_value.key_cells[1][1], table_key_value.key_cells[2][1],
+                     table_key_value.key_cells[3][1]]
         
         self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
-        for i in range(len(prefixes1)):
-            pref = prefixes1[i]
-            scene.play(Indicate(pref[0:3], color = HIGHLIGHT2_COLOR), run_time=0.3)
-
+        for i in range(2):
+            pref1 = prefixes1[2*i]
+            pref2 = prefixes1[2*i+1]
+            scene.play(Indicate(pref1[0:2], color = SECONDARY_COLOR), run_time=0.5)
+            scene.play(Indicate(pref2[0:2], color = SECONDARY_COLOR), run_time=0.5)
+            scene.wait(0.3)
         table_key_value.generate_target()
         table_key_value.target.scale(0.75).shift(RIGHT*4.5)
         scene.wait(1)
@@ -68,14 +73,21 @@ class PatriciaTries(SlideBase):
         scene.play(Create(self.bin_mpt), run_time=2)
             
         self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4c.mp3")
-
-        scene.play(Indicate(prefixes1[0], color = HIGHLIGHT2_COLOR), run_time=1)
+        pref1 = prefixes1[0]
         for j in range(3):
+            scene.play(Indicate(pref1[j], color = SECONDARY_COLOR), run_time=1)
             scene.play(Write(self.keys_on_nodes[j]), run_time=0.5)
+        scene.play(Indicate(pref1[3], color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[0][1], color = SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.leaf_keys[0]))
-        scene.play(Indicate(prefixes1[1], color = HIGHLIGHT2_COLOR), run_time=1)
+        
+        pref2 = prefixes1[1]
+        scene.play(Indicate(pref2[0], color = SECONDARY_COLOR), Indicate(self.keys_on_nodes[0], color = SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(pref2[1], color = SECONDARY_COLOR), Indicate(self.keys_on_nodes[1], color = SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(pref2[2], color = SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.keys_on_nodes[3]), run_time=0.5)
+        scene.play(Indicate(pref2[3], color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[1][1]), run_time=1)
         scene.play(Write(self.leaf_keys[1]), run_time=0.5)
+        
         
         scene.play(Indicate(prefixes1[2], color = SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.keys_on_nodes[4]), run_time=0.4)
@@ -89,10 +101,9 @@ class PatriciaTries(SlideBase):
         scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys))
 
         scene.play(Create(self.node), run_time=1)
-        scene.wait(0.5)
         scene.play(Create(self.key), Write(self.key_text))
         scene.play(Write(self.account_address))
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(Create(self.value), Write(self.value_text))
         scene.play(Write(self.account_balance))
         scene.wait(1)
@@ -103,7 +114,7 @@ class PatriciaTries(SlideBase):
         scene.play(FadeOut(self.title_pt))
         
     def brace_levels(self, scene):
-        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7+LEFT*1)
+        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7)
         self.dots_bin_merkle1 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 0), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle2 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 1), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle3 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 2), DOWN, buff = 1.0).shift(DOWN*0.2)

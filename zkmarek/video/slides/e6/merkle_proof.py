@@ -1,4 +1,4 @@
-from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code
+from manim import Create, Write, DOWN, FadeOut, Scene, Indicate, Code
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.constant import SECONDARY_COLOR
 from zkmarek.video.utils import find_in_code
@@ -24,19 +24,19 @@ class MerkleProof(CodeSlide):
         scene.play(Create(self.code))
 
         self.new_subsection(scene, "takes two arguments: tree and leaf", "data/sound/e6/slide2-3c.mp3")
-        scene.wait(1.5)
+        scene.wait(0.8)
         self.indicate_code(scene, self.code, "tree")
         scene.wait(1)
         self.indicate_code(scene, self.code, "index")
         
         self.new_subsection(scene, "singling of every hash", "data/sound/e6/slide2-3d.mp3")
-        scene.wait(1.5)
+        scene.wait(1)
         self.indicate_code(scene, self.code, "siblingIndex(index)")
         
         self.new_subsection(scene, "returns array of hashes", "data/sound/e6/slide2-3e.mp3")
-        scene.wait(1)
+        scene.wait(0.5)
         self.indicate_code(scene, self.code, "const proof: HexString[] = [];")
-        scene.wait(5)
+        scene.wait(5.5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.code), FadeOut(self.title_text))

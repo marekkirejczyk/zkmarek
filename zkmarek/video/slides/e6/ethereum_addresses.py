@@ -19,7 +19,7 @@ class EthereumAddresses(SlideBase):
         self.more_addresses = Text("0x123456...789012", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=25).next_to(self.addresses, DOWN, buff = 0.6)
         self.dots = Text("...\n...", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=30).next_to(self.more_addresses, DOWN, buff = 0.3)
         self.addresses_all = VGroup(self.addresses, self.more_addresses, self.dots).next_to(self.number, LEFT, buff = 0.8)
-        self.brace_addresses = Brace(self.addresses, RIGHT, color=PRIMARY_COLOR).next_to(self.addresses, RIGHT, buff = 0.3)
+        self.brace_addresses = Brace(self.addresses_all, RIGHT, color=PRIMARY_COLOR).next_to(self.addresses_all, RIGHT, buff = 0.3)
         
         
     def animate_in(self, scene):

@@ -8,7 +8,7 @@ class TableKeyValue(VGroup):
         keys = ["TRIE", "TRAN", "TOW", "TOKEN"]
         values = ["7", "9", "1", "7"]
 
-        cell_width = 3
+        cell_width = 2.2
         cell_height = 0.8
         corner_radius = 0.2
         spacing = 0.1 
@@ -25,11 +25,11 @@ class TableKeyValue(VGroup):
             stroke_width = 0.0
         )
 
-        key_header = Text("Keys", font=PRIMARY_FONT, font_size=36, color=PRIMARY_COLOR)
-        value_header = Text("Values", font=PRIMARY_FONT, font_size=36, color=PRIMARY_COLOR)
+        self.key_header = Text("Keys", font=PRIMARY_FONT, font_size=36, color=PRIMARY_COLOR)
+        self.value_header = Text("Values", font=PRIMARY_FONT, font_size=36, color=PRIMARY_COLOR)
 
-        key_header.next_to(self.background.get_top(), DOWN).shift(LEFT * (cell_width / 2 + 0.2))
-        value_header.next_to(self.background.get_top(), DOWN).shift(RIGHT * (cell_width / 2 + 0.2))
+        self.key_header.next_to(self.background.get_top(), DOWN).shift(LEFT * (cell_width / 2 + 0.2))
+        self.value_header.next_to(self.background.get_top(), DOWN).shift(RIGHT * (cell_width / 2 + 0.2))
 
         self.key_cells = VGroup()
         self.value_cells = VGroup()
@@ -52,4 +52,4 @@ class TableKeyValue(VGroup):
             self.key_cells.add(VGroup(key_cell, key_text))
             self.value_cells.add(VGroup(value_cell, value_text))
 
-        self.add(self.background, key_header, value_header, self.key_cells, self.value_cells)
+        self.add(self.background, self.key_header, self.value_header, self.key_cells, self.value_cells)

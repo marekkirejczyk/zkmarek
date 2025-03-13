@@ -76,12 +76,12 @@ class MerkleTree(SlideBase):
         scene.play(FadeOut(self.seal_of_authenticity))
         self.update_nodes(scene)
         
-        self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3.mp3")
         level = [self.merkle24_nodes_level3[0], self.merkle24_nodes_level2[0], self.merkle24_nodes_level1[0], self.merkle24_nodes_level0]
         for i in range(4):
             levels = level[i]
             levels.set_color(HIGHLIGHT_COLOR)
 
+        self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3.mp3")
         self.account_group_8_elements[0].set_color(PRIMARY_COLOR)
         self.merkle_proof(scene)
         scene.wait(1)
@@ -106,7 +106,7 @@ class MerkleTree(SlideBase):
     #     scene.wait(2)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_merkle_proof, self.merkle_tree_all, self.nodes_copy))
+        scene.play(FadeOut(self.title_merkle_proof, self.merkle_tree_all, *self.nodes_copy))
         
         
     def hashes_of_8_element(self, scene):
@@ -230,12 +230,11 @@ class MerkleTree(SlideBase):
         for i in range(len(all_nodes)):
             node = all_nodes[i]
             hash = all_hashes_in_order[i]
-            scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.2)
-        scene.wait(1)
+            scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.1)
         for i in range(len(nodes_directly_used)):
             node = nodes_directly_used[i]
             hash = self.hashes_on_path[i]
-            scene.play(node.animate.set_opacity(1.0).set_color(SECONDARY_COLOR), hash.animate.set_opacity(1.0).set_color(SECONDARY_COLOR), run_time=0.3)
+            scene.play(node.animate.set_opacity(1.0).set_color(SECONDARY_COLOR), hash.animate.set_opacity(1.0), run_time=0.3)
             scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.3)
 
         scene.wait(2)
@@ -244,7 +243,7 @@ class MerkleTree(SlideBase):
         for i in range(len(nodes_needed_to_proof)):
             node = nodes_needed_to_proof[i]
             hash = hashes_needed_to_proof[i]
-            scene.play(node.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR), hash.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR), run_time=0.3)
+            scene.play(node.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR), hash.animate.set_opacity(1.0), run_time=0.3)
             scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.3)
             
         scene.wait(1.5)
