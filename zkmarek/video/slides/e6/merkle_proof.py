@@ -1,6 +1,6 @@
-from manim import Create, Write, DOWN, FadeOut, Scene, Indicate, Code
+from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text
 from zkmarek.video.slides.common.code_slide import CodeSlide
-from zkmarek.video.constant import SECONDARY_COLOR
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.utils import find_in_code
 
 class MerkleProof(CodeSlide):
@@ -15,12 +15,12 @@ class MerkleProof(CodeSlide):
     
     def construct(self):
         super().construct()
-        # self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
-        self.code.scale(0.9).next_to(self.title_text, DOWN, buff=1)
+        self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
+        self.code.scale(0.9).next_to(self.title_label, DOWN, buff=1)
     
     def animate_in(self, scene):
         self.new_subsection(scene, "code to get proof", "data/sound/e6/slide2-3b.mp3")
-        scene.play(Write(self.title_text), run_time=0.7)
+        scene.play(Write(self.title_label), run_time=0.7)
         scene.play(Create(self.code))
 
         self.new_subsection(scene, "takes two arguments: tree and leaf", "data/sound/e6/slide2-3c.mp3")
@@ -39,7 +39,7 @@ class MerkleProof(CodeSlide):
         scene.wait(5.5)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.code), FadeOut(self.title_text))
+        scene.play(FadeOut(self.code), FadeOut(self.title_label))
 
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=1):
         chars = find_in_code(code, fragment)

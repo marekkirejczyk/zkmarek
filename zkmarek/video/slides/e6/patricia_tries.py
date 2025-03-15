@@ -1,6 +1,6 @@
 from manim import (Text, RoundedRectangle, DashedVMobject, Create, Write, FadeOut, Indicate, Brace, MathTex, 
                    VGroup, MoveToTarget, RIGHT, UP, LEFT, DOWN)
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.bin_mpt import BinaryMPT as BinMPT
 from zkmarek.video.slides.e6.table import TableKeyValue
