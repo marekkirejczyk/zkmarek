@@ -21,7 +21,6 @@ class CodeSlide(SlideBase):
         self.title_text = Text(self.title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         code_params = {
             "background": "window",
-            "insert_line_no": True,
             "font": "Monospace",
             "font_size": 18,
             "margin": 0.2,
