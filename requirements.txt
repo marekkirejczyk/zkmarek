@@ -5,6 +5,7 @@ soundfile
 pyloudnorm
 pycryptodome
 cryptography
+manim_editor
 setuptools
 numpy
 scipy
