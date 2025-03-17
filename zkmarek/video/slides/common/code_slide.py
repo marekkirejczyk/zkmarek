@@ -21,7 +21,6 @@ class CodeSlide(SlideBase):
         self.title_text = Text(self.title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         code_params = {
             "background": "window", 
-            "line_no_buff": 0.2,
         }
 
         code_params.update(self.kwargs)
