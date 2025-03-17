@@ -75,27 +75,21 @@ class PatriciaTries(SlideBase):
         self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4c.mp3")
         pref1 = prefixes1[0]
         for j in range(3):
-            scene.play(Indicate(pref1[j], color = SECONDARY_COLOR), run_time=1)
-            scene.play(Write(self.keys_on_nodes[j]), run_time=0.5)
+            scene.play(Indicate(pref1[j], color = SECONDARY_COLOR), run_time=0.5)
+            scene.play(Write(self.keys_on_nodes[j]), run_time=0.3)
         scene.play(Indicate(pref1[3], color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[0][1], color = SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.leaf_keys[0]))
         
         pref2 = prefixes1[1]
-        scene.play(Indicate(pref2[0], color = SECONDARY_COLOR), Indicate(self.keys_on_nodes[0], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Indicate(pref2[1], color = SECONDARY_COLOR), Indicate(self.keys_on_nodes[1], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Indicate(pref2[2], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.keys_on_nodes[3]), run_time=0.5)
-        scene.play(Indicate(pref2[3], color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[1][1]), run_time=1)
-        scene.play(Write(self.leaf_keys[1]), run_time=0.5)
+        scene.play(Indicate(pref2, color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[1][1], color = SECONDARY_COLOR), run_time=1)
+        scene.play(Write(self.leaf_keys[1]), Write(self.keys_on_nodes[3]), run_time=0.5)
         
         
-        scene.play(Indicate(prefixes1[2], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.keys_on_nodes[4]), run_time=0.4)
-        scene.play(Write(self.leaf_keys[2]), run_time=0.4)
+        scene.play(Indicate(prefixes1[2], color = SECONDARY_COLOR), run_time=0.8)
+        scene.play(Write(self.keys_on_nodes[4]), Write(self.leaf_keys[2]), run_time=0.3)
         
-        scene.play(Indicate(prefixes1[3], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.keys_on_nodes[5]), run_time=0.4)
-        scene.play(Write(self.leaf_keys[3]), run_time=0.4)
+        scene.play(Indicate(prefixes1[3], color = SECONDARY_COLOR), run_time=0.8)
+        scene.play(Write(self.keys_on_nodes[5]), Write(self.leaf_keys[3]), run_time=0.3)
                 
         self.new_subsection(scene, "key and value", "data/sound/e6/slide2-5.mp3")
         scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys))

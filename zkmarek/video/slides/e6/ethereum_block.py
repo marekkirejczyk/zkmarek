@@ -37,8 +37,9 @@ class EthereumBlock(SlideBase):
         tries = ["State Trie", "Storage Trie", "Receipts Trie", "Transaction Trie"]
         self.tries = VGroup()
         self.rectangles_tries = Group()
+        rectangle = Rectangle(width=2, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
         for i, trie in enumerate(tries):
-            rectangle = rectangle.copy().move_to(self.block.get_center()).shift(LEFT*3.5+RIGHT*(i % 5)*2+UP*1.5).shift(DOWN*2.4)
+            rectangle = rectangle.copy().move_to(self.block.get_center()).shift(LEFT*4+RIGHT*(i % 5)*2.5+UP*1.5).shift(DOWN*2.4)
             trie_text = Text(trie, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(rectangle.get_center())
             self.tries.add(trie_text)
             self.rectangles_tries.add(rectangle)
@@ -60,16 +61,16 @@ class EthereumBlock(SlideBase):
         scene.wait(2)
         scene.play(FadeIn(self.rectangles_tries), Write(self.tries))
         self.block_header_whole.generate_target()
-        self.block_header_whole.target.next_to(self.title_label, DOWN, buff = 0.1).scale(0.6).shift(LEFT*1.5)
+        self.block_header_whole.target.next_to(self.title_label, DOWN, buff = 0.1).scale(0.6)
         scene.play(MoveToTarget(self.block_header_whole))
         
         self.new_subsection(scene, "state trie", "data/sound/e6/slide2-7a.mp3")
         scene.play(Indicate(self.tries[0], color = SECONDARY_COLOR, scale_factor=1.5))
-        self.state_trie.next_to(self.block, DOWN, buff = 0.2).shift(LEFT)
+        self.state_trie.next_to(self.block, DOWN, buff = 0.2).shift(LEFT*2)
         scene.play(Create(self.state_trie), run_time=2)
         
-        self.rectangle_state_trie = Rectangle(width=7, height=1, color=SECONDARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
-        self.rectangle_state_trie.move_to(self.state_trie.get_node(2, 3).get_center()).shift(DOWN*0.4+RIGHT*2.8)
+        self.rectangle_state_trie = Rectangle(width=7, height=1, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
+        self.rectangle_state_trie.move_to(self.state_trie.get_node(2, 3).get_center()).shift(DOWN*0.2+RIGHT*3.2)
         
         labels_state_trie = ["Nonce", "Balance", "Code hash", "Storage root"]
         self.labels_state_trie = VGroup()

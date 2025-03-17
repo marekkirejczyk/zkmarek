@@ -234,7 +234,7 @@ class MerkleTree(SlideBase):
         for i in range(len(nodes_directly_used)):
             node = nodes_directly_used[i]
             hash = self.hashes_on_path[i]
-            scene.play(node.animate.set_opacity(1.0).set_color(SECONDARY_COLOR), hash.animate.set_opacity(1.0), run_time=0.3)
+            scene.play(node.animate.set_opacity(0.6).set_color(SECONDARY_COLOR), hash.animate.set_opacity(1.0), run_time=0.3)
             scene.play(node.animate.set_opacity(0.1), hash.animate.set_opacity(0.1), run_time=0.3)
 
         scene.wait(2)
@@ -251,7 +251,7 @@ class MerkleTree(SlideBase):
             
         self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
         scene.wait(1)
-        scene.play(node_prove.animate.set_opacity(1.0).set_color(SECONDARY_COLOR))
+        scene.play(node_prove.animate.set_opacity(0.6).set_color(SECONDARY_COLOR), self.level_3_hashes[3].animate.set_opacity(1.0))
         scene.wait(3)
         scene.play(Indicate(nodes_needed_to_proof[0], color = SECONDARY_COLOR), run_time=0.4)
         scene.play(Indicate(nodes_needed_to_proof[1], color = SECONDARY_COLOR), run_time=0.4)
