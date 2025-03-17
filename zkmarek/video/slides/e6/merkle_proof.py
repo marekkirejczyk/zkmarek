@@ -1,4 +1,4 @@
-from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text
+from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, Code, MoveToTarget
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.utils import find_in_code
@@ -8,15 +8,15 @@ class MerkleProof(CodeSlide):
         super().__init__(
             "Merkle Proof",
             "zkmarek/video/slides/e6/get_proof.ts",
-            # font_size=24,
             background="rectangle",
-            # insert_line_no=False,
         )
     
     def construct(self):
         super().construct()
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.code.scale(0.8).next_to(self.title_label, DOWN, buff=1)
+        
+        self.code_in_solidity = Code("zkmarek/video/slides/e6/merkle_proof.sol", background="rectangle")
     
     def animate_in(self, scene):
         self.new_subsection(scene, "code to get proof", "data/sound/e6/slide2-3b.mp3")
@@ -38,6 +38,14 @@ class MerkleProof(CodeSlide):
         self.indicate_code(scene, self.code, "const proof: HexString[] = [];")
         scene.wait(5.5)
         
+        self.new_subsection(scene, "code in solidity", "data/sound/e6/slide2-3e2.mp3")
+        self.code.generate_target()
+        self.code.target.scale(0.6).next_to(self.title_label, DOWN, buff = 0.3)
+        scene.play(MoveToTarget(self.code))
+        self.code_in_solidity.scale(0.6).next_to(self.code, DOWN, buff=0.3)
+        scene.play(Create(self.code_in_solidity))
+        scene.wait(5)
+        
     def animate_out(self, scene):
         scene.play(FadeOut(self.code), FadeOut(self.title_label))
 
@@ -49,11 +57,5 @@ class MerkleProof(CodeSlide):
     def _get_code(path: str):
         return Code(
             path,
-            # font_size=font_size,
             background="rectangle",
-            # insert_line_no=False,
-            # font="Monospace",
-            # margin=0.2,
-            # style="fruity",
-            # line_no_buff=0.2,
         )        

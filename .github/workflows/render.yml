@@ -41,9 +41,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
-        python -m manim -p --disable_caching zkmarek/video/main.py
+        python -m manim -p -ql zkmarek/video/main.py
     - uses: actions/upload-artifact@v4
       with:
         name: Movie HQ
-        path: media/videos/main/**/Episode6.mp4
+        path: media/videos/main/480p15/Episode6.mp4
         retention-days: 5

@@ -1,5 +1,5 @@
 from zkmarek.video.slides.e6.merkle import MerkleTree
-# from zkmarek.video.slides.e6.merkle_proof import MerkleProof
+from zkmarek.video.slides.e6.merkle_proof import MerkleProof
 from zkmarek.video.slides.e6.balances import EthBalances
 from zkmarek.video.slides.e6.patricia_tries import PatriciaTries
 from zkmarek.video.slides.e6.ethereum_addresses import EthereumAddresses
@@ -12,16 +12,16 @@ from zkmarek.video.slides.common.title import TitleSlide
 
 EPISODE6 = [
     # Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e5/background.mp3",),
-    Sponsored(),
-    TitleSlide("Ethereum Patricia Merkle Tries", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
-    EthBalances(),
-    TitleSlide("Merkle trees", sound = "data/sound/e6/slide2-1.mp3", wait_time=2),
-    MerkleTree(),
-    # MerkleProof(),
-    EthereumAddresses(),
-    TitleSlide("Patricia Tries", sound = "data/sound/e6/slide2-4.mp3", wait_time=4),
-    PatriciaTries(),
-    TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
-    ETHPatriciaMerkleTrie(),
-    EthereumBlock(),
+    # Sponsored(),
+    TitleSlide("Ethereum Merkle-Patricia Tries", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
+    # EthBalances(),
+    # TitleSlide("Merkle trees", sound = "data/sound/e6/slide2-1.mp3", wait_time=2),
+    # MerkleTree(),
+    MerkleProof(),
+    # EthereumAddresses(),
+    # TitleSlide("Patricia Tries", sound = "data/sound/e6/slide2-4.mp3", wait_time=4),
+    # PatriciaTries(),
+    # TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
+    # ETHPatriciaMerkleTrie(),
+    # EthereumBlock(),
 ]
