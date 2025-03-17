@@ -22,7 +22,7 @@ class CodeSlide(SlideBase):
         code_params = {
             "background": "window",
             # "font": "Monospace",
-            # "font_size": 18,
+            "font_size": 18,
             # "margin": 0.2,
             "style": "fruity",
             "line_no_buff": 0.2,
