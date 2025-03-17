@@ -71,7 +71,7 @@ class PatriciaTries(SlideBase):
         table_key_value.target.scale(0.75).shift(RIGHT*4.5)
         scene.wait(0.2)
         scene.play(MoveToTarget(table_key_value))
-        scene.play(Create(self.bin_mpt), run_time=2)
+        scene.play(Create(self.bin_mpt), run_time=1)
             
         self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4c.mp3")
         pref1 = prefixes1[0]

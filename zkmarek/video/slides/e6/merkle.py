@@ -248,14 +248,26 @@ class MerkleTree(SlideBase):
             
         scene.wait(1.5)
         
-            
-        self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
+        self.new_subsection(scene, "lets see how this works", "data/sound/e6/slide2-3a1.mp3")
+        scene.wait(2)
+        scene.play(nodes_needed_to_proof[0].animate.set_opacity(0.8).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[0].animate.set_opacity(1.0))
+        scene.play(node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR), self.level_3_hashes[3].animate.set_opacity(1.0))
         scene.wait(1)
-        scene.play(node_prove.animate.set_opacity(0.6).set_color(SECONDARY_COLOR), self.level_3_hashes[3].animate.set_opacity(1.0))
+        scene.play(self.hashes_on_path[1].animate.set_opacity(1.0), nodes_directly_used[1].set_color(SECONDARY_COLOR).animate.set_opacity(0.4), run_time=0.5)
+        scene.wait(0.5)
+        scene.play(nodes_needed_to_proof[1].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[1].animate.set_opacity(1.0), run_time=0.5)
+        scene.play(self.hashes_on_path[2].animate.set_opacity(1.0), nodes_directly_used[2].set_color(SECONDARY_COLOR).animate.set_opacity(0.4), run_time=0.5)
+        scene.play(nodes_needed_to_proof[2].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[2].animate.set_opacity(1.0), run_time=0.5)
+        scene.play(self.hashes_on_path[3].animate.set_opacity(1.0), nodes_directly_used[3].set_color(SECONDARY_COLOR).animate.set_opacity(0.4), run_time=0.5)
+        scene.wait(1)
+        
+        self.new_subsection(scene, "x3 belongs to set", "data/sound/e6/slide2-3a.mp3")
         scene.wait(3)
-        scene.play(Indicate(nodes_needed_to_proof[0], color = SECONDARY_COLOR), run_time=0.4)
-        scene.play(Indicate(nodes_needed_to_proof[1], color = SECONDARY_COLOR), run_time=0.4)
-        scene.play(Indicate(nodes_needed_to_proof[2], color = SECONDARY_COLOR), run_time=0.4)
+        scene.play(Indicate(node_prove, color = SECONDARY_COLOR), run_time=0.8)
+        scene.wait(1.5)
+        scene.play(Indicate(nodes_needed_to_proof[0], color = PRIMARY_COLOR), run_time=0.4)
+        scene.play(Indicate(nodes_needed_to_proof[1], color = PRIMARY_COLOR), run_time=0.4)
+        scene.play(Indicate(nodes_needed_to_proof[2], color = PRIMARY_COLOR), run_time=0.4)
         
         nodes_copy = []
         
@@ -271,7 +283,7 @@ class MerkleTree(SlideBase):
             scene.play(TransformMatchingShapes(VGroup(nodes_needed_to_proof[i], hashes_needed_to_proof[i]), VGroup(node, hash)), run_time=0.4)
             nodes_copy.append(node)
             nodes_copy.append(hash)
-        scene.wait(2.2)
+        scene.wait(0.5)
         self.nodes_copy = nodes_copy
     
             

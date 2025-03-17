@@ -101,7 +101,7 @@ class BinaryMPT(VGroup):
         self.leaf2.next_to(self.branch4, DOWN, buff=buff).shift(DOWN*0.2)
         
         self.branch5.next_to(self.branch2, RIGHT+DOWN, buff=buff).shift(LEFT*0.7+DOWN*0.2)
-        self.leaf4.next_to(self.branch2, DOWN+LEFT, buff=buff).shift(DOWN*0.2+RIGHT*1.2)
+        self.leaf4.next_to(self.branch2, DOWN+LEFT, buff=buff).shift(DOWN*0.2+RIGHT*1)
         self.leaf3.next_to(self.branch5, DOWN, buff=buff).shift(DOWN*0.2)
         
         self.arrow1 = create_arrow(self.root_branch, self.branch1)

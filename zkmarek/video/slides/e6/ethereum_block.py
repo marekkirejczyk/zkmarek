@@ -105,7 +105,7 @@ class EthereumBlock(SlideBase):
         scene.wait(2)
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item))
         
-        self.new_subsection(scene, "storage trie", "data/sound/e6/slide2-7b.mp3")
+        # self.new_subsection(scene, "storage trie", "data/sound/e6/slide2-7b.mp3")
         # scene.play(Indicate(self.tries[1], color=SECONDARY_COLOR, scale_factor=1.5))
         scene.wait(1)
         scene.play(Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.5))
