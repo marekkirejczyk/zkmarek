@@ -52,8 +52,8 @@ class MerkleProof(CodeSlide):
             font_size=font_size,
             background="rectangle",
             insert_line_no=False,
-            font="Monospace",
-            margin=0.2,
+            # font="Monospace",
+            # margin=0.2,
             style="fruity",
             line_no_buff=0.2,
         )        

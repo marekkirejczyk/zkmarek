@@ -12,7 +12,7 @@ from zkmarek.video.slides.episode5.episode5 import EPISODE5
 from zkmarek.video.slides.e6.episode6 import EPISODE6
 from zkmarek.video.slides.episode2.schnorr_episode import EPISODE7
 
-from zkmarek.video.slides.e6.short2 import SHORT2
+from zkmarek.video.slides.short2.short2 import SHORT2
 
 from zkmarek.video.slides.teaser.teaser1 import TEASER
 from zkmarek.video.slides.teaser2.teaser2 import TEASER2
