@@ -37,9 +37,8 @@ jobs:
     - name: Install pip dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install "manim==0.18.1"
-        pip install -r requirements.txt
-
+        python -m pip install manim-editor
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
         python -m manim -p --disable_caching zkmarek/video/main.py

@@ -20,11 +20,7 @@ class CodeSlide(SlideBase):
     def construct(self):
         self.title_text = Text(self.title, font=PRIMARY_FONT, color=PRIMARY_COLOR)
         code_params = {
-            "background": "window",
-            "font": "Monospace",
-            "font_size": 18,
-            "margin": 0.2,
-            "style": "fruity",
+            "background_color": "window", 
             "line_no_buff": 0.2,
         }
 

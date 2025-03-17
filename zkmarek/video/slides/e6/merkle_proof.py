@@ -46,14 +46,14 @@ class MerkleProof(CodeSlide):
         scene.play(Indicate(chars[index]), color=SECONDARY_COLOR, run_time=run_time)
 
     @staticmethod
-    def _get_code(path: str, font_size: int):
+    def _get_code(path: str):
         return Code(
             path,
-            font_size=font_size,
+            # font_size=font_size,
             background="rectangle",
-            insert_line_no=False,
+            # insert_line_no=False,
             # font="Monospace",
             # margin=0.2,
-            style="fruity",
-            line_no_buff=0.2,
+            # style="fruity",
+            # line_no_buff=0.2,
         )        
