@@ -1,4 +1,4 @@
-from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut, FadeIn
+from manim import Axes, Dot, GrowFromPoint, MathTex, Tex, TexTemplate, VGroup, Indicate, DashedLine, FadeOut, FadeIn, MoveToTarget
 
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.constant import HIGHLIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
@@ -37,8 +37,8 @@ class DiscreetePolynomialChart(VGroup):
         template.add_to_preamble(r"\usepackage{amsfonts}")
         field_label = r"$\mathbb{F}_{" + str(self.label) + "}$"
         self.labels = self.ax.get_axis_labels(
-            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
-            Tex(field_label, tex_template=template, font_size=42, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=55, color=PRIMARY_COLOR),
+            Tex(field_label, tex_template=template, font_size=55, color=PRIMARY_COLOR),
         )
         self.add(self.labels)
 
@@ -113,7 +113,7 @@ class DiscreetePolynomialChart(VGroup):
                 animations.append(a)
         scene.play(*animations)
 
-    def animate_shift_dots_wrap_fix(self, scene, y_shift, runtime=0.7):
+    def animate_shift_dots_wrap_fix(self, scene, y_shift, runtime=0.4):
         animations = []
         for i, d in enumerate(self.dots):
             x = FieldElement(i, self.p)
@@ -124,7 +124,10 @@ class DiscreetePolynomialChart(VGroup):
         scene.play(*animations, run_time=runtime)
         for d in self.dots:
             if d.get_fill_opacity() < 1:
-                d.set_fill(opacity=1)
+                d.generate_target()
+                d.target.set_fill(opacity=1)
+        move_to_target = [MoveToTarget(d) for d in self.dots]
+        scene.play(*move_to_target, run_time=runtime)
                 
     def animate_shift_dots_with_fade(self, scene, y_shift, runtime=0.7):
         animations = []

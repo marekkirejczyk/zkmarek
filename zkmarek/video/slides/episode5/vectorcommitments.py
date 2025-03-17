@@ -1,5 +1,5 @@
 from manim import (FadeOut, Text, LEFT, RIGHT, DOWN, UP, Write, Create, WHITE, ValueTracker, MathTex, TransformMatchingTex,
-Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes)
+Indicate, Arrow, StealthTip, GrowArrow, Transform, Axes, FadeIn, MAROON_A, PURPLE, PINK, TransformMatchingShapes, RoundedRectangle, ApplyWave)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -8,6 +8,7 @@ from zkmarek.video.slides.episode4.curve import Curve
 import numpy as np
 from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
+from scipy.special import factorial
 
 def poly(x):
     output = FieldElement(4, x.order)*x**3 - FieldElement(8, x.order)*x**2 - FieldElement(17, x.order)*x + FieldElement(30, x.order)
@@ -202,7 +203,7 @@ class VectorCommitments(SlideBase):
             FadeOut(self.labels),
             FadeOut(chart.ax, run_time=0.5), FadeIn(self.new_axes4096),  
             Transform(chart.graph, new_axes.plot_implicit_curve(
-                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / np.math.factorial(k)/k**k/np.math.factorial(k)/k**k/k for k in range(1, 101)) - y,
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
                 color=SECONDARY_COLOR
             )), 
             run_time=2)
@@ -233,3 +234,54 @@ class VectorCommitments(SlideBase):
     def transforming_poly_into_field(self, scene):
             self.chart_discrete.gen_points()
             scene.play(FadeOut(self.chart.graph, self.new_axes4096), FadeIn(self.chart_discrete))
+
+    def animate_miniature(self, scene):
+        rectangle = RoundedRectangle(corner_radius=0.5, color=PRIMARY_COLOR, width=15, height=8).scale(0.65).shift(DOWN*6).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        text = Text("Vector commitments", color=SECONDARY_COLOR,
+            font=PRIMARY_FONT, font_size=50).scale(0.65).to_edge(DOWN).next_to(rectangle, UP, buff = 0.4)
+        self.new_axes4096 = Axes(
+            x_range=[-4.7, 5500, 4095],
+            y_range=[-45, 5500, 5596],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        )
+        self.new_axes = Axes(
+            x_range=[-4.7, 20, 20],
+            y_range=[-45, 5.5, 20],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        ).scale(0.7).shift(LEFT*3+UP*0.3).shift(DOWN*6).scale(0.65)
+        self.new_axes4096.scale(0.7).shift(LEFT*3+UP*0.3).shift(DOWN*6).scale(0.65)
+        self.new_axes4096[0].shift(UP)
+        self.polynomial_graph = self.new_axes.plot_implicit_curve(
+                lambda x, y: sum((x**k*np.sin(k*np.pi*x/3)-25) / factorial(k)/k**k/factorial(k)/k**k/k for k in range(1, 101)) - y,
+                color=SECONDARY_COLOR
+            )
+        self.chart_discrete.shift(DOWN*6+RIGHT).scale(0.65)
+        self.arrow_number_chart.shift(DOWN*6).scale(0.65)
+        self.number_sequence.shift(DOWN*6).scale(0.65)
+        self.polynomial_eqn_4096_sum.shift(DOWN*5.5).scale(0.65)
+        
+        self.scale(0.65)
+        self.add(text, rectangle, self.polynomial_graph, self.new_axes4096, self.chart_discrete, self.arrow_number_chart, self.number_sequence, self.polynomial_eqn_4096_sum)
+        scene.play(FadeIn(self.polynomial_graph, rectangle, self.new_axes4096, text, self.number_sequence, self.arrow_number_chart, self.polynomial_eqn_4096_sum), run_time=0.5)
+        scene.wait(1)
+        self.chart_discrete.gen_points()
+        scene.play(FadeOut(self.polynomial_graph, self.new_axes4096), FadeIn(self.chart_discrete), run_time=0.5)
+        scene.play(ApplyWave(self.number_sequence), run_time=1)
+
+        

@@ -1,5 +1,5 @@
 import os
-from manim import Scene, config
+from manim import Scene
 from manimpango import register_font
 from presentation import Presentation
 from zkmarek.video.utils import get_slides_from_names, get_deck_name
@@ -17,9 +17,6 @@ from zkmarek.video.slides.short2.short2 import SHORT2
 from zkmarek.video.slides.teaser.teaser1 import TEASER
 from zkmarek.video.slides.teaser2.teaser2 import TEASER2
 from zkmarek.video.slides.teaser3.teaser3 import TEASER3
-
-config.width = 16
-config.height = 9
 
 DECKS = {
     "TEASER": TEASER,

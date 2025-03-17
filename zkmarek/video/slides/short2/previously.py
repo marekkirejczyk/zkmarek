@@ -410,4 +410,3 @@ class Previously(SlideBase):
         scene.wait(1)
         scene.play(FadeOut(self.tree, self.dots_vec_node, self.dots_vec_node1, self.dots_vec_node2, blobs))
         
-        
