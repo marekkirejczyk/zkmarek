@@ -47,9 +47,9 @@ def find_in_code(code, subject):
     print("Debug: code object type:", type(code))
     print("Debug: code attributes:", dir(code))
     
-    if not hasattr(code, "code"):
-        raise AttributeError("The 'code' object does not have a 'code' attribute. Check object structure.")
+    if not hasattr(code, "lines_text"):
+        raise AttributeError("The 'code' object does not have a 'lines_text' attribute. Check object structure.")
 
-    text = code.code.lines_text 
+    text = code.lines_text  
     arr = text._find_indexes(subject, text.original_text)
     return [text.chars[start:end] for start, end in arr]
