@@ -52,7 +52,7 @@ class PatriciaTries(SlideBase):
         scene.play(Write(self.title_pt), run_time=0.7)
         table_key_value = TableKeyValue().scale(0.85)
         scene.play(Create(table_key_value))
-        scene.wait(0.3)
+        scene.wait(1)
         scene.play(Indicate(table_key_value.key_header, color = SECONDARY_COLOR), run_time=1)
         scene.play(Indicate(table_key_value.value_header, color = SECONDARY_COLOR), run_time=1)
         scene.wait(1)
@@ -60,6 +60,7 @@ class PatriciaTries(SlideBase):
                      table_key_value.key_cells[3][1]]
         
         self.new_subsection(scene, "common prefixes", "data/sound/e6/slide2-4b.mp3")
+        scene.wait(1)
         for i in range(2):
             pref1 = prefixes1[2*i]
             pref2 = prefixes1[2*i+1]
@@ -68,7 +69,7 @@ class PatriciaTries(SlideBase):
             scene.wait(0.3)
         table_key_value.generate_target()
         table_key_value.target.scale(0.75).shift(RIGHT*4.5)
-        scene.wait(1)
+        scene.wait(0.2)
         scene.play(MoveToTarget(table_key_value))
         scene.play(Create(self.bin_mpt), run_time=2)
             

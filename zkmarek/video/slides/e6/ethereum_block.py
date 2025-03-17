@@ -34,12 +34,12 @@ class EthereumBlock(SlideBase):
             self.rectangles.add(rectangle)
                     
         
-        tries = ["State Trie", "Storage Trie", "Receipts Trie", "Transaction Trie"]
+        tries = ["State Trie", "Withdrawal Trie", "Receipts Trie", "Transaction Trie"]
         self.tries = VGroup()
         self.rectangles_tries = Group()
         rectangle = Rectangle(width=2, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
         for i, trie in enumerate(tries):
-            rectangle = rectangle.copy().move_to(self.block.get_center()).shift(LEFT*4+RIGHT*(i % 5)*2.5+UP*1.5).shift(DOWN*2.4)
+            rectangle = rectangle.copy().move_to(self.block.get_center()).shift(LEFT*3.75+RIGHT*(i % 5)*2.5+UP*1.5).shift(DOWN*2.4)
             trie_text = Text(trie, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(rectangle.get_center())
             self.tries.add(trie_text)
             self.rectangles_tries.add(rectangle)
@@ -56,10 +56,10 @@ class EthereumBlock(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "five seperate tries", "data/sound/e6/slide2-7.mp3")
         scene.play(FadeIn(self.block), Write(self.block_label), Write(self.title_label))
-        scene.wait(1)
         scene.play(FadeIn(self.rectangles), Write(self.labels))
-        scene.wait(2)
+        scene.wait(0.3)
         scene.play(FadeIn(self.rectangles_tries), Write(self.tries))
+        scene.wait(1)
         self.block_header_whole.generate_target()
         self.block_header_whole.target.next_to(self.title_label, DOWN, buff = 0.1).scale(0.6)
         scene.play(MoveToTarget(self.block_header_whole))
@@ -69,7 +69,7 @@ class EthereumBlock(SlideBase):
         self.state_trie.next_to(self.block, DOWN, buff = 0.2).shift(LEFT*2)
         scene.play(Create(self.state_trie), run_time=2)
         
-        self.rectangle_state_trie = Rectangle(width=7, height=1, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
+        self.rectangle_state_trie = Rectangle(width=7, height=0.75, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
         self.rectangle_state_trie.move_to(self.state_trie.get_node(2, 3).get_center()).shift(DOWN*0.2+RIGHT*3.2)
         
         labels_state_trie = ["Nonce", "Balance", "Code hash", "Storage root"]
