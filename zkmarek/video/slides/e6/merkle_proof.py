@@ -48,7 +48,7 @@ class MerkleProof(CodeSlide):
         scene.wait(5)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.code), FadeOut(self.title_label))
+        scene.play(FadeOut(self.code, self.code_in_solidity), FadeOut(self.title_label))
 
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=1):
         chars = find_in_code(code, fragment)
