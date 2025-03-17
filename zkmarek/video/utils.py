@@ -44,12 +44,6 @@ def get_deck_name(default_deck):
 #       text: str // with some whitespaces removed
 #       original_text: str
 def find_in_code(code, subject):
-    if hasattr(code, "text"):
-        text = code.text 
-    elif hasattr(code, "source_code"):
-        text = code.source_code 
-    else:
-        raise AttributeError("Could not find a text-related attribute in Code.")
-
+    text = code.code.lines_text
     arr = text._find_indexes(subject, text.original_text)
     return [text.chars[start:end] for start, end in arr]
