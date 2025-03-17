@@ -8,15 +8,15 @@ class MerkleProof(CodeSlide):
         super().__init__(
             "Merkle Proof",
             "zkmarek/video/slides/e6/get_proof.ts",
-            font_size=24,
+            # font_size=24,
             background="rectangle",
-            insert_line_no=False,
+            # insert_line_no=False,
         )
     
     def construct(self):
         super().construct()
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
-        self.code.scale(0.9).next_to(self.title_label, DOWN, buff=1)
+        self.code.scale(0.8).next_to(self.title_label, DOWN, buff=1)
     
     def animate_in(self, scene):
         self.new_subsection(scene, "code to get proof", "data/sound/e6/slide2-3b.mp3")

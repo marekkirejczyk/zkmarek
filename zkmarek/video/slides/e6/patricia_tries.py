@@ -22,7 +22,7 @@ class PatriciaTries(SlideBase):
         for i in range(len(texts)):
             text = texts[i]
             self.keys_on_nodes.append(Text(text, font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size = 20).move_to(nodes[i].get_center()))
-        leaf_texts = ["E 7", "N 9", "W 1", "EN 7"]
+        leaf_texts = ["E;  7", "N; 9", "W;  1", "EN;  7"]
 
         leaf_nodes = [self.bin_mpt.leaf1, self.bin_mpt.leaf2, self.bin_mpt.leaf4, self.bin_mpt.leaf3]
         
@@ -75,8 +75,8 @@ class PatriciaTries(SlideBase):
         self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4c.mp3")
         pref1 = prefixes1[0]
         for j in range(3):
-            scene.play(Indicate(pref1[j], color = SECONDARY_COLOR), run_time=0.5)
-            scene.play(Write(self.keys_on_nodes[j]), run_time=0.3)
+            scene.play(Indicate(pref1[j], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
+            scene.play(Write(self.keys_on_nodes[j]), run_time=0.5)
         scene.play(Indicate(pref1[3], color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[0][1], color = SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.leaf_keys[0]))
         
