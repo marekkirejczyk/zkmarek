@@ -1,4 +1,4 @@
-from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, MoveToTarget
+from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, MoveToTarget, VGroup, Mobject
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.utils import find_in_code
@@ -52,7 +52,14 @@ class MerkleProof(CodeSlide):
 
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=1):
         chars = find_in_code(code, fragment)
-        scene.play(Indicate(chars[index]), color=SECONDARY_COLOR, run_time=run_time)
+
+        if isinstance(chars, list): 
+            chars = VGroup(*[code[i] for i in chars]) 
+
+        if not isinstance(chars, Mobject):
+            raise TypeError(f"find_in_code returned {type(chars)}, expected Mobject.")
+
+        scene.play(Indicate(chars, color=SECONDARY_COLOR, run_time=run_time))
 
     @staticmethod
     def _get_code(path: str):

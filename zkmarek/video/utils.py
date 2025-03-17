@@ -43,7 +43,20 @@ def get_deck_name(default_deck):
 #     lines_text: Text
 #       text: str // with some whitespaces removed
 #       original_text: str
-def find_in_code(code, subject):
-    text = code.code.lines_text
-    arr = text._find_indexes(subject, text.original_text)
-    return [text.chars[start:end] for start, end in arr]
+
+def extract_text_from_code(code_obj):
+    if hasattr(code_obj, "code"):
+        return "\n".join(
+            "".join(line.text for line in vgroup if hasattr(line, "text"))
+            for vgroup in code_obj.code.submobjects
+        )
+    raise AttributeError("Could not find code text in Code object.")
+
+
+def find_in_code(code_obj, subject):
+    try:
+        text = extract_text_from_code(code_obj)
+        indices = [i for i in range(len(text)) if text.startswith(subject, i)]
+        return indices
+    except AttributeError:
+        raise AttributeError("Could not extract text from Code object.")
