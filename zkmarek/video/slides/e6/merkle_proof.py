@@ -1,4 +1,4 @@
-from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, Code, MoveToTarget
+from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, MoveToTarget
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.utils import find_in_code
@@ -12,7 +12,8 @@ class MerkleProof(CodeSlide):
         )
     
     def construct(self):
-        super().construct()
+        # super().construct()
+        self.code = Code("zkmarek/video/slides/e6/get_proof.ts", background="rectangle")
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.code.scale(0.8).next_to(self.title_label, DOWN, buff=1)
         
