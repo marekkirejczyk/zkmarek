@@ -1,4 +1,4 @@
-from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, MoveToTarget, VGroup, Mobject
+from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, MoveToTarget
 from zkmarek.video.slides.common.code_slide import CodeSlide
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.utils import find_in_code
