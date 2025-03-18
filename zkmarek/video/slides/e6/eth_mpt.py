@@ -67,12 +67,11 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.play(Write(self.MPT.arrow2), run_time=1)
         scene.play(Create(self.MPT.leaf2), Write(self.MPT.arrow4), run_time=1)
         self.MPT.replace_leaf2(scene)
-        scene.play(self.worldState.key_cells[2:4].animate.set_color(HIGHLIGHT_COLOR))
-        scene.play(self.MPT.branch1.get_child_slot("1").animate.set_color(PRIMARY_COLOR).set_opacity(0.4))
-        scene.play(self.worldState.key_cells[0:7].animate.set_color(HIGHLIGHT_COLOR))
-        scene.play(self.MPT.branch1.get_child_slot("f").animate.set_color(PRIMARY_COLOR).set_opacity(0.4))
-        scene.play(self.worldState.key_cells[7:14].animate.set_color(HIGHLIGHT_COLOR))
-        scene.wait(2)
+        scene.play(self.worldState.key_cells[2:3].animate.set_color(HIGHLIGHT_COLOR))
+        scene.play(self.MPT.branch1.get_child_slot("1").animate.set_color(PRIMARY_COLOR).set_opacity(0.4),
+                   self.worldState.key_cells[0:7].animate.set_color(HIGHLIGHT_COLOR))
+        scene.play(self.MPT.branch1.get_child_slot("f").animate.set_color(PRIMARY_COLOR).set_opacity(0.4), 
+                   self.worldState.key_cells[7:14].animate.set_color(HIGHLIGHT_COLOR))
         
         self.new_subsection(scene, "extensions", "data/sound/e6/slide2-6d.mp3")
         scene.play(Create(self.MPT.extension2), Write(self.MPT.arrow3), run_time=1)

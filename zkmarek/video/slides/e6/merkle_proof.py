@@ -12,7 +12,7 @@ class MerkleProof(CodeSlide):
         )
     
     def construct(self):
-        # super().construct()
+        super().construct()
         self.code = Code("zkmarek/video/slides/e6/get_proof.ts", background="rectangle")
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.code.scale(0.8).next_to(self.title_label, DOWN, buff=1)
@@ -45,22 +45,21 @@ class MerkleProof(CodeSlide):
         scene.play(MoveToTarget(self.code))
         self.code_in_solidity.scale(0.6).next_to(self.code, DOWN, buff=0.3)
         scene.play(Create(self.code_in_solidity))
-        scene.wait(5)
+        scene.wait(1)
+        self.indicate_code(scene, self.code_in_solidity, "verify")
+        scene.wait(1.7)
+        self.indicate_code(scene, self.code_in_solidity, "leaf")
+        scene.wait(0.5)
+        self.indicate_code(scene, self.code_in_solidity, "proof")
+        scene.wait(2)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.code, self.code_in_solidity), FadeOut(self.title_label))
 
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=1):
-        chars = find_in_code(code, fragment)
-
-        if isinstance(chars, list): 
-            chars = VGroup(*[code[i] for i in chars]) 
-
-        if not isinstance(chars, Mobject):
-            raise TypeError(f"find_in_code returned {type(chars)}, expected Mobject.")
-
-        scene.play(Indicate(chars, color=SECONDARY_COLOR, run_time=run_time))
-
+         chars = find_in_code(code, fragment)
+         scene.play(Indicate(chars[index]), color=SECONDARY_COLOR, run_time=run_time)
+         
     @staticmethod
     def _get_code(path: str):
         return Code(
