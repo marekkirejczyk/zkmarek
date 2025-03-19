@@ -26,17 +26,17 @@ class MerkleProof(CodeSlide):
 
         self.new_subsection(scene, "takes two arguments: tree and leaf", "data/sound/e6/slide2-3c.mp3")
         scene.wait(0.8)
-        self.indicate_code(scene, self.code, "tree")
+        # self.indicate_code(scene, self.code, "tree")
         scene.wait(1)
-        self.indicate_code(scene, self.code, "index")
+        # self.indicate_code(scene, self.code, "index")
         
         self.new_subsection(scene, "singling of every hash", "data/sound/e6/slide2-3d.mp3")
         scene.wait(1)
-        self.indicate_code(scene, self.code, "siblingIndex(index)")
+        # self.indicate_code(scene, self.code, "siblingIndex(index)")
         
         self.new_subsection(scene, "returns array of hashes", "data/sound/e6/slide2-3e.mp3")
         scene.wait(0.5)
-        self.indicate_code(scene, self.code, "const proof: HexString[] = [];")
+        # self.indicate_code(scene, self.code, "const proof: HexString[] = [];")
         scene.wait(5.5)
         
         self.new_subsection(scene, "code in solidity", "data/sound/e6/slide2-3e2.mp3")
@@ -46,11 +46,11 @@ class MerkleProof(CodeSlide):
         self.code_in_solidity.scale(0.6).next_to(self.code, DOWN, buff=0.3)
         scene.play(Create(self.code_in_solidity))
         scene.wait(1)
-        self.indicate_code(scene, self.code_in_solidity, "verify")
+        # self.indicate_code(scene, self.code_in_solidity, "verify")
         scene.wait(1.7)
-        self.indicate_code(scene, self.code_in_solidity, "leaf")
+        # self.indicate_code(scene, self.code_in_solidity, "leaf")
         scene.wait(0.5)
-        self.indicate_code(scene, self.code_in_solidity, "proof")
+        # self.indicate_code(scene, self.code_in_solidity, "proof")
         scene.wait(2)
         
     def animate_out(self, scene):
