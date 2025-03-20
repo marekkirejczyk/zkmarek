@@ -64,9 +64,9 @@ class MerkleProof(CodeSlide):
     def animate_out(self, scene):
         scene.play(FadeOut(self.code, self.code_in_solidity), FadeOut(self.title_label))
         
-    def indicate_with_circle(self, scene: Scene, location, run_time=0.8, scale_circle = 1, ):
+    def indicate_with_circle(self, scene: Scene, location, run_time=0.8, scale_circle = 1):
         circle_to_indicate = Circle(color=SECONDARY_COLOR, radius=0.5).stretch(0.5, 1)
-        scene.play(Create(circle_to_indicate.scale(scale_circle).move_to(location)), run_time=run_time)
+        scene.play(Create(circle_to_indicate.scale(scale_circle).move_to(location+UP*0.2)), run_time=run_time)
         scene.play(FadeOut(circle_to_indicate), run_time=0.3)
 
     def indicate_code(self, scene: Scene, code, fragment: str, index=0, run_time=1):

@@ -239,7 +239,7 @@ class MerkleTree(SlideBase):
 
         scene.wait(1.2)
         nodes_needed_to_proof = [self.merkle_tree_2_4.get_node(3, 2), self.merkle_tree_2_4.get_node(2, 0), self.merkle_tree_2_4.get_node(1, 1)]
-        hashes_needed_to_proof = [self.level_3_hashes[2], self.level_2_hashes[0], self.level_1_hashes[1]]
+        hashes_needed_to_proof = [self.level_3_hashes[2], self.new_hashes[1], self.level_1_hashes[1]]
         for i in range(len(nodes_needed_to_proof)):
             node = nodes_needed_to_proof[i]
             hash = hashes_needed_to_proof[i]
