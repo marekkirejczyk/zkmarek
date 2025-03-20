@@ -22,25 +22,20 @@ jobs:
     - name: Install additional dependencies
       run: |
         sudo apt-get install -y \
-          libgl1-mesa-glx \
+          libgl1 \
           libglew-dev \
           freeglut3-dev \
           mesa-utils \
           xvfb
 
+    - name: Debug OpenGL packages
+      run: apt-cache search mesa | grep -i gl
+
+    - name: Check OpenGL
+      run: glxinfo | grep "OpenGL"
+
     - name: Update CA certificates
       run: sudo apt-get install --reinstall ca-certificates
-
-    - name: Install fonts
-      run: |
-        mkdir ~/texmf
-        curl -k -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
-        unzip ~/texmf/mnsymbol.zip -d ~/texmf
-        cd ~/texmf/mnsymbol/tex && ls && latex MnSymbol.ins
-        mkdir -p ~/texmf/tex/latex/MnSymbol/
-        cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
-        mkdir -p ~/texmf/fonts/tfm/public/MnSymbol
-        cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
