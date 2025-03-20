@@ -13,12 +13,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
     - name: Install apt dependencies
       run: |
         sudo apt-get update
         sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+    
+    - name: Install additional dependencies
+      run: |
+        sudo apt-get install -y \
+          libgl1-mesa-glx \
+          libglew-dev \
+          freeglut3-dev \
+          mesa-utils \
+          xvfb
+
     - name: Update CA certificates
       run: sudo apt-get install --reinstall ca-certificates
+
     - name: Install fonts
       run: |
         mkdir ~/texmf
@@ -29,25 +41,29 @@ jobs:
         cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
         mkdir -p ~/texmf/fonts/tfm/public/MnSymbol
         cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
+
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
         cache: 'pip'
+
     - name: Install pip dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install pygments manim
+        python -m pip install pygments manim manim-editor
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Check installed packages
       run: pip list
-    - name: Print environment details
-      run: env
-    - name: Check Manim version
-      run: python -c "import manim; print(manim.__version__)"
+
+    - name: Check Manim configuration
+      run: python -m manim --config
+
     - name: Render movie (manim)
       run: |
-        python -m manim -p -qh zkmarek/video/main.py
+        xvfb-run --auto-servernum python -m manim -p -qh zkmarek/video/main.py
+    
     - name: Upload rendered video
       uses: actions/upload-artifact@v4
       with:
