@@ -28,13 +28,13 @@ class MerkleProof(CodeSlide):
 
         self.new_subsection(scene, "verifies given leaf to root", "data/sound/e6/slide2-3c.mp3")
         scene.wait(0.8)
-        self.indicate_code(scene, self.code, "verify")
+        # self.indicate_code(scene, self.code, "verify")
         scene.wait(1)
-        self.indicate_code(scene, self.code, "leaf")
+        # self.indicate_code(scene, self.code, "leaf")
         scene.wait(1)
-        self.indicate_code(scene, self.code, "root")
+        # self.indicate_code(scene, self.code, "root")
         scene.wait(1)
-        self.indicate_code(scene, self.code, "proof")
+        # self.indicate_code(scene, self.code, "proof")
         
         # self.new_subsection(scene, "computed hash", "data/sound/e6/slide2-3d.mp3")
         # scene.wait(2)
