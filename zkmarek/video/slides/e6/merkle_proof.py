@@ -19,10 +19,6 @@ class MerkleProof(CodeSlide):
         
         # self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity")
         print(self.code.__dict__) 
-        print(self.code.code_json) 
-
-
-        
     
     def animate_in(self, scene):
         self.new_subsection(scene, "code to get proof", "data/sound/e6/slide2-3b.mp3")
@@ -31,7 +27,7 @@ class MerkleProof(CodeSlide):
 
         self.new_subsection(scene, "verifies given leaf to root", "data/sound/e6/slide2-3c.mp3")
         scene.wait(0.8)
-        # self.indicate_code(scene, self.code, "verify")
+        self.indicate_code(scene, self.code, "verify")
         scene.wait(1)
         # self.indicate_code(scene, self.code, "leaf")
         scene.wait(1)
