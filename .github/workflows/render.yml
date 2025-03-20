@@ -37,13 +37,20 @@ jobs:
     - name: Install pip dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install manim-editor
+        python -m pip install pygments manim
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Check installed packages
+      run: pip list
+    - name: Print environment details
+      run: env
+    - name: Check Manim version
+      run: python -c "import manim; print(manim.__version__)"
     - name: Render movie (manim)
       run: |
         python -m manim -p -qh zkmarek/video/main.py
-        - uses: actions/upload-artifact@v4
-        with:
-          name: Movie HQ
-          path: media/videos/main/1080p60/Episode6.mp4
+    - name: Upload rendered video
+      uses: actions/upload-artifact@v4
+      with:
+        name: Movie HQ
+        path: media/videos/main/1080p60/Episode6.mp4
         retention-days: 5
