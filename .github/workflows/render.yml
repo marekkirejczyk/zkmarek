@@ -29,10 +29,11 @@ jobs:
         cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
         mkdir -p ~/texmf/fonts/tfm/public/MnSymbol
         cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
-    - name: Set up Python 3.12.4
+    - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12.4'
+        python-version: '3.11'
+        cache: 'pip'
     - name: Install pip dependencies
       run: |
         python -m pip install --upgrade pip
@@ -40,6 +41,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Render movie (manim)
       run: |
+        manim --version
         python -m manim -p -qh zkmarek/video/main.py
         - uses: actions/upload-artifact@v4
         with:
