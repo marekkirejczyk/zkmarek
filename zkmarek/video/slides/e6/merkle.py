@@ -198,7 +198,7 @@ class MerkleTree(SlideBase):
             levels = level[i]
             prev_hash = prev_hashes[i]
             levels.set_color(SECONDARY_COLOR)
-            scene.play(TransformMatchingShapes(prev_hash, self.new_hashes[i]), run_time=0.8)
+            scene.play(TransformMatchingShapes(prev_hash, self.new_hashes[i]), run_time=0.9)
 
         self.all_hashes = VGroup(
             *self.new_hashes, 
@@ -266,14 +266,14 @@ class MerkleTree(SlideBase):
     
         self.new_subsection(scene, "lets see how this works", "data/sound/e6/slide2-3a1.mp3")
         scene.wait(2)
-        scene.play(nodes_needed_to_proof[0].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[0].animate.set_opacity(1.0))
+        scene.play(nodes_needed_to_proof[0].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[0].animate.set_opacity(1.0), Indicate(self.nodes_copy[0], color = SECONDARY_COLOR))
         scene.play(node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR), self.level_3_hashes[3].animate.set_opacity(1.0))
         scene.wait(1)
         scene.play(self.hashes_on_path[1].animate.set_opacity(1.0), nodes_directly_used[1].set_color(SECONDARY_COLOR).animate.set_opacity(0.4), run_time=0.5)
         scene.wait(0.5)
-        scene.play(nodes_needed_to_proof[1].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[1].animate.set_opacity(1.0), run_time=0.5)
+        scene.play(nodes_needed_to_proof[1].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[1].animate.set_opacity(1.0), Indicate(self.nodes_copy[2], color = SECONDARY_COLOR), run_time=0.5)
         scene.play(self.hashes_on_path[2].animate.set_opacity(1.0), nodes_directly_used[2].set_color(SECONDARY_COLOR).animate.set_opacity(0.4), run_time=0.5)
-        scene.play(nodes_needed_to_proof[2].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[2].animate.set_opacity(1.0), run_time=0.5)
+        scene.play(nodes_needed_to_proof[2].animate.set_opacity(0.4).set_color(HIGHLIGHT2_COLOR), hashes_needed_to_proof[2].animate.set_opacity(1.0), Indicate(self.nodes_copy[4], color = SECONDARY_COLOR), run_time=0.5)
         scene.play(self.hashes_on_path[3].animate.set_opacity(1.0), nodes_directly_used[3].set_color(SECONDARY_COLOR).animate.set_opacity(0.4), run_time=0.5)
         scene.wait(1)
         

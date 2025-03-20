@@ -23,7 +23,7 @@ class EthereumAddresses(SlideBase):
         
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "Ethereum addresses", "data/sound/e6/slide2-3f.mp3")
+        self.new_subsection(scene, "Ethereum addresses", "data/sound/e6/slide2-3i.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
         scene.play(FadeIn(self.block, self.addresses_all, self.brace_addresses))
         scene.play(ChangeDecimalToValue(self.number, 308105039), run_time=2)
@@ -41,22 +41,8 @@ class EthereumAddresses(SlideBase):
         scene.wait(1.5)
         scene.play(FadeOut(self.addresses, self.length_brace, self.length_text_bytes, self.block))
         
-        self.new_subsection(scene, "Ethereum addresses", "data/sound/e6/slide2-3g.mp3")
-        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7+LEFT*1)
-        self.dots_bin_merkle1 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 0), DOWN, buff = 1.0).shift(DOWN*0.2)
-        self.dots_bin_merkle2 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 1), DOWN, buff = 1.0).shift(DOWN*0.2)
-        self.dots_bin_merkle3 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 2), DOWN, buff = 1.0).shift(DOWN*0.2)
-        self.dots_bin_merkle4 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 3), DOWN, buff = 1.0).shift(DOWN*0.2)
-        self.merkle_tree_binary = VGroup(self.merkle_tree_binary, self.dots_bin_merkle1, self.dots_bin_merkle2, self.dots_bin_merkle3, self.dots_bin_merkle4)
-        scene.play(Create(self.merkle_tree_binary))
-        self.brace_28_levels = Brace(self.merkle_tree_binary, direction=RIGHT, color=PRIMARY_COLOR)
-        
-        self.brace_text_levels28 = Text("160 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_28_levels, RIGHT, buff = 0.1)
-        scene.wait(2)
-        scene.play(Create(self.brace_28_levels), Write(self.brace_text_levels28))
-        scene.wait(3)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.merkle_tree_binary, self.brace_28_levels, self.brace_text_levels28))
+        scene.play(FadeOut(self.title_label))
         
         

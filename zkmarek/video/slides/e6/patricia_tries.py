@@ -22,7 +22,7 @@ class PatriciaTries(SlideBase):
         for i in range(len(texts)):
             text = texts[i]
             self.keys_on_nodes.append(Text(text, font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size = 20).move_to(nodes[i].get_center()))
-        leaf_texts = ["E;  7", "N; 9", "W;  1", "EN;  7"]
+        leaf_texts = ["E", "N", "W;  1", "EN;  7"]
 
         leaf_nodes = [self.bin_mpt.leaf1, self.bin_mpt.leaf2, self.bin_mpt.leaf4, self.bin_mpt.leaf3]
         
@@ -74,26 +74,27 @@ class PatriciaTries(SlideBase):
         scene.play(Create(self.bin_mpt), run_time=1)
             
         self.new_subsection(scene, "indexed along the path", "data/sound/e6/slide2-4c.mp3")
+        self.add_values()
         pref1 = prefixes1[0]
         for j in range(3):
             scene.play(Indicate(pref1[j], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
             scene.play(Write(self.keys_on_nodes[j]), run_time=0.5)
         scene.play(Indicate(pref1[3], color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[0][1], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.leaf_keys[0]))
+        scene.play(Write(self.leaf_keys[0]), Create(self.values0))
         
         pref2 = prefixes1[1]
         scene.play(Indicate(pref2, color = SECONDARY_COLOR), Indicate(table_key_value.value_cells[1][1], color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.leaf_keys[1]), Write(self.keys_on_nodes[3]), run_time=0.5)
+        scene.play(Write(self.leaf_keys[1]), Write(self.keys_on_nodes[3]), Create(self.values1), run_time=0.5)
         
         
         scene.play(Indicate(prefixes1[2], color = SECONDARY_COLOR), run_time=0.8)
-        scene.play(Write(self.keys_on_nodes[4]), Write(self.leaf_keys[2]), run_time=0.3)
+        scene.play(Write(self.keys_on_nodes[4]), Write(self.leaf_keys[2]), Create(self.values2), run_time=0.3)
         
         scene.play(Indicate(prefixes1[3], color = SECONDARY_COLOR), run_time=0.8)
-        scene.play(Write(self.keys_on_nodes[5]), Write(self.leaf_keys[3]), run_time=0.3)
+        scene.play(Write(self.keys_on_nodes[5]), Write(self.leaf_keys[3]), Create(self.values3), run_time=0.3)
                 
         self.new_subsection(scene, "key and value", "data/sound/e6/slide2-5.mp3")
-        scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys))
+        scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys, *self.values, *self.rectangles_values))
 
         scene.play(Create(self.node), run_time=1)
         scene.play(Create(self.key), Write(self.key_text))
@@ -163,3 +164,22 @@ class PatriciaTries(SlideBase):
         
         scene.play(FadeOut(self.merkle_tree_hexary, self.brace_7_levels, self.brace_text_levels7, self.dots_hex_merkle))     
         
+    def add_values(self):
+        rectangles_values = RoundedRectangle(width = 0.4, height = 0.4, corner_radius=0.05, color = PRIMARY_COLOR, fill_opacity = 0.27, stroke_width = 0.0)
+        self.rectangles_values = []
+        leaves = [self.bin_mpt.leaf1, self.bin_mpt.leaf2, self.bin_mpt.leaf4, self.bin_mpt.leaf3]
+        for i in range(4):
+            rectangle = rectangles_values.copy().next_to(leaves[i], DOWN, buff = 0.1)
+            self.rectangles_values.append(rectangle)
+        values = ["7", "9", "1", "7"]
+        
+        self.values = []
+        for i in range(len(values)):
+            text = values[i]
+            self.values.append(Text(text, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 20).move_to(self.rectangles_values[i].get_center()))
+            
+        self.values0 = VGroup(self.values[0], self.rectangles_values[0])
+        self.values1 = VGroup(self.values[1], self.rectangles_values[1])
+        self.values2 = VGroup(self.values[2], self.rectangles_values[2])
+        self.values3 = VGroup(self.values[3], self.rectangles_values[3])
+    
