@@ -10,61 +10,18 @@ permissions:
 
 jobs:
   render_hq:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Install apt dependencies
+
+    - name: Check Ubuntu Version
+      run: lsb_release -a
+
+    - name: Debug installed OpenGL libraries
+      run: dpkg -l | grep -E "mesa|opengl|glx"
+
+    - name: Install OpenGL dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra libgl1 --fix-missing
+        sudo apt-get install -y libgl1-mesa-dri libglx-mesa0 libgl1-mesa-glx libxcb-glx0
 
-    - name: Install additional dependencies
-      run: |
-        sudo apt-get install -y \
-          libgl1 \
-          libglew-dev \
-          freeglut3-dev \
-          mesa-utils \
-          xvfb
-
-    - name: Debug OpenGL packages
-      run: apt-cache search mesa | grep -i gl
-
-    - name: Check OpenGL
-      run: glxinfo | grep "OpenGL"
-
-    - name: Update CA certificates
-      run: sudo apt-get install --reinstall ca-certificates
-
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        cache: 'pip'
-
-    - name: Install pip dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install pygments manim manim-editor
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-    - name: Check installed packages
-      run: pip list
-
-    - name: Check Manim configuration
-      run: python -m manim --config
-    - name: Debug package availability
-      run: |
-        apt-cache search libgl | grep -i mesa
-
-    - name: Render movie (manim)
-      run: |
-        xvfb-run --auto-servernum python -m manim -p -qh zkmarek/video/main.py
-    
-    - name: Upload rendered video
-      uses: actions/upload-artifact@v4
-      with:
-        name: Movie HQ
-        path: media/videos/main/1080p60/Episode6.mp4
-        retention-days: 5
