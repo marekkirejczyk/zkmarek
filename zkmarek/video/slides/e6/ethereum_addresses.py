@@ -1,9 +1,8 @@
 from manim import (Text, FadeIn, Create, RoundedRectangle, Write, ImageMobject, FadeOut, UP, DOWN, Group, RIGHT, LEFT, ChangeDecimalToValue,
-                   Integer, Brace, VGroup, MoveToTarget, ReplacementTransform, MathTex)
+                   Integer, Brace, VGroup, MoveToTarget, ReplacementTransform)
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT
-from zkmarek.video.slides.e6.tree import MerkleTree as Tree
 
 class EthereumAddresses(SlideBase):
     def __init__(self) -> None:
