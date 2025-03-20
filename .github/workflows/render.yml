@@ -10,7 +10,8 @@ permissions:
 
 jobs:
   render_hq:
-    runs-on: ubuntu-22.04 
+    runs-on: ubuntu-22.04  
+
     steps:
     - uses: actions/checkout@v3
 
@@ -25,3 +26,46 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libgl1-mesa-dri libglx-mesa0 libgl1-mesa-glx libxcb-glx0
 
+    - name: Install apt dependencies
+      run: |
+        sudo apt-get install -y libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
+
+    - name: Update CA certificates
+      run: sudo apt-get install --reinstall ca-certificates
+
+    - name: Install fonts
+      run: |
+        mkdir ~/texmf
+        curl -k -L -o ~/texmf/mnsymbol.zip https://mirrors.ctan.org/fonts/mnsymbol.zip
+        unzip ~/texmf/mnsymbol.zip -d ~/texmf
+        cd ~/texmf/mnsymbol/tex && ls && latex MnSymbol.ins
+        mkdir -p ~/texmf/tex/latex/MnSymbol/
+        cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
+        mkdir -p ~/texmf/fonts/tfm/public/MnSymbol
+        cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install pip dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Check installed Python packages
+      run: |
+        pip list
+
+    - name: Render movie (manim)
+      run: |
+        python -m manim -p -qh zkmarek/video/main.py
+
+    - name: Upload Movie HQ
+      uses: actions/upload-artifact@v4
+      with:
+        name: Movie HQ
+        path: media/videos/main/1080p60/Episode6.mp4
+        retention-days: 5
