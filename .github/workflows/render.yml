@@ -17,8 +17,8 @@ jobs:
     - name: Install apt dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra --fix-missing
-    
+        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ ffmpeg texlive-latex-extra libgl1 --fix-missing
+
     - name: Install additional dependencies
       run: |
         sudo apt-get install -y \
@@ -54,6 +54,9 @@ jobs:
 
     - name: Check Manim configuration
       run: python -m manim --config
+    - name: Debug package availability
+      run: |
+        apt-cache search libgl | grep -i mesa
 
     - name: Render movie (manim)
       run: |
