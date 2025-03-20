@@ -12,12 +12,15 @@ class MerkleProof(CodeSlide):
         )
     
     def construct(self):
-        # super().construct()
-        self.code = Code("zkmarek/video/slides/e6/merkle_proof.sol", background="rectangle")
+        super().construct()
+        self.code = Code("zkmarek/video/slides/e6/merkle_proof.sol", background="rectangle", language="solidity")
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.code.scale(0.6).next_to(self.title_label, DOWN, buff=1)
         
-        self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle")
+        self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity")
+        
+        print(self.code.code_string)
+
         
     
     def animate_in(self, scene):
