@@ -13,7 +13,15 @@ class MerkleProof(CodeSlide):
     
     def construct(self):
         super().construct()
-        self.code = Code("zkmarek/video/slides/e6/merkle_proof.sol", background="rectangle", language="solidity")
+        self.code = Code("zkmarek/video/slides/e6/merkle_proof.sol", code_string = """    function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf) internal pure returns (bool) {
+        bytes32 computedHash = leaf;
+        
+        for (uint256 i = 0; i < proof.length; i++) { 
+            computedHash = commutativeKeccak256(computedHash, proof[i]); 
+        }
+
+        return computedHash == root;
+    }""", background="rectangle", language="solidity")
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.code.scale(0.6).next_to(self.title_label, DOWN, buff=1)
         
