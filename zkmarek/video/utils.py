@@ -39,7 +39,7 @@ def get_deck_name(default_deck):
 
 
 # code: Code (arg)
-#   code: Paragraph
+#   code_lines: Paragraph
 #     lines_text: Text
 #       text: str // with some whitespaces removed
 #       original_text: str
