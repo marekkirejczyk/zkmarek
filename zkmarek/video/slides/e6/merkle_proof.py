@@ -18,7 +18,6 @@ class MerkleProof(CodeSlide):
         self.code.scale(0.6).next_to(self.title_label, DOWN, buff=1)
         
         # self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity")
-        print(self.code.__dict__) 
         print(self.code.code_lines) 
         # print(self.code.code_json) 
     
