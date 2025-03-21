@@ -45,6 +45,6 @@ def get_deck_name(default_deck):
 #       original_text: str
 
 def find_in_code(code, subject):
-     text = code.code_string
+     text = code.code_lines.lines_text
      arr = text._find_indexes(subject, text.original_text)
      return [text.chars[start:end] for start, end in arr]
