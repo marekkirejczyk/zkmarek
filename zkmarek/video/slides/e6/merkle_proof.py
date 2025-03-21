@@ -62,7 +62,7 @@ class MerkleProof(SlideBase):
         self.indicate_code(scene, self.code_keccak, "efficientKeccak256(b, a)")
         scene.wait(2)
         
-        self.new_subsection(scene, "w/o knowledge of leafs exact pos", "data/sound/e6/slide2-3h.mp3")
+        # self.new_subsection(scene, "w/o knowledge of leafs exact pos", "data/sound/e6/slide2-3h.mp3")
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.code, self.code_keccak), FadeOut(self.title_label))
