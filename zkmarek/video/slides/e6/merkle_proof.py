@@ -19,6 +19,7 @@ class MerkleProof(CodeSlide):
         
         # self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity")
         print(self.code.__dict__) 
+        print(self.code.code_lines) 
         # print(self.code.code_json) 
     
     def animate_in(self, scene):
