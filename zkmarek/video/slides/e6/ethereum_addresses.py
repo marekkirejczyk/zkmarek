@@ -31,7 +31,7 @@ class EthereumAddresses(SlideBase):
         scene.play(FadeOut(self.dots, self.more_addresses, self.number, self.brace_addresses), run_time=0.5)
         scene.play(MoveToTarget(self.addresses), run_time=0.5)
         
-        self.length_brace = Brace(self.addresses, DOWN, color = PRIMARY_COLOR)
+        self.length_brace = Brace(self.addresses[2:], DOWN, color = PRIMARY_COLOR)
         self.length_text = Text("40 nibbles", color = PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.length_brace, DOWN, buff = 0.1)
         self.length_text_bytes = Text("20 bytes", color = PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.length_brace, DOWN, buff = 0.1)
         scene.play(Create(self.length_brace), Write(self.length_text))

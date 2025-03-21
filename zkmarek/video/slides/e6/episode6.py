@@ -19,7 +19,7 @@ EPISODE6 = [
     MerkleTree(),
     MerkleProof(),
     EthereumAddresses(),
-    TitleSlide("Patricia Tries", sound = "data/sound/e6/slide2-4.mp3", wait_time=4),
+    TitleSlide("Patricia Tries", sound = "data/sound/e6/slide2-4.mp3", wait_time=6),
     PatriciaTries(),
     TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
     ETHPatriciaMerkleTrie(),

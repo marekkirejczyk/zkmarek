@@ -1,5 +1,5 @@
 from manim import (Text, RoundedRectangle, DashedVMobject, Create, Write, FadeOut, Indicate, Brace, MathTex, 
-                   VGroup, MoveToTarget, RIGHT, UP, LEFT, DOWN, FadeIn)
+                   VGroup, MoveToTarget, RIGHT, UP, LEFT, DOWN, FadeIn, TransformMatchingShapes)
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.bin_mpt import BinaryMPT as BinMPT
@@ -95,9 +95,9 @@ class PatriciaTries(SlideBase):
                 
         self.new_subsection(scene, "key and value", "data/sound/e6/slide2-5.mp3")
         scene.play(FadeOut(self.bin_mpt, table_key_value, *self.keys_on_nodes, *self.leaf_keys, *self.values, *self.rectangles_values))
-
+        self.title_state_trie = Text("State Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         scene.play(Create(self.node), run_time=1)
-        scene.play(Create(self.key), Write(self.key_text))
+        scene.play(Create(self.key), Write(self.key_text), TransformMatchingShapes(self.title_pt, self.title_state_trie), run_time=1)
         scene.play(Write(self.account_address))
         scene.wait(0.5)
         scene.play(Create(self.value), Write(self.value_text))
@@ -107,10 +107,10 @@ class PatriciaTries(SlideBase):
         scene.play(FadeOut(self.node, self.key, self.value, self.key_text, self.value_text, self.account_balance, self.account_address))
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_pt))
+        scene.play(FadeOut(self.title_state_trie))
         
     def brace_levels(self, scene):
-        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7+LEFT*2.5)
+        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7+LEFT*1)
         self.dots_bin_merkle1 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 0), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle2 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 1), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle3 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 2), DOWN, buff = 1.0).shift(DOWN*0.2)

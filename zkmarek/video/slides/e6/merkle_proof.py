@@ -23,13 +23,13 @@ class MerkleProof(SlideBase):
         scene.play(Create(self.code))
 
         self.new_subsection(scene, "verifies given leaf to root", "data/sound/e6/slide2-3c.mp3")
-        scene.wait(0.8)
+        scene.wait(0.2)
         self.indicate_code(scene, self.code, "verify")
-        scene.wait(1)
+        scene.wait(0.2)
         self.indicate_code(scene, self.code, "leaf")
-        scene.wait(1)
+        scene.wait(0.2)
         self.indicate_code(scene, self.code, "root")
-        scene.wait(1)
+        scene.wait(0.2)
         self.indicate_code(scene, self.code, "proof")
         
         self.new_subsection(scene, "computed hash", "data/sound/e6/slide2-3d.mp3")
@@ -41,7 +41,7 @@ class MerkleProof(SlideBase):
         self.indicate_code(scene, self.code, "proof.length")
         scene.wait(1.5)
         self.indicate_code(scene, self.code, "computedHash = commutativeKeccak256(computedHash, proof[i]);")
-        scene.wait(3)
+        scene.wait(1)
         
         self.new_subsection(scene, "clever trick", "data/sound/e6/slide2-3f.mp3")
         self.code.generate_target()
@@ -49,8 +49,9 @@ class MerkleProof(SlideBase):
         scene.play(MoveToTarget(self.code))
         self.code_keccak.scale(0.6).next_to(self.code, DOWN, buff=0.3)
         scene.play(Create(self.code_keccak))
-        scene.wait(1)
-        self.indicate_code(scene, self.code_keccak, "bytes32 a, bytes32 b")
+        scene.wait(1.5)
+        self.indicate_code(scene, self.code, "commutativeKeccak256")
+        self.indicate_code(scene, self.code_keccak, "commutativeKeccak256")
         scene.wait(1.7)
         
         self.new_subsection(scene, "smaller hash is always placed first", "data/sound/e6/slide2-3g.mp3")
