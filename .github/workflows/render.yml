@@ -30,10 +30,10 @@ jobs:
         cp ~/texmf/mnsymbol/tex/MnSymbol.sty ~/texmf/tex/latex/MnSymbol/
         mkdir -p ~/texmf/fonts/tfm/public/MnSymbol
         cp ~/texmf/mnsymbol/tfm/* ~/texmf/fonts/tfm/public/MnSymbol
-    - name: Set up Python 3.12
+    - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12'
+        python-version: '3.11'
         cache: 'pip'
 
     - name: Install pip dependencies
