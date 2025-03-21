@@ -32,7 +32,7 @@ DECKS = {
     "E7": EPISODE7,
 }
 
-DEFAULT_DECK = "E5"
+DEFAULT_DECK = "E6"
 
 
 class Episode6(Scene):

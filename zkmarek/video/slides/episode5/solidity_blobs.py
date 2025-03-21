@@ -10,7 +10,7 @@ class BlobsSolidity(CodeSlide):
 
 
     def __init__(self):
-        super().__init__("Blobs in Solidity", "zkmarek/video/slides/e5/blobs.sol")
+        super().__init__("Blobs in Solidity", "zkmarek/video/slides/episode5/blobs.sol")
 
     def construct(self):
         super().construct()

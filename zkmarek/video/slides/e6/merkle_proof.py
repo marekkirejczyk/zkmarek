@@ -1,15 +1,11 @@
 from manim import Create, Write, DOWN, UP, FadeOut, Scene, Indicate, Code, Text, Circle #, MoveToTarget
-from zkmarek.video.slides.common.code_slide import CodeSlide
+from zkmarek.video.slides.common.code_slide import SlideBase
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT
 from zkmarek.video.utils import find_in_code
 
-class MerkleProof(CodeSlide):
+class MerkleProof(SlideBase):
     def __init__(self):
-        super().__init__(
-            "Merkle Proof",
-            "zkmarek/video/slides/e6/merkle_proof.sol",
-            background="rectangle",
-        )
+        super().__init__("Merkle Proof")
     
     def construct(self):
         super().construct()
