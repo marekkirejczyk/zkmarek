@@ -1,6 +1,6 @@
 ruff
 pyright
-manim-ce==0.18.1
+manim == 0.18.1
 soundfile
 pyloudnorm
 pycryptodome
