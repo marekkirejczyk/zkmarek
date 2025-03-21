@@ -111,6 +111,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
         for i in range(4):
             scene.play(Indicate(leaves[i], color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.4)
             
+        self.new_subsection(scene, "leaf belongs to the root", "data/sound/e6/slide2-6g.mp3")
         scene.wait(2)
         scene.play(Indicate(self.MPT.leaf1, color = PRIMARY_COLOR, scale_factor=1.1))
         scene.wait(1.5)

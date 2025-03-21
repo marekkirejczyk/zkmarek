@@ -1,5 +1,5 @@
 from manim import (Text, RoundedRectangle, DashedVMobject, Create, Write, FadeOut, Indicate, Brace, MathTex, 
-                   VGroup, MoveToTarget, RIGHT, UP, LEFT, DOWN)
+                   VGroup, MoveToTarget, RIGHT, UP, LEFT, DOWN, FadeIn)
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.bin_mpt import BinaryMPT as BinMPT
@@ -22,7 +22,7 @@ class PatriciaTries(SlideBase):
         for i in range(len(texts)):
             text = texts[i]
             self.keys_on_nodes.append(Text(text, font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size = 20).move_to(nodes[i].get_center()))
-        leaf_texts = ["E", "N", "W;  1", "EN;  7"]
+        leaf_texts = ["E", "N", "W", "EN"]
 
         leaf_nodes = [self.bin_mpt.leaf1, self.bin_mpt.leaf2, self.bin_mpt.leaf4, self.bin_mpt.leaf3]
         
@@ -110,13 +110,18 @@ class PatriciaTries(SlideBase):
         scene.play(FadeOut(self.title_pt))
         
     def brace_levels(self, scene):
-        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7)
+        self.merkle_tree_binary = Tree(num_levels=4, include_labels=False).scale(0.5).shift(UP*3.7+LEFT*2.5)
         self.dots_bin_merkle1 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 0), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle2 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 1), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle3 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 2), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.dots_bin_merkle4 = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_binary.get_node(2, 3), DOWN, buff = 1.0).shift(DOWN*0.2)
         self.merkle_tree_binary = VGroup(self.merkle_tree_binary, self.dots_bin_merkle1, self.dots_bin_merkle2, self.dots_bin_merkle3, self.dots_bin_merkle4)
         scene.play(Create(self.merkle_tree_binary))
+        self.brace_160_levels = Brace(self.merkle_tree_binary, direction=RIGHT, color=PRIMARY_COLOR).scale(1.2).shift(DOWN*0.3)
+        self.brace_text_levels160 = Text("160 levels", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20).next_to(self.brace_160_levels, RIGHT, buff = 0.1)
+        
+        scene.play(FadeIn(self.brace_160_levels), Write(self.brace_text_levels160))
+        scene.wait(3)
         
         self.merkle_tree_hexary = MT16(num_levels=4, focused_node_path=[7,8,7]).scale(0.6).shift(UP*4+LEFT)
         self.dots_hex_merkle = MathTex(r"\boldsymbol{\cdots}", color = PRIMARY_COLOR, font_size = 40).next_to(self.merkle_tree_hexary, DOWN, buff = 0.3)
@@ -128,7 +133,7 @@ class PatriciaTries(SlideBase):
         self.new_subsection(scene, "bin->hex", "data/sound/e6/slide2-5b.mp3")
         nodes = [self.merkle_tree_hexary.get_node(1, i) for i in range(16)]
         scene.wait(1)
-        scene.play(FadeOut(self.merkle_tree_binary))
+        scene.play(FadeOut(self.merkle_tree_binary, self.brace_160_levels, self.brace_text_levels160))  
         scene.play(Create(self.merkle_tree_hexary), Write(self.dots_hex_merkle))
         for i in range(16):
             scene.play(Indicate(nodes[i], color = SECONDARY_COLOR), run_time=0.15)

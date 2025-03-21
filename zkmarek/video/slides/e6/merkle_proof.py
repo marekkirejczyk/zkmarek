@@ -43,7 +43,7 @@ class MerkleProof(SlideBase):
         self.indicate_code(scene, self.code, "computedHash = commutativeKeccak256(computedHash, proof[i]);")
         scene.wait(3)
         
-        # self.new_subsection(scene, "code in solidity", "data/sound/e6/slide2-3f.mp3")
+        self.new_subsection(scene, "clever trick", "data/sound/e6/slide2-3f.mp3")
         self.code.generate_target()
         self.code.target.next_to(self.title_label, DOWN, buff = 1.0)
         scene.play(MoveToTarget(self.code))
@@ -62,7 +62,8 @@ class MerkleProof(SlideBase):
         self.indicate_code(scene, self.code_keccak, "efficientKeccak256(b, a)")
         scene.wait(2)
         
-        # self.new_subsection(scene, "w/o knowledge of leafs exact pos", "data/sound/e6/slide2-3h.mp3")
+        self.new_subsection(scene, "w/o knowledge of leafs exact pos", "data/sound/e6/slide2-3h.mp3")
+        scene.wait(5)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.code, self.code_keccak), FadeOut(self.title_label))
