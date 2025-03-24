@@ -7,8 +7,9 @@ from zkmarek.video.slides.e6.eth_mpt import ETHPatriciaMerkleTrie
 from zkmarek.video.slides.e6.ethereum_block import EthereumBlock
 from zkmarek.video.slides.episode2.support import Sponsored
 # from zkmarek.video.slides.common.intro import Intro
-# from zkmarek.video.slides.common.subscribe import Subscribe
+from zkmarek.video.slides.common.subscribe import Subscribe
 from zkmarek.video.slides.common.title import TitleSlide
+from zkmarek.video.slides.e6.proof_sizes import ProofSize
 
 EPISODE6 = [
     # Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e5/background.mp3",),
@@ -24,4 +25,6 @@ EPISODE6 = [
     TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
     ETHPatriciaMerkleTrie(),
     EthereumBlock(),
+    ProofSize(),
+    Subscribe("data/sound/episode1/s28.wav"),
 ]

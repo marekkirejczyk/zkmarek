@@ -12,9 +12,9 @@ class EthereumBlock(SlideBase):
 
         self.block = Rectangle(width=10.5, height=2.5, color=PRIMARY_COLOR, fill_opacity=0.17, stroke_width = 0.0)
         # self.block.next_to(self.title_label, DOWN, buff = 0.5)
-        self.block_label = Text("Block N Header", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.block, UP, buff = 0.2).shift(LEFT*1.5)
+        self.block_label = Text("Block N Header", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.block, UP, buff = 0.2).shift(LEFT*2)
         
-        labels = ["Prev hash", "Nonce", "Timestamp", "Uncles hash", "Mix hash", "...", "...", "..."]
+        labels = ["Prev hash", "Nonce", "Timestamp", "Beneficiary", "Gas limit", "Gas used", "Block num", "...", "...", "..."]
         self.labels = VGroup()
         rectangle = Rectangle(width=1.5, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
         
@@ -31,7 +31,7 @@ class EthereumBlock(SlideBase):
             self.rectangles.add(rectangle)
                     
         
-        tries = ["State Trie", "Withdrawals Trie", "Receipts Trie", "Transaction Trie"]
+        tries = ["State Trie", "Transaction Trie", "Receipts Trie", "Withdrawals Trie"]
         self.tries = VGroup()
         self.rectangles_tries = Group()
         rectangle = Rectangle(width=2, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
@@ -62,10 +62,10 @@ class EthereumBlock(SlideBase):
         
         scene.play(Create(self.state_trie), run_time=2)
         
-        self.rectangle_state_trie = Rectangle(width=6, height=0.75, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
+        self.rectangle_state_trie = Rectangle(width=7, height=0.75, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
         self.rectangle_state_trie.move_to(self.nodes[5]).shift(DOWN*0.2+RIGHT*2.5)
         
-        labels_state_trie = ["address", "...", "...", "...", "Storage root"]
+        labels_state_trie = ["address", "Nonce", "Balance", "Code Hash", "Storage root"]
         self.labels_state_trie = VGroup()
         self.rectangles_state_trie = Group()
         rectangle_all = Rectangle(width=0.5, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
@@ -74,12 +74,12 @@ class EthereumBlock(SlideBase):
         for i, label in enumerate(labels_state_trie):
             if i == 0:
                 rectangle = rectangle_storage.copy().move_to(self.rectangle_state_trie.get_center()).shift(LEFT*2)
-            elif i ==4:
-                rectangle = rectangle_storage.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
+            # elif i ==4:
+            #     rectangle = rectangle_storage.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
             else:
-                rectangle = rectangle_all.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
+                rectangle = rectangle_storage.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
             
-            label_text = Text(label, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(rectangle.get_center())
+            label_text = Text(label, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18).move_to(rectangle.get_center())
             self.rectangles_state_trie.add(rectangle)
             self.labels_state_trie.add(label_text)
         
@@ -107,6 +107,8 @@ class EthereumBlock(SlideBase):
         
         scene.wait(1)
         scene.play(Indicate(self.labels_state_trie[4], color=SECONDARY_COLOR, scale_factor=1.5))
+        self.create_storage_trie()
+        scene.play(Create(self.storage_trie), run_time=1.5)
         
         self.new_subsection(scene, "three more tries", "data/sound/e6/slide2-7c.mp3")
         scene.play(Indicate(self.tries[1], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
@@ -157,6 +159,40 @@ class EthereumBlock(SlideBase):
         self.arrows = VGroup(arrow1, arrow2, arrow3, arrow4, arrow5, arrow6)
         
         self.state_trie = VGroup(self.nodes, self.arrows)
+        
+    def create_storage_trie(self):
+        node1_0 = RoundedRectangle(corner_radius=0.05, height = 0.3, width = 0.3, color = HIGHLIGHT_COLOR, fill_opacity = 0.25, stroke_width = 0.0)
+        node1_0.next_to(self.labels_state_trie[4], LEFT+DOWN, buff = 0.2)
+        
+        node1_1 = node1_0.copy()
+        node1_1.next_to(self.labels_state_trie[4], RIGHT+DOWN, buff = 0.2)
+        
+        node2_0 = node1_0.copy()
+        node2_0.next_to(node1_0, DOWN+LEFT, buff = 0.2).shift(RIGHT*0.2)
+        
+        node2_1 = node1_0.copy()
+        node2_1.next_to(node1_0, DOWN+RIGHT, buff = 0.2).shift(LEFT*0.2)
+        
+        node2_2 = node1_0.copy()
+        node2_2.next_to(node1_1, DOWN+LEFT, buff = 0.2).shift(RIGHT*0.2)
+        
+        node2_3 = node1_0.copy()
+        node2_3.next_to(node1_1, DOWN+RIGHT, buff = 0.2).shift(LEFT*0.2)
+        
+        self.nodes = VGroup(node1_0, node1_1, node2_0, node2_1, node2_2, node2_3)   
+        
+        arrow1 = create_arrow(self.tries[0], node1_0)
+        arrow2 = create_arrow(self.tries[0], node1_1)
+        
+        arrow3 = create_arrow(node1_0, node2_0)
+        arrow4 = create_arrow(node1_0, node2_1)
+        
+        arrow5 = create_arrow(node1_1, node2_2)
+        arrow6 = create_arrow(node1_1, node2_3)
+        
+        self.arrows = VGroup(arrow1, arrow2, arrow3, arrow4, arrow5, arrow6)
+        
+        self.storage_trie = VGroup(self.nodes, self.arrows)
         
         
 def create_arrow(start, end, stroke_width=1.8, dash_density=2):

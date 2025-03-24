@@ -90,20 +90,6 @@ class MerkleTree(SlideBase):
         
         # self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3b.mp3")
         # self.calculate_merkle_proof(scene)
-
-    #     self.new_subsection(scene, "proofs smaller?", "data/sound/e6/slide2-7c.mp3")
-    #     scene.wait(1.5)
-    #     scene.play(FadeOut(self.MPT, self.brace_levels_16_children, self.brace_text_levels, self.proof_formula3, self.thousand_proofs, self.thousand_size))
-    #     self.merkle_tree_text = Text("Merkle Tree", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*4)
-    #     self.verkle_tree_text = Text("Verkle Tree", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT*4)
-    #     self.arrow_merkle_verkle = Arrow(self.merkle_tree_text.get_right(), self.verkle_tree_text.get_left(), color = PRIMARY_COLOR, tip_shape = StealthTip, stroke_width=2, max_tip_length_to_length_ratio=0.15).set_color(PRIMARY_COLOR)
-    #     self.vector_commitment = Text("+ Vector Commitment", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.arrow_merkle_verkle, DOWN, buff = 0.2)
-    #     scene.play(Write(self.merkle_tree_text))
-        
-    #     self.new_subsection(scene, "merkle-> verkle", "data/sound/e6/slide2-7d.mp3")
-    #     scene.play(GrowArrow(self.arrow_merkle_verkle), Create(self.vector_commitment))
-    #     scene.play(Write(self.verkle_tree_text))
-    #     scene.wait(2)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_merkle_proof, self.merkle_tree_all, *self.nodes_copy))

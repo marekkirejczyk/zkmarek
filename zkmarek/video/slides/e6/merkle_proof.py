@@ -23,11 +23,9 @@ class MerkleProof(SlideBase):
         scene.play(Create(self.code))
 
         self.new_subsection(scene, "verifies given leaf to root", "data/sound/e6/slide2-3c.mp3")
-        scene.wait(0.2)
         self.indicate_code(scene, self.code, "verify")
-        scene.wait(0.2)
         self.indicate_code(scene, self.code, "leaf")
-        scene.wait(0.2)
+        scene.wait(0.4)
         self.indicate_code(scene, self.code, "root")
         scene.wait(0.2)
         self.indicate_code(scene, self.code, "proof")
