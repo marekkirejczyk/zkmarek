@@ -35,7 +35,8 @@ class Credits(SlideBase):
         self.add_credit("Proto @protolambda")
         self.add_credit("Maciej Kalka @Mojtek")
 
-        self.add_credit("Merkle Proof from the Open Zepellin library - link in the description!")
+        self.add_credit("Merkle Proof from the Open Zepellin library")
+        self.add_credit("link in the description!")
         self.add_title("Music from Udio AI music")
         self.group.generate_target()
         self.group.shift(5 * DOWN)

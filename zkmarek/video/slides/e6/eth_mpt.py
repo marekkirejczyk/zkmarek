@@ -1,4 +1,4 @@
-from manim import Indicate, Create, UP, LEFT, ORIGIN, MoveToTarget, Write, Text, FadeOut, DOWN, RIGHT
+from manim import Indicate, Create, UP, LEFT, ORIGIN, MoveToTarget, Write, Text, FadeOut, DOWN
 
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
@@ -11,7 +11,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
         
     def construct(self):
         self.title_label = Text("Ethereum's Merkle Patricia Trie", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 40).to_edge(UP)
-        self.MPT = MPT().shift(UP*2.9+LEFT*1).scale(0.45)
+        self.MPT = MPT().shift(UP*2.9+LEFT*2).scale(0.45)
         self.worldState = SimplifiedWorldState()
 
     def animate_in(self, scene):
@@ -43,7 +43,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.wait(1)
     
         self.MPT.leaf_replace.generate_target()
-        self.MPT.leaf_replace.target.next_to(self.MPT.branch1, DOWN+LEFT, buff = 0.0).scale(1/2).shift(RIGHT+UP*0.3)
+        self.MPT.leaf_replace.target.scale(1/2).next_to(self.MPT.branch1.get_child_slot("1"), DOWN, buff = 0.5)
         
         self.new_subsection(scene, "root extension", "data/sound/e6/slide2-6b.mp3")
         scene.play(self.worldState.key_cells[0:2].animate.set_color(HIGHLIGHT_COLOR))

@@ -1,7 +1,7 @@
 from manim import (Text, Create, Write, Arrow, StealthTip, GrowArrow, RIGHT, LEFT, UP, DOWN, Brace, 
                    FadeIn, MathTex, Indicate, TransformMatchingShapes, FadeOut, VGroup, MoveToTarget)
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.slides.e6.merkle16 import SelectiveMerkleTree
+from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_FONT
 
 class ProofSize(SlideBase):
@@ -10,11 +10,11 @@ class ProofSize(SlideBase):
         
     def construct(self):
         self.title_label = Text("Proof Sizes", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 40).to_edge(UP)
-        self.merkle_tree = SelectiveMerkleTree(num_levels=5, include_labels=False, focused_node_path=[7, 8, 7, 8]).scale(0.4).shift(UP*5.5)
-        
+
+        self.merkle_tree = MPT(include_labels=False).shift(UP*2.9+LEFT*2).scale(0.45)
         self.dots = Text("...\n...", color = PRIMARY_COLOR, font=PRIMARY_FONT, font_size = 40).next_to(self.merkle_tree, DOWN, buff = 0.15)
         
-        self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR).scale(1.2).shift(DOWN*0.3)
+        self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR)
         self.levels_text = Text("8--10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
         
         self.formula = Text("depth x 15 siblings x hash size", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
@@ -25,7 +25,7 @@ class ProofSize(SlideBase):
         
         approx = MathTex(r"\approx", color = PRIMARY_COLOR)
         approx_formula2 = approx.copy().move_to(self.formula2[8].get_center()).shift(LEFT*0.35)
-        approx_formula3 = approx.copy().move_to(self.formula2[10].get_center()).shift(LEFT*0.24)
+        approx_formula3 = approx.copy().move_to(self.formula2[10].get_center()).shift(LEFT*0.3)
         self.formula2 = VGroup(self.formula2, approx_formula2)
         self.formula3 = VGroup(self.formula3, approx_formula3)
         
@@ -38,10 +38,12 @@ class ProofSize(SlideBase):
         
         self.new_subsection(scene, "8--10 levels", "data/sound/e6/slide2-8b.mp3")
         scene.play(FadeIn(self.brace_levels), Write(self.levels_text))
-        scene.play(*[Indicate(self.merkle_tree.get_node(1, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.5)
-        scene.play(*[Indicate(self.merkle_tree.get_node(2, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.5)
-        scene.play(*[Indicate(self.merkle_tree.get_node(3, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.5)
-        scene.play(*[Indicate(self.merkle_tree.get_node(4, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.root, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.branch1, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.extension2, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.leaf3, color = SECONDARY_COLOR),
+                   Indicate(self.merkle_tree.leaf4, color = SECONDARY_COLOR), run_time=0.5)
+
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR), run_time=0.5)
         
         self.new_subsection(scene, "formula: depth*diblings*hash size", "data/sound/e6/slide2-8c.mp3")
@@ -66,17 +68,16 @@ class ProofSize(SlideBase):
         
         self.new_subsection(scene, "it weighs", "data/sound/e6/slide2-8d.mp3")
         scene.wait(1)
-        scene.play(*[Indicate(self.merkle_tree.get_node(1, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.3)
-        scene.play(*[Indicate(self.merkle_tree.get_node(2, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.3)
-        scene.play(*[Indicate(self.merkle_tree.get_node(3, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.3)
-        scene.play(*[Indicate(self.merkle_tree.get_node(4, i), color = SECONDARY_COLOR) for i in range(0,16)], run_time=0.3)
-        scene.play(Indicate(self.dots, color = SECONDARY_COLOR), run_time=0.3)
-        
+        scene.play(Indicate(self.merkle_tree.root, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.branch1, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.extension2, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.leaf3, color = SECONDARY_COLOR),
+                   Indicate(self.merkle_tree.leaf4, color = SECONDARY_COLOR), run_time=0.5)
+
         scene.play(TransformMatchingShapes(self.formula1, self.formula2))
         
         self.new_subsection(scene, "multiple values", "data/sound/e6/slide2-8e.mp3")
-        nodes = [self.merkle_tree.get_node(4,0), self.merkle_tree.get_node(4,4), self.merkle_tree.get_node(4,8),
-                 self.merkle_tree.get_node(4,12), self.merkle_tree.get_node(4,14)]
+        nodes = [self.merkle_tree.leaf4, self.merkle_tree.leaf3, self.merkle_tree.leaf2, self.merkle_tree.leaf1]
         for node in nodes:
             scene.play(Indicate(node, color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.5)
             
