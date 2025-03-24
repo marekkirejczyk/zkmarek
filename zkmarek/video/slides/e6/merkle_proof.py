@@ -14,13 +14,17 @@ class MerkleProof(SlideBase):
         self.code.scale(0.6).next_to(self.title_label, DOWN, buff=1)
         
         self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity")
-        print(self.code.code_lines.__dict__) 
-        # print(self.code.code_json) 
+        
+        self.link_in_the_description = Text("link to the GitHub in the description!", color = PRIMARY_COLOR, font = PRIMARY_FONT)
+        self.link_in_the_description.next_to(self.code, DOWN, buff = 0.5)
     
     def animate_in(self, scene):
         self.new_subsection(scene, "code to get proof", "data/sound/e6/slide2-3b.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
         scene.play(Create(self.code))
+        scene.play(Write(self.link_in_the_description))
+        scene.wait(2.2)
+        scene.play(FadeOut(self.link_in_the_description))
 
         self.new_subsection(scene, "verifies given leaf to root", "data/sound/e6/slide2-3c.mp3")
         self.indicate_code(scene, self.code, "verify")

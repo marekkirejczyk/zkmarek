@@ -11,7 +11,6 @@ class EthereumBlock(SlideBase):
         self.title_label = Text("Ethereum Block", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
 
         self.block = Rectangle(width=10.5, height=2.5, color=PRIMARY_COLOR, fill_opacity=0.17, stroke_width = 0.0)
-        # self.block.next_to(self.title_label, DOWN, buff = 0.5)
         self.block_label = Text("Block N Header", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.block, UP, buff = 0.2).shift(LEFT*2)
         
         labels = ["Prev hash", "Nonce", "Timestamp", "Beneficiary", "Gas limit", "Gas used", "Block num", "...", "...", "..."]
@@ -42,7 +41,6 @@ class EthereumBlock(SlideBase):
             self.rectangles_tries.add(rectangle)
         
         self.block_header_whole = Group(self.block, self.block_label, self.rectangles, self.labels, self.rectangles_tries, self.tries)
-        
         
 
     def animate_in(self, scene):
@@ -110,7 +108,7 @@ class EthereumBlock(SlideBase):
         self.array_4_item = Group(self.rectangles_state_trie, self.labels_state_trie, self.rectangle_state_trie)
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item))
         
-        scene.wait(1)
+        scene.wait(0.2)
         scene.play(Indicate(self.labels_state_trie[4], color=SECONDARY_COLOR, scale_factor=1.5))
         self.create_storage_trie()
         scene.play(Create(self.storage_trie), run_time=1.5)
@@ -120,16 +118,18 @@ class EthereumBlock(SlideBase):
         scene.play(Indicate(self.tries[2], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.play(Indicate(self.tries[3], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.wait(1)
-        scene.play(Indicate(self.tries[3], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
+        scene.play(Indicate(self.tries[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.wait(0.5)
         scene.play(Indicate(self.tries[2], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.wait(0.5)
-        scene.play(Indicate(self.tries[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
+        scene.play(Indicate(self.tries[3], color = SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.wait(0.5)
         
         self.new_subsection(scene, "each trie has key value", "data/sound/e6/slide2-7d.mp3")
+        scene.wait(5)
         
-        
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.title_label, self.block_header_whole, self.state_trie, self.array_4_item, self.storage_trie))
         
     def create_state_trie(self):
         node1_0 = RoundedRectangle(corner_radius=0.05, height = 0.5, width = 0.5, color = HIGHLIGHT_COLOR, fill_opacity = 0.25, stroke_width = 0.0)
