@@ -62,26 +62,6 @@ class EthereumBlock(SlideBase):
         
         scene.play(Create(self.state_trie), run_time=2)
         
-        self.rectangle_state_trie = Rectangle(width=7, height=0.75, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
-        self.rectangle_state_trie.move_to(self.nodes[5]).shift(DOWN*0.2+RIGHT*2.5)
-        
-        labels_state_trie = ["address", "Nonce", "Balance", "Code Hash", "Storage root"]
-        self.labels_state_trie = VGroup()
-        self.rectangles_state_trie = Group()
-        rectangle_all = Rectangle(width=0.5, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
-        rectangle_storage = Rectangle(width=1.5, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
-        
-        for i, label in enumerate(labels_state_trie):
-            if i == 0:
-                rectangle = rectangle_storage.copy().move_to(self.rectangle_state_trie.get_center()).shift(LEFT*2)
-            # elif i ==4:
-            #     rectangle = rectangle_storage.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
-            else:
-                rectangle = rectangle_storage.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
-            
-            label_text = Text(label, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18).move_to(rectangle.get_center())
-            self.rectangles_state_trie.add(rectangle)
-            self.labels_state_trie.add(label_text)
         
         self.account_balance_node = RoundedRectangle(width = 3.5, height = 0.7, corner_radius=0.05, color = HIGHLIGHT_COLOR, fill_opacity = 0.25, stroke_width = 0.0)
         self.account_balance_node.move_to(self.nodes[5]).shift(RIGHT*1.5+DOWN*0.1)
@@ -98,11 +78,36 @@ class EthereumBlock(SlideBase):
         
         self.acc_balance_node = VGroup(self.balance, self.address, self.account_balance_node)
         
-        self.array_4_item = Group(self.rectangles_state_trie, self.labels_state_trie, self.rectangle_state_trie)
         
         scene.wait(2)
         scene.play(ReplacementTransform(self.nodes[5], self.acc_balance_node))
-        scene.wait(2)
+        self.block_and_state_trie = Group(self.block_header_whole, self.acc_balance_node, self.state_trie)
+        self.block_and_state_trie.generate_target()
+        self.block_and_state_trie.target.shift(LEFT)
+        
+        self.rectangle_state_trie = Rectangle(width=8, height=0.75, color=HIGHLIGHT_COLOR, fill_opacity=0.25, stroke_width = 0.0)
+        
+        scene.wait(1)
+        scene.play(MoveToTarget(self.block_and_state_trie), run_time=1)
+        self.rectangle_state_trie.move_to(self.nodes[5]).shift(RIGHT*1.5)
+        labels_state_trie = ["address", "Nonce", "Balance", "Code Hash", "Storage root"]
+        self.labels_state_trie = VGroup()
+        self.rectangles_state_trie = Group()
+        rectangle_all = Rectangle(width=1, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
+        rectangle_storage = Rectangle(width=1.5, height=0.5, color=PRIMARY_COLOR, fill_opacity=0.25, stroke_width = 0.0)
+        
+        for i, label in enumerate(labels_state_trie):
+            if i == 0:
+                rectangle = rectangle_storage.copy().move_to(self.rectangle_state_trie.get_center()).shift(LEFT*3)
+            if i < 3 and i > 0:
+                rectangle = rectangle_all.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
+            elif i>2:
+                rectangle = rectangle_storage.copy().next_to(self.rectangles_state_trie[i-1], RIGHT, buff = 0.25)
+            
+            label_text = Text(label, font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18).move_to(rectangle.get_center())
+            self.rectangles_state_trie.add(rectangle)
+            self.labels_state_trie.add(label_text)
+        self.array_4_item = Group(self.rectangles_state_trie, self.labels_state_trie, self.rectangle_state_trie)
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item))
         
         scene.wait(1)
@@ -162,10 +167,10 @@ class EthereumBlock(SlideBase):
         
     def create_storage_trie(self):
         node1_0 = RoundedRectangle(corner_radius=0.05, height = 0.3, width = 0.3, color = HIGHLIGHT_COLOR, fill_opacity = 0.25, stroke_width = 0.0)
-        node1_0.next_to(self.labels_state_trie[4], LEFT+DOWN, buff = 0.2)
+        node1_0.next_to(self.labels_state_trie[4], LEFT+DOWN, buff = 0.2).shift(RIGHT*0.6+DOWN*0.3)
         
         node1_1 = node1_0.copy()
-        node1_1.next_to(self.labels_state_trie[4], RIGHT+DOWN, buff = 0.2)
+        node1_1.next_to(self.labels_state_trie[4], RIGHT+DOWN, buff = 0.2).shift(LEFT*0.6+DOWN*0.3)
         
         node2_0 = node1_0.copy()
         node2_0.next_to(node1_0, DOWN+LEFT, buff = 0.2).shift(RIGHT*0.2)
@@ -181,8 +186,8 @@ class EthereumBlock(SlideBase):
         
         self.nodes = VGroup(node1_0, node1_1, node2_0, node2_1, node2_2, node2_3)   
         
-        arrow1 = create_arrow(self.tries[0], node1_0)
-        arrow2 = create_arrow(self.tries[0], node1_1)
+        arrow1 = create_arrow(self.labels_state_trie[4], node1_0)
+        arrow2 = create_arrow(self.labels_state_trie[4], node1_1)
         
         arrow3 = create_arrow(node1_0, node2_0)
         arrow4 = create_arrow(node1_0, node2_1)
@@ -195,7 +200,7 @@ class EthereumBlock(SlideBase):
         self.storage_trie = VGroup(self.nodes, self.arrows)
         
         
-def create_arrow(start, end, stroke_width=1.8, dash_density=2):
+def create_arrow(start, end, stroke_width=1.8, dash_density=3):
     arrow = Arrow(
             start=start.get_bottom()+DOWN*0.1,
             end=end.get_top(),

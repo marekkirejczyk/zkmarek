@@ -25,6 +25,7 @@ EPISODE6 = [
     TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
     ETHPatriciaMerkleTrie(),
     EthereumBlock(),
+    TitleSlide("Proof sizes", sound="data/sound/e6/slide2-8.mp3", wait_time=1.5),
     ProofSize(),
     Subscribe("data/sound/episode1/s28.wav"),
 ]

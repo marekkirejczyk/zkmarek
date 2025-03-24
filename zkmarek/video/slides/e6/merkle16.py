@@ -58,8 +58,8 @@ class SelectiveMerkleTree(VGroup):
 
         if num_children < 2 or num_children > 16:
             raise ValueError("Number of children per node must be between 2 and 16.")
-        if num_levels < 1 or num_levels > 5:
-            raise ValueError("Number of levels must be between 1 and 4.")
+        if num_levels < 1 or num_levels > 7:
+            raise ValueError("Number of levels must be between 1 and 7.")
 
         if focused_node_path is None:
             focused_node_path = [0] * (num_levels - 1)
