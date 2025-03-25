@@ -33,7 +33,7 @@ class SimplifiedWorldState(VGroup):
 
         key_header = Text("Keys", font=PRIMARY_FONT, font_size=24, color=PRIMARY_COLOR)
         value_header = Text("Values", font=PRIMARY_FONT, font_size=24, color=PRIMARY_COLOR)
-        title = Text("Simplified World State", font=PRIMARY_FONT, font_size=25, color=PRIMARY_COLOR)
+        title = Text("Simplified State Trie", font=PRIMARY_FONT, font_size=25, color=PRIMARY_COLOR)
 
         key_header.next_to(self.background.get_top(), DOWN).shift(LEFT * 1)
         value_header.next_to(self.background.get_top(), DOWN).shift(RIGHT * 1.9)
@@ -51,7 +51,7 @@ class SimplifiedWorldState(VGroup):
                     fill_opacity=0.2,
                     color=PRIMARY_COLOR,
                     stroke_width=0.0
-                ).move_to(self.background.get_top()).shift(DOWN * (row_idx + 2) * (cell_height + spacing) + LEFT * (num_cols - col_idx - 1.2) * (cell_width + 0.1)+RIGHT*0.7)
+                ).move_to(self.background.get_top()).shift(DOWN * (row_idx + 2) * (cell_height + spacing) + LEFT * (num_cols - col_idx - 1.1) * (cell_width + 0.1)+RIGHT*0.7)
 
                 key_text = Text(key, font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(key_cell)
 

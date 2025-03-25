@@ -13,15 +13,22 @@ from zkmarek.video.slides.e6.proof_sizes import ProofSize
 from zkmarek.video.slides.e6.credits import Credits
 
 EPISODE6 = [
-    Intro(sound="data/sound/episode3/slide0-0.mp3", background_sound="data/sound/e6/background.mp3",),
+    Intro(
+        sound="data/sound/episode3/slide0-0.mp3",
+        background_sound="data/sound/e6/background.mp3",
+    ),
     Sponsored(),
-    TitleSlide("Ethereum Merkle Patricia Tries", sound="data/sound/e6/slide2-0beg.mp3", wait_time=4),
+    TitleSlide(
+        "Ethereum Merkle Patricia Tries",
+        sound="data/sound/e6/slide2-0beg.mp3",
+        wait_time=4,
+    ),
     EthBalances(),
-    TitleSlide("Merkle trees", sound = "data/sound/e6/slide2-1.mp3", wait_time=2),
+    TitleSlide("Merkle trees", sound="data/sound/e6/slide2-1.mp3", wait_time=2),
     MerkleTree(),
     MerkleProof(),
     EthereumAddresses(),
-    TitleSlide("Patricia Tries", sound = "data/sound/e6/slide2-4.mp3", wait_time=6),
+    TitleSlide("Patricia Tries", sound="data/sound/e6/slide2-4.mp3", wait_time=6),
     PatriciaTries(),
     TitleSlide("Ethereum Merkle Patricia Tries", wait_time=4),
     ETHPatriciaMerkleTrie(),
