@@ -43,7 +43,7 @@ class EthBalances(SlideBase):
         self.account_data2_more = Text(" 0x0124...1265: 0.9 ETH \n 0x3791...2468: 2.0 ETH \n 0x9712...1386: 1.1 ETH \n ...", font=PRIMARY_FONT, font_size = 28).next_to(self.account_data2[22], DOWN, buff = 0.2).shift(0.1*RIGHT)
         self.account_data2 = VGroup(self.account_data2, self.account_data2_more)
         
-        self.computer = ImageMobject("data/images/Laptop2x.png").scale(0.75).shift(UP)
+        self.computer = ImageMobject("data/images/computer.png").scale(0.75).shift(UP)
         
         self.question_mark = Text("?", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 28)
         

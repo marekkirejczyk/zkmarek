@@ -16,7 +16,7 @@ class SimplifiedWorldState(VGroup):
         cell_width = 0.45
         cell_height = 0.45
         corner_radius = 0.1
-        spacing = 0.07
+        spacing = 0.05
         num_rows = len(keys_data)
         num_cols = len(keys_data[0])
 

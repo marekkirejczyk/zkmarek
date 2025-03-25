@@ -13,7 +13,7 @@ class MerkleProof(SlideBase):
         self.title_label = Text("Merkle Proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
         self.code.scale(0.6).next_to(self.title_label, DOWN, buff=1)
         
-        self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity").scale(1.2)
+        self.code_keccak = Code("zkmarek/video/slides/e6/keccak.sol", background="rectangle", language="solidity").scale(1.13)
         
         self.link_in_the_description = Text("link to the code snippet in the description!", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.link_in_the_description.next_to(self.code, DOWN, buff = 0.5)

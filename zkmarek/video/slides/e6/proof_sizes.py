@@ -15,10 +15,10 @@ class ProofSize(SlideBase):
         self.dots = Text("...\n...", color = PRIMARY_COLOR, font=PRIMARY_FONT, font_size = 40).next_to(self.merkle_tree, DOWN, buff = 0.15)
         
         self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR)
-        self.levels_text = Text("8--10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
+        self.levels_text = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
         
         self.formula = Text("depth x 15 siblings x hash size", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
-        self.formula1 = Text("depth x 15 siblings x 32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.formula1 = Text("depth x 15 x 32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         
         self.formula2 = Text("9 x 15 x 32 B      4 kB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 35).scale(0.8)
         self.formula3 = Text("1000 x 9 x 15 x 32 B     4 MB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 35).scale(0.8)
@@ -49,13 +49,13 @@ class ProofSize(SlideBase):
         self.new_subsection(scene, "formula: depth*diblings*hash size", "data/sound/e6/slide2-8c.mp3")
         merkle_dots = VGroup(self.merkle_tree, self.dots)
         merkle_dots.generate_target()
-        merkle_dots.target.shift(LEFT*2)
+        merkle_dots.target.shift(LEFT*1)
         scene.play(FadeOut(self.levels_text), FadeOut(self.brace_levels), MoveToTarget(merkle_dots), run_time=1)
         
-        self.formula.next_to(self.merkle_tree, RIGHT).shift(LEFT*0.2)
-        self.formula1.next_to(self.merkle_tree, RIGHT)
-        self.formula2.next_to(self.merkle_tree, RIGHT).shift(RIGHT*0.5)
-        self.formula3.next_to(self.merkle_tree, RIGHT)
+        self.formula.next_to(self.merkle_tree, RIGHT)
+        self.formula1.next_to(self.merkle_tree, RIGHT).shift(RIGHT)
+        self.formula2.next_to(self.merkle_tree, RIGHT).shift(RIGHT)
+        self.formula3.next_to(self.merkle_tree, RIGHT).shift(RIGHT*0.3)
         
         scene.play(Write(self.formula), run_time=1.2)
         scene.play(Indicate(self.formula[0:5], color = SECONDARY_COLOR), run_time=0.8)

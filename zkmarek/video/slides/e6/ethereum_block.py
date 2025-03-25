@@ -80,7 +80,7 @@ class EthereumBlock(SlideBase):
         scene.play(FadeOut(self.nodes[5]), FadeIn(self.acc_balance_node))
         self.block_and_state_trie = Group(self.block_header_whole, self.acc_balance_node, self.arrows1, self.nodes_wo_5)
         self.block_and_state_trie.generate_target()
-        self.block_and_state_trie.target.shift(LEFT)
+        self.block_and_state_trie.target.shift(LEFT*1.5)
         
         self.rectangle_state_trie = RoundedRectangle(width=7, height=0.5, corner_radius=0.1, color=HIGHLIGHT_COLOR, fill_opacity=0.15, stroke_width = 0.0)
         

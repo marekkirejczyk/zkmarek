@@ -124,7 +124,7 @@ class MerklePatriciaTrie(VGroup):
         self.arrow = create_arrow(end = self.root.field_group[1].get_bottom(), start = self.branch1.get_top())
         self.arrow2 = create_arrow(end = self.branch1.get_child_slot("1").get_bottom(), start =self.branch1.get_child_slot("1").get_bottom()+DOWN*0.85)
                       
-        self.arrow3 = create_arrow(end = self.branch1.get_child_slot("7").get_bottom(), start = self.extension2.get_top()+UP*0.1+LEFT*0.29)
+        self.arrow3 = create_arrow(end = self.branch1.get_child_slot("7").get_bottom(), start = self.extension2.get_top()+UP*0.1+LEFT*0.33)
         self.arrow4 = create_arrow(end = self.branch1.get_child_slot("f").get_bottom(), start = self.leaf2.get_top())
                       
         self.arrow5 = create_arrow(end = self.extension2.field_group[1].get_bottom(), start = self.branch2.get_top())
