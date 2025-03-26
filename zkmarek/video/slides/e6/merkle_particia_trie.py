@@ -142,21 +142,35 @@ class MerklePatriciaTrie(VGroup):
             "Root: extension node",
             {"key-part": "\n      a7", " next\n node": ""},
             include_labels=include_labels,
-            width=3.5,
+            width=4,
         )
 
         values = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
         self.branch1 = MPTBranchNode({i: "" for i in values}, include_labels=include_labels)
         self.leaf_replace = MPTNode(
             title=None,
-            fields={"key-part": "\n\n a711355", "   value": "\n\n 45.0 ETH"},
+            fields={"    key": "\n\na711355", "   value": "\n\n 45.0 ETH"},
+            color=PRIMARY_COLOR,
+            width=3.5,
+            include_labels=include_labels,
+        )
+        self.leaf2_replace = MPTNode(
+            title=None,
+            fields={"    key": "\n\na7f9365", "   value": "\n\n 1.0 WEI"},
+            color=PRIMARY_COLOR,
+            width=3.5,
+            include_labels=include_labels,
+        )
+        self.leaf2_replace2 = MPTNode(
+            title=None,
+            fields={"key-end": "\n\n f9365", "   value": "\n\n 1.0 WEI"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
         )
         self.extension2 = MPTNode(
             "Extension Node",
-            {"key-part": "\n    d3", " next\n node": ""},
+            {"key-part": "\n     d3", " next\n node": ""},
             include_labels=include_labels,
             width=3.5,
         )
@@ -172,14 +186,14 @@ class MerklePatriciaTrie(VGroup):
         )
         self.leaf3 = MPTNode(
             "Leaf Node",
-            {"key-end": "\n\n     7", "  value": "\n\n0.12 ETH"},
+            {"key-end": "\n\n      7", "  value": "\n\n0.12 ETH"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
         )
         self.leaf4 = MPTNode(
             "Leaf Node",
-            {"key-end": "\n\n     7", "  value": "\n\n1.00 WEI"},
+            {"key-end": "\n\n      7", "  value": "\n\n1.00 WEI"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
@@ -204,13 +218,15 @@ class MerklePatriciaTrie(VGroup):
         self.leaf_replace.next_to(self.branch1.get_child_slot("1"), DOWN, buff=0.7)
         self.leaf_replace2.next_to(self.branch1.get_child_slot("1"), DOWN, buff=0.7)
         self.extension2.next_to(self.branch1, DOWN, buff=0.7)
-        self.leaf2.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.7)
+        self.leaf2.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.85)
+        self.leaf2_replace.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.85)
+        self.leaf2_replace2.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.85)
         self.branch2.next_to(self.extension2, DOWN, buff=0.7)
-        self.leaf3.next_to(self.branch2.get_child_slot("3"), DOWN, buff=0.7)
-        self.leaf4.next_to(self.branch2.get_child_slot("8"), DOWN, buff=0.7)
+        self.leaf3.next_to(self.branch2.get_child_slot("3"), DOWN, buff=0.85)
+        self.leaf4.next_to(self.branch2.get_child_slot("8"), DOWN, buff=0.85)
 
         self.arrow = create_arrow(
-            end=self.root.field_group[1].get_bottom(), start=self.branch1.get_top()
+            end=self.root.field_group[1].get_bottom(), start=self.root.field_group[1].get_bottom() + DOWN * 0.8
         )
         self.arrow2 = create_arrow(
             end=self.branch1.get_child_slot("1").get_bottom(),
@@ -219,7 +235,7 @@ class MerklePatriciaTrie(VGroup):
 
         self.arrow3 = create_arrow(
             end=self.branch1.get_child_slot("7").get_bottom(),
-            start=self.extension2.get_top() + UP * 0.1 + LEFT * 0.33,
+            start=self.branch1.get_child_slot("7").get_bottom() + DOWN * 0.85,
         )
         self.arrow4 = create_arrow(
             end=self.branch1.get_child_slot("f").get_bottom(),
@@ -228,7 +244,7 @@ class MerklePatriciaTrie(VGroup):
 
         self.arrow5 = create_arrow(
             end=self.extension2.field_group[1].get_bottom(),
-            start=self.branch2.get_top(),
+            start=self.extension2.field_group[1].get_bottom() + DOWN * 0.8,
         )
         self.arrow6 = create_arrow(
             end=self.branch2.get_child_slot("3").get_bottom(),
@@ -269,6 +285,17 @@ class MerklePatriciaTrie(VGroup):
         self.leaf1.move_to(self.leaf_replace2.get_center())
         scene.play(TransformMatchingShapes(self.leaf_replace2, self.leaf1), run_time=1)
 
+    def replace_2leaf(self, scene):
+        self.leaf2_replace2.move_to(self.leaf2_replace.get_center())
+        scene.play(
+            TransformMatchingShapes(self.leaf2_replace, self.leaf2_replace2), run_time=1
+        )
+
+    def replace_2leaf2(self, scene):
+        self.leaf2.move_to(self.leaf2_replace2.get_center())
+        scene.play(
+            TransformMatchingShapes(self.leaf2_replace2, self.leaf2), run_time=1
+        )
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=8):
     arrow = Arrow(

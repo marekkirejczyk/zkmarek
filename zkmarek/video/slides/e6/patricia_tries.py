@@ -76,61 +76,63 @@ class PatriciaTries(SlideBase):
             )
 
         node = RoundedRectangle(
-            width=4,
-            height=4,
+            width=5,
+            height=5,
             corner_radius=0.1,
             color=PRIMARY_COLOR,
             fill_opacity=0.27,
         )
         self.node = DashedVMobject(node, num_dashes=60)
+
         self.key = RoundedRectangle(
-            width=1.5,
+            width=1.8,
             height=0.5,
             corner_radius=0.1,
             color=PRIMARY_COLOR,
             fill_opacity=0.27,
             stroke_width=0.0,
-        ).move_to(node.get_center() + LEFT * 1 + UP * 1.5)
+        ).next_to(node, UP, buff=0.5).align_to(node, LEFT).shift(RIGHT * 0.5 + DOWN * 1.7)
+
         self.value = RoundedRectangle(
-            width=1.5,
+            width=1,
             height=0.5,
             corner_radius=0.1,
             color=PRIMARY_COLOR,
             fill_opacity=0.27,
             stroke_width=0.0,
-        ).move_to(node.get_center() + RIGHT * 1 + UP * 1.5)
+        ).next_to(node, UP, buff=0.5).align_to(node, RIGHT).shift(LEFT * 0.5 + DOWN * 1.7)
+
         self.key_text = Text(
             "key", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
-        ).move_to(self.key.get_center())
+        ).move_to(self.key)
+
         self.value_text = Text(
             "value", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
-        ).move_to(self.value.get_center())
-
+        ).move_to(self.value)
 
         self.account_addresses = Text(
-            "0x1234...5678 \n\n 0x9187...2378 \n\n 0x1294...3894 \n 0x0319...2614",
+            "0x1234...5678 \n\n\n 0x9187...2378 \n\n\n 0x1294...3894 \n\n\n 0x0319...2614",
             color=PRIMARY_COLOR,
             font=PRIMARY_FONT,
             font_size=20,
-        ).next_to(self.key, DOWN, buff=0.5)
+        ).next_to(self.key, DOWN, buff=0.58).align_to(self.key, LEFT).shift(DOWN*0.2)
+
         self.account_balances = Text(
-            "7 ETH \n\n 9 ETH \n\n 1 ETH \n 7 ETH",
+            "7 ETH    \n\n\n 9 ETH    \n\n\n 1 ETH    \n\n\n 7 ETH   ",
             color=PRIMARY_COLOR,
             font=PRIMARY_FONT,
             font_size=20,
-        ).next_to(self.value, DOWN, buff=0.5)
+        ).next_to(self.value, DOWN, buff=0.58).align_to(self.value, RIGHT).shift(DOWN*0.2+LEFT*0.15)
 
-        self.nodes_for_address = []
-        for i in range(4):
-            node = self.key.copy()
-            node.next_to(self.key, DOWN, buff=0.5).shift(DOWN * 0.65 * i)
-            self.nodes_for_address.append(node)
+        self.nodes_for_address = VGroup(*[
+            self.key.copy().next_to(self.key, DOWN, buff=0.4)
+            for _ in range(4)
+        ]).arrange(DOWN, buff=0.3).align_to(self.key, LEFT).shift(DOWN*0.8)
 
-        self.nodes_for_balances = []
-        for i in range(4):
-            node = self.value.copy()
-            node.next_to(self.value, DOWN, buff=0.5).shift(DOWN * 0.65 * i)
-            self.nodes_for_balances.append(node)
+        self.nodes_for_balances = VGroup(*[
+            self.value.copy().next_to(self.value, DOWN, buff=0.4)
+            for _ in range(4)
+        ]).arrange(DOWN, buff=0.3).align_to(self.value, RIGHT).shift(DOWN * 0.8)
 
     def animate_in(self, scene):
         self.key_value_pairs(scene)

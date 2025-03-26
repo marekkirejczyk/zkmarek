@@ -36,7 +36,7 @@ class MerkleProof(SlideBase):
             "zkmarek/video/slides/e6/keccak.sol",
             background="rectangle",
             language="solidity",
-        ).scale(1.08)
+        ).scale(1.1)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "code to get proof", "data/sound/e6/slide2-3b.mp3")
