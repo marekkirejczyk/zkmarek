@@ -76,7 +76,6 @@ class EthereumBlock(SlideBase):
         
         self.acc_balance_node = VGroup(self.balance, self.address, self.account_balance_node)
         
-        scene.wait(2)
         scene.play(FadeOut(self.nodes[5]), FadeIn(self.acc_balance_node))
         self.block_and_state_trie = Group(self.block_header_whole, self.acc_balance_node, self.arrows1, self.nodes_wo_5)
         self.block_and_state_trie.generate_target()
@@ -107,7 +106,9 @@ class EthereumBlock(SlideBase):
         self.array_4_item = Group(self.rectangles_state_trie, self.labels_state_trie, self.rectangle_state_trie)
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item))
         
-        scene.wait(0.2)
+        scene.wait(1)
+        scene.play(Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.5))
+        scene.wait(0.5)
         scene.play(Indicate(self.labels_state_trie[4], color=SECONDARY_COLOR, scale_factor=1.5))
         self.create_storage_trie()
         scene.play(Create(self.storage_trie), run_time=1.5)

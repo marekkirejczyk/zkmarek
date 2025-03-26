@@ -9,7 +9,7 @@ from manim import (
     StealthTip,
     Arrow,
     DashedVMobject,
-    TransformMatchingShapes,
+    Transform,
 )
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 
@@ -157,7 +157,7 @@ class MerklePatriciaTrie(VGroup):
         )
         self.leaf2_replace = MPTNode(
             title=None,
-            fields={"    key": "\na7f9365", "   value": "\n 1.0 WEI"},
+            fields={"   key": "\na7f9365", "  value": "\n 1.0 WEI"},
             color=PRIMARY_COLOR,
             width=3.75,
             include_labels=include_labels,
@@ -215,11 +215,11 @@ class MerklePatriciaTrie(VGroup):
         )
         self.root.move_to(2 * UP)
         self.branch1.next_to(self.root, DOWN, buff=0.7)
-        self.leaf1.next_to(self.branch1.get_child_slot("1"), DOWN, buff=0.7)
+        self.leaf1.next_to(self.branch1.get_child_slot("1"), DOWN, buff=0.9)
         self.leaf_replace.next_to(self.branch1.get_child_slot("1"), DOWN, buff=0.7)
         self.leaf_replace2.next_to(self.branch1.get_child_slot("1"), DOWN, buff=0.7)
         self.extension2.next_to(self.branch1, DOWN, buff=0.7)
-        self.leaf2.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.85)
+        self.leaf2.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.9)
         self.leaf2_replace.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.85)
         self.leaf2_replace2.next_to(self.branch1.get_child_slot("f"), DOWN, buff=0.85)
         self.branch2.next_to(self.extension2, DOWN, buff=0.7)
@@ -279,23 +279,23 @@ class MerklePatriciaTrie(VGroup):
     def replace_leaf1(self, scene):
         self.leaf_replace2.move_to(self.leaf_replace.get_center())
         scene.play(
-            TransformMatchingShapes(self.leaf_replace, self.leaf_replace2), run_time=1
+            Transform(self.leaf_replace, self.leaf_replace2), run_time=1
         )
 
     def replace_leaf2(self, scene):
         self.leaf1.move_to(self.leaf_replace2.get_center())
-        scene.play(TransformMatchingShapes(self.leaf_replace2, self.leaf1), run_time=1)
+        scene.play(Transform(self.leaf_replace2, self.leaf1), run_time=1)
 
     def replace_2leaf(self, scene):
         self.leaf2_replace2.move_to(self.leaf2_replace.get_center())
         scene.play(
-            TransformMatchingShapes(self.leaf2_replace, self.leaf2_replace2), run_time=1
+            Transform(self.leaf2_replace, self.leaf2_replace2), run_time=1
         )
 
     def replace_2leaf2(self, scene):
         self.leaf2.move_to(self.leaf2_replace2.get_center())
         scene.play(
-            TransformMatchingShapes(self.leaf2_replace2, self.leaf2), run_time=1
+            Transform(self.leaf2_replace2, self.leaf2), run_time=1
         )
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=8):

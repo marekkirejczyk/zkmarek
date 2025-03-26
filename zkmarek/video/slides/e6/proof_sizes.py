@@ -17,11 +17,11 @@ class ProofSize(SlideBase):
         self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR)
         self.levels_text = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
         
-        self.formula = Text("depth x 15 siblings x hash size", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
-        self.formula1 = Text("depth x 15 x 32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.formula = Text("depth x 16 nibbles x hash size", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.formula1 = Text("depth x 16 x 32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         
-        self.formula2 = Text("9 x 15 x 32 B      4 kB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 35).scale(0.8)
-        self.formula3 = Text("1000 x 9 x 15 x 32 B     4 MB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 35).scale(0.8)
+        self.formula2 = Text("9 x 16 x 32 B      4 kB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 35).scale(0.8)
+        self.formula3 = Text("1000 x 9 x 16 x 32 B     4 MB", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 35).scale(0.8)
         
         approx = MathTex(r"\approx", color = PRIMARY_COLOR)
         approx_formula2 = approx.copy().move_to(self.formula2[8].get_center()).shift(LEFT*0.35)
@@ -41,10 +41,9 @@ class ProofSize(SlideBase):
         scene.play(Indicate(self.merkle_tree.root, color = SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.merkle_tree.branch1, color = SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.merkle_tree.extension2, color = SECONDARY_COLOR), run_time=0.5)
-        scene.play(Indicate(self.merkle_tree.leaf3, color = SECONDARY_COLOR),
-                   Indicate(self.merkle_tree.leaf4, color = SECONDARY_COLOR), run_time=0.5)
-
+        scene.play(Indicate(self.merkle_tree.branch2, color = SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.dots, color = SECONDARY_COLOR), run_time=0.5)
+
         
         self.new_subsection(scene, "formula: depth*diblings*hash size", "data/sound/e6/slide2-8c.mp3")
         merkle_dots = VGroup(self.merkle_tree, self.dots)
@@ -58,10 +57,11 @@ class ProofSize(SlideBase):
         self.formula3.next_to(self.merkle_tree, RIGHT).shift(RIGHT*0.3)
         
         scene.play(Write(self.formula), run_time=1.2)
+        scene.wait(0.8)
         scene.play(Indicate(self.formula[0:5], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
         scene.play(Indicate(self.formula[6:16], color = SECONDARY_COLOR), run_time=0.8)
-        scene.wait(1.7)
+        scene.wait(2.7)
         scene.play(Indicate(self.formula[17:], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.formula, self.formula1))
@@ -71,8 +71,9 @@ class ProofSize(SlideBase):
         scene.play(Indicate(self.merkle_tree.root, color = SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.merkle_tree.branch1, color = SECONDARY_COLOR), run_time=0.5)
         scene.play(Indicate(self.merkle_tree.extension2, color = SECONDARY_COLOR), run_time=0.5)
-        scene.play(Indicate(self.merkle_tree.leaf3, color = SECONDARY_COLOR),
-                   Indicate(self.merkle_tree.leaf4, color = SECONDARY_COLOR), run_time=0.5)
+        scene.play(Indicate(self.merkle_tree.branch2, color = SECONDARY_COLOR), run_time=0.5)
+
+        scene.play(Indicate(self.dots, color = SECONDARY_COLOR), run_time=0.5)
 
         scene.play(TransformMatchingShapes(self.formula1, self.formula2))
         
