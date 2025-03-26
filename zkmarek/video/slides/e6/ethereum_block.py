@@ -11,7 +11,7 @@ class EthereumBlock(SlideBase):
         self.title_label = Text("Ethereum Block", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size = 40).to_edge(UP)
 
         self.block = RoundedRectangle(width=10.5, height=4.5, color=PRIMARY_COLOR, corner_radius=0.1, fill_opacity=0.1, stroke_width = 0.0)
-        self.block_label = Text("Block N Header", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).move_to(self.block.get_center()).shift(UP*1.8)
+        self.block_label = Text("Block Header", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).move_to(self.block.get_center()).shift(UP*1.8)
         
         labels = ["Prev hash", "Nonce", "Timestamp", "Beneficiary", "Gas limit", "Gas used", "Block num", "...", "...", "..."]
         self.labels = VGroup()
@@ -106,7 +106,7 @@ class EthereumBlock(SlideBase):
         self.array_4_item = Group(self.rectangles_state_trie, self.labels_state_trie, self.rectangle_state_trie)
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item))
         
-        scene.wait(1)
+        scene.wait(2.3)
         scene.play(Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.5))
         scene.wait(0.5)
         scene.play(Indicate(self.labels_state_trie[4], color=SECONDARY_COLOR, scale_factor=1.5))

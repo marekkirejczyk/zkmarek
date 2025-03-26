@@ -14,7 +14,7 @@ class ProofSize(SlideBase):
         self.merkle_tree = MPT(include_labels=False).shift(UP*2.9+LEFT*2).scale(0.45)
         self.dots = Text("...\n...", color = PRIMARY_COLOR, font=PRIMARY_FONT, font_size = 40).next_to(self.merkle_tree, DOWN, buff = 0.15)
         
-        self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR)
+        self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR).scale(1.2).shift(DOWN*0.5)
         self.levels_text = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
         
         self.formula = Text("depth x 16 nibbles x hash size", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
@@ -60,9 +60,9 @@ class ProofSize(SlideBase):
         scene.wait(0.8)
         scene.play(Indicate(self.formula[0:5], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
-        scene.play(Indicate(self.formula[6:16], color = SECONDARY_COLOR), run_time=0.8)
-        scene.wait(2.7)
-        scene.play(Indicate(self.formula[17:], color = SECONDARY_COLOR), run_time=0.8)
+        scene.play(Indicate(self.formula[6:15], color = SECONDARY_COLOR), run_time=0.8)
+        scene.wait(3.8)
+        scene.play(Indicate(self.formula[16:], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.formula, self.formula1))
         

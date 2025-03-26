@@ -9,7 +9,9 @@ from manim import (
     StealthTip,
     Arrow,
     DashedVMobject,
-    Transform,
+    TransformMatchingShapes,
+    FadeIn,
+    FadeOut,
 )
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 
@@ -279,23 +281,23 @@ class MerklePatriciaTrie(VGroup):
     def replace_leaf1(self, scene):
         self.leaf_replace2.move_to(self.leaf_replace.get_center())
         scene.play(
-            Transform(self.leaf_replace, self.leaf_replace2), run_time=1
+            FadeOut(self.leaf_replace), FadeIn(self.leaf_replace2), run_time=1
         )
 
     def replace_leaf2(self, scene):
         self.leaf1.move_to(self.leaf_replace2.get_center())
-        scene.play(Transform(self.leaf_replace2, self.leaf1), run_time=1)
+        scene.play(TransformMatchingShapes(self.leaf_replace2, self.leaf1), run_time=1)
 
     def replace_2leaf(self, scene):
         self.leaf2_replace2.move_to(self.leaf2_replace.get_center())
         scene.play(
-            Transform(self.leaf2_replace, self.leaf2_replace2), run_time=1
+            FadeOut(self.leaf2_replace), FadeIn(self.leaf2_replace2), run_time=1
         )
 
     def replace_2leaf2(self, scene):
         self.leaf2.move_to(self.leaf2_replace2.get_center())
         scene.play(
-            Transform(self.leaf2_replace2, self.leaf2), run_time=1
+            TransformMatchingShapes(self.leaf2_replace2, self.leaf2), run_time=1
         )
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=8):
