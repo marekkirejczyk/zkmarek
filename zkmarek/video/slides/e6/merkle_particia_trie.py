@@ -23,7 +23,7 @@ class MPTNode(VGroup):
         fields,
         width=6,
         height=2,
-        font_size=26,
+        font_size=25,
         color=HIGHLIGHT_COLOR,
         include_labels=True,
     ):
@@ -42,7 +42,7 @@ class MPTNode(VGroup):
         if self.title is not None:
             self.title_text = Text(
                 self.title,
-                font_size=font_size + 5,
+                font_size=font_size + 3,
                 color=PRIMARY_COLOR,
                 font=PRIMARY_FONT,
             ).move_to(self.rect.get_top() + 0.3 * DOWN)
@@ -50,7 +50,8 @@ class MPTNode(VGroup):
         self.field_group = VGroup()
         for i, (key, value) in enumerate(self.fields.items()):
             field_rect = RoundedRectangle(
-                width=width * 0.45,
+                # width=width * 0.45,
+                width=3.75 * 0.45,
                 height=1.2,
                 color=self.color,
                 stroke_width=0.0,
@@ -66,12 +67,12 @@ class MPTNode(VGroup):
             if self.title is not None:
                 # field_rect.next_to(self.title_text, DOWN, buff = (0.2 + 0.8 * i))
                 shifts = [LEFT, RIGHT]
-                field_rect.next_to(self.title_text, DOWN, buff = (0.26)).shift(shifts[i] * 0.87)
+                field_rect.next_to(self.title_text, DOWN, buff = (0.26)).shift(shifts[i] * 0.9)
                 field_text.move_to(field_rect.get_center())
                 self.add(self.title_text)
             else:
                 shifts = [LEFT, RIGHT]
-                field_rect.move_to(self.rect.get_center()).shift(shifts[i] * 0.87)
+                field_rect.move_to(self.rect.get_center()).shift(shifts[i] * 0.9)
                 field_text.move_to(field_rect.get_center())
 
             self.field_group.add(VGroup(field_rect, field_text))
@@ -142,41 +143,41 @@ class MerklePatriciaTrie(VGroup):
             "Root: extension node",
             {"key-part": "\n      a7", " next\n node": ""},
             include_labels=include_labels,
-            width=4,
+            width=4.0,
         )
 
         values = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
         self.branch1 = MPTBranchNode({i: "" for i in values}, include_labels=include_labels)
         self.leaf_replace = MPTNode(
             title=None,
-            fields={"    key": "\n\na711355", "   value": "\n\n 45.0 ETH"},
+            fields={"    key": "\na711355", "   value": "\n 45.0 ETH"},
             color=PRIMARY_COLOR,
-            width=3.5,
+            width=3.75,
             include_labels=include_labels,
         )
         self.leaf2_replace = MPTNode(
             title=None,
-            fields={"    key": "\n\na7f9365", "   value": "\n\n 1.0 WEI"},
+            fields={"    key": "\na7f9365", "   value": "\n 1.0 WEI"},
             color=PRIMARY_COLOR,
-            width=3.5,
+            width=3.75,
             include_labels=include_labels,
         )
         self.leaf2_replace2 = MPTNode(
             title=None,
-            fields={"key-end": "\n\n f9365", "   value": "\n\n 1.0 WEI"},
+            fields={"key-end": "\n   f9365", "   value": "\n 1.0 WEI"},
             color=PRIMARY_COLOR,
-            width=3.5,
+            width=3.75,
             include_labels=include_labels,
         )
         self.extension2 = MPTNode(
             "Extension Node",
             {"key-part": "\n     d3", " next\n node": ""},
             include_labels=include_labels,
-            width=3.5,
+            width=3.75,
         )
         self.leaf2 = MPTNode(
             "Leaf Node",
-            {"key-end": "\n\n   9365", " value": "\n\n1.1 ETH"},
+            {"key-end": "\n   9365", " value": "\n1.1 ETH"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
@@ -186,28 +187,28 @@ class MerklePatriciaTrie(VGroup):
         )
         self.leaf3 = MPTNode(
             "Leaf Node",
-            {"key-end": "\n\n      7", "  value": "\n\n0.12 ETH"},
+            {"key-end": "\n      7", "  value": "\n0.12 ETH"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
         )
         self.leaf4 = MPTNode(
             "Leaf Node",
-            {"key-end": "\n\n      7", "  value": "\n\n1.00 WEI"},
+            {"key-end": "\n      7", "  value": "\n1.00 WEI"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
         )
         self.leaf_replace2 = MPTNode(
             title=None,
-            fields={"key-end": "\n\n  11335", "  value": "\n\n45.0 ETH"},
+            fields={"key-end": "\n  11335", "  value": "\n45.0 ETH"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,
         )
         self.leaf1 = MPTNode(
             "Leaf Node",
-            {"key-end": "\n\n   1335", "  value": "\n\n45.0 ETH"},
+            {"key-end": "\n   1335", "  value": "\n45.0 ETH"},
             color=PRIMARY_COLOR,
             width=3.5,
             include_labels=include_labels,

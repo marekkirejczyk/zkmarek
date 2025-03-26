@@ -12,7 +12,6 @@ from manim import (
     DOWN,
     TransformMatchingShapes,
     VGroup,
-    FadeIn
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -45,7 +44,8 @@ class ETHPatriciaMerkleTrie(SlideBase):
 
     def animate_out(self, scene):
         scene.play(
-            FadeOut(self.title_label), FadeOut(self.MPT), FadeOut(self.worldState)
+            FadeOut(self.title_label, self.MPT, self.worldState,
+                    self.hashes),
         )
 
     def merkle_particia_trie(self, scene):
@@ -66,21 +66,24 @@ class ETHPatriciaMerkleTrie(SlideBase):
             run_time=0.8,
         )
         scene.play(
-            Indicate(self.worldState.key_cells[0:7], color=HIGHLIGHT_COLOR),
-            Indicate(self.worldState.value_cells[0], color=HIGHLIGHT_COLOR),
+            self.worldState.key_cells[0:7].animate.set_color(HIGHLIGHT_COLOR),
+            self.worldState.value_cells[0].animate.set_color(HIGHLIGHT_COLOR),
             run_time=0.7,
         )
         scene.wait(0.5)
+        
         self.MPT.leaf_replace.generate_target()
         self.MPT.leaf_replace.target.scale(1.5/2).shift(LEFT*3)
         scene.play(MoveToTarget(self.MPT.leaf_replace), run_time=0.7)
+        scene.play(self.worldState.key_cells[7:14].animate.set_color(HIGHLIGHT_COLOR),
+                   self.worldState.value_cells[1].animate.set_color(HIGHLIGHT_COLOR), run_time=0.7)
         self.MPT.leaf2_replace.scale(0.45).scale(1.5).next_to(self.MPT.leaf_replace, RIGHT, buff=1.0)
         scene.play(Create(self.MPT.leaf2_replace), run_time=0.7)
         scene.play(Indicate(self.worldState.key_cells[0:2], color=SECONDARY_COLOR), run_time=0.8)
         scene.play(Indicate(self.worldState.key_cells[7:9], color=SECONDARY_COLOR), run_time=0.8)
         scene.wait(0.2)
-        scene.play(Indicate(self.MPT.leaf_replace.field_group[0], color=HIGHLIGHT_COLOR), run_time=0.8)
-        scene.play(Indicate(self.MPT.leaf2_replace.field_group[0], color=HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.MPT.leaf_replace.field_group[0][0][4:6], color=HIGHLIGHT_COLOR), run_time=0.8)
+        scene.play(Indicate(self.MPT.leaf2_replace.field_group[0][0][4:6], color=HIGHLIGHT_COLOR), run_time=0.8)
         scene.wait(1)
 
         self.MPT.leaf_replace.generate_target()
@@ -116,7 +119,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.play(MoveToTarget(self.MPT.leaf_replace), MoveToTarget(self.MPT.leaf2_replace), run_time=1)
         scene.play(TransformMatchingShapes(VGroup(self.MPT.leaf_replace.field_group[0][1][4:6].copy(), 
                                                   self.MPT.leaf2_replace.field_group[0][1][4:6].copy()), 
-                                           self.MPT.root.field_group[0][1][9:12]), Create(self.MPT.root), run_time=1)
+                                           self.MPT.root.field_group[0][1][8:11]), Create(self.MPT.root), run_time=1)
         self.MPT.leaf_replace2.move_to(self.MPT.leaf_replace.get_center()).scale(0.45)
         self.MPT.leaf2_replace2.move_to(self.MPT.leaf2_replace.get_center()).scale(0.45)
         self.MPT.replace_leaf1(scene)
@@ -254,18 +257,51 @@ class ETHPatriciaMerkleTrie(SlideBase):
         self.new_subsection(
             scene, "leaf belongs to the root", "data/sound/e6/slide2-6g.mp3"
         )
-        scene.wait(2)
+        scene.wait(1.5)
         scene.play(Indicate(self.MPT, color=PRIMARY_COLOR, scale_factor=1.05))
-        scene.wait(4.2)
+        self.hash_of_it_contents(scene)
         scene.play(Indicate(self.MPT.leaf1, color=PRIMARY_COLOR), run_time=1)
+        scene.wait(1)
         scene.play(
-            Indicate(self.MPT.root.field_group[0], color=PRIMARY_COLOR), run_time=0.8
+            Indicate(self.MPT.root.field_group[0][0][8:11], color=PRIMARY_COLOR, scale_factor=1.5), run_time=0.8
         )
         scene.play(
             Indicate(self.MPT.branch1.get_child_slot("1"), color=PRIMARY_COLOR),
             run_time=0.8,
         )
         scene.play(
-            Indicate(self.MPT.leaf1.field_group[0], color=PRIMARY_COLOR), run_time=0.8
+            Indicate(self.MPT.leaf1.field_group[0][0][4:6], color=PRIMARY_COLOR, scale_factor=1.5), run_time=0.8
         )
         scene.wait(0.8)
+        
+    def hash_of_it_contents(self, scene):
+        fontsize = 10
+        self.root = Text("7361...6720", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.root.next_to(self.MPT.root, UP, buff = 0.1).shift(RIGHT * 0.6)
+        
+        self.branch1 = Text("3c8a...1749", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.branch1.next_to(self.MPT.branch1, UP, buff = 0.1).shift(RIGHT * 2.2)
+        
+        self.leaf1 = Text("9a31...4753", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf1.next_to(self.MPT.leaf1, UP, buff = 0.1).shift(RIGHT * 0.75)
+        
+        self.extension = Text("2614...781c", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.extension.next_to(self.MPT.extension2, UP, buff = 0.1).shift(RIGHT * 0.6)
+        
+        self.leaf2 = Text("7241...c862", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf2.next_to(self.MPT.leaf2, UP, buff = 0.1).shift(RIGHT * 0.6)
+        
+        self.branch2 = Text("2167...6c23", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.branch2.next_to(self.MPT.branch2, UP, buff = 0.1).shift(RIGHT * 2.2)
+        
+        self.leaf3 = Text("987e...7124", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf3.next_to(self.MPT.leaf3, UP, buff = 0.1).shift(RIGHT * 0.6)
+        
+        self.leaf4 = Text("139c...1724", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf4.next_to(self.MPT.leaf4, UP, buff = 0.1).shift(RIGHT * 0.6)
+
+        self.hashes = VGroup(self.root, self.branch1, self.leaf1, self.leaf2, self.extension,
+                             self.branch2, self.leaf3, self.leaf4)
+        scene.play(Create(self.hashes), run_time=1.5) 
+        
+        scene.wait(2)

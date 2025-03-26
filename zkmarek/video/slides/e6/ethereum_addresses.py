@@ -1,7 +1,6 @@
 from manim import (
     Text,
     FadeIn,
-    Create,
     RoundedRectangle,
     Write,
     ImageMobject,
