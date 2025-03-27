@@ -1,7 +1,7 @@
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode3.ceremony import Ceremony
-from zkmarek.video.slides.e4.commitment import Commitment
-from zkmarek.video.slides.e5.vectorcommitments import VectorCommitments
+from zkmarek.video.slides.episode4.commitment import Commitment
+from zkmarek.video.slides.episode5.vectorcommitments import VectorCommitments
 
 class FullVideos(SlideBase):
     def __init__(self) -> None:

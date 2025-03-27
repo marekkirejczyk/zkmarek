@@ -1,14 +1,14 @@
 from manim import (FadeIn, FadeOut, Text, MathTex, Create, LEFT, RIGHT, UP, DOWN, Write, TransformMatchingShapes, MoveToTarget, Indicate, VGroup, ValueTracker, 
 ImageMobject, Axes, Arrow, StealthTip, Polygon, GrowArrow, Group, ORIGIN)
 from manim import BLUE_D, GREEN_E, MAROON_E, LIGHT_BROWN, PURPLE_B
-from zkmarek.video.slides.e4.discreete_polynomial_chart import DiscreetePolynomialChart
+from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
-from zkmarek.video.slides.e4.chart import Chart
+from zkmarek.video.slides.episode4.chart import Chart
 from zkmarek.video.slides.e6.curve import Curve
-from zkmarek.video.slides.e5.layer2 import Layer2
+from zkmarek.video.slides.episode5.layer2 import Layer2
 from zkmarek.video.slides.e6.tree import MerkleTree
 import numpy as np
 from scipy.special import factorial
@@ -409,5 +409,4 @@ class Previously(SlideBase):
         
         scene.wait(1)
         scene.play(FadeOut(self.tree, self.dots_vec_node, self.dots_vec_node1, self.dots_vec_node2, blobs))
-        
         

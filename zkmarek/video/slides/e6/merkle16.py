@@ -1,17 +1,18 @@
-from manim import VGroup, RIGHT, DOWN, RoundedRectangle, GREEN_E, TEAL_E, Arrow, Text, StealthTip, UP, GREY
-from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
-
+from manim import VGroup, RIGHT, DOWN, RoundedRectangle, Text, StealthTip, DashedVMobject, Arrow, UP
+from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 class Node(VGroup):
-    def __init__(self, value=None, font_size=32):
+    def __init__(self, value=None, font_size=40):
         super().__init__()
         square = RoundedRectangle(
             color=PRIMARY_COLOR,
             fill_color=BACKGROUND_COLOR,
             fill_opacity=0.3,
-            width=1.7,
+            width=1.2,
             height=1.2,
-        ).set_color_by_gradient([GREEN_E, TEAL_E])
-        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
+            stroke_width = 0.0,
+            corner_radius=0.1,
+        ).set_color(HIGHLIGHT_COLOR)
+        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT, color = PRIMARY_COLOR)
         self.value = value
         self.text = text
         self.add(square, text)
@@ -21,19 +22,23 @@ class Node(VGroup):
         self.value = value
         self.text.text = str(value)
 
-
-def create_arrow(start, end, stroke_width=2):
-    return Arrow(
+def create_arrow(start, end, stroke_width=1.8, dash_density=3.5):
+    arrow = Arrow(
         start=start.get_bottom(),
-        end=end.get_top()+UP*0.1,
-        color=GREY,
+        end=end.get_top() + UP * 0.1,
+        color=PRIMARY_COLOR,
         buff=0,
         max_tip_length_to_length_ratio=0.1,
-        # max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
-        tip_shape = StealthTip,
-        tip_length=0.1,
+        tip_shape=StealthTip,
+        tip_length=0.15,
     )
+
+    arrow_length = arrow.get_length()
+
+    num_dashes = max(2, int(arrow_length * dash_density)) 
+
+    return DashedVMobject(arrow, num_dashes=num_dashes)
 
 
 class SelectiveMerkleTree(VGroup):
@@ -53,8 +58,8 @@ class SelectiveMerkleTree(VGroup):
 
         if num_children < 2 or num_children > 16:
             raise ValueError("Number of children per node must be between 2 and 16.")
-        if num_levels < 1 or num_levels > 5:
-            raise ValueError("Number of levels must be between 1 and 4.")
+        if num_levels < 1 or num_levels > 7:
+            raise ValueError("Number of levels must be between 1 and 7.")
 
         if focused_node_path is None:
             focused_node_path = [0] * (num_levels - 1)
@@ -74,7 +79,7 @@ class SelectiveMerkleTree(VGroup):
 
     def _create_selective_tree(self):
         """Generate the selective tree by focusing on the specified path."""
-        root = Node("Root" if self.include_labels else None)
+        root = Node("root" if self.include_labels else None)
         root.move_to(0.5 * DOWN)
         self.nodes.append([root])
         self.add(root)
@@ -82,9 +87,9 @@ class SelectiveMerkleTree(VGroup):
         current_node = root
         for level_idx in range(1, self.num_levels):
             child_index = self.focused_node_path[level_idx - 1]
-
+            indeces = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
             children = [
-                Node(f"{level_idx}-{i}" if self.include_labels else None).scale(0.5)
+                Node(indeces[i] if self.include_labels else None).scale(0.5)
                 for i in range(self.num_children)
             ]
 
@@ -95,7 +100,7 @@ class SelectiveMerkleTree(VGroup):
 
             spacing = 0.8
             for i, child in enumerate(children):
-                child.next_to(current_node, DOWN, buff=1.4).shift(1.3*RIGHT * (i - (self.num_children - 1) / 2) * spacing)
+                child.next_to(current_node, DOWN, buff=2).shift(1.3*RIGHT * (i - (self.num_children - 1) / 2) * spacing)
             for i, child in enumerate(children):
                 arrow = create_arrow(current_node, children[i])
                 self.add(arrow)

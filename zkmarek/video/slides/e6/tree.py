@@ -1,6 +1,5 @@
-from manim import VGroup, DOWN, Arrow, Text, RoundedRectangle, GREEN_E, TEAL_E, RIGHT, StealthTip, UP
-from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT
-
+from manim import VGroup, DOWN, Text, RoundedRectangle, RIGHT, StealthTip, Arrow, DashedVMobject, UP
+from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 class Node(VGroup):
     def __init__(self, value=None, font_size=32):
         super().__init__()
@@ -8,10 +7,12 @@ class Node(VGroup):
             color=PRIMARY_COLOR,
             fill_color=BACKGROUND_COLOR,
             fill_opacity=0.3,
-            width=2,
-            height=1.2,
-        ).set_color_by_gradient([GREEN_E, TEAL_E])
-        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT)
+            width=2.3,
+            height=1,
+            stroke_width = 0.0,
+            corner_radius=0.1
+        ).set_color(HIGHLIGHT_COLOR)
+        text = Text(str(value) if value is not None else "", z_index=1, font_size=font_size, font=PRIMARY_FONT, color = PRIMARY_COLOR)
         self.value = value
         self.text = text
         self.add(square, text)
@@ -22,18 +23,23 @@ class Node(VGroup):
         self.text.text = str(value)
 
 
-def create_arrow(start, end, stroke_width=1.8):
-    return Arrow(
+def create_arrow(start, end, stroke_width=1.8, dash_density=2):
+    arrow = Arrow(
         start=start.get_bottom(),
-        end=end.get_top()+UP*0.1,
+        end=end.get_top() + UP * 0.1,
         color=PRIMARY_COLOR,
         buff=0,
         max_tip_length_to_length_ratio=0.1,
-        # max_stroke_width_to_length_ratio=1,
         stroke_width=stroke_width,
-        tip_shape = StealthTip,
-        tip_length=0.2,
+        tip_shape=StealthTip,
+        tip_length=0.15,
     )
+
+    arrow_length = arrow.get_length()
+
+    num_dashes = max(2, int(arrow_length * dash_density)) 
+
+    return DashedVMobject(arrow, num_dashes=num_dashes)
 
 
 class MerkleTree(VGroup):
@@ -66,13 +72,15 @@ class MerkleTree(VGroup):
             if i == 0:
                 level_group.move_to(0.5 * DOWN)
             elif i == 1:
-                level_group.arrange(RIGHT, buff=8.6)
+                level_group.arrange(RIGHT, buff=9.5)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1)
             elif i == 2:
-                level_group.arrange(RIGHT, buff=3.45)
+                level_group.arrange(RIGHT, buff=3.7)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*2)
             elif i == 3:
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*4)
+            elif i == 4:
+                level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*6)
             self.add(level_group)
 
         for i in range(1, num_levels):
