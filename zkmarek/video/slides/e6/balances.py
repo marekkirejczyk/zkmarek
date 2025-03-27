@@ -162,13 +162,13 @@ class EthBalances(SlideBase):
         scene.play(MoveToTarget(self.finalized_blocks[1]), MoveToTarget(self.ethereum))
 
         self.account_data.move_to(
-            self.finalized_blocks[1].get_top() + DOWN * 0.98 + LEFT * 1.5
+            self.finalized_blocks[1].get_top() + DOWN * 1 + LEFT * 1.5
         )
         self.account_data_more.next_to(self.account_data[22], DOWN, buff=0.2).shift(
             0.1 * RIGHT
         )
         self.transaction_data.next_to(self.account_data[11], RIGHT, buff=1.0).shift(
-            RIGHT * 0.6 + DOWN * 0.4
+            RIGHT * 0.6 + DOWN * 0.55
         )
         data_vecs = VGroup(
             self.transaction_data, self.account_data, self.account_data_more
