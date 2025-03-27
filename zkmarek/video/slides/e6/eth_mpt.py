@@ -84,7 +84,6 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.wait(0.2)
         scene.play(Indicate(self.MPT.leaf_replace.field_group[0][1][4:6], color=SECONDARY_COLOR), run_time=0.8)
         scene.play(Indicate(self.MPT.leaf2_replace.field_group[0][1][4:6], color=SECONDARY_COLOR), run_time=0.8)
-        scene.wait(1)
 
         self.MPT.leaf_replace.generate_target()
         self.MPT.leaf_replace.target.scale(1 / 1.5).next_to(
@@ -144,38 +143,36 @@ class ETHPatriciaMerkleTrie(SlideBase):
             ],
             run_time=1
         )
-        scene.wait(2)
+        scene.wait(3.5)
         self.MPT.leaf1.move_to(self.MPT.leaf_replace2.get_center())
         self.MPT.leaf2.move_to(self.MPT.leaf2_replace2.get_center())
-        scene.play(self.worldState.key_cells[2].animate.set_color(HIGHLIGHT_COLOR),
-                   self.worldState.key_cells[9].animate.set_color(HIGHLIGHT_COLOR), run_time=0.8)
-        scene.play(Indicate(self.worldState.key_cells[2], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
-        scene.play(Indicate(self.MPT.branch1.get_child_slot("1"), color=PRIMARY_COLOR, scale_factor=1.2), run_time=1)
-        scene.play(Write(self.MPT.arrow2), run_time=1)
+        scene.play(Indicate(self.worldState.key_cells[2], color = PRIMARY_COLOR, scale_factor=1.6), run_time=0.8)
+        scene.play(Indicate(self.MPT.branch1.get_child_slot("1"), color=PRIMARY_COLOR, scale_factor=1.6), run_time=1)
         scene.play(
             self.MPT.branch1.get_child_slot("1")
-            .animate.set_color(PRIMARY_COLOR)
-            .set_opacity(0.6),
+            .animate.set_color(PRIMARY_COLOR),
             run_time=0.7,
         )
+        scene.play(Write(self.MPT.arrow2), run_time=1)
         self.MPT.replace_leaf2(scene)
         
-        scene.play(Indicate(self.worldState.key_cells[9], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
-        scene.play(Indicate(self.MPT.branch1.get_child_slot("f"), color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
+        scene.play(Indicate(self.worldState.key_cells[9], color = PRIMARY_COLOR, scale_factor=1.6), run_time=0.8)
+        scene.play(Indicate(self.MPT.branch1.get_child_slot("f"), color=PRIMARY_COLOR, scale_factor=1.6), run_time=1)
+        scene.play(
+            self.MPT.branch1.get_child_slot("f")
+            .animate.set_color(PRIMARY_COLOR),
+            run_time=0.7,
+        )
         scene.play(Write(self.MPT.arrow4), run_time=1)
         self.MPT.replace_2leaf2(scene)
         
-        scene.play(
-            self.MPT.branch1.get_child_slot("f")
-            .animate.set_color(PRIMARY_COLOR)
-            .set_opacity(0.6),
-            run_time=0.7,
-        )
 
         self.new_subsection(scene, "extensions", "data/sound/e6/slide2-6d.mp3")
+        scene.play(Indicate(self.worldState.key_cells[16:19], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
+        scene.play(self.worldState.key_cells[16:19].animate.set_color(SECONDARY_COLOR), run_time=0.1)
+        scene.play(Indicate(self.worldState.key_cells[23:26], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
+        scene.play(self.worldState.key_cells[23:26].animate.set_color(SECONDARY_COLOR), run_time=0.2)
         scene.play(Create(self.MPT.extension2), Write(self.MPT.arrow3), run_time=1)
-        scene.play(self.worldState.key_cells[16:19].animate.set_color(SECONDARY_COLOR))
-        scene.play(self.worldState.key_cells[23:26].animate.set_color(SECONDARY_COLOR))
         scene.play(
             Indicate(
                 self.MPT.branch1.get_child_slot("7"),
@@ -184,7 +181,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
             )
         )
         scene.play(
-            self.MPT.branch1.get_child_slot("7").animate.set_color(SECONDARY_COLOR)
+            self.MPT.branch1.get_child_slot("7").animate.set_color(PRIMARY_COLOR), run_time=0.1
         )
 
         d3_label = None
@@ -194,29 +191,29 @@ class ETHPatriciaMerkleTrie(SlideBase):
                 d3_label = text[9:11]
                 break
         if d3_label:
-            scene.play(d3_label.animate.set_color(SECONDARY_COLOR).scale(1.2).shift(DOWN*0.05))
             scene.play(
                 Indicate(d3_label, color=SECONDARY_COLOR, scale_factor=1.2),
             )
-        scene.play(self.worldState.key_cells[14:19].animate.set_color(SECONDARY_COLOR))
-        scene.play(self.worldState.key_cells[21:26].animate.set_color(SECONDARY_COLOR))
+            scene.play(d3_label.animate.set_color(PRIMARY_COLOR).scale(1.2).shift(DOWN*0.05), run_time=0.1)
+        scene.play(self.worldState.key_cells[14:19].animate.set_color(HIGHLIGHT_COLOR))
+        scene.play(self.worldState.key_cells[21:26].animate.set_color(HIGHLIGHT_COLOR))
 
         self.new_subsection(scene, "leaves", "data/sound/e6/slide2-6e.mp3")
         scene.play(Create(self.MPT.branch2), Write(self.MPT.arrow5), run_time=1)
         scene.play(Indicate(self.worldState.key_cells[19:20], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.play(
-            self.worldState.key_cells[19:20].animate.set_color(SECONDARY_COLOR), run_time=0.2
+            self.worldState.key_cells[19:20].animate.set_color(HIGHLIGHT_COLOR), run_time=0.2
         )
         scene.play(Indicate(self.worldState.key_cells[26:27], color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.play(
-            self.worldState.key_cells[26:27].animate.set_color(SECONDARY_COLOR), run_time=0.2
+            self.worldState.key_cells[26:27].animate.set_color(HIGHLIGHT_COLOR), run_time=0.2
         )
         scene.play(Indicate(self.MPT.branch2.get_child_slot("3"), color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
         scene.play(
-            self.MPT.branch2.get_child_slot("3").animate.set_color(SECONDARY_COLOR), run_time=0.1
+            self.MPT.branch2.get_child_slot("3").animate.set_color(PRIMARY_COLOR), run_time=0.1
         )
         scene.play(Indicate(self.MPT.branch2.get_child_slot("8"), color=SECONDARY_COLOR, scale_factor=1.5), run_time=0.8)
-        scene.play(self.MPT.branch2.get_child_slot("8").animate.set_color(SECONDARY_COLOR), run_time=0.1)
+        scene.play(self.MPT.branch2.get_child_slot("8").animate.set_color(PRIMARY_COLOR), run_time=0.1)
         scene.play(
             Create(self.MPT.leaf3),
             Write(self.MPT.arrow6),
@@ -224,9 +221,11 @@ class ETHPatriciaMerkleTrie(SlideBase):
             Write(self.MPT.arrow7),
             run_time=1,
         )
-        scene.play(self.worldState.key_cells[20:21].animate.set_color(SECONDARY_COLOR))
+        scene.play(self.worldState.key_cells[20:21].animate.set_color(HIGHLIGHT_COLOR),
+                   self.worldState.value_cells[2].animate.set_color(HIGHLIGHT_COLOR), run_time=0.2)
 
-        scene.play(self.worldState.key_cells[27:28].animate.set_color(SECONDARY_COLOR))
+        scene.play(self.worldState.key_cells[27:28].animate.set_color(HIGHLIGHT_COLOR),
+                   self.worldState.value_cells[3].animate.set_color(HIGHLIGHT_COLOR), run_time=0.2)
 
         self.new_subsection(scene, "4 level mpt", "data/sound/e6/slide2-6f.mp3")
         scene.wait(5.2)
@@ -261,35 +260,35 @@ class ETHPatriciaMerkleTrie(SlideBase):
             run_time=0.8,
         )
         scene.play(
-            Indicate(self.MPT.leaf1.field_group[0][1][8:10], color=PRIMARY_COLOR, scale_factor=1.5), run_time=0.8
+            Indicate(self.MPT.leaf1.field_group[0][1][8:12], color=PRIMARY_COLOR, scale_factor=1.5), run_time=0.8
         )
         scene.wait(0.8)
         
     def hash_of_it_contents(self, scene):
         fontsize = 10
-        self.root = Text("7361...6720", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.root.next_to(self.MPT.root, UP, buff = 0.1).shift(RIGHT * 0.6)
+        self.root = Text("73616...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.root.next_to(self.MPT.root, UP, buff = 0.1).shift(RIGHT * 0.55)
         
-        self.branch1 = Text("3c8a...1749", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.branch1.next_to(self.MPT.branch1, UP, buff = 0.1).shift(RIGHT * 2.2)
+        self.branch1 = Text("3c8a1...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.branch1.next_to(self.MPT.branch1, UP, buff = 0.1).shift(RIGHT * 2.4)
         
-        self.leaf1 = Text("9a31...4753", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.leaf1.next_to(self.MPT.leaf1, UP, buff = 0.1).shift(RIGHT * 0.75)
+        self.leaf1 = Text("9a314...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf1.next_to(self.MPT.leaf1, UP, buff = 0.1).shift(RIGHT * 0.5)
         
-        self.extension = Text("2614...781c", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.extension.next_to(self.MPT.extension2, UP, buff = 0.1).shift(RIGHT * 0.6)
+        self.extension = Text("26147...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.extension.next_to(self.MPT.extension2, UP, buff = 0.1).shift(RIGHT * 0.5)
         
-        self.leaf2 = Text("7241...c862", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.leaf2.next_to(self.MPT.leaf2, UP, buff = 0.1).shift(RIGHT * 0.6)
+        self.leaf2 = Text("7241c...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf2.next_to(self.MPT.leaf2, UP, buff = 0.1).shift(RIGHT * 0.5)
         
-        self.branch2 = Text("2167...6c23", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.branch2.next_to(self.MPT.branch2, UP, buff = 0.1).shift(RIGHT * 2.2)
+        self.branch2 = Text("21676...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.branch2.next_to(self.MPT.branch2, UP, buff = 0.1).shift(RIGHT * 2.4)
         
-        self.leaf3 = Text("987e...7124", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.leaf3.next_to(self.MPT.leaf3, UP, buff = 0.1).shift(RIGHT * 0.6)
+        self.leaf3 = Text("987e7...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf3.next_to(self.MPT.leaf3, UP, buff = 0.1).shift(RIGHT * 0.45)
         
-        self.leaf4 = Text("139c...1724", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
-        self.leaf4.next_to(self.MPT.leaf4, UP, buff = 0.1).shift(RIGHT * 0.6)
+        self.leaf4 = Text("139c7...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = fontsize)
+        self.leaf4.next_to(self.MPT.leaf4, UP, buff = 0.1).shift(RIGHT * 0.45)
 
         self.hashes = VGroup(self.root, self.branch1, self.leaf1, self.leaf2, self.extension,
                              self.branch2, self.leaf3, self.leaf4)

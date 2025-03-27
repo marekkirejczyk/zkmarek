@@ -166,7 +166,7 @@ class MerklePatriciaTrie(VGroup):
         )
         self.leaf2_replace2 = MPTNode(
             title=None,
-            fields={"key-end": "\n   f9365", "   value": "\n 1.0 WEI"},
+            fields={"key-end": "\n   f9365", "  value": "\n 1.0 WEI"},
             color=PRIMARY_COLOR,
             width=3.75,
             include_labels=include_labels,

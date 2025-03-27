@@ -25,11 +25,11 @@ from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
 
 class EthBalances(SlideBase):
     def __init__(self) -> None:
-        super().__init__("Ethereum Balances")
+        super().__init__("Ethereum Storage")
 
     def construct(self):
         self.title_label = Text(
-            "Ethereum Balances", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=40
+            "Ethereum Storage", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=40
         ).to_edge(UP)
 
         self.finalized_blocks = [

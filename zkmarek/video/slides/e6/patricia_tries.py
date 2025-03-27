@@ -220,6 +220,7 @@ class PatriciaTries(SlideBase):
             ),
             run_time=1.5,
         )
+        scene.wait(1.3)
 
         scene.play(
             Indicate(pref1[3], color=SECONDARY_COLOR),
@@ -416,13 +417,14 @@ class PatriciaTries(SlideBase):
         #     run_time=0.8
         # )
         path = [
+            self.merkle_tree_hexary.get_node(0, 0),
             self.merkle_tree_hexary.get_node(1, 7),
             self.merkle_tree_hexary.get_node(2, 8),
             self.merkle_tree_hexary.get_node(3, 2),
         ]
         for node in path:
-            scene.play(Indicate(node, color=SECONDARY_COLOR), run_time=1)
-        scene.wait(1)
+            scene.play(node.animate.set_color(SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(path[0], color=SECONDARY_COLOR), run_time=1)
 
         self.play_sound(scene, "data/sound/e6/slide2-5e.mp3")
         scene.wait(2)

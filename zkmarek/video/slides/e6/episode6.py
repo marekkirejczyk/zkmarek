@@ -30,7 +30,7 @@ EPISODE6 = [
     EthereumAddresses(),
     TitleSlide("Patricia Tries", sound="data/sound/e6/slide2-4.mp3", wait_time=6),
     PatriciaTries(),
-    TitleSlide("Ethereum Merkle Patricia Tries", wait_time=2.5),
+    TitleSlide("Ethereum Merkle Patricia Tries", wait_time=1.7),
     ETHPatriciaMerkleTrie(),
     EthereumBlock(),
     TitleSlide("Proof sizes", sound="data/sound/e6/slide2-8.mp3", wait_time=1.5),

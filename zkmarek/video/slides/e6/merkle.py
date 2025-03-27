@@ -192,9 +192,9 @@ class MerkleTree(SlideBase):
         for i in range(4):
             levels = level[i]
             levels.set_color(HIGHLIGHT_COLOR)
+        self.account_group_8_elements[0].set_color(PRIMARY_COLOR)
 
         self.new_subsection(scene, "merkle proofs", "data/sound/e6/slide2-3.mp3")
-        self.account_group_8_elements[0].set_color(PRIMARY_COLOR)
         self.merkle_proof(scene)
         scene.wait(1)
 
@@ -411,6 +411,7 @@ class MerkleTree(SlideBase):
             *self.level_1_hashes[1:]
         )
         scene.wait(2.5)
+        scene.play(Indicate(self.new_hashes[3], color = SECONDARY_COLOR))
 
     def merkle_proof(self, scene):
         all_nodes = VGroup(

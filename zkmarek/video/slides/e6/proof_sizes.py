@@ -61,7 +61,10 @@ class ProofSize(SlideBase):
         scene.play(Indicate(self.formula[0:5], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
         scene.play(Indicate(self.formula[6:15], color = SECONDARY_COLOR), run_time=0.8)
-        scene.wait(3.8)
+        scene.wait(0.5)
+        scene.play(Indicate(self.merkle_tree.branch1, color = SECONDARY_COLOR), run_time=0.9)
+        scene.play(Indicate(self.merkle_tree.branch2, color = SECONDARY_COLOR), run_time=0.9)
+        scene.wait(1.7)
         scene.play(Indicate(self.formula[16:], color = SECONDARY_COLOR), run_time=0.8)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.formula, self.formula1))
@@ -85,8 +88,13 @@ class ProofSize(SlideBase):
         scene.play(TransformMatchingShapes(self.formula2, self.formula3))
         
         self.new_subsection(scene, "proofs smaller", "data/sound/e6/slide2-8f.mp3")
-        scene.wait(3)
-        scene.play(FadeOut(self.formula3, self.merkle_tree, self.dots))
+        question_mark = Text("?", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.formula3, DOWN, buff = 0.4)
+        scene.wait(0.3)
+        scene.play(FadeIn(question_mark), run_time=1)
+        scene.wait(1.7)
+        
+        scene.play(FadeOut(self.formula3, self.merkle_tree, self.dots, question_mark))
+        
         self.new_subsection(scene, "merkle verkle", "data/sound/e6/slide2-8g.mp3")
         self.merkle_tree_text = Text("Merkle Tree", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(LEFT*4)
         self.verkle_tree_text = Text("Verkle Tree", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT*4)
