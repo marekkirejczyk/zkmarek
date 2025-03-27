@@ -40,7 +40,7 @@ jobs:
     - name: Render movie (manim)
       run: |
         python -m manim -p -qk zkmarek/video/main.py
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: Movie HD
         path: media/videos/main/2160p60/Episode6.mp4
