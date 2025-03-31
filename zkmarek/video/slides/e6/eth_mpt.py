@@ -131,7 +131,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
                 a7_label = text[9:18]
                 break
         if a7_label:
-            scene.play(a7_label.animate.set_color(PRIMARY_COLOR).scale(1.2).shift(DOWN*0.05))
+            scene.play(a7_label.animate.set_color(PRIMARY_COLOR))
 
         self.new_subsection(scene, "branches", "data/sound/e6/slide2-6c.mp3")
         scene.play(Create(self.MPT.branch1), Write(self.MPT.arrow), run_time=1)
@@ -194,7 +194,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
             scene.play(
                 Indicate(d3_label, color=SECONDARY_COLOR, scale_factor=1.2),
             )
-            scene.play(d3_label.animate.set_color(PRIMARY_COLOR).scale(1.2).shift(DOWN*0.05), run_time=0.1)
+            scene.play(d3_label.animate.set_color(PRIMARY_COLOR), run_time=0.1)
         scene.play(self.worldState.key_cells[14:19].animate.set_color(HIGHLIGHT_COLOR))
         scene.play(self.worldState.key_cells[21:26].animate.set_color(HIGHLIGHT_COLOR))
 
@@ -251,7 +251,9 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.play(Indicate(self.MPT, color=PRIMARY_COLOR, scale_factor=1.05))
         self.hash_of_it_contents(scene)
         scene.play(Indicate(self.MPT.leaf1, color=PRIMARY_COLOR), run_time=1)
-        scene.wait(1)
+        scene.wait(0.2)
+        scene.play(Indicate(self.MPT.root, color=PRIMARY_COLOR), run_time=1)
+        scene.wait(0.2)
         scene.play(
             Indicate(self.MPT.root.field_group[0][1][9:11], color=PRIMARY_COLOR, scale_factor=1.5), run_time=0.8
         )
@@ -262,7 +264,7 @@ class ETHPatriciaMerkleTrie(SlideBase):
         scene.play(
             Indicate(self.MPT.leaf1.field_group[0][1][8:12], color=PRIMARY_COLOR, scale_factor=1.5), run_time=0.8
         )
-        scene.wait(0.8)
+        scene.wait(0.2)
         
     def hash_of_it_contents(self, scene):
         fontsize = 10

@@ -85,7 +85,16 @@ class PatriciaTries(SlideBase):
         self.node = DashedVMobject(node, num_dashes=60)
 
         self.key = RoundedRectangle(
-            width=1.8,
+            width=1.4,
+            height=0.6,
+            corner_radius=0.1,
+            color=PRIMARY_COLOR,
+            fill_opacity=0.17,
+            stroke_width=0.0,
+        ).next_to(node, UP, buff=0.5).align_to(node, LEFT).shift(RIGHT * 0.8 + DOWN * 1.7)
+
+        self.nodes_key = RoundedRectangle(
+            width=2.1,
             height=0.6,
             corner_radius=0.1,
             color=PRIMARY_COLOR,
@@ -98,13 +107,19 @@ class PatriciaTries(SlideBase):
             height=0.6,
             corner_radius=0.1,
             color=PRIMARY_COLOR,
+            fill_opacity=0.17,
+            stroke_width=0.0,
+        ).next_to(node, UP, buff=0.5).align_to(node, RIGHT).shift(LEFT * 0.8 + DOWN * 1.7)
+
+        self.nodes_value = RoundedRectangle(
+            width=1,
+            height=0.6,
+            corner_radius=0.1,
+            color=PRIMARY_COLOR,
             fill_opacity=0.27,
             stroke_width=0.0,
         ).next_to(node, UP, buff=0.5).align_to(node, RIGHT).shift(LEFT * 0.8 + DOWN * 1.7)
 
-        self.key_text = Text(
-            "Keys", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
-        ).move_to(self.key)
 
         self.value_text = Text(
             "Values", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
@@ -115,7 +130,7 @@ class PatriciaTries(SlideBase):
             color=PRIMARY_COLOR,
             font=PRIMARY_FONT,
             font_size=18,
-        ).next_to(self.key, DOWN, buff=0.35).align_to(self.key, LEFT).shift(RIGHT * 0.07)
+        ).next_to(self.key, DOWN, buff=0.35).align_to(self.key, LEFT).shift(RIGHT * 0.2)
 
         self.account_balances = Text(
             "7 ETH \n\n\n 9 ETH \n\n\n 1 ETH \n\n\n 7 ETH",
@@ -125,14 +140,20 @@ class PatriciaTries(SlideBase):
         ).next_to(self.value, DOWN, buff=0.38).align_to(self.value, RIGHT).shift(LEFT*0.16)
 
         self.nodes_for_address = VGroup(*[
-            self.key.copy().next_to(self.key, DOWN, buff=0.4)
+            self.nodes_key.copy().next_to(self.key, DOWN, buff=0.4)
             for _ in range(4)
-        ]).arrange(DOWN, buff=0.13).align_to(self.key, LEFT).shift(DOWN*0.28)
+        ]).arrange(DOWN, buff=0.13).align_to(self.key, LEFT).shift(DOWN*0.24)
 
         self.nodes_for_balances = VGroup(*[
-            self.value.copy().next_to(self.value, DOWN, buff=0.4)
+            self.nodes_value.copy().next_to(self.value, DOWN, buff=0.4)
             for _ in range(4)
-        ]).arrange(DOWN, buff=0.13).align_to(self.value, RIGHT).shift(DOWN * 0.28)
+        ]).arrange(DOWN, buff=0.13).align_to(self.value, RIGHT).shift(DOWN * 0.24)
+        
+        self.key.shift(RIGHT * 0.5)
+        self.key_text = Text(
+            "Keys", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
+        ).move_to(self.key)
+        
 
     def animate_in(self, scene):
         self.key_value_pairs(scene)
@@ -181,10 +202,6 @@ class PatriciaTries(SlideBase):
         pref2 = prefixes1[1]
         pref3 = prefixes1[2]
         pref4 = prefixes1[3]
-
-        # for j in range(3):
-        #     scene.play(Indicate(pref1[j], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
-        #     scene.play(Write(self.keys_on_nodes[j]), run_time=0.5)
 
         # T to the root
         scene.play(
@@ -273,7 +290,7 @@ class PatriciaTries(SlideBase):
             "State Trie", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=40
         ).to_edge(UP)
 
-        scene.play(Create(self.node), run_time=1)
+        scene.play(Create(self.node), run_time=0.7)
         scene.play(
             Create(self.key),
             Write(self.key_text),
@@ -281,12 +298,12 @@ class PatriciaTries(SlideBase):
             run_time=1,
         )
         scene.play(
-            FadeIn(*self.nodes_for_address, self.account_addresses),
+            FadeIn(*self.nodes_for_address, self.account_addresses), run_time=0.7
         )
         scene.wait(0.5)
-        scene.play(Create(self.value), Write(self.value_text))
+        scene.play(Create(self.value), Write(self.value_text), run_time=0.7)
         scene.play(
-            FadeIn(*self.nodes_for_balances, self.account_balances),
+            FadeIn(*self.nodes_for_balances, self.account_balances), run_time=0.7
         )
         scene.wait(1)
 
