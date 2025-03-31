@@ -110,5 +110,8 @@ class ProofSize(SlideBase):
         scene.play(TransformMatchingShapes(self.title_label, self.stay_tuned))
         scene.wait(3)
         
+        self.new_subsection(scene, "stay tuned", "data/sound/e6/slide2-8i.mp3")
+        scene.wait(1)
+        
     def animate_out(self, scene):
         scene.play(FadeOut(self.stay_tuned, self.arrow_merkle_verkle, self.vector_commitment, self.merkle_tree_text, self.verkle_tree_text))

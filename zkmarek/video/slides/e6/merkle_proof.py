@@ -94,11 +94,11 @@ class MerkleProof(SlideBase):
             scene, "smaller hash is always placed first", "data/sound/e6/slide2-3g.mp3"
         )
         scene.wait(1)
-        self.indicate_code(scene, self.code_keccak, "return a < b ?")
+        self.indicate_code(scene, self.code_keccak, "a < b")
         scene.wait(0.5)
-        self.indicate_code(scene, self.code_keccak, "efficientKeccak256(a, b)")
+        self.indicate_code(scene, self.code_keccak, "a, b", index=1)
         scene.wait(0.5)
-        self.indicate_code(scene, self.code_keccak, "efficientKeccak256(b, a)")
+        self.indicate_code(scene, self.code_keccak, "b, a")
         scene.wait(2)
 
         self.new_subsection(

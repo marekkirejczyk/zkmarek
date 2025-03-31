@@ -195,10 +195,10 @@ class EthereumBlock(SlideBase):
             self.nodes_wo_5,
         )
         self.block_and_state_trie.generate_target()
-        self.block_and_state_trie.target.shift(LEFT * 1.5)
+        self.block_and_state_trie.target.shift(LEFT * 0.5)
 
         self.rectangle_state_trie = RoundedRectangle(
-            width=7,
+            width=5.9,
             height=0.5,
             corner_radius=0.1,
             color=HIGHLIGHT_COLOR,
@@ -208,8 +208,8 @@ class EthereumBlock(SlideBase):
 
         scene.wait(1)
         scene.play(MoveToTarget(self.block_and_state_trie), run_time=1)
-        self.rectangle_state_trie.move_to(self.nodes[5]).shift(RIGHT * 2)
-        labels_state_trie = ["address", "Nonce", "Balance", "Code Hash", "Storage root"]
+        self.rectangle_state_trie.move_to(self.nodes[5]).shift(RIGHT * 1.5)
+        labels_state_trie = ["Nonce", "Balance", "Code Hash", "Storage root"]
         self.labels_state_trie = VGroup()
         self.rectangles_state_trie = Group()
         rectangle_all = RoundedRectangle(
@@ -234,13 +234,13 @@ class EthereumBlock(SlideBase):
                 rectangle = (
                     rectangle_all.copy()
                     .move_to(self.rectangle_state_trie.get_center())
-                    .shift(LEFT * 2.9)
+                    .shift(LEFT * 2.27)
                 )
-            elif i < 3:
+            elif i < 2:
                 rectangle = rectangle_all.copy().next_to(
                     self.rectangles_state_trie[i - 1], RIGHT, buff=0.13
                 )
-            elif i > 2:
+            elif i > 1:
                 rectangle = rectangle_storage.copy().next_to(
                     self.rectangles_state_trie[i - 1], RIGHT, buff=0.13
                 )
@@ -259,11 +259,11 @@ class EthereumBlock(SlideBase):
 
         scene.wait(2.3)
         scene.play(
-            Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.5)
+            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2)
         )
         scene.wait(0.5)
         scene.play(
-            Indicate(self.labels_state_trie[4], color=SECONDARY_COLOR, scale_factor=1.5)
+            Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.2)
         )
         self.create_storage_trie()
         scene.play(Create(self.storage_trie), run_time=1.5)
@@ -275,14 +275,14 @@ class EthereumBlock(SlideBase):
             Indicate(self.tries[3], color=SECONDARY_COLOR, scale_factor=1.1),
             run_time=1.5,
         )
-        scene.wait(1.9)
+        scene.wait(1.5)
 
         scene.play(
             Indicate(self.tries[1], color=SECONDARY_COLOR, scale_factor=1.1),
             Indicate(self.rectangles_tries[1], color=SECONDARY_COLOR, scale_factor=1.1),
             run_time=0.8,
         )
-        scene.wait(0.5)
+        scene.wait(0.8)
         scene.play(
             Indicate(self.tries[2], color=SECONDARY_COLOR, scale_factor=1.1),
             Indicate(self.rectangles_tries[2], color=SECONDARY_COLOR, scale_factor=1.1),
@@ -364,12 +364,12 @@ class EthereumBlock(SlideBase):
             fill_opacity=0.25,
             stroke_width=0.0,
         )
-        node1_0.next_to(self.labels_state_trie[4], LEFT + DOWN, buff=0.2).shift(
+        node1_0.next_to(self.labels_state_trie[3], LEFT + DOWN, buff=0.2).shift(
             RIGHT * 0.6 + DOWN * 0.3
         )
 
         node1_1 = node1_0.copy()
-        node1_1.next_to(self.labels_state_trie[4], RIGHT + DOWN, buff=0.2).shift(
+        node1_1.next_to(self.labels_state_trie[3], RIGHT + DOWN, buff=0.2).shift(
             LEFT * 0.6 + DOWN * 0.3
         )
 
@@ -388,10 +388,10 @@ class EthereumBlock(SlideBase):
         self.nodes = VGroup(node1_0, node1_1, node2_0, node2_1, node2_2, node2_3)
 
         arrow1 = create_arrow(
-            self.labels_state_trie[4], node1_0, dash_density=15, add_down_shift=True
+            self.labels_state_trie[3], node1_0, dash_density=15, add_down_shift=True
         )
         arrow2 = create_arrow(
-            self.labels_state_trie[4], node1_1, dash_density=15, add_down_shift=True
+            self.labels_state_trie[3], node1_1, dash_density=15, add_down_shift=True
         )
 
         arrow3 = create_arrow(node1_0, node2_0, dash_density=15)

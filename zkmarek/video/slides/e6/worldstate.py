@@ -34,7 +34,7 @@ class SimplifiedWorldState(VGroup):
         num_rows = len(keys_data)
         num_cols = len(keys_data[0])
 
-        bg_width = (cell_width * (num_cols + 1)) + 2
+        bg_width = (cell_width * (num_cols + 1)) + 2.3
         bg_height = (cell_height + spacing) * num_rows + 1
         self.background = RoundedRectangle(
             width=bg_width,
