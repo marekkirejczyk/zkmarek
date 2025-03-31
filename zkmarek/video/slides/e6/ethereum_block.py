@@ -234,7 +234,7 @@ class EthereumBlock(SlideBase):
                 rectangle = (
                     rectangle_all.copy()
                     .move_to(self.rectangle_state_trie.get_center())
-                    .shift(LEFT * 2.25)
+                    .shift(LEFT * 2.27)
                 )
             elif i < 2:
                 rectangle = rectangle_all.copy().next_to(
