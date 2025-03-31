@@ -96,7 +96,7 @@ class MerkleProof(SlideBase):
         scene.wait(1)
         self.indicate_code(scene, self.code_keccak, "a < b")
         scene.wait(0.5)
-        self.indicate_code(scene, self.code_keccak, "a, b")
+        self.indicate_code(scene, self.code_keccak, "a, b", index=1)
         scene.wait(0.5)
         self.indicate_code(scene, self.code_keccak, "b, a")
         scene.wait(2)

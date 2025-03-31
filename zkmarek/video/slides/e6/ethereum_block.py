@@ -234,7 +234,7 @@ class EthereumBlock(SlideBase):
                 rectangle = (
                     rectangle_all.copy()
                     .move_to(self.rectangle_state_trie.get_center())
-                    .shift(LEFT * 2.3)
+                    .shift(LEFT * 2.25)
                 )
             elif i < 2:
                 rectangle = rectangle_all.copy().next_to(
@@ -275,14 +275,14 @@ class EthereumBlock(SlideBase):
             Indicate(self.tries[3], color=SECONDARY_COLOR, scale_factor=1.1),
             run_time=1.5,
         )
-        scene.wait(1.9)
+        scene.wait(1.5)
 
         scene.play(
             Indicate(self.tries[1], color=SECONDARY_COLOR, scale_factor=1.1),
             Indicate(self.rectangles_tries[1], color=SECONDARY_COLOR, scale_factor=1.1),
             run_time=0.8,
         )
-        scene.wait(0.5)
+        scene.wait(0.8)
         scene.play(
             Indicate(self.tries[2], color=SECONDARY_COLOR, scale_factor=1.1),
             Indicate(self.rectangles_tries[2], color=SECONDARY_COLOR, scale_factor=1.1),
