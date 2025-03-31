@@ -110,7 +110,7 @@ class ProofSize(SlideBase):
         scene.play(TransformMatchingShapes(self.title_label, self.stay_tuned))
         scene.wait(3)
         
-        self.new_subsection(scene, "stay tuned", "data'/sound/e6/slide2-8i.mp3")
+        self.new_subsection(scene, "stay tuned", "data/sound/e6/slide2-8i.mp3")
         scene.wait(1)
         
     def animate_out(self, scene):

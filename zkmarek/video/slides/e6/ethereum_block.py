@@ -195,10 +195,10 @@ class EthereumBlock(SlideBase):
             self.nodes_wo_5,
         )
         self.block_and_state_trie.generate_target()
-        self.block_and_state_trie.target.shift(LEFT * 1)
+        self.block_and_state_trie.target.shift(LEFT * 0.5)
 
         self.rectangle_state_trie = RoundedRectangle(
-            width=6.2,
+            width=5.9,
             height=0.5,
             corner_radius=0.1,
             color=HIGHLIGHT_COLOR,
@@ -208,7 +208,7 @@ class EthereumBlock(SlideBase):
 
         scene.wait(1)
         scene.play(MoveToTarget(self.block_and_state_trie), run_time=1)
-        self.rectangle_state_trie.move_to(self.nodes[5]).shift(RIGHT * 1.8)
+        self.rectangle_state_trie.move_to(self.nodes[5]).shift(RIGHT * 1.5)
         labels_state_trie = ["Nonce", "Balance", "Code Hash", "Storage root"]
         self.labels_state_trie = VGroup()
         self.rectangles_state_trie = Group()
@@ -234,7 +234,7 @@ class EthereumBlock(SlideBase):
                 rectangle = (
                     rectangle_all.copy()
                     .move_to(self.rectangle_state_trie.get_center())
-                    .shift(LEFT * 2.9)
+                    .shift(LEFT * 2.3)
                 )
             elif i < 2:
                 rectangle = rectangle_all.copy().next_to(
@@ -259,11 +259,11 @@ class EthereumBlock(SlideBase):
 
         scene.wait(2.3)
         scene.play(
-            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.5)
+            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2)
         )
         scene.wait(0.5)
         scene.play(
-            Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.5)
+            Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.2)
         )
         self.create_storage_trie()
         scene.play(Create(self.storage_trie), run_time=1.5)

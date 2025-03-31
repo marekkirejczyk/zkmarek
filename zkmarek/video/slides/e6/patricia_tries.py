@@ -130,7 +130,7 @@ class PatriciaTries(SlideBase):
             color=PRIMARY_COLOR,
             font=PRIMARY_FONT,
             font_size=18,
-        ).next_to(self.key, DOWN, buff=0.35).align_to(self.key, LEFT).shift(RIGHT * 0.2)
+        ).next_to(self.key, DOWN, buff=0.35).align_to(self.key, LEFT).shift(RIGHT * 0.22)
 
         self.account_balances = Text(
             "7 ETH \n\n\n 9 ETH \n\n\n 1 ETH \n\n\n 7 ETH",
@@ -149,7 +149,7 @@ class PatriciaTries(SlideBase):
             for _ in range(4)
         ]).arrange(DOWN, buff=0.13).align_to(self.value, RIGHT).shift(DOWN * 0.24)
         
-        self.key.shift(RIGHT * 0.5)
+        self.key.shift(RIGHT * 0.35)
         self.key_text = Text(
             "Keys", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
         ).move_to(self.key)

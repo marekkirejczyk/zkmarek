@@ -26,7 +26,7 @@ EPISODE6 = [
     EthBalances(),
     TitleSlide("Merkle trees", sound="data/sound/e6/slide2-1.mp3", wait_time=2),
     MerkleTree(),
-    # MerkleProof(),
+    MerkleProof(),
     EthereumAddresses(),
     TitleSlide("Patricia Tries", sound="data/sound/e6/slide2-4.mp3", wait_time=6),
     PatriciaTries(),
