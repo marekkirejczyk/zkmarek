@@ -10,7 +10,7 @@ from zkmarek.video.slides.episode3.episode3 import EPISODE3
 from zkmarek.video.slides.episode4.episode4 import EPISODE4
 from zkmarek.video.slides.episode5.episode5 import EPISODE5
 from zkmarek.video.slides.e6.episode6 import EPISODE6
-from zkmarek.video.slides.episode2.schnorr_episode import EPISODE7
+from zkmarek.video.slides.e7.episode7 import EPISODE7
 
 from zkmarek.video.slides.short2.short2 import SHORT2
 
@@ -32,10 +32,10 @@ DECKS = {
     "E7": EPISODE7,
 }
 
-DEFAULT_DECK = "E6"
+DEFAULT_DECK = "E7"
 
 
-class Episode6(Scene):
+class Episode7(Scene):
     def construct(self):
         register_font("data/brand/Oxanium-Regular.ttf")
 
