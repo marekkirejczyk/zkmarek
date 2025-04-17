@@ -43,35 +43,35 @@ class Recap(SlideBase):
         ).to_edge(UP)
 
     def animate_in(self, scene):
-        self.new_subsection(scene, "Merkle trees", "data/sound/episode7/slide1-0.mp3")
+        self.new_subsection(scene, "Merkle trees", "data/sound/e7/slide1-0.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
         self.merkle_tree(scene)
 
-        self.new_subsection(scene, "four MPTs", "data/sound/episode7/slide1-1.mp3")
+        self.new_subsection(scene, "four MPTs", "data/sound/e7/slide1-1.mp3")
         self.block_tries(scene)
 
         self.new_subsection(
-            scene, "efficient lookups", "data/sound/episode7/slide1-4.mp3"
+            scene, "efficient lookups", "data/sound/e7/slide1-4.mp3"
         )
 
         self.new_subsection(
-            scene, "proof size: 9 levels", "data/sound/episode7/slide1-5.mp3"
+            scene, "proof size: 9 levels", "data/sound/e7/slide1-5.mp3"
         )
         self.proof_sizes(scene)
 
         self.new_subsection(
-            scene, "more efficient?", "data/sound/episode7/slide1-10.mp3"
+            scene, "more efficient?", "data/sound/e7/slide1-10.mp3"
         )
 
         self.new_subsection(
-            scene, "vector commitment!", "data/sound/episode7/slide1-11.mp3"
+            scene, "vector commitment!", "data/sound/e7/slide1-11.mp3"
         )
 
         self.new_subsection(
-            scene, "kzg-> vec commitment", "data/sound/episode7/slide1-12.mp3"
+            scene, "kzg-> vec commitment", "data/sound/e7/slide1-12.mp3"
         )
 
-        self.new_subsection(scene, "lets recap", "data/sound/episode7/slide1-13.mp3")
+        self.new_subsection(scene, "lets recap", "data/sound/e7/slide1-13.mp3")
 
     def merkle_tree(self, scene):
         self.merkle_tree_2_4 = (
@@ -140,12 +140,12 @@ class Recap(SlideBase):
         self.block.target.scale(0.7).shift(UP + LEFT * 0.7)
         scene.play(MoveToTarget(self.block), run_time=1)
 
-        self.new_subsection(scene, "key value", "data/sound/episode7/slide1-2.mp3")
+        self.new_subsection(scene, "key value", "data/sound/e7/slide1-2.mp3")
 
         self.new_subsection(
             scene,
             "state trie: acc balanaces, nonces...",
-            "data/sound/episode7/slide1-3.mp3",
+            "data/sound/e7/slide1-3.mp3",
         )
         self.create_state_trie()
 
@@ -317,7 +317,7 @@ class Recap(SlideBase):
         )
         scene.wait(1)
 
-        self.new_subsection(scene, "4 kB", "data/sound/episode7/slide1-6.mp3")
+        self.new_subsection(scene, "4 kB", "data/sound/e7/slide1-6.mp3")
         scene.wait(1)
         scene.play(
             TransformMatchingShapes(
@@ -326,7 +326,7 @@ class Recap(SlideBase):
         )
         scene.wait(1)
 
-        self.new_subsection(scene, "4 MB", "data/sound/episode7/slide1-7.mp3")
+        self.new_subsection(scene, "4 MB", "data/sound/e7/slide1-7.mp3")
         scene.wait(1)
         scene.play(
             TransformMatchingShapes(
@@ -335,10 +335,10 @@ class Recap(SlideBase):
         )
         scene.wait(1)
 
-        self.new_subsection(scene, "a lot", "data/sound/episode7/slide1-8.mp3")
+        self.new_subsection(scene, "a lot", "data/sound/e7/slide1-8.mp3")
         scene.wait(1)
 
-        self.new_subsection(scene, "watch full", "data/sound/episode7/slide1-9.mp3")
+        self.new_subsection(scene, "watch full", "data/sound/e7/slide1-9.mp3")
         scene.wait(1)
         scene.play(
             FadeOut(
