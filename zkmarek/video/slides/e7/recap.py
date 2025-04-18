@@ -17,6 +17,8 @@ from manim import (
     MoveToTarget,
     Group,
     TransformMatchingShapes,
+    Polygon,
+    ImageMobject,
 )
 from zkmarek.video.constant import (
     SECONDARY_COLOR,
@@ -26,8 +28,10 @@ from zkmarek.video.constant import (
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.tree import MerkleTree as Tree
+from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
 from zkmarek.video.slides.e6.ethereum_block import EthereumBlock
 from zkmarek.video.slides.e6.proof_sizes import ProofSize
+from zkmarek.video.slides.e6.merkle import MerkleTree
 
 
 class Recap(SlideBase):
@@ -53,6 +57,7 @@ class Recap(SlideBase):
         self.new_subsection(
             scene, "efficient lookups", "data/sound/e7/slide1-4.mp3"
         )
+        self.merkle_patricia_trie(scene)
 
         self.new_subsection(
             scene, "proof size: 9 levels", "data/sound/e7/slide1-5.mp3"
@@ -62,16 +67,7 @@ class Recap(SlideBase):
         self.new_subsection(
             scene, "more efficient?", "data/sound/e7/slide1-10.mp3"
         )
-
-        self.new_subsection(
-            scene, "vector commitment!", "data/sound/e7/slide1-11.mp3"
-        )
-
-        self.new_subsection(
-            scene, "kzg-> vec commitment", "data/sound/e7/slide1-12.mp3"
-        )
-
-        self.new_subsection(scene, "lets recap", "data/sound/e7/slide1-13.mp3")
+        self.efficient_kzg(scene)
 
     def merkle_tree(self, scene):
         self.merkle_tree_2_4 = (
@@ -129,7 +125,9 @@ class Recap(SlideBase):
             FadeOut(self.merkle_tree_2_4, self.account_group_8_elements), run_time=0.5
         )
         scene.play(FadeIn(self.block), run_time=0.7)
-        scene.wait(1)
+        scene.wait(1.5)
+        scene.play(*[Indicate(trie, color=SECONDARY_COLOR) for trie in self.slide_block.tries], run_time = 1.0)
+        scene.wait(0.3)
         for i in range(0, 4):
             scene.play(
                 Indicate(self.slide_block.tries[i], color=HIGHLIGHT_COLOR),
@@ -137,10 +135,11 @@ class Recap(SlideBase):
             )
             scene.wait(0.2)
         self.block.generate_target()
-        self.block.target.scale(0.7).shift(UP + LEFT * 0.7)
+        self.block.target.scale(0.5).shift(UP*1.5)
         scene.play(MoveToTarget(self.block), run_time=1)
 
         self.new_subsection(scene, "key value", "data/sound/e7/slide1-2.mp3")
+        self.key_value(scene)
 
         self.new_subsection(
             scene,
@@ -149,7 +148,7 @@ class Recap(SlideBase):
         )
         self.create_state_trie()
 
-        scene.play(Create(self.state_trie), run_time=2)
+        scene.play(Create(self.state_trie), run_time=1)
 
         self.account_balance_node = RoundedRectangle(
             width=3,
@@ -216,7 +215,7 @@ class Recap(SlideBase):
             stroke_width=0.0,
         )
 
-        scene.wait(1)
+        scene.play(Indicate(self.address, color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.9)
         scene.play(MoveToTarget(self.block_and_state_trie), run_time=1)
         self.rectangle_state_trie.move_to(self.nodes[5]).shift(RIGHT * 1.5)
         labels_state_trie = ["Nonce", "Balance", "Code Hash", "Storage root"]
@@ -267,26 +266,45 @@ class Recap(SlideBase):
         )
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item))
         scene.play(
+            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2)
+        )
+        scene.play(
+            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2)
+        )
+        scene.play(
             Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2)
         )
-        scene.wait(0.5)
         scene.play(
             Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.2)
         )
-        self.create_storage_trie()
-        scene.play(Create(self.storage_trie), run_time=1.5)
+        self.create_storage_trie(scene)
 
         scene.play(
             FadeOut(
                 self.nodes_wo_5,
                 self.storage_trie,
                 self.block,
-                self.state_trie,
                 self.arrows1,
                 self.array_4_item,
             ),
             run_time=1,
         )
+        
+    def merkle_patricia_trie(self, scene):
+        self.mpt_proof = MPT(include_labels=True).shift(UP*2.9).scale(0.45)
+        scene.play(Create(self.mpt_proof), run_time=1.0)
+        scene.wait(1)
+        scene.play(Indicate(self.mpt_proof.leaf1.field_group[1][0], color = SECONDARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.mpt_proof.leaf2.field_group[1][0], color = SECONDARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.mpt_proof.leaf3.field_group[1][0], color = SECONDARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.mpt_proof.leaf4.field_group[1][0], color = SECONDARY_COLOR), run_time=0.7)
+        scene.wait(1)
+        scene.play(Indicate(self.mpt_proof.leaf1.field_group, color = SECONDARY_COLOR), run_time=0.7)
+        scene.wait(0.5)
+        scene.play(Indicate(self.mpt_proof.branch1.get_child_slot("1"), color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
+        scene.play(Indicate(self.mpt_proof.root.field_group[1][0], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
+        scene.wait(2.5)
+        scene.play(FadeOut(self.mpt_proof), run_time=1.0)
 
     def proof_sizes(self, scene):
         self.slide_proof = ProofSize()
@@ -303,10 +321,10 @@ class Recap(SlideBase):
             run_time=0.7,
         )
         scene.wait(1)
-        self.slide_proof.formula.next_to(self.slide_proof.merkle_tree, RIGHT, buff=1.0)
+        self.slide_proof.formula.scale(0.8).next_to(self.slide_proof.merkle_tree, RIGHT, buff=0.2)
         self.slide_proof.formula1.next_to(self.slide_proof.merkle_tree, RIGHT, buff=1.0)
         self.slide_proof.formula2.next_to(self.slide_proof.merkle_tree, RIGHT, buff=1.0)
-        self.slide_proof.formula3.next_to(self.slide_proof.merkle_tree, RIGHT, buff=1.0)
+        self.slide_proof.formula3.next_to(self.slide_proof.merkle_tree, RIGHT, buff=0.5)
         scene.play(
             Write(self.slide_proof.formula),
             FadeOut(self.slide_proof.brace_levels, self.slide_proof.levels_text),
@@ -339,15 +357,31 @@ class Recap(SlideBase):
         scene.wait(1)
 
         self.new_subsection(scene, "watch full", "data/sound/e7/slide1-9.mp3")
-        scene.wait(1)
         scene.play(
             FadeOut(
                 self.slide_proof.merkle_tree,
                 self.slide_proof.dots,
                 self.slide_proof.formula3,
             ),
-            run_time=1,
+            run_time=0.5,
         )
+        self.miniature_merkle(scene)
+        
+    def key_value(self, scene):
+        node = RoundedRectangle(width = 4.2, height = 2.4, corner_radius=0.1, fill_opacity = 0.4).set_color(HIGHLIGHT_COLOR)
+        node = DashedVMobject(node, num_dashes=60).next_to(self.block, DOWN, buff = 0.3)
+        key = RoundedRectangle(width = 1.75, height = 1, corner_radius=0, fill_opacity = 0.3).set_color(SECONDARY_COLOR)
+        key = DashedVMobject(key, num_dashes=30).align_to(node, LEFT).shift(DOWN*1.5+RIGHT*0.2)
+        value = RoundedRectangle(width = 1.75, height = 1, corner_radius=0.1, fill_opacity = 0.3).set_color(PRIMARY_COLOR)
+        value = DashedVMobject(value, num_dashes=30).align_to(node, RIGHT).shift(DOWN*1.5+LEFT*0.2)
+        
+        key_text = Text("key", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(key.get_center())
+        value_text = Text("value", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(value.get_center())
+        self.key_value_pair = VGroup(node, key, value, key_text, value_text)
+        scene.play(Create(self.key_value_pair), run_time=1)
+        scene.wait(2)
+        scene.play(
+            FadeOut(self.key_value_pair))
 
     def create_state_trie(self):
         node1_0 = RoundedRectangle(
@@ -391,7 +425,7 @@ class Recap(SlideBase):
 
         self.state_trie = VGroup(self.nodes, self.arrows1)
 
-    def create_storage_trie(self):
+    def create_storage_trie(self, scene):
         node1_0 = RoundedRectangle(
             corner_radius=0.12,
             height=0.3,
@@ -439,6 +473,53 @@ class Recap(SlideBase):
         self.arrows = VGroup(arrow1, arrow2, arrow3, arrow4, arrow5, arrow6)
 
         self.storage_trie = VGroup(self.nodes, self.arrows)
+        scene.play(Create(self.storage_trie), run_time=1.5)
+        scene.wait(0.5)
+        for i in range(4):
+            scene.play(Indicate(self.nodes[i], color = SECONDARY_COLOR), run_time=0.5)
+        scene.wait(1)
+        
+    def miniature_merkle(self, scene):
+        self.slide_merkle = MerkleTree()
+        self.slide_merkle.construct()
+        self.slide_merkle.animate_miniature(scene)
+        
+    def efficient_kzg(self, scene):
+        question_mark = Text("?", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size=50)
+        scene.play(Write(question_mark), run_time = 1)
+        scene.wait(1)
+        
+        self.new_subsection(
+            scene, "vector commitment!", "data/sound/e7/slide1-11.mp3"
+        )
+        scene.play(FadeOut(question_mark), run_time = 0.5)
+        envelope = RoundedRectangle(width = 8 * 0.3, height = 2 * 0.3, fill_opacity = 0.3, stroke_width = 0.0, corner_radius=0.1).set_color(PRIMARY_COLOR)
+        envelope_flap_closed = Polygon(
+            [-4, 1, 0],
+            [4, 1, 0],
+            [0, -0.6, 0],
+            fill_color=HIGHLIGHT_COLOR,
+            fill_opacity=0.2,
+        ).scale(0.3).shift(DOWN*0.1)
+        kzg = Text("kzg", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=40).move_to(envelope.get_center())
+        envelope = VGroup(envelope, envelope_flap_closed, kzg).shift(LEFT*2+UP)
+        person = ImageMobject("data/images/person.png").scale(0.7).shift(LEFT*3)
+        person2 = ImageMobject("data/images/person_blue.png").scale(0.7).shift(RIGHT*3)
+        scene.play(FadeIn(person), FadeIn(person2))
+
+        self.new_subsection(
+            scene, "kzg-> vec commitment", "data/sound/e7/slide1-12.mp3"
+        )
+        scene.play(Create(envelope), run_time=1)
+        envelope.generate_target()
+        envelope.target.shift(4*RIGHT)
+        scene.play(MoveToTarget(envelope), run_time=1)
+        scene.wait(1)
+        scene.play(FadeOut(envelope), FadeOut(person), FadeOut(person2))
+        scene.wait(1)
+        
+        self.new_subsection(scene, "lets recap", "data/sound/e7/slide1-13.mp3")
+
 
 
 def create_arrow(start, end, stroke_width=1.8, dash_density=4.5, add_down_shift=False):

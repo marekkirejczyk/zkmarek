@@ -22,6 +22,7 @@ from manim import (
     GrowArrow,
     Group,
     ORIGIN,
+    RoundedRectangle,
 )
 from manim import BLUE_D, GREEN_E, MAROON_E, LIGHT_BROWN, PURPLE_B
 from zkmarek.video.slides.episode4.discreete_polynomial_chart import (
@@ -76,8 +77,9 @@ class Previously(SlideBase):
                 include_numbers=False,
                 dot_color=SECONDARY_COLOR,
             )
-            .scale(0.4)
-            .shift(3 * LEFT + DOWN * 1.0)
+            .scale(0.3)
+            .to_edge(LEFT)
+            .shift(RIGHT + DOWN * 1.5)
         )
         self.polynomial_label = (
             MathTex(r"{{}} {{p(x)}} {{}}", color=PRIMARY_COLOR, font_size=45)
@@ -86,25 +88,25 @@ class Previously(SlideBase):
         )
         self.prover = (
             ImageMobject("data/images/person.png")
-            .scale(0.7)
+            .scale(0.5)
             .to_edge(LEFT)
             .shift(RIGHT + UP * 1.5)
         )
         self.verifier = (
             ImageMobject("data/images/person_blue.png")
-            .scale(0.7)
+            .scale(0.5)
             .to_edge(RIGHT)
             .shift(LEFT + UP * 1.5)
         )
         self.commiter_label = Text(
-            "Prover", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=32
+            "Prover", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=27
         ).next_to(self.prover, DOWN)
         self.verifier_label = Text(
-            "Verifier", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=32
+            "Verifier", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=27
         ).next_to(self.verifier, DOWN)
 
         self.polynomial_opening_label = MathTex(
-            r"{{r(x)}} = {{p(x)}} - {{y_0}}", color=PRIMARY_COLOR, font_size=25
+            r"{{r(x)}} = {{p(x)}} - {{y_0}}", color=PRIMARY_COLOR, font_size=32
         ).next_to(self.polynomial_chart, UP, buff=0.5)
 
         self.opening = (
@@ -133,14 +135,14 @@ class Previously(SlideBase):
         self.dots = MathTex(r"\cdots", color=PRIMARY_COLOR)
 
         self.quotient_deriviation_3 = MathTex(
-            r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size=35, color=PRIMARY_COLOR
+            r"{{q(x)}} = \frac{p(x) - y_0}{x-x_0}", font_size=30, color=PRIMARY_COLOR
         )
 
         self.pairing_verifiaction_0 = (
             MathTex(
                 r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
                 color=BLUE_D,
-                font_size=35,
+                font_size=30,
             )
             .to_edge(DOWN)
             .shift(DOWN * 2)
@@ -149,7 +151,7 @@ class Previously(SlideBase):
             MathTex(
                 r"e( {{\pi}}{{}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{p(\tau)}} \cdot {{G_1}} - {{y_0}} {{\cdot G_1}}, {{G_2}})",
                 color=BLUE_D,
-                font_size=35,
+                font_size=30,
             )
             .to_edge(DOWN)
             .shift(DOWN * 2)
@@ -158,24 +160,22 @@ class Previously(SlideBase):
             MathTex(
                 r"e( {{q(\tau)}}\cdot {{~G_1}}, {{(\tau-x_0)}} {{\cdot G_2}} ) = e({{[p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})",
                 color=BLUE_D,
-                font_size=35,
+                font_size=30,
             )
             .to_edge(DOWN)
-            .shift(DOWN * 2)
         )
         self.pairing_verifiaction_2a = (
             MathTex(
                 r"e( {{q(\tau)}}{{\cdot}}{{(\tau-x_0)}}{{~G_1}}, {{\cdot G_2}} ) = e([{{p(\tau)}} - {{y_0}}] {{\cdot G_1}}, {{G_2}})",
                 color=BLUE_D,
-                font_size=35,
+                font_size=30,
             )
             .to_edge(DOWN)
-            .shift(DOWN * 2)
         )
         self.pairing_verifiaction_3 = (
             MathTex(
                 r"q({{\tau}}) {{\cdot}} {{(\tau-x_0)}} = {{p(\tau)}} - {{y_0}}",
-                font_size=35,
+                font_size=30,
                 color=PURPLE_B,
             )
             .next_to(self.pairing_verifiaction_2, UP, buff=0.5)
@@ -196,7 +196,7 @@ class Previously(SlideBase):
         self.z = FieldElement(13, 41)
         self.y = poly(self.z)
 
-        self.chart_interpolation = Chart(include_details=True)
+        self.chart_interpolation = Chart(include_details=True).scale(0.7).shift(LEFT*2)
         self.chart_interpolation.ax = Axes(
             x_range=[0, 11, 1],
             y_range=[-13, 10.5, 10],
@@ -209,7 +209,7 @@ class Previously(SlideBase):
                     "num_decimal_places": 0,
                 },
             },
-        )
+        ).scale(0.7).shift(LEFT*2)
 
         self.chart_interpolation.labels[0].next_to(
             self.chart_interpolation.ax[0], RIGHT + UP, buff=0.0
@@ -231,7 +231,7 @@ class Previously(SlideBase):
                 - y,
                 color=SECONDARY_COLOR,
             )
-        )
+        )#.scale(0.7).shift(LEFT*2)
         self.vector_values = (
             MathTex(
                 r"\left[{{2, }}{{3, }}{{1, }}{{-3, }}{{-4, }}{{\cdots}} \right]",
@@ -278,13 +278,6 @@ class Previously(SlideBase):
             max_tip_length_to_length_ratio=0.15,
         ).set_color_by_gradient([GREEN_E, MAROON_E])
 
-        self.blob = ImageMobject("data/images/blob.png").scale(0.7).shift(LEFT * 2.5)
-        self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff=0.0)
-        self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff=0.0)
-
-        self.layer2 = Layer2()
-        self.layer2.construct()
-
         self.tree = (
             MerkleTree(num_children=2, num_levels=3, include_labels=False)
             .shift(RIGHT * 2.5 + UP * 1.5)
@@ -292,14 +285,19 @@ class Previously(SlideBase):
         )
         self.tree.stretch(2, dim=1)
 
-        self.envelope_body_closed = Polygon(
-            [-4, -1, 0],
-            [4, -1, 0],
-            [4, 1, 0],
-            [-4, 1, 0],
+        self.envelope_body_closed = RoundedRectangle(width = 8, height = 2, 
             fill_color=PRIMARY_COLOR,
             fill_opacity=0.3,
-        ).scale(0.45)
+            corner_radius=0.1
+        ).scale(0.3)
+        # self.envelope_body_closed = Polygon(
+        #     [-4, -1, 0],
+        #     [4, -1, 0],
+        #     [4, 1, 0],
+        #     [-4, 1, 0],
+        #     fill_color=PRIMARY_COLOR,
+        #     fill_opacity=0.3,
+        # ).scale(0.45)
 
         self.envelope_flap_closed = Polygon(
             [-4, 1, 0],
@@ -307,33 +305,33 @@ class Previously(SlideBase):
             [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
-        ).scale(0.44)
+        ).scale(0.3)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.68)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.68).shift(DOWN*0.1)
 
         self.commitment = MathTex(
-            r"{{C}} = {{p(\tau)}} \cdot {{G_1}}", font_size=55, color=PRIMARY_COLOR
+            r"{{C}} = {{p(\tau)}} \cdot {{G_1}}", font_size=30, color=PRIMARY_COLOR
         ).move_to(self.envelope_body_closed.get_center())
         self.proof = MathTex(
-            r"\pi = q(\tau) \cdot G_1", font_size=55, color=PRIMARY_COLOR
+            r"\pi = q(\tau) \cdot G_1", font_size=30, color=PRIMARY_COLOR
         ).next_to(self.opening, DOWN, buff=0.2)
         self.x_zero = FieldElement(13, 41)
         self.value_at_x_zero = poly(self.x_zero)
 
-        self.poly_eval0 = MathTex(r"P(0)=2", color=PRIMARY_COLOR, font_size=50).next_to(
+        self.poly_eval0 = MathTex(r"P(0)=2", color=PRIMARY_COLOR, font_size=30).next_to(
             self.vector_values[3], DOWN, buff=0.2
         )
-        self.poly_eval1 = MathTex(r"P(1)=3", color=PRIMARY_COLOR, font_size=50).next_to(
+        self.poly_eval1 = MathTex(r"P(1)=3", color=PRIMARY_COLOR, font_size=30).next_to(
             self.poly_eval0, RIGHT, buff=0.5
         )
-        self.poly_eval2 = MathTex(r"P(2)=1", color=PRIMARY_COLOR, font_size=50).next_to(
+        self.poly_eval2 = MathTex(r"P(2)=1", color=PRIMARY_COLOR, font_size=30).next_to(
             self.poly_eval0, DOWN, buff=0.2
         )
         self.poly_eval3 = MathTex(
-            r"P(3)=-3", color=PRIMARY_COLOR, font_size=50
+            r"P(3)=-3", color=PRIMARY_COLOR, font_size=30
         ).next_to(self.poly_eval2, RIGHT, buff=0.5)
         self.dots_poly_eval = (
-            MathTex(r"\cdots", color=PRIMARY_COLOR, font_size=60)
+            MathTex(r"\cdots", color=PRIMARY_COLOR, font_size=30)
             .next_to(self.poly_eval3, LEFT + DOWN, buff=0.5)
             .shift(RIGHT * 0.7)
         )

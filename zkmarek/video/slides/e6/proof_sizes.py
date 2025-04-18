@@ -15,7 +15,7 @@ class ProofSize(SlideBase):
         self.dots = Text("...\n...", color = PRIMARY_COLOR, font=PRIMARY_FONT, font_size = 40).next_to(self.merkle_tree, DOWN, buff = 0.15)
         
         self.brace_levels = Brace(self.merkle_tree, direction = RIGHT, color = PRIMARY_COLOR).scale(1.2).shift(DOWN*0.5)
-        self.levels_text = Text("8-10 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
+        self.levels_text = Text("9 levels", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.brace_levels, RIGHT, buff = 0.2)
         
         self.formula = Text("depth x 16 nibbles x hash size", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.formula1 = Text("depth x 16 x 32 B", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)

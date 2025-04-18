@@ -601,122 +601,129 @@ class MerkleTree(SlideBase):
         )
         scene.wait(1)
 
-    def calculate_merkle_proof(self, scene):
-        sibling_formula = Text(
-            "c1d04...", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
-        ).shift(RIGHT * 4 + UP * 2.5)
-        hash_sibling_leaf = Text(
-            "hash(c1d04..., eccbd...)",
-            color=PRIMARY_COLOR,
-            font=PRIMARY_FONT,
-            font_size=20,
-        ).shift(RIGHT * 4 + UP * 2.5)
-        parent_hash = Text(
-            "ae5a7... = hash(c1d04..., eccbd...)",
-            color=PRIMARY_COLOR,
-            font=PRIMARY_FONT,
-            font_size=20,
-        ).shift(RIGHT * 4 + UP * 2.5)
-        parent_hash[0:8].set_color(SECONDARY_COLOR)
-        parent_sibling_hash = Text(
-            "hash(ae5a7..., 3c825...)",
-            color=PRIMARY_COLOR,
-            font=PRIMARY_FONT,
-            font_size=20,
-        ).shift(RIGHT * 4 + UP * 2.5)
-        grandparent_hash = Text(
-            "9c493... = hash(3c825..., ae5a7...)",
-            color=PRIMARY_COLOR,
-            font=PRIMARY_FONT,
-            font_size=20,
-        ).shift(RIGHT * 4 + UP * 2.5)
-        grandparent_hash[0:8].set_color(SECONDARY_COLOR)
-        grandparent_sibling_hash = Text(
-            "hash(9c493..., 913a7...)",
-            color=PRIMARY_COLOR,
-            font=PRIMARY_FONT,
-            font_size=20,
-        ).shift(RIGHT * 4 + UP * 2.5)
-        root_hash = Text(
-            "d313e... = hash(9c493..., 913a7...)",
-            color=PRIMARY_COLOR,
-            font=PRIMARY_FONT,
-            font_size=20,
-        ).shift(RIGHT * 4 + UP * 2.5)
-        root_hash[0:8].set_color(SECONDARY_COLOR)
 
-        scene.wait(0.2)
-        scene.play(
-            TransformMatchingShapes(self.level_3_hashes[2].copy(), sibling_formula),
-            Indicate(self.level_3_hashes[2], color=SECONDARY_COLOR),
-            run_time=0.7,
-        )
-        scene.wait(0.2)
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(sibling_formula, self.level_3_hashes[3].copy()),
-                hash_sibling_leaf,
-            ),
-            Indicate(self.level_3_hashes[3], color=SECONDARY_COLOR),
-            run_time=0.9,
-        )
-        scene.wait(1)
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(hash_sibling_leaf, self.level_2_hashes[1].copy()), parent_hash
-            ),
-            self.level_2_hashes[1].animate.set_opacity(1.0).set_color(SECONDARY_COLOR),
-            run_time=0.9,
-        )
-        scene.wait(0.4)
-        parent_hash.generate_target()
-        parent_hash.target.shift(DOWN * 0.5)
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(parent_hash.copy(), self.new_hashes[1].copy()),
-                parent_sibling_hash,
-            ),
-            Indicate(self.new_hashes[1], color=SECONDARY_COLOR),
-            MoveToTarget(parent_hash),
-            run_time=0.7,
-        )
-        scene.wait(0.4)
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(parent_sibling_hash, self.new_hashes[2].copy()), grandparent_hash
-            ),
-            self.new_hashes[2].animate.set_opacity(1.0).set_color(SECONDARY_COLOR),
-            run_time=0.7,
-        )
-        scene.wait(0.2)
-        grandparent_hash.generate_target()
-        grandparent_hash.target.shift(DOWN * 0.5)
-        parent_hash.generate_target()
-        parent_hash.target.shift(DOWN * 0.5)
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(grandparent_hash.copy(), self.level_1_hashes[1].copy()),
-                grandparent_sibling_hash,
-            ),
-            Indicate(self.level_1_hashes[1], color=SECONDARY_COLOR),
-            MoveToTarget(parent_hash),
-            MoveToTarget(grandparent_hash),
-            run_time=0.7,
-        )
-        scene.wait(0.2)
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(grandparent_sibling_hash, self.new_hashes[3].copy()), root_hash
-            ),
-            self.new_hashes[3].animate.set_opacity(1.0).set_color(SECONDARY_COLOR),
-            run_time=0.7,
-        )
+    def animate_miniature(self, scene):
+        rectangle = RoundedRectangle(width = 11, height = 5, corner_radius=0.1).set_color(PRIMARY_COLOR)
+        scene.play(FadeIn(rectangle), run_time=0.5)
+        self.merkle_tree_2_4.scale(0.75).move_to(rectangle.get_center())
+        scene.play(Create(self.merkle_tree_2_4), Create(self.account_group_8_elements), run_time=0.5)
 
-        scene.wait(1)
+        all_nodes = VGroup(
+            self.merkle_tree_2_4.get_node(3, 0),
+            self.merkle_tree_2_4.get_node(3, 1),
+            self.merkle_tree_2_4.get_node(3, 2),
+            self.merkle_tree_2_4.get_node(3, 3),
+            self.merkle_tree_2_4.get_node(3, 4),
+            self.merkle_tree_2_4.get_node(3, 5),
+            self.merkle_tree_2_4.get_node(3, 6),
+            self.merkle_tree_2_4.get_node(3, 7),
+            self.merkle_tree_2_4.get_node(2, 0),
+            self.merkle_tree_2_4.get_node(2, 1),
+            self.merkle_tree_2_4.get_node(2, 2),
+            self.merkle_tree_2_4.get_node(2, 3),
+            self.merkle_tree_2_4.get_node(1, 0),
+            self.merkle_tree_2_4.get_node(1, 1),
+            self.merkle_tree_2_4.get_node(0, 0)
+        )
+        node_prove = self.merkle_tree_2_4.get_node(3, 3)
 
-        self.new_subsection(scene, "if the hash equals", "data/sound/e6/slide2-3c.mp3")
+        node_prove.set_color(SECONDARY_COLOR)
+
+        nodes_directly_used = [
+            self.merkle_tree_2_4.get_node(3, 3),
+            self.merkle_tree_2_4.get_node(2, 1),
+            self.merkle_tree_2_4.get_node(1, 0),
+            self.merkle_tree_2_4.get_node(0, 0),
+        ]
+        for i in range(len(all_nodes)):
+            node = all_nodes[i]
+            scene.play(
+                node.animate.set_opacity(0.1),
+                run_time=0.1,
+            )
+        for i in range(len(nodes_directly_used)):
+            node = nodes_directly_used[i]
+            scene.play(
+                node.animate.set_opacity(0.4).set_color(SECONDARY_COLOR),
+                run_time=0.3,
+            )
+            scene.play(
+                node.animate.set_opacity(0.1),
+                run_time=0.3,
+            )
+
+        nodes_needed_to_proof = [
+            self.merkle_tree_2_4.get_node(3, 2),
+            self.merkle_tree_2_4.get_node(2, 0),
+            self.merkle_tree_2_4.get_node(1, 1),
+        ]
+
+        for i in range(len(nodes_needed_to_proof)):
+            node = nodes_needed_to_proof[i]
+            scene.play(
+                node.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR),
+                run_time=0.3,
+            )
+            scene.play(
+                node.animate.set_opacity(0.1),
+                run_time=0.3,
+            )
+
+
+        nodes_copy = []
+        for i in range(len(nodes_needed_to_proof)):
+            node = nodes_needed_to_proof[i]
+            node = node.copy()
+            node.set_opacity(0.4)
+            node.set_color(HIGHLIGHT2_COLOR).next_to(
+                self.merkle_tree_2_4, DOWN, buff=1.0
+            ).shift(LEFT * 2 + RIGHT * 2 * i + DOWN * 0.2)
+            scene.play(
+                TransformMatchingShapes(
+                    nodes_needed_to_proof[i],
+                    node,
+                ),
+                run_time=0.4,
+            )
+            nodes_copy.append(node)
+            nodes_copy.append(hash)
         scene.wait(0.5)
-        scene.play(Indicate(root_hash[0:8], color=PRIMARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.new_hashes[3], color=PRIMARY_COLOR), run_time=0.7)
-        scene.wait(1.6)
-        scene.play(FadeOut(parent_hash, grandparent_hash, root_hash))
+        self.nodes_copy = nodes_copy
+
+        scene.play(
+            nodes_needed_to_proof[0]
+            .animate.set_opacity(0.4)
+            .set_color(HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[0], color=HIGHLIGHT2_COLOR),
+        )
+        scene.play(
+            node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR),
+        )
+        scene.play(
+            nodes_directly_used[1].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_needed_to_proof[1]
+            .animate.set_opacity(0.4)
+            .set_color(HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[2], color=HIGHLIGHT2_COLOR),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_directly_used[2].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_needed_to_proof[2]
+            .animate.set_opacity(0.4)
+            .set_color(HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[4], color=HIGHLIGHT2_COLOR),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_directly_used[3].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
+            run_time=0.5,
+        )
+        
+        scene.play(FadeOut(rectangle, self.merkle_tree_2_4))
