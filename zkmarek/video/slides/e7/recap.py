@@ -265,15 +265,15 @@ class Recap(SlideBase):
             self.rectangle_state_trie,
         )
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item), run_time=0.5)
-        scene.wait(0.7)
+        scene.wait(1)
         scene.play(
-            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
+            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2), run_time=1.0
         )
         scene.play(
-            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
+            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2), run_time=1.0
         )
         scene.play(
-            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
+            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2), run_time=1.0
         )
         scene.wait(0.7)
         scene.play(

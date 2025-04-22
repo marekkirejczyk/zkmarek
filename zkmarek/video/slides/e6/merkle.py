@@ -9,7 +9,6 @@ from manim import (
     DOWN,
     Write,
     Create,
-    MoveToTarget,
     Indicate,
     FadeOut,
     MathTex,
