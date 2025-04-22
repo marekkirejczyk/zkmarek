@@ -1,6 +1,7 @@
 # from zkmarek.video.slides.common.intro import Intro
 from zkmarek.video.slides.e7.recap import Recap
 from zkmarek.video.slides.e7.vec_com import Previously
+from zkmarek.video.slides.e7.watch_other import FullVideos
 
 EPISODE7 = [
     # Intro(
@@ -9,4 +10,5 @@ EPISODE7 = [
     # ),
     Recap(),
     Previously(),
+    FullVideos(),
 ]

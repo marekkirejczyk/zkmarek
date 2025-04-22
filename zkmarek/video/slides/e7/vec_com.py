@@ -39,7 +39,6 @@ from zkmarek.crypto.field_element import FieldElement
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.episode4.chart import Chart
 from zkmarek.video.slides.e6.curve import Curve
-from zkmarek.video.slides.episode5.layer2 import Layer2
 from zkmarek.video.slides.e6.tree import MerkleTree
 import numpy as np
 from scipy.special import factorial
@@ -244,7 +243,7 @@ class Previously(SlideBase):
             self.indeces_over_vector[i].next_to(self.vector_values[i + 1], UP, buff=0.2)
             if i == 5:
                 self.indeces_over_vector[i].next_to(
-                    self.vector_values[i + 1], UP, buff=0.65
+                    self.vector_values[i + 1], UP, buff=0.45
                 )
 
         self.data_points = Text(
