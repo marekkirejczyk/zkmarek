@@ -82,7 +82,7 @@ class Previously(SlideBase):
             .shift(RIGHT + DOWN * 1.5)
         )
         self.polynomial_label = (
-            MathTex(r"{{}} {{p(x)}} {{}}", color=PRIMARY_COLOR, font_size=45)
+            MathTex(r"{{}} {{p(x)}} {{}}", color=PRIMARY_COLOR, font_size=35)
             .next_to(self.polynomial_chart, direction=RIGHT + UP, buff=0)
             .shift(DOWN * 0.1 + LEFT * 2.3)
         )
@@ -110,7 +110,7 @@ class Previously(SlideBase):
         ).next_to(self.polynomial_chart, UP, buff=0.5)
 
         self.opening = (
-            MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=25, color=PRIMARY_COLOR)
+            MathTex(r"{{}}p({{x_0}}) {{}} = {{y_0}}", font_size=30, color=PRIMARY_COLOR)
             .next_to(self.verifier_label, DOWN, buff=0.7)
             .shift(DOWN * 0.7)
         )
@@ -125,7 +125,7 @@ class Previously(SlideBase):
         )
         self.opening3 = MathTex(
             r"{{a}}{{(x-x_1)}}{{(x - x_2)}}{{(x-x_0)}} = {{p(x)}} - {{y_0}} {{}}",
-            font_size=50,
+            font_size=30,
             color=PRIMARY_COLOR,
         )
         self.x_one = FieldElement(3, 41)
@@ -179,16 +179,16 @@ class Previously(SlideBase):
                 color=PURPLE_B,
             )
             .next_to(self.pairing_verifiaction_2, UP, buff=0.5)
-            .shift(UP * 2)
+            .shift(UP)
         )
         self.pairing_verifiaction_4 = (
             MathTex(
                 r"q({{\tau}}) = \frac{p(\tau) - y_0}{\tau - x_0}",
-                font_size=55,
+                font_size=30,
                 color=PURPLE_B,
             )
             .next_to(self.pairing_verifiaction_2, UP, buff=0.5)
-            .shift(UP * 2)
+            .shift(UP)
         )
 
         self.tau = FieldElement(20, 41)
@@ -209,7 +209,7 @@ class Previously(SlideBase):
                     "num_decimal_places": 0,
                 },
             },
-        ).scale(0.7).shift(LEFT*2)
+        ).scale(0.7).shift(LEFT*2.5)
 
         self.chart_interpolation.labels[0].next_to(
             self.chart_interpolation.ax[0], RIGHT + UP, buff=0.0
@@ -237,14 +237,12 @@ class Previously(SlideBase):
                 r"\left[{{2, }}{{3, }}{{1, }}{{-3, }}{{-4, }}{{\cdots}} \right]",
                 color=SECONDARY_COLOR,
             )
-            .next_to(self.chart_interpolation.ax, DOWN, buff=0.5)
-            .shift(DOWN)
-            .scale(1.7)
+            .next_to(self.chart_interpolation.ax, RIGHT, buff=1.0)
         )
 
         self.indeces_over_vector = MathTex(
             r"{{0}}{{1}}{{2}}{{3}}{{4}}{{\cdots}}", color=PRIMARY_COLOR, font_size=30
-        ).scale(2)
+        )
         for i in range(len(self.indeces_over_vector)):
             self.indeces_over_vector[i].next_to(self.vector_values[i + 1], UP, buff=0.2)
             if i == 5:
@@ -254,7 +252,7 @@ class Previously(SlideBase):
 
         self.data_points = Text(
             "data vector", font=PRIMARY_FONT, color=BLUE_D, font_size=35
-        ).shift(UP * 5.5)
+        ).next_to(self.chart_interpolation, RIGHT, buff = 1.0).shift(UP*2)
         self.interpolation = Text(
             "interplolation", font=PRIMARY_FONT, color=GREEN_E, font_size=35
         ).next_to(self.data_points, DOWN, buff=1.5)
@@ -288,7 +286,8 @@ class Previously(SlideBase):
         self.envelope_body_closed = RoundedRectangle(width = 8, height = 2, 
             fill_color=PRIMARY_COLOR,
             fill_opacity=0.3,
-            corner_radius=0.1
+            corner_radius=0.1,
+            stroke_width = 0.0
         ).scale(0.3)
         # self.envelope_body_closed = Polygon(
         #     [-4, -1, 0],
@@ -305,9 +304,10 @@ class Previously(SlideBase):
             [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
+            stroke_width = 0.0
         ).scale(0.3)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.68).shift(DOWN*0.1)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.45)
 
         self.commitment = MathTex(
             r"{{C}} = {{p(\tau)}} \cdot {{G_1}}", font_size=30, color=PRIMARY_COLOR
@@ -343,17 +343,13 @@ class Previously(SlideBase):
         scene.play(Write(self.title_label), run_time=0.7)
         scene.play(FadeIn(self.prover), Write(self.commiter_label), run_time=1)
         self.y0_x0(scene)
-        self.polynomial_chart.generate_target()
-        self.polynomial_chart.target.to_edge(DOWN).shift(DOWN * 4 + 3 * RIGHT)
-        self.polynomial_label.generate_target()
-        self.polynomial_label.target.next_to(self.polynomial_chart.target, UP, buff=0.2)
         self.prover.generate_target()
-        self.prover.target.set_opacity(0.5).shift(RIGHT * 0.3 + UP * 0.3)
+        self.prover.target.set_opacity(0.5).shift(RIGHT * 0.3)
         self.verifier.generate_target()
-        self.verifier.target.set_opacity(0.5).shift(LEFT * 0.3 + UP * 0.3)
+        self.verifier.target.set_opacity(0.5).shift(LEFT * 0.3)
 
         self.commitment.generate_target()
-        self.commitment.target.move_to(ORIGIN).shift(UP * 2.5)
+        self.commitment.target.move_to(ORIGIN).shift(UP * 1.5)
         self.proof.generate_target()
         self.proof.target.next_to(self.commitment.target, DOWN, buff=0.2)
         self.opening.generate_target()
@@ -373,8 +369,6 @@ class Previously(SlideBase):
             MoveToTarget(self.proof),
             MoveToTarget(self.opening),
             MoveToTarget(self.commitment),
-            MoveToTarget(self.polynomial_chart),
-            MoveToTarget(self.polynomial_label),
             run_time=1,
         )
         self.opening2.next_to(self.opening, DOWN, buff=0.3)
@@ -426,12 +420,7 @@ class Previously(SlideBase):
         self.polynomial_chart.target.shift(DOWN * 3)
         self.polynomial_opening_label.generate_target()
         self.polynomial_opening_label.target.shift(DOWN * 3)
-        scene.play(
-            FadeIn(self.dots),
-            MoveToTarget(self.polynomial_chart),
-            MoveToTarget(self.polynomial_opening_label),
-            run_time=0.5,
-        )
+
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff=0.2)
         scene.play(Write(self.quotient_deriviation_3))
         scene.wait(2)
@@ -537,15 +526,6 @@ class Previously(SlideBase):
             run_time=0.7,
         )
         rest = Group(self.polynomial_chart, self.verifier, self.prover)
-        self.polynomial_chart.generate_target()
-        self.polynomial_chart.target.shift(UP * 6.5)
-        self.verifier.generate_target()
-        self.verifier.target.scale(1 / 1.3)
-        scene.play(
-            MoveToTarget(self.polynomial_chart),
-            MoveToTarget(self.verifier),
-            run_time=0.8,
-        )
         scene.wait(1)
         vector_commitment_text = Text(
             "Vector commitment?", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=45
@@ -588,18 +568,13 @@ class Previously(SlideBase):
             self.chart_interpolation.ax,
             self.chart_interpolation.labels,
             self.chart_interpolation_graph4,
-            self.vector_values,
             self.point,
-            self.poly_eval0,
+        )
+        scene.play(FadeOut(self.indeces_over_vector, self.vector_values, self.poly_eval0,
+            self.dots_poly_eval,
             self.poly_eval1,
             self.poly_eval2,
-            self.poly_eval3,
-            self.dots_poly_eval,
-        )
-        interpolation.generate_target()
-        interpolation.target.shift(DOWN * 4.5)
-        scene.play(FadeOut(self.indeces_over_vector), run_time=0.2)
-        scene.play(MoveToTarget(interpolation), run_time=0.8)
+            self.poly_eval3,), run_time=0.2)
         scene.play(Write(self.data_points))
         scene.play(GrowArrow(self.arrow_data_interpolation))
         scene.play(Write(self.interpolation))
@@ -767,49 +742,4 @@ class Previously(SlideBase):
             self.p7,
             self.p8,
             self.p9,
-        )
-
-    def application(self, scene):
-        self.blob = ImageMobject("data/images/blob.png").scale(0.9).shift(UP * 3.5)
-        self.blob_1 = self.blob.copy().scale(0.5).next_to(self.blob, LEFT, buff=0.0)
-        self.blob_2 = self.blob.copy().scale(0.5).next_to(self.blob, RIGHT, buff=0.0)
-        scene.play(FadeIn(self.blob), run_time=0.3)
-        scene.play(FadeIn(self.blob_1), run_time=0.3)
-        scene.play(FadeIn(self.blob_2), run_time=0.3)
-        scene.wait(1)
-        blobs = Group(self.blob, self.blob_1, self.blob_2)
-        blobs.generate_target()
-        blobs.target.shift(DOWN * 6.5)
-        scene.play(MoveToTarget(blobs), run_time=0.7)
-
-        self.tree = (
-            MerkleTree(num_children=2, num_levels=3, include_labels=False)
-            .shift(UP * 6)
-            .scale(0.4)
-        )
-        self.tree.stretch(2, dim=1)
-        node2_0 = self.tree.get_node(2, 0)
-        node2_1 = self.tree.get_node(2, 2)
-        node0_0 = self.tree.get_node(0, 0)
-        self.dots_vec_node = MathTex(r"\cdots", color=PRIMARY_COLOR)
-        self.dots_vec_node.move_to(node2_0.get_right()).shift(RIGHT * 0.67)
-        self.dots_vec_node1 = self.dots_vec_node.copy()
-        self.dots_vec_node2 = self.dots_vec_node.copy()
-        self.dots_vec_node1.move_to(node2_1.get_right()).shift(RIGHT * 0.67)
-        self.dots_vec_node2.next_to(node0_0, DOWN, buff=1.0).shift(DOWN * 0.2)
-        scene.play(
-            Create(self.tree),
-            FadeIn(self.dots_vec_node, self.dots_vec_node1, self.dots_vec_node2),
-            run_time=1,
-        )
-
-        scene.wait(1)
-        scene.play(
-            FadeOut(
-                self.tree,
-                self.dots_vec_node,
-                self.dots_vec_node1,
-                self.dots_vec_node2,
-                blobs,
-            )
         )

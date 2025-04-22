@@ -73,7 +73,7 @@ class DiscreetePolynomialChart(VGroup):
             self.add(dot)
 
     def add_xaxis_label(self, x, label):
-        label = MathTex(label, color=PRIMARY_COLOR)
+        label = MathTex(label, color=PRIMARY_COLOR, font_size = 30)
         label.move_to(self.ax.coords_to_point(x, -3))
         self.add(label)
         return label

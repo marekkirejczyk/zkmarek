@@ -604,9 +604,10 @@ class MerkleTree(SlideBase):
 
     def animate_miniature(self, scene):
         rectangle = RoundedRectangle(width = 11, height = 5, corner_radius=0.1).set_color(PRIMARY_COLOR)
-        scene.play(FadeIn(rectangle), run_time=0.5)
         self.merkle_tree_2_4.scale(0.75).move_to(rectangle.get_center())
-        scene.play(Create(self.merkle_tree_2_4), Create(self.account_group_8_elements), run_time=0.5)
+        rectangle.shift(DOWN * 0.9)
+        scene.play(FadeIn(rectangle), run_time=0.5)
+        scene.play(Create(self.merkle_tree_2_4), run_time=0.5)
 
         all_nodes = VGroup(
             self.merkle_tree_2_4.get_node(3, 0),
@@ -637,20 +638,12 @@ class MerkleTree(SlideBase):
         ]
         for i in range(len(all_nodes)):
             node = all_nodes[i]
-            scene.play(
-                node.animate.set_opacity(0.1),
-                run_time=0.1,
-            )
+            node.set_opacity(0.1)
+            
         for i in range(len(nodes_directly_used)):
             node = nodes_directly_used[i]
-            scene.play(
-                node.animate.set_opacity(0.4).set_color(SECONDARY_COLOR),
-                run_time=0.3,
-            )
-            scene.play(
-                node.animate.set_opacity(0.1),
-                run_time=0.3,
-            )
+            node.set_opacity(0.4).set_color(SECONDARY_COLOR)
+            node.animate.set_opacity(0.1)
 
         nodes_needed_to_proof = [
             self.merkle_tree_2_4.get_node(3, 2),
@@ -660,14 +653,10 @@ class MerkleTree(SlideBase):
 
         for i in range(len(nodes_needed_to_proof)):
             node = nodes_needed_to_proof[i]
-            scene.play(
-                node.animate.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR),
-                run_time=0.3,
-            )
-            scene.play(
-                node.animate.set_opacity(0.1),
-                run_time=0.3,
-            )
+            node.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR),
+
+            node.set_opacity(0.1),
+
 
 
         nodes_copy = []
@@ -687,7 +676,6 @@ class MerkleTree(SlideBase):
             )
             nodes_copy.append(node)
             nodes_copy.append(hash)
-        scene.wait(0.5)
         self.nodes_copy = nodes_copy
 
         scene.play(
@@ -726,4 +714,4 @@ class MerkleTree(SlideBase):
             run_time=0.5,
         )
         
-        scene.play(FadeOut(rectangle, self.merkle_tree_2_4))
+        scene.play(FadeOut(rectangle, self.merkle_tree_2_4, self.nodes_copy[0], self.nodes_copy[2], self.nodes_copy[4]), run_time=0.5)
