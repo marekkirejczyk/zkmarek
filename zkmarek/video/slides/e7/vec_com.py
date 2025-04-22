@@ -61,13 +61,12 @@ class Previously(SlideBase):
     def construct(self):
         self.title_label = (
             Text(
-                "Vector commitment in 90 s",
+                "Previously on zkMarek...",
                 font=PRIMARY_FONT,
                 color=PRIMARY_COLOR,
-                font_size=60,
+                font_size=40,
             )
             .to_edge(UP)
-            .shift(UP * 5)
         )
         self.polynomial_chart = (
             DiscreetePolynomialChart(
@@ -82,9 +81,9 @@ class Previously(SlideBase):
             .shift(RIGHT + DOWN * 1.5)
         )
         self.polynomial_label = (
-            MathTex(r"{{}} {{p(x)}} {{}}", color=PRIMARY_COLOR, font_size=35)
-            .next_to(self.polynomial_chart, direction=RIGHT + UP, buff=0)
-            .shift(DOWN * 0.1 + LEFT * 2.3)
+            MathTex(r"{{}} {{p(x)}} {{}}", color=PRIMARY_COLOR, font_size=30)
+            .next_to(self.polynomial_chart, direction=UP, buff=0)
+            .shift(DOWN * 0.1)
         )
         self.prover = (
             ImageMobject("data/images/person.png")
@@ -119,8 +118,8 @@ class Previously(SlideBase):
             r"{{r(x)}} = {{p(x)}} - {{y_0}} {{}}", font_size=35, color=PRIMARY_COLOR
         ).next_to(self.opening, DOWN, buff=1.2)
         self.new_polynomial_label = (
-            Text("new polynomial", color=GREEN_E, font_size=18, font=PRIMARY_FONT)
-            .next_to(self.opening2, LEFT, buff=1.7)
+            Text("new   polynomial", color=GREEN_E, font_size=16, font=PRIMARY_FONT)
+            .next_to(self.opening2, LEFT, buff=0.1)
             .shift(UP * 0.14)
         )
         self.opening3 = MathTex(
@@ -145,7 +144,6 @@ class Previously(SlideBase):
                 font_size=30,
             )
             .to_edge(DOWN)
-            .shift(DOWN * 2)
         )
         self.pairing_verifiaction_1 = (
             MathTex(
@@ -154,7 +152,6 @@ class Previously(SlideBase):
                 font_size=30,
             )
             .to_edge(DOWN)
-            .shift(DOWN * 2)
         )
         self.pairing_verifiaction_2 = (
             MathTex(
@@ -178,8 +175,8 @@ class Previously(SlideBase):
                 font_size=30,
                 color=PURPLE_B,
             )
-            .next_to(self.pairing_verifiaction_2, UP, buff=0.5)
-            .shift(UP)
+            .next_to(self.pairing_verifiaction_2, UP, buff=1.0)
+            .shift(UP*1.2)
         )
         self.pairing_verifiaction_4 = (
             MathTex(
@@ -187,8 +184,8 @@ class Previously(SlideBase):
                 font_size=30,
                 color=PURPLE_B,
             )
-            .next_to(self.pairing_verifiaction_2, UP, buff=0.5)
-            .shift(UP)
+            .next_to(self.pairing_verifiaction_2, UP, buff=1.0)
+            .shift(UP * 1.2)
         )
 
         self.tau = FieldElement(20, 41)
@@ -289,14 +286,6 @@ class Previously(SlideBase):
             corner_radius=0.1,
             stroke_width = 0.0
         ).scale(0.3)
-        # self.envelope_body_closed = Polygon(
-        #     [-4, -1, 0],
-        #     [4, -1, 0],
-        #     [4, 1, 0],
-        #     [-4, 1, 0],
-        #     fill_color=PRIMARY_COLOR,
-        #     fill_opacity=0.3,
-        # ).scale(0.45)
 
         self.envelope_flap_closed = Polygon(
             [-4, 1, 0],
@@ -307,7 +296,7 @@ class Previously(SlideBase):
             stroke_width = 0.0
         ).scale(0.3)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.45)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48)
 
         self.commitment = MathTex(
             r"{{C}} = {{p(\tau)}} \cdot {{G_1}}", font_size=30, color=PRIMARY_COLOR
@@ -349,7 +338,7 @@ class Previously(SlideBase):
         self.verifier.target.set_opacity(0.5).shift(LEFT * 0.3)
 
         self.commitment.generate_target()
-        self.commitment.target.move_to(ORIGIN).shift(UP * 1.5)
+        self.commitment.target.move_to(ORIGIN).shift(UP * 2)
         self.proof.generate_target()
         self.proof.target.next_to(self.commitment.target, DOWN, buff=0.2)
         self.opening.generate_target()
@@ -373,7 +362,7 @@ class Previously(SlideBase):
         )
         self.opening2.next_to(self.opening, DOWN, buff=0.3)
         self.polynomial_opening_label.next_to(self.polynomial_chart, UP, buff=0.0)
-        self.new_polynomial_label.next_to(self.opening2, LEFT, buff=0.3)
+        self.new_polynomial_label.next_to(self.opening2, LEFT, buff=0.2)
         self.opening3.next_to(self.opening2, DOWN, buff=0.2)
         self.dots.next_to(self.opening3, DOWN, buff=0.2)
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff=0.5)
@@ -441,16 +430,16 @@ class Previously(SlideBase):
 
         self.pairing_verifiaction_0.next_to(
             self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 2)
+        ).shift(DOWN * 1.0)
         self.pairing_verifiaction_1.next_to(
             self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 2)
+        ).shift(DOWN * 1.0)
         self.pairing_verifiaction_2.next_to(
             self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 2)
+        ).shift(DOWN * 1.0)
         self.pairing_verifiaction_2a.next_to(
             self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 2)
+        ).shift(DOWN * 1.0)
 
         scene.play(FadeIn(self.pairing_verifiaction_0))
         scene.play(

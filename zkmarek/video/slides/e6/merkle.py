@@ -605,7 +605,7 @@ class MerkleTree(SlideBase):
     def animate_miniature(self, scene):
         rectangle = RoundedRectangle(width = 11, height = 5, corner_radius=0.1).set_color(PRIMARY_COLOR)
         self.merkle_tree_2_4.scale(0.75).move_to(rectangle.get_center())
-        rectangle.shift(DOWN * 0.9)
+        rectangle.shift(DOWN * 0.4)
         scene.play(FadeIn(rectangle), run_time=0.5)
         scene.play(Create(self.merkle_tree_2_4), run_time=0.5)
 
@@ -665,8 +665,8 @@ class MerkleTree(SlideBase):
             node = node.copy()
             node.set_opacity(0.4)
             node.set_color(HIGHLIGHT2_COLOR).next_to(
-                self.merkle_tree_2_4, DOWN, buff=1.0
-            ).shift(LEFT * 2 + RIGHT * 2 * i + DOWN * 0.2)
+                self.merkle_tree_2_4, DOWN, buff=0.7
+            ).shift(LEFT * 2 + RIGHT * 2 * i)
             scene.play(
                 TransformMatchingShapes(
                     nodes_needed_to_proof[i],
