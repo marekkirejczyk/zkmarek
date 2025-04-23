@@ -28,7 +28,6 @@ from zkmarek.video.constant import (
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.tree import MerkleTree as Tree
-from zkmarek.video.slides.e6.merkle_particia_trie import MerklePatriciaTrie as MPT
 from zkmarek.video.slides.e6.ethereum_block import EthereumBlock
 from zkmarek.video.slides.e6.proof_sizes import ProofSize
 from zkmarek.video.slides.e6.merkle import MerkleTree
@@ -57,12 +56,8 @@ class Recap(SlideBase):
         self.new_subsection(
             scene, "efficient lookups", "data/sound/e7/slide1-4.mp3"
         )
-        self.merkle_patricia_trie(scene)
-
-        self.new_subsection(
-            scene, "proof size: 9 levels", "data/sound/e7/slide1-5.mp3"
-        )
         self.proof_sizes(scene)
+
 
         self.new_subsection(
             scene, "more efficient?", "data/sound/e7/slide1-10.mp3"
@@ -265,15 +260,15 @@ class Recap(SlideBase):
             self.rectangle_state_trie,
         )
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item), run_time=0.5)
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(
-            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2), run_time=1.0
+            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.4
         )
         scene.play(
-            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2), run_time=1.0
+            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.4
         )
         scene.play(
-            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2), run_time=1.0
+            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.4
         )
         scene.wait(0.7)
         scene.play(
@@ -291,22 +286,6 @@ class Recap(SlideBase):
             ),
             run_time=1,
         )
-        
-    def merkle_patricia_trie(self, scene):
-        self.mpt_proof = MPT(include_labels=True).shift(UP*2.9).scale(0.45)
-        scene.play(Create(self.mpt_proof), run_time=1.0)
-        scene.wait(1)
-        scene.play(Indicate(self.mpt_proof.leaf1.field_group[0][1], color = SECONDARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.mpt_proof.leaf2.field_group[0][1], color = SECONDARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.mpt_proof.leaf3.field_group[0][1], color = SECONDARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.mpt_proof.leaf4.field_group[0][1], color = SECONDARY_COLOR), run_time=0.7)
-        scene.wait(1)
-        scene.play(Indicate(self.mpt_proof.leaf1.field_group, color = SECONDARY_COLOR), run_time=0.7)
-        scene.wait(0.5)
-        scene.play(Indicate(self.mpt_proof.branch1.get_child_slot("1"), color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
-        scene.play(Indicate(self.mpt_proof.root.field_group[0][1], color = PRIMARY_COLOR, scale_factor=1.5), run_time=0.8)
-        scene.wait(2.5)
-        scene.play(FadeOut(self.mpt_proof), run_time=1.0)
 
     def proof_sizes(self, scene):
         self.slide_proof = ProofSize()
@@ -317,10 +296,21 @@ class Recap(SlideBase):
             FadeIn(self.slide_proof.dots),
             run_time=1.5,
         )
+        scene.play(Indicate(self.slide_proof.merkle_tree.extension2, color=SECONDARY_COLOR, scale_factor=1.1),
+                   Indicate(self.slide_proof.merkle_tree.root, color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.8)
+        scene.play(Indicate(self.slide_proof.merkle_tree.branch1, color=SECONDARY_COLOR, scale_factor=1.1),
+                   Indicate(self.slide_proof.merkle_tree.branch2, color=SECONDARY_COLOR, scale_factor=1.1), run_time=0.8)
+        leaves = [self.slide_proof.merkle_tree.leaf1, self.slide_proof.merkle_tree.leaf2, self.slide_proof.merkle_tree.leaf3, self.slide_proof.merkle_tree.leaf4]
+        for leaf in leaves:
+            scene.play(Indicate(leaf, color=SECONDARY_COLOR, scale_factor=1.1), run_time=0.3)
+            
         scene.wait(1)
         scene.play(
             FadeIn(self.slide_proof.brace_levels, self.slide_proof.levels_text),
             run_time=0.7,
+        )
+        self.new_subsection(
+            scene, "proof", "data/sound/e7/slide1-5.mp3"
         )
         scene.wait(1)
         self.slide_proof.formula.scale(0.8).next_to(self.slide_proof.merkle_tree, RIGHT, buff=0.2)
@@ -332,10 +322,11 @@ class Recap(SlideBase):
             Write(self.slide_proof.formula),
             run_time=0.7,
         )
+        scene.wait(0.5)
         scene.play(
             TransformMatchingShapes(self.slide_proof.formula, self.slide_proof.formula1)
         )
-        scene.wait(1)
+        scene.wait(0.5)
 
         self.new_subsection(scene, "4 kB", "data/sound/e7/slide1-6.mp3")
         scene.wait(1)
@@ -373,9 +364,9 @@ class Recap(SlideBase):
         node = RoundedRectangle(width = 4.2, height = 2.4, corner_radius=0.1, fill_opacity = 0.4).set_color(HIGHLIGHT_COLOR)
         node = DashedVMobject(node, num_dashes=60).next_to(self.block, DOWN, buff = 0.3)
         key = RoundedRectangle(width = 1.75, height = 1, corner_radius=0, fill_opacity = 0.3).set_color(SECONDARY_COLOR)
-        key = DashedVMobject(key, num_dashes=30).align_to(node, LEFT).shift(DOWN*1.0+RIGHT*0.25)
+        key = DashedVMobject(key, num_dashes=30).align_to(node, LEFT).shift(DOWN*1.2+RIGHT*0.25)
         value = RoundedRectangle(width = 1.75, height = 1, corner_radius=0.1, fill_opacity = 0.3).set_color(PRIMARY_COLOR)
-        value = DashedVMobject(value, num_dashes=30).align_to(node, RIGHT).shift(DOWN*1.0+LEFT*0.25)
+        value = DashedVMobject(value, num_dashes=30).align_to(node, RIGHT).shift(DOWN*1.2+LEFT*0.25)
         
         key_text = Text("key", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(key.get_center())
         value_text = Text("value", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20).move_to(value.get_center())

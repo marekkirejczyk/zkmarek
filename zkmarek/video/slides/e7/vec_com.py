@@ -404,134 +404,40 @@ class Previously(SlideBase):
                 Indicate(roots[i], color=GREEN_E, scale_factor=1.3), run_time=0.5
             )
             self.polynomial_chart.indicate_xaxis_label(scene, labels[i], runtime=0.5)
-        self.polynomial_chart.generate_target()
-        self.polynomial_chart.target.shift(DOWN * 3)
-        self.polynomial_opening_label.generate_target()
-        self.polynomial_opening_label.target.shift(DOWN * 3)
+
 
         self.quotient_deriviation_3.next_to(self.dots, DOWN, buff=0.2)
         scene.play(Write(self.quotient_deriviation_3))
         scene.wait(2)
 
         self.new_subsection(
-            scene, "comparing two pairings", "data/sound/e6/slide1-1.mp3"
+            scene, "comparing two pairings", "data/sound/e7/slide1-14a.mp3"
         )
-
-        self.quotient_deriviation_3.generate_target()
-        self.quotient_deriviation_3.target.next_to(
-            self.opening, DOWN, buff=0.2
-        ).set_color(PRIMARY_COLOR)
-        scene.play(
-            FadeOut(self.opening3, self.dots, self.opening2),
-            MoveToTarget(self.quotient_deriviation_3),
-            run_time=0.5,
-        )
-
-        self.pairing_verifiaction_0.next_to(
-            self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 1.0)
-        self.pairing_verifiaction_1.next_to(
-            self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 1.0)
-        self.pairing_verifiaction_2.next_to(
-            self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 1.0)
-        self.pairing_verifiaction_2a.next_to(
-            self.quotient_deriviation_3, DOWN, buff=0.5
-        ).shift(DOWN * 1.0)
-
-        scene.play(FadeIn(self.pairing_verifiaction_0))
-        scene.play(
-            Indicate(self.commitment, color=LIGHT_BROWN),
-            Indicate(self.pairing_verifiaction_0[9], color=LIGHT_BROWN),
-        )
-        scene.play(
-            Indicate(self.proof, color=LIGHT_BROWN),
-            Indicate(self.pairing_verifiaction_0[1], color=LIGHT_BROWN),
-        )
-        # scene.wait(0.5)
-        scene.play(
-            Indicate(self.opening[1], color=PURPLE_B),
-            Indicate(self.pairing_verifiaction_0[5], color=PURPLE_B),
-            run_time=0.7,
-        )
-        scene.play(
-            Indicate(self.opening[4], color=PURPLE_B),
-            Indicate(self.pairing_verifiaction_0[11], color=PURPLE_B),
-            run_time=0.7,
-        )
-        self.verifier.generate_target()
-        self.verifier.target.set_opacity(0.9).scale(1.3)
-        scene.wait(1.1)
-        scene.play(
-            TransformMatchingShapes(
-                self.pairing_verifiaction_0, self.pairing_verifiaction_1
-            ),
-            Indicate(self.commitment, color=LIGHT_BROWN),
-            MoveToTarget(self.verifier),
-        )
-        scene.wait(0.5)
-        scene.play(
-            TransformMatchingShapes(
-                self.pairing_verifiaction_1, self.pairing_verifiaction_2
-            ),
-            Indicate(self.proof, color=LIGHT_BROWN),
-        )
+        scene.wait(0.2)
+        scene.play(Indicate(self.commitment, color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
+        scene.play(Indicate(self.proof, color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
+        scene.wait(1.8)
+        scene.play(Indicate(self.opening[0:3], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
         scene.wait(1)
-        scene.play(
-            TransformMatchingShapes(
-                self.pairing_verifiaction_2, self.pairing_verifiaction_2a
-            )
-        )
-        colors = VGroup(
-            self.pairing_verifiaction_2a[1:4], self.pairing_verifiaction_2a[8:11]
-        )
-        colors.set_color(PURPLE_B)
-        scene.wait(1)
-        scene.play(
-            TransformMatchingShapes(VGroup(colors.copy()), self.pairing_verifiaction_3)
-        )
-        scene.wait(1)
-        scene.play(
-            TransformMatchingShapes(
-                self.pairing_verifiaction_3, self.pairing_verifiaction_4
-            )
-        )
-        scene.wait(0.7)
+        scene.play(Indicate(self.opening[4], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
 
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
-        scene.wait(0.5)
+        scene.wait(2)
         scene.play(
             FadeOut(
                 self.quotient_deriviation_3,
-                self.pairing_verifiaction_2a,
                 self.opening,
-                self.pairing_verifiaction_4,
                 self.proof,
                 self.commitment,
                 self.polynomial_opening_label,
+                self.opening2,
+                self.opening3,
             ),
             run_time=0.7,
         )
         rest = Group(self.polynomial_chart, self.verifier, self.prover)
-        scene.wait(1)
-        vector_commitment_text = Text(
-            "Vector commitment?", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=45
-        ).shift(DOWN * 7.5)
-        arrow_vector_commitment = Arrow(
-            DOWN * 4,
-            DOWN * 7,
-            tip_shape=StealthTip,
-            stroke_width=2,
-            max_tip_length_to_length_ratio=0.15,
-        ).set_color_by_gradient([PRIMARY_COLOR, MAROON_E])
-        scene.play(
-            Write(vector_commitment_text),
-            GrowArrow(arrow_vector_commitment),
-            run_time=0.7,
-        )
         scene.wait(1.5)
-        scene.play(FadeOut(vector_commitment_text, arrow_vector_commitment, rest))
+        scene.play(FadeOut(rest), run_time=1.0)
 
         self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2a.mp3")
         scene.play(
@@ -605,10 +511,13 @@ class Previously(SlideBase):
         self.commitment_sent = VGroup(
             self.commitment, self.envelope_body_closed, self.envelope_flap_closed
         )
-
+        self.opening.next_to(self.commitment, DOWN, buff=0.5)
+        self.commitment_sent.generate_target()
+        self.commitment_sent.target.next_to(self.verifier_label, DOWN, buff=0.5)
+        scene.play(MoveToTarget(self.commitment_sent))
+        
         self.new_subsection(scene, "opening - proof pi", "data/sound/e6/slide1-0b.mp3")
         scene.wait(1.5)
-        self.opening.next_to(self.commitment, DOWN, buff=0.5)
         scene.play(Write(self.opening), FadeOut(label_tau))
         self.polynomial_chart.remove(label_tau)
         self.label_y = self.polynomial_chart.add_yaxis_label(
@@ -631,12 +540,11 @@ class Previously(SlideBase):
         self.commitment_sent.generate_target()
         self.commitment_sent.target.next_to(self.verifier_label, DOWN, buff=0.5)
         self.proof.generate_target()
-        self.proof.target.next_to(self.commitment_sent.target, DOWN, buff=0.3)
+        self.proof.target.next_to(self.commitment_sent, DOWN, buff=0.3)
         self.opening.generate_target()
-        self.opening.target.next_to(self.proof.target, DOWN, buff=0.3)
+        self.opening.target.next_to(self.proof, DOWN, buff=0.3)
         scene.wait(2)
         scene.play(
-            MoveToTarget(self.commitment_sent),
             MoveToTarget(self.proof),
             MoveToTarget(self.opening),
             run_time=0.7,
