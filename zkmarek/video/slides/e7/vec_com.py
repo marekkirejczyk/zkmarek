@@ -418,11 +418,11 @@ class Previously(SlideBase):
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
         scene.wait(1.8)
         scene.play(Indicate(self.opening[0:3], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
-        scene.wait(1)
+        scene.wait(1.3)
         scene.play(Indicate(self.opening[4], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
 
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
-        scene.wait(2)
+        scene.wait(2.5)
         scene.play(
             FadeOut(
                 self.quotient_deriviation_3,
@@ -542,7 +542,7 @@ class Previously(SlideBase):
         self.proof.generate_target()
         self.proof.target.next_to(self.commitment_sent, DOWN, buff=0.3)
         self.opening.generate_target()
-        self.opening.target.next_to(self.proof, DOWN, buff=0.3)
+        self.opening.target.next_to(self.proof.target, DOWN, buff=0.3)
         scene.wait(2)
         scene.play(
             MoveToTarget(self.proof),

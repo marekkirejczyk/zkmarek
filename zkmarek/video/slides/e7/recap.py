@@ -260,17 +260,15 @@ class Recap(SlideBase):
             self.rectangle_state_trie,
         )
         scene.play(FadeOut(self.acc_balance_node), FadeIn(self.array_4_item), run_time=0.5)
-        scene.wait(0.5)
         scene.play(
-            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.4
+            Indicate(self.labels_state_trie[1], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
         )
         scene.play(
-            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.4
+            Indicate(self.labels_state_trie[0], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
         )
         scene.play(
-            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.4
+            Indicate(self.labels_state_trie[2], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
         )
-        scene.wait(0.7)
         scene.play(
             Indicate(self.labels_state_trie[3], color=SECONDARY_COLOR, scale_factor=1.2), run_time=0.8
         )
@@ -294,7 +292,7 @@ class Recap(SlideBase):
         scene.play(
             Create(self.slide_proof.merkle_tree),
             FadeIn(self.slide_proof.dots),
-            run_time=1.5,
+            run_time=2,
         )
         scene.play(Indicate(self.slide_proof.merkle_tree.extension2, color=SECONDARY_COLOR, scale_factor=1.1),
                    Indicate(self.slide_proof.merkle_tree.root, color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.8)
