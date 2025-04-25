@@ -24,7 +24,7 @@ from manim import (
     ORIGIN,
     RoundedRectangle,
 )
-from manim import BLUE_D, GREEN_E, MAROON_E, LIGHT_BROWN, PURPLE_B
+from manim import BLUE_D, GREEN_E, MAROON_E, PURPLE_B
 from zkmarek.video.slides.episode4.discreete_polynomial_chart import (
     DiscreetePolynomialChart,
 )

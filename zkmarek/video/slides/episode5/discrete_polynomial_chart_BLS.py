@@ -1,8 +1,8 @@
 from manim import Axes, Dot, VGroup, TexTemplate, Tex, DashedLine, GrowFromPoint, Line, MathTex
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import BLS12381
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
-
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.crypto.field_element import FieldElement
 
 class DotOnCurve(Dot):
     coords: ECAffine
@@ -17,11 +17,6 @@ class DotOnCurve(Dot):
         
 class PolynomialOnCurve(VGroup):
     def __init__(self, curve=BLS12381, dot_color=SECONDARY_COLOR, include_numbers = True, label = None):
-        """
-        Initialize the PolynomialOnCurve visualization.
-        :param curve: WeierstrassCurve instance (e.g., BLS12381)
-        :param dot_color: The color of the dots representing points
-        """
         super().__init__()
         self.curve = curve
         self.dots = []
@@ -62,6 +57,18 @@ class PolynomialOnCurve(VGroup):
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
+                
+    def get_point(self, x: FieldElement, sgn: int = 0):
+        point = ECAffine.from_x(x.value, sgn, self.curve)
+
+        if point is None:
+            return None 
+
+        dot = Dot(self.ax.c2p(float(point.x.value), float(point.y.value)), color=HIGHLIGHT_COLOR)
+        dot.set_z_index(10, family=True)
+        return dot
+
+
 
     def animate_create_vertical_line(self, scene, x, y_top):
         s = self.ax.c2p(x, -1)

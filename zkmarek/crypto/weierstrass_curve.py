@@ -31,4 +31,4 @@ Secp256k1_41 = WeierstrassCurve(0, 7, 41)
 BLS12381 = WeierstrassCurve(0, 4, 41)
 BLS12381_137 = WeierstrassCurve(0, 4, 137)
 BN254 = WeierstrassCurve(0, 3, 41)
-
+BanderSnatch = WeierstrassCurve(3763200000, 78675968000000, 131)
