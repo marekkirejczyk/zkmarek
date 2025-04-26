@@ -4,6 +4,7 @@ from zkmarek.video.slides.e7.vec_com import Previously
 from zkmarek.video.slides.e7.watch_other import FullVideos
 from zkmarek.video.slides.common.title import TitleSlide
 from zkmarek.video.slides.e7.elliptic_curves import EllipticCurves
+from zkmarek.video.slides.e7.single_level_verkle import SingleLevelVerkleTree
 
 EPISODE7 = [
     # Intro(
@@ -13,7 +14,8 @@ EPISODE7 = [
     Recap(),
     Previously(),
     FullVideos(),
-    TitleSlide("Elliptic curves", sound = "data/sound/e7/slide2-0.mp3", wait_time=2),
+    TitleSlide("Elliptic curves", sound = "data/sound/e7/slide2-0.mp3", pre_wait_time=1, wait_time=4.5),
     EllipticCurves(),
     TitleSlide("Verkle trees", sound = "data/sound/e7/slide2-10.mp3", wait_time=2),
+    SingleLevelVerkleTree(),
 ]
