@@ -602,10 +602,10 @@ class MerkleTree(SlideBase):
 
 
     def animate_miniature(self, scene):
-        rectangle = RoundedRectangle(width = 11, height = 5, corner_radius=0.1).set_color(PRIMARY_COLOR)
+        rectangle = RoundedRectangle(width = 11, height = 5, corner_radius=0.1).shift(DOWN*1.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        text = Text("Merkle trees", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=50).scale(0.65).next_to(rectangle, UP, buff = 0.4)
         self.merkle_tree_2_4.scale(0.75).move_to(rectangle.get_center())
-        rectangle.shift(DOWN * 0.4)
-        scene.play(FadeIn(rectangle), run_time=0.5)
+        scene.play(FadeIn(rectangle, text), run_time=0.5)
         scene.play(Create(self.merkle_tree_2_4), run_time=0.5)
 
         all_nodes = VGroup(
@@ -637,7 +637,7 @@ class MerkleTree(SlideBase):
         ]
         for i in range(len(all_nodes)):
             node = all_nodes[i]
-            node.set_opacity(0.1)
+            scene.play(node.animate.set_opacity(0.1), run_time=0.7)
             
         for i in range(len(nodes_directly_used)):
             node = nodes_directly_used[i]

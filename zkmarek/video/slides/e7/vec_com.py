@@ -450,11 +450,12 @@ class Previously(SlideBase):
 
         self.new_subsection(scene, "interpolation", "data/sound/e6/slide1-2aa.mp3")
         scene.wait(1.5)
-        scene.play(Create(self.poly_eval0), run_time=0.7)
-        scene.play(Create(self.poly_eval1), run_time=0.7)
-        scene.play(Create(self.poly_eval2), run_time=0.5)
-        scene.play(Create(self.poly_eval3), run_time=0.5)
+        scene.play(Create(self.poly_eval0), Indicate(self.p0), run_time=0.7)
+        scene.play(Create(self.poly_eval1), Indicate(self.p1), run_time=0.7)
+        scene.play(Create(self.poly_eval2), Indicate(self.p2), run_time=0.5)
+        scene.play(Create(self.poly_eval3), Indicate(self.p3), run_time=0.5)
         scene.play(Create(self.dots_poly_eval), run_time=0.5)
+        scene.wait(0.7)
 
         self.new_subsection(scene, "vector commitment", "data/sound/e6/slide1-2b.mp3")
 

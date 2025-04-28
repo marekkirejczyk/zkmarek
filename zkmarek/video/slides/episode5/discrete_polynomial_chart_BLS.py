@@ -87,11 +87,11 @@ class PolynomialOnCurve(VGroup):
     
     def add_xaxis_label(self, x, label):
         label = MathTex(label, color=PRIMARY_COLOR)
-        label.move_to(self.ax.coords_to_point(x, -3))
+        label.move_to(self.ax.coords_to_point(x, -9))
         self.add(label)
         return label
     
     def add_yaxis_label(self, y, label):
         label = MathTex(label, color=PRIMARY_COLOR)
-        label.move_to(self.ax.coords_to_point(-5.5, y))
+        label.move_to(self.ax.coords_to_point(-9, y))
         self.add(label)

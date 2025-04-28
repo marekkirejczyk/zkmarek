@@ -493,7 +493,7 @@ class Recap(SlideBase):
             fill_opacity=0.2,
             stroke_width = 0.0
         ).scale(0.27).shift(DOWN*0.12)
-        kzg = Text("kzg", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=32).move_to(envelope.get_center())
+        kzg = Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=32).move_to(envelope.get_center())
         envelope = VGroup(envelope, envelope_flap_closed, kzg).shift(LEFT*2+UP)
         person = ImageMobject("data/images/person.png").scale(0.7).shift(LEFT*3)
         person2 = ImageMobject("data/images/person_blue.png").scale(0.7).shift(RIGHT*3)
