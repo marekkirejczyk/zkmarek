@@ -137,7 +137,7 @@ class EllipticCurves(SlideBase):
             .shift(UP * 0.2+LEFT*0.1)
         )
         self.q = (
-            MathTex(r"{{q}} \approx 2^{253}", color=SECONDARY_COLOR, font_size=32)
+            MathTex(r"{{q}} \approx 2^{253}", color=PRIMARY_COLOR, font_size=32)
             .next_to(self.chart_scalar, RIGHT, buff=0.0).scale(0.7)
         )
         self.bytes_p2 = MathTex(
@@ -205,7 +205,7 @@ class EllipticCurves(SlideBase):
         )
 
         self.point_to_generator = self.chart_ec.get_point(FieldElement(4, 137))
-        self.circle_gen = Circle(radius=0.3, color=SECONDARY_COLOR).move_to(
+        self.circle_gen = Circle(radius=0.15, color=SECONDARY_COLOR).move_to(
             self.point_to_generator.get_center()
         )
         self.point_to_generator_label = MathTex(
@@ -255,16 +255,15 @@ class EllipticCurves(SlideBase):
 
         self.new_subsection(scene, "48 bytes", "data/sound/e7/slide2-4.mp3")
         scene.play(self.dot_48b.animate.set_color(SECONDARY_COLOR), run_time=0.5)
-        value_at_4 = poly(FieldElement(50, 137))
         self.labelx0 = self.chart_ec.add_xaxis_label(FieldElement(50, 137).value, r"x_0")
-        self.labely0 = self.chart_ec.add_yaxis_label(value_at_4.value, r"y_0")
+        self.labely0 = self.chart_ec.add_yaxis_label(FieldElement(32, 137).value, r"y_0")
         
         scene.wait(0.5)
         scene.play(
-            Indicate(self.chart_ec.labels[0], color=SECONDARY_COLOR), FadeIn(self.labelx0), run_time=0.7
+            Indicate(self.chart_ec.labels[0], color=SECONDARY_COLOR), run_time=0.7
         )
         scene.play(
-            Indicate(self.chart_ec.labels[1], color=SECONDARY_COLOR), FadeIn(self.labely0), run_time=0.7
+            Indicate(self.chart_ec.labels[1], color=SECONDARY_COLOR), run_time=0.7
         )
         scene.wait(0.6)
         scene.play(FadeIn(self.bytes_p2), FadeOut(self.dot_48b))
@@ -289,7 +288,7 @@ class EllipticCurves(SlideBase):
         self.formula_bls.generate_target()
         self.formula_bls.target.next_to(self.chart_ec.target, DOWN, buff=0.3)
         self.p.generate_target()
-        self.p.target.next_to(self.chart_ec.target, LEFT, buff=0.1).shift(UP * 0.2)
+        self.p.target.next_to(self.chart_ec.target, LEFT, buff=0.0).shift(UP * 0.2+RIGHT*0.1)
         self.bytes_p2.generate_target()
         self.bytes_p2.target.next_to(self.p.target, DOWN)
     
@@ -369,12 +368,12 @@ class EllipticCurves(SlideBase):
         scene.play(MoveToTarget(self.all_mobjects), run_time=1)
         self.pairing_def.next_to(self.all_mobjects, UP, buff=1.2)
         self.point_to_generator2 = self.chart_bander.get_point(FieldElement(10, 137))
-        self.circle_gen2 = Circle(radius=0.3, color=SECONDARY_COLOR).move_to(
+        self.circle_gen2 = Circle(radius=0.15, color=SECONDARY_COLOR).move_to(
             self.point_to_generator2.get_center()
-        )
+        ).scale(0.7)
         self.point_to_generator_label2 = MathTex(
             r"{{G_2 \cdot k}}", color=PRIMARY_COLOR, font_size=32
-        ).next_to(self.point_to_generator2, RIGHT, buff=0.5)
+        ).next_to(self.point_to_generator2, RIGHT, buff=0.35)
         self.chart_scalar_Fq.move_to(
             self.chart_scalar.get_center())
         self.q.move_to(self.r.get_center())

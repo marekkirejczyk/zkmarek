@@ -183,7 +183,7 @@ class Recap(SlideBase):
             RIGHT * 0.75
         )
         balance_text = Text(
-            "balance", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18
+            "value", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18
         ).move_to(balance_rectangle.get_center())
         self.balance = VGroup(balance_rectangle, balance_text)
 
