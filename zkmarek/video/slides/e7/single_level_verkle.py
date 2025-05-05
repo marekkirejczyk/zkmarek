@@ -13,7 +13,8 @@ class SingleLevelVerkleTree(SlideBase):
     def construct(self):
         self.title_label = Text("Single level Verkle tree", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size=40).to_edge(UP)
         
-        self.sixteen_element_vector = Text("8375471035773653", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.sixteen_element_vector = Text("8375471035643653", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+
         rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
         rectangles_of_values = [rectangle.copy() for _ in range(16)]
         self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.1)
@@ -24,19 +25,15 @@ class SingleLevelVerkleTree(SlideBase):
         self.animate_polynomial()
         values = [
             (0, 8), (1, 3), (2, 7), (3, 5), (4, 4), (5, 7), (6, 1), (7, 0),
-            (8, 3), (9, 5), (10, 7), (11, 7), (12, 3), (13, 6), (14, 5), (15, 3)
+            (8, 3), (9, 5), (10, 6), (11, 4), (12, -6), (13, -17), (14, -42), (15, -50)
         ]
+        self.dots = []
         for i, (x, y) in enumerate(values):
             tracker = ValueTracker(x)
             curve = Curve.from_x(tracker.get_value())
             dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve)
+            self.dots.append(dot)
     
-        # if i == 1:
-        #     dot.label.shift(LEFT * 0.1)
-        # elif i == 2:
-        #     dot.label.shift(LEFT * 0.3 + DOWN * 0.3)
-        self.points = []
-        self.points.append(dot)
         self.vector_values = VGroup(self.sixteen_element_vector, self.rectangles_values)
         
         self.prover = ImageMobject("data/images/person_blue.png").scale(0.4).to_edge(LEFT).shift(UP*1.5)
@@ -52,7 +49,7 @@ class SingleLevelVerkleTree(SlideBase):
         
         self.commitment = Text("C", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 30).move_to(self.envelope.get_center())
         
-        self.verifier = ImageMobject("data/images/person.png").scale(0.4).to_edge(RIGHT).shift(UP*1.5)
+        self.verifier = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
         
         self.proof = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 30).next_to(self.verifier, DOWN, buff = 0.5)
         self.opening = MathTex(r"{{a_6}} = 1", color = PRIMARY_COLOR, font_size = 30).next_to(self.proof, DOWN, buff = 0.5)
@@ -67,11 +64,22 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(MoveToTarget(self.vector_values), run_time=1)
         scene.play(Create(self.new_axes), run_time=2)
         scene.wait(1)
-        scene.play(TransformMatchingShapes(self.sixteen_element_vector.copy(), *self.points))
+        values_y = [8, 3, 7, 5, 4, 7, 1, 0, 3, 5, 5.5, 4.2, -6, -17, -42, -50]
+        for i in range(16):
+            dot = self.dots[i]
+            dot.move_to(self.new_axes.c2p(i, values_y[i]*0.3)).shift(RIGHT*0.45)
+            if i == 15:
+                dot.shift(RIGHT*0.1)
+            if i == 13:
+                dot.shift(DOWN*0.15+RIGHT*0.05)
+            if i == 10 or i == 11 or i == 12:
+                dot.shift(RIGHT*0.05)
+            # dot.set_color(SECONDARY_COLOR)
+            scene.play(Create(dot.dot), run_time=0.5)
         scene.wait(1)
         scene.play(Create(self.polynomial_graph), run_time=1.5)
         scene.wait(2)
-        scene.play(FadeOut(self.polynomial_chart), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
+        scene.play(FadeOut(self.polynomial_chart, *self.dots), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
         scene.wait(1)
         scene.play(Create(self.commitment))
         
@@ -120,22 +128,9 @@ class SingleLevelVerkleTree(SlideBase):
         
         
     def animate_polynomial(self):
-        self.new_axes4096 = Axes(
-            x_range=[-0.5, 15.5, 1],
-            y_range=[-1000, 1100, 500],
-            x_length=7,
-            axis_config={
-                "include_numbers": True,
-                "color": PRIMARY_COLOR,
-                "decimal_number_config": {
-                    "color": PRIMARY_COLOR,
-                    "num_decimal_places": 0
-                }
-            }
-        )
         self.new_axes = Axes(
             x_range=[-0.5, 15.5, 1],
-            y_range=[-1000, 1100, 500],
+            y_range=[-22, 10, 500],
             x_length=7,
             axis_config={
                 "include_numbers": True,
@@ -147,9 +142,7 @@ class SingleLevelVerkleTree(SlideBase):
             }
         ).scale(0.7)
         
-        self.new_axes.scale(0.7)
-        self.new_axes[0].shift(UP)
-        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: 4.26713027e-09 * x ** (15) 
+        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (4.26713027e-09 * x ** (15) 
                                                                   -5.00493029e-07 * x ** (14) +  2.67032132e-05 * x ** (13) 
                                                                   -8.57314665e-04* x ** (12) +1.84604634e-02 * x ** (11) 
                                                                   -2.81249901e-01* x ** (10) +  3.11615153e+00 * x ** (9) 
@@ -157,7 +150,7 @@ class SingleLevelVerkleTree(SlideBase):
                                                                   -6.66027523e+02 * x ** (6) +  2.07111066e+03 * x ** (5) 
                                                                   -4.40664678e+03 * x ** (4) +5.99848486e+03 * x ** (3) 
                                                                   -4.60965478e+03 * x ** (2) + 1.47784469e+03 * x ** (1)
-                                                                  + 7.99999698e+00 * x ** (0) - y, color=SECONDARY_COLOR)
+                                                                  + 7.99999698e+00 * x ** (0))*0.3 - y, color=SECONDARY_COLOR)
         
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
         

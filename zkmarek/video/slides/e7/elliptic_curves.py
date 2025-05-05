@@ -21,6 +21,7 @@ from manim import (
     Polygon,
     rate_functions,
     Line,
+    Axes,
 )
 from zkmarek.video.constant import (
     PRIMARY_COLOR,
@@ -38,7 +39,6 @@ from zkmarek.crypto.weierstrass_curve import BanderSnatch
 from zkmarek.video.mobjects.continuous_elliptic_chart import ContinuousEllipticChart
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e7.curve import Curve
-from zkmarek.video.slides.e7.single_level_verkle import SingleLevelVerkleTree
 
 class EllipticCurves(SlideBase):
     def __init__(self) -> None:
@@ -101,6 +101,7 @@ class EllipticCurves(SlideBase):
             self.bytes_of_el, LEFT, buff=0.1
         )
         self.bytes_of_el.next_to(self.r, RIGHT, buff = 0.7)
+        self.bytes_of_el = VGroup(self.sim_32, self.bytes_of_el)
         self.point_to_generator = self.chart_ec.get_point(FieldElement(4, 137))
         self.circle_gen = Circle(radius=0.15, color=SECONDARY_COLOR).move_to(
             self.point_to_generator.get_center()
@@ -116,8 +117,7 @@ class EllipticCurves(SlideBase):
             color=PRIMARY_COLOR,
             font_size=36,
         )
-        self.slide = SingleLevelVerkleTree()
-        self.slide.animate_polynomial()
+        self.animate_polynomial()
         values = [
             (0, 8), (1, 3), (2, 7), (3, 5), (4, 4), (5, 7), (6, 1), (7, 0),
             (8, 3), (9, 5), (10, 7), (11, 7), (12, 3), (13, 6), (14, 5), (15, 3)
@@ -125,15 +125,15 @@ class EllipticCurves(SlideBase):
         for i, (x, y) in enumerate(values):
             tracker = ValueTracker(x)
             curve = Curve.from_x(tracker.get_value())
-            dot = DotOnCurve(self.slide.new_axes, f"({{{x}}}, {{{y}}})", curve)
+            dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve)
     
         self.dots = []
         self.dots.append(dot)
-        self.envelope = RoundedRectangle(width = 8 * 0.3, height = 2 * 0.3, fill_opacity = 0.3, stroke_width = 0.0, corner_radius=0.1).set_color(PRIMARY_COLOR)
+        self.envelope = RoundedRectangle(width = 8 * 0.3, height = 4 * 0.3, fill_opacity = 0.3, stroke_width = 0.0, corner_radius=0.1).set_color(PRIMARY_COLOR)
         self.envelope_flap_closed = Polygon(
             [-4.3, 1, 0],
             [4.3, 1, 0],
-            [0, -0.6, 0],
+            [0, -1.6, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
             stroke_width = 0.0
@@ -151,10 +151,10 @@ class EllipticCurves(SlideBase):
         self.point_to_generator2 = self.chart_ec.get_point(FieldElement(51, 137))
         self.circle_gen2 = Circle(radius=0.15, color=PRIMARY_COLOR).move_to(
             self.point_to_generator2.get_center()
-        ).scale(0.7)
+        )
         self.point_to_generator_label2 = MathTex(
             r"{{G_2 \cdot k'}}", color=PRIMARY_COLOR, font_size=32
-        ).next_to(self.point_to_generator2, RIGHT, buff=0.35)
+        ).next_to(self.point_to_generator2, RIGHT, buff=0.2)
         
         self.scalar_Fr = MathTex(r"k\in F_r", font_size = 40).shift(RIGHT*3+UP*1.5)
         self.scalar_Fq = MathTex(r"k'\in F_q", font_size = 40).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(DOWN)
@@ -176,23 +176,23 @@ class EllipticCurves(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "kzg commitment", "data/sound/e7/slide2-1.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
-        scene.play(Create(self.slide.new_axes), run_time=1)
+        scene.play(Create(self.new_axes), run_time=1)
         for dot in self.dots:
             scene.play(Create(dot), run_time=0.1)
-        scene.play(Create(self.slide.polynomial_graph), run_time=1.5)
+        scene.play(Create(self.polynomial_graph), run_time=1.5)
         scene.play(FadeIn(self.prover), run_time=0.5)
         scene.play(FadeIn(self.verifier), run_time=0.5)
-        scene.play(self.slide.polynomial_chart.animate.set_opacity(0.3).scale(0.1),
+        scene.play(self.polynomial_chart.animate.set_opacity(0.3).scale(0.1),
                    FadeIn(self.envelope, self.envelope_flap_closed),
                    *[FadeOut(dot) for dot in self.dots], run_time=1)
-        scene.play(FadeOut(self.slide.polynomial_chart), run_time=0.5)
+        scene.play(FadeOut(self.polynomial_chart), run_time=0.5)
                
         self.new_subsection(scene, "BLS12-381 -> continuous -> discrete", "data/sound/e7/slide2-2.mp3")
         scene.play(FadeOut(self.verifier, self.prover, self.envelope, self.envelope_flap_closed), run_time=0.8)
         scene.wait(0.2)
         scene.play(MoveToTarget(self.blob, rate_func = rate_functions.ease_out_bounce, run_time=1))
-        
-        scene.play(Create(self.chart_ec_continuous), FadeIn(self.curve_ec), run_time=2)
+        scene.wait(0.5)
+        scene.play(Create(self.chart_ec_continuous), FadeIn(self.curve_ec), run_time=3.5)
         scene.wait(4)
         self.chart_ec.gen_points()
         scene.play(FadeOut(self.chart_ec_continuous), Create(self.chart_ec), run_time=1)
@@ -230,8 +230,8 @@ class EllipticCurves(SlideBase):
         scene.play(FadeOut(self.polynomial_evaluations, self.pairings, self.scalar_Fq, self.scalar_Fr), run_tim=0.2)
         self.chart_ec.add_xaxis_label(FieldElement(50, 137).value, r"x_0")
         self.chart_ec.add_yaxis_label(FieldElement(32, 137).value, r"y_0")
-        self.chart_ec.animate_create_vertical_line(scene, FieldElement(50, 137).value, FieldElement(32, 137).value)
-        self.chart_ec.animate_create_horizontal_line(scene, FieldElement(32, 137).value, FieldElement(0, 137).value, FieldElement(50, 137).value)
+        line1 = self.chart_ec.animate_create_vertical_line(scene, FieldElement(50, 137).value, FieldElement(32, 137).value)
+        line2 = self.chart_ec.animate_create_horizontal_line(scene, FieldElement(32, 137).value, FieldElement(0, 137).value, FieldElement(50, 137).value)
         scene.play(Write(self.p), run_time=0.7)
         scene.play(Write(self.bytes_p2), run_time=0.7)
         scene.wait(2)
@@ -249,8 +249,8 @@ class EllipticCurves(SlideBase):
         scene.play(Create(self.cross_out_line), run_time=0.7)
         scene.wait(1)
         scene.play(FadeOut(self.cross_out_line, self.kzg), run_time=0.7) 
-        self.ipa.next_to(self.chart_ec, RIGHT, buff = 0.4).shift(UP*0.5)
-        self.ipa2.next_to(self.chart_ec, RIGHT, buff = 0.4).shift(UP*0.5)
+        self.ipa.next_to(self.chart_ec, RIGHT, buff = 0.1).shift(UP*0.5)
+        self.ipa2.next_to(self.chart_ec, RIGHT, buff = 0.1).shift(UP*0.5)
         scene.play(Write(self.ipa), run_time=0.7)
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.ipa, self.ipa2), run_time=0.7)
@@ -268,15 +268,19 @@ class EllipticCurves(SlideBase):
         scene.play(FadeIn(self.thumb_up), run_time=0.7)
         scene.wait(1)
         scene.play(Write(self.pairing_operatio_bander), run_time=0.7)
-        scene.wait(1)
+        scene.wait(2.5)
+        scene.play(Indicate(self.pairing_operatio_bander, color = SECONDARY_COLOR), run_time=1)
         
         self.new_subsection(scene, "same scalar field", "data/sound/e7/slide2-7.mp3")
         self.chart_bander.generate_target()
+        self.curve_ec_bander.generate_target()
         self.chart_whole.generate_target()
         self.chart_bander.target.scale(0.7).shift(RIGHT)
+        self.curve_ec_bander.target.scale(0.7).shift(RIGHT)
         self.chart_whole.target.scale(0.7).shift(LEFT)
+        scene.play(FadeOut(self.pairing_operation_bls, self.pairing_operatio_bander, self.thumb_up, line1, line2), run_time=0.5)
         scene.wait(1)
-        scene.play(MoveToTarget(self.chart_bander), MoveToTarget(self.chart_whole), run_time=1)
+        scene.play(MoveToTarget(self.chart_bander), MoveToTarget(self.chart_whole), MoveToTarget(self.curve_ec_bander), run_time=1)
         scene.wait(1)
         self.r.move_to(ORIGIN)
         self.bytes_of_el.next_to(self.r, DOWN, buff = 0.7)
@@ -288,10 +292,45 @@ class EllipticCurves(SlideBase):
         scene.play(Indicate(self.r, color = SECONDARY_COLOR), run_time=1)
         scene.play(Indicate(self.bytes_of_el, color = SECONDARY_COLOR), run_time=1)
         scene.wait(1)
-        scene.play(Indicate(self.chart_ec, color = SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(self.chart_whole, color = SECONDARY_COLOR), run_time=1)
         scene.wait(3.5)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.chart_bander, self.chart_ec, self.curve_ec, self.curve_ec_bander,
+        scene.play(FadeOut(self.title_label, self.chart_bander, self.chart_whole, self.curve_ec_bander,
                            self.r, self.bytes_of_el), run_time=0.5)
 
+      
+    def animate_polynomial(self):
+        self.new_axes = Axes(
+            x_range=[-0.5, 15.5, 1],
+            y_range=[-1000, 1100, 500],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        ).scale(0.7)
+        
+        self.new_axes.scale(0.7)
+        # self.new_axes[0].shift(UP)
+        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: 4.26713027e-09 * x ** (15) 
+                                                                  -5.00493029e-07 * x ** (14) +  2.67032132e-05 * x ** (13) 
+                                                                  -8.57314665e-04* x ** (12) +1.84604634e-02 * x ** (11) 
+                                                                  -2.81249901e-01* x ** (10) +  3.11615153e+00 * x ** (9) 
+                                                                  -2.54062977e+01 * x ** (8) +1.52442624e+02 * x ** (7) 
+                                                                  -6.66027523e+02 * x ** (6) +  2.07111066e+03 * x ** (5) 
+                                                                  -4.40664678e+03 * x ** (4) +5.99848486e+03 * x ** (3) 
+                                                                  -4.60965478e+03 * x ** (2) + 1.47784469e+03 * x ** (1)
+                                                                  + 7.99999698e+00 * x ** (0) - y, color=SECONDARY_COLOR)
+        
+        self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
+        
+        
+        
+
+
+        
