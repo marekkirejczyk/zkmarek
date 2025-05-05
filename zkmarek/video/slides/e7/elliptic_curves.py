@@ -148,7 +148,7 @@ class EllipticCurves(SlideBase):
         )
         self.blob.generate_target()
         self.blob.target.next_to(self.chart_ec_continuous, LEFT + UP * 0.2, buff=0.1).shift(LEFT * 0.8 + DOWN)
-        self.point_to_generator2 = self.chart_ec.get_point(FieldElement(3, 137))
+        self.point_to_generator2 = self.chart_ec.get_point(FieldElement(51, 137))
         self.circle_gen2 = Circle(radius=0.15, color=PRIMARY_COLOR).move_to(
             self.point_to_generator2.get_center()
         ).scale(0.7)
@@ -184,7 +184,7 @@ class EllipticCurves(SlideBase):
         scene.play(FadeIn(self.verifier), run_time=0.5)
         scene.play(self.slide.polynomial_chart.animate.set_opacity(0.3).scale(0.1),
                    FadeIn(self.envelope, self.envelope_flap_closed),
-                   FadeOut(*self.points), run_time=1)
+                   *[FadeOut(dot) for dot in self.dots], run_time=1)
         scene.play(FadeOut(self.slide.polynomial_chart), run_time=0.5)
                
         self.new_subsection(scene, "BLS12-381 -> continuous -> discrete", "data/sound/e7/slide2-2.mp3")
