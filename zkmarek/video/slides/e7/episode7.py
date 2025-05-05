@@ -15,8 +15,8 @@ EPISODE7 = [
     Previously(),
     FullVideos(),
     TitleSlide("Elliptic curves", sound = "data/sound/e7/slide2-0.mp3", 
-               pre_wait_time=1, wait_time=2, subtitle="in the Verkle trees", wait_time_for_subtitle=3),
+               wait_time=2, subtitle="in the Verkle trees", wait_time_for_subtitle=1),
     EllipticCurves(),
-    TitleSlide("Verkle trees", sound = "data/sound/e7/slide2-10.mp3", wait_time=2),
+    TitleSlide("Verkle trees", sound = "data/sound/e7/slide2-9.mp3", wait_time=2),
     # SingleLevelVerkleTree(),
 ]
