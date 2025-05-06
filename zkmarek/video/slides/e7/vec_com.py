@@ -377,15 +377,15 @@ class Previously(SlideBase):
         scene.play(Indicate(self.opening[4], color=GREEN_E))
         scene.wait(1.3)
         self.polynomial_chart.animate_shift_dots_with_fade(scene, self.y.value)
+        self.polynomial_chart.remove(self.line_z)
+        self.polynomial_chart.remove(self.line_correct_y)
+        self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.play(
             Indicate(self.opening[1], color=GREEN_E),
             TransformMatchingShapes(
                 self.polynomial_label, self.polynomial_opening_label
             ),
         )
-        self.polynomial_chart.remove(self.line_z)
-        self.polynomial_chart.remove(self.line_correct_y)
-        self.polynomial_chart.animate_shift_dots_wrap_fix(scene, self.y.value)
         scene.wait(0.6)
 
         self.new_subsection(scene, "roots", "data/sound/e6/slide1-0d.mp3")
@@ -418,8 +418,12 @@ class Previously(SlideBase):
         scene.play(Indicate(self.proof, color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
         scene.wait(1.8)
         scene.play(Indicate(self.opening[0:3], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
-        scene.wait(1.3)
+        scene.wait(1.8)
         scene.play(Indicate(self.opening[4], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
+        scene.wait(1)
+        self.pairing_eqn = MathTex(r"e({{G_1}}, {{G_2}})\rightarrow {{G_T}}", color=SECONDARY_COLOR, font_size=30).next_to(self.quotient_deriviation_3, DOWN, buff = 1.0)
+        scene.play(Write(self.pairing_eqn))
+        scene.wait(1)
 
         self.new_subsection(scene, "real data", "data/sound/e6/slide1-2.mp3")
         scene.wait(2.5)
@@ -432,6 +436,7 @@ class Previously(SlideBase):
                 self.polynomial_opening_label,
                 self.opening2,
                 self.opening3,
+                self.pairing_eqn,
             ),
             run_time=0.7,
         )

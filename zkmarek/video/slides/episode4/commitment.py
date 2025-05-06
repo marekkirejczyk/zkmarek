@@ -247,7 +247,7 @@ class Commitment(SlideBase):
         scene.play(FadeIn(self.commiter, self.commiter_label, self.bubble_opening, self.verifier, self.verifier_label, self.chart, 
                  self.envelope_body_closed, self.envelope_flap_closed, text, rectangle), run_time=0.3)
         scene.play(FadeIn(tail_verifier, bubble_verifier, speech_text_verifier), run_time=0.3)
-        scene.wait(0.1)
+        scene.wait(0.8)
         scene.play(FadeIn(self.bubble_committer, self.tail), Write(self.opening), run_time=0.5)
         scene.wait(1)
         scene.play(FadeOut(self.commiter, self.commiter_label, self.bubble_opening, self.verifier, self.verifier_label, self.chart, 

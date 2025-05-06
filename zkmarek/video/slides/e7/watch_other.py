@@ -20,7 +20,7 @@ class FullVideos(SlideBase):
         self.animate_miniatures(scene)
         
     def animate_miniatures(self, scene):
-        self.slide1.animate_miniature3(scene)
         self.slide2.animate_miniature2(scene)
+        self.slide1.animate_miniature3(scene)
         self.slide3.animate_miniature2(scene)
         

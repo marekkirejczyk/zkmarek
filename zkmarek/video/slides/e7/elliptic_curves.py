@@ -224,15 +224,16 @@ class EllipticCurves(SlideBase):
         scene.play(FadeOut(self.polynomial_evaluations, self.pairings, self.scalar_Fq, self.scalar_Fr), run_tim=0.2)
         self.chart_ec.add_xaxis_label(FieldElement(50, 137).value, r"x_0")
         self.chart_ec.add_yaxis_label(FieldElement(32, 137).value, r"y_0")
-        line1 = self.chart_ec.animate_create_vertical_line(scene, FieldElement(50, 137).value, FieldElement(32, 137).value)
-        line2 = self.chart_ec.animate_create_horizontal_line(scene, FieldElement(32, 137).value, FieldElement(0, 137).value, FieldElement(50, 137).value)
+        line1 = self.chart_ec.animate_create_vertical_line(scene, FieldElement(50, 137).value, FieldElement(32, 137).value, run_time=0.4)
+        line2 = self.chart_ec.animate_create_horizontal_line(scene, FieldElement(32, 137).value, FieldElement(0, 137).value, FieldElement(50, 137).value, run_time=0.4)
         scene.play(Write(self.p), run_time=0.7)
+        scene.wait(1)
         scene.play(Write(self.bytes_p2), run_time=0.7)
-        scene.wait(2)
+        scene.wait(4)
         scene.play(Write(self.r), run_time=0.7)
-        scene.wait(0.6)
+        scene.wait(1)
         scene.play(Write(self.bytes_of_el), run_time=0.7)
-        scene.wait(2.6)
+        scene.wait(1)
     
         self.new_subsection(scene, "Not KZG -> IPA", "data/sound/e7/slide2-5.mp3")
         # scene.play(FadeOut(label_x, label_y, line1, line2), run_time=0.5)
@@ -297,7 +298,7 @@ class EllipticCurves(SlideBase):
     def animate_polynomial(self):
         self.new_axes = Axes(
             x_range=[-0.5, 15.5, 1],
-            y_range=[-22, 10, 500],
+            y_range=[-3, 90, 500],
             x_length=7,
             axis_config={
                 "include_numbers": True,
@@ -309,16 +310,19 @@ class EllipticCurves(SlideBase):
             }
         ).scale(0.7)
         
-        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (4.26713027e-09 * x ** (15) 
-                                                                  -5.00493029e-07 * x ** (14) +  2.67032132e-05 * x ** (13) 
-                                                                  -8.57314665e-04* x ** (12) +1.84604634e-02 * x ** (11) 
-                                                                  -2.81249901e-01* x ** (10) +  3.11615153e+00 * x ** (9) 
-                                                                  -2.54062977e+01 * x ** (8) +1.52442624e+02 * x ** (7) 
-                                                                  -6.66027523e+02 * x ** (6) +  2.07111066e+03 * x ** (5) 
-                                                                  -4.40664678e+03 * x ** (4) +5.99848486e+03 * x ** (3) 
-                                                                  -4.60965478e+03 * x ** (2) + 1.47784469e+03 * x ** (1)
-                                                                  + 7.99999698e+00 * x ** (0))*0.3 - y, color=SECONDARY_COLOR)
+        # self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (4.26713027e-09 * x ** (15) 
+        #                                                           -5.00493029e-07 * x ** (14) +  2.67032132e-05 * x ** (13) 
+        #                                                           -8.57314665e-04* x ** (12) +1.84604634e-02 * x ** (11) 
+        #                                                           -2.81249901e-01* x ** (10) +  3.11615153e+00 * x ** (9) 
+        #                                                           -2.54062977e+01 * x ** (8) +1.52442624e+02 * x ** (7) 
+        #                                                           -6.66027523e+02 * x ** (6) +  2.07111066e+03 * x ** (5) 
+        #                                                           -4.40664678e+03 * x ** (4) +5.99848486e+03 * x ** (3) 
+        #                                                           -4.60965478e+03 * x ** (2) + 1.47784469e+03 * x ** (1)
+        #                                                           + 7.99999698e+00 * x ** (0))*0.3 - y, color=SECONDARY_COLOR)
         
+        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
+                                                                  -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
+                                                                  +4.2790892673006296 * x ** (0)) - y, color=SECONDARY_COLOR)
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
         
         

@@ -70,19 +70,18 @@ class PolynomialOnCurve(VGroup):
 
 
 
-    def animate_create_vertical_line(self, scene, x, y_top):
+    def animate_create_vertical_line(self, scene, x, y_top, run_time=1):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, y_top)
         line = Line(s, e, color=SECONDARY_COLOR, z_index=0)
-        scene.play(GrowFromPoint(line, point=s))
+        scene.play(GrowFromPoint(line, point=s), run_time=run_time)
         return line
 
-    def animate_create_horizontal_line(self, scene, y, x_left, x_right):
+    def animate_create_horizontal_line(self, scene, y, x_left, x_right, run_time=1):
         s = self.ax.c2p(x_left, y)
         e = self.ax.c2p(x_right, y)
         line = DashedLine(s, e, color=SECONDARY_COLOR, z_index=0)
-        scene.play(GrowFromPoint(line, point=s))
-        scene.wait(1)
+        scene.play(GrowFromPoint(line, point=s), run_time=run_time)
         return line
     
     def add_xaxis_label(self, x, label):
