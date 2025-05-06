@@ -1,6 +1,6 @@
 from manim import (FadeIn, FadeOut, Indicate, MoveToTarget, Write, Create, Text,
                    MathTex, UP, RoundedRectangle, VGroup, RIGHT, DOWN, Axes, LEFT, ValueTracker,
-                   TransformMatchingShapes, ImageMobject, Polygon)
+                   ImageMobject, Polygon)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.e7.curve import Curve
@@ -31,7 +31,7 @@ class SingleLevelVerkleTree(SlideBase):
         for i, (x, y) in enumerate(values):
             tracker = ValueTracker(x)
             curve = Curve.from_x(tracker.get_value())
-            dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve)
+            dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve).dot
             self.dots.append(dot)
     
         self.vector_values = VGroup(self.sixteen_element_vector, self.rectangles_values)
@@ -51,8 +51,8 @@ class SingleLevelVerkleTree(SlideBase):
         
         self.verifier = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
         
-        self.proof = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 30).next_to(self.verifier, DOWN, buff = 0.5)
-        self.opening = MathTex(r"{{a_6}} = 1", color = PRIMARY_COLOR, font_size = 30).next_to(self.proof, DOWN, buff = 0.5)
+        self.proof = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 37).next_to(self.verifier, DOWN, buff = 0.5)
+        self.opening = MathTex(r"{{a_6}} = 1", color = PRIMARY_COLOR, font_size = 37).next_to(self.proof, DOWN, buff = 0.5)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "16 element vector", "data/sound/e7/slide3-1.mp3")
@@ -67,27 +67,26 @@ class SingleLevelVerkleTree(SlideBase):
         values_y = [8, 3, 7, 5, 4, 7, 1, 0, 3, 5, 5.5, 4.2, -6, -17, -42, -50]
         for i in range(16):
             dot = self.dots[i]
-            dot.move_to(self.new_axes.c2p(i, values_y[i]*0.3)).shift(RIGHT*0.45)
-            if i == 15:
-                dot.shift(RIGHT*0.1)
-            if i == 13:
-                dot.shift(DOWN*0.15+RIGHT*0.05)
-            if i == 10 or i == 11 or i == 12:
-                dot.shift(RIGHT*0.05)
-            # dot.set_color(SECONDARY_COLOR)
-            scene.play(Create(dot.dot), run_time=0.5)
+            dot.move_to(self.new_axes.c2p(i, values_y[i]*0.1))
+            if i == 13 or i == 14 or i == 15:
+                dot.shift(DOWN*0.1)
+
+            scene.play(Create(dot), run_time=0.1)
         scene.wait(1)
         scene.play(Create(self.polynomial_graph), run_time=1.5)
         scene.wait(2)
-        scene.play(FadeOut(self.polynomial_chart, *self.dots), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
+        self.chart = VGroup(self.polynomial_chart, *self.dots)
+        scene.play(self.chart.animate.scale(0.1).set_opacity(0.1), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
         scene.wait(1)
-        scene.play(Create(self.commitment))
+        scene.play(Create(self.commitment), FadeOut(self.chart))
         
         self.new_subsection(scene, "number belongs to vector", "data/sound/e7/slide3-1a.mp3")
         scene.play(FadeIn(self.verifier), run_time=0.7)
         scene.wait(1)
-        scene.play(Indicate(self.rectangles_values[6], color = SECONDARY_COLOR), run_time=0.7)
-        scene.play(Indicate(self.rectangles_values, color = SECONDARY_COLOR), run_time=0.7)
+        scene.play(Indicate(self.rectangles_values[6], color = PRIMARY_COLOR),
+                   Indicate(self.sixteen_element_vector[6], color = PRIMARY_COLOR), run_time=0.9)
+        scene.play(Indicate(self.rectangles_values, color = HIGHLIGHT_COLOR),
+                   Indicate(self.sixteen_element_vector, color = HIGHLIGHT_COLOR), run_time=0.9)
         scene.wait(1)
         scene.play(Indicate(self.commitment, color = SECONDARY_COLOR), run_time=0.7)
         scene.play(Write(self.proof), run_time=0.7)
@@ -130,7 +129,7 @@ class SingleLevelVerkleTree(SlideBase):
     def animate_polynomial(self):
         self.new_axes = Axes(
             x_range=[-0.5, 15.5, 1],
-            y_range=[-22, 10, 500],
+            y_range=[-22, 20, 500],
             x_length=7,
             axis_config={
                 "include_numbers": True,
@@ -150,7 +149,7 @@ class SingleLevelVerkleTree(SlideBase):
                                                                   -6.66027523e+02 * x ** (6) +  2.07111066e+03 * x ** (5) 
                                                                   -4.40664678e+03 * x ** (4) +5.99848486e+03 * x ** (3) 
                                                                   -4.60965478e+03 * x ** (2) + 1.47784469e+03 * x ** (1)
-                                                                  + 7.99999698e+00 * x ** (0))*0.3 - y, color=SECONDARY_COLOR)
+                                                                  + 7.99999698e+00 * x ** (0))*0.1 - y, color=SECONDARY_COLOR)
         
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
         
