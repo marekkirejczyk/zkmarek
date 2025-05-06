@@ -27,6 +27,7 @@ from zkmarek.video.constant import (
     PRIMARY_FONT,
     SECONDARY_COLOR,
     HIGHLIGHT_COLOR,
+    HIGHLIGHT2_COLOR,
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode5.discrete_polynomial_chart_BLS import (
@@ -65,7 +66,7 @@ class EllipticCurves(SlideBase):
         self.chart_bander = (
             PolynomialOnCurve(
                 curve=BanderSnatch,
-                dot_color=SECONDARY_COLOR,
+                dot_color=HIGHLIGHT2_COLOR,
                 label="p",
                 include_numbers=False,
             )
@@ -77,6 +78,8 @@ class EllipticCurves(SlideBase):
             MathTex(r"{{p}} \approx 2^{381}", color=HIGHLIGHT_COLOR, font_size=32)
             .shift(UP * 1.5+RIGHT * 3)
         )
+        self.ec_points = Text("EC points", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size=34).next_to(self.p, LEFT, buff = 0.4)
+        
         self.bytes_p2 = MathTex(
             r"\sim {{48}} \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=32
         ).next_to(self.p, RIGHT, buff = 0.7)
@@ -86,12 +89,13 @@ class EllipticCurves(SlideBase):
         ).next_to(self.p, RIGHT, buff = 0.7)
         self.sim_48 = MathTex(r"\sim", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.bytes_p2, LEFT, buff = 0.1)
         self.bytes_p2 = VGroup(self.sim_48, self.bytes_p2)
+        self.scalars = Text("scalars", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size=34).next_to(self.r, LEFT, buff=0.4)
 
         self.curve_ec = Text(
             "BLS12-381", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=34
         ).next_to(self.chart_ec, UP, buff=0.3)
         self.curve_ec_bander = Text(
-            "BanderSnatch", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=34
+            "BanderSnatch", color=HIGHLIGHT2_COLOR, font=PRIMARY_FONT, font_size=34
         )
         self.r = (
             MathTex(r"{{r}} \approx 2^{255}", color=SECONDARY_COLOR, font_size=32)
@@ -228,22 +232,24 @@ class EllipticCurves(SlideBase):
         line2 = self.chart_ec.animate_create_horizontal_line(scene, FieldElement(32, 137).value, FieldElement(0, 137).value, FieldElement(50, 137).value, run_time=0.4)
         scene.play(Write(self.p), run_time=0.7)
         scene.wait(1)
-        scene.play(Write(self.bytes_p2), run_time=0.7)
+        scene.play(Write(self.bytes_p2), Write(self.ec_points), run_time=0.7)
         scene.wait(4)
-        scene.play(Write(self.r), run_time=0.7)
+        scene.play(Write(self.r), Write(self.scalars), run_time=0.7)
         scene.wait(1)
         scene.play(Write(self.bytes_of_el), run_time=0.7)
         scene.wait(1)
     
         self.new_subsection(scene, "Not KZG -> IPA", "data/sound/e7/slide2-5.mp3")
         # scene.play(FadeOut(label_x, label_y, line1, line2), run_time=0.5)
-        scene.play(FadeOut(self.r, self.p, self.bytes_of_el, self.bytes_p2), run_time=0.5)
+        scene.play(FadeOut(self.r, self.p, self.bytes_of_el, self.bytes_p2, self.scalars, self.ec_points), run_time=0.5)
         scene.wait(1)
         scene.play(Write(self.kzg), run_time=0.7)
         scene.wait(1)
         scene.play(Create(self.cross_out_line), run_time=0.7)
         scene.wait(1)
-        scene.play(FadeOut(self.cross_out_line, self.kzg), run_time=0.7) 
+        self.kzg.generate_target()
+        self.kzg.target.next_to(self.chart_ec, LEFT, buff = 0.1)
+        scene.play(FadeOut(self.cross_out_line), MoveToTarget(self.kzg), run_time=0.7) 
         self.ipa.next_to(self.chart_ec, RIGHT, buff = 0.0).shift(UP*0.45+LEFT*0.1)
         self.ipa2.next_to(self.chart_ec, RIGHT, buff = 0.0).shift(UP*0.45+LEFT*0.1)
         scene.play(Write(self.ipa), run_time=0.7)
@@ -252,7 +258,7 @@ class EllipticCurves(SlideBase):
         self.chart_bander.gen_points()
         self.curve_ec_bander.next_to(self.chart_bander, UP, buff=0.3)
         scene.play(Create(self.chart_bander), FadeIn(self.curve_ec_bander), run_time=1)
-        scene.play(FadeOut(self.ipa2), run_time=0.7)
+        # scene.play(FadeOut(self.ipa2), run_time=0.7)
         scene.wait(1)
         
         self.new_subsection(scene, "not pairing friendly", "data/sound/e7/slide2-6.mp3")
@@ -270,12 +276,17 @@ class EllipticCurves(SlideBase):
         self.chart_bander.generate_target()
         self.curve_ec_bander.generate_target()
         self.chart_whole.generate_target()
+        self.kzg.generate_target()
+        self.ipa2.generate_target()
         self.chart_bander.target.scale(0.7).shift(RIGHT)
         self.curve_ec_bander.target.scale(0.7).next_to(self.chart_bander.target, UP, buff=0.3)
         self.chart_whole.target.scale(0.7).shift(LEFT)
+        self.kzg.target.scale(0.7).next_to(self.chart_ec, DOWN, buff = 0.3)
+        self.ipa2.target.scale(0.7).next_to(self.chart_bander, DOWN, buff = 0.3)
         scene.play(FadeOut(self.pairing_operation_bls, self.pairing_operatio_bander, self.thumb_up, line1, line2), run_time=0.5)
         scene.wait(1)
-        scene.play(MoveToTarget(self.chart_bander), MoveToTarget(self.chart_whole), MoveToTarget(self.curve_ec_bander), run_time=1)
+        scene.play(MoveToTarget(self.chart_bander), MoveToTarget(self.chart_whole), 
+                   MoveToTarget(self.curve_ec_bander), MoveToTarget(self.kzg), MoveToTarget(self.ipa2), run_time=1)
         scene.wait(1)
         self.r.move_to(ORIGIN)
         scene.play(FadeIn(self.r), run_time=0.7)
@@ -292,13 +303,13 @@ class EllipticCurves(SlideBase):
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.chart_bander, self.chart_whole, self.curve_ec_bander,
-                           self.r, self.bytes_of_el), run_time=0.5)
+                           self.r, self.bytes_of_el, self.kzg, self.ipa2), run_time=0.5)
 
       
     def animate_polynomial(self):
         self.new_axes = Axes(
             x_range=[-0.5, 15.5, 1],
-            y_range=[-3, 90, 500],
+            y_range=[-3, 90, 30],
             x_length=7,
             axis_config={
                 "include_numbers": True,

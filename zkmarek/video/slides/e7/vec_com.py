@@ -421,7 +421,7 @@ class Previously(SlideBase):
         scene.wait(1.8)
         scene.play(Indicate(self.opening[4], color = SECONDARY_COLOR, scale_factor=1.2), run_time=0.7)
         scene.wait(1)
-        self.pairing_eqn = MathTex(r"e({{G_1}}, {{G_2}})\rightarrow {{G_T}}", color=SECONDARY_COLOR, font_size=30).next_to(self.quotient_deriviation_3, DOWN, buff = 1.0)
+        self.pairing_eqn = MathTex(r"e( {{\pi}}, ({{\tau}} -{{x_0}}) {{\cdot G_2}} ) = e({{C}} - {{y_0}} {{\cdot G_1}}, {{G_2}})", color=SECONDARY_COLOR, font_size=30).next_to(self.quotient_deriviation_3, DOWN, buff = 1.0)
         scene.play(Write(self.pairing_eqn))
         scene.wait(1)
 
