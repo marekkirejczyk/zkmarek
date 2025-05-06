@@ -56,7 +56,7 @@ class SingleLevelVerkleTree(SlideBase):
         
         self.proof = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 37).next_to(self.verifier, DOWN, buff = 0.5)
         self.opening = MathTex(r"{{a_6}} = 1", color = PRIMARY_COLOR, font_size = 37).next_to(self.proof, DOWN, buff = 0.5)
-        self.elliptic_curve_point = Text("EC points", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.envelope, RIGHT, buff = 1.0)
+        self.elliptic_curve_point = Text("EC points", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.envelope, RIGHT, buff = 0.8)
         self.arrow_ec_commitment = Arrow(self.elliptic_curve_point.get_left(), self.envelope.get_right(), 
             color=PRIMARY_COLOR,
             buff=0.2,
@@ -74,9 +74,9 @@ class SingleLevelVerkleTree(SlideBase):
         
         self.dots2048 = Text("...", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 40)
         indeces = [0, 1, 2, 3, 4, 2043, 2044, 2045, 2046, 2047]
-        self.indeces = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in indeces]).arrange(RIGHT, buff=0.1)
+        self.indeces = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 17) for i in indeces]).arrange(RIGHT, buff=0.1)
         indeces256 = [0, 1, 2, 3, 4, 251, 252, 253, 254, 255]
-        self.indeces256 = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in indeces256]).arrange(RIGHT, buff=0.1)
+        self.indeces256 = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 17) for i in indeces256]).arrange(RIGHT, buff=0.1)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "16 element vector", "data/sound/e7/slide3-1.mp3")
@@ -84,7 +84,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(Write(self.sixteen_element_vector), run_time=0.5)
         scene.play(Create(self.rectangles_values), run_time=0.5)
         self.vector_values.generate_target()
-        self.vector_values.target.shift(DOWN*2)
+        self.vector_values.target.shift(DOWN*3)
         scene.play(MoveToTarget(self.vector_values), run_time=1)
         scene.play(Create(self.new_axes), run_time=2)
         scene.wait(1)
@@ -102,7 +102,10 @@ class SingleLevelVerkleTree(SlideBase):
         scene.wait(2)
         self.chart = VGroup(self.polynomial_chart, *self.dots)
         scene.play(self.chart.animate.scale(0.1).set_opacity(0.1), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
-        scene.wait(1)
+        self.vector_values.generate_target()
+        self.vector_values.target.shift(UP)
+        scene.play(MoveToTarget(self.vector_values), run_time=1)
+        
         scene.play(Create(self.commitment), FadeOut(self.chart))
         self.arrows = []
         for i in range(16):
@@ -151,17 +154,17 @@ class SingleLevelVerkleTree(SlideBase):
                        Indicate(self.sixteen_element_vector[i]), run_time=0.1)
             
         scene.play(FadeOut(self.vector_values[0][5:11], self.vector_values[1][5:11]))
-        scene.play(self.vector_values[0][0:5].animate.shift(LEFT*0.4), self.vector_values[1][0:5].animate.shift(LEFT*0.4),
-                   self.vector_values[0][11:].animate.shift(RIGHT*0.4), self.vector_values[1][11:].animate.shift(RIGHT*0.4), run_timr=1)
+        scene.play(self.vector_values[0][0:5].animate.shift(LEFT*0.05), self.vector_values[1][0:5].animate.shift(LEFT*0.05),
+                   self.vector_values[0][11:].animate.shift(RIGHT*0.05), self.vector_values[1][11:].animate.shift(RIGHT*0.05), run_timr=1)
         
-        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0)
+        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*0.8)
         scene.play(Write(self.dots2048), run_time=0.5)
         for i in range(5):
-            self.indeces[i].next_to(self.rectangles_values[i], DOWN, buff = 0.5)
-            self.indeces256[i].next_to(self.rectangles_values[i], DOWN, buff = 0.5).shift(RIGHT*0.1)
+            self.indeces[i].next_to(self.rectangles_values[i], DOWN, buff = 0.3)
+            self.indeces256[i].next_to(self.rectangles_values[i], DOWN, buff = 0.3).shift(RIGHT*0.3)
         for i in range(11, 16):
-            self.indeces[i-6].next_to(self.rectangles_values[i], DOWN, buff = 0.5)
-            self.indeces256[i-6].next_to(self.rectangles_values[i], DOWN, buff = 0.5).shift(LEFT*0.1)
+            self.indeces[i-6].next_to(self.rectangles_values[i], DOWN, buff = 0.3)
+            self.indeces256[i-6].next_to(self.rectangles_values[i], DOWN, buff = 0.3).shift(LEFT*0.3)
             
         scene.play(Write(self.indeces), run_time=0.5)
         scene.play(self.vector_values[0][0:5].animate.shift(RIGHT * 0.3),
@@ -179,21 +182,21 @@ class SingleLevelVerkleTree(SlideBase):
         self.new_subsection(scene, "ETh VT 256", "data/sound/e7/slide3-4.mp3")
         scene.play(FadeOut(blob), run_time=0.5)
         
-        # self.new_subsection(scene, "BLS12-381", "data/sound/e7/slide3-5.mp3")
+        self.new_subsection(scene, "BLS12-381", "data/sound/e7/slide3-5.mp3")
         
         
-        # self.new_subsection(scene, "pi C are 48 B", "data/sound/e7/slide3-5a.mp3")
+        self.new_subsection(scene, "pi C are 48 B", "data/sound/e7/slide3-5a.mp3")
         
-        # self.new_subsection(scene, "vec el < 32", "data/sound/e7/slide3-5b.mp3")
-        
-        
-        # self.new_subsection(scene, "VT struct is different", "data/sound/e7/slide3-5c.mp3")
+        self.new_subsection(scene, "vec el < 32", "data/sound/e7/slide3-5b.mp3")
         
         
-        # self.new_subsection(scene, "11 belongs to level", "data/sound/e7/slide3-6.mp3")
+        self.new_subsection(scene, "VT struct is different", "data/sound/e7/slide3-5c.mp3")
         
         
-        # self.new_subsection(scene, "Commitment, proof, opening, total", "data/sound/e7/slide3-7.mp3")
+        self.new_subsection(scene, "11 belongs to level", "data/sound/e7/slide3-6.mp3")
+        
+        
+        self.new_subsection(scene, "Commitment, proof, opening, total", "data/sound/e7/slide3-7.mp3")
         
         
         
@@ -232,7 +235,7 @@ class SingleLevelVerkleTree(SlideBase):
         self.arrows.append(arrow)
         
     def create_merkle_tree(self, scene):
-        self.merkle = MerkleTree(num_children=2, num_levels=4, include_labels=False).stretch(2, 1).scale(0.3).shift(LEFT*2+UP*3)
+        self.merkle = MerkleTree(num_children=2, num_levels=4, include_labels=False).stretch(2, 1).scale(0.5).shift(LEFT*3+UP*5)
         scene.play(Create(self.merkle), run_time=1.5)
         scene.wait(1)
         self.node_change = self.merkle.get_node(3, 0)

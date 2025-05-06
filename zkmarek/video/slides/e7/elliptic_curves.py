@@ -89,7 +89,6 @@ class EllipticCurves(SlideBase):
         ).next_to(self.p, RIGHT, buff = 0.7)
         self.sim_48 = MathTex(r"\sim", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.bytes_p2, LEFT, buff = 0.1)
         self.bytes_p2 = VGroup(self.sim_48, self.bytes_p2)
-        self.scalars = Text("scalars", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size=34).next_to(self.r, LEFT, buff=0.4)
 
         self.curve_ec = Text(
             "BLS12-381", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=34
@@ -101,6 +100,7 @@ class EllipticCurves(SlideBase):
             MathTex(r"{{r}} \approx 2^{255}", color=SECONDARY_COLOR, font_size=32)
             .next_to(self.p, DOWN, buff = 1.0).shift(DOWN)
         )
+        self.scalars = Text("scalars", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size=34).next_to(self.r, LEFT, buff=0.4)
         self.bytes_of_el = Text("32 B", font=PRIMARY_FONT, font_size=24).set_color(
             SECONDARY_COLOR
         )
