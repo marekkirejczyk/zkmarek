@@ -1,6 +1,6 @@
 from manim import (FadeIn, FadeOut, Indicate, MoveToTarget, Write, Create, Text,
                    MathTex, UP, RoundedRectangle, VGroup, RIGHT, DOWN, Axes, LEFT, ValueTracker,
-                   ImageMobject, Polygon, Arrow, StealthTip, Transform, rate_functions)
+                   ImageMobject, Polygon, Arrow, StealthTip, Transform, rate_functions, TransformMatchingShapes)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.e7.curve import Curve
@@ -19,7 +19,7 @@ class SingleLevelVerkleTree(SlideBase):
         self.sixteen_element_vector = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in sixteen_element_vector]).arrange(RIGHT, buff=0.1)
         rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
         rectangles_of_values = [rectangle.copy() for _ in range(16)]
-        self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.1)
+        self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.2)
         for i in range(16):
             self.sixteen_element_vector[i].move_to(self.rectangles_values[i].get_center())
     
@@ -55,7 +55,9 @@ class SingleLevelVerkleTree(SlideBase):
         self.verifier = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
         
         self.proof = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 37).next_to(self.verifier, DOWN, buff = 0.5)
-        self.opening = MathTex(r"{{a_6}} = 1", color = PRIMARY_COLOR, font_size = 37).next_to(self.proof, DOWN, buff = 0.5)
+        self.opening = MathTex(r"{{a_{12} }} = 55", color = PRIMARY_COLOR, font_size = 37).next_to(self.proof, DOWN, buff = 0.5)
+        self.opening2 = MathTex(r"{{a_{2044} }} = 55", color = PRIMARY_COLOR, font_size = 37).next_to(self.proof, DOWN, buff = 0.5)
+        self.opening3 = MathTex(r"{{a_{252} }} = 55", color = PRIMARY_COLOR, font_size = 37).next_to(self.proof, DOWN, buff = 0.5)
         self.elliptic_curve_point = Text("EC points", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.envelope, RIGHT, buff = 0.8)
         self.arrow_ec_commitment = Arrow(self.elliptic_curve_point.get_left(), self.envelope.get_right(), 
             color=PRIMARY_COLOR,
@@ -101,7 +103,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(Create(self.polynomial_graph), run_time=1.5)
         scene.wait(2)
         self.chart = VGroup(self.polynomial_chart, *self.dots)
-        scene.play(self.chart.animate.scale(0.1).set_opacity(0.1), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
+        scene.play(self.chart.animate.scale(0.1).set_opacity(0.1).move_to(self.envelope.get_center()), FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
         self.vector_values.generate_target()
         self.vector_values.target.shift(UP)
         scene.play(MoveToTarget(self.vector_values), run_time=1)
@@ -109,7 +111,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(Create(self.commitment), FadeOut(self.chart))
         self.arrows = []
         for i in range(16):
-            self.create_arrow(self.envelope, self.rectangles_values[i])
+            self.create_arrow(self.envelope, self.rectangles_values[i], where_to_append=self.arrows)
             
         for i in range(16):
             scene.play(Create(self.arrows[i]), run_time=0.1)
@@ -133,7 +135,7 @@ class SingleLevelVerkleTree(SlideBase):
         
         
         self.new_subsection(scene, "ec points", "data/sound/e7/slide3-2.mp3")
-        scene.wait(2)
+        scene.wait(0.5)
         self.commitment_whole = VGroup(self.envelope, self.envelope_flap_closed, self.commitment)
         scene.play(Indicate(self.commitment_whole, color = HIGHLIGHT_COLOR), run_time=0.5)
         scene.play(Indicate(self.proof, color = HIGHLIGHT2_COLOR), run_time=1)
@@ -153,11 +155,11 @@ class SingleLevelVerkleTree(SlideBase):
             scene.play(Indicate(self.rectangles_values[i], color = SECONDARY_COLOR),
                        Indicate(self.sixteen_element_vector[i]), run_time=0.1)
             
-        scene.play(FadeOut(self.vector_values[0][5:11], self.vector_values[1][5:11]))
+        scene.play(FadeOut(self.vector_values[0][5:11], self.vector_values[1][5:11], *self.arrows[5:11]))
         scene.play(self.vector_values[0][0:5].animate.shift(LEFT*0.05), self.vector_values[1][0:5].animate.shift(LEFT*0.05),
                    self.vector_values[0][11:].animate.shift(RIGHT*0.05), self.vector_values[1][11:].animate.shift(RIGHT*0.05), run_timr=1)
         
-        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*0.8)
+        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*0.75)
         scene.play(Write(self.dots2048), run_time=0.5)
         for i in range(5):
             self.indeces[i].next_to(self.rectangles_values[i], DOWN, buff = 0.3)
@@ -166,23 +168,35 @@ class SingleLevelVerkleTree(SlideBase):
             self.indeces[i-6].next_to(self.rectangles_values[i], DOWN, buff = 0.3)
             self.indeces256[i-6].next_to(self.rectangles_values[i], DOWN, buff = 0.3).shift(LEFT*0.3)
             
-        scene.play(Write(self.indeces), run_time=0.5)
+        scene.play(Write(self.indeces), TransformMatchingShapes(self.opening, self.opening2), run_time=0.5)
+        scene.wait(1)
+        
+        self.new_subsection(scene, "ETh VT 256", "data/sound/e7/slide3-4.mp3")
+        scene.wait(1)
         scene.play(self.vector_values[0][0:5].animate.shift(RIGHT * 0.3),
         self.vector_values[1][0:5].animate.shift(RIGHT * 0.3),
         self.vector_values[0][11:].animate.shift(LEFT * 0.3),
         self.vector_values[1][11:].animate.shift(LEFT * 0.3),
-        Transform(self.indeces, self.indeces256), run_time=1)
+        Transform(self.indeces, self.indeces256),
+        TransformMatchingShapes(self.opening2, self.opening3), run_time=2)
+        self.arrows2 = []
+        for i in range(5):
+            self.create_arrow(self.envelope, self.rectangles_values[i], where_to_append=self.arrows2)
+            
+        for i in range(11, 16):
+            self.create_arrow(self.envelope, self.rectangles_values[i], where_to_append=self.arrows2)
+        scene.play(TransformMatchingShapes(VGroup(*self.arrows[0:5], *self.arrows[11:]), VGroup(*self.arrows2)), run_time=1)
+        
         scene.wait(1)
         blob = ImageMobject("data/images/blob.png").scale(0.3).shift(LEFT*5)
         blob.generate_target()
         blob.target.shift(RIGHT*3)
+        scene.wait(2)
         scene.play(MoveToTarget(blob, rate_func = rate_functions.ease_out_bounce), run_time=2)
         
         
-        self.new_subsection(scene, "ETh VT 256", "data/sound/e7/slide3-4.mp3")
-        scene.play(FadeOut(blob), run_time=0.5)
-        
         self.new_subsection(scene, "BLS12-381", "data/sound/e7/slide3-5.mp3")
+        scene.play(FadeOut(blob), run_time=0.5)
         
         
         self.new_subsection(scene, "pi C are 48 B", "data/sound/e7/slide3-5a.mp3")
@@ -225,17 +239,17 @@ class SingleLevelVerkleTree(SlideBase):
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
         
         
-    def create_arrow(self, start, end):
+    def create_arrow(self, start, end, where_to_append):
         arrow = Arrow(start.get_bottom(), end.get_top(), buff = 0.1, 
             color=PRIMARY_COLOR,
             max_tip_length_to_length_ratio=0.1,
             stroke_width=1.5,
             tip_shape=StealthTip,
             tip_length=0.15,)
-        self.arrows.append(arrow)
+        where_to_append.append(arrow)
         
     def create_merkle_tree(self, scene):
-        self.merkle = MerkleTree(num_children=2, num_levels=4, include_labels=False).stretch(2, 1).scale(0.5).shift(LEFT*3+UP*5)
+        self.merkle = MerkleTree(num_children=2, num_levels=4, include_labels=False).stretch(2, 1).scale(0.15).shift(LEFT*4+UP*4.5)
         scene.play(Create(self.merkle), run_time=1.5)
         scene.wait(1)
         self.node_change = self.merkle.get_node(3, 0)
