@@ -1,0 +1,235 @@
+from manim import (
+    FadeIn,
+    FadeOut,
+    Text,
+    MathTex,
+    Create,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    Write,
+    TransformMatchingShapes,
+    MoveToTarget,
+    Indicate,
+    VGroup,
+    ValueTracker,
+    ImageMobject,
+    Axes,
+    Arrow,
+    StealthTip,
+    Polygon,
+    GrowArrow,
+    RoundedRectangle,
+)
+from manim import BLUE_D, GREEN_E, MAROON_E
+
+from zkmarek.video.constant import (
+    SECONDARY_COLOR,
+    PRIMARY_COLOR,
+    PRIMARY_FONT,
+    HIGHLIGHT_COLOR,
+)
+from zkmarek.video.slides.common.slide_base import SlideBase
+from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
+from zkmarek.video.slides.e6.curve import Curve
+
+
+class PreviouslyVectorCommitment(SlideBase):
+    def __init__(self) -> None:
+        super().__init__("Previously on zkMarek")
+
+    def construct(self):
+        self.title_label = (
+            Text(
+                "Previously on zkMarek...",
+                font=PRIMARY_FONT,
+                color=PRIMARY_COLOR,
+                font_size=40,
+            )
+            .to_edge(UP)
+        )
+        self.prover = (
+            ImageMobject("data/images/person.png")
+            .scale(0.5)
+            .to_edge(LEFT)
+            .shift(RIGHT + UP * 1.5)
+        )
+        self.verifier = (
+            ImageMobject("data/images/person_blue.png")
+            .scale(0.5)
+            .to_edge(RIGHT)
+            .shift(LEFT + UP * 1.5)
+        )
+        self.commiter_label = Text(
+            "Prover", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=27
+        ).next_to(self.prover, DOWN)
+        self.verifier_label = Text(
+            "Verifier", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=27
+        ).next_to(self.verifier, DOWN)
+
+        self.data_points = Text(
+            "data vector", font=PRIMARY_FONT, color=BLUE_D, font_size=35
+        ).shift(UP*2)
+        self.interpolation = Text(
+            "interplolation", font=PRIMARY_FONT, color=GREEN_E, font_size=35
+        ).next_to(self.data_points, DOWN, buff=1.5)
+        self.vector_commitment = Text(
+            "vector commitment", font=PRIMARY_FONT, color=MAROON_E, font_size=35
+        ).next_to(self.interpolation, DOWN, buff=1.5)
+
+        self.arrow_data_interpolation = Arrow(
+            self.data_points.get_bottom(),
+            self.interpolation.get_top(),
+            tip_shape=StealthTip,
+            stroke_width=2,
+            max_tip_length_to_length_ratio=0.15,
+        ).set_color_by_gradient([BLUE_D, GREEN_E])
+        self.arrow_interpolation_vector = Arrow(
+            self.interpolation.get_bottom(),
+            self.vector_commitment.get_top(),
+            color=PRIMARY_COLOR,
+            tip_shape=StealthTip,
+            stroke_width=2,
+            max_tip_length_to_length_ratio=0.15,
+        ).set_color_by_gradient([GREEN_E, MAROON_E])
+
+        self.envelope_body_closed = RoundedRectangle(width = 8, height = 2, 
+            fill_color=PRIMARY_COLOR,
+            fill_opacity=0.3,
+            corner_radius=0.1,
+            stroke_width = 0.0
+        ).scale(0.3)
+
+        self.envelope_flap_closed = Polygon(
+            [-4, 1, 0],
+            [4, 1, 0],
+            [0, -1, 0],
+            fill_color=HIGHLIGHT_COLOR,
+            fill_opacity=0.2,
+            stroke_width = 0.0
+        ).scale(0.3)
+        self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48)
+
+        self.commitment = Text("C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).move_to(self.envelope_body_closed.get_center())
+        
+        sixteen_element_vector = [4, 16, 22, 24, 22, 19, 20, 20, 22, 28, 35, 45, 55, 65, 75, 85]
+        self.sixteen_element_vector = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20) for i in sixteen_element_vector]).arrange(RIGHT, buff=0.05)
+        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.3).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
+        rectangles_of_values = [rectangle.copy() for _ in range(16)]
+        self.rectangles_values = VGroup(*rectangles_of_values).next_to(self.prover, DOWN, buff = 1.5).arrange(RIGHT, buff=0.07).shift(LEFT*3+DOWN*0.3)
+        for i in range(16):
+            self.sixteen_element_vector[i].move_to(self.rectangles_values[i].get_center())
+
+        self.data_vector = VGroup(
+            self.sixteen_element_vector,
+            self.rectangles_values)
+        
+        self.envelope = VGroup(self.envelope_body_closed, self.envelope_body_closed, self.commitment)
+        
+        self.opening = MathTex(r"a_{{{i}}}", color = SECONDARY_COLOR, font_size=30).next_to(self.prover, RIGHT, buff = 1.0)
+        self.proof_pi = MathTex(r"\pi", color = SECONDARY_COLOR, font_size=30).next_to(self.opening, DOWN, buff = 0.2)
+
+    def animate_in(self, scene):
+        self.new_subsection(
+            scene, "kzg commitment scheme", "data/sound/e7/slide1-14.mp3"
+        )
+        scene.play(Write(self.title_label), run_time=0.7)
+        scene.play(FadeIn(self.prover), Write(self.commiter_label), run_time=1)
+        scene.wait(0.5)
+        scene.play(Create(self.data_vector), run_time=0.7)
+        scene.wait(0.5)
+        scene.play(TransformMatchingShapes(self.data_vector.copy(), self.envelope))
+        scene.wait(0.5)
+        self.envelope.generate_target()
+        self.envelope.target.next_to(self.verifier_label, DOWN, buff=0.5)
+        scene.play(MoveToTarget(self.envelope), run_time=1)
+        scene.wait(1)
+
+        self.new_subsection(scene, "proof", "data/sound/e7/slide1-15.mp3")
+        scene.wait(1)
+        scene.play(Write(self.opening), run_time=1)
+        scene.wait(1)
+        scene.play(Write(self.proof_pi), run_time=1)
+        scene.wait(1)
+        self.proof_pi.generate_target()
+        self.proof_pi.target.next_to(self.envelope, DOWN, buff = 0.5)
+        self.opening.generate_target()
+        self.opening.target.next_to(self.proof_pi.target, DOWN, buff = 0.5)
+        scene.play(MoveToTarget(self.opening), MoveToTarget(self.proof_pi), run_time=1)
+        scene.wait(1)
+
+        self.new_subsection(scene, "proof convinces", "data/sound/e7/slide1-16.mp3")
+        scene.play(Indicate(self.proof_pi, color=SECONDARY_COLOR), run_time=1)
+        scene.wait(0.7)
+        scene.play(Indicate(self.verifier, color=SECONDARY_COLOR), run_time=1)
+        scene.wait(0.7)
+        scene.play(Indicate(self.data_vector, color=SECONDARY_COLOR), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.opening, color=SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(self.opening[1], color=SECONDARY_COLOR), run_time=1)
+        
+
+        self.new_subsection(scene, "vector commitment", "data/sound/e7/slide1-17.mp3")
+        self.animate_polynomial()
+        scene.play(Create(self.new_axes), run_time=2)
+        scene.wait(1)
+        values_y = [4, 16, 22, 23, 22, 20, 20, 20, 22, 27.5, 35, 45, 55, 67, 77, 86]
+        self.points_dots = []
+        values = [
+            (0, 4), (1, 16), (2, 22), (3, 23), (4, 22), (5, 20), (6, 20), (7, 20),
+            (8, 22), (9, 28), (10, 35), (11, 45), (12, 55), (13, 66), (14, 76), (15, 85)
+        ]
+        for i, (x, y) in enumerate(values):
+            tracker = ValueTracker(x)
+            curve = Curve.from_x(tracker.get_value())
+            dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve).dot
+            self.points_dots.append(dot)
+            
+        for i in range(16):
+            dot = self.points_dots[i]
+            dot.move_to(self.new_axes.c2p(i, values_y[i]))
+            if i == 13 or i == 14 or i == 15:
+                dot.shift(DOWN*0.1)
+
+            scene.play(Create(dot), run_time=0.1)
+        scene.wait(1)
+        scene.play(Create(self.polynomial_graph), run_time=1.5)
+        self.polynomial = VGroup(self.new_axes, self.polynomial_graph, *self.points_dots)
+        scene.play(self.polynomial.animate.set_opacity(0.1))
+        scene.wait(1)
+        scene.play(Write(self.data_vector), run_time=1)
+        scene.play(GrowArrow(self.arrow_data_interpolation), run_time=1)
+        scene.play(Write(self.interpolation), run_time=1)
+        scene.play(GrowArrow(self.arrow_interpolation_vector), run_time=1)
+        scene.play(Write(self.vector_commitment), run_time=1)
+        scene.wait(1)
+
+     
+    def animate_out(self, scene):
+        scene.play(FadeOut(self.title_label, self.data_vector, self.envelope, self.arrow_data_interpolation, self.arrow_data_interpolation, 
+                           self.opening, self.proof_pi, self.verifier, self.prover, self.polynomial))
+
+    def animate_polynomial(self):
+        self.new_axes = Axes(
+            x_range=[-0.5, 15.5, 1],
+            y_range=[-3, 90, 500],
+            x_length=7,
+            axis_config={
+                "include_numbers": True,
+                "color": PRIMARY_COLOR,
+                "decimal_number_config": {
+                    "color": PRIMARY_COLOR,
+                    "num_decimal_places": 0
+                }
+            }
+        ).scale(0.7)
+        
+        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
+                                                                  -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
+                                                                  +4.2790892673006296 * x ** (0)) - y, color=SECONDARY_COLOR)
+        self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
+        
+
+  
