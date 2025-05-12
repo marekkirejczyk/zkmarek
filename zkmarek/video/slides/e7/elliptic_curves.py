@@ -27,7 +27,6 @@ from zkmarek.video.constant import (
     PRIMARY_FONT,
     SECONDARY_COLOR,
     HIGHLIGHT_COLOR,
-    HIGHLIGHT2_COLOR,
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode5.discrete_polynomial_chart_BLS import (
@@ -71,7 +70,7 @@ class EllipticCurves(SlideBase):
         self.chart_bander = (
             PolynomialOnCurve(
                 curve=BanderSnatch,
-                dot_color=HIGHLIGHT2_COLOR,
+                dot_color=PRIMARY_COLOR,
                 label="p'",
                 include_numbers=False,
             )
@@ -93,7 +92,7 @@ class EllipticCurves(SlideBase):
             "BLS12-381", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=28
         ).next_to(self.chart_ec, UP, buff=0.1)
         self.curve_ec_bander = Text(
-            "BanderSnatch", color=HIGHLIGHT2_COLOR, font=PRIMARY_FONT, font_size=28
+            "BanderSnatch", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=28
         ).next_to(self.chart_bander, UP, buff=0.1)
         self.r = (
             MathTex(r"{{r}} \approx 2^{255}", color=SECONDARY_COLOR, font_size=32)
@@ -105,14 +104,14 @@ class EllipticCurves(SlideBase):
         
         self.bytes_p2 = Text(
             "48 B", color=HIGHLIGHT_COLOR, font_size=24, font = PRIMARY_FONT
-        ).next_to(self.base_field_bls, RIGHT, buff = 0.7)
+        ).next_to(self.base_field_bls, RIGHT, buff = 0.7).shift(UP*0.1)
         self.sim_48 = MathTex(r"\sim", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.bytes_p2, LEFT, buff = 0.1)
         self.bytes_p2 = VGroup(self.sim_48, self.bytes_p2)
         self.scalars = Text("scalars", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size=24).next_to(self.r, LEFT, buff=0.4)
         self.bytes_of_el = Text("32 B", font=PRIMARY_FONT, font_size=24).set_color(
             SECONDARY_COLOR
         )
-        self.bytes_of_el.next_to(self.scalar_Fr, RIGHT, buff = 0.7)
+        self.bytes_of_el.next_to(self.scalar_Fr, RIGHT, buff = 0.7).shift(UP * 0.1)
         self.sim_32 = MathTex(r"<", color=SECONDARY_COLOR, font_size=32).next_to(
             self.bytes_of_el, LEFT, buff=0.1
         )
@@ -182,9 +181,9 @@ class EllipticCurves(SlideBase):
         self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.3)
         
         self.kzg_ipa_table = TableKZGIPA()
-        self.base_field_bander = MathTex(r"F_{p'} \sim 255 \ \mathrm{b}", font_size = 40, color = HIGHLIGHT2_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
-        self.scalar_field_bander = MathTex(r"F_r' \sim 253 \ \mathrm{b}", font_size = 40, color = HIGHLIGHT2_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
-        self.size_base_field_bander = Text("< 32 B", font_size = 25).next_to(self.base_field_bander, RIGHT, buff = 0.1)
+        self.base_field_bander = MathTex(r"F_{p'} \sim 255 \ \mathrm{b}", font_size = 40, color = PRIMARY_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
+        self.scalar_field_bander = MathTex(r"F_r' \sim 253 \ \mathrm{b}", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
+        self.size_base_field_bander = Text("< 32 B", font_size = 25, color = PRIMARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.1)
         self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
         
         self.ipa_proof = MathTex(r"\pi \sim \log_2(n)", color = PRIMARY_COLOR, font_size = 30)

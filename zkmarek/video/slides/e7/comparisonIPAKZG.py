@@ -7,10 +7,10 @@ class TableKZGIPA(VGroup):
 
         vec_commitment_column = ["Commitment C", "Proof pi", "commitment\n   opening" ,
                                  "    use of \n trusted setup", "pairing-based"]
-        kzg_values = ["1 EC point <48 B", "1 EC point < 48 B", "1 scalar field \n element < 32 B", 
+        kzg_values = ["1 EC point <48 B", "1 EC point < 48 B", "  1 scalar field \n element < 32 B", 
                       "Yes", "Yes"]
         
-        ipa_values = ["1 EC point <32 B", "log2(n) EC points", "1 scalar field\n element < 32 B", 
+        ipa_values = ["1 EC point <32 B", "log2(n) EC points", "  1 scalar field\n element < 32 B", 
                       "No", "No"]
 
         cell_width = 2.9
@@ -51,7 +51,7 @@ class TableKZGIPA(VGroup):
             value_cell = key_cell.copy().shift(RIGHT * (cell_width + 0.3))
             vec_cell = key_cell.copy().shift(LEFT * (cell_width + 0.3)).set_color(HIGHLIGHT_COLOR)
 
-            vec_text = Text(vec_column, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(vec_cell)
+            vec_text = Text(vec_column, font=PRIMARY_FONT, font_size=23, color=HIGHLIGHT_COLOR).move_to(vec_cell)
             key_text = Text(key, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(key_cell)
             value_text = Text(value, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(value_cell)
 

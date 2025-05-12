@@ -16,7 +16,7 @@ class FullVideos(SlideBase):
         self.slide3.construct()
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "Full videos", "data/sound/e7/slide1-14.mp3")
+        self.new_subsection(scene, "Full videos", "data/sound/e7/slide1-21.mp3")
         self.animate_miniatures(scene)
         
     def animate_miniatures(self, scene):
