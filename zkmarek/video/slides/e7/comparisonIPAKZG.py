@@ -5,12 +5,12 @@ class TableKZGIPA(VGroup):
     def __init__(self):
         super().__init__()
 
-        vec_commitment_column = ["Commitment C", "Proof pi", "commitment\n   opening" ,
+        vec_commitment_column = ["Commitment", "Proof", "commitment\n   opening" ,
                                  "    use of \n trusted setup", "pairing-based"]
-        kzg_values = ["1 EC point <48 B", "1 EC point < 48 B", "  1 scalar field \n element < 32 B", 
+        kzg_values = ["1 EC point <48 B", "1 EC point < 48 B", "   1 scalar field \n element < 32 B", 
                       "Yes", "Yes"]
         
-        ipa_values = ["1 EC point <32 B", "log2(n) EC points", "  1 scalar field\n element < 32 B", 
+        ipa_values = ["1 EC point <32 B", "log2(n) EC points", "   1 scalar field\n element < 32 B", 
                       "No", "No"]
 
         cell_width = 2.9
@@ -31,7 +31,7 @@ class TableKZGIPA(VGroup):
         )
 
         self.key_header = Text("KZG on BLS12-381", font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR)
-        self.value_header = Text("Pedersen commitments \n IPA on Bandersnatch", font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR)
+        self.value_header = Text("IPA on Bandersnatch", font=PRIMARY_FONT, font_size=22, color=PRIMARY_COLOR)
 
 
         self.key_cells = VGroup()

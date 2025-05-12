@@ -4,7 +4,6 @@ from manim import (FadeIn, FadeOut, Indicate, MoveToTarget, Write, Create, Text,
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.e7.curve import Curve
-from zkmarek.video.slides.e6.tree import MerkleTree
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 
 class SingleLevelVerkleTree(SlideBase):
@@ -131,7 +130,6 @@ class SingleLevelVerkleTree(SlideBase):
         scene.wait(1)
         
         self.new_subsection(scene, "tree modification", "data/sound/e7/slide3-1b.mp3")
-        self.create_merkle_tree(scene)
         
         
         self.new_subsection(scene, "ec points", "data/sound/e7/slide3-2.mp3")
@@ -195,25 +193,6 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(MoveToTarget(blob, rate_func = rate_functions.ease_out_bounce), run_time=2)
         
         
-        self.new_subsection(scene, "BLS12-381", "data/sound/e7/slide3-5.mp3")
-        scene.play(FadeOut(blob), run_time=0.5)
-        
-        
-        self.new_subsection(scene, "pi C are 48 B", "data/sound/e7/slide3-5a.mp3")
-        
-        self.new_subsection(scene, "vec el < 32", "data/sound/e7/slide3-5b.mp3")
-        
-        
-        self.new_subsection(scene, "VT struct is different", "data/sound/e7/slide3-5c.mp3")
-        
-        
-        self.new_subsection(scene, "11 belongs to level", "data/sound/e7/slide3-6.mp3")
-        
-        
-        self.new_subsection(scene, "Commitment, proof, opening, total", "data/sound/e7/slide3-7.mp3")
-        
-        
-        
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label), run_time=0.5)
         
@@ -247,35 +226,6 @@ class SingleLevelVerkleTree(SlideBase):
             tip_shape=StealthTip,
             tip_length=0.15,)
         where_to_append.append(arrow)
-        
-    def create_merkle_tree(self, scene):
-        self.merkle = MerkleTree(num_children=2, num_levels=4, include_labels=False).stretch(2, 1).scale(0.15).shift(LEFT*4+UP*4.5)
-        scene.play(Create(self.merkle), run_time=1.5)
-        scene.wait(1)
-        self.node_change = self.merkle.get_node(3, 0)
-        self.node_change1 = self.merkle.get_node(2, 0)
-        self.node_change2 = self.merkle.get_node(1, 0)
-        self.node_change3 = self.merkle.get_node(0, 0)
-        scene.play(self.node_change.animate.set_color(HIGHLIGHT2_COLOR), run_time=0.5)
-        scene.play(self.node_change1.animate.set_color(HIGHLIGHT2_COLOR), run_time=0.5)
-        scene.play(self.node_change2.animate.set_color(HIGHLIGHT2_COLOR), run_time=0.5)
-        scene.play(self.node_change3.animate.set_color(HIGHLIGHT2_COLOR), run_time=0.5)
-        scene.wait(1)
-        scene.play(self.node_change.animate.set_color(HIGHLIGHT_COLOR),
-                   self.node_change1.animate.set_color(HIGHLIGHT_COLOR),
-                   self.node_change2.animate.set_color(HIGHLIGHT_COLOR),
-                   self.node_change3.animate.set_color(HIGHLIGHT_COLOR), run_time=0.5)
-    
-        self.node_verify = self.merkle.get_node(3, 3)
-        
-        self.merkle_proof = [self.merkle.get_node(3, 2), self.merkle.get_node(2, 0), self.merkle.get_node(1, 1)]
-        scene.play(self.node_verify.animate.set_color(SECONDARY_COLOR).set_opacity(0.2), run_time=0.5)
-        scene.wait(0.5)
-        for i in range(3):
-            scene.play(self.merkle_proof[i].animate.set_color(SECONDARY_COLOR).set_opacity(0.1), run_time=0.5)
-        scene.wait(4)
-        scene.play(FadeOut(self.merkle), run_time=0.5)
-        
         
         
 

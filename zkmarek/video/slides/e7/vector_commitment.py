@@ -94,7 +94,7 @@ class PreviouslyVectorCommitment(SlideBase):
             max_tip_length_to_length_ratio=0.15,
         ).set_color_by_gradient([GREEN_E, MAROON_E])
 
-        self.envelope_body_closed = RoundedRectangle(width = 8, height = 2, 
+        self.envelope_body_closed = RoundedRectangle(width = 6, height = 3, 
             fill_color=PRIMARY_COLOR,
             fill_opacity=0.3,
             corner_radius=0.1,
@@ -102,15 +102,15 @@ class PreviouslyVectorCommitment(SlideBase):
         ).scale(0.3)
 
         self.envelope_flap_closed = Polygon(
-            [-4, 1, 0],
-            [4, 1, 0],
-            [0, -1, 0],
+            [-3, 1, 0],
+            [3, 1, 0],
+            [0, -1.5, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
             stroke_width = 0.0
         ).scale(0.3)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48).shift(DOWN*0.1)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48)
 
         self.commitment = Text("C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).move_to(self.envelope_body_closed.get_center())
         
@@ -118,7 +118,7 @@ class PreviouslyVectorCommitment(SlideBase):
         self.sixteen_element_vector = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20) for i in sixteen_element_vector]).arrange(RIGHT, buff=0.05)
         rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.3).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
         rectangles_of_values = [rectangle.copy() for _ in range(8)]
-        self.rectangles_values = VGroup(*rectangles_of_values).next_to(self.prover, DOWN, buff = 1.5).arrange(RIGHT, buff=0.07).shift(LEFT*4+DOWN*0.3)
+        self.rectangles_values = VGroup(*rectangles_of_values).next_to(self.prover, DOWN, buff = 1.5).arrange(RIGHT, buff=0.07).shift(LEFT*3.7+DOWN*0.3)
         for i in range(8):
             self.sixteen_element_vector[i].move_to(self.rectangles_values[i].get_center())
 
