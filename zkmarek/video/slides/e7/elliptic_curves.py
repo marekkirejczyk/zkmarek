@@ -90,17 +90,17 @@ class EllipticCurves(SlideBase):
         ).next_to(self.p, RIGHT, buff = 0.7)
         
         self.curve_ec = Text(
-            "BLS12-381", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=34
-        ).next_to(self.chart_ec, UP, buff=0.3)
+            "BLS12-381", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=28
+        ).next_to(self.chart_ec, UP, buff=0.1)
         self.curve_ec_bander = Text(
-            "BanderSnatch", color=HIGHLIGHT2_COLOR, font=PRIMARY_FONT, font_size=34
-        )
+            "BanderSnatch", color=HIGHLIGHT2_COLOR, font=PRIMARY_FONT, font_size=28
+        ).next_to(self.chart_bander, UP, buff=0.1)
         self.r = (
             MathTex(r"{{r}} \approx 2^{255}", color=SECONDARY_COLOR, font_size=32)
             .next_to(self.p, DOWN, buff = 1.0).shift(DOWN*0.5)
         )
-        self.base_field_bls = MathTex(r"F_p \sim 381 \ \mathrm{b}", font_size = 40).shift(RIGHT*3+UP*1.5)
-        self.scalar_Fr = MathTex(r"F_r \sim 255 \ \mathrm{b}", font_size = 40).shift(RIGHT*3)
+        self.base_field_bls = MathTex(r"F_p \sim 381 \ \mathrm{b}", font_size = 40, color = HIGHLIGHT_COLOR).shift(RIGHT*3+UP*1.5)
+        self.scalar_Fr = MathTex(r"F_r \sim 255 \ \mathrm{b}", font_size = 40, color = HIGHLIGHT_COLOR).shift(RIGHT*3)
         self.scalar_Fq = MathTex(r"k'\in F_q", font_size = 40).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(DOWN)
         
         self.bytes_p2 = Text(
@@ -167,8 +167,8 @@ class EllipticCurves(SlideBase):
         ).next_to(self.point_to_generator2, RIGHT, buff=0.2)
         self.chart_ec.shift(RIGHT * 3)
         
-        self.pairings = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color = PRIMARY_COLOR, font_size = 30).next_to(self.scalar_Fr, DOWN, buff = 1.0)
-        self.cross_out_pairings = Line(LEFT, RIGHT, color = PRIMARY_COLOR, stroke_width = 2).scale(0.9).move_to(self.pairings.get_center())
+        self.pairings = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color = PRIMARY_COLOR, font_size = 30).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(RIGHT)
+        self.cross_out_pairings = Line(LEFT, RIGHT, color = PRIMARY_COLOR, stroke_width = 2).scale(1.2).move_to(self.pairings.get_center())
         self.kzg = Text("KZG", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.cross_out_line = Line(LEFT, RIGHT, color = PRIMARY_COLOR, stroke_width = 2).scale(0.4).move_to(self.kzg.get_center())
         self.ipa = Text("Inner Product Argument", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT*3)
@@ -182,8 +182,8 @@ class EllipticCurves(SlideBase):
         self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.3)
         
         self.kzg_ipa_table = TableKZGIPA()
-        self.base_field_bander = MathTex(r"F_p' \sim 255 \ \mathrm{b}", font_size = 40).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
-        self.scalar_field_bander = MathTex(r"F_r' \sim 253 \ \mathrm{b}", font_size = 40).next_to(self.base_field_bander, RIGHT, buff = 1.5)
+        self.base_field_bander = MathTex(r"F_{p'} \sim 255 \ \mathrm{b}", font_size = 40, color = HIGHLIGHT2_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
+        self.scalar_field_bander = MathTex(r"F_r' \sim 253 \ \mathrm{b}", font_size = 40, color = HIGHLIGHT2_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
         self.size_base_field_bander = Text("< 32 B", font_size = 25).next_to(self.base_field_bander, RIGHT, buff = 0.1)
         self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
         
@@ -204,18 +204,20 @@ class EllipticCurves(SlideBase):
         self.new_subsection(scene, "BLS Fp Fr sizes", "data/sound/e7/slide2-2.mp3")
         scene.play(FadeOut(self.envelope_flap_closed, self.envelope, self.kzg_commitment, self.prover, self.verifier), run_time=1)
         self.chart_ec.gen_points()
-        scene.play(Create(self.chart_ec), run_time=2)
+        scene.play(Create(self.chart_ec), Write(self.curve_ec), run_time=2)
         scene.wait(0.5)
         scene.play(ApplyWave(self.chart_ec.labels[0]), run_time=1.5)
         scene.play(ApplyWave(self.chart_ec.labels[1]), run_time=1.5)
         self.chart_ec.generate_target()
         self.chart_ec.target.shift(LEFT * 3)
+        self.curve_ec.generate_target()
+        self.curve_ec.target.shift(LEFT * 3)
         scene.wait(1)
-        scene.play(MoveToTarget(self.chart_ec), run_time=1)
+        scene.play(MoveToTarget(self.chart_ec), MoveToTarget(self.curve_ec), run_time=1)
         scene.play(Write(self.base_field_bls), run_time=1)
         scene.wait(1.5)
         scene.play(Write(self.scalar_Fr), run_time=1)
-        scene.wait(1.5)
+        scene.wait(4.5)
         scene.play(Write(self.bytes_p2), run_time=1)
         scene.wait(2)
         scene.play(Write(self.bytes_of_el), run_time=1)
@@ -237,7 +239,7 @@ class EllipticCurves(SlideBase):
         scene.play(TransformMatchingShapes(self.title_label, self.title_label2, run_time=1.5))
         scene.wait(1)
         scene.play(Write(self.kzg))
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(Write(self.cross_out_line), run_time=1)
         scene.wait(0.6)
         scene.play(Write(self.cross_out_pairings), run_time=1)
@@ -247,8 +249,11 @@ class EllipticCurves(SlideBase):
         self.base_field_bls.target.next_to(self.chart_ec, DOWN, buff = 0.5).shift(LEFT)
         self.scalar_Fr.generate_target()
         self.scalar_Fr.target.next_to(self.base_field_bls.target, RIGHT, buff = 0.5)
-        scene.play(FadeOut(self.kzg, self.pairings, self.cross_out_line, self.cross_out_pairings, 
-                           self.bytes_p2, self.bytes_of_el), MoveToTarget(self.base_field_bls), MoveToTarget(self.scalar_Fr), run_time=2)
+        self.kzg.generate_target()
+        self.kzg.target.next_to(self.chart_ec, LEFT, buff = 0.05)
+        scene.play(FadeOut(self.pairings, self.cross_out_line, self.cross_out_pairings, 
+                           self.bytes_p2, self.bytes_of_el), MoveToTarget(self.base_field_bls), 
+                   MoveToTarget(self.scalar_Fr), MoveToTarget(self.kzg), run_time=2)
         scene.play(Write(self.ipa), run_time=1)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.ipa, self.ipa2), run_time=1)
@@ -257,69 +262,84 @@ class EllipticCurves(SlideBase):
         self.ipa2.target.next_to(self.chart_bander, RIGHT, buff = 0.0)
         scene.play(MoveToTarget(self.ipa2), run_time=1)
         self.chart_bander.gen_points()
-        scene.play(Create(self.chart_bander), run_time=1)
+        scene.play(Create(self.chart_bander), Write(self.curve_ec_bander), run_time=1)
 
         self.new_subsection(scene, "Bandersnatch F p' Fr'", "data/sound/e7/slide2-4.mp3")
         scene.wait(1)
         scene.play(Indicate(self.scalar_Fr, color = SECONDARY_COLOR), run_time=1)
-        scene.play(Write(self.base_field_bander), run_time=1)
+        scene.play(TransformMatchingShapes(self.scalar_Fr.copy(), self.base_field_bander), run_time=1)
         scene.wait(2)
         scene.play(Write(self.size_base_field_bander), run_time=1)
         scene.wait(1)
         
         self.new_subsection(scene, "many generators", "data/sound/e7/slide2-4a.mp3")
         self.animate_generators(scene)
-        scene.wait(1)
+        self.chart_bander = VGroup(self.chart_bander, self.curve_ec_bander, self.base_field_bander, self.size_base_field_bander)
         self.chart_bander.generate_target()
-        self.chart_bander.target.scale(0.8).shift(UP*1.2)
+        self.chart_bander.target.scale(0.8).shift(UP*1.1)
         self.chart_whole = VGroup(self.chart_ec, self.point_to_generator_label2, self.point_to_generator_label,
-                                 self.circle_gen2, self.circle_gen, self.base_field_bls, self.scalar_Fr)
+                                 self.circle_gen2, self.circle_gen, self.curve_ec, self.base_field_bls, self.scalar_Fr)
         self.chart_whole.generate_target()
         self.chart_whole.target.scale(0.8).shift(UP*1.2)
         scene.play(MoveToTarget(self.chart_bander), MoveToTarget(self.chart_whole), run_time=1)
-        scene.wait(1)
-        self.ipa_commtiment.next_to(self.chart_bander, DOWN, buff = 1.0).shift(DOWN+LEFT * 1.5)
+        self.ipa_commtiment.next_to(self.chart_bander, DOWN, buff = 0.3)
         scene.play(Write(self.ipa_commtiment), run_time=1)
         scene.wait(1)
         
         self.new_subsection(scene, "scalars 253 bit", "data/sound/e7/slide2-4b.mp3")
         scene.wait(1)
-        self.scalar_field_bander.scale(0.8).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT * 1.5)
-        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 1.5)
+        self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 1.5)
+        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
         scene.play(Write(self.scalar_field_bander), run_time=1)
         scene.play(Write(self.size_scalar_bander), run_time=1)
         scene.wait(1)
         
         self.new_subsection(scene, "IPA proof log2(n)", "data/sound/e7/slide2-5.mp3")
-        self.ipa_proof.next_to(self.ipa_commtiment, RIGHT, buff = 1.5)
+        self.ipa_proof.next_to(self.ipa_commtiment, DOWN, buff = 0.4)
         scene.play(Write(self.ipa_proof), run_time=1)
         scene.wait(1)
         
         
         self.new_subsection(scene, "sizes", "data/sound/e7/slide2-6.mp3")
         scene.wait(1)
-        scene.play(FadeOut(self.base_field_bander, self.size_base_field_bander, 
-                           self.scalar_field_bander, self.size_scalar_bander, self.chart_bander,
-                           self.chart_ec, self.scalar_Fr, self.point_to_generator_label,
+        scene.play(FadeOut(self.scalar_field_bander, self.size_scalar_bander, self.chart_bander,
+                           self.chart_whole, self.scalar_Fr, self.point_to_generator_label, self.kzg,
                            self.point_to_generator_label2, self.circle_gen, self.circle_gen2, 
-                           self.bytes_of_el, self.bytes_p2, self.ipa_commtiment, self.ipa_proof), run_time=1)
+                           self.ipa_commtiment, self.ipa_proof, self.ipa2, self.base_field_bls), run_time=1)
         
-        scene.play(Create(self.kzg_ipa_table), run_time=1)
-        
+        self.kzg_ipa_table.get_table_without_stuff(scene)
         
         self.new_subsection(scene, "KZG commitment", "data/sound/e7/slide2-6a.mp3")
+        scene.play(Create(self.kzg_ipa_table.key_cells[:][0]),
+                   Create(self.kzg_ipa_table.vec_column[:][0]), run_time=1)
+        scene.wait(2)
+        scene.play(Create(self.kzg_ipa_table.key_cells[:][1]),
+                          Create(self.kzg_ipa_table.vec_column[:][1]), run_time=1)
         
         self.new_subsection(scene, "IPA proof", "data/sound/e7/slide2-6b.mp3")
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][0]), run_time=1)
+        scene.wait(4.5)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][1]), run_time=1)
         
         self.new_subsection(scene, "openings", "data/sound/e7/slide2-6c.mp3")
+        scene.play(Create(self.kzg_ipa_table.key_cells[:][2]),
+                   Create(self.kzg_ipa_table.vec_column[:][2]), run_time=1)
+        scene.wait(1)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][2]), run_time=1)
         
         self.new_subsection(scene, "trusted setup", "data/sound/e7/slide2-6d.mp3")
-       
+        scene.play(Create(self.kzg_ipa_table.key_cells[:][3]),
+                        Create(self.kzg_ipa_table.vec_column[:][3]), run_time=1)
+        scene.play(Create(self.kzg_ipa_table.key_cells[:][4]),
+                           Create(self.kzg_ipa_table.vec_column[:][4]), run_time=1)
+        scene.wait(2.5)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][3]), run_time=1)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][4]), run_time=1)
+        scene.wait(2.5)
        
        
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.chart_bander, self.curve_ec_bander,
-                           self.r, self.bytes_of_el, self.kzg, self.ipa2), run_time=0.5)
+        scene.play(FadeOut(self.title_label2, self.kzg_ipa_table), run_time=0.5)
 
       
     def animate_polynomial(self):
@@ -336,16 +356,6 @@ class EllipticCurves(SlideBase):
                 }
             }
         ).scale(0.7)
-        
-        # self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (4.26713027e-09 * x ** (15) 
-        #                                                           -5.00493029e-07 * x ** (14) +  2.67032132e-05 * x ** (13) 
-        #                                                           -8.57314665e-04* x ** (12) +1.84604634e-02 * x ** (11) 
-        #                                                           -2.81249901e-01* x ** (10) +  3.11615153e+00 * x ** (9) 
-        #                                                           -2.54062977e+01 * x ** (8) +1.52442624e+02 * x ** (7) 
-        #                                                           -6.66027523e+02 * x ** (6) +  2.07111066e+03 * x ** (5) 
-        #                                                           -4.40664678e+03 * x ** (4) +5.99848486e+03 * x ** (3) 
-        #                                                           -4.60965478e+03 * x ** (2) + 1.47784469e+03 * x ** (1)
-        #                                                           + 7.99999698e+00 * x ** (0))*0.3 - y, color=SECONDARY_COLOR)
         
         self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
                                                                   -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
