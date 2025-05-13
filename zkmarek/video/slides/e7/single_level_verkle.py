@@ -157,7 +157,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(self.vector_values[0][0:5].animate.shift(LEFT*0.05), self.vector_values[1][0:5].animate.shift(LEFT*0.05),
                    self.vector_values[0][11:].animate.shift(RIGHT*0.05), self.vector_values[1][11:].animate.shift(RIGHT*0.05), run_timr=1)
         
-        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*0.75)
+        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*1.0)
         scene.play(Write(self.dots2048), run_time=0.5)
         for i in range(5):
             self.indeces[i].next_to(self.rectangles_values[i], DOWN, buff = 0.3)

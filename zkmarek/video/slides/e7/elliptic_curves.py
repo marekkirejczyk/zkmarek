@@ -184,7 +184,7 @@ class EllipticCurves(SlideBase):
         self.base_field_bander = MathTex(r"F_{p'} \sim 255 \ \mathrm{b}", font_size = 40, color = PRIMARY_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
         self.scalar_field_bander = MathTex(r"F_{r'} \sim 253 \ \mathrm{b}", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
         self.size_base_field_bander = Text("< 32 B", font_size = 25, color = PRIMARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.05)
-        self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
+        self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1).shift(UP * 0.05).set_color(SECONDARY_COLOR)
         
         self.ipa_proof = MathTex(r"\pi \sim \log_2({{n}})", color = PRIMARY_COLOR, font_size = 30)
         self.ipa_commtiment = MathTex(r"C \sim {{a_1}} {{G_1}} + \cdots + {{a_n}} {{G_n}}", color = PRIMARY_COLOR, font_size = 30)
@@ -273,15 +273,13 @@ class EllipticCurves(SlideBase):
         
         self.new_subsection(scene, "many generators", "data/sound/e7/slide2-4a.mp3")
         self.animate_generators(scene)
-
-        scene.play(Write(self.ipa_commtiment), run_time=1)
-        scene.wait(1)
         
         self.new_subsection(scene, "scalars 253 bit", "data/sound/e7/slide2-4b.mp3")
-        scene.wait(1)
-        self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 1.5)
-        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
+        scene.wait(2.5)
+        self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 1.0)
+        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1).shift(UP * 0.05)
         scene.play(Write(self.scalar_field_bander), run_time=1)
+        scene.wait(1)
         scene.play(Write(self.size_scalar_bander), run_time=1)
         scene.wait(1)
         
@@ -289,10 +287,10 @@ class EllipticCurves(SlideBase):
         self.ipa_proof.next_to(self.ipa_commtiment, DOWN, buff = 0.4)
         scene.play(Write(self.ipa_proof), run_time=1)
         scene.wait(2)
-        scene.play(Indicate(self.ipa_proof[1], color = SECONDARY_COLOR), run_time=1)
-        scene.wait(2)
+        scene.play(Indicate(self.ipa_proof[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
+        scene.wait(2.5)
         scene.play(Indicate(self.ipa_commtiment, color = SECONDARY_COLOR), run_time=1)
-        scene.wait(1)
+        scene.wait(2)
         scene.play(Indicate(self.ipa_proof, color = SECONDARY_COLOR), run_time=1)
         
         self.new_subsection(scene, "sizes", "data/sound/e7/slide2-6.mp3")
@@ -315,6 +313,7 @@ class EllipticCurves(SlideBase):
         scene.play(Create(self.kzg_ipa_table.value_cells[:][0]), run_time=1)
         scene.wait(4.5)
         scene.play(Create(self.kzg_ipa_table.value_cells[:][1]), run_time=1)
+        self.proof_size_table(scene)
         
         self.new_subsection(scene, "openings", "data/sound/e7/slide2-6c.mp3")
         scene.play(Create(self.kzg_ipa_table.key_cells[:][2]),
@@ -372,7 +371,7 @@ class EllipticCurves(SlideBase):
         self.circle_gen5 = Circle(radius=0.15).move_to(
             self.point_to_generator5.get_center()
         )
-        self.commitment_ipa = Text("C(IPA)", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 25).next_to(self.circle_gen5, RIGHT, buff =0.1)
+        self.commitment_ipa = Text("C(IPA)", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.circle_gen5, RIGHT, buff =0.1)
         
         self.point_to_generator6 = self.chart_bander.get_point(FieldElement(61, 137))
         self.circle_gen6 = Circle(radius=0.15).move_to(
@@ -407,16 +406,34 @@ class EllipticCurves(SlideBase):
         self.circle_gen5 = Circle(radius=0.15).move_to(
             self.point_to_generator5.get_center()
         )
-        self.commitment_ipa = Text("C(IPA)", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 25).next_to(self.circle_gen5, RIGHT, buff =0.1)
+        self.commitment_ipa = Text("C(IPA)", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.circle_gen5, RIGHT, buff =0.1)
         
         scene.wait(0.5)
         scene.play(Create(self.circle_gen5), run_time=0.8)
         scene.play(Write(self.commitment_ipa), run_time=0.8)
+        scene.play(Write(self.ipa_commtiment), run_time=1)
         scene.wait(1)
         scene.play(Indicate(self.commitment_ipa, color=SECONDARY_COLOR), run_time=1)
         scene.wait(1)
         scene.play(FadeOut(self.circle_gen5, self.commitment_ipa), run_time=0.5)
 
 
-
-        
+    def proof_size_table(self, scene):
+        self.current_table = VGroup(self.kzg_ipa_table.background, self.kzg_ipa_table.key_header, self.kzg_ipa_table.value_header,
+                                    self.kzg_ipa_table.key_cells[:][0:2], self.kzg_ipa_table.value_cells[:][0:2], self.kzg_ipa_table.vec_column[:][0:2])
+        scene.wait(1.5)
+        scene.play(self.current_table.animate.scale(0.5).shift(LEFT*2), run_time=1)
+        self.n256 = MathTex(r"n \sim 2^{256}", color=SECONDARY_COLOR, font_size=30).next_to(self.current_table, RIGHT+UP, buff = 1.0).shift(RIGHT)
+        self.proof_256 = MathTex(r"\pi \sim \log_2({{256}}) \sim {{8}}", color=SECONDARY_COLOR, font_size=30).next_to(self.n256, DOWN, buff = 0.5)
+        self.proof_256_2 = MathTex(r"\pi \sim \log_2({{256}}) \sim {{256 \mathrm{b}}}", color=SECONDARY_COLOR, font_size=30).next_to(self.n256, DOWN, buff = 0.5)
+        scene.wait(1)
+        scene.play(Write(self.n256), run_time=0.5)
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.n256.copy(), self.proof_256), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.kzg_ipa_table.value_cells[:][1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
+        scene.play(TransformMatchingShapes(self.proof_256, self.proof_256_2), run_time=1)
+        scene.wait(1)
+        scene.play(FadeOut(self.n256, self.proof_256_2), run_time=0.5)
+        scene.play(self.current_table.animate.scale(2).shift(RIGHT*2), run_time=1)
+        scene.wait(0.5)

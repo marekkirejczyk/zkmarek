@@ -110,7 +110,7 @@ class PreviouslyVectorCommitment(SlideBase):
             stroke_width = 0.0
         ).scale(0.3)
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
-        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48)
+        self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48).shift(DOWN*0.25)
 
         self.commitment = Text("C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).move_to(self.envelope_body_closed.get_center())
         
@@ -136,9 +136,14 @@ class PreviouslyVectorCommitment(SlideBase):
         indeces = [Text(i, color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20) for i in indeces]
         self.indeces = []
         for i in range(len(indeces)):
-            index = indeces[i]
-            index.next_to(self.rectangles_values[i], DOWN, buff = 0.1)
-            self.indeces.append(index)
+            if i == 3 or i == 5:                
+                index = indeces[i]
+                index.next_to(self.rectangles_values[i], DOWN, buff = 0.2)
+                self.indeces.append(index)
+            else:
+                index = indeces[i]
+                index.next_to(self.rectangles_values[i], DOWN, buff = 0.2)
+                self.indeces.append(index)
         self.indeces = VGroup(*self.indeces)
         
 
@@ -163,8 +168,8 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.wait(0.2)
         scene.play(Write(self.opening2), run_time=1)
         scene.wait(2)
+        scene.play(Indicate(self.indeces[4], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
         scene.play(TransformMatchingShapes(self.opening2, self.opening), run_time=1)
-        scene.wait(1)
         scene.play(Write(self.proof_pi), run_time=1)
         scene.wait(1)
         self.proof_pi.generate_target()
@@ -209,7 +214,6 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.wait(1)
         scene.play(Create(self.polynomial_graph), run_time=1.5)
         self.polynomial = VGroup(self.new_axes, self.polynomial_graph, *self.points_dots)
-        scene.play(self.polynomial.animate.set_opacity(0.1))
         scene.play(Write(self.data_points), FadeOut(self.polynomial), run_time=0.3)
         scene.play(GrowArrow(self.arrow_data_interpolation), run_time=0.3)
         scene.play(Write(self.interpolation), run_time=0.3)
@@ -236,7 +240,7 @@ class PreviouslyVectorCommitment(SlideBase):
                     "num_decimal_places": 0
                 }
             }
-        ).scale(0.7)
+        ).scale(0.6)
         
         self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
                                                                   -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
