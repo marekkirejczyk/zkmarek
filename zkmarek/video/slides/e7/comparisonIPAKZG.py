@@ -6,7 +6,7 @@ class TableKZGIPA(VGroup):
         super().__init__()
 
         vec_commitment_column = ["commitment", "proof", "commitment\n   opening" ,
-                                 "     use of\n trusted setup", "pairing-based"]
+                                 "     use of\n trusted setup", "pairing-based\n verification"]
         kzg_values = ["1 EC point <48 B", "1 EC point <48 B", "   1 scalar field \n element <32 B", 
                       "Yes", "Yes"]
         

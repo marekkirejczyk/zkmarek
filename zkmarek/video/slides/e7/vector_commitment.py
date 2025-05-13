@@ -3,7 +3,6 @@ from manim import (
     FadeOut,
     Text,
     MathTex,
-    Create,
     LEFT,
     RIGHT,
     UP,
@@ -13,13 +12,10 @@ from manim import (
     MoveToTarget,
     Indicate,
     VGroup,
-    ValueTracker,
     ImageMobject,
-    Axes,
     Arrow,
     StealthTip,
     Polygon,
-    GrowArrow,
     RoundedRectangle,
 )
 from manim import BLUE_D, GREEN_E, MAROON_E
@@ -112,19 +108,9 @@ class PreviouslyVectorCommitment(SlideBase):
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48).shift(DOWN*0.25)
 
-        self.commitment = Text("C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).move_to(self.envelope_body_closed.get_center())
+        self.commitment = Text("commitment C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25).move_to(self.envelope_body_closed.get_center())
         
-        sixteen_element_vector = [4, 16, 22, 24, 22, 19, 20, 20]
-        self.sixteen_element_vector = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20) for i in sixteen_element_vector]).arrange(RIGHT, buff=0.05)
-        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.3).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
-        rectangles_of_values = [rectangle.copy() for _ in range(8)]
-        self.rectangles_values = VGroup(*rectangles_of_values).next_to(self.prover, DOWN, buff = 1.5).arrange(RIGHT, buff=0.07).shift(LEFT*3.7+DOWN*0.3)
-        for i in range(8):
-            self.sixteen_element_vector[i].move_to(self.rectangles_values[i].get_center())
-
-        self.data_vector = VGroup(
-            self.sixteen_element_vector,
-            self.rectangles_values)
+        self.data_vector_ai = MathTex(r"[{{a_0}}, {{a_1}}, {{a_2}}, {{\ldots}}, {{a_i}}, {{\ldots}}]", color = PRIMARY_COLOR, font_size=40).move_to(self.data_vector.get_center())
         
         self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         
@@ -136,9 +122,9 @@ class PreviouslyVectorCommitment(SlideBase):
         indeces = [Text(i, color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 20) for i in indeces]
         self.indeces = []
         for i in range(len(indeces)):
-            if i == 3 or i == 5:                
+            if i == 3 or i == 5:             
                 index = indeces[i]
-                index.next_to(self.rectangles_values[i], DOWN, buff = 0.2)
+                index.next_to(self.data_vector_ai[2*i+1], DOWN, buff = 0.2)
                 self.indeces.append(index)
             else:
                 index = indeces[i]
@@ -154,9 +140,9 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.play(Write(self.title_label), run_time=0.7)
         scene.play(FadeIn(self.prover, self.verifier), Write(self.commiter_label), Write(self.verifier_label), run_time=1)
         scene.wait(0.5)
-        scene.play(Write(self.data_vector), run_time=0.7)
+        scene.play(Write(self.data_vector_ai), run_time=0.7)
         scene.wait(0.5)
-        scene.play(TransformMatchingShapes(self.data_vector.copy(), self.envelope))
+        scene.play(TransformMatchingShapes(self.data_vector_ai.copy(), self.envelope))
         scene.wait(0.5)
         self.envelope.generate_target()
         self.envelope.target.next_to(self.verifier_label, DOWN, buff=0.5)
@@ -188,37 +174,6 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.play(Indicate(self.opening, color=HIGHLIGHT_COLOR), run_time=1)
         scene.wait(0.5)
         scene.play(Indicate(self.opening[1], color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
-        
-
-        self.new_subsection(scene, "vector commitment", "data/sound/e7/slide1-17.mp3")
-        self.animate_polynomial()
-        scene.play(Create(self.new_axes), run_time=2)
-        scene.wait(1)
-        values_y = [4, 16, 22, 23, 22, 20.5, 19.5, 20]
-        self.points_dots = []
-        values = [
-            (0, 4), (1, 16), (2, 22), (3, 23), (4, 22), (5, 20.5), (6, 19.5), (7, 20),
-        ]
-        for i, (x, y) in enumerate(values):
-            tracker = ValueTracker(x)
-            curve = Curve.from_x(tracker.get_value())
-            dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve).dot
-            self.points_dots.append(dot)
-            
-        for i in range(8):
-            dot = self.points_dots[i]
-            dot.move_to(self.new_axes.c2p(i, values_y[i]))
-
-            scene.play(Create(dot), run_time=0.1)
-        scene.wait(1)
-        scene.play(Create(self.polynomial_graph), run_time=1.5)
-        self.polynomial = VGroup(self.new_axes, self.polynomial_graph, *self.points_dots)
-        scene.play(Write(self.data_points), FadeOut(self.polynomial), run_time=0.3)
-        scene.play(GrowArrow(self.arrow_data_interpolation), run_time=0.3)
-        scene.play(Write(self.interpolation), run_time=0.3)
-        scene.play(GrowArrow(self.arrow_interpolation_vector), run_time=0.3)
-        scene.play(Write(self.vector_commitment), run_time=0.3)
-        scene.wait(1)
 
      
     def animate_out(self, scene):
@@ -226,25 +181,3 @@ class PreviouslyVectorCommitment(SlideBase):
                            self.opening, self.proof_pi, self.verifier, self.prover, self.verifier_label, self.indeces, self.commiter_label, 
                            self.data_points, self.interpolation, self.vector_commitment, self.commitment), run_time=1)
 
-    def animate_polynomial(self):
-        self.new_axes = Axes(
-            x_range=[-0.5, 8, 1],
-            y_range=[-3, 25, 500],
-            x_length=7,
-            axis_config={
-                "include_numbers": True,
-                "color": PRIMARY_COLOR,
-                "decimal_number_config": {
-                    "color": PRIMARY_COLOR,
-                    "num_decimal_places": 0
-                }
-            }
-        ).scale(0.6)
-        
-        self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
-                                                                  -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
-                                                                  +4.2790892673006296 * x ** (0)) - y, color=SECONDARY_COLOR)
-        self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph)
-        
-
-  
