@@ -18,7 +18,7 @@ class SingleLevelVerkleTree(SlideBase):
                  r"a_8", r"a_9", r"a_{10}", r"a_{11}", r"a_{12}", r"a_{13}", r"a_{14}", r"a_{15}"]
         self.vector = VGroup(*[MathTex(i, color = PRIMARY_COLOR, font_size = 30) for i in vector]).arrange(RIGHT, buff=0.1)
         self.sixteen_element_vector = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in sixteen_element_vector]).arrange(RIGHT, buff=0.1)
-        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
+        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.3, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
         rectangles_of_values = [rectangle.copy() for _ in range(16)]
         self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.2)
         for i in range(16):
@@ -26,7 +26,7 @@ class SingleLevelVerkleTree(SlideBase):
             self.vector[i].move_to(self.rectangles_values[i].get_center())
             
     
-        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.5, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
+        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.3, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
         self.formula = MathTex(r"a_{15}\cdot {{x^{15}}} + a_{14}\cdot {{x^{14}}} + \cdots {{a_{0}}}]", color = PRIMARY_COLOR, font_size = 20).shift(RIGHT*2+DOWN*1.5)
         self.animate_polynomial()
         values = [
@@ -43,28 +43,39 @@ class SingleLevelVerkleTree(SlideBase):
         self.vector_values = VGroup(self.sixteen_element_vector, self.rectangles_values)
         
         self.prover = ImageMobject("data/images/person_blue.png").scale(0.4).to_edge(LEFT).shift(UP*1.5)
-        self.envelope = RoundedRectangle(width = 8 * 0.3, height = 2 * 0.3, fill_opacity = 0.3, stroke_width = 0.0, corner_radius=0.1).set_color(PRIMARY_COLOR).shift(DOWN*0.7)
+        self.envelope = RoundedRectangle(width = 8, height = 3, 
+            fill_color=PRIMARY_COLOR,
+            fill_opacity=0.3,
+            corner_radius=0.1,
+            stroke_width = 0.0
+        ).scale(0.3)
+
         self.envelope_flap_closed = Polygon(
-            [-4.3, 1, 0],
-            [4.3, 1, 0],
-            [0, -0.6, 0],
+            [-4, 1, 0],
+            [4, 1, 0],
+            [0, -1.5, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
             stroke_width = 0.0
-        ).scale(0.27).shift(DOWN*0.12+DOWN*0.7)
+        ).scale(0.3)
+        self.envelope.shift(DOWN * 0.7)
+        self.envelope_flap_closed.next_to(self.envelope, UP, buff=-0.48).shift(DOWN*0.25)
+
         
-        self.commitment = Text("commitment C", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 30).move_to(self.envelope.get_center())
+        self.commitment = Text("commitment C", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 23).move_to(self.envelope.get_center())
         
         self.verifier = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
+        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier, DOWN, buff = 0.5)
+        self.verifier = Group(self.verifier, self.verifier_label)
         self.prover = ImageMobject("data/images/person_blue.png").scale(0.7).shift(UP*1.5)
         self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover, DOWN, buff = 0.5)
         
-        self.proof_pi = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 40).next_to(self.verifier, DOWN, buff = 0.5)
-        self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 40, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.05)
+        self.proof_pi = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.verifier, DOWN, buff = 0.5).shift(RIGHT * 0.5)
+        self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.1)
         self.proof = VGroup(self.proof, self.proof_pi)
-        self.opening = MathTex(r"{{a_{12} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.5)
-        self.opening2 = MathTex(r"{{a_{2044} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.5)
-        self.opening3 = MathTex(r"{{a_{252} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.5)
+        self.opening = MathTex(r"{{a_{12} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.3)
+        self.opening2 = MathTex(r"{{a_{2044} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.3)
+        self.opening3 = MathTex(r"{{a_{252} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.3)
         self.elliptic_curve_point = Text("1 EC point", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.envelope, UP, buff = 0.8)
         
         self.dots2048 = Text("...", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 40)
@@ -77,23 +88,24 @@ class SingleLevelVerkleTree(SlideBase):
         self.new_subsection(scene, "16 element vector", "data/sound/e7/slide3-1.mp3")
         scene.play(Create(self.title_label), run_time=0.5)
         scene.play(FadeIn(self.prover), Write(self.prover_label), run_time=1)
+        self.prover = Group(self.prover, self.prover_label)
         self.rectangles_values.next_to(self.prover, DOWN, buff=0.3)
-        self.vector.next_to(self.prover, DOWN, buff=0.3)
+        for i in range(16):
+            self.vector[i].move_to(self.rectangles_values[i].get_center())
+            self.sixteen_element_vector[i].move_to(self.rectangles_values[i].get_center())
+            
         scene.play(Create(self.rectangles_values), run_time=0.5)
         scene.play(Write(self.vector), run_time=0.5)
         scene.wait(1)
         scene.play(FadeOut(self.vector), FadeIn(self.sixteen_element_vector), run_time=0.5)
         self.vector_values.generate_target()
         self.vector_values.target.shift(DOWN*3)
-        self.prover = Group(self.prover, self.prover_label)
         self.prover.generate_target()
-        self.prover.target.to_edge(LEFT).shift(UP*2.5+DOWN*3)
+        self.prover.target.to_edge(LEFT).shift(RIGHT)
         scene.play(MoveToTarget(self.vector_values), MoveToTarget(self.prover), run_time=1)
         
         scene.play(FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
-        self.vector_values.generate_target()
-        self.vector_values.target.shift(UP)
-        scene.play(MoveToTarget(self.vector_values), run_time=1)
+        scene.wait(1)
         
         scene.play(Create(self.commitment))
         self.arrows = []
@@ -125,9 +137,9 @@ class SingleLevelVerkleTree(SlideBase):
         scene.wait(0.2)
         scene.play(Indicate(self.prover, color = PRIMARY_COLOR), run_time=1)
         scene.wait(0.5)
-        scene.play(FadeOut(self.sixteen_element_vector[9]), FadeIn(self.sixteen_element_vector2[9]), run_time=1)
+        scene.play(self.sixteen_element_vector[9].animate.set_opacity(0.0), FadeIn(self.sixteen_element_vector2[9]), run_time=1)
         scene.wait(1)
-        scene.play(FadeIn(self.sixteen_element_vector[9]), FadeOut(self.sixteen_element_vector2[9]), run_time=1)
+        scene.play(self.sixteen_element_vector[9].animate.set_opacity(1.0), FadeOut(self.sixteen_element_vector2[9]), run_time=1)
         scene.play(Indicate(self.verifier, color = PRIMARY_COLOR), run_time=1)
         scene.wait(0.3)
         scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=1)
@@ -156,7 +168,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(self.vector_values[0][0:5].animate.shift(LEFT*0.05), self.vector_values[1][0:5].animate.shift(LEFT*0.05),
                    self.vector_values[0][11:].animate.shift(RIGHT*0.05), self.vector_values[1][11:].animate.shift(RIGHT*0.05), run_timr=1)
         
-        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*1.0)
+        self.dots2048.next_to(self.rectangles_values[4], buff = 1.0).shift(RIGHT*1.1)
         scene.play(Write(self.dots2048), run_time=0.5)
         for i in range(5):
             self.indeces[i].next_to(self.rectangles_values[i], DOWN, buff = 0.3)
@@ -185,9 +197,9 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(TransformMatchingShapes(VGroup(*self.arrows[0:5], *self.arrows[11:]), VGroup(*self.arrows2)), run_time=1)
         
         scene.wait(1)
-        blob = ImageMobject("data/images/blob.png").scale(0.3).shift(LEFT*5)
+        blob = ImageMobject("data/images/blob.png").scale(0.3).shift(UP*5)
         blob.generate_target()
-        blob.target.shift(RIGHT*3)
+        blob.target.shift(UP*1.5)
         scene.wait(2)
         scene.play(MoveToTarget(blob, rate_func = rate_functions.ease_out_bounce), run_time=2)
         

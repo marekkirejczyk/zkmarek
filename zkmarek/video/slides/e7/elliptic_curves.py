@@ -111,7 +111,7 @@ class EllipticCurves(SlideBase):
         self.bytes_of_el = Text("32 B", font=PRIMARY_FONT, font_size=24).set_color(
             SECONDARY_COLOR
         )
-        self.bytes_of_el.next_to(self.scalar_Fr, RIGHT, buff = 0.7).shift(UP * 0.05)
+        self.bytes_of_el.next_to(self.scalar_Fr, RIGHT, buff = 0.7)
         self.sim_32 = MathTex(r"<", color=SECONDARY_COLOR, font_size=32).next_to(
             self.bytes_of_el, LEFT, buff=0.1
         )
@@ -181,15 +181,15 @@ class EllipticCurves(SlideBase):
         self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.3)
         
         self.kzg_ipa_table = TableKZGIPA()
-        self.base_field_bander = MathTex(r"F_{p'} \sim 255 \ \mathrm{b}", font_size = 40, color = PRIMARY_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
-        self.scalar_field_bander = MathTex(r"F_{r'} \sim 253 \ \mathrm{b}", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
+        self.base_field_bander = MathTex(r"F_{p'}: p' \sim 2^{255}", font_size = 40, color = PRIMARY_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
+        self.scalar_field_bander = MathTex(r"F_{r'} \sim 2^{253} ", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
         self.size_base_field_bander = Text("< 32 B", font_size = 25, color = PRIMARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.05)
-        self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1).shift(UP * 0.05).set_color(SECONDARY_COLOR)
+        self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1).set_color(SECONDARY_COLOR)
         
         self.ipa_proof = MathTex(r"\pi \sim 2\log({{n}})", color = PRIMARY_COLOR, font_size = 30)
         self.ipa_proof_ec = Text("EC points", color = PRIMARY_COLOR, font_size = 20, font = PRIMARY_FONT)
         self.ipa_commtiment = Text("C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25)
-        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}} {{G_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment, DOWN, buff = 0.05)
+        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment, DOWN, buff = 0.05)
         self.ipa_commtiment = VGroup(self.ipa_commtiment, self.ipa_commitment_formila)
         
     def animate_in(self, scene):
@@ -282,15 +282,15 @@ class EllipticCurves(SlideBase):
         for i in range(3):
             scene.play(Indicate(self.ipa_commtiment[1][2*i+1], color = SECONDARY_COLOR), run_time=0.3)
         self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 0.8)
-        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1).shift(UP * 0.02)
+        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
         scene.play(Write(self.scalar_field_bander), run_time=1)
         scene.wait(1)
         scene.play(Write(self.size_scalar_bander), run_time=1)
         scene.wait(1)
         
         self.new_subsection(scene, "IPA proof log2(n)", "data/sound/e7/slide2-5.mp3")
-        self.ipa_proof.next_to(self.ipa_commtiment, RIGHT, buff = 0.8)
-        self.ipa_proof_ec.next_to(self.ipa_proof, RIGHT, buff = 0.1)
+        self.ipa_proof.next_to(self.ipa_commtiment, RIGHT, buff = 0.4)
+        self.ipa_proof_ec.next_to(self.ipa_proof, RIGHT, buff = 0.2)
         scene.play(Write(self.ipa_proof), Write(self.ipa_proof_ec), FadeOut(self.size_scalar_bander), run_time=1)
         scene.wait(2)
         scene.play(Indicate(self.ipa_proof[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
@@ -368,8 +368,7 @@ class EllipticCurves(SlideBase):
         self.chart_bander_whole = VGroup(self.chart_bander, self.curve_ec_bander, self.base_field_bander)
         self.chart_bander_whole.generate_target()
         self.chart_bander_whole.target.scale(0.8).shift(UP*0.8)
-        self.chart_whole = VGroup(self.chart_ec, self.point_to_generator_label2, self.point_to_generator_label,
-                                 self.circle_gen2, self.circle_gen, self.curve_ec, self.base_field_bls, self.scalar_Fr)
+        self.chart_whole = VGroup(self.chart_ec, self.curve_ec, self.base_field_bls, self.scalar_Fr)
         self.chart_whole.generate_target()
         self.chart_whole.target.scale(0.8).shift(UP*0.9)
         scene.play(MoveToTarget(self.chart_bander_whole), MoveToTarget(self.chart_whole), run_time=1)

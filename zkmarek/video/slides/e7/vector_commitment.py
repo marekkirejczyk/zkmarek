@@ -90,7 +90,7 @@ class PreviouslyVectorCommitment(SlideBase):
             max_tip_length_to_length_ratio=0.15,
         ).set_color_by_gradient([GREEN_E, MAROON_E])
 
-        self.envelope_body_closed = RoundedRectangle(width = 6, height = 3, 
+        self.envelope_body_closed = RoundedRectangle(width = 8, height = 3, 
             fill_color=PRIMARY_COLOR,
             fill_opacity=0.3,
             corner_radius=0.1,
@@ -98,8 +98,8 @@ class PreviouslyVectorCommitment(SlideBase):
         ).scale(0.3)
 
         self.envelope_flap_closed = Polygon(
-            [-3, 1, 0],
-            [3, 1, 0],
+            [-4, 1, 0],
+            [4, 1, 0],
             [0, -1.5, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
@@ -108,9 +108,9 @@ class PreviouslyVectorCommitment(SlideBase):
         self.envelope_body_closed.next_to(self.prover, RIGHT, buff=0.6)
         self.envelope_flap_closed.next_to(self.envelope_body_closed, UP, buff=-0.48).shift(DOWN*0.25)
 
-        self.commitment = Text("commitment C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25).move_to(self.envelope_body_closed.get_center())
+        self.commitment = Text("commitment  C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 22).move_to(self.envelope_body_closed.get_center())
         
-        self.data_vector_ai = MathTex(r"[{{a_0}}, {{a_1}}, {{a_2}}, {{\ldots}}, {{a_i}}, {{\ldots}}]", color = PRIMARY_COLOR, font_size=40).move_to(self.data_vector.get_center())
+        self.data_vector_ai = MathTex(r"[{{a_0}}, {{a_1}}, {{a_2}}, {{\ldots}}, {{a_i}}, {{\ldots}}]", color = PRIMARY_COLOR, font_size=40).next_to(self.prover, DOWN, buff = 0.5)
         
         self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         
@@ -124,11 +124,11 @@ class PreviouslyVectorCommitment(SlideBase):
         for i in range(len(indeces)):
             if i == 3 or i == 5:             
                 index = indeces[i]
-                index.next_to(self.data_vector_ai[2*i+1], DOWN, buff = 0.2)
+                index.next_to(self.data_vector_ai[2*i+1], DOWN, buff = 0.3)
                 self.indeces.append(index)
             else:
                 index = indeces[i]
-                index.next_to(self.rectangles_values[i], DOWN, buff = 0.1)
+                index.next_to(self.data_vector_ai[2*i+1], DOWN, buff = 0.1)
                 self.indeces.append(index)
         self.indeces = VGroup(*self.indeces)
         
@@ -154,7 +154,7 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.wait(0.2)
         scene.play(Write(self.opening2), run_time=1)
         scene.wait(2)
-        scene.play(Indicate(self.indeces[4], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
+        scene.play(Indicate(self.indeces[4], color = HIGHLIGHT_COLOR, scale_factor=2), run_time=1)
         scene.play(FadeOut(self.opening2), FadeIn(self.opening), run_time=0.4)
         scene.play(Write(self.proof_pi), run_time=1)
         scene.wait(1)
@@ -169,15 +169,14 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.play(Indicate(self.proof_pi, color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
         scene.play(Indicate(self.verifier, color=PRIMARY_COLOR), run_time=1)
         scene.wait(0.7)
-        scene.play(Indicate(self.data_vector[0][4], color=HIGHLIGHT_COLOR),
-                   Indicate(self.data_vector[1][4], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
+        scene.play(Indicate(self.data_vector_ai[4], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
         scene.play(Indicate(self.opening, color=HIGHLIGHT_COLOR), run_time=1)
         scene.wait(0.5)
         scene.play(Indicate(self.opening[1], color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
 
      
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label, self.data_vector, self.envelope, self.arrow_data_interpolation, self.arrow_interpolation_vector, 
-                           self.opening, self.proof_pi, self.verifier, self.prover, self.verifier_label, self.indeces, self.commiter_label, 
-                           self.data_points, self.interpolation, self.vector_commitment, self.commitment), run_time=1)
+        scene.play(FadeOut(self.title_label, self.data_vector_ai, self.envelope, 
+                           self.opening, self.proof_pi, self.verifier, self.prover, 
+                           self.verifier_label, self.indeces, self.commiter_label, self.commitment), run_time=1)
 
