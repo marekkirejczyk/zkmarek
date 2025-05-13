@@ -42,7 +42,6 @@ class SingleLevelVerkleTree(SlideBase):
     
         self.vector_values = VGroup(self.sixteen_element_vector, self.rectangles_values)
         
-        self.prover = ImageMobject("data/images/person_blue.png").scale(0.4).to_edge(LEFT).shift(UP*1.5)
         self.envelope = RoundedRectangle(width = 8, height = 3, 
             fill_color=PRIMARY_COLOR,
             fill_opacity=0.3,
@@ -64,11 +63,11 @@ class SingleLevelVerkleTree(SlideBase):
         
         self.commitment = Text("commitment C", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 23).move_to(self.envelope.get_center())
         
-        self.verifier = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
-        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier, DOWN, buff = 0.5)
-        self.verifier = Group(self.verifier, self.verifier_label)
-        self.prover = ImageMobject("data/images/person_blue.png").scale(0.7).shift(UP*1.5)
-        self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover, DOWN, buff = 0.5)
+        self.verifier1 = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
+        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, DOWN, buff = 0.1)
+        self.verifier = Group(self.verifier1, self.verifier_label)
+        self.prover1 = ImageMobject("data/images/person_blue.png").scale(0.7).shift(UP*1.5)
+        self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
         
         self.proof_pi = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.verifier, DOWN, buff = 0.5).shift(RIGHT * 0.5)
         self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.1)
@@ -87,8 +86,8 @@ class SingleLevelVerkleTree(SlideBase):
     def animate_in(self, scene):
         self.new_subsection(scene, "16 element vector", "data/sound/e7/slide3-1.mp3")
         scene.play(Create(self.title_label), run_time=0.5)
-        scene.play(FadeIn(self.prover), Write(self.prover_label), run_time=1)
-        self.prover = Group(self.prover, self.prover_label)
+        scene.play(FadeIn(self.prover1), Write(self.prover_label), run_time=1)
+        self.prover = Group(self.prover1, self.prover_label)
         self.rectangles_values.next_to(self.prover, DOWN, buff=0.3)
         for i in range(16):
             self.vector[i].move_to(self.rectangles_values[i].get_center())
@@ -99,7 +98,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.wait(1)
         scene.play(FadeOut(self.vector), FadeIn(self.sixteen_element_vector), run_time=0.5)
         self.vector_values.generate_target()
-        self.vector_values.target.shift(DOWN*3)
+        self.vector_values.target.shift(DOWN*2.5)
         self.prover.generate_target()
         self.prover.target.to_edge(LEFT).shift(RIGHT)
         scene.play(MoveToTarget(self.vector_values), MoveToTarget(self.prover), run_time=1)
@@ -197,16 +196,21 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(TransformMatchingShapes(VGroup(*self.arrows[0:5], *self.arrows[11:]), VGroup(*self.arrows2)), run_time=1)
         
         scene.wait(1)
-        blob = ImageMobject("data/images/blob.png").scale(0.3).shift(UP*5)
-        blob.generate_target()
-        blob.target.shift(UP*1.5)
+        self.blob = ImageMobject("data/images/blob.png").scale(0.3).shift(UP*5)
+        self.blob.generate_target()
+        self.blob.target.shift(DOWN*5)
         scene.wait(2)
-        scene.play(MoveToTarget(blob, rate_func = rate_functions.ease_out_bounce), run_time=2)
+        scene.play(MoveToTarget(self.blob, rate_func = rate_functions.ease_out_bounce), run_time=2)
+        scene.wait(2)
+        self.remaining_vector_values = VGroup(self.vector_values[0][0:5], self.vector_values[1][0:5],
+                                              self.vector_values[0][11:], self.vector_values[1][11:],)
         
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label), run_time=0.5)
-        
+        scene.play(FadeOut(self.title_label, self.blob, self.remaining_vector_values, 
+                           self.commitment_whole, self.verifier, self.prover1, self.prover_label, 
+                           *self.arrows2, self.dots2048, self.proof, self.opening2,
+                           self.indeces256, self.verifier1, self.verifier_label), run_time=1)
         
     def animate_polynomial(self):
         self.new_axes = Axes(

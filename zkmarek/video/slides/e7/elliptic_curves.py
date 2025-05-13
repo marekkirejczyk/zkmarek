@@ -270,6 +270,10 @@ class EllipticCurves(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.scalar_Fr, color = SECONDARY_COLOR), run_time=1)
         scene.play(TransformMatchingShapes(self.scalar_Fr.copy(), self.base_field_bander), run_time=1)
+        scene.wait(3)
+        scene.play(Indicate(self.base_field_bander), run_time=1)
+        scene.wait(0.5)
+        scene.play(Indicate(self.base_field_bls), run_time=1)
         scene.wait(2)
         scene.play(Write(self.size_base_field_bander), run_time=1)
         scene.wait(1)
@@ -280,11 +284,12 @@ class EllipticCurves(SlideBase):
         self.new_subsection(scene, "scalars 253 bit", "data/sound/e7/slide2-4b.mp3")
         scene.wait(1.5)
         for i in range(3):
-            scene.play(Indicate(self.ipa_commtiment[1][2*i+1], color = SECONDARY_COLOR), run_time=0.3)
+            scene.play(Indicate(self.ipa_commtiment[1][2*i+1], color = SECONDARY_COLOR, scale_factor=1.6), run_time=0.3)
         self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 0.8)
         self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
+        scene.wait(2)
         scene.play(Write(self.scalar_field_bander), run_time=1)
-        scene.wait(1)
+        scene.wait(1.5)
         scene.play(Write(self.size_scalar_bander), run_time=1)
         scene.wait(1)
         
@@ -364,7 +369,6 @@ class EllipticCurves(SlideBase):
         
     def animate_generators(self, scene):
         scene.play(FadeOut(self.size_base_field_bander))
-        scene.wait(1)
         self.chart_bander_whole = VGroup(self.chart_bander, self.curve_ec_bander, self.base_field_bander)
         self.chart_bander_whole.generate_target()
         self.chart_bander_whole.target.scale(0.8).shift(UP*0.8)
@@ -378,11 +382,10 @@ class EllipticCurves(SlideBase):
             self.point_to_generator5.get_center()
         )
         self.commitment_ipa = Text("C(IPA)", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.circle_gen5, RIGHT, buff =0.1)
+        scene.play(Write(self.ipa_commtiment), run_time=1)
         
         scene.wait(0.5)
-        scene.play(Create(self.circle_gen5), run_time=0.8)
-        scene.play(Write(self.commitment_ipa), run_time=0.8)
-        scene.play(Write(self.ipa_commtiment), run_time=1)
+        scene.play(Create(self.circle_gen5), Write(self.commitment_ipa), run_time=0.8)
         scene.wait(1)
         scene.play(Indicate(self.commitment_ipa, color=SECONDARY_COLOR), run_time=1)
         scene.wait(1)

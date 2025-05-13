@@ -173,7 +173,9 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.play(Indicate(self.opening, color=HIGHLIGHT_COLOR), run_time=1)
         scene.wait(0.5)
         scene.play(Indicate(self.opening[1], color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
-
+        scene.wait(1.5)
+        scene.play(Indicate(self.data_vector_ai, color = HIGHLIGHT_COLOR), run_time=1)
+        scene.wait(1)
      
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.data_vector_ai, self.envelope, 
