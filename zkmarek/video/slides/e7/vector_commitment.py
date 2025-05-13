@@ -142,7 +142,7 @@ class PreviouslyVectorCommitment(SlideBase):
                 self.indeces.append(index)
             else:
                 index = indeces[i]
-                index.next_to(self.rectangles_values[i], DOWN, buff = 0.2)
+                index.next_to(self.rectangles_values[i], DOWN, buff = 0.1)
                 self.indeces.append(index)
         self.indeces = VGroup(*self.indeces)
         
@@ -169,7 +169,7 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.play(Write(self.opening2), run_time=1)
         scene.wait(2)
         scene.play(Indicate(self.indeces[4], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
-        scene.play(TransformMatchingShapes(self.opening2, self.opening), run_time=1)
+        scene.play(FadeOut(self.opening2), FadeIn(self.opening), run_time=0.4)
         scene.play(Write(self.proof_pi), run_time=1)
         scene.wait(1)
         self.proof_pi.generate_target()
@@ -181,13 +181,12 @@ class PreviouslyVectorCommitment(SlideBase):
 
         self.new_subsection(scene, "proof convinces", "data/sound/e7/slide1-16.mp3")
         scene.play(Indicate(self.proof_pi, color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
-        scene.wait(0.2)
         scene.play(Indicate(self.verifier, color=PRIMARY_COLOR), run_time=1)
         scene.wait(0.7)
         scene.play(Indicate(self.data_vector[0][4], color=HIGHLIGHT_COLOR),
                    Indicate(self.data_vector[1][4], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
-        scene.wait(1)
         scene.play(Indicate(self.opening, color=HIGHLIGHT_COLOR), run_time=1)
+        scene.wait(0.5)
         scene.play(Indicate(self.opening[1], color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
         
 

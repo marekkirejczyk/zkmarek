@@ -1,5 +1,5 @@
 # from zkmarek.video.slides.common.intro import Intro
-# from zkmarek.video.slides.e7.recap import Recap
+from zkmarek.video.slides.e7.recap import Recap
 from zkmarek.video.slides.e7.vector_commitment import PreviouslyVectorCommitment
 from zkmarek.video.slides.e7.watch_other import FullVideos
 from zkmarek.video.slides.common.title import TitleSlide
@@ -11,7 +11,7 @@ EPISODE7 = [
     #     sound="data/sound/episode3/slide0-0.mp3",
     #     background_sound="data/sound/e7/background.mp3",
     # ),
-    # Recap(),
+    Recap(),
     PreviouslyVectorCommitment(),
     FullVideos(),
     TitleSlide("Elliptic curves", sound = "data/sound/e7/slide2-0.mp3", 

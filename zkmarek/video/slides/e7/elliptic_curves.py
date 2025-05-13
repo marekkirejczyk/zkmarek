@@ -276,8 +276,8 @@ class EllipticCurves(SlideBase):
         
         self.new_subsection(scene, "scalars 253 bit", "data/sound/e7/slide2-4b.mp3")
         scene.wait(2.5)
-        self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 1.0)
-        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1).shift(UP * 0.05)
+        self.scalar_field_bander.scale(0.8).next_to(self.base_field_bander, RIGHT, buff = 0.8)
+        self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1).shift(UP * 0.02)
         scene.play(Write(self.scalar_field_bander), run_time=1)
         scene.wait(1)
         scene.play(Write(self.size_scalar_bander), run_time=1)
@@ -285,7 +285,7 @@ class EllipticCurves(SlideBase):
         
         self.new_subsection(scene, "IPA proof log2(n)", "data/sound/e7/slide2-5.mp3")
         self.ipa_proof.next_to(self.ipa_commtiment, DOWN, buff = 0.4)
-        scene.play(Write(self.ipa_proof), run_time=1)
+        scene.play(Write(self.ipa_proof), FadeOut(self.size_scalar_bander), run_time=1)
         scene.wait(2)
         scene.play(Indicate(self.ipa_proof[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
         scene.wait(2.5)
@@ -295,7 +295,7 @@ class EllipticCurves(SlideBase):
         
         self.new_subsection(scene, "sizes", "data/sound/e7/slide2-6.mp3")
         scene.wait(1)
-        scene.play(FadeOut(self.scalar_field_bander, self.size_scalar_bander, self.chart_bander_whole,
+        scene.play(FadeOut(self.scalar_field_bander, self.chart_bander_whole,
                            self.chart_whole, self.scalar_Fr, self.point_to_generator_label, self.kzg,
                            self.point_to_generator_label2, self.circle_gen, self.circle_gen2, 
                            self.ipa_commtiment, self.ipa_proof, self.ipa2, self.base_field_bls), run_time=1)
@@ -391,9 +391,9 @@ class EllipticCurves(SlideBase):
                 scene.play(Create(circles[i]), FadeOut(circles[i-1]), run_time=0.2)
             else:
                 scene.play(Create(circles[i]), run_time=0.2)
-        scene.play(FadeOut(circles[5]))
+        scene.play(FadeOut(circles[5], self.size_base_field_bander))
         scene.wait(1)
-        self.chart_bander_whole = VGroup(self.chart_bander, self.curve_ec_bander, self.base_field_bander, self.size_base_field_bander)
+        self.chart_bander_whole = VGroup(self.chart_bander, self.curve_ec_bander, self.base_field_bander)
         self.chart_bander_whole.generate_target()
         self.chart_bander_whole.target.scale(0.8).shift(UP*0.8)
         self.chart_whole = VGroup(self.chart_ec, self.point_to_generator_label2, self.point_to_generator_label,
@@ -423,9 +423,9 @@ class EllipticCurves(SlideBase):
                                     self.kzg_ipa_table.key_cells[:][0:2], self.kzg_ipa_table.value_cells[:][0:2], self.kzg_ipa_table.vec_column[:][0:2])
         scene.wait(1.5)
         scene.play(self.current_table.animate.scale(0.5).shift(LEFT*2), run_time=1)
-        self.n256 = MathTex(r"n \sim 2^{256}", color=SECONDARY_COLOR, font_size=30).next_to(self.current_table, RIGHT+UP, buff = 1.0).shift(RIGHT)
+        self.n256 = MathTex(r"n \sim 2^{256}", color=SECONDARY_COLOR, font_size=30).next_to(self.current_table, RIGHT+UP, buff = 0.3).shift(RIGHT*1.5)
         self.proof_256 = MathTex(r"\pi \sim \log_2({{256}}) \sim {{8}}", color=SECONDARY_COLOR, font_size=30).next_to(self.n256, DOWN, buff = 0.5)
-        self.proof_256_2 = MathTex(r"\pi \sim \log_2({{256}}) \sim {{256 \mathrm{b}}}", color=SECONDARY_COLOR, font_size=30).next_to(self.n256, DOWN, buff = 0.5)
+        self.proof_256_2 = MathTex(r"\pi \sim \log_2({{256}}) \sim {{256 \  \mathrm{b}}}", color=SECONDARY_COLOR, font_size=30).next_to(self.n256, DOWN, buff = 0.5)
         scene.wait(1)
         scene.play(Write(self.n256), run_time=0.5)
         scene.wait(1)
