@@ -27,8 +27,6 @@ from zkmarek.video.constant import (
     HIGHLIGHT_COLOR,
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
-from zkmarek.video.slides.e6.curve import Curve
 
 
 class PreviouslyVectorCommitment(SlideBase):
