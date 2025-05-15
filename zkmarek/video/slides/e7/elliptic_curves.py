@@ -337,7 +337,8 @@ class EllipticCurves(SlideBase):
         scene.play(Create(self.kzg_ipa_table.key_cells[:][0]),
                    Create(self.kzg_ipa_table.vec_column[:][0]),
                    Create(self.kzg_ipa_table.sizes_kzg[:][0]),
-                Create(self.kzg_ipa_table.sizes_ipa[:][0]), run_time=1)
+                Create(self.kzg_ipa_table.sizes_ipa[:][0]),
+                    Create(self.kzg_ipa_table.value_cells[:][0]), run_time=1)
         scene.wait(2)
         scene.play(Create(self.kzg_ipa_table.key_cells[:][1]),
                           Create(self.kzg_ipa_table.vec_column[:][1]),

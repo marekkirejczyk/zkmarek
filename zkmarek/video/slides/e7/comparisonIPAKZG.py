@@ -5,12 +5,12 @@ class TableKZGIPA(VGroup):
     def __init__(self):
         super().__init__()
 
-        vec_commitment_column = ["vector\n elements", "proof", "commitment" ,
-                                 "      trusted setup", "require\n pairings"]
-        kzg_values = [ "   1 scalar field \n element", "1 EC point","1 EC point", 
+        vec_commitment_column = ["   vector\n elements", "proof", "commitment" ,
+                                 "      trusted setup", " require\n pairings"]
+        kzg_values = [ "1 scalar\n field \n element", "1 EC\n point","1 EC point", 
                       "Yes", "Yes"]
         
-        ipa_values = ["   1 scalar field\n element", "1 EC point", "log2(n)\n EC points", 
+        ipa_values = ["   1 scalar field\n element", "1 EC\n point", "log2(n)\n EC points", 
                       "No", "No"]
         
         sizes_kzg = ["<32 B", "<48 B", "<48 B"]
@@ -58,7 +58,7 @@ class TableKZGIPA(VGroup):
             ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing))
             
             key_cell_ec_scalar = RoundedRectangle(
-                width=cell_width*2/3,
+                width=cell_width*20/33,
                 height=cell_height,
                 corner_radius=corner_radius,
                 fill_opacity=0.3,
@@ -67,7 +67,7 @@ class TableKZGIPA(VGroup):
             ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing)+LEFT*0.4)
             
             key_cell_size = RoundedRectangle(
-                width=cell_width*1/3,
+                width=cell_width*10/33,
                 height=cell_height,
                 corner_radius=corner_radius,
                 fill_opacity=0.3,
@@ -77,8 +77,8 @@ class TableKZGIPA(VGroup):
 
             if i < 3:
                 key_cell_true = key_cell_ec_scalar
-                value_cell_true = key_cell_ec_scalar.copy().shift(RIGHT*0.85 * (cell_width + 0.3))
-                size_kzg_cell = key_cell_size.copy().shift(RIGHT*0.25 * (cell_width + 0.3))
+                size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.1)
+                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.33)
                 size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.1)
 
             else:
@@ -87,10 +87,10 @@ class TableKZGIPA(VGroup):
                 
             vec_cell = key_cell.copy().shift(LEFT * (cell_width + 0.3)).set_color(HIGHLIGHT_COLOR)
             vec_text = Text(vec_column, font=PRIMARY_FONT, font_size=23, color=HIGHLIGHT_COLOR).move_to(vec_cell)
-            key_text = Text(key, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(key_cell)
-            value_text = Text(value, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(value_cell_true)
-            size_kzg_text = Text(size_kzg, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(value_cell_true)
-            size_ipa_text = Text(size_ipa, font=PRIMARY_FONT, font_size=23, color=PRIMARY_COLOR).move_to(value_cell_true)
+            key_text = Text(key, font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(key_cell_true)
+            value_text = Text(value, font=PRIMARY_FONT, font_size=15, color=PRIMARY_COLOR).move_to(value_cell_true)
+            size_kzg_text = Text(size_kzg, font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(size_kzg_cell)
+            size_ipa_text = Text(size_ipa, font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(size_ipa_cell)
             
             self.vec_column.add(VGroup(vec_cell, vec_text))
             self.key_cells.add(VGroup(key_cell_true, key_text))
