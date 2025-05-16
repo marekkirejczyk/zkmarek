@@ -38,7 +38,6 @@ class ThreeLevelVerkleTree(SlideBase):
         
         self.new_subsection(scene, "3 levels", "data/sound/e7/slide4-8.mp3")
         
-        self.new_subsection(scene, "3 levels", "data/sound/e7/slide4-9.mp3")
         
         self.new_subsection(scene, "3 levels", "data/sound/e7/slide4-10.mp3")
         
