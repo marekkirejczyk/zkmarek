@@ -334,29 +334,33 @@ class EllipticCurves(SlideBase):
         self.kzg_ipa_table.get_table_without_stuff(scene)
         
         self.new_subsection(scene, "openings", "data/sound/e7/slide2-6c.mp3")
+        scene.play(Create(self.kzg_ipa_table.vec_column[:][0]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.key_cells[:][0]),
-                   Create(self.kzg_ipa_table.vec_column[:][0]),
-                   Create(self.kzg_ipa_table.sizes_kzg[:][0]),
-                Create(self.kzg_ipa_table.sizes_ipa[:][0]),
                     Create(self.kzg_ipa_table.value_cells[:][0]), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.kzg_ipa_table.key_cells[:][0], color = HIGHLIGHT_COLOR, scale_factor=1.5),
+                   Indicate(self.kzg_ipa_table.value_cells[:][0], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
+        scene.wait(0.5)
+        scene.play(Create(self.kzg_ipa_table.sizes_kzg[:][0]),
+                   Create(self.kzg_ipa_table.sizes_ipa[:][0]), run_time=1)
         scene.wait(2)
+        
+        self.new_subsection(scene, "KZG commitment", "data/sound/e7/slide2-6a.mp3")
         scene.play(Create(self.kzg_ipa_table.key_cells[:][1]),
                           Create(self.kzg_ipa_table.vec_column[:][1]),
                            Create(self.kzg_ipa_table.sizes_kzg[:][1]), run_time=1)
-        
-        self.new_subsection(scene, "KZG commitment", "data/sound/e7/slide2-6a.mp3")
         scene.play(Create(self.kzg_ipa_table.key_cells[:][2]),
                    Create(self.kzg_ipa_table.sizes_kzg[:][2]),
                    Create(self.kzg_ipa_table.vec_column[:][2]), run_time=1)
         scene.wait(1)
-        scene.play(Create(self.kzg_ipa_table.value_cells[:][2]), run_time=1)
         
         self.new_subsection(scene, "IPA proof", "data/sound/e7/slide2-6b.mp3")
-        scene.play(Create(self.kzg_ipa_table.value_cells[:][1]),
-                   Create(self.kzg_ipa_table.sizes_ipa[:][1]), run_time=1)
-        scene.wait(4.5)
-        scene.play(Create(self.kzg_ipa_table.value_cells[:][2]),
-                   Create(self.kzg_ipa_table.sizes_ipa[:][2]), run_time=1)
+        scene.wait(1)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][2]), run_time=1)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][1]), run_time=1)
+        scene.wait(2.5)
+        scene.play(Create(self.kzg_ipa_table.sizes_ipa[:][1]), run_time=1)
+        scene.play(Create(self.kzg_ipa_table.sizes_ipa[:][2]), run_time=1)
         
         
         self.new_subsection(scene, "trusted setup", "data/sound/e7/slide2-6d.mp3")

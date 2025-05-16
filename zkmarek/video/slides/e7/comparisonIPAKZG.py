@@ -7,14 +7,14 @@ class TableKZGIPA(VGroup):
 
         vec_commitment_column = ["   vector\n elements", "proof", "commitment" ,
                                  "      trusted setup", " require\n pairings"]
-        kzg_values = [ "1 scalar\n field \n element", "1 EC\n point","1 EC point", 
+        kzg_values = [ "  scalar\n   field \n element", "1 EC point","1 EC point", 
                       "Yes", "Yes"]
         
-        ipa_values = ["   1 scalar field\n element", "1 EC\n point", "log2(n)\n EC points", 
+        ipa_values = ["  scalar\n   field \n element", "1 EC point", "  2log2(n)\n EC points", 
                       "No", "No"]
         
         sizes_kzg = ["<32 B", "<48 B", "<48 B"]
-        sizes_ipa = ["<32 B", "<32 B", "x <48 B"]
+        sizes_ipa = ["<32 B", "<32 B", "each\n<48 B"]
 
         cell_width = 2.4
         cell_height = 0.8
@@ -88,7 +88,7 @@ class TableKZGIPA(VGroup):
             vec_cell = key_cell.copy().shift(LEFT * (cell_width + 0.3)).set_color(HIGHLIGHT_COLOR)
             vec_text = Text(vec_column, font=PRIMARY_FONT, font_size=23, color=HIGHLIGHT_COLOR).move_to(vec_cell)
             key_text = Text(key, font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(key_cell_true)
-            value_text = Text(value, font=PRIMARY_FONT, font_size=15, color=PRIMARY_COLOR).move_to(value_cell_true)
+            value_text = Text(value, font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(value_cell_true)
             size_kzg_text = Text(size_kzg, font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(size_kzg_cell)
             size_ipa_text = Text(size_ipa, font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(size_ipa_cell)
             

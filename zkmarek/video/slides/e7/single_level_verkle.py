@@ -64,12 +64,14 @@ class SingleLevelVerkleTree(SlideBase):
         self.commitment = Text("commitment C", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 23).move_to(self.envelope.get_center())
         
         self.verifier1 = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
-        self.verifier_label = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, DOWN, buff = 0.1)
+        self.verifier_label = Text("verification function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, DOWN, buff = 0.1)
+        self.verifier_label2 = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, UP, buff = 0.1)
         self.verifier = Group(self.verifier1, self.verifier_label)
         self.prover1 = ImageMobject("data/images/person_blue.png").scale(0.7).shift(UP*1.5)
-        self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
+        self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, UP, buff = 0.1)
+        self.prover_label2 = Text("insert function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
         
-        self.proof_pi = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.verifier, DOWN, buff = 0.5).shift(RIGHT * 0.5)
+        self.proof_pi = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.prover, RIGHT, buff = 0.5).shift(RIGHT * 0.5)
         self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.1)
         self.proof = VGroup(self.proof, self.proof_pi)
         self.opening = MathTex(r"{{a_{12} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.3)
@@ -85,28 +87,46 @@ class SingleLevelVerkleTree(SlideBase):
 
     def animate_in(self, scene):
         self.new_subsection(scene, "16 element vector", "data/sound/e7/slide3-1.mp3")
-        scene.play(Create(self.title_label), run_time=0.5)
-        scene.play(FadeIn(self.prover1), Write(self.prover_label), run_time=1)
-        self.prover = Group(self.prover1, self.prover_label)
+        scene.play(Create(self.title_label), run_time=1.0)
         self.rectangles_values.next_to(self.prover, DOWN, buff=0.3)
         for i in range(16):
             self.vector[i].move_to(self.rectangles_values[i].get_center())
             self.sixteen_element_vector[i].move_to(self.rectangles_values[i].get_center())
             
-        scene.play(Create(self.rectangles_values), run_time=0.5)
-        scene.play(Write(self.vector), run_time=0.5)
+        scene.play(Create(self.rectangles_values), run_time=1.0)
+        scene.play(Write(self.vector), run_time=1.0)
         scene.wait(1)
-        scene.play(FadeOut(self.vector), FadeIn(self.sixteen_element_vector), run_time=0.5)
+        scene.play(FadeOut(self.vector), FadeIn(self.sixteen_element_vector), run_time=1.0)
+        
+        
+        self.new_subsection(scene, "insert function", "data/sound/e7/slide3-1a.mp3")
         self.vector_values.generate_target()
         self.vector_values.target.shift(DOWN*2.5)
+        scene.play(MoveToTarget(self.vector_values), run_time=1.0)
+        scene.play(FadeIn(self.prover1), Write(self.prover_label2), run_time=1)
+        scene.play(Indicate(self.vector_values, color = PRIMARY_COLOR), run_time=1)
+        scene.wit(0.5)
+        scene.play(Write(self.prover_label), run_time=1)
+        scene.wait(0.5)
+        self.prover = Group(self.prover1, self.prover_label, self.prover_label2)
+        sixteen_element_vector2 = [4, 16, 22, 24, 22, 19, 20, 20, 22, 5, 35, 45, 55, 65, 75, 85]
+        self.sixteen_element_vector2 = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in sixteen_element_vector2]).arrange(RIGHT, buff=0.1)
+        for i in range(16):
+            self.sixteen_element_vector2[i].move_to(self.rectangles_values[i].get_center())
+        scene.wait(0.2)
+        scene.play(Indicate(self.prover, color = PRIMARY_COLOR), run_time=1)
+        scene.wait(0.5)
+        scene.play(self.sixteen_element_vector[9].animate.set_opacity(0.0), FadeIn(self.sixteen_element_vector2[9]), run_time=1)
+        scene.wait(1)
+        scene.play(self.sixteen_element_vector[9].animate.set_opacity(1.0), FadeOut(self.sixteen_element_vector2[9]), run_time=1)
+        
         self.prover.generate_target()
         self.prover.target.to_edge(LEFT).shift(RIGHT)
-        scene.play(MoveToTarget(self.vector_values), MoveToTarget(self.prover), run_time=1)
-        
+        scene.play(MoveToTarget(self.prover), run_time=1)
         scene.play(FadeIn(self.envelope, self.envelope_flap_closed), run_time=0.8)
         scene.wait(1)
-        
         scene.play(Create(self.commitment))
+        
         self.arrows = []
         for i in range(16):
             self.create_arrow(self.envelope, self.rectangles_values[i], where_to_append=self.arrows)
@@ -114,8 +134,13 @@ class SingleLevelVerkleTree(SlideBase):
         for i in range(16):
             scene.play(Create(self.arrows[i]), run_time=0.1)
         
-        self.new_subsection(scene, "number belongs to vector", "data/sound/e7/slide3-1a.mp3")
+        
+        self.new_subsection(scene, "function that verifies", "data/sound/e7/slide3-1b.mp3")
+        
         scene.play(FadeIn(self.verifier), run_time=0.7)
+        scene.wait(2)
+        scene.play(Write(self.verifier_label2), run_time=0.7)
+        self.verifier.add(self.verifier_label2)
         scene.wait(1)
         scene.play(Indicate(self.rectangles_values[6], color = PRIMARY_COLOR),
                    Indicate(self.sixteen_element_vector[6], color = PRIMARY_COLOR), run_time=0.9)
@@ -127,23 +152,12 @@ class SingleLevelVerkleTree(SlideBase):
         scene.wait(1)
         scene.play(Write(self.opening), run_time=0.7)
         scene.wait(1)
-        
-        self.new_subsection(scene, "tree modification", "data/sound/e7/slide3-1b.mp3")
-        sixteen_element_vector2 = [4, 16, 22, 24, 22, 19, 20, 20, 22, 5, 35, 45, 55, 65, 75, 85]
-        self.sixteen_element_vector2 = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in sixteen_element_vector2]).arrange(RIGHT, buff=0.1)
-        for i in range(16):
-            self.sixteen_element_vector2[i].move_to(self.rectangles_values[i].get_center())
-        scene.wait(0.2)
-        scene.play(Indicate(self.prover, color = PRIMARY_COLOR), run_time=1)
-        scene.wait(0.5)
-        scene.play(self.sixteen_element_vector[9].animate.set_opacity(0.0), FadeIn(self.sixteen_element_vector2[9]), run_time=1)
-        scene.wait(1)
-        scene.play(self.sixteen_element_vector[9].animate.set_opacity(1.0), FadeOut(self.sixteen_element_vector2[9]), run_time=1)
-        scene.play(Indicate(self.verifier, color = PRIMARY_COLOR), run_time=1)
-        scene.wait(0.3)
-        scene.play(Indicate(self.opening, color = HIGHLIGHT_COLOR), run_time=1)
-        scene.wait(1)
-        
+        self.proof.generate_target()
+        self.proof.target.next_to(self.verifier, DOWN, buff = 0.3)
+        self.opening.generate_target()
+        self.opening.target.next_to(self.proof.target, DOWN, buff = 0.3)
+        scene.play(MoveToTarget(self.proof), MoveToTarget(self.opening), run_time=1)
+    
         self.new_subsection(scene, "ec points", "data/sound/e7/slide3-2.mp3")
         scene.wait(0.5)
         self.commitment_whole = VGroup(self.envelope, self.envelope_flap_closed, self.commitment)
