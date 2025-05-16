@@ -22,7 +22,7 @@ class ThreeLevelVerkleTree(SlideBase):
         rectangle = RoundedRectangle(corner_radius=0.1, width = 0.5, height = 0.5, fill_opacity = 0.25,  stroke_width = 0.0).set_color(SECONDARY_COLOR)
         
         self.internal_node = [rectangle.copy().scale(2) for _ in range(4)]
-        self.internal_node = VGroup(*self.internal_node).arrange(RIGHT, buff = 0.15).shift(DOWN * 2.5)
+        self.internal_node = VGroup(*self.internal_node).arrange(RIGHT, buff = 0.15).shift(DOWN * 3)
         self.internal_node2 = [rectangle.copy() for _ in range(4)]
         self.internal_node2 = VGroup(*self.internal_node2).arrange(RIGHT, buff = 0.15).shift(DOWN*1.5+RIGHT*2)
         
@@ -91,7 +91,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.final_parent_node_text = Text(r"C", font=PRIMARY_FONT, font_size=30, color=SECONDARY_COLOR).move_to(self.final_parent_node_rec.get_center())
         self.final_parent_node = VGroup(self.final_parent_node_rec, self.final_parent_node_text)
         
-        self.values256 = MathTex(r"256 \mathrm{values}", font_size=45, color = PRIMARY_COLOR)
+        self.values256 = MathTex(r"256 \  \mathrm{values}", font_size=45, color = PRIMARY_COLOR)
         
         self.values2_to_8 = MathTex(r"256 = {{2^8}}", font_size=45, color = PRIMARY_COLOR)
         self.values2_to_24 = MathTex(r"({{256}})^3 = ({{2^8}})^3 = {{2^{24}}}", font_size=45, color = PRIMARY_COLOR)
@@ -129,8 +129,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.new_subsection(scene, "parent to 256 value", "data/sound/e7/slide4-3.mp3")
         values = [self.internal_node, self.internal_node2]
         for value in values:
-            for i in range(len(value)):
-                Indicate(value[i], run_time=0.3)
+            Indicate(value, run_time=0.3)
             
         self.new_subsection(scene, "array of commitments", "data/sound/e7/slide4-4.mp3")
         scene.wait(1.5)
@@ -158,7 +157,7 @@ class ThreeLevelVerkleTree(SlideBase):
         scene.play(Write(self.scalar_brace), Write(self.scalar), run_time=1)
         scene.wait(1)
         scene.play(Write(self.commitment_size_brace), Write(self.ec_point), run_time=1)
-        scene.wait(1)
+        scene.wait(2)
         self.commitment_to_ec_values.next_to(self.commitmentcdots, UP, buff = 1.0).shift(LEFT * 0.5)
         scene.play(Write(self.commitment_to_ec_values), run_time=1)
         scene.wait(1)
@@ -246,9 +245,10 @@ class ThreeLevelVerkleTree(SlideBase):
         self.whole_tree_until_C10.add(self.final_parent_node,*arrows_final)
         
         self.new_subsection(scene, "simple math", "data/sound/e7/slide4-11.mp3")
+        scene.wait(1)
         self.whole_tree_until_C10.generate_target()
         self.whole_tree_until_C10.target.scale(0.75).shift(LEFT*2)
-        scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=1)
+        scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=2.5)
         
         self.new_subsection(scene, "simple level VT holds 256 vals", "data/sound/e7/slide4-11a.mp3")
         for node in self.internal_node:
@@ -256,12 +256,12 @@ class ThreeLevelVerkleTree(SlideBase):
         
         self.values256.next_to(self.whole_tree_until_C10, RIGHT, buff = 1.0).shift(RIGHT*0.5+UP)
         self.values2_to_8.next_to(self.whole_tree_until_C10, RIGHT, buff = 1.0).shift(RIGHT*0.5+UP)
-        self.values2_to_24.next_to(self.whole_tree_until_C10, RIGHT, buff = 1.0).shift(RIGHT*0.4+UP)
-        self.values_four_level.next_to(self.whole_tree_until_C10, RIGHT, buff = 1.0).shift(RIGHT*0.2+UP)
+        self.values2_to_24.next_to(self.whole_tree_until_C10, RIGHT, buff = 1.0).shift(RIGHT*0.3+UP)
+        self.values_four_level.next_to(self.whole_tree_until_C10, RIGHT, buff = 1.0).shift(UP)
         scene.play(Write(self.values256), run_time=1)
         scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.values256, self.values2_to_8), run_time=0.5)
-        scene.wait(1.5)
+        scene.wait(2.5)
         scene.play(TransformMatchingShapes(self.values2_to_8, self.values2_to_24), run_time=0.5)
         scene.wait(1.5)
         
@@ -311,7 +311,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.create_arrow(self.commitment_to_commitment, self.commitment_to_third, arrows)
         arrows = VGroup(*arrows)
         scene.play(Write(arrows), Create(self.commitment_to_commitment), run_time=0.5)
-        scene.wait(1)
+        scene.wait(2)
         scene.play(FadeOut(self.first_block, self.commitment_to_commitment, self.commitment_to_first, self.commitment_to_second,
                            self.commitment_to_third, arrows), FadeOut(self.second_block), FadeOut(self.third_block), run_time=1)
         
