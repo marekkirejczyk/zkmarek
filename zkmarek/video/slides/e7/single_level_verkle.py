@@ -116,7 +116,8 @@ class SingleLevelVerkleTree(SlideBase):
         scene.wait(0.2)
         scene.play(Indicate(self.prover, color = PRIMARY_COLOR), run_time=1)
         scene.wait(0.5)
-        scene.play(self.sixteen_element_vector[9].animate.set_opacity(0.0), FadeIn(self.sixteen_element_vector2[9]), run_time=1)
+        scene.play(self.sixteen_element_vector[9].animate.set_opacity(0.0), FadeIn(self.sixteen_element_vector2[9]),
+                   Indicate(self.rectangles_values[9]), run_time=1)
         scene.wait(1)
         scene.play(self.sixteen_element_vector[9].animate.set_opacity(1.0), FadeOut(self.sixteen_element_vector2[9]), run_time=1)
         
@@ -137,14 +138,14 @@ class SingleLevelVerkleTree(SlideBase):
         self.new_subsection(scene, "function that verifies", "data/sound/e7/slide3-1b.mp3")
         scene.wait(1.5)
         scene.play(FadeIn(self.verifier), run_time=0.7)
-        scene.wait(2)
+        scene.wait(1.5)
         scene.play(Indicate(self.rectangles_values[6], color = PRIMARY_COLOR),
                    Indicate(self.sixteen_element_vector[6], color = PRIMARY_COLOR), run_time=0.9)
         scene.play(Indicate(self.rectangles_values, color = HIGHLIGHT_COLOR),
                    Indicate(self.sixteen_element_vector, color = HIGHLIGHT_COLOR), run_time=0.9)
         scene.play(Write(self.verifier_label2), run_time=1.0)
         self.verifier.add(self.verifier_label2)
-        scene.wait(1)
+        scene.wait(3.5)
         
         scene.play(Write(self.proof), run_time=0.7)
         scene.wait(1)
@@ -220,7 +221,8 @@ class SingleLevelVerkleTree(SlideBase):
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.blob, self.remaining_vector_values, 
                            self.commitment_whole, self.verifier, self.prover1, self.prover_label, 
-                           *self.arrows2, self.dots2048, self.proof, self.opening2,
+                           *self.arrows2, self.dots2048, self.proof, self.opening3, self.indeces256,
+                           self.prover_label2,
                            self.indeces256, self.verifier1, self.verifier_label), run_time=1)
         
     def animate_polynomial(self):
