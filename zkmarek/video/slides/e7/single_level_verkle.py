@@ -2,7 +2,7 @@ from manim import (FadeIn, FadeOut, Indicate, MoveToTarget, Write, Create, Text,
                    MathTex, UP, RoundedRectangle, VGroup, RIGHT, DOWN, Axes, LEFT, ValueTracker,
                    ImageMobject, Polygon, Arrow, StealthTip, Transform, rate_functions, TransformMatchingShapes)
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR, HIGHLIGHT2_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.e7.curve import Curve
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 
