@@ -222,8 +222,7 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(FadeOut(self.title_label, self.blob, self.remaining_vector_values, 
                            self.commitment_whole, self.verifier, self.prover1, self.prover_label, 
                            *self.arrows2, self.dots2048, self.proof, self.opening3, self.indeces256,
-                           self.prover_label2,
-                           self.indeces256, self.verifier1, self.verifier_label), run_time=1)
+                           self.prover_label2, self.verifier1, self.verifier_label), run_time=1)
         
     def animate_polynomial(self):
         self.new_axes = Axes(

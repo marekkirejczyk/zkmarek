@@ -171,7 +171,9 @@ class ThreeLevelVerkleTree(SlideBase):
             
         self.new_subsection(scene, "parent to 256 value", "data/sound/e7/slide4-3.mp3")
         values = [self.internal_node, self.internal_node2]
-        for value in values:
+        for value in self.internal_node:
+            Indicate(value, run_time=0.3) 
+        for value in self.internal_node2:
             Indicate(value, run_time=0.3)
             
         self.new_subsection(scene, "array of commitments", "data/sound/e7/slide4-4.mp3")
@@ -220,8 +222,9 @@ class ThreeLevelVerkleTree(SlideBase):
         self.scalar_brace.put_at_tip(self.scalar_size)
         self.scalar_brace.put_at_tip(self.scalar_size_ipa)
         scene.play(FadeOut(self.scalar, self.ec_point))
-        scene.play(Write(self.commitment_size), Write(kzg_text), run_time=1)
         scene.wait(1)
+        scene.play(Write(self.commitment_size), Write(kzg_text), run_time=1)
+        scene.wait(2)
         scene.play(Write(self.scalar_size), run_time=1)
         
         self.new_subsection(scene, "sizes ec and scalar in IPA", "data/sound/e7/slide4-5b.mp3")
@@ -264,8 +267,6 @@ class ThreeLevelVerkleTree(SlideBase):
         self.new_subsection(scene, "and it gathers 256 commitments", "data/sound/e7/slide4-8.mp3")
         for hash in self.hashaes_of_commitments[:]:
             scene.play(Indicate(hash), run_time=0.3)
-        
-        self.new_subsection(scene, "reduce root commitments->commit to them->with final parent node", "data/sound/e7/slide4-10.mp3")
         self.commitment_C01.generate_target()
         self.commitment_C01.target.next_to(self.hashaes_of_commitments[:][0], UP, buff = 0.4).shift(LEFT * 1.25)
         scene.play(MoveToTarget(self.commitment_C01), FadeOut(self.arrow_commitment_C01), run_time=1)
@@ -286,6 +287,8 @@ class ThreeLevelVerkleTree(SlideBase):
         self.arrow_commitment_C01 = VGroup(*self.arrow_commitment_C01)
         
         scene.play(Create(self.other_commitments), Write(self.arrow_commitment_C01), run_time=1)  
+        
+        self.new_subsection(scene, "reduce root commitments->commit to them->with final parent node", "data/sound/e7/slide4-10.mp3")
         self.other_commitments.add(self.commitment_C01, self.arrow_commitment_C01)
         self.other_hashes.next_to(self.other_commitments[0], UP, buff = 0.01)
         self.whole_tree_until_C10.add(self.other_commitments, self.other_hashes)
@@ -328,7 +331,7 @@ class ThreeLevelVerkleTree(SlideBase):
         scene.wait(1)
 
         other_nodes = self.internal_node2
-        texts_nodes = self.node2_texts
+
         scene.play(Write(self.three_level), run_time=0.5)
         scene.play(other_nodes.animate.set_opacity(0.4), run_time=0.5)
         scene.play(self.right_commitments_opacity.animate.set_opacity(0.4),
@@ -345,10 +348,10 @@ class ThreeLevelVerkleTree(SlideBase):
     
     
         scene.wait(2)
-        scene.play(TransformMatchingShapes(self.three_level, self.four_level), run_time=0.5)
-        scene.wait(1.5)
         
         self.new_subsection(scene, "4 level deep squeeze in all of the ETH acc", "data/sound/e7/slide4-11b.mp3")
+        scene.play(TransformMatchingShapes(self.three_level, self.four_level), run_time=0.5)
+        scene.wait(1.5)
         scene.play(TransformMatchingShapes(self.values2_to_24, self.values_four_level), run_time=0.5)
         self.create_ethereum_addresses_counter(scene)
         
@@ -362,13 +365,13 @@ class ThreeLevelVerkleTree(SlideBase):
         rectangle = RoundedRectangle(corner_radius=0.1, width = 0.5, height = 0.5, fill_opacity = 0.25,  stroke_width = 0.0).set_color(SECONDARY_COLOR)
         self.first_block = [rectangle.copy() for _ in range(10)]
         self.first_block = VGroup(*self.first_block).arrange(RIGHT, buff = 0.05)
-        self.cdots = Text(r"...", font=PRIMARY_FONT, font_size=40, color=PRIMARY_COLOR).move_to(self.first_block[5]).shift(LEFT*0.2)
+        self.cdots = Text(r"...", font=PRIMARY_FONT, font_size=40, color=PRIMARY_COLOR).move_to(self.first_block[5]).shift(LEFT*0.22)
                 
         self.third_block = self.first_block.copy()
         self.second_block = self.first_block.copy()
-        self.cdots3 = self.cdots.copy().move_to(self.third_block[5]).shift(LEFT * 0.2)
+        self.cdots3 = self.cdots.copy().move_to(self.third_block[5]).shift(LEFT * 0.22)
         self.first_block.add(self.cdots)
-        self.cdots2 = self.cdots.copy().move_to(self.second_block[5]).shift(LEFT * 0.2)
+        self.cdots2 = self.cdots.copy().move_to(self.second_block[5]).shift(LEFT * 0.22)
         self.second_block.add(self.cdots2)
         self.third_block.add(self.cdots3)
         
