@@ -6,6 +6,7 @@
 # from zkmarek.video.slides.e7.elliptic_curves import EllipticCurves
 from zkmarek.video.slides.e7.single_level_verkle import SingleLevelVerkleTree
 from zkmarek.video.slides.e7.three_level_vt import ThreeLevelVerkleTree
+from zkmarek.video.slides.e7.proofs import Proofs
 
 EPISODE7 = [
     # Intro(
@@ -21,4 +22,5 @@ EPISODE7 = [
     # TitleSlide("Verkle trees", sound = "data/sound/e7/slide2-7.mp3", wait_time=2),
     SingleLevelVerkleTree(),
     ThreeLevelVerkleTree(),
+    Proofs(),
 ]
