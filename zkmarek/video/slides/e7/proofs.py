@@ -1,7 +1,8 @@
 from manim import (Text, Write, UP, RIGHT, DOWN, LEFT, VGroup, FadeOut, RoundedRectangle, Arrow, StealthTip, Create, 
-                   MoveToTarget, ORIGIN)
+                   MoveToTarget, ORIGIN, ImageMobject, Polygon, FadeIn, MathTex, Group)
 from zkmarek.video.slides.common.slide_base import SlideBase
-from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR
+from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
+
 class Proofs(SlideBase):
     def __init__(self)-> None:
         super().__init__("Proofs")
@@ -63,7 +64,30 @@ class Proofs(SlideBase):
             self.create_arrow(self.hashes_commitments_root, self.hashes_commitments_level3[i], self.arrows)
             
         ## node rectangles
-        node = RoundedRectangle()
+        
+        ## other elements
+        self.prover = ImageMobject("data/images/person.png").scale(0.5).to_edge(LEFT, buff=1.0).shift(RIGHT+UP*1.5)
+        self.prover_label = Text("insert function", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.prover, DOWN, buff = 0.2)
+        self.prover_whole = Group(self.prover, self.prover_label)
+        
+        self.verifier = ImageMobject("data/images/person_blue.png").scale(0.5).to_edge(RIGHT, buff=1.0).shift(LEFT+UP*1.5)
+        self.verifier_label = Text("verification function", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.prover, DOWN, buff = 0.2)
+        self.verifier_whole = Group(self.verifier, self.verifier_label)
+        
+        self.commitment = Text("C", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.prover_whole, RIGHT, buff = 1.)
+        self.envelope = RoundedRectangle(width = 8 * 0.3, height = 4 * 0.3, fill_opacity = 0.3, stroke_width = 0.0, corner_radius=0.1).set_color(PRIMARY_COLOR).move_to(self.commitment.get_center())
+        self.envelope_flap_closed = Polygon(
+            [-4.3, 1, 0],
+            [4.3, 1, 0],
+            [0, -1.6, 0],
+            fill_color=HIGHLIGHT_COLOR,
+            fill_opacity=0.2,
+            stroke_width = 0.0
+        ).scale(0.27).shift(UP*0.55)
+        
+        self.proof_text = Text("proof", font = PRIMARY_FONT, color = PRIMARY_COLOR, font_size = 30).next_to(self.commitment, DOWN, buff = 0.7)
+        self.pi = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof_text, RIGHT, buff = 0.05)
+        self.proof = VGroup(self.proof_text, self.pi)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "85: proof C, opening", "data/sound/e7/slide5-1.mp3")
@@ -71,6 +95,12 @@ class Proofs(SlideBase):
         scene.wait(1)
         self.values.scale(2).move_to(ORIGIN)
         scene.play(Write(self.values), run_time=0.7)
+        scene.wait(1)
+        scene.play(FadeIn(self.verifier_whole, self.prover_whole), run_time=0.5)
+        scene.play(Write(self.commitment),
+                   Create(self.envelope), Create(self.envelope_flap_closed), run_time=0.5)
+        scene.play(Write(self.proof), run_time=0.5)
+        
         
         self.new_subsection(scene, "multi-level", "data/sound/e7/slide5-2.mp3")
         self.values.generate_target()
