@@ -1,6 +1,6 @@
 from manim import (FadeIn, FadeOut, Indicate, MoveToTarget, Write, Create, Text, Group,
                    MathTex, UP, RoundedRectangle, VGroup, RIGHT, DOWN, Axes, LEFT, ValueTracker,
-                   ImageMobject, Polygon, Arrow, StealthTip, Transform, rate_functions, TransformMatchingShapes)
+                   ImageMobject, Polygon, Arrow, StealthTip, rate_functions, TransformMatchingShapes)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.e7.curve import Curve
@@ -197,7 +197,7 @@ class SingleLevelVerkleTree(SlideBase):
         self.vector_values[1][0:5].animate.shift(RIGHT * 0.3),
         self.vector_values[0][11:].animate.shift(LEFT * 0.3),
         self.vector_values[1][11:].animate.shift(LEFT * 0.3),
-        Transform(self.indeces, self.indeces256),
+        TransformMatchingShapes(self.indeces, self.indeces256),
         TransformMatchingShapes(self.opening2, self.opening3), run_time=2)
         self.arrows2 = []
         for i in range(5):
