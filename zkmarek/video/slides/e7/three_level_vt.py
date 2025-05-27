@@ -363,11 +363,11 @@ class ThreeLevelVerkleTree(SlideBase):
         self.four_level.next_to(self.values2_to_8, DOWN, buff = 0.3)
         self.values_four_level.next_to(self.values2_to_8, DOWN, buff = 1.0).shift(RIGHT * 0.5)
         scene.play(Write(self.values256), Write(self.single_commitment), run_time=1)
-        scene.play(self.hashaes_of_commitments[0][0].animate.set_opacity(0.4),
-                   self.hashaes_of_commitments[0][1].animate.set_opacity(1.0), run_time=0.5)
+        scene.play(self.hashaes_of_commitments[0].animate.set_opacity(0.4),
+                   self.hashaes_of_commitments[2].animate.set_opacity(1.0), run_time=0.5)
         
-        scene.play(Indicate(self.hashaes_of_commitments[0][1], color = PRIMARY_COLOR),
-                   Indicate(self.hashaes_of_commitments[0][0], color = PRIMARY_COLOR), run_time=1.)
+        scene.play(Indicate(self.hashaes_of_commitments[0], color = PRIMARY_COLOR),
+                   Indicate(self.hashaes_of_commitments[2], color = PRIMARY_COLOR), run_time=1.)
         scene.play(self.internal_node.animate.set_opacity(0.4),
                    self.node1_texts.animate.set_opacity(1.), run_time=1)
         scene.wait(0.5)
