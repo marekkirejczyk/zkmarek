@@ -2,7 +2,7 @@
 # from zkmarek.video.slides.e7.recap import Recap
 # from zkmarek.video.slides.e7.vector_commitment import PreviouslyVectorCommitment
 # from zkmarek.video.slides.e7.watch_other import FullVideos
-# from zkmarek.video.slides.common.title import TitleSlide
+from zkmarek.video.slides.common.title import TitleSlide
 # from zkmarek.video.slides.e7.elliptic_curves import EllipticCurves
 from zkmarek.video.slides.e7.single_level_verkle import SingleLevelVerkleTree
 from zkmarek.video.slides.e7.three_level_vt import ThreeLevelVerkleTree
@@ -22,5 +22,6 @@ EPISODE7 = [
     # TitleSlide("Verkle trees", sound = "data/sound/e7/slide2-7.mp3", wait_time=2),
     SingleLevelVerkleTree(),
     ThreeLevelVerkleTree(),
+    TitleSlide("Proofs", sound = "data/sound/e7/slide5-0.mp3", wait_time=2),
     Proofs(),
 ]

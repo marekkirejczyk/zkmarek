@@ -76,14 +76,14 @@ class ThreeLevelVerkleTree(SlideBase):
         tilde = Text("~", font_size=30, color=PRIMARY_COLOR)
         
         self.commitment_C01_rec = rectangle.copy().scale(1.2).set_color(HIGHLIGHT_COLOR)
-        self.commiemtnt_c01_text = Text(r"C0", font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(self.commitment_C01_rec.get_center())
+        self.commiemtnt_c01_text = Text(r"C0", font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(self.commitment_C01_rec.get_center())
         tilde2 = tilde.copy().scale(1.2).move_to(self.commiemtnt_c01_text.get_top()).shift(UP*0.05)
         self.commiemtnt_c01_text = VGroup(self.commiemtnt_c01_text, tilde2)
         self.commitment_C01 = VGroup(self.commitment_C01_rec, self.commiemtnt_c01_text)
         
         self.other_commitments = [rectangle.copy().scale(1.2).set_color(HIGHLIGHT_COLOR) for _ in range(1)]
         self.other_commitments = VGroup(*self.other_commitments).arrange(RIGHT, buff = 3.5)
-        self.text_other_commitments = [Text(f"C{iss[i+1]}", font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(self.other_commitments[i]) for i in range(len(self.other_commitments))]
+        self.text_other_commitments = [Text(f"C{iss[i+1]}", font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(self.other_commitments[i]) for i in range(len(self.other_commitments))]
         for i in range(len(self.text_other_commitments)):
             tilde3 = tilde.copy().scale(1.2).move_to(self.text_other_commitments[i].get_top()).shift(UP*0.05)
             self.text_other_commitments[i] = VGroup(self.text_other_commitments[i], tilde3)
@@ -114,6 +114,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.values2_to_24 = MathTex(r"({{256}})^3 = ({{2^8}})^3 = {{2^{24}}}", font_size=45, color = PRIMARY_COLOR)
         self.values_four_level = MathTex(r"({{256}})^3 = ({{2^8}})^3 = {{2^{24}}} = {{...}}", color = PRIMARY_COLOR)
         
+        
         hashes_copy_recs = [rectangle.copy().scale(1.2).set_color(PRIMARY_COLOR) for _ in range(2)]
         self.hashes_copy_recs = VGroup(*hashes_copy_recs).arrange(RIGHT, buff = 1.4)
     
@@ -129,12 +130,23 @@ class ThreeLevelVerkleTree(SlideBase):
             self.create_arrow(self.hashes_copy_recs[0], node, arrows)
             node2 = values2[i]
             self.create_arrow(self.hashes_copy_recs[1], node2, arrows)
+        
+        self.rectangle_on_parent_commitments = RoundedRectangle(corner_radius=0.1, width = 5.5, height = 0.8, fill_opacity = 0.15, stroke_width = 0.0).set_color(HIGHLIGHT_COLOR)
+        self.cdots_text = Text("...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40)
+        
+        self.cdots_node1 = self.cdots_text.copy().next_to(self.internal_node[0], RIGHT, buff = 0.4).scale(2)
+        self.cdots_node2 = self.cdots_text.copy().next_to(self.internal_node2[0], RIGHT, buff = 0.1)
+        
+        self.cdots_hashes1 = self.cdots_text.copy()
+        self.cdots_hashes2 = self.cdots_text.copy()
+        self.cdots_right_nodes1 = self.cdots_text.copy().next_to(values[0], RIGHT, buff = 0.1)
+        self.cdots_right_nodes2 = self.cdots_text.copy().next_to(values2[0], RIGHT, buff = 0.1)
+        self.cdots_right_hashes = self.cdots_text.copy().next_to(self.hashes_copy_recs[0], RIGHT, buff = 0.55)
+        
         self.right_commitments = VGroup(*values, *values2, *arrows, *self.hashes_copy_recs,
-                                        self.rectangle_node_commitments2)
+                                        self.rectangle_node_commitments2, self.cdots_right_hashes, self.cdots_right_nodes1,
+                                        self.cdots_right_nodes2)
         self.right_commitments_opacity = VGroup(*values, *values2, *self.hashes_copy_recs)
-        
-        self.rectangle_on_parent_commitments = RoundedRectangle(corner_radius=0.1, width = 5.5, height = 0.8, fill_opacity = 0.13, stroke_width = 0.0).set_color(HIGHLIGHT_COLOR)
-        
         
     def animate_in(self, scene):
         self.new_subsection(scene, "3 levels", "data/sound/e7/slide4-0.mp3")
@@ -142,7 +154,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.generate_multi_level_snapshot(scene)
         
         self.new_subsection(scene, "C0", "data/sound/e7/slide4-1.mp3")
-        scene.play(Create(self.internal_node), Write(self.node1_texts), run_time=1)
+        scene.play(Create(self.internal_node), Write(self.node1_texts), Write(self.cdots_node1), run_time=1)
         self.arrows_C0 = VGroup(*self.arrows_C0)
         scene.play(Write(self.arrows_C0), run_time=0.5)
         scene.play(Write(self.commitment_to_c0_text), Create(self.commitment_to_C0), run_time=0.5)
@@ -150,11 +162,12 @@ class ThreeLevelVerkleTree(SlideBase):
         self.new_subsection(scene, "internal node", "data/sound/e7/slide4-2.mp3")
         self.internal_node_whole = VGroup(self.internal_node, self.node1_texts, 
                                           self.commitment_to_c0_text, self.commitment_to_C0,
-                                          self.arrows_C0)
+                                          self.arrows_C0, self.cdots_node1)
         self.internal_node_whole.generate_target()
         self.internal_node_whole.target.scale(0.5).next_to(self.internal_node2_whole, LEFT, buff = 0.12)
         scene.play(MoveToTarget(self.internal_node_whole), run_time=1)
-        scene.play(FadeIn(self.internal_node2_whole), run_time=1)
+        scene.play(FadeIn(self.internal_node2_whole, self.cdots_node2), run_time=1)
+        self.internal_node2_whole.add(self.cdots_node2)
 
         self.commitmentcdots.next_to(self.commitment_to_c255_text, LEFT, buff = 0.57)
         self.rectangle_node_commitments.move_to(self.commitmentcdots.get_center())
@@ -235,6 +248,8 @@ class ThreeLevelVerkleTree(SlideBase):
         self.commitment_size_brace = VGroup(self.commitment_size_brace, self.commitment_size_ipa)
 
         self.hashaes_of_commitments.move_to(self.commitmentcdots.get_center())
+        self.cdots_hashes1.move_to(self.commitmentcdots.get_center())
+        self.hashaes_of_commitments.add(self.cdots_hashes1)
         self.rectangle_with_hashes.move_to(self.hashaes_of_commitments.get_center()).shift(DOWN*0.35)
         scene.play(FadeIn(self.hashaes_of_commitments), FadeOut(self.commitmentcdots, self.commitment_255, self.commitment_to_C0, self.commitment_to_c0_text),
                    run_time=1)
@@ -243,7 +258,7 @@ class ThreeLevelVerkleTree(SlideBase):
         
         self.new_subsection(scene, "commitment C^1_0", "data/sound/e7/slide4-7.mp3")
         self.whole_tree_until_C10 = VGroup(self.internal_node, self.node1_texts, 
-                                          self.arrows_C0, self.internal_node2, self.node2_texts,
+                                          self.arrows_C0, self.internal_node2, self.node2_texts, self.cdots_node2, self.cdots_node1,
                                           *self.arrows_C255, self.rectangle_node_commitments,
                                           *self.arrows_C0, *self.arrows_C255, self.hashaes_of_commitments)
         scene.play(FadeOut(self.scalar_brace, self.commitment_size_brace, self.scalar_size_hash, self.scalar_size_ipa, ipa_text), run_time=0.5)
@@ -276,6 +291,9 @@ class ThreeLevelVerkleTree(SlideBase):
         self.other_commitments.next_to(self.commitment_C01, RIGHT, buff = 3.5)
         self.right_commitments.next_to(self.other_commitments[0], DOWN, buff = 0.75)
         self.rectangle_on_parent_commitments.move_to(self.other_commitments.get_center()).shift(LEFT * 2)
+
+        self.cdots_hashes2.next_to(self.commitment_C01, RIGHT, buff = 1.5)
+        self.other_commitments.add(self.cdots_hashes2)
         scene.play(Create(self.right_commitments), FadeIn(self.rectangle_on_parent_commitments), run_time=1)
         
         for node in self.hashes_copy_recs:
@@ -302,7 +320,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.create_arrow(self.final_parent_node_rec, node, arrows_final)
             scene.play(Write(arrows_final[i]), run_time=0.3)
         self.whole_tree_until_C10.add(self.final_parent_node,*arrows_final, self.arrow_commitment_C01,
-                                      self.rectangle_on_parent_commitments, self.right_commitments)
+                                      self.rectangle_on_parent_commitments, self.right_commitments, self.cdots_hashes2)
         
         self.new_subsection(scene, "simple math", "data/sound/e7/slide4-11.mp3")
         scene.wait(1)
