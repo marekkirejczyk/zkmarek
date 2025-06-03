@@ -10,7 +10,6 @@ from manim import (
     RoundedRectangle,
     Arrow,
     StealthTip,
-    Create,
     MoveToTarget,
     ORIGIN,
     ImageMobject,
@@ -84,8 +83,8 @@ class Proofs(SlideBase):
             .arrange(RIGHT, buff=1.43)
             .next_to(self.values_all, UP, buff=1.3)
         )
-        text_commitment_C0 = Text(
-            "C0", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
+        text_commitment_C0 = MathTex(
+            r"C_0^0", color=PRIMARY_COLOR, font_size=28
         ).move_to(self.hashes_commitments_level2[0].get_center())
         self.cdots_level2 = self.cdots.copy().next_to(
             self.hashes_commitments_level2[0], RIGHT, buff=0.6
@@ -103,25 +102,23 @@ class Proofs(SlideBase):
             .arrange(RIGHT, buff=3.5)
             .next_to(self.hashes_commitments_level2, UP, buff=1.3)
         )
-        text_hash_commitmentH0 = Text(
-            "H(C0)", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
+        text_hash_commitmentH0 = MathTex(
+            r"H(C_0^1)", color=PRIMARY_COLOR, font_size=28
         ).move_to(self.hashes_commitments_level3[0].get_center())
-        tilde = Text("~", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=30).move_to(
-            text_hash_commitmentH0.get_top() + UP * 0.05
-        )
+
         self.cdots_level3 = self.cdots.copy().next_to(
             self.hashes_commitments_level3[0], RIGHT, buff=1.65
         )
         self.hashes_commitments_level3.add(
-            text_hash_commitmentH0, tilde, self.cdots_level3
+            text_hash_commitmentH0, self.cdots_level3
         )
 
         ## root commitment
         self.hashes_commitments_root = commitments_rectangles.copy().next_to(
             self.hashes_commitments_level3, UP, buff=1.3
         )
-        text_hash_commitmentH = Text(
-            "C", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=20
+        text_hash_commitmentH = MathTex(
+            "C_0^2", color=PRIMARY_COLOR, font_size=28
         ).move_to(self.hashes_commitments_root.get_center())
         self.hashes_commitments_root.add(text_hash_commitmentH)
 
@@ -226,11 +223,11 @@ class Proofs(SlideBase):
         self.values.target.scale(1 / 2).next_to(self.values2, LEFT, buff=0.6)
         scene.play(MoveToTarget(self.values), run_time=1.3)
         scene.play(
-            Create(self.values_all),
-            Create(self.hashes_commitments_level2),
-            Create(self.hashes_commitments_level3),
-            Create(self.hashes_commitments_root),
-            Create(self.arrows),
+            FadeIn(self.values_all,
+            self.hashes_commitments_level2,
+            self.hashes_commitments_level3,
+            self.hashes_commitments_root,
+            self.arrows),
             run_time=2,
         )
 
