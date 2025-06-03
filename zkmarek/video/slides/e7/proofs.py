@@ -97,11 +97,14 @@ class Proofs(SlideBase):
         self.cdots_level2 = self.cdots.copy().next_to(
             self.hashes_commitments_level2[0], RIGHT, buff=0.6
         )
+        self.cdots_level2_1 = self.cdots.copy().next_to(
+            self.hashes_commitments_level2[1], RIGHT, buff=0.6
+        )
         self.cdots_level2_2 = self.cdots.copy().next_to(
             self.hashes_commitments_level2[2], RIGHT, buff=0.6
         )
         self.hashes_commitments_level2.add(
-            text_commitment_C0, self.cdots_level2, self.cdots_level2_2
+            text_commitment_C0, self.cdots_level2, self.cdots_level2_2, self.cdots_level2_1
         )
 
         ## commitments (3 level)
@@ -198,15 +201,13 @@ class Proofs(SlideBase):
         self.verifier_whole = Group(self.verifier, self.verifier_label)
 
         self.commitment = Text(
-            "commitment C", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25
+            "C", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25
         ).next_to(self.prover_whole, RIGHT, buff=1.0)
 
         self.proof_text = Text(
             "proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25
         ).next_to(self.commitment, DOWN, buff=0.3)
-        self.pi = MathTex(r"\pi^0", color=PRIMARY_COLOR, font_size=35).next_to(
-            self.proof_text, RIGHT, buff=0.1
-        )
+        self.pi = MathTex(r"\pi^0", color=PRIMARY_COLOR, font_size=35).next_to(self.commitment, DOWN, buff=0.3)
         self.proof = VGroup(self.pi)
         self.opening = MathTex(
             r"a_{255} = 85", color=PRIMARY_COLOR, font_size=30
@@ -217,7 +218,7 @@ class Proofs(SlideBase):
         
         self.pi_proof_level3 = MathTex(r"\pi^2", color=PRIMARY_COLOR, font_size=35)
         
-        self.kzg = Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.verifier_label, LEFT, buff = 1.).shift(DOWN * 0.1)
+        self.kzg = Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.verifier_label, LEFT, buff = 1.)
         self.ipa = Text("IPA", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.kzg, LEFT, buff = 0.75)
         
         self.kzg_scalar = Text("<32 B", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=25)
@@ -227,10 +228,10 @@ class Proofs(SlideBase):
         self.ipa_proof = Text("     16 x\n EC points", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
         self.ipa_proof2 = Text("<512 B", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
         
-        self.kzg_total = Text("kzg proofs: 140 B", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
-        self.ipa_total = Text("ipa proofs: 1.5 kB", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25 )
+        self.kzg_total = Text("KZG proofs: 140 B", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
+        self.ipa_total = Text("IPA proofs: 1.5 kB", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25 )
         
-        self.trusted_setup = Text("+trusted setup\n pairings", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
+        self.trusted_setup = Text("+trusted setup\n pairings", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=20)
         
         self.multiproof = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 60)
         
@@ -334,8 +335,8 @@ class Proofs(SlideBase):
         self.new_subsection(scene, "KZG", "data/sound/e7/slide5-6d.mp3")
         scene.play(FadeIn(self.kzg), run_time=1.)
         
-        self.kzg_ec_point.next_to(self.kzg, DOWN, buff = 0.3)
-        self.ipa_ec_point.next_to(self.ipa, DOWN, buff =0.3)
+        self.kzg_ec_point.next_to(self.kzg, DOWN, buff = 0.5)
+        self.ipa_ec_point.next_to(self.ipa, DOWN, buff =0.5)
         self.kzg_scalar.next_to(self.kzg_ec_point, DOWN, buff = 0.5)
         self.ipa_scalar.next_to(self.ipa_ec_point, DOWN, buff = 0.5)
         self.kzg_ecpoint2 = self.kzg_ec_point.copy().next_to(self.kzg_scalar, DOWN, buff = 0.5).set_color(PRIMARY_COLOR)
@@ -389,7 +390,7 @@ class Proofs(SlideBase):
         scene.play(Indicate(self.ipa_total, color = PRIMARY_COLOR), run_time=1)
         scene.play(Indicate(self.kzg_total, color = PRIMARY_COLOR), run_time=1)
         scene.wait(1)
-        self.trusted_setup.next_to(self.kzg_ecpoint2, DOWN, buff=0.5)
+        self.trusted_setup.next_to(self.kzg_ecpoint2, DOWN, buff=0.5).shift(RIGHT * 0.2)
         scene.play(FadeIn(self.trusted_setup), run_time=1)
 
         self.new_subsection(
