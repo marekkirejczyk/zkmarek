@@ -24,12 +24,12 @@ class ThreeLevelVerkleTree(SlideBase):
         self.internal_node = [rectangle.copy().scale(2.4) for _ in range(2)]
         self.internal_node = VGroup(*self.internal_node).arrange(RIGHT, buff = 1.1).shift(DOWN * 1.5)
         self.internal_node2 = [rectangle.copy().scale(1.2) for _ in range(2)]
-        self.internal_node2 = VGroup(*self.internal_node2).arrange(RIGHT, buff = 0.55).shift(DOWN*1.7+RIGHT*1.2)
+        self.internal_node2 = VGroup(*self.internal_node2).arrange(RIGHT, buff = 0.55).shift(DOWN*1.7+RIGHT*1.8)
         
-        txs = [r"a0", r"a255"]
-        txs2 = [r"FF0", r"FF255"]
-        self.node1_texts = [Text(txs[i], font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(self.internal_node[i]) for i in range(len(txs))]
-        self.node2_texts = [Text(txs2[i], font=PRIMARY_FONT, font_size=10, color=PRIMARY_COLOR).move_to(self.internal_node2[i]) for i in range(len(txs))]
+        txs = [r"a_0", r"a_{255}"]
+        txs2 = [r"FF_0", r"FF_{255}"]
+        self.node1_texts = [MathTex(txs[i], font_size=36, color=PRIMARY_COLOR).move_to(self.internal_node[i]) for i in range(len(txs))]
+        self.node2_texts = [MathTex(txs2[i], font_size=18, color=PRIMARY_COLOR).move_to(self.internal_node2[i]) for i in range(len(txs))]
         self.node1_texts = VGroup(*self.node1_texts)
         self.node2_texts = VGroup(*self.node2_texts)
         
@@ -42,8 +42,8 @@ class ThreeLevelVerkleTree(SlideBase):
         self.commitment_to_C0 = rectangle.copy().scale(3).set_color(HIGHLIGHT_COLOR).next_to(self.internal_node, UP, buff = 0.8).shift(UP*0.5)
         self.commitment_to_C255 = rectangle.copy().scale(1.5).set_color(HIGHLIGHT_COLOR).next_to(self.internal_node2, UP, buff = 0.65)
         
-        self.commitment_to_c0_text = Text(r"C0", font=PRIMARY_FONT, font_size=40, color=PRIMARY_COLOR).move_to(self.commitment_to_C0.get_center())
-        self.commitment_to_c255_text = Text(r"C255", font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR).move_to(self.commitment_to_C255.get_center())
+        self.commitment_to_c0_text = MathTex(r"C_0^0", font_size=50, color=PRIMARY_COLOR).move_to(self.commitment_to_C0.get_center())
+        self.commitment_to_c255_text = MathTex(r"C_{255}^0", font_size=25, color=PRIMARY_COLOR).move_to(self.commitment_to_C255.get_center())
         self.commitment_255 = VGroup(self.commitment_to_C255, self.commitment_to_c255_text)
         
         self.arrows_C0 = []
@@ -70,37 +70,29 @@ class ThreeLevelVerkleTree(SlideBase):
         self.hashaes_of_commitments_rec = [rectangle.copy().scale(1.2).set_color(PRIMARY_COLOR) for _ in range(2)]
         self.hashaes_of_commitments_rec = VGroup(*self.hashaes_of_commitments_rec).arrange(RIGHT, buff = 1.2)
         iss = ["0", "255"]
-        self.text_hashes_of_commitments = [Text(f"H(C{iss[i]})", font=PRIMARY_FONT, font_size=14, color=PRIMARY_COLOR).move_to(self.hashaes_of_commitments_rec[i]) for i in range(len(self.hashaes_of_commitments_rec))]
+        self.text_hashes_of_commitments = [MathTex(f"H(C_{{{iss[i]}}})", font_size=20, color=PRIMARY_COLOR).move_to(self.hashaes_of_commitments_rec[i]) for i in range(len(self.hashaes_of_commitments_rec))]
         self.hashaes_of_commitments = VGroup(*self.hashaes_of_commitments_rec, *self.text_hashes_of_commitments)
         
-        tilde = Text("~", font_size=25, color=PRIMARY_COLOR)
-        
         self.commitment_C01_rec = rectangle.copy().scale(1.2).set_color(HIGHLIGHT_COLOR)
-        self.commiemtnt_c01_text = Text(r"C0", font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(self.commitment_C01_rec.get_center())
-        tilde2 = tilde.copy().scale(1.2).move_to(self.commiemtnt_c01_text.get_top()).shift(UP*0.05)
-        self.commiemtnt_c01_text = VGroup(self.commiemtnt_c01_text, tilde2)
+        self.commiemtnt_c01_text = MathTex(r"C_0", font_size=20, color=PRIMARY_COLOR).move_to(self.commitment_C01_rec.get_center())
+
         self.commitment_C01 = VGroup(self.commitment_C01_rec, self.commiemtnt_c01_text)
         
         self.other_commitments = [rectangle.copy().scale(1.2).set_color(HIGHLIGHT_COLOR) for _ in range(1)]
         self.other_commitments = VGroup(*self.other_commitments).arrange(RIGHT, buff = 3.5)
-        self.text_other_commitments = [Text(f"C{iss[i+1]}", font=PRIMARY_FONT, font_size=18, color=PRIMARY_COLOR).move_to(self.other_commitments[i]) for i in range(len(self.other_commitments))]
-        for i in range(len(self.text_other_commitments)):
-            tilde3 = tilde.copy().scale(1.2).move_to(self.text_other_commitments[i].get_top()).shift(UP*0.05)
-            self.text_other_commitments[i] = VGroup(self.text_other_commitments[i], tilde3)
+        self.text_other_commitments = [MathTex(f"C_{{{iss[i+1]}}}", font_size=18, color=PRIMARY_COLOR).move_to(self.other_commitments[i]) for i in range(len(self.other_commitments))]
+
         self.other_commitments.add(*self.text_other_commitments)
         self.text_other_commitments = VGroup(*self.text_other_commitments)
         
         self.other_hashes_rec = [rectangle.copy().stretch(1, 2).scale(1.2).set_color(PRIMARY_COLOR) for _ in range(2)]
         self.other_hashes_rec = VGroup(*self.other_hashes_rec).arrange(RIGHT, buff = 2.5)
-        self.text_other_hashes = [Text(f"H(C{iss[i]})", font=PRIMARY_FONT, font_size=14, color=PRIMARY_COLOR).move_to(self.other_hashes_rec[i]) for i in range(len(self.other_hashes_rec))]
-        for i in range(len(self.text_other_hashes)):
-            tilde4 = tilde.copy().move_to(self.text_other_hashes[i].get_top()).shift(UP*0.05)
-            self.text_other_hashes[i] = VGroup(self.text_other_hashes[i], tilde4)
+        self.text_other_hashes = [MathTex(f"H(C_{{{iss[i]}}}^1)", font_size=20, color=PRIMARY_COLOR).move_to(self.other_hashes_rec[i]) for i in range(len(self.other_hashes_rec))]
         
         self.other_hashes = VGroup(*self.other_hashes_rec, *self.text_other_hashes)
         
         self.final_parent_node_rec = rectangle.copy().scale(2).set_color(SECONDARY_COLOR)
-        self.final_parent_node_text = Text(r"C", font=PRIMARY_FONT, font_size=30, color=SECONDARY_COLOR).move_to(self.final_parent_node_rec.get_center())
+        self.final_parent_node_text = MathTex(r"C_0^2", font_size=30, color=SECONDARY_COLOR).move_to(self.final_parent_node_rec.get_center())
         self.final_parent_node = VGroup(self.final_parent_node_rec, self.final_parent_node_text)
         
         self.values256 = MathTex(r"256 \  \mathrm{values}", font_size=45, color = PRIMARY_COLOR)
@@ -113,7 +105,6 @@ class ThreeLevelVerkleTree(SlideBase):
         self.values2_to_24 = MathTex(r"({{256}})^3 = ({{2^8}})^3 = {{2^{24}}}", font_size=45, color = PRIMARY_COLOR)
         self.values2_to_24 = MathTex(r"({{256}})^3 = ({{2^8}})^3 = {{2^{24}}}", font_size=45, color = PRIMARY_COLOR)
         self.values_four_level = MathTex(r"({{256}})^3 = ({{2^8}})^3 = {{2^{24}}} = {{...}}", color = PRIMARY_COLOR)
-        
         
         hashes_copy_recs = [rectangle.copy().scale(1.2).set_color(PRIMARY_COLOR) for _ in range(2)]
         self.hashes_copy_recs = VGroup(*hashes_copy_recs).arrange(RIGHT, buff = 1.4)
@@ -132,7 +123,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.create_arrow(self.hashes_copy_recs[1], node2, arrows)
         
         self.rectangle_on_parent_commitments = RoundedRectangle(corner_radius=0.1, width = 5.5, height = 0.8, fill_opacity = 0.15, stroke_width = 0.0).set_color(HIGHLIGHT_COLOR)
-        self.cdots_text = Text("...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40)
+        self.cdots_text = Text("...", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         
         self.cdots_node1 = self.cdots_text.copy().next_to(self.internal_node[0], RIGHT, buff = 0.4).scale(2)
         self.cdots_node2 = self.cdots_text.copy().next_to(self.internal_node2[0], RIGHT, buff = 0.1)
@@ -173,7 +164,7 @@ class ThreeLevelVerkleTree(SlideBase):
                                           self.commitment_to_c0_text, self.commitment_to_C0,
                                           self.arrows_C0, self.cdots_node1)
         self.internal_node_whole.generate_target()
-        self.internal_node_whole.target.scale(0.5).next_to(self.internal_node2_whole, LEFT, buff = 0.12)
+        self.internal_node_whole.target.scale(0.5).next_to(self.internal_node2_whole, LEFT, buff = 0.2)
         scene.play(MoveToTarget(self.internal_node_whole), run_time=1)
         scene.play(FadeIn(self.internal_node2_whole, self.cdots_node2), run_time=1)
         self.internal_node2_whole.add(self.cdots_node2)
