@@ -246,8 +246,8 @@ class Proofs(SlideBase):
         scene.play(Write(self.commitment), run_time=0.5)
         scene.play(Write(self.proof), run_time=0.5)
         scene.play(Write(self.opening), run_time=0.5)
-        scene.wait(0.5)
         self.terms = VGroup(self.commitment, self.proof, self.opening)
+        scene.wait(2)
         scene.play(FadeOut(self.terms))
 
         self.new_subsection(scene, "multi-level", "data/sound/e7/slide5-2.mp3")
@@ -255,7 +255,11 @@ class Proofs(SlideBase):
         self.values.target.scale(1 / 2).next_to(self.values2, LEFT, buff=0.6)
         scene.play(MoveToTarget(self.values), run_time=1.3)
         scene.play(
-            FadeIn(self.tree),
+            FadeIn(self.values2, self.values3, self.values4,
+                    self.hashes_commitments_root,
+                    self.hashes_commitments_level3,
+                    self.hashes_commitments_level2,
+                    self.arrows),
             run_time=2,
         )
 
@@ -286,7 +290,6 @@ class Proofs(SlideBase):
             FadeIn(opening2),
             run_time=1.5,
         )
-
         scene.wait(0.5)
         self.pi_proof.next_to(opening2, DOWN, buff=0.5)
         scene.play(FadeIn(self.pi_proof), run_time=1.0)
@@ -296,7 +299,7 @@ class Proofs(SlideBase):
             commtiment_C0_1, RIGHT, buff=0.5
         ).scale(1.2)
         scene.play(
-            TransformMatchingShapes(self.hashes_commitments_root.copy(), root),
+            TransformMatchingShapes(self.hashes_commitments_root[1].copy(), root),
             run_time=1.5,
         )
         opening3 = self.hashes_commitments_level3[2].copy().next_to(
@@ -318,7 +321,7 @@ class Proofs(SlideBase):
         scene.play(Indicate(self.values[1], color = PRIMARY_COLOR), run_time=1)
         scene.wait(1)
         scene.play(Indicate(commitment_C0, color = PRIMARY_COLOR), run_time=0.6)
-        scene.play(Indicate(commitment_C0, color = PRIMARY_COLOR), run_time=0.6)
+        scene.play(Indicate(commtiment_C0_1, color = PRIMARY_COLOR), run_time=0.6)
         scene.play(Indicate(root, color = PRIMARY_COLOR), run_time=0.6)
         scene.wait(0.5)
         scene.play(Indicate(self.opening, color = PRIMARY_COLOR), run_time=0.6)
@@ -335,8 +338,8 @@ class Proofs(SlideBase):
         self.new_subsection(scene, "KZG", "data/sound/e7/slide5-6d.mp3")
         scene.play(FadeIn(self.kzg), run_time=1.)
         
-        self.kzg_ec_point.next_to(self.kzg, DOWN, buff = 0.5)
-        self.ipa_ec_point.next_to(self.ipa, DOWN, buff =0.5)
+        self.kzg_ec_point.next_to(self.kzg, DOWN, buff = 0.3)
+        self.ipa_ec_point.next_to(self.ipa, DOWN, buff =0.3)
         self.kzg_scalar.next_to(self.kzg_ec_point, DOWN, buff = 0.5)
         self.ipa_scalar.next_to(self.ipa_ec_point, DOWN, buff = 0.5)
         self.kzg_ecpoint2 = self.kzg_ec_point.copy().next_to(self.kzg_scalar, DOWN, buff = 0.5).set_color(PRIMARY_COLOR)
@@ -375,8 +378,9 @@ class Proofs(SlideBase):
         scene.play(Indicate(self.proof, color = PRIMARY_COLOR), run_time=1)
         scene.play(Indicate(self.pi_proof, color = PRIMARY_COLOR), run_time=1)
         scene.play(Indicate(self.pi_proof_level3, color = PRIMARY_COLOR), run_time=1)
+        scene.wait(1)
         scene.play(FadeIn(self.ipa_proof), run_time=1)
-        scene.wait(2)
+        scene.wait(4)
         scene.play(TransformMatchingShapes(self.ipa_proof, self.ipa_proof2), run_time=1)
 
         self.new_subsection(scene, "total 1.5 kB", "data/sound/e7/slide5-6c.mp3")
