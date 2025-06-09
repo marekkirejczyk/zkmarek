@@ -22,6 +22,7 @@ EPISODE7 = [
     EllipticCurves(),
     TitleSlide("Verkle trees", sound = "data/sound/e7/slide2-7.mp3", wait_time=2),
     SingleLevelVerkleTree(),
+    TitleSlide("Multi-level Verkle Tree", sound = "data/sound/e7/slide4-0.mp3", wait_time=2),
     ThreeLevelVerkleTree(),
     TitleSlide("Proofs", sound = "data/sound/e7/slide5-0.mp3", wait_time=2),
     Proofs(),
