@@ -18,7 +18,7 @@ class SingleLevelVerkleTree(SlideBase):
                  r"a_8", r"a_9", r"a_{10}", r"a_{11}", r"a_{12}", r"a_{13}", r"a_{14}", r"a_{15}"]
         self.vector = VGroup(*[MathTex(i, color = PRIMARY_COLOR, font_size = 30) for i in vector]).arrange(RIGHT, buff=0.1)
         self.sixteen_element_vector = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30) for i in sixteen_element_vector]).arrange(RIGHT, buff=0.1)
-        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.3, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
+        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.3, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(HIGHLIGHT_COLOR)
         rectangles_of_values = [rectangle.copy() for _ in range(16)]
         self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.2)
         for i in range(16):
@@ -26,7 +26,7 @@ class SingleLevelVerkleTree(SlideBase):
             self.vector[i].move_to(self.rectangles_values[i].get_center())
             
     
-        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.3, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(SECONDARY_COLOR)
+        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=SECONDARY_COLOR, fill_opacity=0.3, stroke_width = 0.0).scale(0.5).move_to(self.sixteen_element_vector.get_center()).set_color(HIGHLIGHT_COLOR)
         self.formula = MathTex(r"a_{15}\cdot {{x^{15}}} + a_{14}\cdot {{x^{14}}} + \cdots {{a_{0}}}]", color = PRIMARY_COLOR, font_size = 20).shift(RIGHT*2+DOWN*1.5)
         self.animate_polynomial()
         values = [
@@ -61,7 +61,7 @@ class SingleLevelVerkleTree(SlideBase):
         self.envelope_flap_closed.next_to(self.envelope, UP, buff=-0.48).shift(DOWN*0.25)
 
         
-        self.commitment = Text("commitment C", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 23).move_to(self.envelope.get_center())
+        self.commitment = MathTex(r"\mathrm{commitment}\ C^0", color = HIGHLIGHT_COLOR, font_size = 28).move_to(self.envelope.get_center())
         
         self.verifier1 = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
         self.verifier_label = Text("verification function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, DOWN, buff = 0.1)
@@ -71,8 +71,8 @@ class SingleLevelVerkleTree(SlideBase):
         self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, UP, buff = 0.1)
         self.prover_label2 = Text("insert function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
         
-        self.proof_pi = MathTex(r"{{\pi}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.prover1, LEFT, buff = 0.5)
-        self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.1)
+        self.proof_pi = MathTex(r"{{\pi^0}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.prover1, LEFT, buff = 0.5)
+        self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT+DOWN*0.2, buff = 0.1)
         self.proof = VGroup(self.proof, self.proof_pi)
         self.opening = MathTex(r"{{a_{12} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.3)
         self.opening2 = MathTex(r"{{a_{2044} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.verifier, DOWN, buff = 1.0)

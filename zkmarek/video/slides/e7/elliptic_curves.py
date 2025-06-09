@@ -254,8 +254,9 @@ class EllipticCurves(SlideBase):
         self.kzg.generate_target()
         self.kzg.target.next_to(self.chart_ec, LEFT, buff = 0.05)
         scene.play(FadeOut(self.pairings, self.cross_out_line, self.cross_out_pairings, 
-                           self.bytes_p2, self.bytes_of_el), MoveToTarget(self.base_field_bls), 
-                   MoveToTarget(self.scalar_Fr), MoveToTarget(self.kzg), run_time=2)
+                           self.bytes_p2, self.bytes_of_el),  run_time=1)
+        scene.play(MoveToTarget(self.base_field_bls), 
+                   MoveToTarget(self.scalar_Fr), MoveToTarget(self.kzg), run_time=1)
         scene.play(Write(self.ipa), run_time=1)
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.ipa, self.ipa2), run_time=1)

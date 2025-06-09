@@ -7,14 +7,14 @@ class TableKZGIPA(VGroup):
 
         vec_commitment_column = ["   vector\n elements", "proof", "commitment" ,
                                  "      trusted setup", " require\n pairings"]
-        kzg_values = [ "  scalar\n   field \n element", "1 EC point","1 EC point", 
+        kzg_values = [ "   scalar\n     field \n element", "1 EC point","1 EC point", 
                       "Yes", "Yes"]
         
-        ipa_values = ["  scalar\n   field \n element", "1 EC point", "  2log2(n)\n EC points", 
+        ipa_values = ["   scalar\n     field \n element", "1 EC point", "  2log2(n)\n EC points", 
                       "No", "No"]
         
         sizes_kzg = ["<32 B", "<48 B", "<48 B"]
-        sizes_ipa = ["<32 B", "<32 B", "each\n<48 B"]
+        sizes_ipa = ["<32 B", "<32 B", "each\n<32 B"]
 
         cell_width = 2.4
         cell_height = 0.8
@@ -22,7 +22,7 @@ class TableKZGIPA(VGroup):
         spacing = 0.1 
         num_rows = len(kzg_values)
 
-        bg_width = (cell_width * 3) + 1.2
+        bg_width = (cell_width * 3) + 1.5
         bg_height = (cell_height + spacing) * num_rows + 1.2
         self.background = RoundedRectangle(
             width=bg_width,
@@ -78,12 +78,12 @@ class TableKZGIPA(VGroup):
             if i < 3:
                 key_cell_true = key_cell_ec_scalar
                 size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.1)
-                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.33)
+                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.33).shift(RIGHT * 0.2)
                 size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.1)
 
             else:
                 key_cell_true = key_cell
-                value_cell_true = key_cell.copy().shift(RIGHT * (cell_width + 0.3))
+                value_cell_true = key_cell.copy().shift(RIGHT * (cell_width + 0.3)+RIGHT * 0.2)
                 
             vec_cell = key_cell.copy().shift(LEFT * (cell_width + 0.3)).set_color(HIGHLIGHT_COLOR)
             vec_text = Text(vec_column, font=PRIMARY_FONT, font_size=23, color=HIGHLIGHT_COLOR).move_to(vec_cell)
