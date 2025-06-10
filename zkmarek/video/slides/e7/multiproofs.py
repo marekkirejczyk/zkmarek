@@ -1,5 +1,6 @@
 from manim import (Text, UP, DOWN, RIGHT, LEFT, FadeOut, Write, MathTex, TransformMatchingShapes, VGroup,
-                   Axes, RoundedRectangle, FadeIn, ValueTracker, Indicate, MoveToTarget, Line, ImageMobject)
+                   Axes, RoundedRectangle, FadeIn, ValueTracker, Indicate, MoveToTarget, Line, ImageMobject,
+                   CurvedArrow, StealthTip, Arrow)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -33,7 +34,7 @@ class Multiproofs(SlideBase):
         self.opening = MathTex(r"p({x_i})=a_i", color = PRIMARY_COLOR, font_size=35)
         
         self.new_polynomial = MathTex(r"{{r(x)}} = {{p(x)}}-{{a_i}} {{}}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
-        self.new_polynomial2 = MathTex(r"{{r(x_i)}} = {{p(x_i)}}-{{a_i}}={{0}}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
+        self.new_polynomial2 = MathTex(r"r({{x_i}}) = {{p(x_i)}}-{{a_i}}={{0}}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
         self.new_polynomial3 = MathTex(r"{{r(x)}} = {{(x-x_i)}}{{(...)}}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
         self.new_polynomial4 = MathTex(r"{{r(x)}} = {{(x-x_i)}}{{(q(x))}}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
         self.quotient = MathTex(r"\frac{r(x)}{(x-x_i)} = q(x)", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
@@ -51,7 +52,12 @@ class Multiproofs(SlideBase):
         self.bg_image_prover = RoundedRectangle(corner_radius=0.15, width = 6, height = 3, fill_opacity=0.2, color=HIGHLIGHT_COLOR, stroke_width=0.0).move_to(self.commitment2.get_center()).shift(RIGHT*1.5)
         
         self.quotient_g = MathTex(
-            r"g(x) = {{r^0}} \cdot {{\frac{p_0(x_0)-a_0}{x - x_0}}} + {{r^1}} \cdot {{\frac{p_1(x_1)-a_1}{x - x_1}}} + {{r^2}} \cdot {{\frac{p_2(x_2)-a_2}{x - x_2}}}",
+            r"g(x) = {{r^0}} \cdot {{\frac{p_0(x)-a_0}{x - x_0}}} + {{r^1}} \cdot {{\frac{p_1(x)-a_1}{x - x_1}}} + {{r^2}} \cdot {{\frac{p_2(x)-a_2}{x - x_2}}}",
+            color=PRIMARY_COLOR,
+            font_size=35
+        ).shift(DOWN*1.5)
+        self.quotient_g2 = MathTex(
+            r"g(t) = {{r^0}} \cdot {{\frac{p_0(t)-a_0}{t - x_0}}} + {{r^1}} \cdot {{\frac{p_1(t)-a_1}{t - x_1}}} + {{r^2}} \cdot {{\frac{p_2(t)-a_2}{x - x_2}}}",
             color=PRIMARY_COLOR,
             font_size=35
         ).shift(DOWN*1.5)
@@ -71,7 +77,17 @@ class Multiproofs(SlideBase):
         self.powers_of_r[13].set_color(PRIMARY_COLOR)
         self.powers_of_r[15].set_color(HIGHLIGHT_COLOR)
         self.powers_of_r[17].set_color(SECONDARY_COLOR)
+        self.opening.shift(RIGHT * 4.5+UP*1.5)
+        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right(), stroke_width=0.3, 
+                                                tip_shape=StealthTip, color=PRIMARY_COLOR)
+        self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
+        self.random_t = MathTex(r"t\sim \mathrm{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5)
+        
+        self.proof_to_g = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 40).next_to(self.quotient_g2, DOWN, buff = 0.5)
+        self.arrow_proof_to_g = Arrow(self.quotient_g2.get_bottom(), self.proof_to_g.get_top(),
+                                      tip_shape=StealthTip, stroke_width=2,
+                                      max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT_COLOR])
         
     def animate_in(self, scene):
         self.new_subsection(scene, "pi0, pi1, pi2, ..., pin", "data/sound/e7/slide6-1.mp3")
@@ -98,6 +114,7 @@ class Multiproofs(SlideBase):
         for i in range(6):
             scene.play(Indicate(self.vector[i]), run_time=0.3)
         scene.play(self.vector[6].animate.set_color(SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(self.vector[6], scale_factor=1.5), run_time=1)
 
         scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening1), run_time=1)
         scene.play(FadeOut(self.vector, self.rectangles_values))
@@ -105,22 +122,25 @@ class Multiproofs(SlideBase):
         self.polynomial_graph.target.shift(DOWN * 0.65)
         scene.play(MoveToTarget(self.polynomial_graph), run_time=1)
         scene.play(FadeOut(self.dots[6], self.line_ai), run_time=1)
-        
-        self.new_subsection(scene, "p(xi)-ai=0", "data/sound/e7/slide6-4.mp3")
+        scene.wait(1)
         self.opening.move_to(self.opening1.get_center()).shift(LEFT * 2)
         scene.play(self.polynomial_chart.animate.shift(LEFT * 2),
                    self.commtiment_C.animate.shift(LEFT * 2), run_time=1)
         scene.play(TransformMatchingShapes(self.opening1, self.opening), run_time=1)
+        
+        self.new_subsection(scene, "p(xi)-ai=0", "data/sound/e7/slide6-4.mp3")
         scene.play(Write(self.new_polynomial), run_time=1)
         scene.wait(0.5)
         
         self.new_subsection(scene, "root x=xi", "data/sound/e7/slide6-5.mp3")
         scene.play(TransformMatchingShapes(self.new_polynomial, self.new_polynomial2), run_time=1)
+        scene.wait(1.5)
+        scene.play(Indicate(self.new_polynomial2[1], scale_factor=1.2), run_time=1)
         
         self.new_subsection(scene, "factored form", "data/sound/e7/slide6-6.mp3")
-        scene.wait(0.4)
-        scene.play(TransformMatchingShapes(self.new_polynomial2, self.new_polynomial3), run_time=1)
-        scene.wait(0.5)
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.new_polynomial2, self.new_polynomial3), run_time=2)
+        scene.wait(1)
         scene.play(TransformMatchingShapes(self.new_polynomial3, self.new_polynomial4), run_time=1)
         
         self.new_subsection(scene, "quotient poly", "data/sound/e7/slide6-7.mp3")
@@ -133,9 +153,13 @@ class Multiproofs(SlideBase):
         self.new_subsection(scene, "divide x-xi", "data/sound/e7/slide6-8.mp3")
         scene.wait(1)
         scene.play(TransformMatchingShapes(self.quotient2, self.quotient3), run_time=1)
+        scene.wait(2)
+        scene.play(Write(self.curved_arrow_proof), run_time=1)
+        scene.play(Write(self.proof_label_arrow), run_time=1)
+        scene.wait(2)
         
         self.new_subsection(scene, "multiproofs", "data/sound/e7/slide6-9.mp3")
-        scene.play(FadeOut(self.polynomial_chart, self.commtiment_C, self.quotient3, self.opening), run_time=2)
+        scene.play(FadeOut(self.polynomial_chart, self.curved_arrow_proof, self.proof_label_arrow, self.commtiment_C, self.quotient3, self.opening), run_time=2)
         
         self.new_subsection(scene, "3 proofs, 3 openings, 3 commitments", "data/sound/e7/slide6-10.mp3")
         scene.play(FadeIn(self.prover, self.bg_image_prover), run_time=1)
@@ -147,18 +171,34 @@ class Multiproofs(SlideBase):
         scene.play(Write(self.commitment2), run_time=0.4)
         scene.play(Write(self.commitment3), run_time=0.4)
         scene.wait(1)
-        scene.play(FadeIn(self.quotient_g), run_time=1)
+        scene.play(FadeIn(self.quotient_g[3]), run_time=1)
+        scene.play(FadeIn(self.quotient_g[7]), run_time=1)
+        scene.play(FadeIn(self.quotient_g[11]), run_time=1)
         
         self.new_subsection(scene, "random linear combinations", "data/sound/e7/slide6-11.mp3")
+        scene.play(FadeIn(self.quotient_g[0:3], self.quotient_g[4:7], self.quotient_g[8:11], self.quotient3[12:]), run_time=1)
+        scene.wait(2)
         scene.play(FadeIn(self.powers_of_r), run_time=1)
+        scene.wait(2)
+        scene.play(Indicate(self.quotient_g[0], scale_factor=1.3), run_time=1)
         
         self.new_subsection(scene, "random point t", "data/sound/e7/slide6-12.mp3")
-        
+        scene.wait(1.5)
+        scene.play(Indicate(self.quotient_g, scale_factor=1.3), run_time=1)
+        scene.wait(1)
+        scene.play(FadeOut(self.powers_of_r), run_time=1)
+        scene.wait(1)
+        scene.play(FadeIn(self.random_t), run_time=1)
+        scene.play(TransformMatchingShapes(self.quotient_g, self.quotient_g2), run_time=1)
+                
         self.new_subsection(scene, "verkle multiproof", "data/sound/e7/slide6-13.mp3")
+        scene.play(FadeOut(self.random_t))
+        scene.play(Write(self.proof_to_g), run_time=1)
+        scene.play(FadeIn(self.arrow_proof_to_g), run_time=1)
         
         self.new_subsection(scene, "verify once", "data/sound/e7/slide6-14.mp3")
+        scene.wait(2)
         
-        self.new_subsection(scene, "if tree deep - savings", "data/sound/e7/slide6-15.mp3")
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label))

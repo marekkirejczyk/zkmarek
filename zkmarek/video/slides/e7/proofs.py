@@ -230,12 +230,12 @@ class Proofs(SlideBase):
         self.kzg = Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.verifier_label, LEFT, buff = 1.).shift(LEFT * 0.5)
         self.ipa = Text("IPA", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.kzg, LEFT, buff = 1.3)
         
-        self.kzg_scalar = Text("<32 B", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=25)
-        self.ipa_scalar = Text("<32 B", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=25)
-        self.kzg_ec_point = Text("<48 B", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=25)
-        self.ipa_ec_point = Text("<32 B", color=SECONDARY_COLOR, font=PRIMARY_FONT, font_size=25)
+        self.kzg_scalar = MathTex(r"<32  \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35)
+        self.ipa_scalar = MathTex(r"<32  \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35)
+        self.kzg_ec_point = MathTex(r"<48  \ \mathrm{B}", color=SECONDARY_COLOR, font_size=35)
+        self.ipa_ec_point = MathTex(r"<32  \ \mathrm{B}", color=SECONDARY_COLOR, font_size=35)
         self.ipa_proof = Text("     16 x\n EC points", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
-        self.ipa_proof2 = Text("<512 B", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
+        self.ipa_proof2 = MathTex(r"<512 \ \mathrm{B}", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
         
         self.kzg_total = Text("KZG proofs: 140 B", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
         self.ipa_total = Text("IPA proofs: 1.5 kB", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25 )
@@ -246,7 +246,7 @@ class Proofs(SlideBase):
         
         ## calculation proof
         self.proof_kzg1 = MathTex(r"\sim 48\ \mathrm{B} \cdot 3 + 48 \mathrm{B} \cdot 2", color = HIGHLIGHT_COLOR, font_size = 30)
-        self.proof_kzg2 = MathTex(r"\sim 240 \mathrm{B}", color = HIGHLIGHT_COLOR, font_size = 30)
+        self.proof_kzg2 = MathTex(r"\sim 240 \  \mathrm{B}", color = HIGHLIGHT_COLOR, font_size = 30)
         
         self.proof_ipa1 = MathTex(r"\sim 3 \cdot  512 \ \mathrm{B} + 64 \mathrm{B}", color = HIGHLIGHT_COLOR, font_size = 30)
         self.proof_ipa2 = MathTex(r"\sim 1536 \ \mathrm{B} + 64 \mathrm{B}", color = HIGHLIGHT_COLOR, font_size = 30)
@@ -370,17 +370,17 @@ class Proofs(SlideBase):
         self.kzg_ec_point.next_to(self.kzg, DOWN, buff = 0.3)
         self.ipa_ec_point.next_to(self.ipa, DOWN, buff =0.3)
         self.kzg_ecpoint2 = self.kzg_ec_point.copy().next_to(self.proof, LEFT, buff = 0.6).set_color(PRIMARY_COLOR)
-        self.ipa_proof.next_to(self.kzg_ecpoint2, LEFT, buff = 1.)
-        self.ipa_proof2.next_to(self.kzg_ecpoint2, LEFT, buff = 1.)
+        self.ipa_proof.next_to(self.kzg_ecpoint2, LEFT, buff = 0.8)
+        self.ipa_proof2.next_to(self.kzg_ecpoint2, LEFT, buff = 0.9)
         self.commitment_label.next_to(self.ipa_ec_point, LEFT, buff=0.5)
         self.proof_label.next_to(self.ipa_proof, LEFT, buff=0.5)
         self.total_size.next_to(self.proof_label, DOWN, buff=0.5)
         
-        self.proof_ipa1.next_to(self.total_size, RIGHT, buff = 0.5)
-        self.proof_ipa2.next_to(self.total_size, RIGHT, buff = 0.4)
-        self.proof_ipa3.next_to(self.total_size, RIGHT, buff = 0.5)
+        self.proof_ipa1.next_to(self.total_size, RIGHT, buff = 0.2)
+        self.proof_ipa2.next_to(self.total_size, RIGHT, buff = 0.3)
+        self.proof_ipa3.next_to(self.total_size, RIGHT, buff = 0.6)
         self.proof_kzg1.next_to(self.proof_ipa3, RIGHT, buff = 0.2)
-        self.proof_kzg2.next_to(self.proof_ipa3, RIGHT, buff = 0.7)
+        self.proof_kzg2.next_to(self.proof_ipa3, RIGHT, buff = 0.8)
         
         scene.play(Write(self.commitment_label), run_time=1)
         scene.play(Write(self.proof_label), run_time=1)
@@ -439,9 +439,10 @@ class Proofs(SlideBase):
         self.new_subsection(
             scene, "simplified to sinlge proof", "data/sound/e7/slide5-7.mp3"
         )
+        scene.wait(2)
         self.multiproof.move_to(self.pi_proof.get_center())
         scene.play(TransformMatchingShapes(VGroup(self.proof, self.pi_proof, self.pi_proof_level3), self.multiproof), run_time=1)
-        scene.wait(6.5)
+        scene.wait(8.5)
         
         self.all = Group(
             self.title_label,
@@ -459,6 +460,9 @@ class Proofs(SlideBase):
             self.rectangle_bg,
             self.proof_kzg2,
             self.proof_ipa3,
+            self.total_size,
+            self.commitment_label,
+            self.proof_label,
         )
 
     def animate_out(self, scene):

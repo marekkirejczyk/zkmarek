@@ -8,6 +8,7 @@ from zkmarek.video.slides.e7.single_level_verkle import SingleLevelVerkleTree
 from zkmarek.video.slides.e7.three_level_vt import ThreeLevelVerkleTree
 from zkmarek.video.slides.e7.proofs import Proofs
 from zkmarek.video.slides.e7.multiproofs import Multiproofs
+from zkmarek.video.slides.e7.code_multiproofs import Multiproofs as CodeMultiproofs
 
 EPISODE7 = [
     # Intro(
@@ -26,7 +27,8 @@ EPISODE7 = [
     ThreeLevelVerkleTree(),
     TitleSlide("Proofs", sound = "data/sound/e7/slide5-0.mp3", wait_time=2),
     Proofs(),
-    TitleSlide("Multiproofs", sound="data/sound/e7/slide6-0.mp3", wait_time=2),
+    TitleSlide("Multiproofs", wait_time=2),
     Multiproofs(),
-    TitleSlide("Code", sound = "data/sound/e7/slide6-16.mp3")
+    TitleSlide("Code", sound = "data/sound/e7/slide6-16.mp3"),
+    CodeMultiproofs(),
 ]

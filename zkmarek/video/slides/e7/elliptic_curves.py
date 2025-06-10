@@ -188,8 +188,10 @@ class EllipticCurves(SlideBase):
         
         self.ipa_proof = MathTex(r"\pi \sim 2\log({{n}})", color = PRIMARY_COLOR, font_size = 30)
         self.ipa_proof_ec = Text("EC points", color = PRIMARY_COLOR, font_size = 20, font = PRIMARY_FONT)
-        self.ipa_commtiment1 = Text("C", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25)
-        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment1, DOWN, buff = 0.05)
+        self.ipa_commtiment1 = Text("C: ", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25)
+        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment1, RIGHT, buff = 0.05)
+        self.ipa_commitment_formila.set_color(SECONDARY_COLOR)
+        self.ipa_commtiment1.set_color(PRIMARY_COLOR)
         self.ipa_commtiment = VGroup(self.ipa_commtiment1, self.ipa_commitment_formila)
         
     def animate_in(self, scene):
@@ -243,7 +245,7 @@ class EllipticCurves(SlideBase):
         scene.play(Write(self.kzg))
         scene.wait(0.5)
         scene.play(Write(self.cross_out_line), run_time=1)
-        scene.wait(0.6)
+        scene.wait(2)
         scene.play(Write(self.cross_out_pairings), run_time=1)
         
         self.new_subsection(scene, "Pedersen commitments & Bandersnatch", "data/sound/e7/slide2-3a.mp3")
@@ -275,9 +277,9 @@ class EllipticCurves(SlideBase):
         scene.play(Indicate(self.base_field_bander), run_time=1)
         scene.wait(0.5)
         scene.play(Indicate(self.base_field_bls), run_time=1)
-        scene.wait(2)
+        scene.wait(4.5)
         scene.play(Write(self.size_base_field_bander), run_time=1)
-        scene.wait(1)
+        scene.wait(2)
         scene.play(FadeOut(self.size_base_field_bander))
         
         self.new_subsection(scene, "scalars 253 bit", "data/sound/e7/slide2-4b.mp3")
@@ -288,7 +290,7 @@ class EllipticCurves(SlideBase):
         self.chart_whole.generate_target()
         self.chart_whole.target.scale(0.8).shift(UP*0.9)
         scene.play(MoveToTarget(self.chart_bander_whole), MoveToTarget(self.chart_whole), run_time=1)
-        self.ipa_commtiment.next_to(self.chart_bander, DOWN, buff = 1.0).shift(LEFT)
+        self.ipa_commtiment.next_to(self.chart_bander, DOWN, buff = 1.0)
         self.point_to_generator5 = self.chart_bander.get_point(FieldElement(43, 137))
         self.circle_gen5 = Circle(radius=0.15).move_to(
             self.point_to_generator5.get_center()
@@ -300,7 +302,7 @@ class EllipticCurves(SlideBase):
         self.size_scalar_bander.scale(0.8).next_to(self.scalar_field_bander, RIGHT, buff = 0.1)
         scene.wait(2)
         scene.play(Write(self.scalar_field_bander), run_time=1)
-        scene.wait(1.5)
+        scene.wait(2.5)
         scene.play(Write(self.size_scalar_bander), run_time=1)
         scene.wait(1)
         
@@ -316,8 +318,8 @@ class EllipticCurves(SlideBase):
         scene.play(FadeOut(self.commitment_ipa, self.circle_gen5), run_time=0.5)
         
         self.new_subsection(scene, "IPA proof log2(n)", "data/sound/e7/slide2-5.mp3")
-        self.ipa_proof.next_to(self.ipa_commtiment, RIGHT, buff = 0.4)
-        self.ipa_proof_ec.next_to(self.ipa_proof, RIGHT, buff = 0.2)
+        self.ipa_proof.next_to(self.ipa_commtiment, DOWN, buff = 0.4)
+        self.ipa_proof_ec.next_to(self.ipa_proof, RIGHT , buff = 0.2)
         scene.play(Write(self.ipa_proof), Write(self.ipa_proof_ec), FadeOut(self.size_scalar_bander), run_time=1)
         scene.wait(2)
         scene.play(Indicate(self.ipa_proof[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
