@@ -1,6 +1,6 @@
 from manim import (FadeIn, FadeOut, ImageMobject, Text, LEFT, RIGHT, DOWN, UP, Write, Create, MoveToTarget, VGroup, Rectangle, WHITE, PURPLE, 
 Indicate, Group, Circle, Brace, AddTextLetterByLetter, BLACK, GREY, Arrow, StealthTip, GrowArrow, SurroundingRectangle, ApplyWave,
-BLUE_E, GREEN_E, TEAL_E, RoundedRectangle, Transform, MathTex)
+BLUE_E, GREEN_E, TEAL_E, RoundedRectangle, Transform, MathTex, rate_functions)
 from zkmarek.video.constant import PRIMARY_COLOR, SECONDARY_COLOR, HIGHLIGHT_COLOR, PRIMARY_FONT, HIGHLIGHT2_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.tree import MerkleTree
@@ -36,7 +36,7 @@ class Layer2(SlideBase):
                                self.tx_circle2, self.tx_circle, self.tx_label, self.tx_label2, self.tx_label3, self.tx_label4, 
                                self.tx_label5, self.tx_label6, self.tx_label7, self.tx_label8).shift(DOWN * 1.9+RIGHT*1.06)
 
-        self.layer2_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3) for _ in range(4)]
+        self.layer2_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3, stroke_width = 0.0) for _ in range(4)]
         for i in range(4):
             self.layer2_blocks[i].set_color_by_gradient([WHITE, SCROLL_COLOR_BACKGROUND, SCROLL_COLOR])
 
@@ -49,7 +49,7 @@ class Layer2(SlideBase):
         self.layer2_blocks[2].shift(RIGHT+0.5*UP*0.9)
         self.layer2_blocks[3].shift(RIGHT+0.5*UP*0.9)
         
-        self.finalized_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3) for _ in range(4)]
+        self.finalized_blocks = [Rectangle(width=1.3, height=1, fill_opacity=0.3, stroke_width = 0.0) for _ in range(4)]
         for i in range(4):
             self.finalized_blocks[i].set_color_by_gradient([WHITE, PURPLE, HIGHLIGHT2_COLOR])
         self.finalized_group = VGroup(*self.finalized_blocks).arrange(RIGHT, buff=0.5).next_to(self.layer2_group, UP).shift(UP)
@@ -246,3 +246,37 @@ class Layer2(SlideBase):
                 FadeOut(self.ethereum2), FadeOut(self.ethereum3), 
                 FadeOut(self.ethereum4, self.tree, self.dots_vec_node, self.dots_vec_node1))
         
+
+    def animate_miniature_final_season(self, scene):
+        rectangle = RoundedRectangle(corner_radius=0.3, width = 4, height = 2, color = PRIMARY_COLOR, stroke_width=0.3).shift(LEFT * 3 + DOWN * 2)
+        self.blob = ImageMobject("data/images/blob.png").scale(0.4).move_to(rectangle.get_center()).shift(UP * 6.5)
+        self.blob_0 = self.blob.copy().scale(0.25)
+        self.blob_0.generate_target()
+        self.blob_0.target.shift(DOWN * 5.5)
+        self.blob_1 = self.blob.copy().scale(0.25)
+        self.blob_1.generate_target()
+        self.blob_1.target.next_to(self.blob_0.target, LEFT, buff = 0.0)
+        self.blob_2 = self.blob.copy().scale(0.25)
+        self.blob_2.generate_target()
+        self.blob_2.target.next_to(self.blob_0.target, RIGHT, buff = 0.0)
+        
+        scene.play(MoveToTarget(self.blob_0, rate_func=rate_functions.ease_out_bounce), run_time=0.3)
+        scene.play(MoveToTarget(self.blob_1, rate_func=rate_functions.ease_out_bounce), run_time=0.3)
+        scene.play(MoveToTarget(self.blob_2, rate_func=rate_functions.ease_out_bounce), run_time=0.3)
+        self.block_chain = VGroup(
+            self.tx_group, self.layer1_ethereum, self.layer2, self.transactions,
+            self.layer2_group, self.finalized_group, self.arrow_layer1, self.arrow_layer2,
+            self.arrow_txs, self.brace_tx,
+            self.arrow_layer1_group, self.arrow_layer2_group
+        ).move_to(rectangle.get_center()).shift(DOWN * 1.5)
+
+        scene.add(self.ethereum, self.ethereum2, self.ethereum3, self.ethereum4)
+        self.block_chain.scale(0.4).next_to(self.blob_0, DOWN, buff = 0.3)
+        self.ethereum.scale(0.5).move_to(self.finalized_blocks[0])
+        self.ethereum2.scale(0.5).move_to(self.finalized_blocks[1])
+        self.ethereum3.scale(0.5).move_to(self.finalized_blocks[2])
+        self.ethereum4.scale(0.5).move_to(self.finalized_blocks[3])
+
+        scene.play(FadeIn(self.block_chain, rectangle))  
+        scene.wait(0.3)
+        scene.play(self.ethereum.animate.set_color(PURPLE))

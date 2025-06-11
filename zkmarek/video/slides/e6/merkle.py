@@ -714,3 +714,116 @@ class MerkleTree(SlideBase):
         )
         
         scene.play(FadeOut(rectangle, text, self.merkle_tree_2_4, self.nodes_copy[0], self.nodes_copy[2], self.nodes_copy[4]), run_time=0.5)
+
+    def animate_miniature_final_season(self, scene):
+        rectangle = RoundedRectangle(width = 5, height = 3, corner_radius=0.3).shift(DOWN*2+RIGHT * 3).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        self.merkle_tree_2_4.scale(0.4).move_to(rectangle.get_center()).shift(UP*0.2)
+        scene.play(FadeIn(rectangle), run_time=0.5)
+        scene.play(Create(self.merkle_tree_2_4), run_time=0.5)
+
+        all_nodes = VGroup(
+            self.merkle_tree_2_4.get_node(3, 0),
+            self.merkle_tree_2_4.get_node(3, 1),
+            self.merkle_tree_2_4.get_node(3, 2),
+            self.merkle_tree_2_4.get_node(3, 3),
+            self.merkle_tree_2_4.get_node(3, 4),
+            self.merkle_tree_2_4.get_node(3, 5),
+            self.merkle_tree_2_4.get_node(3, 6),
+            self.merkle_tree_2_4.get_node(3, 7),
+            self.merkle_tree_2_4.get_node(2, 0),
+            self.merkle_tree_2_4.get_node(2, 1),
+            self.merkle_tree_2_4.get_node(2, 2),
+            self.merkle_tree_2_4.get_node(2, 3),
+            self.merkle_tree_2_4.get_node(1, 0),
+            self.merkle_tree_2_4.get_node(1, 1),
+            self.merkle_tree_2_4.get_node(0, 0)
+        )
+        node_prove = self.merkle_tree_2_4.get_node(3, 3)
+
+        node_prove.set_color(SECONDARY_COLOR)
+
+        nodes_directly_used = [
+            self.merkle_tree_2_4.get_node(3, 3),
+            self.merkle_tree_2_4.get_node(2, 1),
+            self.merkle_tree_2_4.get_node(1, 0),
+            self.merkle_tree_2_4.get_node(0, 0),
+        ]
+        for i in range(len(all_nodes)):
+            node = all_nodes[i]
+            scene.play(node.animate.set_opacity(0.1), run_time=0.03)
+            
+        for i in range(len(nodes_directly_used)):
+            node = nodes_directly_used[i]
+            node.set_opacity(0.4).set_color(SECONDARY_COLOR)
+            node.animate.set_opacity(0.1)
+
+        nodes_needed_to_proof = [
+            self.merkle_tree_2_4.get_node(3, 2),
+            self.merkle_tree_2_4.get_node(2, 0),
+            self.merkle_tree_2_4.get_node(1, 1),
+        ]
+
+        for i in range(len(nodes_needed_to_proof)):
+            node = nodes_needed_to_proof[i]
+            node.set_opacity(1.0).set_color(HIGHLIGHT2_COLOR),
+
+            node.set_opacity(0.1),
+
+
+
+        nodes_copy = []
+        for i in range(len(nodes_needed_to_proof)):
+            node = nodes_needed_to_proof[i]
+            node = node.copy()
+            node.set_opacity(0.4)
+            node.set_color(HIGHLIGHT2_COLOR).next_to(
+                self.merkle_tree_2_4, DOWN, buff=0.2
+            ).shift(LEFT * 2 + RIGHT * 2 * i)
+            scene.play(
+                TransformMatchingShapes(
+                    nodes_needed_to_proof[i],
+                    node,
+                ),
+                run_time=0.4,
+            )
+            nodes_copy.append(node)
+            nodes_copy.append(hash)
+        self.nodes_copy = nodes_copy
+
+        scene.play(
+            nodes_needed_to_proof[0]
+            .animate.set_opacity(0.4)
+            .set_color(HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[0], color=HIGHLIGHT2_COLOR),
+        )
+        scene.play(
+            node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR),
+        )
+        scene.play(
+            nodes_directly_used[1].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_needed_to_proof[1]
+            .animate.set_opacity(0.4)
+            .set_color(HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[2], color=HIGHLIGHT2_COLOR),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_directly_used[2].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_needed_to_proof[2]
+            .animate.set_opacity(0.4)
+            .set_color(HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[4], color=HIGHLIGHT2_COLOR),
+            run_time=0.5,
+        )
+        scene.play(
+            nodes_directly_used[3].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
+            run_time=0.5,
+        )
+        
+        scene.play(FadeOut(rectangle, self.merkle_tree_2_4, self.nodes_copy[0], self.nodes_copy[2], self.nodes_copy[4]), run_time=0.5)

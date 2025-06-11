@@ -5,6 +5,10 @@ from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR,
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.episode4.discreete_polynomial_chart import DiscreetePolynomialChart
 from zkmarek.crypto.field_element import FieldElement
+from zkmarek.crypto.weierstrass_curve import Secp256k1_41
+from zkmarek.video.mobjects.discreet_elliptic_chart import (
+    DiscreteEllipticChart,
+)
 
 def poly(x):
     if isinstance(x, FieldElement):
@@ -255,4 +259,67 @@ class Commitment(SlideBase):
                  self.envelope_body_closed, self.envelope_flap_closed, text, rectangle, tail_verifier, bubble_verifier, speech_text_verifier,
                  self.bubble_committer, self.tail, self.opening), run_time=0.5)
         
+        
+    def animate_miniature_final_season(self, scene):
+        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 2 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        self.commiter.move_to(rectangle.get_center() + LEFT * 0.05).scale(0.5)
+        self.commiter_label.next_to(self.commiter, DOWN, buff = 0.1).scale(0.7)
+        self.verifier.move_to(rectangle.get_center() + RIGHT * 2.4).scale(0.5)
+        self.verifier_label.next_to(self.verifier, DOWN, buff = 0.1).scale(0.7)
+        self.envelope_body_closed = RoundedRectangle(width = 6, height = 2, 
+            fill_color=PRIMARY_COLOR,
+            fill_opacity=0.3,
+            corner_radius=0.1,
+            stroke_width = 0.0
+        ).scale(0.2).next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
+        self.bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, 
+                                               color = PRIMARY_COLOR, stroke_width = 0.0, fill_opacity = 0.3).scale(0.5).next_to(self.commiter, UP+RIGHT, buff = -0.3)
+        self.scale(0.65)
+        self.bubble_committer.move_to(rectangle.get_left()).shift(RIGHT*0.05+UP*0.3).scale(0.4)
+        self.curve = Secp256k1_41
+        self.chart = DiscreteEllipticChart(self.curve, dot_color=HIGHLIGHT_COLOR).move_to(rectangle.get_center()).shift(LEFT * 1.3)
+       
+        self.chart.move_to(self.bubble_committer.get_center()).scale(0.2)
+        self.tail = Polygon(
+            [0.06, 0.08, 0], 
+            [-0.35, -1.2, 0], 
+            [0.93, -0.63, 0], 
+            color=PRIMARY_COLOR,
+            fill_opacity=0.3,
+            stroke_width = 0.0,
+        ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.2).shift(LEFT*0.02+DOWN*0.15)
+
+        self.envelope_flap_closed = Polygon(
+            [-4, 1, 0],
+            [4, 1, 0],
+            [0, -0.6, 0],
+            fill_color=HIGHLIGHT_COLOR,
+            fill_opacity=0.2,
+            stroke_width = 0.0
+        ).scale(0.2).move_to(self.envelope_body_closed.center()).shift(UP*0.05)
+        self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed)
+        bubble_verifier = RoundedRectangle(corner_radius=0.5, width=1+1, height=0.5 + 1.2, 
+                                           color = SECONDARY_COLOR, stroke_width = 0.0, fill_opacity = 0.2).scale(0.7).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(LEFT*0.3).scale(0.65)
+
+        tail_verifier = Polygon(
+            [0.2, 0.05, 0], 
+            [-0.56, -0.67, 0], 
+            [0.78, -1.1, 0], 
+            color=SECONDARY_COLOR,
+            fill_opacity=0.3,
+            stroke_width=0.0
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.3).shift(RIGHT*0.1+DOWN*0.2)
+        
+
+        self.envelope.next_to(self.commiter, RIGHT+DOWN, buff = 0.2)
+        self.all_mobjects = Group(self.commiter, self.commiter_label, self.bubble_opening, self.verifier, self.verifier_label, self.bubble_committer, self.chart, 
+                 self.envelope, tail_verifier, bubble_verifier, self.tail).scale(0.65)
+        self.chart.gen_points()
+        scene.play(FadeIn(self.commiter, self.commiter_label, self.bubble_opening, self.verifier, self.verifier_label, self.chart, 
+                 self.envelope_body_closed, self.envelope_flap_closed, rectangle), run_time=0.5)
+
+        scene.play(FadeIn(tail_verifier, bubble_verifier), run_time=0.6)
+
+        scene.play(FadeIn(self.bubble_committer, self.tail), run_time=0.5)
+
         

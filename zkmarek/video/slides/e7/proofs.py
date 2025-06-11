@@ -235,7 +235,7 @@ class Proofs(SlideBase):
         self.kzg_ec_point = MathTex(r"<48  \ \mathrm{B}", color=SECONDARY_COLOR, font_size=35)
         self.ipa_ec_point = MathTex(r"<32  \ \mathrm{B}", color=SECONDARY_COLOR, font_size=35)
         self.ipa_proof = Text("     16 x\n EC points", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
-        self.ipa_proof2 = MathTex(r"<512 \ \mathrm{B}", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
+        self.ipa_proof2 = MathTex(r"<512 \ \mathrm{B}", color=PRIMARY_COLOR, font_size=25)
         
         self.kzg_total = Text("KZG proofs: 140 B", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
         self.ipa_total = Text("IPA proofs: 1.5 kB", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25 )

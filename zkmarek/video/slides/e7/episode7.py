@@ -1,4 +1,5 @@
 # from zkmarek.video.slides.common.intro import Intro
+from zkmarek.video.slides.episode2.support import Sponsored
 from zkmarek.video.slides.e7.recap import Recap
 from zkmarek.video.slides.e7.vector_commitment import PreviouslyVectorCommitment
 from zkmarek.video.slides.e7.watch_other import FullVideos
@@ -9,12 +10,15 @@ from zkmarek.video.slides.e7.three_level_vt import ThreeLevelVerkleTree
 from zkmarek.video.slides.e7.proofs import Proofs
 from zkmarek.video.slides.e7.multiproofs import Multiproofs
 from zkmarek.video.slides.e7.code_multiproofs import Multiproofs as CodeMultiproofs
+from zkmarek.video.slides.e7.final_season1 import FinalSeason1
 
 EPISODE7 = [
     # Intro(
     #     sound="data/sound/episode3/slide0-0.mp3",
     #     background_sound="data/sound/e7/background.mp3",
     # ),
+    Sponsored(),
+    FinalSeason1(),
     Recap(),
     PreviouslyVectorCommitment(),
     FullVideos(),

@@ -219,7 +219,22 @@ class Ceremony(SlideBase):
         scene.wait(0.3)
         scene.play(FadeOut(self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.three_dot, text, rectangle, self.line0, self.line1, self.linei, self.tau_col,
                            self.person, self.person2, self.person3), run_time=0.3)
+        
+    def animate_miniature_final_season(self, scene):
+        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).scale(1/0.4).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).move_to(rectangle.get_center()).shift(RIGHT * 0.6)
+        self.add(rectangle, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.tau_col)
+        self.scale(0.4).shift(UP*2)
+        self.tau_0_mini.scale(1.2).move_to(rectangle.get_left()).shift(RIGHT*1.2+UP*0.5)
+        self.tau_1_mini.scale(1.2).move_to(rectangle.get_left()).shift(RIGHT*1.2)
+        self.tau_k_mini.scale(1.2).move_to(rectangle.get_left()).shift(RIGHT*1.2+DOWN * 0.5)
 
+        self.person.scale(0.3).next_to(self.tau_0_mini, LEFT, buff = 0.1)
+        self.person2.scale(0.3).next_to(self.tau_1_mini, LEFT, buff = 0.1)
+        self.person3.scale(0.3).next_to(self.tau_k_mini, LEFT, buff = 0.1)
+        self.three_dot.scale(0.3).next_to(self.tau_1_mini, DOWN, buff = 0.1)
+
+        scene.play(FadeIn(rectangle, self.tau_col, self.person, self.person2, self.person3), Write(self.tau_0_mini), Write(self.tau_1_mini), Write(self.three_dot), Write(self.tau_k_mini), run_time=0.5)
 
     def animate_out(self, scene):
         scene.play(FadeOut(self.person, self.person2, self.person3, self.tau_0, self.tau_1, self.tau_k, self.title_label, self.three_dot, self.vector_0, self.vector_1, self.vector_k, self.tau))

@@ -19,6 +19,8 @@ from manim import (
     Dot,
     VGroup,
     ApplyWave,
+    RoundedRectangle,
+    Create
 )
 from random import randint
 from zkmarek.video.constant import (
@@ -234,3 +236,19 @@ class PreviouslyOn(TexSlide):
 
         scene.wait(1.5)
         scene.play(FadeOut(self.wallet))
+
+    def animate_miniature(self, scene):
+        self.curve = Secp256k1_41
+
+        rectangle = RoundedRectangle(corner_radius=0.3, width = 4.5, height = 3, color = PRIMARY_COLOR, stroke_width=0.3).shift(LEFT * 4 + UP * 2)
+        self.chart = DiscreteEllipticChart(self.curve, dot_color=HIGHLIGHT_COLOR).scale(0.3).move_to(rectangle.get_center()).shift(LEFT * 1.3)
+        self.tex.scale(0.3).next_to(self.chart, RIGHT, buff=0.0)
+        self.tex.shift(LEFT * 2.7)
+        self.chart.gen_points()
+        self.add(self.chart, self.tex, rectangle)
+        scene.play(FadeIn(rectangle))
+        scene.play(Create(self.chart), run_time=0.5)
+        scene.play(Write(self.tex.shift(RIGHT * 3)))
+        scene.play(self.tex[0][0:14].animate.set_color(HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(self.tex[0][14:27].animate.set_color(HIGHLIGHT_COLOR), run_time=0.3)
+        scene.play(self.tex[0][27:52].animate.set_color(HIGHLIGHT_COLOR), run_time=0.3)
