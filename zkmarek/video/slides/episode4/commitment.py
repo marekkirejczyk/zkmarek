@@ -261,7 +261,7 @@ class Commitment(SlideBase):
         
         
     def animate_miniature_final_season(self, scene):
-        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 2 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 1.5 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
         self.commiter.move_to(rectangle.get_center() + LEFT * 0.05).scale(0.5)
         self.commiter_label.next_to(self.commiter, DOWN, buff = 0.1).scale(0.7)
         self.verifier.move_to(rectangle.get_center() + RIGHT * 2.4).scale(0.5)

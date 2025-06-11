@@ -25,6 +25,7 @@ from zkmarek.video.constant import (
     PRIMARY_FONT,
     SECONDARY_COLOR,
     HIGHLIGHT_COLOR,
+    HIGHLIGHT2_COLOR,
 )
 
 
@@ -520,10 +521,10 @@ class Proofs(SlideBase):
                 corner_radius=0.2,
                 width=self.proofs.width+0.7,
                 height=2,
-                fill_opacity=0.2,
+                fill_opacity=0.15,
                 stroke_width=0.0,
             )
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(HIGHLIGHT2_COLOR)
             .move_to(self.proofs.get_center())
             .shift(UP*0.6)
         )

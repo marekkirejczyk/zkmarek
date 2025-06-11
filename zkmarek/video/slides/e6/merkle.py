@@ -826,4 +826,3 @@ class MerkleTree(SlideBase):
             run_time=0.5,
         )
         
-        scene.play(FadeOut(rectangle, self.merkle_tree_2_4, self.nodes_copy[0], self.nodes_copy[2], self.nodes_copy[4]), run_time=0.5)

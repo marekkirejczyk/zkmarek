@@ -189,7 +189,7 @@ class EllipticCurves(SlideBase):
         self.ipa_proof = MathTex(r"\pi \sim 2\log({{n}})", color = PRIMARY_COLOR, font_size = 30)
         self.ipa_proof_ec = Text("EC points", color = PRIMARY_COLOR, font_size = 20, font = PRIMARY_FONT)
         self.ipa_commtiment1 = Text("C: ", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25)
-        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment1, RIGHT, buff = 0.05)
+        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment1, RIGHT, buff = 0.2)
         self.ipa_commitment_formila.set_color(SECONDARY_COLOR)
         self.ipa_commtiment1.set_color(PRIMARY_COLOR)
         self.ipa_commtiment = VGroup(self.ipa_commtiment1, self.ipa_commitment_formila)
@@ -290,7 +290,7 @@ class EllipticCurves(SlideBase):
         self.chart_whole.generate_target()
         self.chart_whole.target.scale(0.8).shift(UP*0.9)
         scene.play(MoveToTarget(self.chart_bander_whole), MoveToTarget(self.chart_whole), run_time=1)
-        self.ipa_commtiment.next_to(self.chart_bander, DOWN, buff = 1.0)
+        self.ipa_commtiment.next_to(self.chart_bander, DOWN, buff = 1.0).shift(RIGHT*0.5)
         self.point_to_generator5 = self.chart_bander.get_point(FieldElement(43, 137))
         self.circle_gen5 = Circle(radius=0.15).move_to(
             self.point_to_generator5.get_center()
@@ -318,7 +318,7 @@ class EllipticCurves(SlideBase):
         scene.play(FadeOut(self.commitment_ipa, self.circle_gen5), run_time=0.5)
         
         self.new_subsection(scene, "IPA proof log2(n)", "data/sound/e7/slide2-5.mp3")
-        self.ipa_proof.next_to(self.ipa_commtiment, DOWN, buff = 0.4)
+        self.ipa_proof.next_to(self.ipa_commtiment, DOWN, buff = 0.4).shift(LEFT*0.5)
         self.ipa_proof_ec.next_to(self.ipa_proof, RIGHT , buff = 0.2)
         scene.play(Write(self.ipa_proof), Write(self.ipa_proof_ec), FadeOut(self.size_scalar_bander), run_time=1)
         scene.wait(2)

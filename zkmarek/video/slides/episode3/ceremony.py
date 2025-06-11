@@ -222,7 +222,7 @@ class Ceremony(SlideBase):
         
     def animate_miniature_final_season(self, scene):
         rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).scale(1/0.4).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
-        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).move_to(rectangle.get_center()).shift(RIGHT * 0.6)
+        self.tau_col = MathTex(r"\tau = \tau_0 \cdot \tau_1 \cdot \cdots \tau_i", color = SECONDARY_COLOR).scale(1.2).move_to(rectangle.get_center()).shift(RIGHT * 0.9)
         self.add(rectangle, self.tau_0_mini, self.tau_1_mini, self.tau_k_mini, self.tau_col)
         self.scale(0.4).shift(UP*2)
         self.tau_0_mini.scale(1.2).move_to(rectangle.get_left()).shift(RIGHT*1.2+UP*0.5)
