@@ -78,9 +78,9 @@ class Multiproofs(SlideBase):
         self.powers_of_r[15].set_color(HIGHLIGHT_COLOR)
         self.powers_of_r[17].set_color(SECONDARY_COLOR)
         self.opening.shift(RIGHT * 4.5+UP*1.5)
-        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right(), stroke_width=0.3, 
+        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right()+LEFT * 2, stroke_width=0.3, 
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
-        self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
+        self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 23).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
         self.random_t = MathTex(r"t\sim \mathrm{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5)
         
