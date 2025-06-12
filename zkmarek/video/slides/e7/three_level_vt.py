@@ -641,7 +641,7 @@ class ThreeLevelVerkleTree(SlideBase):
 
         self.arrow_commitment_C01 = VGroup(*self.arrow_commitment_C01)
         hash_parent = hash.copy().next_to(self.commitment_C01, UP, buff=0.3)
-        hash_parent_255 = hash.copy().next_to(self.other_hashes[0][1], UP, buff=0.3)
+        hash_parent_255 = hash.copy().next_to(self.other_hashes[:][3], UP, buff=0.3)
         self.arrow_commitment_C01.add(hash_parent, hash_parent_255)
         scene.play(
             Create(self.other_commitments), Write(self.arrow_commitment_C01), run_time=1

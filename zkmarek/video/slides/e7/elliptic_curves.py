@@ -103,9 +103,9 @@ class EllipticCurves(SlideBase):
         self.scalar_Fq = MathTex(r"k'\in F_q", font_size = 40).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(DOWN)
         
         self.bytes_p2 = Text(
-            "48 B", color=HIGHLIGHT_COLOR, font_size=24, font = PRIMARY_FONT
+            "48 B", color=PRIMARY_COLOR, font_size=24, font = PRIMARY_FONT
         ).next_to(self.base_field_bls, RIGHT, buff = 0.7).shift(UP*0.1)
-        self.sim_48 = MathTex(r"<", color = HIGHLIGHT_COLOR, font_size = 32).next_to(self.bytes_p2, LEFT, buff = 0.1)
+        self.sim_48 = MathTex(r"<", color = PRIMARY_COLOR, font_size = 32).next_to(self.bytes_p2, LEFT, buff = 0.1)
         self.bytes_p2 = VGroup(self.sim_48, self.bytes_p2)
         self.scalars = Text("scalars", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size=24).next_to(self.r, LEFT, buff=0.4)
         self.bytes_of_el = Text("32 B", font=PRIMARY_FONT, font_size=24).set_color(
@@ -157,15 +157,15 @@ class EllipticCurves(SlideBase):
         self.point_to_generator_label = MathTex(
             r"{{G_1}} \cdot k", color=PRIMARY_COLOR, font_size=32
         ).next_to(self.point_to_generator, RIGHT, buff=0.2)
-        self.point_to_generator_label.set_color(SECONDARY_COLOR)
+        self.point_to_generator_label[1].set_color(SECONDARY_COLOR)
         self.point_to_generator2 = self.chart_ec.get_point(FieldElement(51, 137))
-        self.circle_gen2 = Circle(radius=0.15, color=PRIMARY_COLOR).move_to(
+        self.circle_gen2 = Circle(radius=0.15, color=SECONDARY_COLOR).move_to(
             self.point_to_generator2.get_center()
         )
         self.point_to_generator_label2 = MathTex(
             r"{{G_2}} \cdot k'", color=PRIMARY_COLOR, font_size=32
         ).next_to(self.point_to_generator2, RIGHT, buff=0.2)
-        self.point_to_generator_label2.set_color(SECONDARY_COLOR)
+        self.point_to_generator_label2[1].set_color(SECONDARY_COLOR)
         self.chart_ec.shift(RIGHT * 3)
         
         self.pairings = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color = PRIMARY_COLOR, font_size = 30).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(RIGHT)
@@ -325,7 +325,7 @@ class EllipticCurves(SlideBase):
         scene.play(Write(self.ipa_proof), Write(self.ipa_proof_ec), FadeOut(self.size_scalar_bander), run_time=1)
         scene.wait(2)
         scene.play(Indicate(self.ipa_proof[1], color = SECONDARY_COLOR, scale_factor=1.5), run_time=1)
-        scene.wait(2.5)
+        scene.wait(1.5)
         scene.play(Indicate(self.ipa_commtiment, color = SECONDARY_COLOR), run_time=1)
         scene.wait(2)
         scene.play(Indicate(self.ipa_proof, color = SECONDARY_COLOR), run_time=1)
@@ -361,10 +361,11 @@ class EllipticCurves(SlideBase):
         
         self.new_subsection(scene, "IPA proof", "data/sound/e7/slide2-6b.mp3")
         scene.wait(1)
-        scene.play(Create(self.kzg_ipa_table.value_cells[:][2]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.value_cells[:][1]), run_time=1)
         scene.wait(2.5)
         scene.play(Create(self.kzg_ipa_table.sizes_ipa[:][1]), run_time=1)
+        scene.wait(1)
+        scene.play(Create(self.kzg_ipa_table.value_cells[:][2]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.sizes_ipa[:][2]), run_time=1)
         
         
@@ -376,7 +377,7 @@ class EllipticCurves(SlideBase):
         scene.wait(2)
         scene.play(Create(self.kzg_ipa_table.value_cells[:][3]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.value_cells[:][4]), run_time=1)
-        scene.wait(2.5)
+        scene.wait(4)
        
        
     def animate_out(self, scene):

@@ -14,7 +14,7 @@ class FinalSeason1(SlideBase):
     def animate_in(self, scene):
 
         self.title_label = Text(
-            "Final Season 1",
+            "Final episode: Season 1",
             font=PRIMARY_FONT,
             color=PRIMARY_COLOR,
             font_size=40,
@@ -44,8 +44,8 @@ class FinalSeason1(SlideBase):
         self.slide_trusted_setup.animate_miniature_final_season(scene)
         self.slide_kzg.animate_miniature_final_season(scene)
         
-        self.slide_blobs.animate_miniature_final_season(scene)
         self.slide_merkle.animate_miniature_final_season(scene)
+        self.slide_blobs.animate_miniature_final_season(scene)
         scene.wait(2)
         
         

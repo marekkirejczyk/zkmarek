@@ -248,7 +248,7 @@ class Layer2(SlideBase):
         
 
     def animate_miniature_final_season(self, scene):
-        rectangle = RoundedRectangle(corner_radius=0.3, width = 5, height = 3, color = PRIMARY_COLOR).shift(LEFT * 3 + DOWN * 2)
+        rectangle = RoundedRectangle(corner_radius=0.1, width = 5, height = 3, color = PRIMARY_COLOR).shift(LEFT * 3 + DOWN * 2)
         self.blob = ImageMobject("data/images/blob.png").scale(0.4).move_to(rectangle.get_center()).shift(UP * 6.5)
         self.blob_0 = self.blob.copy().scale(0.25)
         self.blob_0.generate_target()

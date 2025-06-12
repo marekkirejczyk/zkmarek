@@ -1,4 +1,5 @@
-def generateMultiProof(opening ai, root c2, pathCommitments [c0, c1]):
+def verifyMultiProof(opening ai, root c2, MultiProof [pi, c0, c1]):
+
     r = hash(c2, c1, c0, ai, hash(c0), hash(c1))
     g(x) = 0
     for i in [0, 1, 2]:  # for c0, c1, c2
@@ -7,11 +8,11 @@ def generateMultiProof(opening ai, root c2, pathCommitments [c0, c1]):
         pi(x) = corresponding_polynomial_for(ci)
         g(x) += r^i * (pi(x) - vi) / (x - xi)
 
-    D = commit(g) 
+    D = commit(g)
 
     s = hash(D, c0, c1, c2, ai, hash(c0), hash(c1))
-    value = g(s)
+    expected_value = g(s)
 
-    pi = open(D, s, value) 
+    is_valid = verifyOpening(D, s, expected_value, pi) # true/false
 
-    return MultiProof(pi, c0, c1)
+    return is_valid

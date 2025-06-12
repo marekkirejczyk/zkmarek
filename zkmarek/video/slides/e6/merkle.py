@@ -718,8 +718,8 @@ class MerkleTree(SlideBase):
     def animate_miniature_final_season(self, scene):
         rectangle = RoundedRectangle(width = 5, height = 3, corner_radius=0.1).shift(DOWN*2+RIGHT * 3).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
         self.merkle_tree_2_4.scale(0.35).move_to(rectangle.get_center()).shift(UP*0.2)
-        scene.play(FadeIn(rectangle), run_time=0.5)
-        scene.play(Create(self.merkle_tree_2_4), run_time=0.5)
+        scene.play(FadeIn(rectangle), run_time=0.3)
+        scene.play(Create(self.merkle_tree_2_4), run_time=0.3)
 
         all_nodes = VGroup(
             self.merkle_tree_2_4.get_node(3, 0),
@@ -784,7 +784,7 @@ class MerkleTree(SlideBase):
                     nodes_needed_to_proof[i],
                     node,
                 ),
-                run_time=0.4,
+                run_time=0.2,
             )
             nodes_copy.append(node)
             nodes_copy.append(hash)
@@ -793,35 +793,12 @@ class MerkleTree(SlideBase):
         scene.play(
             nodes_needed_to_proof[0]
             .animate.set_opacity(0.4)
-            .set_color(HIGHLIGHT2_COLOR),
-            Indicate(self.nodes_copy[0], color=HIGHLIGHT2_COLOR),
+            .set_color(HIGHLIGHT2_COLOR),run_time=0.1
         )
         scene.play(
             node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR),
-        )
-        scene.play(
             nodes_directly_used[1].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
-            run_time=0.5,
-        )
-        scene.play(
-            nodes_needed_to_proof[1]
-            .animate.set_opacity(0.4)
-            .set_color(HIGHLIGHT2_COLOR),
-            Indicate(self.nodes_copy[2], color=HIGHLIGHT2_COLOR),
-            run_time=0.5,
-        )
-        scene.play(
             nodes_directly_used[2].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
-            run_time=0.5,
-        )
-        scene.play(
-            nodes_needed_to_proof[2]
-            .animate.set_opacity(0.4)
-            .set_color(HIGHLIGHT2_COLOR),
-            Indicate(self.nodes_copy[4], color=HIGHLIGHT2_COLOR),
-            run_time=0.5,
-        )
-        scene.play(
             nodes_directly_used[3].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
             run_time=0.5,
         )
