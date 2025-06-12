@@ -219,35 +219,7 @@ class Proofs(SlideBase):
             .shift(LEFT * 0.5)
         )
 
-        ## other elements
-        self.prover = (
-            ImageMobject("data/images/person.png")
-            .scale(0.5)
-            .to_edge(LEFT, buff=1.0)
-            .shift(RIGHT * 0.5 + UP * 1.5)
-        )
-        self.prover_label = Text(
-            "insert function", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30
-        ).next_to(self.prover, DOWN, buff=0.2)
-        self.prover_whole = Group(self.prover, self.prover_label)
-
-        self.verifier = (
-            ImageMobject("data/images/person_blue.png")
-            .scale(0.5)
-            .to_edge(RIGHT, buff=1.0)
-            .shift(LEFT * 0.5 + UP * 1.5)
-        )
-        self.verifier_label = Text(
-            "verification function",
-            font=PRIMARY_FONT,
-            color=PRIMARY_COLOR,
-            font_size=30,
-        ).next_to(self.verifier, DOWN, buff=0.2)
-        self.verifier_whole = Group(self.verifier, self.verifier_label)
-
-        self.commitment = MathTex(r"C^0", color=PRIMARY_COLOR, font_size=30).next_to(
-            self.prover_whole, RIGHT, buff=1.0
-        )
+        self.commitment = MathTex(r"C^0", color=PRIMARY_COLOR, font_size=35).shift(UP * 1.5)
 
         self.proof_text = Text(
             "proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25
@@ -257,7 +229,7 @@ class Proofs(SlideBase):
         )
         self.proof = VGroup(self.pi)
         self.opening = MathTex(
-            r"a_{255} = 85", color=PRIMARY_COLOR, font_size=30
+            r"a_{255} = 85", color=PRIMARY_COLOR, font_size=35
         ).next_to(self.proof, DOWN, buff=0.3)
 
         ## table
@@ -270,7 +242,6 @@ class Proofs(SlideBase):
                 fill_opacity=0.2,
             )
             .set_color(PRIMARY_COLOR)
-            .shift(DOWN)
         )
         self.pi_proof = MathTex(r"\pi^1", color=PRIMARY_COLOR, font_size=35)
 
@@ -288,12 +259,11 @@ class Proofs(SlideBase):
 
         self.kzg = (
             Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30)
-            .next_to(self.verifier_label, LEFT, buff=1.0)
-            .shift(LEFT * 0.5)
+            .shift(RIGHT * 0.5+UP)
         )
         self.ipa = Text(
             "IPA", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30
-        ).next_to(self.kzg, LEFT, buff=1.3)
+        ).next_to(self.kzg, LEFT, buff=2.)
 
         self.kzg_scalar = MathTex(
             r"<32  \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35
@@ -356,6 +326,9 @@ class Proofs(SlideBase):
         self.proof_ipa3 = MathTex(
             r"\sim 1.6\ \mathrm{kB}", color=HIGHLIGHT_COLOR, font_size=30
         )
+        
+        self.verify_function = MathTex(r"\texttt{verify(opening = }{{a_i}}, \texttt{ root = }{{C_0^2}}, \texttt{ verkleProof = }[{{\pi^0}},\ {{\pi^0}},\ {{\pi^2}},\ {{C_0^0}},\ {{C_0^1}}])",
+                                       color = PRIMARY_COLOR, font_size = 37).to_edge(DOWN)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "85: proof C, opening", "data/sound/e7/slide5-1.mp3")
@@ -363,7 +336,6 @@ class Proofs(SlideBase):
         self.values.scale(2).move_to(ORIGIN).shift(DOWN * 1.5)
         scene.play(Write(self.values), run_time=0.7)
         scene.wait(1)
-        scene.play(FadeIn(self.verifier_whole, self.prover_whole), run_time=1.0)
         scene.wait(3)
         scene.play(Write(self.commitment), run_time=0.7)
         scene.play(Write(self.opening), run_time=0.7)
@@ -396,8 +368,7 @@ class Proofs(SlideBase):
         scene.wait(1)
         commitment_C0 = (
             MathTex(r"{{C_0^0}}", color=PRIMARY_COLOR, font_size=28)
-            .next_to(self.verifier_whole, DOWN, buff=0.3)
-            .shift(LEFT)
+            .next_to(self.tree, RIGHT, buff=0.3).shift(UP)
             .scale(1.2)
         )
         scene.play(
@@ -423,9 +394,9 @@ class Proofs(SlideBase):
         )
 
         scene.wait(1)
-        scene.play(Indicate(self.hashes_commitments_level2[4]), run_time=1)
+        scene.play(Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1)
         scene.wait(0.5)
-        scene.play(Indicate(self.hashes_commitments_level3[2]), run_time=1)
+        scene.play(Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1)
         scene.wait(1)
         scene.play(
             TransformMatchingShapes(
@@ -444,7 +415,7 @@ class Proofs(SlideBase):
             FadeIn(opening2),
             run_time=1.5,
         )
-        scene.play(Indicate(self.hashes_commitments_level2[4]), run_time=1)
+        scene.play(Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1)
         scene.wait(1)
         self.pi_proof.next_to(opening2, DOWN, buff=0.5)
         scene.play(FadeIn(self.pi_proof), run_time=1.0)
@@ -456,9 +427,10 @@ class Proofs(SlideBase):
             .scale(1.2)
         )
         scene.wait(1)
-        scene.play(Indicate(self.hashes_commitments_level3[2]), run_time=1)
+        scene.play(Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1)
         scene.wait(0.5)
-        scene.play(Indicate(self.hashes_commitments_root[1]), run_time=1)
+        scene.play(Indicate(self.hashes_commitments_root[1], scale_factor=1.5), run_time=1)
+        scene.wait(1.5)
         scene.play(
             TransformMatchingShapes(self.hashes_commitments_root[1].copy(), root),
             run_time=1.5,
@@ -474,18 +446,19 @@ class Proofs(SlideBase):
             FadeIn(opening3),
             run_time=1.5,
         )
-        scene.wait(2)
+        scene.wait(2.5)
         self.pi_proof_level3.next_to(opening3, DOWN, buff=0.5)
         scene.play(FadeIn(self.pi_proof_level3), run_time=1.0)
 
         self.new_subsection(
-            scene, "3 commitments, 3 openings, 3 proofs", "data/sound/e7/slide5-6.mp3"
+            scene, "2 commitments, 3 proofs", "data/sound/e7/slide5-6.mp3"
         )
         scene.wait(2)
         scene.play(
             Indicate(self.values[1], color=SECONDARY_COLOR, scale_factor=1.5),
             run_time=1,
         )
+        scene.play(Write(self.verify_function), run_time=1.5)
         scene.wait(1)
         scene.play(Indicate(self.proof, color=SECONDARY_COLOR), run_time=0.6)
         scene.play(Indicate(self.pi_proof, color=SECONDARY_COLOR), run_time=0.6)
@@ -502,15 +475,16 @@ class Proofs(SlideBase):
 
         self.new_subsection(scene, "different weight", "data/sound/e7/slide5-6a.mp3")
         scene.play(
-            FadeOut(self.tree, self.verifier_whole, self.prover_whole), run_time=2
+            FadeOut(self.tree), run_time=2
         )
+        
         self.proofs = VGroup(self.pi_proof, self.pi_proof_level3, self.proof)
         scene.play(FadeOut(self.opening, opening2, opening3, root), run_time=1.5)
         self.commitments = VGroup(commitment_C0, commtiment_C0_1)
         self.commitments.generate_target()
         self.proofs.generate_target()
-        self.commitments.target.shift(LEFT * 1.5)
-        self.proofs.target.shift(LEFT * 1.5 + UP * 0.5)
+        self.commitments.target.shift(LEFT * 1.5+DOWN * 0.5)
+        self.proofs.target.shift(LEFT * 1.5)
         scene.play(
             MoveToTarget(self.commitments),
             MoveToTarget(self.proofs),
@@ -539,17 +513,17 @@ class Proofs(SlideBase):
             .next_to(self.proof, LEFT, buff=0.6)
             .set_color(PRIMARY_COLOR)
         )
-        self.ipa_proof.next_to(self.kzg_ecpoint2, LEFT, buff=0.8)
-        self.ipa_proof2.next_to(self.kzg_ecpoint2, LEFT, buff=0.7)
         self.commitment_label.next_to(self.ipa_ec_point, LEFT, buff=0.5)
-        self.proof_label.next_to(self.ipa_proof, LEFT, buff=0.5)
+        self.proof_label.next_to(self.commitment_label, DOWN, buff=0.8)
+        self.ipa_proof.next_to(self.proof_label, RIGHT, buff=0.9)
+        self.ipa_proof2.next_to(self.proof_label, RIGHT, buff=1.)
         self.total_size.next_to(self.proof_label, DOWN, buff=0.5)
 
-        self.proof_ipa1.next_to(self.total_size, RIGHT, buff=0.1)
-        self.proof_ipa2.next_to(self.total_size, RIGHT, buff=0.3)
-        self.proof_ipa3.next_to(self.total_size, RIGHT, buff=0.6)
-        self.proof_kzg1.next_to(self.proof_ipa3, RIGHT, buff=0.2)
-        self.proof_kzg2.next_to(self.proof_ipa3, RIGHT, buff=0.8)
+        self.proof_ipa1.next_to(self.ipa_proof, DOWN, buff=0.5)
+        self.proof_ipa2.next_to(self.ipa_proof, DOWN, buff=0.5)
+        self.proof_ipa3.next_to(self.ipa_proof, DOWN, buff=0.5)
+        self.proof_kzg1.next_to(self.kzg_ecpoint2, DOWN, buff=0.2)
+        self.proof_kzg2.next_to(self.kzg_ecpoint2, DOWN, buff=0.2)
 
         scene.play(Write(self.commitment_label), run_time=1)
         scene.play(Write(self.proof_label), run_time=1)
@@ -652,6 +626,7 @@ class Proofs(SlideBase):
             self.total_size,
             self.commitment_label,
             self.proof_label,
+            self.verify_function
         )
 
     def animate_out(self, scene):

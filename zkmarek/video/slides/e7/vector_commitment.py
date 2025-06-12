@@ -167,7 +167,7 @@ class PreviouslyVectorCommitment(SlideBase):
         scene.play(Indicate(self.proof_pi, color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
         scene.play(Indicate(self.verifier, color=PRIMARY_COLOR), run_time=1)
         scene.wait(0.7)
-        scene.play(Indicate(self.data_vector_ai[5], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
+        scene.play(Indicate(self.data_vector_ai[9], color = HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)
         scene.play(Indicate(self.opening, color=HIGHLIGHT_COLOR), run_time=1)
         scene.wait(0.5)
         scene.play(Indicate(self.opening[1], color=HIGHLIGHT_COLOR, scale_factor=1.5), run_time=1)

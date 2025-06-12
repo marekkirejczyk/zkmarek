@@ -261,8 +261,8 @@ class Commitment(SlideBase):
         
         
     def animate_miniature_final_season(self, scene):
-        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 1.5 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
-        self.commiter.move_to(rectangle.get_center() + LEFT * 0.05).scale(0.5)
+        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 1.8 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        self.commiter.move_to(rectangle.get_center() + LEFT * 0.2).scale(0.5)
         self.commiter_label.next_to(self.commiter, DOWN, buff = 0.1).scale(0.7)
         self.verifier.move_to(rectangle.get_center() + RIGHT * 2.4).scale(0.5)
         self.verifier_label.next_to(self.verifier, DOWN, buff = 0.1).scale(0.7)
@@ -287,7 +287,7 @@ class Commitment(SlideBase):
             color=PRIMARY_COLOR,
             fill_opacity=0.3,
             stroke_width = 0.0,
-        ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.2).shift(LEFT*0.02+DOWN*0.15)
+        ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.2).shift(LEFT*0.1+DOWN*0.15)
 
         self.envelope_flap_closed = Polygon(
             [-4, 1, 0],
@@ -299,7 +299,7 @@ class Commitment(SlideBase):
         ).scale(0.2).move_to(self.envelope_body_closed.center()).shift(UP*0.05)
         self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=1+1, height=0.5 + 1.2, 
-                                           color = SECONDARY_COLOR, stroke_width = 0.0, fill_opacity = 0.2).scale(0.7).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(LEFT*0.3).scale(0.65)
+                                           color = SECONDARY_COLOR, stroke_width = 0.0, fill_opacity = 0.2).scale(0.7).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(LEFT*0.4+UP*0.2).scale(0.65)
 
         tail_verifier = Polygon(
             [0.2, 0.05, 0], 

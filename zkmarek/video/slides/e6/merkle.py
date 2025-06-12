@@ -604,7 +604,7 @@ class MerkleTree(SlideBase):
     def animate_miniature(self, scene):
         rectangle = RoundedRectangle(width = 11, height = 5, corner_radius=0.1).shift(DOWN*1.2).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
         text = Text("Merkle trees", font=PRIMARY_FONT, color=SECONDARY_COLOR, font_size=50).scale(0.65).next_to(rectangle, UP, buff = 0.4)
-        self.merkle_tree_2_4.scale(0.75).move_to(rectangle.get_center()).shift(UP*0.2)
+        self.merkle_tree_2_4.scale(0.7).move_to(rectangle.get_center()).shift(UP*0.2)
         scene.play(FadeIn(rectangle, text), run_time=0.5)
         scene.play(Create(self.merkle_tree_2_4), run_time=0.5)
 

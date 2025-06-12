@@ -41,7 +41,7 @@ class FinalSeason1(SlideBase):
         self.new_subsection(scene, "Final Season 1", "data/sound/e7/slide0-3.mp3")
         scene.play(FadeIn(self.title_label))
         scene.wait(2)
-        scene.play(Create(rectangle))
+        
         self.slide_ec.animate_miniature(scene)
         self.slide_trusted_setup.animate_miniature_final_season(scene)
         self.slide_kzg.animate_miniature_final_season(scene)
