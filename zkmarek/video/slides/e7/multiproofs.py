@@ -98,9 +98,9 @@ class Multiproofs(SlideBase):
         scene.play(Write(self.pi2), run_time=1)
         scene.play(TransformMatchingShapes(VGroup(self.pi0.copy(), self.pi1.copy(), self.pi2.copy()), self.all_pis), run_time=1)
         
-        # self.new_subsection(scene, "multiproof: commitment D, commitments path", "data/sound/e7/slide6-1a.mp3")
+        self.new_subsection(scene, "multiproof: commitment D, commitments path", "data/sound/e7/slide6-1a.mp3")
         
-        # self.new_subsection(scene, "how?", "data/sound/e7/slide6-1b.mp3")
+        self.new_subsection(scene, "how?", "data/sound/e7/slide6-1b.mp3")
         
         self.new_subsection(scene, "data vector: polynomial", "data/sound/e7/slide6-2.mp3")
         scene.play(FadeOut(self.pi0, self.pi1, self.pi2, self.all_pis), run_time=1)
@@ -205,7 +205,7 @@ class Multiproofs(SlideBase):
         self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide6-14.mp3")
         scene.wait(2)
         
-        # self.new_subsection(scene, "verify only once", "data/sound/e7/slide6-15.mp3")
+        self.new_subsection(scene, "verify only once", "data/sound/e7/slide6-15.mp3")
         scene.wait(7)
         
         
