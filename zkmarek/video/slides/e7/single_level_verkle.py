@@ -71,8 +71,8 @@ class SingleLevelVerkleTree(SlideBase):
         self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, UP, buff = 0.1)
         self.prover_label2 = Text("insert function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
         
-        self.proof_pi = MathTex(r"{{\pi^0}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.prover1, LEFT, buff = 0.5)
-        self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT+DOWN*0.2, buff = 0.1)
+        self.proof_pi = MathTex(r"{{\pi^0}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.prover1, LEFT, buff = 0.1)
+        self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.1).shift(DOWN * 0.2)
         self.proof = VGroup(self.proof, self.proof_pi)
         self.opening = MathTex(r"{{a_{12} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.proof, DOWN, buff = 0.3)
         self.opening2 = MathTex(r"{{a_{2044} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.verifier, DOWN, buff = 1.0)

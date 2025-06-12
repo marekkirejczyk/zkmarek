@@ -1,5 +1,5 @@
-from manim import FadeIn, Text, UP, LEFT, RoundedRectangle, DOWN, Create
-from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR, HIGHLIGHT2_COLOR
+from manim import FadeIn, Text, UP
+from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.merkle import MerkleTree
 from zkmarek.video.slides.episode3.ceremony import Ceremony
@@ -20,8 +20,6 @@ class FinalSeason1(SlideBase):
             font_size=40,
         ).to_edge(UP)
         
-        rectangle_blobs = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=5, height=3).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR]).shift(LEFT * 3 + DOWN * 2)
-        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR]).shift(LEFT * 5 + UP * 2)
         self.slide_merkle = MerkleTree()
         self.slide_merkle.construct()
         
@@ -45,7 +43,7 @@ class FinalSeason1(SlideBase):
         self.slide_ec.animate_miniature(scene)
         self.slide_trusted_setup.animate_miniature_final_season(scene)
         self.slide_kzg.animate_miniature_final_season(scene)
-        scene.play(FadeIn(rectangle_blobs))
+        
         self.slide_blobs.animate_miniature_final_season(scene)
         self.slide_merkle.animate_miniature_final_season(scene)
         scene.wait(2)

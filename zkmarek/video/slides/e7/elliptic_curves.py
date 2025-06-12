@@ -60,7 +60,7 @@ class EllipticCurves(SlideBase):
         self.chart_ec = (
             PolynomialOnCurve(
                 curve=BLS12381_137,
-                dot_color=HIGHLIGHT_COLOR,
+                dot_color=PRIMARY_COLOR,
                 label="p",
                 include_numbers=False,
             )
@@ -70,7 +70,7 @@ class EllipticCurves(SlideBase):
         self.chart_bander = (
             PolynomialOnCurve(
                 curve=BanderSnatch,
-                dot_color=PRIMARY_COLOR,
+                dot_color=HIGHLIGHT_COLOR,
                 label="p'",
                 include_numbers=False,
             )
@@ -98,7 +98,7 @@ class EllipticCurves(SlideBase):
             MathTex(r"{{r}} \approx 2^{255}", color=SECONDARY_COLOR, font_size=32)
             .next_to(self.p, DOWN, buff = 1.0).shift(DOWN*0.5)
         )
-        self.base_field_bls = MathTex(r"F_p: p \approx 2^{381} ", font_size = 40, color = HIGHLIGHT_COLOR).shift(RIGHT*3+UP*1.5)
+        self.base_field_bls = MathTex(r"F_p: p \approx 2^{381} ", font_size = 40, color = PRIMARY_COLOR).shift(RIGHT*3+UP*1.5)
         self.scalar_Fr = MathTex(r"F_r: r \approx 2^{255} ", font_size = 40, color = SECONDARY_COLOR).shift(RIGHT*3)
         self.scalar_Fq = MathTex(r"k'\in F_q", font_size = 40).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(DOWN)
         
@@ -155,15 +155,17 @@ class EllipticCurves(SlideBase):
             self.point_to_generator.get_center()
         )
         self.point_to_generator_label = MathTex(
-            r"{{G_1 \cdot k}}", color=SECONDARY_COLOR, font_size=32
+            r"{{G_1}} \cdot k", color=PRIMARY_COLOR, font_size=32
         ).next_to(self.point_to_generator, RIGHT, buff=0.2)
+        self.point_to_generator_label.set_color(SECONDARY_COLOR)
         self.point_to_generator2 = self.chart_ec.get_point(FieldElement(51, 137))
         self.circle_gen2 = Circle(radius=0.15, color=PRIMARY_COLOR).move_to(
             self.point_to_generator2.get_center()
         )
         self.point_to_generator_label2 = MathTex(
-            r"{{G_2 \cdot k'}}", color=PRIMARY_COLOR, font_size=32
+            r"{{G_2}} \cdot k'", color=PRIMARY_COLOR, font_size=32
         ).next_to(self.point_to_generator2, RIGHT, buff=0.2)
+        self.point_to_generator_label2.set_color(SECONDARY_COLOR)
         self.chart_ec.shift(RIGHT * 3)
         
         self.pairings = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color = PRIMARY_COLOR, font_size = 30).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(RIGHT)
@@ -181,17 +183,17 @@ class EllipticCurves(SlideBase):
         self.thumb_up = ImageMobject("data/images/Thumb_up.png").scale(0.3)
         
         self.kzg_ipa_table = TableKZGIPA()
-        self.base_field_bander = MathTex(r"F_{p'}: p' \approx 2^{255}", font_size = 40, color = PRIMARY_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
+        self.base_field_bander = MathTex(r"F_{p'}: p' \approx 2^{255}", font_size = 40, color = HIGHLIGHT_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
         self.scalar_field_bander = MathTex(r"F_{r'} \approx 2^{253} ", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
-        self.size_base_field_bander = Text("< 32 B", font_size = 25, color = PRIMARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.05)
+        self.size_base_field_bander = Text("< 32 B", font_size = 25, color = HIGHLIGHT_COLOR).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.05)
         self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1).set_color(SECONDARY_COLOR)
         
-        self.ipa_proof = MathTex(r"\pi \sim 2\log({{n}})", color = PRIMARY_COLOR, font_size = 30)
-        self.ipa_proof_ec = Text("EC points", color = PRIMARY_COLOR, font_size = 20, font = PRIMARY_FONT)
-        self.ipa_commtiment1 = Text("C: ", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 25)
-        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = PRIMARY_COLOR, font_size =30).next_to(self.ipa_commtiment1, RIGHT, buff = 0.2)
+        self.ipa_proof = MathTex(r"\pi \sim 2\log({{n}})", color = HIGHLIGHT_COLOR, font_size = 30)
+        self.ipa_proof_ec = Text("EC points", color = HIGHLIGHT_COLOR, font_size = 20, font = PRIMARY_FONT)
+        self.ipa_commtiment1 = Text("C: ", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 25)
+        self.ipa_commitment_formila = MathTex(r"[{{a_0}}, {{a_1}}, \cdots, {{a_n}}]", color = SECONDARY_COLOR, font_size =30).next_to(self.ipa_commtiment1, RIGHT, buff = 0.2)
         self.ipa_commitment_formila.set_color(SECONDARY_COLOR)
-        self.ipa_commtiment1.set_color(PRIMARY_COLOR)
+        self.ipa_commtiment1.set_color(HIGHLIGHT_COLOR)
         self.ipa_commtiment = VGroup(self.ipa_commtiment1, self.ipa_commitment_formila)
         
     def animate_in(self, scene):
@@ -245,7 +247,7 @@ class EllipticCurves(SlideBase):
         scene.play(Write(self.kzg))
         scene.wait(0.5)
         scene.play(Write(self.cross_out_line), run_time=1)
-        scene.wait(2)
+        scene.wait(2.7)
         scene.play(Write(self.cross_out_pairings), run_time=1)
         
         self.new_subsection(scene, "Pedersen commitments & Bandersnatch", "data/sound/e7/slide2-3a.mp3")

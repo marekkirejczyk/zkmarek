@@ -78,9 +78,9 @@ class Multiproofs(SlideBase):
         self.powers_of_r[15].set_color(HIGHLIGHT_COLOR)
         self.powers_of_r[17].set_color(SECONDARY_COLOR)
         self.opening.shift(RIGHT * 4.5+UP*1.5)
-        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right()+LEFT * 2, stroke_width=0.3, 
+        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right()+LEFT * 2+RIGHT*0.2, stroke_width=1.6, 
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
-        self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 23).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
+        self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
         self.random_t = MathTex(r"t\sim \mathrm{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5)
         
@@ -90,13 +90,17 @@ class Multiproofs(SlideBase):
                                       max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT_COLOR])
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "pi0, pi1, pi2, ..., pin", "data/sound/e7/slide6-1.mp3")
+        self.new_subsection(scene, "VP: three proofs, three commitments", "data/sound/e7/slide6-1.mp3")
         scene.play(Write(self.title_label))
         scene.wait(1)
         scene.play(Write(self.pi0), run_time=1)
         scene.play(Write(self.pi1), run_time=1)
         scene.play(Write(self.pi2), run_time=1)
         scene.play(TransformMatchingShapes(VGroup(self.pi0.copy(), self.pi1.copy(), self.pi2.copy()), self.all_pis), run_time=1)
+        
+        # self.new_subsection(scene, "multiproof: commitment D, commitments path", "data/sound/e7/slide6-1a.mp3")
+        
+        # self.new_subsection(scene, "how?", "data/sound/e7/slide6-1b.mp3")
         
         self.new_subsection(scene, "data vector: polynomial", "data/sound/e7/slide6-2.mp3")
         scene.play(FadeOut(self.pi0, self.pi1, self.pi2, self.all_pis), run_time=1)
@@ -118,19 +122,21 @@ class Multiproofs(SlideBase):
 
         scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening1), run_time=1)
         scene.play(FadeOut(self.vector, self.rectangles_values))
-        self.polynomial_graph.generate_target()
-        self.polynomial_graph.target.shift(DOWN * 0.65)
-        scene.play(MoveToTarget(self.polynomial_graph), run_time=1)
-        scene.play(FadeOut(self.dots[6], self.line_ai), run_time=1)
-        scene.wait(1)
+        scene.wait(2)
         self.opening.move_to(self.opening1.get_center()).shift(LEFT * 2)
         scene.play(self.polynomial_chart.animate.shift(LEFT * 2),
-                   self.commtiment_C.animate.shift(LEFT * 2), run_time=1)
+                   self.commtiment_C.animate.shift(LEFT * 2),
+                   self.dots[6].animate.shift(LEFT),
+                   self.line_ai.animate.shift(LEFT), run_time=1)
         scene.play(TransformMatchingShapes(self.opening1, self.opening), run_time=1)
         
         self.new_subsection(scene, "p(xi)-ai=0", "data/sound/e7/slide6-4.mp3")
         scene.play(Write(self.new_polynomial), run_time=1)
         scene.wait(0.5)
+        self.polynomial_graph.generate_target()
+        self.polynomial_graph.target.shift(DOWN * 0.65)
+        scene.play(MoveToTarget(self.polynomial_graph), run_time=1)
+        scene.play(FadeOut(self.dots[6], self.line_ai), run_time=1)
         
         self.new_subsection(scene, "root x=xi", "data/sound/e7/slide6-5.mp3")
         scene.play(TransformMatchingShapes(self.new_polynomial, self.new_polynomial2), run_time=1)
@@ -182,7 +188,7 @@ class Multiproofs(SlideBase):
         scene.wait(2)
         scene.play(Indicate(self.quotient_g[0], scale_factor=1.3), run_time=1)
         
-        self.new_subsection(scene, "random point t", "data/sound/e7/slide6-12.mp3")
+        self.new_subsection(scene, "commitment D", "data/sound/e7/slide6-12.mp3")
         scene.wait(1.5)
         scene.play(Indicate(self.quotient_g, scale_factor=1.3), run_time=1)
         scene.wait(1)
@@ -191,13 +197,16 @@ class Multiproofs(SlideBase):
         scene.play(FadeIn(self.random_t), run_time=1)
         scene.play(TransformMatchingShapes(self.quotient_g, self.quotient_g2), run_time=1)
                 
-        self.new_subsection(scene, "verkle multiproof", "data/sound/e7/slide6-13.mp3")
+        self.new_subsection(scene, "g(s)f", "data/sound/e7/slide6-13.mp3")
         scene.play(FadeOut(self.random_t))
         scene.play(Write(self.proof_to_g), run_time=1)
         scene.play(FadeIn(self.arrow_proof_to_g), run_time=1)
         
-        self.new_subsection(scene, "verify once", "data/sound/e7/slide6-14.mp3")
+        self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide6-14.mp3")
         scene.wait(2)
+        
+        # self.new_subsection(scene, "verify only once", "data/sound/e7/slide6-15.mp3")
+        scene.wait(7)
         
         
     def animate_out(self, scene):

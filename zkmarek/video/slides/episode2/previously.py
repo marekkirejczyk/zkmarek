@@ -241,10 +241,10 @@ class PreviouslyOn(TexSlide):
     def animate_miniature(self, scene):
         self.curve = Secp256k1_41
 
-        rectangle = RoundedRectangle(corner_radius=0.3, width = 4, height = 2, color = PRIMARY_COLOR).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR]).shift(LEFT * 4.5 + UP * 2)
-        self.chart = DiscreteEllipticChart(self.curve, dot_color=HIGHLIGHT_COLOR).scale(0.25).move_to(rectangle.get_center()).shift(LEFT * 1.2)
+        rectangle = RoundedRectangle(corner_radius=0.3, width = 4, height = 2, color = PRIMARY_COLOR).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR]).shift(LEFT * 4.5 + UP * 1.5)
+        self.chart = DiscreteEllipticChart(self.curve, dot_color=HIGHLIGHT_COLOR).scale(0.25).move_to(rectangle.get_center()).shift(LEFT * 0.8)
         self.tex.scale(0.3).next_to(self.chart, RIGHT, buff=0.0)
-        self.tex.shift(LEFT * 3.3)
+        self.tex.shift(LEFT * 2.8)
         self.chart.gen_points()
         self.add(self.chart, self.tex, rectangle)
         scene.play(FadeIn(rectangle))

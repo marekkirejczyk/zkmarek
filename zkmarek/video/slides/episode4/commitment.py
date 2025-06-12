@@ -261,17 +261,17 @@ class Commitment(SlideBase):
         
         
     def animate_miniature_final_season(self, scene):
-        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 1.8 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
-        self.commiter.move_to(rectangle.get_center() + LEFT * 0.2).scale(0.5)
+        rectangle = RoundedRectangle(corner_radius=0.3, color=PRIMARY_COLOR, width=4, height=2).shift(UP * 1.43 + RIGHT * 4.5).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT2_COLOR])
+        self.commiter.move_to(rectangle.get_center() + LEFT * 0.4).scale(0.5)
         self.commiter_label.next_to(self.commiter, DOWN, buff = 0.1).scale(0.7)
         self.verifier.move_to(rectangle.get_center() + RIGHT * 2.4).scale(0.5)
         self.verifier_label.next_to(self.verifier, DOWN, buff = 0.1).scale(0.7)
-        self.envelope_body_closed = RoundedRectangle(width = 6, height = 2, 
+        self.envelope_body_closed = RoundedRectangle(width = 5, height = 2.5, 
             fill_color=PRIMARY_COLOR,
             fill_opacity=0.3,
             corner_radius=0.1,
             stroke_width = 0.0
-        ).scale(0.2).next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
+        ).scale(0.15).next_to(self.commiter, RIGHT+DOWN, buff = 0.6)
         self.bubble_opening = RoundedRectangle(corner_radius=0.5, width=self.opening.width + 1, height=self.opening.height + 1.5, 
                                                color = PRIMARY_COLOR, stroke_width = 0.0, fill_opacity = 0.3).scale(0.5).next_to(self.commiter, UP+RIGHT, buff = -0.3)
         self.scale(0.65)
@@ -290,13 +290,13 @@ class Commitment(SlideBase):
         ).next_to(self.bubble_opening, DOWN+LEFT, buff=-0.8).scale(0.2).shift(LEFT*0.1+DOWN*0.15)
 
         self.envelope_flap_closed = Polygon(
-            [-4, 1, 0],
-            [4, 1, 0],
+            [-3, 1, 0],
+            [3, 1, 0],
             [0, -0.6, 0],
             fill_color=HIGHLIGHT_COLOR,
             fill_opacity=0.2,
             stroke_width = 0.0
-        ).scale(0.2).move_to(self.envelope_body_closed.center()).shift(UP*0.05)
+        ).scale(0.15).move_to(self.envelope_body_closed.center()).shift(UP*0.05)
         self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed)
         bubble_verifier = RoundedRectangle(corner_radius=0.5, width=1+1, height=0.5 + 1.2, 
                                            color = SECONDARY_COLOR, stroke_width = 0.0, fill_opacity = 0.2).scale(0.7).next_to(self.verifier, UP+LEFT, buff = -0.7).shift(LEFT*0.4+UP*0.2).scale(0.65)
@@ -308,7 +308,7 @@ class Commitment(SlideBase):
             color=SECONDARY_COLOR,
             fill_opacity=0.3,
             stroke_width=0.0
-        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.3).shift(RIGHT*0.1+DOWN*0.2)
+        ).next_to(bubble_verifier, DOWN+RIGHT, buff=-0.8).scale(0.3).shift(RIGHT*0.15+DOWN*0.25)
         
 
         self.envelope.next_to(self.commiter, RIGHT+DOWN, buff = 0.2)

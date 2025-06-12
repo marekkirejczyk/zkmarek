@@ -12,7 +12,6 @@ from manim import (
     StealthTip,
     MoveToTarget,
     ORIGIN,
-    ImageMobject,
     FadeIn,
     MathTex,
     Group,
@@ -40,7 +39,7 @@ class Proofs(SlideBase):
 
         ## values (1 level)
         values_rectangles = RoundedRectangle(
-            corner_radius=0.1,
+            corner_radius=0.05,
             width=0.5,
             height=0.3,
             fill_opacity=0.25,
@@ -80,7 +79,7 @@ class Proofs(SlideBase):
 
         ## commitments (2 level)
         commitments_rectangles = RoundedRectangle(
-            corner_radius=0.1,
+            corner_radius=0.05,
             width=0.9,
             height=0.6,
             fill_opacity=0.25,
@@ -105,7 +104,7 @@ class Proofs(SlideBase):
         )
         self.rectangle_all_commitments_left = (
             RoundedRectangle(
-                corner_radius=0.1,
+                corner_radius=0.05,
                 width=3.8,
                 height=0.8,
                 fill_opacity=0.22,
@@ -116,7 +115,7 @@ class Proofs(SlideBase):
         )
         self.rectangle_all_commitments_right = (
             RoundedRectangle(
-                corner_radius=0.1,
+                corner_radius=0.05,
                 width=3.8,
                 height=0.8,
                 fill_opacity=0.22,
@@ -149,7 +148,7 @@ class Proofs(SlideBase):
         )
         self.rectangle_parent_commitments = (
             RoundedRectangle(
-                corner_radius=0.1,
+                corner_radius=0.05,
                 width=6.0,
                 height=0.8,
                 fill_opacity=0.22,
@@ -235,7 +234,7 @@ class Proofs(SlideBase):
         ## table
         self.rectangle_bg = (
             RoundedRectangle(
-                corner_radius=0.1,
+                corner_radius=0.05,
                 width=12,
                 height=4,
                 stroke_width=0.0,
@@ -492,7 +491,7 @@ class Proofs(SlideBase):
         )
         rectangle_around_commitment_proofs = (
             RoundedRectangle(
-                corner_radius=0.2,
+                corner_radius=0.05,
                 width=self.proofs.width+0.7,
                 height=2,
                 fill_opacity=0.15,
@@ -510,20 +509,20 @@ class Proofs(SlideBase):
         self.ipa_ec_point.next_to(self.ipa, DOWN, buff=0.3)
         self.kzg_ecpoint2 = (
             self.kzg_ec_point.copy()
-            .next_to(self.proof, LEFT, buff=0.6)
+            .next_to(self.proof, LEFT, buff=0.8)
             .set_color(PRIMARY_COLOR)
         )
         self.commitment_label.next_to(self.ipa_ec_point, LEFT, buff=0.5)
         self.proof_label.next_to(self.commitment_label, DOWN, buff=0.8)
         self.ipa_proof.next_to(self.proof_label, RIGHT, buff=0.9)
-        self.ipa_proof2.next_to(self.proof_label, RIGHT, buff=1.)
+        self.ipa_proof2.next_to(self.proof_label, RIGHT, buff=1.1)
         self.total_size.next_to(self.proof_label, DOWN, buff=0.5)
 
-        self.proof_ipa1.next_to(self.ipa_proof, DOWN, buff=0.5)
-        self.proof_ipa2.next_to(self.ipa_proof, DOWN, buff=0.5)
-        self.proof_ipa3.next_to(self.ipa_proof, DOWN, buff=0.5)
-        self.proof_kzg1.next_to(self.kzg_ecpoint2, DOWN, buff=0.2)
-        self.proof_kzg2.next_to(self.kzg_ecpoint2, DOWN, buff=0.2)
+        self.proof_ipa1.next_to(self.ipa_proof2, DOWN, buff=0.6)
+        self.proof_ipa2.next_to(self.ipa_proof2, DOWN, buff=0.6)
+        self.proof_ipa3.next_to(self.ipa_proof2, DOWN, buff=0.6)
+        self.proof_kzg1.next_to(self.kzg_ecpoint2, DOWN, buff=0.5)
+        self.proof_kzg2.next_to(self.kzg_ecpoint2, DOWN, buff=0.5)
 
         scene.play(Write(self.commitment_label), run_time=1)
         scene.play(Write(self.proof_label), run_time=1)
