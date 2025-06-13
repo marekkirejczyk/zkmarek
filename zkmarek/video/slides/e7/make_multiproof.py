@@ -1,17 +1,46 @@
-def generateMultiProof(opening ai, root c2, pathCommitments [c0, c1]):
-    r = hash(c2, c1, c0, ai, hash(c0), hash(c1))
-    g(x) = 0
-    for i in [0, 1, 2]:  # for c0, c1, c2
-        xi = point_of_evaluation[i]
-        vi = value_at_point[i]
-        pi(x) = corresponding_polynomial_for(ci)
-        g(x) += r^i * (pi(x) - vi) / (x - xi)
+from typing import List, Callable
 
-    D = commit(g) 
+from typing import NamedTuple
 
-    s = hash(D, c0, c1, c2, ai, hash(c0), hash(c1))
-    value = g(s)
+class ECPoint(NamedTuple):
+    x: int
+    y: int
+x = 5
 
-    pi = open(D, s, value) 
+def hash(*args):
+    return sum(hash(str(a)) for a in args) % (2**256)
+
+def commit(polynomial_expr):
+    return f"commit({polynomial_expr})"
+
+def open(commitment, point, value):
+    return f"proof_at_{point}_for_{value}"
+
+class MultiProof:
+    def __init__(self, pi, c0, c1):
+        self.pi = pi
+        self.c0 = c0
+        self.c1 = c1
+
+def generateMultiProof(x_i, a_i, c2, pathCommitments: List[ECPoint], polynomials: List[Callable]):
+    c0, c1 = pathCommitments
+    r = hash(c2, c1, c0, a_i, hash(c0), hash(c1))
+
+    opening_indices = [x_i, c0.index, c1.index]      
+    opening_values = [a_i, hash(c0), hash(c1)]      
+
+    g = 0
+    for i in range(3):
+        xi = opening_indices[i]
+        vi = opening_values[i]
+        p_i = polynomials[i]  
+        g += (r**i) * (p_i(x) - vi) / (x - xi)
+
+    D = commit(g)
+
+    s = hash(D, c0, c1, c2, a_i, hash(c0), hash(c1))
+    value = g.subs(x, s)
+
+    pi = open(D, s, value)
 
     return MultiProof(pi, c0, c1)

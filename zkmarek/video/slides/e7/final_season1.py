@@ -46,7 +46,7 @@ class FinalSeason1(SlideBase):
         
         self.slide_merkle.animate_miniature_final_season(scene)
         self.slide_blobs.animate_miniature_final_season(scene)
-        scene.wait(2)
+        scene.wait(3)
         
         
         

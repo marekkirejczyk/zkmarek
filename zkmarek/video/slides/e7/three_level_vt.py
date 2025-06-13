@@ -85,14 +85,14 @@ class ThreeLevelVerkleTree(SlideBase):
 
         self.commitment_to_C0 = (
             rectangle.copy()
-            .scale(3)
+            .scale(3.6)
             .set_color(HIGHLIGHT_COLOR)
             .next_to(self.internal_node, UP, buff=0.8)
             .shift(UP * 0.5)
         )
         self.commitment_to_C255 = (
             rectangle.copy()
-            .scale(1.5)
+            .scale(1.8)
             .set_color(HIGHLIGHT_COLOR)
             .next_to(self.internal_node2, UP, buff=0.65)
         )
@@ -532,8 +532,8 @@ class ThreeLevelVerkleTree(SlideBase):
             color=PRIMARY_COLOR,
             buff=0.1,
             tip_shape=StealthTip,
-            stroke_width=1.6,
-            max_stroke_width_to_length_ratio=1.,
+            stroke_width=1.5,
+            # max_stroke_width_to_length_ratio=1.,
         )
         scene.play(FadeIn(hash), run_time=1)
         scene.play(Write(arrow_hash), run_time=1)
@@ -584,7 +584,7 @@ class ThreeLevelVerkleTree(SlideBase):
         )
         self.whole_tree_until_C10.generate_target()
         self.whole_tree_until_C10.target.shift(DOWN)
-        scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=1)
+        scene.play(MoveToTarget(self.whole_tree_until_C10), hash.animate.shift(DOWN*0.3), run_time=1)
         self.commitment_C01.next_to(self.commitmentcdots, UP, buff=0.9)
         scene.play(Create(self.commitment_C01), run_time=1)
 
@@ -640,9 +640,7 @@ class ThreeLevelVerkleTree(SlideBase):
             )
 
         self.arrow_commitment_C01 = VGroup(*self.arrow_commitment_C01)
-        hash_parent = hash.copy().next_to(self.commitment_C01, UP, buff=0.3)
-        hash_parent_255 = hash.copy().next_to(self.other_hashes[:][3], UP, buff=0.3)
-        self.arrow_commitment_C01.add(hash_parent, hash_parent_255)
+        # self.arrow_commitment_C01.add(hash_parent, hash_parent_255)
         scene.play(
             Create(self.other_commitments), Write(self.arrow_commitment_C01), run_time=1
         )
@@ -657,9 +655,12 @@ class ThreeLevelVerkleTree(SlideBase):
         self.other_hashes[:][1].move_to(self.other_commitments[0][0].get_center())
         self.other_hashes[:][2].move_to(self.commitment_C01.get_center())
         self.other_hashes[:][3].move_to(self.other_commitments[0][0].get_center())
-        self.whole_tree_until_C10.add(self.other_hashes)
+        hash_parent = hash.copy().next_to(self.commitment_C01, UP, buff=0.3)
+        hash_parent_255 = hash.copy().next_to(self.other_hashes[:][3], UP, buff=0.3)
+        self.whole_tree_until_C10.add(self.other_hashes, hash_parent, hash_parent_255)
         scene.play(
             Create(self.other_hashes),
+            FadeIn(hash_parent_255, hash_parent),
             FadeOut(self.other_commitments, self.commitment_C01),
             run_time=1,
         )
@@ -701,6 +702,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.commitment_to_c255_text,
             self.final_parent_node_text,
             *self.text_other_hashes,
+            hash, hash_255, hash_parent, hash_parent_255,
         )
         scene.play(
             nodes.animate.set_opacity(0.15), texts.animate.set_opacity(0.15), run_time=2

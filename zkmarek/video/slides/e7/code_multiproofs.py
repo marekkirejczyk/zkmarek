@@ -17,27 +17,19 @@ class Multiproofs(CodeSlide):
             )
             .to_edge(UP)
         )
-        self.code_prover_query = Code(
-            "zkmarek/video/slides/e7/prover_query.py",
-            background="rectangle",
-            language="python",
-        )
         self.code = Code("zkmarek/video/slides/e7/make_multiproof.py", 
                          background="rectangle",
             language="python",).scale(0.55).shift(DOWN * 0.7)
         
     def animate_in(self, scene):
-        self.new_subsection(scene, "prover quoery", "data/sound/e7/slide7-1.mp3")
+        # self.new_subsection(scene, "prover quoery", "data/sound/e7/slide7-1.mp3")
         scene.play(Write(self.title_label))
-        scene.play(FadeIn(self.code_prover_query))
-        scene.wait(1)
-        self.indicate_code(scene, self.code_prover_query, "p: ", index=0)
-        self.indicate_code(scene, self.code_prover_query, "C: ", index=0)
-        
-        self.new_subsection(scene, "prover quoery", "data/sound/e7/slide7-1.mp3")
-        scene.play(FadeOut(self.code_prover_query))
-        scene.wait(1)
         scene.play(FadeIn(self.code))
+        
+        # self.new_subsection(scene, "prover quoery", "data/sound/e7/slide7-1.mp3")
+        # scene.play(FadeOut(self.code_prover_query))
+        # scene.wait(1)
+        # scene.play(FadeIn(self.code))
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.code))
