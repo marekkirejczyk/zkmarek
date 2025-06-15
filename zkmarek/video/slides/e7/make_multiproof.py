@@ -1,27 +1,3 @@
-from typing import List, Callable
-
-from typing import NamedTuple
-
-class ECPoint(NamedTuple):
-    x: int
-    y: int
-x = 5
-
-def hash(*args):
-    return sum(hash(str(a)) for a in args) % (2**256)
-
-def commit(polynomial_expr):
-    return f"commit({polynomial_expr})"
-
-def open(commitment, point, value):
-    return f"proof_at_{point}_for_{value}"
-
-class MultiProof:
-    def __init__(self, pi, c0, c1):
-        self.pi = pi
-        self.c0 = c0
-        self.c1 = c1
-
 def generateMultiProof(x_i, a_i, c2, pathCommitments: List[ECPoint], polynomials: List[Callable]):
     c0, c1 = pathCommitments
     r = hash(c2, c1, c0, a_i, hash(c0), hash(c1))

@@ -91,7 +91,7 @@ class Proofs(SlideBase):
             .next_to(self.values_all, UP, buff=1.3)
         )
         text_commitment_C0 = MathTex(
-            r"H({{C_0^0}})", color=PRIMARY_COLOR, font_size=28
+            r"{{C_0^0}}", color=PRIMARY_COLOR, font_size=28
         ).move_to(self.hashes_commitments_level2[0].get_center())
         self.cdots_level2 = self.cdots.copy().next_to(
             self.hashes_commitments_level2[0], RIGHT, buff=0.6
@@ -140,7 +140,7 @@ class Proofs(SlideBase):
             .next_to(self.hashes_commitments_level2, UP, buff=1.3)
         )
         text_hash_commitmentH0 = MathTex(
-            r"H({{C_0^1}})", color=PRIMARY_COLOR, font_size=28
+            r"{{C_0^1}}", color=PRIMARY_COLOR, font_size=28
         ).move_to(self.hashes_commitments_level3[0].get_center())
 
         self.cdots_level3 = self.cdots.copy().next_to(

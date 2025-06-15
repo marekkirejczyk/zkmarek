@@ -197,7 +197,7 @@ class Multiproofs(SlideBase):
         scene.play(FadeIn(self.random_t), run_time=1)
         scene.play(TransformMatchingShapes(self.quotient_g, self.quotient_g2), run_time=1)
                 
-        self.new_subsection(scene, "g(s)f", "data/sound/e7/slide6-13.mp3")
+        self.new_subsection(scene, "g(s)", "data/sound/e7/slide6-13.mp3")
         scene.play(FadeOut(self.random_t))
         scene.play(Write(self.proof_to_g), run_time=1)
         scene.play(FadeIn(self.arrow_proof_to_g), run_time=1)

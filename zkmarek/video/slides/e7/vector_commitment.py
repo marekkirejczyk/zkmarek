@@ -112,13 +112,11 @@ class PreviouslyVectorCommitment(SlideBase):
         
         self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         
-        self.opening2_text = Text("opening", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.opening2_text = Text("opening: ", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.opening2_math = MathTex(r"a_{{{i}}} = 22", color = SECONDARY_COLOR, font_size=40).next_to(self.opening2_text, RIGHT, buff = 0.1)
         self.opening2 = VGroup(self.opening2_text, self.opening2_math).next_to(self.prover, RIGHT, buff = 1.0)
         
-        self.opening_text = Text("opening", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 30)
-        self.opening_math = MathTex(r"a_{{{i}}} = 22", color = SECONDARY_COLOR, font_size=40).next_to(self.opening2_text, RIGHT, buff = 0.1)
-        self.opening = VGroup(self.opening_text, self.opening_math).next_to(self.prover, RIGHT, buff = 1.0)
+        self.opening = MathTex(r"a_{{{i}}} = 22", color = SECONDARY_COLOR, font_size=40).next_to(self.prover, RIGHT, buff = 1.0)
         
         self.pi = MathTex(r"\pi", color = PRIMARY_COLOR, font_size=40)
         self.proof = Text("proof", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).next_to(self.pi, LEFT, buff = 0.1)
@@ -143,7 +141,7 @@ class PreviouslyVectorCommitment(SlideBase):
         self.new_subsection(
             scene, "kzg commitment scheme", "data/sound/e7/slide1-14.mp3"
         )
-        scene.play(Write(self.title_label), run_time=0.7)
+        # scene.play(Write(self.title_label), run_time=0.7)
         scene.play(FadeIn(self.prover, self.verifier), Write(self.commiter_label), Write(self.verifier_label), run_time=1)
         scene.wait(0.5)
         scene.play(Write(self.data_vector_ai), run_time=0.7)

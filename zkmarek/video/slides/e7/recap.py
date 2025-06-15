@@ -31,6 +31,7 @@ from zkmarek.video.slides.e6.tree import MerkleTree as Tree
 from zkmarek.video.slides.e6.ethereum_block import EthereumBlock
 from zkmarek.video.slides.e6.proof_sizes import ProofSize
 from zkmarek.video.slides.e6.merkle import MerkleTree
+from zkmarek.video.slides.e7.vector_commitment import PreviouslyVectorCommitment
 
 
 class Recap(SlideBase):
@@ -63,6 +64,10 @@ class Recap(SlideBase):
             scene, "more efficient?", "data/sound/e7/slide1-10.mp3"
         )
         self.efficient_kzg(scene)
+        
+        self.slide = PreviouslyVectorCommitment()
+        self.slide.construct()
+        self.slide.animate_in(scene)
 
     def merkle_tree(self, scene):
         self.merkle_tree_2_4 = (
