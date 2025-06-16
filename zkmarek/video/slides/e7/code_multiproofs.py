@@ -32,7 +32,7 @@ class Multiproofs(CodeSlide):
         scene.wait(2)
         self.indicate_code(scene, self.code, "VerklePath", run_time=1)
         scene.wait(1)
-        self.indicate_code(scene, self.code, "c0, c1 = Verkle Path", run_time=1)
+        self.indicate_code(scene, self.code, "c0, c1 = VerklePath", run_time=1)
         scene.wait(2)
         self.indicate_code(scene, self.code, "c2", run_time=1)
         
