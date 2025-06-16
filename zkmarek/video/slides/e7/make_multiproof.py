@@ -1,5 +1,5 @@
-def generateMultiProof(x_i, a_i, c2, pathCommitments: List[ECPoint], polynomials: List[Callable]):
-    c0, c1 = pathCommitments
+def generateMultiProof(x_i, a_i, c2, VerklePath: List[ECPoint], polynomials: List[Callable]):
+    c0, c1 = VerklePath
     r = hash(c2, c1, c0, a_i, hash(c0), hash(c1))
 
     opening_indices = [x_i, c0.index, c1.index]      
@@ -10,7 +10,7 @@ def generateMultiProof(x_i, a_i, c2, pathCommitments: List[ECPoint], polynomials
         xi = opening_indices[i]
         vi = opening_values[i]
         p_i = polynomials[i]  
-        g += (r**i) * (p_i(x) - vi) / (x - xi)
+        g += (r ** i) * (p_i(x) - vi) / (x - xi)
 
     D = commit(g)
 
