@@ -5,6 +5,7 @@ from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
 from zkmarek.video.slides.e7.curve import Curve
+from zkmarek.video.slides.e7.proofs import Proofs
 
 class Multiproofs(SlideBase):
     def __init__(self):
@@ -17,7 +18,7 @@ class Multiproofs(SlideBase):
         self.pi1 = MathTex(r"\pi^1", color=PRIMARY_COLOR, font_size=45)
         self.pi2 = MathTex(r"\pi^2", color=PRIMARY_COLOR, font_size=45).shift(RIGHT*2)
         
-        self.all_pis = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).shift(UP*1.5)
+        self.all_pis = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).shift(RIGHT*1.5)
         
         vector = [r"a_0", r"a_1", r"a_2", r"a_3", r"a_4", r"a_5", r"a_6", r"a_7",
                  r"a_8", r"a_9", r"a_{10}", r"a_{11}", r"a_{12}", r"a_{13}", r"a_{14}", r"a_{15}"]
@@ -88,22 +89,40 @@ class Multiproofs(SlideBase):
         self.arrow_proof_to_g = Arrow(self.quotient_g2.get_bottom(), self.proof_to_g.get_top(),
                                       tip_shape=StealthTip, stroke_width=2,
                                       max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT_COLOR])
+        self.proofs = Proofs()
+        self.proofs.construct()
+        self.tree = self.proofs.tree
+        self.tree.scale(0.7).shift(LEFT * 3)
+        self.verify_func = MathTex(r"\texttt{VerkleProof}({{\pi^0}}, {{\pi^1}}, {{\pi^2}}, {{C^0_0}}, {{C_0^1}})", color = PRIMARY_COLOR, font_size = 30).shift(RIGHT * 2+UP*1.5)
+        
+        self.commitment_D_aggregate = MathTex(r"D", color=PRIMARY_COLOR, font_size=40).next_to(self.verify_func, DOWN, buff =0.2)
+        self.arrow_D_pi = Arrow(self.commitment_D_aggregate.get_bottom(), self.all_pis.get_top(), tip_shape = StealthTip, max_tip_length_to_length_ratio=1.).set_color(PRIMARY_COLOR)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "VP: three proofs, three commitments", "data/sound/e7/slide6-1.mp3")
         scene.play(Write(self.title_label))
         scene.wait(1)
-        scene.play(Write(self.pi0), run_time=1)
-        scene.play(Write(self.pi1), run_time=1)
-        scene.play(Write(self.pi2), run_time=1)
-        scene.play(TransformMatchingShapes(VGroup(self.pi0.copy(), self.pi1.copy(), self.pi2.copy()), self.all_pis), run_time=1)
+        scene.play(FadeIn(self.tree), run_time=1)
+        scene.play(Write(self.verify_func), run_time=1)
+        scene.wait(1)
+        scene.play(Indicate(self.verify_func[1:6], scale_factor=1.3), run_time=1)
+        scene.play(Indicate(self.verify_func[7:], scale_factor=1.3), run_time=1)
         
         self.new_subsection(scene, "multiproof: commitment D, commitments path", "data/sound/e7/slide6-1a.mp3")
+        scene.play(FadeIn(self.all_pis), run_time=1)
+        scene.wait(1.5)
+        scene.play(self.tree[2][0].animate.set_color(PRIMARY_COLOR), run_time=1)
+        scene.play(self.tree[1][0].animate.set_color(PRIMARY_COLOR), run_time=1)
+        scene.play(self.tree[0][0].animate.set_color(PRIMARY_COLOR), run_time=1)
+        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.verify_func[7:].copy(), self.commitment_D_aggregate), run_time=1)
+        scene.play(Write(self.arrow_D_pi), run_time=1)
         
         self.new_subsection(scene, "how?", "data/sound/e7/slide6-1b.mp3")
+        scene.wait(1.5)
+        scene.play(FadeOut(self.tree, self.verify_func, self.arrow_D_pi, self.all_pis, self.commitment_D_aggregate), run_time=1)
         
         self.new_subsection(scene, "data vector: polynomial", "data/sound/e7/slide6-2.mp3")
-        scene.play(FadeOut(self.pi0, self.pi1, self.pi2, self.all_pis), run_time=1)
         scene.play(FadeIn(self.commtiment_C), run_time=1)
         scene.wait(0.5)
         scene.play(Write(self.vector), run_time=1)

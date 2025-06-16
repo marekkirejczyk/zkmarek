@@ -11,6 +11,7 @@ from zkmarek.video.slides.e7.proofs import Proofs
 from zkmarek.video.slides.e7.multiproofs import Multiproofs
 from zkmarek.video.slides.e7.code_multiproofs import Multiproofs as CodeMultiproofs
 from zkmarek.video.slides.e7.final_season1 import FinalSeason1
+from zkmarek.video.slides.e7.merkle_verkle import MerkleVerkle
 
 EPISODE7 = [
     # Intro(
@@ -35,4 +36,6 @@ EPISODE7 = [
     Multiproofs(),
     TitleSlide("Code"),
     CodeMultiproofs(),
+    TitleSlide("Merkle vs Verkle Trees", sound = "data/sound/e7/slide8-0.mp3", wait_time=2),
+    MerkleVerkle(),
 ]

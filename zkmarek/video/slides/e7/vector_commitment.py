@@ -112,14 +112,14 @@ class PreviouslyVectorCommitment(SlideBase):
         
         self.envelope = VGroup(self.envelope_body_closed, self.envelope_flap_closed, self.commitment)
         
-        self.opening2_text = Text("opening: ", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.opening2_text = Text("opening:   ", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.opening2_math = MathTex(r"a_{{{i}}} = 22", color = SECONDARY_COLOR, font_size=40).next_to(self.opening2_text, RIGHT, buff = 0.1)
         self.opening2 = VGroup(self.opening2_text, self.opening2_math).next_to(self.prover, RIGHT, buff = 1.0)
         
         self.opening = MathTex(r"a_{{{i}}} = 22", color = SECONDARY_COLOR, font_size=40).next_to(self.prover, RIGHT, buff = 1.0)
         
         self.pi = MathTex(r"\pi", color = PRIMARY_COLOR, font_size=40)
-        self.proof = Text("proof", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 40).next_to(self.pi, LEFT, buff = 0.1)
+        self.proof = Text("proof  ", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.pi, LEFT, buff = 0.1)
         self.proof_pi = VGroup(self.pi, self.proof).next_to(self.opening, DOWN, buff = 0.2)
         
         indeces = ["0", "1", "2", "...", "i", "..."]

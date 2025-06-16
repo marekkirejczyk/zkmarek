@@ -537,7 +537,7 @@ class ThreeLevelVerkleTree(SlideBase):
         ).next_to(self.commitment_size_ipa, DOWN, buff=0.7)
         hash_255 = MathTex(
             r"\mathrm{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.commitment_to_C255, UP, buff=0.3)
+        ).next_to(self.commitment_to_C255, UP, buff=0.3).shift(RIGHT * 0.2)
         arrow_hash = Arrow(
             hash.get_bottom(),
             self.commitment_to_C0.get_top(),
@@ -598,7 +598,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.whole_tree_until_C10.target.shift(DOWN)
         scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=1)
         self.commitment_C01.next_to(self.commitmentcdots, UP, buff=0.9)
-        scene.play(Create(self.commitment_C01), hash.animate.shift(DOWN*0.3), run_time=1)
+        scene.play(Create(self.commitment_C01), hash.animate.shift(DOWN*0.15+LEFT*0.2), run_time=1)
 
         self.arrow_commitment_C01 = []
         for rectangle in self.commitments:
@@ -669,7 +669,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.other_hashes[:][3].move_to(self.other_commitments[0][0].get_center())
         hash_parent = MathTex(
             r"\mathrm{hash}(C_0^{1})", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.commitment_C01, UP, buff=0.3)
+        ).next_to(self.commitment_C01, UP, buff=0.2)
         hash_parent_255 = MathTex(
             r"\mathrm{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.other_hashes[:][3], UP, buff=0.3)
