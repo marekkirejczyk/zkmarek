@@ -17,6 +17,7 @@ from manim import (
     Group,
     Indicate,
     TransformMatchingShapes,
+    Brace,
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import (
@@ -219,29 +220,32 @@ class Proofs(SlideBase):
         )
 
         self.commitment = MathTex(r"C^0", color=PRIMARY_COLOR, font_size=35)
-            
-        self.proof_text = Text(
-            "proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.commitment, DOWN, buff=0.8)
-        self.pi = MathTex(r"\pi^0", color=PRIMARY_COLOR, font_size=35).next_to(
-            self.commitment, RIGHT, buff=0.8
+
+        self.proof_text = (
+            Text("proof", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=25)
+            .next_to(self.commitment, DOWN, buff=0.8)
+            .shift(UP * 0.3)
+        )
+        self.pi = (
+            MathTex(r"\pi^0", color=PRIMARY_COLOR, font_size=35)
+            .next_to(self.commitment, RIGHT, buff=1.0)
+            .shift(UP * 0.3)
         )
         self.proof = VGroup(self.pi)
-        self.opening = MathTex(
-            r"a_{255} = 85", color=PRIMARY_COLOR, font_size=35
-        ).next_to(self.commitment, LEFT, buff=0.3)
+        self.opening = (
+            MathTex(r"a_{255} = 85", color=PRIMARY_COLOR, font_size=35)
+            .next_to(self.commitment, LEFT, buff=1.0)
+            .shift(UP * 0.3)
+        )
 
         ## table
-        self.rectangle_bg = (
-            RoundedRectangle(
-                corner_radius=0.05,
-                width=12,
-                height=4,
-                stroke_width=0.0,
-                fill_opacity=0.2,
-            )
-            .set_color(PRIMARY_COLOR)
-        )
+        self.rectangle_bg = RoundedRectangle(
+            corner_radius=0.05,
+            width=12,
+            height=4,
+            stroke_width=0.0,
+            fill_opacity=0.2,
+        ).set_color(PRIMARY_COLOR)
         self.pi_proof = MathTex(r"\pi^1", color=PRIMARY_COLOR, font_size=35)
 
         self.pi_proof_level3 = MathTex(r"\pi^2", color=PRIMARY_COLOR, font_size=35)
@@ -256,13 +260,12 @@ class Proofs(SlideBase):
             "total size: ", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25
         ).next_to(self.proof_label, DOWN, buff=0.3)
 
-        self.kzg = (
-            Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30)
-            .shift(RIGHT * 0.5+UP)
-        )
+        self.kzg = Text(
+            "KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30
+        ).shift(RIGHT * 0.5 + UP)
         self.ipa = Text(
             "IPA", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30
-        ).next_to(self.kzg, LEFT, buff=2.)
+        ).next_to(self.kzg, LEFT, buff=2.0)
 
         self.kzg_scalar = MathTex(
             r"<32  \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35
@@ -325,21 +328,37 @@ class Proofs(SlideBase):
         self.proof_ipa3 = MathTex(
             r"\sim 1.6\ \mathrm{kB}", color=HIGHLIGHT_COLOR, font_size=30
         )
-        
-        self.verify_function = MathTex(r"\texttt{verify(opening = }{{a_i}}, \texttt{ root = }{{C_0^2}}, \texttt{ verkleProof = }[{{\pi^0}},\ {{\pi^0}},\ {{\pi^2}},\ {{C_0^0}},\ {{C_0^1}}])",
-                                       color = PRIMARY_COLOR, font_size = 37).to_edge(DOWN)
+
+        self.verify_function = (
+            MathTex(
+                r"\texttt{verify}",
+                r"\texttt{(opening = }{a_i,}",
+                r"\texttt{ root = }{C_0^2,}",
+                r"\texttt{ verkleProof = }",
+                r"[{\pi^0,}\;",
+                r"{\pi^1,}\; ",
+                r"{\pi^2,}\; ",
+                r"{C_0^0,}\; " ,
+                r"{C_0^1}]",
+                color=PRIMARY_COLOR,
+                font_size=37,
+            )
+            .to_edge(DOWN)
+            .shift(UP * 1.)
+        )
 
     def animate_in(self, scene):
         self.new_subsection(scene, "85: proof C, opening", "data/sound/e7/slide5-1.mp3")
         scene.play(Write(self.title_label), run_time=0.7)
         self.values.scale(2).move_to(ORIGIN).shift(DOWN * 1.5)
-        scene.play(Write(self.values), run_time=0.7)
-        scene.wait(1)
-        scene.play(Write(self.commitment), run_time=0.7)
         self.arrows_commitment = VGroup()
         for i in range(2):
             self.create_arrow(self.commitment, self.values[i], self.arrows_commitment)
-            
+
+        scene.play(Write(self.values), run_time=0.7)
+        scene.wait(1)
+        self.commitment.shift(UP * 0.3)
+        scene.play(Write(self.commitment), run_time=0.7)
         scene.play(Write(self.arrows_commitment), run_time=0.7)
         scene.wait(2)
         scene.play(Write(self.opening), run_time=0.7)
@@ -362,6 +381,9 @@ class Proofs(SlideBase):
                 self.hashes_commitments_level3,
                 self.hashes_commitments_level2,
                 self.arrows,
+                self.cdots_val1,
+                self.cdots_val2,
+                self.cdots_val3,
             ),
             run_time=2,
         )
@@ -372,7 +394,8 @@ class Proofs(SlideBase):
         scene.wait(1)
         commitment_C0 = (
             MathTex(r"{{C_0^0}}", color=PRIMARY_COLOR, font_size=28)
-            .next_to(self.tree, RIGHT, buff=0.3).shift(UP)
+            .next_to(self.tree, RIGHT, buff=0.3)
+            .shift(UP)
             .scale(1.2)
         )
         scene.play(
@@ -398,9 +421,13 @@ class Proofs(SlideBase):
         )
 
         scene.wait(1)
-        scene.play(Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1)
+        scene.play(
+            Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1
+        )
         scene.wait(0.5)
-        scene.play(Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1)
+        scene.play(
+            Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1
+        )
         scene.wait(1)
         scene.play(
             TransformMatchingShapes(
@@ -409,16 +436,18 @@ class Proofs(SlideBase):
             run_time=1.5,
         )
         opening2 = (
-            MathTex(r"H(C_0^0)", color = PRIMARY_COLOR, font_size = 28)
+            MathTex(r"H(C_0^0)", color=PRIMARY_COLOR, font_size=28)
             .next_to(commtiment_C0_1, DOWN, buff=0.5)
             .scale(1.2)
         )
         scene.wait(1)
         scene.play(
-            FadeIn(opening2),
+            TransformMatchingShapes(self.hashes_commitments_level2[4].copy(), opening2),
             run_time=1.5,
         )
-        scene.play(Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1)
+        scene.play(
+            Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1
+        )
         scene.wait(1)
         self.pi_proof.next_to(opening2, DOWN, buff=0.5)
         scene.play(FadeIn(self.pi_proof), run_time=1.0)
@@ -429,17 +458,19 @@ class Proofs(SlideBase):
             .next_to(commtiment_C0_1, RIGHT, buff=1.0)
             .scale(1.2)
         )
-        scene.wait(1)
-        scene.play(Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1)
+        scene.wait(2)
+        scene.play(
+            Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1
+        )
         scene.wait(0.5)
-        scene.play(Indicate(self.hashes_commitments_root[1], scale_factor=1.5), run_time=1)
+        scene.play(Indicate(self.hashes_commitments_root, scale_factor=1.5), run_time=1)
         scene.wait(1.5)
         scene.play(
             TransformMatchingShapes(self.hashes_commitments_root[1].copy(), root),
             run_time=1.5,
         )
         opening3 = (
-            MathTex(r"H(C_0^1)", color = PRIMARY_COLOR, font_size = 28)
+            MathTex(r"H(C_0^1)", color=PRIMARY_COLOR, font_size=28)
             .next_to(root, DOWN, buff=0.5)
             .scale(1.2)
         )
@@ -457,37 +488,59 @@ class Proofs(SlideBase):
         )
         scene.wait(2)
         scene.play(self.tree.animate.scale(0.7).to_edge(LEFT), run_time=1)
-        scene.wait(1.7)
-        scene.play(self.proof.animate.set_color(SECONDARY_COLOR), 
-                   self.pi_proof.animate.set_color(SECONDARY_COLOR), 
-                   self.pi_proof_level3.animate.set_color(SECONDARY_COLOR), run_time=1)
-        scene.play(TransformMatchingShapes(self.proof.copy(), self.verify_function[5]),
-                    TransformMatchingShapes(self.pi_proof.copy(), self.verify_function[7]),
-                    TransformMatchingShapes(self.pi_proof_level3, self.verify_function[9]), run_time=1)
-        scene.wait(1)
-        scene.play(commitment_C0.animate.set_color(SECONDARY_COLOR), commtiment_C0_1.animate.set_color(SECONDARY_COLOR), 
+        scene.play(FadeIn(self.verify_function[0], run_time=1.5))
+        scene.wait(0.2)
+        scene.play(
+            self.proof.animate.set_color(SECONDARY_COLOR),
+            self.pi_proof.animate.set_color(SECONDARY_COLOR),
+            self.pi_proof_level3.animate.set_color(SECONDARY_COLOR),
+            run_time=1,
         )
-        scene.play(TransformMatchingShapes(commitment_C0.copy(), self.verify_function[11]), TransformMatchingShapes(commtiment_C0_1.copy(), self.verify_function[13]),
-                   run_time=1)
+        scene.play(
+            TransformMatchingShapes(self.proof.copy(), self.verify_function[4]),
+            TransformMatchingShapes(self.pi_proof.copy(), self.verify_function[5]),
+            TransformMatchingShapes(self.pi_proof_level3, self.verify_function[6]),
+            run_time=1,
+        )
+        scene.wait(1)
+        scene.play(
+            commitment_C0.animate.set_color(SECONDARY_COLOR),
+            commtiment_C0_1.animate.set_color(SECONDARY_COLOR),
+        )
+        scene.play(
+            TransformMatchingShapes(commitment_C0.copy(), self.verify_function[7]),
+            TransformMatchingShapes(commtiment_C0_1.copy(), self.verify_function[8]),
+            run_time=1,
+        )
         scene.wait(1.5)
-        scene.play(self.opening.animate.set_color(HIGHLIGHT_COLOR), root.animate.set_color(HIGHLIGHT_COLOR), run_time=1)
-        scene.play(TransformMatchingShapes(root.copy(), self.verify_function[3]), run_time=1)
-        scene.play(TransformMatchingShapes(self.opening.copy(), self.verify_function[1]), run_time=1)
+        scene.play(
+            self.opening.animate.set_color(HIGHLIGHT_COLOR),
+            root.animate.set_color(HIGHLIGHT_COLOR),
+            run_time=1,
+        )
+        scene.play(
+            TransformMatchingShapes(root.copy(), self.verify_function[2]), run_time=1
+        )
+        scene.play(
+            TransformMatchingShapes(self.opening.copy(), self.verify_function[1]),
+            run_time=1,
+        )
         scene.wait(2)
 
         scene.play(FadeOut(self.opening, opening2, opening3, root), run_time=1.5)
-        
+
         self.new_subsection(scene, "different weight", "data/sound/e7/slide5-6a.mp3")
-        scene.play(FadeIn(self.verify_function[0], self.verify_function[2],
-                        self.verify_function[4], self.verify_function[6],
-                        self.verify_function[8], self.verify_function[10],
-                        self.verify_function[12], self.verify_function[14]),
-                    run_time=1.5)
+        scene.play(
+            FadeIn(
+                self.verify_function[3],
+            ),
+            run_time=1.5,
+        )
         self.proofs = VGroup(self.pi_proof, self.pi_proof_level3, self.proof)
         self.commitments = VGroup(commitment_C0, commtiment_C0_1)
         self.commitments.generate_target()
         self.proofs.generate_target()
-        self.commitments.target.shift(LEFT * 1.5+DOWN * 0.5)
+        self.commitments.target.shift(LEFT * 1.5 + DOWN * 0.5)
         self.proofs.target.shift(LEFT * 1.5)
         # scene.play(
         #     MoveToTarget(self.commitments),
@@ -498,20 +551,20 @@ class Proofs(SlideBase):
         rectangle_around_commitment_proofs = (
             RoundedRectangle(
                 corner_radius=0.05,
-                width=self.proofs.width+0.7,
+                width=self.proofs.width + 0.7,
                 height=2,
                 fill_opacity=0.15,
                 stroke_width=0.0,
             )
             .set_color(HIGHLIGHT2_COLOR)
             .move_to(self.proofs.get_center())
-            .shift(UP*0.6)
+            .shift(UP * 0.6)
         )
         # scene.play(FadeIn(self.rectangle_bg, rectangle_around_commitment_proofs))
-        self.verify_function_REST = self.verify_function[4:]
-        scene.play(FadeOut(self.verify_function[0:4]), run_time=1)
+        self.verify_function_REST = self.verify_function[3:]
+        scene.play(FadeOut(self.verify_function[0:3]), run_time=1)
         self.verify_function_REST.generate_target()
-        self.verify_function_REST.target.shift(UP * 4 + LEFT * 2.5).scale(1.3)
+        self.verify_function_REST.target.shift(UP * 4 + LEFT * 1.8).scale(1.3)
         scene.play(
             MoveToTarget(self.verify_function_REST),
             run_time=1.5,
@@ -519,28 +572,36 @@ class Proofs(SlideBase):
 
         self.new_subsection(scene, "KZG", "data/sound/e7/slide5-6d.mp3")
 
-        self.kzg_ec_point.next_to(self.kzg, DOWN, buff=0.3)
-        self.ipa_ec_point.next_to(self.ipa, DOWN, buff=0.3)
+        self.kzg.next_to(self.verify_function_REST[0], DOWN, buff=1.0)
+        self.ipa.next_to(self.kzg, DOWN, buff=1.0)
+        self.kzg_ec_point.next_to(self.verify_function_REST[4], DOWN, buff=1.)
+        self.ipa_ec_point.next_to(self.kzg_ec_point, DOWN, buff=1.)
         self.kzg_ecpoint2 = (
             self.kzg_ec_point.copy()
-            .next_to(self.proof, LEFT, buff=0.8)
+            .next_to(self.verify_function_REST[2], DOWN, buff=1.)
             .set_color(PRIMARY_COLOR)
         )
         self.commitment_label.next_to(self.ipa_ec_point, LEFT, buff=0.5)
         self.proof_label.next_to(self.commitment_label, DOWN, buff=0.8)
-        self.ipa_proof.next_to(self.proof_label, RIGHT, buff=0.9)
-        self.ipa_proof2.next_to(self.proof_label, RIGHT, buff=1.1).shift(DOWN*0.1)
+        self.ipa_proof.next_to(self.kzg_ecpoint2, DOWN, buff=0.9)
+        self.ipa_proof2.next_to(self.kzg_ecpoint2, DOWN, buff=0.8).shift(DOWN * 0.1)
         self.total_size.next_to(self.proof_label, DOWN, buff=0.5)
 
-        self.proof_ipa1.next_to(self.ipa_proof2, DOWN, buff=0.6)
-        self.proof_ipa2.next_to(self.ipa_proof2, DOWN, buff=0.6)
-        self.proof_ipa3.next_to(self.ipa_proof2, DOWN, buff=0.6)
-        self.proof_kzg1.next_to(self.kzg_ecpoint2, DOWN, buff=0.6)
-        self.proof_kzg2.next_to(self.kzg_ecpoint2, DOWN, buff=0.6)
-
-        scene.play(Write(self.commitment_label), run_time=1)
-        scene.play(Write(self.proof_label), run_time=1)
+        self.proof_ipa1.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
+        self.proof_ipa2.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
+        self.proof_ipa3.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
+        self.proof_kzg1.next_to(self.kzg_ec_point, RIGHT, buff=0.6)
+        self.proof_kzg2.next_to(self.kzg_ec_point, RIGHT, buff=0.6)
         scene.play(FadeIn(self.kzg), run_time=1.0)
+
+        self.brace_proofs = Brace(
+            VGroup(self.verify_function_REST[1:4]), DOWN, buff=0.1
+        ).set_color(PRIMARY_COLOR)
+        self.brace_commitments = Brace(
+            VGroup(self.verify_function_REST[4:]), DOWN, buff=0.1
+        ).set_color(PRIMARY_COLOR)
+        scene.play(FadeIn(self.brace_commitments), run_time=1.0)
+        scene.play(FadeIn(self.brace_proofs), run_time=1.0)
 
         scene.play(FadeIn(self.kzg_ec_point, self.kzg_ecpoint2), run_time=1)
         scene.wait(1)
@@ -548,7 +609,6 @@ class Proofs(SlideBase):
         self.new_subsection(scene, "total 240 B", "data/sound/e7/slide5-6e.mp3")
         scene.wait(1)
 
-        scene.play(FadeIn(self.total_size), run_time=1)
         scene.play(Write(self.proof_kzg1), run_time=1)
         scene.wait(1)
         scene.play(
@@ -595,14 +655,21 @@ class Proofs(SlideBase):
         )
         scene.wait(2)
         self.multiproof.move_to(self.pi_proof.get_center())
-        self.multicommitment = MathTex("C", color = SECONDARY_COLOR, font_size = 40).move_to(commtiment_C0_1.get_center())
+        self.multicommitment = MathTex(
+            "C", color=SECONDARY_COLOR, font_size=40
+        ).move_to(commtiment_C0_1.get_center())
         scene.play(
             TransformMatchingShapes(
                 VGroup(self.proof, self.pi_proof, self.pi_proof_level3), self.multiproof
             ),
             run_time=1,
         )
-        scene.play(TransformMatchingShapes(VGroup(commtiment_C0_1, commitment_C0), self.multicommitment), run_time=1)
+        scene.play(
+            TransformMatchingShapes(
+                VGroup(commtiment_C0_1, commitment_C0), self.multicommitment
+            ),
+            run_time=1,
+        )
         scene.wait(6.5)
 
         self.all = Group(
@@ -623,7 +690,7 @@ class Proofs(SlideBase):
             self.total_size,
             self.commitment_label,
             self.proof_label,
-            self.verify_function
+            self.verify_function,
         )
 
     def animate_out(self, scene):

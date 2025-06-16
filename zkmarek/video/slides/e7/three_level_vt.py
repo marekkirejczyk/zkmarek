@@ -633,7 +633,7 @@ class ThreeLevelVerkleTree(SlideBase):
                 self.commitment_C01_rec, rectangle, self.arrow_commitment_C01
             )
         self.other_commitments.next_to(self.commitment_C01, RIGHT, buff=3.5)
-        self.right_commitments.next_to(self.other_commitments[0], DOWN, buff=0.78)
+        self.right_commitments.next_to(self.other_commitments[0], DOWN, buff=0.78).shift(LEFT*0.5)
         self.rectangle_on_parent_commitments.move_to(
             self.other_commitments.get_center()
         ).shift(LEFT * 2.2)

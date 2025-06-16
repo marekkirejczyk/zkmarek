@@ -18,7 +18,7 @@ class Multiproofs(SlideBase):
         self.pi1 = MathTex(r"\pi^1", color=PRIMARY_COLOR, font_size=45)
         self.pi2 = MathTex(r"\pi^2", color=PRIMARY_COLOR, font_size=45).shift(RIGHT*2)
         
-        self.all_pis = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).shift(RIGHT*1.5)
+        self.all_pis = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).shift(RIGHT*2.5+DOWN*1.2)
         
         vector = [r"a_0", r"a_1", r"a_2", r"a_3", r"a_4", r"a_5", r"a_6", r"a_7",
                  r"a_8", r"a_9", r"a_{10}", r"a_{11}", r"a_{12}", r"a_{13}", r"a_{14}", r"a_{15}"]
@@ -58,7 +58,7 @@ class Multiproofs(SlideBase):
             font_size=35
         ).shift(DOWN*1.5)
         self.quotient_g2 = MathTex(
-            r"g(t) = {{r^0}} \cdot {{\frac{p_0(t)-a_0}{t - x_0}}} + {{r^1}} \cdot {{\frac{p_1(t)-a_1}{t - x_1}}} + {{r^2}} \cdot {{\frac{p_2(t)-a_2}{x - x_2}}}",
+            r"g(s) = {{r^0}} \cdot {{\frac{p_0(s)-a_0}{s - x_0}}} + {{r^1}} \cdot {{\frac{p_1(s)-a_1}{s - x_1}}} + {{r^2}} \cdot {{\frac{p_2(s)-a_2}{s - x_2}}}",
             color=PRIMARY_COLOR,
             font_size=35
         ).shift(DOWN*1.5)
@@ -83,7 +83,7 @@ class Multiproofs(SlideBase):
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
         self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
-        self.random_t = MathTex(r"t\sim \mathrm{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5)
+        self.random_t = MathTex(r"s\sim \mathrm{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5)
         
         self.proof_to_g = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 40).next_to(self.quotient_g2, DOWN, buff = 0.5)
         self.arrow_proof_to_g = Arrow(self.quotient_g2.get_bottom(), self.proof_to_g.get_top(),
@@ -93,10 +93,10 @@ class Multiproofs(SlideBase):
         self.proofs.construct()
         self.tree = self.proofs.tree
         self.tree.scale(0.7).shift(LEFT * 3)
-        self.verify_func = MathTex(r"\texttt{VerkleProof}({{\pi^0}}, {{\pi^1}}, {{\pi^2}}, {{C^0_0}}, {{C_0^1}})", color = PRIMARY_COLOR, font_size = 30).shift(RIGHT * 2+UP*1.5)
+        self.verify_func = MathTex(r"\texttt{VerkleProof}({{\pi^0}}, {{\pi^1}}, {{\pi^2}}, {{C^0_0}}, {{C_0^1}})", color = PRIMARY_COLOR, font_size = 35).shift(RIGHT * 2+UP*1.5)
         
-        self.commitment_D_aggregate = MathTex(r"D", color=PRIMARY_COLOR, font_size=40).next_to(self.verify_func, DOWN, buff =0.2)
-        self.arrow_D_pi = Arrow(self.commitment_D_aggregate.get_bottom(), self.all_pis.get_top(), tip_shape = StealthTip, max_tip_length_to_length_ratio=1.).set_color(PRIMARY_COLOR)
+        self.commitment_D_aggregate = MathTex(r"D", color=PRIMARY_COLOR, font_size=40).next_to(self.verify_func, DOWN, buff =0.6).shift(RIGHT * 0.7)
+        self.arrow_D_pi = Arrow(self.commitment_D_aggregate.get_bottom(), self.all_pis.get_top(), tip_shape = StealthTip, max_tip_length_to_length_ratio=0.3).set_color(PRIMARY_COLOR)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "VP: three proofs, three commitments", "data/sound/e7/slide6-1.mp3")
@@ -213,15 +213,19 @@ class Multiproofs(SlideBase):
         scene.wait(1)
         scene.play(FadeOut(self.powers_of_r), run_time=1)
         scene.wait(1)
-        scene.play(FadeIn(self.random_t), run_time=1)
-        scene.play(TransformMatchingShapes(self.quotient_g, self.quotient_g2), run_time=1)
-                
+        commitment_D = MathTex(r"D = \texttt{commit}({{g}})", color=PRIMARY_COLOR, font_size=35).next_to(self.quotient_g, DOWN, buff=0.5)
+        scene.play(FadeIn(commitment_D), run_time=1)
+        
         self.new_subsection(scene, "g(s)", "data/sound/e7/slide6-13.mp3")
+        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.quotient_g, self.quotient_g2), run_time=1)
+        scene.play(FadeIn(self.random_t), run_time=1)
+        scene.wait(1)
+        
+        self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide6-14.mp3")
         scene.play(FadeOut(self.random_t))
         scene.play(Write(self.proof_to_g), run_time=1)
         scene.play(FadeIn(self.arrow_proof_to_g), run_time=1)
-        
-        self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide6-14.mp3")
         scene.wait(2)
         
         self.new_subsection(scene, "verify only once", "data/sound/e7/slide6-15.mp3")
