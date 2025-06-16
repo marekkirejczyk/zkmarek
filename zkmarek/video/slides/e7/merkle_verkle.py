@@ -21,7 +21,7 @@ class MerkleVerkle(SlideBase):
         )
         
         self.tree_MT = (
-            MT16(num_levels=4, focused_node_path=[7, 8, 7])
+            MT16(num_levels=4, focused_node_path=[7, 8, 7], include_labels=False)
             .scale(0.6)
             .shift(UP * 4 + LEFT * 1)
         )
@@ -33,8 +33,8 @@ class MerkleVerkle(SlideBase):
         self.slide_VT.construct()
         self.tree_VT = self.slide_VT.tree.shift(RIGHT * 3.5).scale(0.8)
         
-        self.brace_MT = Brace(self.tree_MT, DOWN, buff = 0.1).set_color(PRIMARY_COLOR)
-        self.brace_VT = Brace(self.tree_VT, DOWN, buff = 0.1).set_color(PRIMARY_COLOR)
+        self.brace_MT = Brace(self.tree_MT.copy().shift(LEFT * 2).scale(0.5), DOWN, buff = 0.1).set_color(PRIMARY_COLOR)
+        self.brace_VT = Brace(self.tree_VT.copy().scale(0.2), DOWN, buff = 0.1).set_color(PRIMARY_COLOR).shift(LEFT*0.78+DOWN*1.5)
         
         self.VT_children= Text("256 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_VT, DOWN, buff=0.1)
         self.MT_children = Text("16 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_MT, DOWN, buff=0.1)

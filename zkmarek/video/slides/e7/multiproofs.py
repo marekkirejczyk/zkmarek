@@ -96,13 +96,13 @@ class Multiproofs(SlideBase):
         self.verify_func = MathTex(r"\texttt{VerkleProof}({{\pi^0}}, {{\pi^1}}, {{\pi^2}}, {{C^0_0}}, {{C_0^1}})", color = PRIMARY_COLOR, font_size = 35).shift(RIGHT * 2+UP*1.5)
         
         self.commitment_D_aggregate = MathTex(r"D", color=PRIMARY_COLOR, font_size=40).next_to(self.all_pis, UP, buff =1.)
-        self.arrow_D_pi = Arrow(self.commitment_D_aggregate.get_bottom(), self.all_pis.get_top(), tip_shape = StealthTip, max_tip_length_to_length_ratio=0.3, max_stroke_width_to_length_ratio=0.3).set_color(PRIMARY_COLOR)
+        self.arrow_D_pi = Arrow(self.commitment_D_aggregate.get_bottom(), self.all_pis.get_top(), tip_shape = StealthTip, max_tip_length_to_length_ratio=0.3, max_stroke_width_to_length_ratio=0.5).set_color(PRIMARY_COLOR)
         
-        self.indices = VGroup(*[Text(str(i), font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30) for i in range(16)]).arrange(RIGHT, buff = 0.5).next_to(self.vector, DOWN)
+        self.indices = VGroup(*[Text(str(i), font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30) for i in range(16)]).arrange(RIGHT, buff = 0.42).next_to(self.vector, DOWN, buff = 0.2).shift(1.3 * DOWN)
         
         self.opening__0 = MathTex(r"p_0({x_0})=a_0", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5)
-        self.opening__1 = MathTex(r"p_1({x_{0}})=\texttt{hash}(C_0^0)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening_0, DOWN, buff=0.5)
-        self.opening__2 = MathTex(r"p_2({x_{0}})=\texttt{hash}(C_0^1)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening_1, DOWN, buff=0.5)
+        self.opening__1 = MathTex(r"p_1({x_{0}})=\texttt{hash}(C_0^0)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening__0, DOWN, buff=0.5)
+        self.opening__2 = MathTex(r"p_2({x_{0}})=\texttt{hash}(C_0^1)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening__1, DOWN, buff=0.5)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "VP: three proofs, three commitments", "data/sound/e7/slide6-1.mp3")
@@ -112,7 +112,7 @@ class Multiproofs(SlideBase):
         scene.play(Write(self.verify_func), run_time=1)
         scene.wait(1)
         scene.play(Indicate(self.verify_func[1:6], scale_factor=1.3), run_time=1)
-        scene.play(Indicate(self.verify_func[7:], scale_factor=1.3), run_time=1)
+        scene.play(Indicate(self.verify_func[7:9], scale_factor=1.3), run_time=1)
         
         self.new_subsection(scene, "multiproof: commitment D, commitments path", "data/sound/e7/slide6-1a.mp3")
         scene.play(FadeIn(self.all_pis), run_time=1)
@@ -146,10 +146,10 @@ class Multiproofs(SlideBase):
             scene.play(Indicate(self.vector[i]), run_time=0.3)
         scene.play(self.vector[6].animate.set_color(SECONDARY_COLOR), run_time=1)
         scene.play(Indicate(self.vector[6], scale_factor=1.5), run_time=1)
-
-        scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening1), run_time=1)
-        scene.wait(2)
-        self.opening.move_to(self.opening1.get_center()).shift(LEFT * 2)
+        scene.wait(1)
+        self.opening.move_to(self.opening1.get_center())
+        scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening), run_time=1)
+        scene.wait(3)
         scene.play(Indicate(self.new_axes[0]))
         scene.play(Indicate(self.indices))
         
@@ -157,7 +157,7 @@ class Multiproofs(SlideBase):
                    self.commtiment_C.animate.shift(LEFT * 2),
                    self.dots[6].animate.shift(LEFT *2),
                    self.line_ai.animate.shift(LEFT * 2), run_time=1)
-        scene.play(TransformMatchingShapes(self.opening1, self.opening), run_time=1)
+        scene.play(self.opening.animate.shift(LEFT * 1.5), run_time=1)
         scene.play(Write(self.opening__0), run_time=1)
         scene.play(Write(self.opening__1), run_time=1)
         scene.play(Write(self.opening__2), run_time=1)
@@ -251,9 +251,9 @@ class Multiproofs(SlideBase):
         
         self.new_subsection(scene, "verify only once", "data/sound/e7/slide6-15.mp3")
         scene.wait(9)
-        self.all_terms = Group(self.bg_image_prover, self.prover, self.commitment1, self.commitment2,
+        self.all_terms = Group(self.bg_image_prover, self.prover, self.commitment1, commitment_D, self.commitment2,
                                self.commitment3, self.opening_1, self.opening_2, self.opening_3,
-                               self.quotient_g, self.quotient_g2, self.proof_to_g, self.arrow_proof_to_g)
+                                self.quotient_g2, self.proof_to_g, self.arrow_proof_to_g)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.all_terms))
