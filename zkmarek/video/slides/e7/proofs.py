@@ -542,18 +542,6 @@ class Proofs(SlideBase):
         #     run_time=1.5,
         # )
         scene.play(FadeOut(self.commitments, self.proofs))
-        rectangle_around_commitment_proofs = (
-            RoundedRectangle(
-                corner_radius=0.05,
-                width=self.proofs.width + 0.7,
-                height=2,
-                fill_opacity=0.15,
-                stroke_width=0.0,
-            )
-            .set_color(HIGHLIGHT2_COLOR)
-            .move_to(self.proofs.get_center())
-            .shift(UP * 0.6)
-        )
         # scene.play(FadeIn(self.rectangle_bg, rectangle_around_commitment_proofs))
         self.verify_function_REST = self.verify_function[3:]
         scene.play(FadeOut(self.verify_function[0:3]), run_time=1)
