@@ -45,8 +45,9 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "r = hash(c2, c1, c0, a_i, hash(c0), hash(c1))", run_time=1)
         scene.wait(2.4)
         challenges = ["c2", "c1", "c0", "a_i", "hash(c0)", "hash(c1)"]
+        indices = [1, 1, 1, 1, 0, 0]
         for i, challenge in enumerate(challenges):
-            self.indicate_code(scene, self.code, challenge, index=i, run_time=0.4)
+            self.indicate_code(scene, self.code, challenge, index=indices[i], run_time=0.4)
         
         self.new_subsection(scene, "set up openings", "data/sound/e7/slide7-4.mp3")
         scene.wait(0.5)
