@@ -5,7 +5,7 @@ from zkmarek.video.utils import find_in_code
 
 class Multiproofs(CodeSlide):
     def __init__(self) -> None:
-        super().__init__("Multiproofs", "zkmarek/video/slides/e7/make_multiproof")
+        super().__init__("Multiproofs", "zkmarek/video/slides/e7/make_multiproof.txt")
 
     def construct(self):
         self.title_label = (
@@ -17,7 +17,7 @@ class Multiproofs(CodeSlide):
             )
             .to_edge(UP)
         )
-        self.code = Code("zkmarek/video/slides/e7/make_multiproof", 
+        self.code = Code("zkmarek/video/slides/e7/make_multiproof.txt", 
                          background="rectangle", 
             language="python",).scale(0.65).shift(DOWN * 0.5)
         
