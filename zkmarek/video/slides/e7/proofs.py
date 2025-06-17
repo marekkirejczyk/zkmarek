@@ -18,6 +18,8 @@ from manim import (
     Indicate,
     TransformMatchingShapes,
     Brace,
+    DashedVMobject,
+    Create,
 )
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import (
@@ -124,6 +126,12 @@ class Proofs(SlideBase):
             .set_color(HIGHLIGHT_COLOR)
             .move_to(self.cdots_level2_2.get_center())
         )
+        self.hash = MathTex(
+            r"\mathrm{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=21
+        ).next_to(self.hashes_commitments_level2[0], UP, buff=0.6)
+        hash_255 = MathTex(
+            r"\mathrm{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=21
+        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6)
         self.hashes_commitments_level2.add(
             text_commitment_C0,
             self.cdots_level2,
@@ -131,6 +139,8 @@ class Proofs(SlideBase):
             self.cdots_level2_1,
             self.rectangle_all_commitments_left,
             self.rectangle_all_commitments_right,
+            self.hash,
+            hash_255
         )
 
         ## commitments (3 level)
@@ -157,9 +167,17 @@ class Proofs(SlideBase):
             .set_color(HIGHLIGHT_COLOR)
             .move_to(self.cdots_level3.get_center())
         )
+        self.hash_parent = MathTex(
+            r"\mathrm{hash}(C_0^1)", color=PRIMARY_COLOR, font_size=21
+        ).next_to(self.hashes_commitments_level3[0], UP, buff=0.6)
+        hash_255_parent = MathTex(
+            r"\mathrm{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=21
+        ).next_to(self.hashes_commitments_level3[1], UP, buff=0.6)
 
         self.hashes_commitments_level3.add(
-            text_hash_commitmentH0, self.cdots_level3, self.rectangle_parent_commitments
+            text_hash_commitmentH0, self.cdots_level3, self.rectangle_parent_commitments,
+            hash_255_parent, 
+            self.hash_parent,
         )
 
         ## root commitment
@@ -215,22 +233,122 @@ class Proofs(SlideBase):
                 self.arrows,
             )
             .scale(0.8)
-            .shift(LEFT * 0.5)
+            .shift(LEFT * 2.5+DOWN * 1.)
         )
         ## verify function
-        self.verify_function0 = MathTex(r"\texttt{verify}(", r"a_{255}=85, ",r"C_0^0, ",r"\pi^0)", font_size = 35, color = PRIMARY_COLOR).shift(UP)
-        self.brace_public = Brace(self.verify_function0[1:3], UP, buff = 0.1, color = HIGHLIGHT_COLOR)
-        self.public_imput = Text("public input", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25).next_to(self.brace_public, UP, buff=0.1)
+        self.verify_function0 = MathTex(
+            r"\texttt{verify}(",
+            r"a_{255}=85, \;",
+            r"C_0^0, \;",
+            r"\pi^0)",
+            font_size=35,
+            color=PRIMARY_COLOR,
+        ).shift(UP)
+        self.brace_public = Brace(
+            self.verify_function0[1:3], UP, buff=0.1, color=HIGHLIGHT_COLOR
+        )
+        self.public_imput = Text(
+            "public input", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25
+        ).next_to(self.brace_public, UP, buff=0.1)
 
-        self.verify_function1_commitment = MathTex(r"\texttt{verify}(", r"a_{255}=85, ",r"C_0^1, ", r"C_0^0", r"\pi^0)", font_size = 35, color = PRIMARY_COLOR).to_edge(RIGHT).shift(UP*1+LEFT*1.2)
-        self.verify_function1_commitment[1:3].set_color(HIGHLIGHT_COLOR)    
-        self.hash_opening = MathTex(r"C_0^0\rightarrow \texttt{hash}(C_0^0)", color = PRIMARY_COLOR, font_size=30).next_to(self.verify_function1_commitment[3], UP, buff=0.3)
-        self.verify_function1_proof = MathTex(r"\texttt{verify}(", r"a_{255}=85, ",r"C_0^1, ", r"C_0^0",r"\pi^0", r"\pi^1)", color = PRIMARY_COLOR, font_size = 35).to_edge(RIGHT).shift(UP*1+LEFT*1.2)
-        
-        self.verify_function2_commitment = MathTex(r"\texttt{verify}(", r"a_{255}=85, ",r"C_0^2, ", r"C_0^1", r"C_0^0", r"\pi^0", r"\pi^1)", font_size = 35, color = PRIMARY_COLOR).to_edge(RIGHT).shift(UP*1+LEFT*1.2)
-        self.verify_function2_commitment[1:3].set_color(HIGHLIGHT_COLOR)    
-        self.hash_opening2 = MathTex(r"C_0^1\rightarrow \texttt{hash}(C_0^1)", color = PRIMARY_COLOR, font_size=30).next_to(self.verify_function2_commitment[4], UP, buff=0.3)
-        self.verify_function2_proof = MathTex(r"\texttt{verify}(", r"a_{255}=85, ",r"C_0^2, ", r"C_0^1", r"C_0^0", r"\pi^0", r"\pi^1", r"\pi^2)", color = PRIMARY_COLOR, font_size = 35).to_edge(RIGHT).shift(UP*1+LEFT*1.2)
+        self.verify_function1_commitment = (
+            MathTex(
+                r"\texttt{verify}(",
+                r"a_{255}=85, \;",
+                r"C_0^1, \;",
+                r"C_0^0,\;",
+                r"\pi^0)",
+                font_size=35,
+                color=PRIMARY_COLOR,
+            )
+            .to_edge(RIGHT)
+            .shift(UP * 1 + LEFT * 0.5)
+        )
+        self.verify_function1_commitment[1:3].set_color(HIGHLIGHT_COLOR)
+        self.hash_opening = MathTex(
+            r"C_0^0\rightarrow \texttt{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=30
+        ).next_to(self.verify_function1_commitment[3], UP, buff=0.3)
+        self.verify_function1_proof = (
+            MathTex(
+                r"\texttt{verify}(",
+                r"a_{255}=85, \;",
+                r"C_0^1, \;",
+                r"C_0^0\;",
+                r"\pi^0\;",
+                r"\pi^1)",
+                color=PRIMARY_COLOR,
+                font_size=35,
+            )
+            .to_edge(RIGHT)
+            .shift(UP * 1 + LEFT * 0.1)
+        )
+
+        self.verify_function2_commitment = (
+            MathTex(
+                r"\texttt{verify}(",
+                r"a_{255}=85,\; ",
+                r"C_0^2,\; ",
+                r"C_0^1,\;",
+                r"C_0^0\;",
+                r"\pi^0\;",
+                r"\pi^1)",
+                font_size=35,
+                color=PRIMARY_COLOR,
+            )
+            .to_edge(RIGHT)
+            .shift(UP * 1 + LEFT * 0.1)
+        )
+        self.verify_function2_commitment[1:3].set_color(HIGHLIGHT_COLOR)
+        self.hash_opening2 = MathTex(
+            r"C_0^1\rightarrow \texttt{hash}(C_0^1)", color=PRIMARY_COLOR, font_size=30
+        ).next_to(self.verify_function2_commitment[4], UP, buff=0.3)
+        self.verify_function2_proof = (
+            MathTex(
+                r"\texttt{verify}(",
+                r"a_{255}=85, \;",
+                r"C_0^2,\; ",
+                r"C_0^1, \;",
+                r"C_0^0,\;",
+                r"\pi^0,\;",
+                r"\pi^1,\;",
+                r"\pi^2)",
+                color=PRIMARY_COLOR,
+                font_size=35,
+            )
+            .to_edge(RIGHT)
+            .shift(UP * 1 + LEFT * 0.1)
+        )
+
+        rectangle_C0 = (
+            RoundedRectangle(
+                corner_radius=0.05,
+                width=self.values.width+0.2,
+                height=2.3,
+                fill_opacity=0.0,
+                stroke_width=1.0,
+            )
+            .move_to(self.values.get_top())
+            .shift(UP * 0.7)
+        )
+        self.rectancle_C0 = DashedVMobject(rectangle_C0, num_dashes=60)
+
+        rectangle_C1 = RoundedRectangle(
+            corner_radius=0.05,
+            width=self.values_all.width/2+0.2,
+            height=4.3,
+            fill_opacity=0.0,
+            stroke_width=1.0,
+        ).move_to(self.hashes_commitments_level2.get_center()).shift(UP*0.15+LEFT*1.8)
+        self.rectancle_C1 = DashedVMobject(rectangle_C1, num_dashes=120)
+
+        rectangle_C2 = RoundedRectangle(
+            corner_radius=0.05,
+            width=self.tree.width+0.5,
+            height=self.tree.height + 0.2,
+            fill_opacity=0.0,
+            stroke_width=1.0,
+        ).move_to(self.tree.get_center())
+        self.rectancle_C2 = DashedVMobject(rectangle_C2, num_dashes=200)
 
         ## table
 
@@ -306,19 +424,19 @@ class Proofs(SlideBase):
         self.verify_function = (
             MathTex(
                 r"\texttt{verify}",
-                r"\texttt{(opening = }{a_i,}",
-                r"\texttt{ root = }{C_0^2,}",
+                r"({a_{255},}",
+                r"{C_0^2,}",
                 r"\texttt{ verkleProof = }",
                 r"[{\pi^0,}\;",
                 r"{\pi^1,}\; ",
                 r"{\pi^2,}\; ",
-                r"{C_0^0,}\; " ,
+                r"{C_0^0,}\; ",
                 r"{C_0^1}]",
                 color=PRIMARY_COLOR,
-                font_size=37,
+                font_size=32,
             )
-            .to_edge(DOWN)
-            .shift(UP * 1.)
+            .to_edge(RIGHT)
+            .shift(UP * 1 + LEFT * 0.1)
         )
 
     def animate_in(self, scene):
@@ -332,12 +450,18 @@ class Proofs(SlideBase):
         scene.play(Write(self.verify_function0[1]), run_time=1)
         scene.wait(1.7)
         scene.play(Write(self.verify_function0[2]), run_time=0.7)
-        scene.play(FadeIn(self.public_imput, self.brace_public),
-                   self.verify_function0[1:3].animate.set_color(HIGHLIGHT_COLOR), run_time=1.)
+        scene.play(
+            FadeIn(self.public_imput, self.brace_public),
+            self.verify_function0[1:3].animate.set_color(HIGHLIGHT_COLOR),
+            run_time=1.0,
+        )
         scene.wait(1.5)
         scene.play(Write(self.verify_function0[3:]), run_time=0.5)
         scene.wait(2)
-        scene.play(FadeOut(self.brace_public, self.public_imput),self.verify_function0.animate.to_edge(RIGHT).shift(UP*1+LEFT*1.2))
+        scene.play(
+            FadeOut(self.brace_public, self.public_imput),
+            self.verify_function0.animate.to_edge(RIGHT).shift(LEFT * 0.5),
+        )
 
         self.new_subsection(scene, "multi-level", "data/sound/e7/slide5-2.mp3")
         self.values.generate_target()
@@ -362,27 +486,25 @@ class Proofs(SlideBase):
         self.new_subsection(
             scene, "C0, opening, proof pi", "data/sound/e7/slide5-3.mp3"
         )
-        scene.wait(2.5)
+        scene.play(Create(self.rectancle_C0), run_time=1.)
+        scene.wait(1.5)
         scene.play(
-            Indicate(
-                self.verify_function0[2]),
+            Indicate(self.verify_function0[2]),
             run_time=1.0,
         )
         scene.play(
-            Indicate(
-                self.verify_function0[1]),
+            Indicate(self.verify_function0[1]),
             run_time=1.0,
         )
         scene.play(
-            Indicate(
-                self.verify_function0[3]),
+            Indicate(self.verify_function0[3]),
             run_time=1.0,
         )
 
         self.new_subsection(
             scene, "parent commitment, opening", "data/sound/e7/slide5-4.mp3"
         )
-        scene.wait(1)
+        scene.play(TransformMatchingShapes(self.rectancle_C0, self.rectancle_C1), run_time=1)
         scene.play(
             Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1
         )
@@ -393,44 +515,62 @@ class Proofs(SlideBase):
         scene.wait(1)
         scene.play(
             TransformMatchingShapes(
-                self.verify_function0, self.verify_function1_commitment),
+                self.verify_function0, self.verify_function1_commitment
+            ),
             run_time=1.5,
         )
         scene.wait(1)
-        scene.play(
-            Write(self.hash_opening), run_time=1.5
-        )
+        scene.play(Write(self.hash_opening), run_time=1.5)
         scene.play(
             Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1
         )
         scene.wait(1)
-        scene.play(TransformMatchingShapes(self.verify_function1_commitment, self.verify_function1_proof), FadeOut(self.hash_opening), run_time=1.0)
+        scene.play(
+            TransformMatchingShapes(
+                self.verify_function1_commitment, self.verify_function1_proof
+            ),
+            FadeOut(self.hash_opening),
+            run_time=1.0,
+        )
 
         self.new_subsection(scene, "root, proof, opening", "data/sound/e7/slide5-5.mp3")
-        scene.wait(2)
+        scene.play(TransformMatchingShapes(self.rectancle_C1, self.rectancle_C2), run_time=1)
+        scene.wait(1)
         scene.play(
             Indicate(self.hashes_commitments_level3[2], scale_factor=1.5), run_time=1
         )
         scene.wait(0.5)
         scene.play(Indicate(self.hashes_commitments_root, scale_factor=1.5), run_time=1)
-        scene.wait(1.5)
+        scene.wait(0.5)
+        scene.play(self.tree.animate.scale(0.7).to_edge(LEFT),
+                   self.rectancle_C2.animate.scale(0.7).to_edge(LEFT).shift(LEFT*0.1), run_time=1)
         scene.play(
-            TransformMatchingShapes(self.verify_function1_proof, self.verify_function2_commitment),
+            TransformMatchingShapes(
+                self.verify_function1_proof, self.verify_function2_commitment
+            ),
             run_time=1.5,
         )
         scene.wait(1)
-        scene.play(
-            Write(self.hash_opening2), run_time=1.5
-        )
+        scene.play(Write(self.hash_opening2), run_time=1.5)
         scene.wait(2.5)
-        scene.play(TransformMatchingShapes(self.verify_function2_commitment, self.verify_function2_proof), FadeOut(self.hash_opening2), run_time=1.0)
+        scene.play(
+            TransformMatchingShapes(
+                self.verify_function2_commitment, self.verify_function2_proof
+            ),
+            FadeOut(self.hash_opening2),
+            run_time=1.0,
+        )
 
         self.new_subsection(
             scene, "2 commitments, 3 proofs", "data/sound/e7/slide5-6.mp3"
         )
-        scene.wait(2)
-        scene.play(self.tree.animate.scale(0.7).to_edge(LEFT), run_time=1)
-        scene.play(TransformMatchingShapes(self.verify_function2_proof, self.verify_function), run_time=1.5)
+        scene.wait(1)
+        scene.play(FadeOut(self.rectancle_C2), run_time=1)
+        scene.wait(1)
+        scene.play(
+            TransformMatchingShapes(self.verify_function2_proof, self.verify_function),
+            run_time=1.5,
+        )
         scene.wait(0.2)
 
         self.new_subsection(scene, "different weight", "data/sound/e7/slide5-6a.mp3")
@@ -439,7 +579,7 @@ class Proofs(SlideBase):
         self.verify_function_REST = self.verify_function[3:]
         scene.play(FadeOut(self.verify_function[0:3]), run_time=1)
         self.verify_function_REST.generate_target()
-        self.verify_function_REST.target.shift(UP * 4 + LEFT * 1.8).scale(1.3)
+        self.verify_function_REST.target.shift(LEFT * 2.2).scale(1.3)
         scene.play(
             MoveToTarget(self.verify_function_REST),
             run_time=1.5,
@@ -447,17 +587,21 @@ class Proofs(SlideBase):
 
         self.new_subsection(scene, "KZG", "data/sound/e7/slide5-6d.mp3")
 
-        self.kzg.next_to(self.verify_function_REST[0], DOWN, buff=1.0).shift(RIGHT*0.3)
+        self.kzg.next_to(self.verify_function_REST[0], DOWN, buff=1.0).shift(
+            RIGHT * 0.3
+        )
         self.ipa.next_to(self.kzg, DOWN, buff=1.0)
-        self.kzg_ec_point.next_to(self.verify_function_REST[4], DOWN, buff=1.).shift(RIGHT*0.15)
+        self.kzg_ec_point.next_to(self.verify_function_REST[4], DOWN, buff=1.0).shift(
+            RIGHT * 0.3
+        )
         self.ipa_ec_point.next_to(self.kzg_ec_point, DOWN, buff=0.9)
         self.kzg_ecpoint2 = (
             self.kzg_ec_point.copy()
-            .next_to(self.verify_function_REST[2], DOWN, buff=1.)
+            .next_to(self.verify_function_REST[2], DOWN, buff=1.0)
             .set_color(PRIMARY_COLOR)
         )
         self.ipa_proof.next_to(self.kzg_ecpoint2, DOWN, buff=0.8)
-        self.ipa_proof2.next_to(self.kzg_ecpoint2, DOWN, buff=1.)
+        self.ipa_proof2.next_to(self.kzg_ecpoint2, DOWN, buff=1.0)
 
         self.proof_ipa1.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
         self.proof_ipa2.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
@@ -524,9 +668,11 @@ class Proofs(SlideBase):
         )
         scene.wait(2)
         self.multiproof.next_to(self.verify_function_REST[2], UP, buff=0.2)
-        self.multicommitment = MathTex(
-            "C", color=SECONDARY_COLOR, font_size=40
-        ).next_to(self.verify_function_REST[4], UP, buff = 0.2).shift(RIGHT*0.1)
+        self.multicommitment = (
+            MathTex("C", color=SECONDARY_COLOR, font_size=40)
+            .next_to(self.verify_function_REST[4], UP, buff=0.2)
+            .shift(RIGHT * 0.1)
+        )
         scene.play(
             TransformMatchingShapes(
                 VGroup(self.verify_function_REST[1:4].copy()), self.multiproof
@@ -560,7 +706,7 @@ class Proofs(SlideBase):
         )
 
     def animate_out(self, scene):
-        scene.play(FadeOut(self.all), run_time=1.)
+        scene.play(FadeOut(self.all), run_time=1.0)
 
     def create_arrow(self, start, end, arrow_array):
         arrow = Arrow(

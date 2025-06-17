@@ -21,12 +21,18 @@ class Multiproofs(SlideBase):
         self.all_pis = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).shift(RIGHT*2.5+DOWN*1.2)
         
         vector = [r"a_0", r"a_1", r"a_2", r"a_3", r"a_4", r"a_5", r"a_6", r"a_7",
-                 r"a_8", r"a_9", r"a_{10}", r"a_{11}", r"a_{12}", r"a_{13}", r"a_{14}", r"a_{15}"]
-        self.vector = VGroup(*[MathTex(i, color = PRIMARY_COLOR, font_size = 30) for i in vector]).arrange(RIGHT, buff=0.1)
+                 r"a_8", r"a_9", r"a_{250}", r"a_{251}", r"a_{252}", r"a_{253}", r"a_{254}", r"a_{255}"]
+        self.vector = VGroup(*[MathTex(i, color = PRIMARY_COLOR, font_size = 30) for i in vector]).arrange(RIGHT, buff=0.3)
+        self.vector = VGroup(*[self.vector[i] for i in list(range(6)) + list(range(10, len(self.vector)))])
+        self.vector[:6].shift(LEFT)
+        self.vector[6:].shift(RIGHT)
+
         rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=HIGHLIGHT_COLOR, fill_opacity=0.2, stroke_width = 0.0).scale(0.5).set_color(HIGHLIGHT_COLOR)
-        rectangles_of_values = [rectangle.copy() for _ in range(16)]
+        rectangles_of_values = [rectangle.copy() for _ in range(12)]
         self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.2).shift(DOWN*1.5)
-        for i in range(16):
+        self.rectangles_values[:6].shift(LEFT)
+        self.rectangles_values[6:].shift(RIGHT)
+        for i in range(12):
             self.vector[i].move_to(self.rectangles_values[i].get_center())
         
         self.commtiment_C = MathTex(r"C_0^0", color=PRIMARY_COLOR, font_size=40).shift(UP*1.5)
@@ -68,16 +74,15 @@ class Multiproofs(SlideBase):
         self.quotient_g[7].set_color(HIGHLIGHT_COLOR)
         self.quotient_g[11].set_color(SECONDARY_COLOR)
         
-        self.powers_of_r = MathTex(r"r\sim \texttt{hash}({{C_0^0}}, {{C_0^1}}, {{C_0^2}}, {{x_0}}, {{x_1}}, {{x_2}}, {{a_0}}, {{a_1}}, {{a_2}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.quotient_g, DOWN, buff = 0.5)
-        self.powers_of_r[1].set_color(PRIMARY_COLOR)
-        self.powers_of_r[3].set_color(HIGHLIGHT_COLOR)
-        self.powers_of_r[5].set_color(SECONDARY_COLOR)
-        self.powers_of_r[7].set_color(PRIMARY_COLOR)
-        self.powers_of_r[9].set_color(HIGHLIGHT_COLOR)
-        self.powers_of_r[11].set_color(SECONDARY_COLOR)
-        self.powers_of_r[13].set_color(PRIMARY_COLOR)
-        self.powers_of_r[15].set_color(HIGHLIGHT_COLOR)
-        self.powers_of_r[17].set_color(SECONDARY_COLOR)
+        self.powers_of_r = MathTex(r"r\sim \texttt{hash}({{C_0^0}},\; {{C_0^1}},\; {{C_0^2}},\; {{x_0}},\; {{x_1}},\; {{x_2}},\; {{a_{255}}},\; {{\texttt{hash}(C_0^0)}},\; {{\texttt{hash}(C_0^1)}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.quotient_g, DOWN, buff = 0.5)
+        for i in range(18):
+            if i % 6 == 1:
+                self.powers_of_r[i].set_color(PRIMARY_COLOR)
+            elif i % 6 == 3:
+                self.powers_of_r[i].set_color(HIGHLIGHT_COLOR)
+            elif i % 6 == 5:
+                self.powers_of_r[i].set_color(SECONDARY_COLOR)
+
         self.opening.shift(RIGHT * 4.5+UP*1.5)
         self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right()+LEFT * 2+RIGHT*0.2, stroke_width=1.6, 
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
@@ -92,13 +97,15 @@ class Multiproofs(SlideBase):
         self.proofs = Proofs()
         self.proofs.construct()
         self.tree = self.proofs.tree
-        self.tree.scale(0.7).shift(LEFT * 3)
+        self.tree.scale(0.7).shift(LEFT * 1)
         self.verify_func = MathTex(r"\texttt{VerkleProof}({{\pi^0}}, {{\pi^1}}, {{\pi^2}}, {{C^0_0}}, {{C_0^1}})", color = PRIMARY_COLOR, font_size = 35).shift(RIGHT * 2+UP*1.5)
         
         self.commitment_D_aggregate = MathTex(r"D", color=PRIMARY_COLOR, font_size=40).next_to(self.all_pis, UP, buff =1.)
         self.arrow_D_pi = Arrow(self.commitment_D_aggregate.get_bottom(), self.all_pis.get_top(), tip_shape = StealthTip, max_tip_length_to_length_ratio=0.3, max_stroke_width_to_length_ratio=0.5).set_color(PRIMARY_COLOR)
         
-        self.indices = VGroup(*[Text(str(i), font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30) for i in range(16)]).arrange(RIGHT, buff = 0.42).next_to(self.vector, DOWN, buff = 0.2).shift(1.3 * DOWN)
+        idxs = [0, 1, 2, 3, 4, 5, 250, 251, 252, 253, 254, 255]
+        self.indices = VGroup(*[Text(str(i), font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18) for i in idxs]).arrange(RIGHT, buff = 0.42)
+
         
         self.opening__0 = MathTex(r"p_0({x_0})=a_0", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5)
         self.opening__1 = MathTex(r"p_1({x_{0}})=\texttt{hash}(C_0^0)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening__0, DOWN, buff=0.5)
@@ -151,6 +158,9 @@ class Multiproofs(SlideBase):
         scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening), run_time=1)
         scene.wait(3)
         scene.play(Indicate(self.new_axes[0]))
+        for i, idx in enumerate(self.indices):
+            idx.next_to(self.vector[i], DOWN, buff = 0.2)
+            
         scene.play(Indicate(self.indices))
         
         scene.play(self.polynomial_chart.animate.shift(LEFT * 2),

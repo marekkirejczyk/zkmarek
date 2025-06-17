@@ -5,7 +5,7 @@ from zkmarek.video.utils import find_in_code
 
 class Multiproofs(CodeSlide):
     def __init__(self) -> None:
-        super().__init__("Multiproofs", "zkmarek/video/slides/e7/make_multiproof.py")
+        super().__init__("Multiproofs", "zkmarek/video/slides/e7/make_multiproof")
 
     def construct(self):
         self.title_label = (
@@ -17,7 +17,7 @@ class Multiproofs(CodeSlide):
             )
             .to_edge(UP)
         )
-        self.code = Code("zkmarek/video/slides/e7/make_multiproof.py", 
+        self.code = Code("zkmarek/video/slides/e7/make_multiproof", 
                          background="rectangle", 
             language="python",).scale(0.65).shift(DOWN * 0.5)
         
@@ -33,7 +33,7 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "VerklePath", run_time=1)
         scene.wait(1)
         self.indicate_code(scene, self.code, "c0, c1 = VerklePath", run_time=1)
-        scene.wait(2)
+        scene.wait(2.7)
         self.indicate_code(scene, self.code, "c2", run_time=1)
         
         self.new_subsection(scene, "+ list of polynomials", "data/sound/e7/slide7-2.mp3")
@@ -43,6 +43,10 @@ class Multiproofs(CodeSlide):
         self.new_subsection(scene, "challenge scalar r", "data/sound/e7/slide7-3.mp3")
         scene.wait(1)
         self.indicate_code(scene, self.code, "r = hash(c2, c1, c0, a_i, hash(c0), hash(c1))", run_time=1)
+        scene.wait(2.4)
+        challenges = ["c2", "c1", "c0", "a_i", "hash(c0)", "hash(c1)"]
+        for i, challenge in enumerate(challenges):
+            self.indicate_code(scene, self.code, challenge, index=i, run_time=0.4)
         
         self.new_subsection(scene, "set up openings", "data/sound/e7/slide7-4.mp3")
         scene.wait(0.5)
@@ -55,9 +59,9 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "hash(c1)", index = 1, run_time=1)
         
         self.new_subsection(scene, "g - random linear combination", "data/sound/e7/slide7-5.mp3")
-        scene.wait(1)
+        scene.wait(3)
         self.indicate_code(scene, self.code, "g = 0", run_time=1)
-        scene.wait(1.5)
+        scene.wait(3.5)
         self.indicate_code(scene, self.code, "(p_i(x) - vi) / (x - xi)", run_time=1)
         scene.wait(1)
         self.indicate_code(scene, self.code, "r ** i", run_time=1)
@@ -68,12 +72,17 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "vi = opening_values[i]", run_time=1)
         scene.wait(1)
         self.indicate_code(scene, self.code, "p_i = polynomials[i]", run_time=1)
-        
-        self.new_subsection(scene, "quotient verifies opening", "data/sound/e7/slide7-7.mp3")
-        scene.wait(1)
+        scene.wait(2)
+        self.indicate_code(scene, self.code, "(p_i(x) - vi) / (x - xi)", run_time=1)
+        scene.wait(2)
         self.indicate_code(scene, self.code, "(p_i(x) - vi)", run_time=1)
         self.indicate_code(scene, self.code, "(x - xi)", run_time=1)
-        scene.wait(4)
+        self.new_subsection(scene, "quotient verifies opening", "data/sound/e7/slide7-7.mp3")
+        scene.wait(5)
+        self.indicate_code(scene, self.code, "xi = opening_indices[i]", run_time=1)
+        scene.wait(1)
+        self.indicate_code(scene, self.code, "vi = opening_values[i]", run_time=1)
+        scene.wait(3)
         self.indicate_code(scene, self.code, "r ** i", run_time=1)
         
         self.new_subsection(scene, "commit to g", "data/sound/e7/slide7-8.mp3")
@@ -89,7 +98,9 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "pi = open(D, s, value)", run_time=1)
         
         self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide7-11.mp3")
-        scene.wait(8)
+        scene.wait(5)
+        self.indicate_code(scene, self.code, "return MultiProof(pi, c0, c1)", run_time=1)
+        scene.wait(3)
 
         
     def animate_out(self, scene):
