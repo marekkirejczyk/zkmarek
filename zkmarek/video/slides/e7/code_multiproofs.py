@@ -79,9 +79,8 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "(p_i(x) - vi)", run_time=1)
         self.indicate_code(scene, self.code, "(x - xi)", run_time=1)
         self.new_subsection(scene, "quotient verifies opening", "data/sound/e7/slide7-7.mp3")
-        scene.wait(5)
+        scene.wait(4.5)
         self.indicate_code(scene, self.code, "xi = opening_indices[i]", run_time=1)
-        scene.wait(1)
         self.indicate_code(scene, self.code, "vi = opening_values[i]", run_time=1)
         scene.wait(3)
         self.indicate_code(scene, self.code, "r ** i", run_time=1)
@@ -99,9 +98,9 @@ class Multiproofs(CodeSlide):
         self.indicate_code(scene, self.code, "pi = open(D, s, value)", run_time=1)
         
         self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide7-11.mp3")
-        scene.wait(5)
-        self.indicate_code(scene, self.code, "return MultiProof(pi, c0, c1)", run_time=1)
         scene.wait(3)
+        self.indicate_code(scene, self.code, "return MultiProof(pi, c0, c1)", run_time=1)
+        scene.wait(5)
 
         
     def animate_out(self, scene):
