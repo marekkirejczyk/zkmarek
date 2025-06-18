@@ -127,11 +127,11 @@ class Proofs(SlideBase):
             .move_to(self.cdots_level2_2.get_center())
         )
         self.hash = MathTex(
-            r"\mathrm{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=21
         ).next_to(self.hashes_commitments_level2[0], UP, buff=0.6)
         hash_255 = MathTex(
-            r"\mathrm{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=21
-        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6)
+            r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=21
+        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6).shift(RIGHT*0.1)
         self.hashes_commitments_level2.add(
             text_commitment_C0,
             self.cdots_level2,
@@ -168,10 +168,10 @@ class Proofs(SlideBase):
             .move_to(self.cdots_level3.get_center())
         )
         self.hash_parent = MathTex(
-            r"\mathrm{hash}(C_0^1)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_0^1)", color=PRIMARY_COLOR, font_size=21
         ).next_to(self.hashes_commitments_level3[0], UP, buff=0.6)
         hash_255_parent = MathTex(
-            r"\mathrm{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=21
         ).next_to(self.hashes_commitments_level3[1], UP, buff=0.6)
 
         self.hashes_commitments_level3.add(
@@ -273,14 +273,14 @@ class Proofs(SlideBase):
                 r"\texttt{verify}(",
                 r"a_{255}=85, \;",
                 r"C_0^1, \;",
-                r"C_0^0\;",
-                r"\pi^0\;",
+                r"C_0^0,\;",
+                r"\pi^0,\;",
                 r"\pi^1)",
                 color=PRIMARY_COLOR,
                 font_size=35,
             )
             .to_edge(RIGHT)
-            .shift(UP * 1 + LEFT * 0.1)
+            .shift(UP * 1 + LEFT * 0.05)
         )
 
         self.verify_function2_commitment = (
@@ -360,25 +360,25 @@ class Proofs(SlideBase):
         ).next_to(self.kzg, LEFT, buff=2.0)
 
         self.kzg_scalar = MathTex(
-            r"<32  \ \mathrm{B}", color=SECONDARY_COLOR, font_size=35
+            r"<32  \ \texttt{B}", color=SECONDARY_COLOR, font_size=35
         )
         self.ipa_scalar = MathTex(
-            r"<32  \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35
+            r"<32  \ \texttt{B}", color=HIGHLIGHT_COLOR, font_size=35
         )
         self.kzg_ec_point = MathTex(
-            r"\sim 2 \cdot 48  \ \mathrm{B}", color=SECONDARY_COLOR, font_size=35
+            r"\sim 2 \cdot 48  \ \texttt{B}", color=SECONDARY_COLOR, font_size=35
         )
         self.ipa_ec_point = MathTex(
-            r"\sim 2\cdot 32  \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35
+            r"\sim 2\cdot 32  \ \texttt{B}", color=HIGHLIGHT_COLOR, font_size=35
         )
         self.ipa_proof = Text(
-            "     16 x\n EC points",
+            "     3 x 16 x\n EC points",
             font=PRIMARY_FONT,
             color=HIGHLIGHT_COLOR,
             font_size=25,
         )
         self.ipa_proof2 = MathTex(
-            r"<512 \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=35
+            r"\sim 3 \cdot 512 \ \texttt{B}", color=HIGHLIGHT_COLOR, font_size=35
         )
 
         self.kzg_total = Text(
@@ -399,33 +399,33 @@ class Proofs(SlideBase):
 
         ## calculation proof
         self.proof_kzg1 = MathTex(
-            r"\sim 48\ \mathrm{B} \cdot 3 + 48 \ \mathrm{B} \cdot 2",
+            r"\sim 48\ \texttt{B} \cdot 3 + 48 \ \texttt{B} \cdot 2",
             color=HIGHLIGHT_COLOR,
             font_size=30,
         )
         self.proof_kzg2 = MathTex(
-            r"\sim 240 \  \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=30
+            r"\sim 240 \  \texttt{B}", color=SECONDARY_COLOR, font_size=30
         )
 
         self.proof_ipa1 = MathTex(
-            r"\sim 3 \cdot  512 \ \mathrm{B} + 64 \mathrm{B}",
+            r"\sim 3 \cdot  512 \ \texttt{B} + 64 \texttt{B}",
             color=HIGHLIGHT_COLOR,
             font_size=30,
         )
         self.proof_ipa2 = MathTex(
-            r"\sim 1536 \ \mathrm{B} + 64 \mathrm{B}",
+            r"\sim 1536 \ \texttt{B} + 64 \texttt{B}",
             color=HIGHLIGHT_COLOR,
             font_size=30,
         )
         self.proof_ipa3 = MathTex(
-            r"\sim 1.6\ \mathrm{kB}", color=HIGHLIGHT_COLOR, font_size=30
+            r"\sim 1.6\ \texttt{kB}", color=HIGHLIGHT_COLOR, font_size=30
         )
 
         self.verify_function = (
             MathTex(
                 r"\texttt{verify}",
-                r"({a_{255},}",
-                r"{C_0^2,}",
+                r"({a_{255},\;}",
+                r"{C_0^2,\;}",
                 r"\texttt{ verkleProof = }",
                 r"[{\pi^0,}\;",
                 r"{\pi^1,}\; ",
@@ -487,7 +487,7 @@ class Proofs(SlideBase):
             scene, "C0, opening, proof pi", "data/sound/e7/slide5-3.mp3"
         )
         scene.play(Create(self.rectancle_C0), run_time=1.)
-        scene.wait(1.5)
+        scene.wait(2.5)
         scene.play(
             Indicate(self.verify_function0[2]),
             run_time=1.0,
@@ -520,11 +520,12 @@ class Proofs(SlideBase):
             run_time=1.5,
         )
         scene.wait(1)
+        scene.play(self.verify_function1_commitment[3].animate.set_color(SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.hash_opening), run_time=1.5)
         scene.play(
             Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1
         )
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(
             TransformMatchingShapes(
                 self.verify_function1_commitment, self.verify_function1_proof
@@ -550,7 +551,7 @@ class Proofs(SlideBase):
             ),
             run_time=1.5,
         )
-        scene.wait(1)
+        scene.play(self.verify_function2_commitment[3].animate.set_color(SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.hash_opening2), run_time=1.5)
         scene.wait(2.5)
         scene.play(
@@ -571,7 +572,17 @@ class Proofs(SlideBase):
             TransformMatchingShapes(self.verify_function2_proof, self.verify_function),
             run_time=1.5,
         )
-        scene.wait(0.2)
+        scene.wait(1)
+        scene.play(Indicate(self.verify_function[4], scale_factor=1.5), run_time=0.5)
+        scene.play(Indicate(self.verify_function[5], scale_factor=1.5), run_time=0.5)
+        scene.play(Indicate(self.verify_function[6], scale_factor=1.5), run_time=0.5)
+        scene.wait(0.5)
+        scene.play(Indicate(self.verify_function[7], scale_factor=1.5), run_time=0.5)
+        scene.play(Indicate(self.verify_function[8], scale_factor=1.5), run_time=0.5)
+        scene.wait(1.5)
+        scene.play(Indicate(self.verify_function[1], scale_factor=1.5), run_time=0.7)
+        scene.play(Indicate(self.verify_function[2], scale_factor=1.5), run_time=0.7)
+        
 
         self.new_subsection(scene, "different weight", "data/sound/e7/slide5-6a.mp3")
         scene.wait(1.5)
@@ -592,16 +603,15 @@ class Proofs(SlideBase):
         )
         self.ipa.next_to(self.kzg, DOWN, buff=1.0)
         self.kzg_ec_point.next_to(self.verify_function_REST[4], DOWN, buff=1.0).shift(
-            RIGHT * 0.3
+            RIGHT * 0.3+UP*0.05
         )
         self.ipa_ec_point.next_to(self.kzg_ec_point, DOWN, buff=0.9)
         self.kzg_ecpoint2 = (
-            self.kzg_ec_point.copy()
+            MathTex(r"\sim 3\cdot 48 \ \texttt{B}", color = SECONDARY_COLOR, font_size = 35)
             .next_to(self.verify_function_REST[2], DOWN, buff=1.0)
-            .set_color(PRIMARY_COLOR)
         )
         self.ipa_proof.next_to(self.kzg_ecpoint2, DOWN, buff=0.8)
-        self.ipa_proof2.next_to(self.kzg_ecpoint2, DOWN, buff=1.0)
+        self.ipa_proof2.next_to(self.ipa_ec_point, LEFT, buff=1.0)
 
         self.proof_ipa1.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
         self.proof_ipa2.next_to(self.ipa_ec_point, RIGHT, buff=0.6)

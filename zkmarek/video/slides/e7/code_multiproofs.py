@@ -25,7 +25,7 @@ class Multiproofs(CodeSlide):
         self.new_subsection(scene, "prover quoery", "data/sound/e7/slide7-1.mp3")
         scene.play(Write(self.title_label))
         scene.play(FadeIn(self.code))
-        scene.wait(2)
+        scene.wait(2.5)
         self.indicate_code(scene, self.code, "x_i", run_time=1)
         scene.wait(2)
         self.indicate_code(scene, self.code, "a_i", run_time=1)

@@ -27,7 +27,7 @@ class Multiproofs(SlideBase):
         self.vector[:6].shift(LEFT)
         self.vector[6:].shift(RIGHT)
 
-        rectangle = RoundedRectangle(height = 1, width = 1, corner_radius=0.05, color=HIGHLIGHT_COLOR, fill_opacity=0.2, stroke_width = 0.0).scale(0.5).set_color(HIGHLIGHT_COLOR)
+        rectangle = RoundedRectangle(height = 1.1, width = 1.1, corner_radius=0.05, color=HIGHLIGHT_COLOR, fill_opacity=0.2, stroke_width = 0.0).scale(0.5).set_color(HIGHLIGHT_COLOR)
         rectangles_of_values = [rectangle.copy() for _ in range(12)]
         self.rectangles_values = VGroup(*rectangles_of_values).arrange(RIGHT, buff=0.2).shift(DOWN*1.5)
         self.rectangles_values[:6].shift(LEFT)
@@ -53,18 +53,18 @@ class Multiproofs(SlideBase):
         self.commitment1 = MathTex(r"{{C_0^0}} \ \rightarrow p_0(x),", color=PRIMARY_COLOR, font_size=40).next_to(self.prover, RIGHT, buff=0.3)
         self.commitment2 = MathTex(r"{{C_0^1}} \ \rightarrow p_1(x),", color=HIGHLIGHT_COLOR, font_size=40).next_to(self.commitment1, DOWN, buff=0.3)
         self.commitment3 = MathTex(r"{{C_0^2}} \ \rightarrow p_2(x),", color=SECONDARY_COLOR, font_size=40).next_to(self.commitment2, DOWN, buff=0.3)
-        self.opening_1 = MathTex(r"p_0({{x_0}}) - {{a_0}}=0", color=PRIMARY_COLOR, font_size=35).next_to(self.commitment1, RIGHT, buff=0.3)
-        self.opening_2 = MathTex(r"p_1({{x_1}}) - {{a_1}}=0", color=HIGHLIGHT_COLOR, font_size=35).next_to(self.commitment2, RIGHT, buff=0.3)
-        self.opening_3 = MathTex(r"p_2({{x_2}}) - {{a_2}}=0", color=SECONDARY_COLOR, font_size=35).next_to(self.commitment3, RIGHT, buff=0.3)
+        self.opening_1 = MathTex(r"p_0({{x_0}}) - {{a_{255}}}=0", color=PRIMARY_COLOR, font_size=35).next_to(self.commitment1, RIGHT, buff=0.3)
+        self.opening_2 = MathTex(r"p_1({{x_1}}) - {{\texttt{hash}(C_0^0)}}=0", color=HIGHLIGHT_COLOR, font_size=35).next_to(self.commitment2, RIGHT, buff=0.3)
+        self.opening_3 = MathTex(r"p_2({{x_2}}) - {{\texttt{hash}(C_0^1)}}=0", color=SECONDARY_COLOR, font_size=35).next_to(self.commitment3, RIGHT, buff=0.3)
         self.bg_image_prover = RoundedRectangle(corner_radius=0.15, width = 6, height = 3, fill_opacity=0.2, color=HIGHLIGHT_COLOR, stroke_width=0.0).move_to(self.commitment2.get_center()).shift(RIGHT*1.5)
         
         self.quotient_g = MathTex(
-            r"g(x) = {{r^0}} \cdot {{\frac{p_0(x)-a_0}{x - x_0}}} + {{r^1}} \cdot {{\frac{p_1(x)-a_1}{x - x_1}}} + {{r^2}} \cdot {{\frac{p_2(x)-a_2}{x - x_2}}}",
+            r"g(x) = {{r^0}} \cdot {{\frac{p_0(x)-a_0}{x - x_0}}} + {{r^1}} \cdot {{\frac{p_1(x)-\texttt{hash}(C_0^0)}{x - x_1}}} + {{r^2}} \cdot {{\frac{p_2(x)-\texttt{hash}(C_0^1)}{x - x_2}}}",
             color=PRIMARY_COLOR,
             font_size=35
         ).shift(DOWN*1.5)
         self.quotient_g2 = MathTex(
-            r"g(s) = {{r^0}} \cdot {{\frac{p_0(s)-a_0}{s - x_0}}} + {{r^1}} \cdot {{\frac{p_1(s)-a_1}{s - x_1}}} + {{r^2}} \cdot {{\frac{p_2(s)-a_2}{s - x_2}}}",
+            r"g(s) = {{r^0}} \cdot {{\frac{p_0(s)-a_0}{s - x_0}}} + {{r^1}} \cdot {{\frac{p_1(s)-\texttt{hash}(C_0^0)}{s - x_1}}} + {{r^2}} \cdot {{\frac{p_2(s)-\texttt{hash}(C_0^1)}{s - x_2}}}",
             color=PRIMARY_COLOR,
             font_size=35
         ).shift(DOWN*1.5)
@@ -84,13 +84,13 @@ class Multiproofs(SlideBase):
                 self.powers_of_r[i].set_color(SECONDARY_COLOR)
 
         self.opening.shift(RIGHT * 4.5+UP*1.5)
-        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right(), self.opening.get_right()+LEFT * 2+RIGHT*0.2, stroke_width=1.6, 
+        self.curved_arrow_proof = CurvedArrow(self.quotient3.get_right()+0.1*RIGHT, self.opening.get_right()+LEFT * 2+RIGHT*0.6, stroke_width=1.6, 
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
         self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
-        self.random_t = MathTex(r"s\sim \texttt{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5)
+        self.random_t = MathTex(r"s\sim \texttt{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.5).shift(RIGHT*1.5)
         
-        self.proof_to_g = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 40).next_to(self.quotient_g2, DOWN, buff = 0.5)
+        self.proof_to_g = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).next_to(self.quotient_g2, DOWN, buff = 0.8)
         self.arrow_proof_to_g = Arrow(self.quotient_g2.get_bottom(), self.proof_to_g.get_top(),
                                       tip_shape=StealthTip, stroke_width=2,
                                       max_tip_length_to_length_ratio=0.15).set_color_by_gradient([PRIMARY_COLOR, HIGHLIGHT_COLOR])
@@ -119,18 +119,18 @@ class Multiproofs(SlideBase):
         scene.play(Write(self.verify_func), run_time=1)
         scene.wait(1)
         scene.play(Indicate(self.verify_func[1:6], scale_factor=1.3), run_time=1)
-        scene.play(Indicate(self.verify_func[7:9], scale_factor=1.3), run_time=1)
+        scene.play(Indicate(self.verify_func[7:10], scale_factor=1.3), run_time=1)
         
         self.new_subsection(scene, "multiproof: commitment D, commitments path", "data/sound/e7/slide6-1a.mp3")
         scene.play(FadeIn(self.all_pis), run_time=1)
         scene.wait(1.5)
+        scene.play(TransformMatchingShapes(self.verify_func[7:].copy(), self.commitment_D_aggregate), run_time=1)
         scene.play(self.tree[2][0].animate.set_color(PRIMARY_COLOR),
                    Indicate(self.tree[2][0]), run_time=1)
         scene.play(self.tree[1][0].animate.set_color(PRIMARY_COLOR),
                    Indicate(self.tree[1][0]), run_time=1)
         scene.play(self.tree[0][0].animate.set_color(PRIMARY_COLOR),
                    Indicate(self.tree[0][0]), run_time=1)
-        scene.play(TransformMatchingShapes(self.verify_func[7:].copy(), self.commitment_D_aggregate), run_time=1)
         scene.play(Write(self.arrow_D_pi), run_time=1)
         
         self.new_subsection(scene, "how?", "data/sound/e7/slide6-1b.mp3")
@@ -148,7 +148,7 @@ class Multiproofs(SlideBase):
         scene.wait(1)
         
         self.new_subsection(scene, "opening p(xi)=ai", "data/sound/e7/slide6-3.mp3")
-        self.opening1.shift(RIGHT * 4.5+UP*1.5)
+        self.opening1.shift(RIGHT * 3.5+UP*1.5)
         for i in range(6):
             scene.play(Indicate(self.vector[i]), run_time=0.3)
         scene.play(self.vector[6].animate.set_color(SECONDARY_COLOR), run_time=1)
@@ -260,7 +260,11 @@ class Multiproofs(SlideBase):
         scene.wait(2)
         
         self.new_subsection(scene, "verify only once", "data/sound/e7/slide6-15.mp3")
-        scene.wait(9)
+        scene.wait(2)
+        scene.play(Indicate(self.commitment1), Indicate(self.opening_1), run_time=1)
+        scene.play(Indicate(self.commitment2), Indicate(self.opening_2), run_time=1)
+        scene.play(Indicate(self.commitment3), Indicate(self.opening_3), run_time=1)
+        scene.wait(4)
         self.all_terms = Group(self.bg_image_prover, self.prover, self.commitment1, commitment_D, self.commitment2,
                                self.commitment3, self.opening_1, self.opening_2, self.opening_3,
                                 self.quotient_g2, self.proof_to_g, self.arrow_proof_to_g)

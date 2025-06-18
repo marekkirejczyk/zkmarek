@@ -210,7 +210,7 @@ class ThreeLevelVerkleTree(SlideBase):
         )
 
         self.values256 = MathTex(
-            r"256 \  \mathrm{values}", font_size=45, color=PRIMARY_COLOR
+            r"256 \  \texttt{values}", font_size=45, color=PRIMARY_COLOR
         )
 
         self.single_commitment = Text(
@@ -533,10 +533,10 @@ class ThreeLevelVerkleTree(SlideBase):
             run_time=1,
         )
         hash = MathTex(
-            r"\mathrm{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=25
+            r"\texttt{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.commitment_size_ipa, DOWN, buff=0.7)
         hash_255 = MathTex(
-            r"\mathrm{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
+            r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.commitment_to_C255, UP, buff=0.3).shift(RIGHT * 0.2)
         arrow_hash = Arrow(
             hash.get_bottom(),
@@ -633,7 +633,7 @@ class ThreeLevelVerkleTree(SlideBase):
                 self.commitment_C01_rec, rectangle, self.arrow_commitment_C01
             )
         self.other_commitments.next_to(self.commitment_C01, RIGHT, buff=3.5)
-        self.right_commitments.next_to(self.other_commitments[0], DOWN, buff=0.78).shift(LEFT*0.5)
+        self.right_commitments.next_to(self.other_commitments[0], DOWN, buff=0.78).shift(LEFT*0.3)
         self.rectangle_on_parent_commitments.move_to(
             self.other_commitments.get_center()
         ).shift(LEFT * 2.2)
@@ -668,10 +668,10 @@ class ThreeLevelVerkleTree(SlideBase):
         self.other_hashes[:][2].move_to(self.commitment_C01.get_center())
         self.other_hashes[:][3].move_to(self.other_commitments[0][0].get_center())
         hash_parent = MathTex(
-            r"\mathrm{hash}(C_0^{1})", color=PRIMARY_COLOR, font_size=25
+            r"\texttt{hash}(C_0^{1})", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.commitment_C01, UP, buff=0.2)
         hash_parent_255 = MathTex(
-            r"\mathrm{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
+            r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.other_hashes[:][3], UP, buff=0.3)
         self.whole_tree_until_C10.add(self.other_hashes, hash_parent, hash_parent_255)
         scene.play(

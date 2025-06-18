@@ -31,7 +31,7 @@ class MerkleVerkle(SlideBase):
         
         self.slide_VT = Proofs()
         self.slide_VT.construct()
-        self.tree_VT = self.slide_VT.tree.shift(RIGHT * 3.5).scale(0.8)
+        self.tree_VT = self.slide_VT.tree.shift(RIGHT * 4.5).scale(0.8)
         
         self.brace_MT = Brace(self.tree_MT.copy().shift(LEFT * 2).scale(0.5), DOWN, buff = 0.1).set_color(PRIMARY_COLOR)
         self.brace_VT = Brace(self.tree_VT.copy().scale(0.2), DOWN, buff = 0.1).set_color(PRIMARY_COLOR).shift(LEFT*0.78+DOWN*1.5)
@@ -68,6 +68,8 @@ class MerkleVerkle(SlideBase):
         self.new_subsection(scene, "MT: 4 MB", "data/sound/e7/slide8-6.mp3")
         
         self.new_subsection(scene, "VT: efficient", "data/sound/e7/slide8-7.mp3")
+        scene.play(Create(self.tree_VT), run_time=1.5)
+        scene.play(FadeOut(self.tree_MT), run_time=1.5)
         
         self.new_subsection(scene, "IPA VT: 1.3 kB, KZG VP: 600 B ", "data/sound/e7/slide8-8.mp3")
         
