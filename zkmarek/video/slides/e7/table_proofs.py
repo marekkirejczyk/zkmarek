@@ -8,24 +8,21 @@ class MerkleVerkleTable(VGroup):
         categories = [
             "Proof depth", 
             "Per-key\nproof size", 
-            "1000 keys\n(batch)", 
+            "1000 keys", 
             "Hash/commitment",
-            "Proof structure",
         ]
 
         merkle_values = [
-            "~9", "~4 KB", "~4 MB", "Hash (SHA/Keccak)",
-            "Sibling hashes", 
+            "~9", "~4 KB", "~4 MB", "Hashes",
         ]
 
         ipa_values = [
             "~4", "~1.3 KB", "~45 KB", "IPA vector commitment",
-            "Openings + IP", 
+            "Openings + IPA", 
         ]
 
         kzg_values = [
             "~4", "~600 B", "~15 KB", "KZG commitment",
-            "Openings + pairing", 
         ]
 
         cell_width = 2.7
@@ -107,5 +104,5 @@ class MerkleVerkleTable(VGroup):
                 
     def reveal_header(self, scene):
         scene.play(Create(self.background), run_time=0.7)
-        scene.play(Create(self.headers), run_time=1)
+        scene.play(Create(self.headers[0]), run_time=1)
         scene.play(Create(self.vec), run_time=1)
