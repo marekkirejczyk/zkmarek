@@ -42,9 +42,9 @@ class MerkleVerkle(SlideBase):
         self.MT_children = Text("16 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_MT, DOWN, buff=0.1)
         self.table = MerkleVerkleTable().scale(0.7)
         
-        self.merkle_proof_constr1 = MathTex(r"16 \texttt{hashes} \times \texttt{level}", color = PRIMARY_COLOR, font = 35).next_to(self.table, DOWN, buff = 0.5)
-        self.merkle_proof_constr2= MathTex(r"16 \times \texttt{32 B} \times \texttt{level}", color = PRIMARY_COLOR, font = 35).next_to(self.table, DOWN, buff = 0.5)
-        self.merkle_proof_constr3 = MathTex(r"16 \times \texttt{32 B} \times \texttt{9}", color = PRIMARY_COLOR, font = 35).next_to(self.table, DOWN, buff = 0.5)
+        self.merkle_proof_constr1 = MathTex(r"16 \texttt{hashes} \times \texttt{level}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN, buff = 0.5)
+        self.merkle_proof_constr2= MathTex(r"16 \times \texttt{32 B} \times \texttt{level}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN, buff = 0.5)
+        self.merkle_proof_constr3 = MathTex(r"16 \times \texttt{32 B} \times \texttt{9}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN, buff = 0.5)
         
         
     
