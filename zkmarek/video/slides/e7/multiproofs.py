@@ -49,14 +49,14 @@ class Multiproofs(SlideBase):
         self.quotient3 = MathTex(r"q(x) = \frac{p(x)-a_i}{(x-x_i)}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
         
         ## prover query
-        self.prover = ImageMobject("data/images/person_blue.png").scale(0.5).shift(LEFT * 2.5 + UP * 2)
+        self.prover = ImageMobject("data/images/person_blue.png").scale(0.5).shift(LEFT * 3.5 + UP * 2)
         self.commitment1 = MathTex(r"{{C_0^0}} \ \rightarrow p_0(x),", color=PRIMARY_COLOR, font_size=40).next_to(self.prover, RIGHT, buff=0.3)
         self.commitment2 = MathTex(r"{{C_0^1}} \ \rightarrow p_1(x),", color=HIGHLIGHT_COLOR, font_size=40).next_to(self.commitment1, DOWN, buff=0.3)
         self.commitment3 = MathTex(r"{{C_0^2}} \ \rightarrow p_2(x),", color=SECONDARY_COLOR, font_size=40).next_to(self.commitment2, DOWN, buff=0.3)
         self.opening_1 = MathTex(r"p_0({{x_0}}) - {{a_{255}}}=0", color=PRIMARY_COLOR, font_size=35).next_to(self.commitment1, RIGHT, buff=0.3)
         self.opening_2 = MathTex(r"p_1({{x_1}}) - {{\texttt{hash}(C_0^0)}}=0", color=HIGHLIGHT_COLOR, font_size=35).next_to(self.commitment2, RIGHT, buff=0.3)
         self.opening_3 = MathTex(r"p_2({{x_2}}) - {{\texttt{hash}(C_0^1)}}=0", color=SECONDARY_COLOR, font_size=35).next_to(self.commitment3, RIGHT, buff=0.3)
-        self.bg_image_prover = RoundedRectangle(corner_radius=0.15, width = 6, height = 3, fill_opacity=0.2, color=HIGHLIGHT_COLOR, stroke_width=0.0).move_to(self.commitment2.get_center()).shift(RIGHT*1.5)
+        self.bg_image_prover = RoundedRectangle(corner_radius=0.15, width = 7, height = 3, fill_opacity=0.2, color=HIGHLIGHT_COLOR, stroke_width=0.0).move_to(self.commitment2.get_center()).shift(RIGHT*1.5)
         
         self.quotient_g = MathTex(
             r"g(x) = {{r^0}} \cdot {{\frac{p_0(x)-a_0}{x - x_0}}} + {{r^1}} \cdot {{\frac{p_1(x)-\texttt{hash}(C_0^0)}{x - x_1}}} + {{r^2}} \cdot {{\frac{p_2(x)-\texttt{hash}(C_0^1)}{x - x_2}}}",

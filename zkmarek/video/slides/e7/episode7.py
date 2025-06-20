@@ -1,4 +1,4 @@
-# from zkmarek.video.slides.common.intro import Intro
+from zkmarek.video.slides.common.intro import Intro
 from zkmarek.video.slides.episode2.support import Sponsored
 from zkmarek.video.slides.e7.recap import Recap
 from zkmarek.video.slides.e7.vector_commitment import PreviouslyVectorCommitment
@@ -12,12 +12,14 @@ from zkmarek.video.slides.e7.multiproofs import Multiproofs
 from zkmarek.video.slides.e7.code_multiproofs import Multiproofs as CodeMultiproofs
 from zkmarek.video.slides.e7.final_season1 import FinalSeason1
 from zkmarek.video.slides.e7.merkle_verkle import MerkleVerkle
+from zkmarek.video.slides.e6.credits import Credits
+from zkmarek.video.slides.common.subscribe import Subscribe
 
 EPISODE7 = [
-    # Intro(
-    #     sound="data/sound/episode3/slide0-0.mp3",
-    #     background_sound="data/sound/e7/background.mp3",
-    # ),
+    Intro(
+        sound="data/sound/episode3/slide0-0.mp3",
+        background_sound="data/sound/e7/background.mp3",
+    ),
     Sponsored(),
     FinalSeason1(),
     Recap(),
@@ -38,4 +40,6 @@ EPISODE7 = [
     CodeMultiproofs(),
     TitleSlide("Merkle vs Verkle Trees", sound = "data/sound/e7/slide8-0.mp3", wait_time=2),
     MerkleVerkle(),
+    Subscribe("data/sound/episode1/s28.wav"),
+    Credits(),
 ]

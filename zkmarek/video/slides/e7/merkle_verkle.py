@@ -2,8 +2,9 @@ from manim import (FadeIn, Text, UP, FadeOut, Create, RIGHT, LEFT, DOWN, Brace)
 from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
-from zkmarek.video.slides.e6.merkle16 import SelectiveMerkleTree as MT16
+from zkmarek.video.slides.e7.tree import MerkleTree as MT16
 from zkmarek.video.slides.e7.proofs import Proofs
+from zkmarek.video.slides.e7.table_proofs import MerkleVerkleTable
 
 class MerkleVerkle(SlideBase):
     def __init__(self) -> None:
@@ -21,9 +22,9 @@ class MerkleVerkle(SlideBase):
         )
         
         self.tree_MT = (
-            MT16(num_levels=4, focused_node_path=[7, 8, 7], include_labels=False)
-            .scale(0.6)
-            .shift(UP * 4 + LEFT * 1)
+            MT16(include_labels=False)
+            .scale(0.4)
+            .shift(UP * 4 + LEFT * 2.5)
         )
         
         self.brace_levels = Brace(self.tree_MT, RIGHT, buff=0.1).set_color(PRIMARY_COLOR)
@@ -31,13 +32,14 @@ class MerkleVerkle(SlideBase):
         
         self.slide_VT = Proofs()
         self.slide_VT.construct()
-        self.tree_VT = self.slide_VT.tree.shift(RIGHT * 4.5).scale(0.8)
+        self.tree_VT = self.slide_VT.tree.shift(RIGHT * 6).scale(0.8)
         
         self.brace_MT = Brace(self.tree_MT.copy().shift(LEFT * 2).scale(0.5), DOWN, buff = 0.1).set_color(PRIMARY_COLOR)
         self.brace_VT = Brace(self.tree_VT.copy().scale(0.2), DOWN, buff = 0.1).set_color(PRIMARY_COLOR).shift(LEFT*0.78+DOWN*1.5)
         
         self.VT_children= Text("256 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_VT, DOWN, buff=0.1)
         self.MT_children = Text("16 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_MT, DOWN, buff=0.1)
+        self.table = MerkleVerkleTable().scale(0.7).shift(RIGHT*3)
     
     def animate_in(self, scene):
         self.new_subsection(scene, "depth -MT", "data/sound/e7/slide8-1.mp3")
@@ -48,9 +50,8 @@ class MerkleVerkle(SlideBase):
         )
         scene.play(FadeIn(self.brace_levels, self.label_levels), run_time=1.5)
         
-        
         self.new_subsection(scene, "depth VT", "data/sound/e7/slide8-2.mp3")
-        scene.play(self.tree_MT.animate.shift(LEFT * 2).scale(0.5),
+        scene.play(self.tree_MT.animate.shift(LEFT * 0.3).scale(0.9),
                    FadeOut(self.brace_levels, self.label_levels), run_time=1.5)
         scene.play(Create(self.tree_VT), run_time=2)
         scene.wait(3)
@@ -61,15 +62,14 @@ class MerkleVerkle(SlideBase):
         scene.play(FadeOut(self.brace_MT, self.brace_VT, self.VT_children, self.MT_children), run_time=1.5)
         
         self.new_subsection(scene, "MT proof size", "data/sound/e7/slide8-4.mp3")
-        scene.play(FadeOut(self.tree_VT), run_time=1)
+        scene.play(FadeOut(self.tree_VT, self.tree_MT), run_time=1)
+        self.table.reveal_header(scene)
         
         self.new_subsection(scene, "MT: 4 kB", "data/sound/e7/slide8-5.mp3")
         
         self.new_subsection(scene, "MT: 4 MB", "data/sound/e7/slide8-6.mp3")
         
         self.new_subsection(scene, "VT: efficient", "data/sound/e7/slide8-7.mp3")
-        scene.play(Create(self.tree_VT), run_time=1.5)
-        scene.play(FadeOut(self.tree_MT), run_time=1.5)
         
         self.new_subsection(scene, "IPA VT: 1.3 kB, KZG VP: 600 B ", "data/sound/e7/slide8-8.mp3")
         

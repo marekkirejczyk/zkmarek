@@ -718,7 +718,7 @@ class Proofs(SlideBase):
     def animate_out(self, scene):
         scene.play(FadeOut(self.all), run_time=1.0)
 
-    def create_arrow(self, start, end, arrow_array):
+    def create_arrow(self, start, end, arrow_array, dash_density=2.):
         arrow = Arrow(
             start.get_bottom(),
             end.get_top(),
@@ -729,4 +729,7 @@ class Proofs(SlideBase):
             tip_length=0.1,
             tip_shape=StealthTip,
         )
+        arrow_length = arrow.get_length()
+        num_dashes = max(2, int(arrow_length * dash_density)) 
+        arrow = DashedVMobject(arrow, num_dashes= num_dashes)
         arrow_array.add(arrow)

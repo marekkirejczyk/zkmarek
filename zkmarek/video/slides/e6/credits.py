@@ -33,9 +33,6 @@ class Credits(SlideBase):
         
         self.add_title("Special thanks")
         self.add_credit("Maciej Kalka @Mojtek")
-        
-        self.add_title("Code snippet")
-        self.add_credit("OpenZeppelin")
 
         self.add_title("Music from Udio AI music")
         self.group.generate_target()
