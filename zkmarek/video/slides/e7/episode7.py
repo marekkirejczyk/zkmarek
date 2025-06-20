@@ -1,7 +1,6 @@
 from zkmarek.video.slides.common.intro import Intro
 from zkmarek.video.slides.episode2.support import Sponsored
 from zkmarek.video.slides.e7.recap import Recap
-from zkmarek.video.slides.e7.vector_commitment import PreviouslyVectorCommitment
 from zkmarek.video.slides.e7.watch_other import FullVideos
 from zkmarek.video.slides.common.title import TitleSlide
 from zkmarek.video.slides.e7.elliptic_curves import EllipticCurves
