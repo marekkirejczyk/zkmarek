@@ -49,7 +49,7 @@ class Multiproofs(SlideBase):
         self.quotient3 = MathTex(r"q(x) = \frac{p(x)-a_i}{(x-x_i)}", color = PRIMARY_COLOR, font_size=35).shift(RIGHT * 2.5+UP*0.5)
         
         ## prover query
-        self.prover = ImageMobject("data/images/person_new2.png").scale(0.5).shift(LEFT * 3.5 + UP * 2)
+        self.prover = ImageMobject("data/images/person_new2.png").scale(0.9).shift(LEFT * 4.5 + UP * 2)
         self.commitment1 = MathTex(r"{{C_0^0}} \ \rightarrow p_0(x),", color=PRIMARY_COLOR, font_size=40).next_to(self.prover, RIGHT, buff=0.3)
         self.commitment2 = MathTex(r"{{C_0^1}} \ \rightarrow p_1(x),", color=HIGHLIGHT_COLOR, font_size=40).next_to(self.commitment1, DOWN, buff=0.3)
         self.commitment3 = MathTex(r"{{C_0^2}} \ \rightarrow p_2(x),", color=SECONDARY_COLOR, font_size=40).next_to(self.commitment2, DOWN, buff=0.3)
@@ -88,7 +88,7 @@ class Multiproofs(SlideBase):
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
         self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
-        self.random_t = MathTex(r"s\sim \texttt{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.8).shift(RIGHT*2.)
+        self.random_t = MathTex(r"s\sim \texttt{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.6).shift(RIGHT*2.)
         
         self.proof_to_g = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).next_to(self.quotient_g2, DOWN, buff = 0.8)
         self.arrow_proof_to_g = Arrow(self.quotient_g2.get_bottom(), self.proof_to_g.get_top(),
@@ -167,7 +167,7 @@ class Multiproofs(SlideBase):
                    self.commtiment_C.animate.shift(LEFT * 2),
                    self.dots[6].animate.shift(LEFT *2),
                    self.line_ai.animate.shift(LEFT * 2), run_time=1)
-        scene.play(self.opening.animate.shift(LEFT * 1.5), run_time=1)
+        scene.play(self.opening.animate.shift(LEFT * 1.1), run_time=1)
         scene.play(Write(self.opening__0), run_time=1)
         scene.play(Write(self.opening__1), run_time=1)
         scene.play(Write(self.opening__2), run_time=1)

@@ -76,10 +76,10 @@ class MerkleTree(VGroup):
                 level_group.arrange(RIGHT, buff=9.)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*2)
             elif i == 2:
-                level_group.arrange(RIGHT, buff=3.5)
+                level_group.arrange(RIGHT, buff=3.9)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN*(i+3))
             elif i == 3:
-                level_group.arrange(RIGHT, buff=1.25)
+                level_group.arrange(RIGHT, buff=1.45)
                 level_group.next_to(self.nodes[0][0], DOWN, buff=1).shift(DOWN * (i+5))
             elif i == 4:
                 level_group.arrange(RIGHT, buff=0.5)

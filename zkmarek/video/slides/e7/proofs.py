@@ -86,7 +86,7 @@ class Proofs(SlideBase):
             height=0.6,
             fill_opacity=0.25,
             stroke_width=0.0,
-        ).set_color(PRIMARY_COLOR)
+        ).set_color(HIGHLIGHT_COLOR)
         self.hashes_commitments_level2 = (
             VGroup(*[commitments_rectangles.copy() for _ in range(4)])
             .arrange(RIGHT, buff=1.6)
@@ -240,7 +240,8 @@ class Proofs(SlideBase):
             r"\texttt{verify}(",
             r"a_{255}=85, \;",
             r"C_0^0, \;",
-            r"\pi^0)",
+            r"\pi^0",
+            r")",
             font_size=35,
             color=PRIMARY_COLOR,
         ).shift(UP)
@@ -257,7 +258,8 @@ class Proofs(SlideBase):
                 r"a_{255}=85, \;",
                 r"C_0^1, \;",
                 r"C_0^0,\;",
-                r"\pi^0)",
+                r"\pi^0",
+                r")",
                 font_size=35,
                 color=PRIMARY_COLOR,
             )
@@ -275,7 +277,8 @@ class Proofs(SlideBase):
                 r"C_0^1, \;",
                 r"C_0^0,\;",
                 r"\pi^0,\;",
-                r"\pi^1)",
+                r"\pi^1",
+                r")",
                 color=PRIMARY_COLOR,
                 font_size=35,
             )
@@ -291,7 +294,8 @@ class Proofs(SlideBase):
                 r"C_0^1,\;",
                 r"C_0^0\;",
                 r"\pi^0\;",
-                r"\pi^1)",
+                r"\pi^1",
+                r")",
                 font_size=35,
                 color=PRIMARY_COLOR,
             )
@@ -311,7 +315,8 @@ class Proofs(SlideBase):
                 r"C_0^0,\;",
                 r"\pi^0,\;",
                 r"\pi^1,\;",
-                r"\pi^2)",
+                r"\pi^2",
+                r")",
                 color=PRIMARY_COLOR,
                 font_size=35,
             )
@@ -347,7 +352,7 @@ class Proofs(SlideBase):
             height=self.tree.height + 0.2,
             fill_opacity=0.0,
             stroke_width=1.0,
-        ).move_to(self.tree.get_center())
+        ).move_to(self.tree.get_center()).shift(DOWN*0.05)
         self.rectancle_C2 = DashedVMobject(rectangle_C2, num_dashes=200)
 
         ## table
@@ -423,7 +428,7 @@ class Proofs(SlideBase):
 
         self.verify_function = (
             MathTex(
-                r"\texttt{verify}()",
+                r"\texttt{verify}( ",
                 r"{a_{255},\;}",
                 r"{C_0^2,\;}",
                 r"\texttt{ verkleProof = }",
@@ -431,7 +436,7 @@ class Proofs(SlideBase):
                 r"{\pi^1,}\; ",
                 r"{\pi^2,}\; ",
                 r"{C_0^0,}\; ",
-                r"{C_0^1}]",
+                r"{C_0^1}])",
                 color=PRIMARY_COLOR,
                 font_size=32,
             )
@@ -525,6 +530,8 @@ class Proofs(SlideBase):
         scene.play(
             Indicate(self.hashes_commitments_level2[4], scale_factor=1.5), run_time=1
         )
+        scene.play(self.hash.animate.set_color(SECONDARY_COLOR), run_time=1
+        )
         scene.wait(0.5)
         scene.play(
             TransformMatchingShapes(
@@ -553,7 +560,9 @@ class Proofs(SlideBase):
         )
         scene.play(self.verify_function2_commitment[3].animate.set_color(SECONDARY_COLOR), run_time=1)
         scene.play(Write(self.hash_opening2), run_time=1.5)
-        scene.wait(2.5)
+        scene.play(self.hash_parent.animate.set_color(SECONDARY_COLOR), run_time=1
+        )
+        scene.wait(1.5)
         scene.play(
             TransformMatchingShapes(
                 self.verify_function2_commitment, self.verify_function2_proof

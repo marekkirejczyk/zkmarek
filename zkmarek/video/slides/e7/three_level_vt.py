@@ -277,7 +277,7 @@ class ThreeLevelVerkleTree(SlideBase):
             fill_opacity=0.15,
             stroke_width=0.0,
         ).set_color(PRIMARY_COLOR)
-        self.cdots_text = Text(
+        self.cdots_text = Text( 
             "...", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=30
         )
 
@@ -289,7 +289,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.internal_node2[0], RIGHT, buff=0.02
         )
         self.cdots_node3 = self.cdots_text.copy().next_to(
-            self.internal_node2[0], LEFT, buff=0.1
+            self.internal_node2[0], LEFT, buff=0.13
         )
 
         self.cdots_hashes1 = self.cdots_text.copy()
@@ -593,8 +593,8 @@ class ThreeLevelVerkleTree(SlideBase):
         )
         self.whole_tree_until_C10.generate_target()
         self.whole_tree_until_C10.target.shift(DOWN)
-        scene.play(MoveToTarget(self.whole_tree_until_C10),
-                   hash.animate.shift(DOWN*0.23+LEFT*0.2), run_time=1)
+        scene.play(hash.animate.shift(DOWN*0.13+LEFT*0.2), run_time=0.5)
+        scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=1)
         self.commitment_C01.next_to(self.commitmentcdots, UP, buff=0.9)
         scene.play(Create(self.commitment_C01), run_time=1)
 
@@ -670,7 +670,7 @@ class ThreeLevelVerkleTree(SlideBase):
         ).next_to(self.commitment_C01, UP, buff=0.2)
         hash_parent_255 = MathTex(
             r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.other_hashes[:][3], UP, buff=0.33)
+        ).next_to(self.other_hashes[:][3], UP, buff=0.33).shift(RIGHT*0.05)
         self.whole_tree_until_C10.add(hash_parent, hash_parent_255)
         scene.play(
             FadeIn(hash_parent_255, hash_parent),
@@ -703,7 +703,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.internal_node,
             self.commitments,
             self.right_commitments_opacity,
-            self.other_hashes_rec,
+            self.other_commitments, self.commitment_C01,
             self.final_parent_node_rec,
         )
 
@@ -729,7 +729,7 @@ class ThreeLevelVerkleTree(SlideBase):
         )
         self.single_commitment.next_to(self.values256, UP, buff=0.3)
         self.values2_to_8.next_to(self.whole_tree_until_C10, RIGHT, buff=1.0).shift(
-            RIGHT * 1.5 + UP * 0.5
+            RIGHT * 0.8 + UP * 0.5
         )
         self.values2_to_24.next_to(self.values2_to_8, DOWN, buff=1.0)
         self.three_level.next_to(self.values2_to_24, UP, buff=0.3)

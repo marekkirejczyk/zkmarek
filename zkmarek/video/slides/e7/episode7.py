@@ -23,7 +23,6 @@ EPISODE7 = [
     Sponsored(),
     FinalSeason1(),
     Recap(),
-    PreviouslyVectorCommitment(),
     FullVideos(),
     TitleSlide("Elliptic curves", sound = "data/sound/e7/slide2-0.mp3", 
                wait_time=2, subtitle="in the Verkle trees", wait_time_for_subtitle=1),
