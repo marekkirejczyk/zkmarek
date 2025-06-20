@@ -1,6 +1,6 @@
 from manim import (FadeIn, FadeOut, Indicate, MoveToTarget, Write, Create, Text, Group,
                    MathTex, UP, RoundedRectangle, VGroup, RIGHT, DOWN, Axes, LEFT, ValueTracker,
-                   ImageMobject, Polygon, Arrow, StealthTip, rate_functions, TransformMatchingShapes)
+                   ImageMobject, Polygon, Arrow, StealthTip, rate_functions, TransformMatchingShapes, DashedVMobject)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.e7.curve import Curve
@@ -61,13 +61,13 @@ class SingleLevelVerkleTree(SlideBase):
         self.envelope_flap_closed.next_to(self.envelope, UP, buff=-0.48).shift(DOWN*0.25)
 
         
-        self.commitment = MathTex(r"\mathrm{commitment}\ C^0", color = HIGHLIGHT_COLOR, font_size = 28).move_to(self.envelope.get_center())
+        self.commitment = MathTex(r"\texttt{commitment}\ C^0", color = HIGHLIGHT_COLOR, font_size = 28).move_to(self.envelope.get_center())
         
-        self.verifier1 = ImageMobject("data/images/person.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
+        self.verifier1 = ImageMobject("data/images/person_new.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
         self.verifier_label = Text("verification function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, DOWN, buff = 0.1)
         self.verifier_label2 = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, UP, buff = 0.1)
         self.verifier = Group(self.verifier1, self.verifier_label)
-        self.prover1 = ImageMobject("data/images/person_blue.png").scale(0.7).shift(UP*1.5)
+        self.prover1 = ImageMobject("data/images/person_new2.png").scale(0.7).shift(UP*1.5)
         self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, UP, buff = 0.1)
         self.prover_label2 = Text("insert function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
         
@@ -252,7 +252,12 @@ class SingleLevelVerkleTree(SlideBase):
             stroke_width=1.5,
             tip_shape=StealthTip,
             tip_length=0.15,)
+        arrow_length = arrow.get_length()
+        num_dashes = max(2, int(arrow_length * 2))
+        arrow = DashedVMobject(arrow, num_dashes=num_dashes)
+        
         where_to_append.append(arrow)
+        
         
         
 

@@ -44,13 +44,13 @@ class PreviouslyVectorCommitment(SlideBase):
             .to_edge(UP)
         )
         self.prover = (
-            ImageMobject("data/images/person.png")
+            ImageMobject("data/images/person_new.png")
             .scale(0.7)
             .to_edge(LEFT)
             .shift(RIGHT*2 + UP * 1.5)
         )
         self.verifier = (
-            ImageMobject("data/images/person_blue.png")
+            ImageMobject("data/images/person_new2.png")
             .scale(0.7)
             .to_edge(RIGHT)
             .shift(LEFT*2 + UP * 1.5)

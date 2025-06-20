@@ -19,6 +19,7 @@ from manim import (
     MathTex,
     FadeIn,
     StealthTip,
+    DashedVMobject,
 )
 
 from zkmarek.video.slides.common.slide_base import SlideBase
@@ -42,9 +43,9 @@ class ThreeLevelVerkleTree(SlideBase):
             font_size=40,
         ).to_edge(UP)
         rectangle = RoundedRectangle(
-            corner_radius=0.05,
-            width=0.5,
-            height=0.3,
+            corner_radius=0.2,
+            width=0.6,
+            height=0.6,
             fill_opacity=0.25,
             stroke_width=0.0,
         ).set_color(SECONDARY_COLOR)
@@ -85,14 +86,14 @@ class ThreeLevelVerkleTree(SlideBase):
 
         self.commitment_to_C0 = (
             rectangle.copy()
-            .scale(3.6)
+            .scale(2.)
             .set_color(HIGHLIGHT_COLOR)
             .next_to(self.internal_node, UP, buff=0.8)
             .shift(UP * 0.5)
         )
         self.commitment_to_C255 = (
             rectangle.copy()
-            .scale(1.8)
+            .scale(1.)
             .set_color(HIGHLIGHT_COLOR)
             .next_to(self.internal_node2, UP, buff=0.65)
         )
@@ -109,7 +110,7 @@ class ThreeLevelVerkleTree(SlideBase):
 
         self.arrows_C0 = []
         for rectangle in self.internal_node:
-            self.create_arrow(self.commitment_to_C0, rectangle, self.arrows_C0)
+            self.create_arrow(self.commitment_to_C0, rectangle, self.arrows_C0, dash_density=5.)
 
         self.arrows_C255 = []
         for rectangle in self.internal_node2:
@@ -121,9 +122,9 @@ class ThreeLevelVerkleTree(SlideBase):
             *self.arrows_C255,
         ).shift(RIGHT * 0.1)
 
-        self.commitment_cdots = rectangle.copy().scale(1.2).set_color(HIGHLIGHT_COLOR)
+        self.commitment_cdots = rectangle.copy().scale(1.).set_color(HIGHLIGHT_COLOR)
         self.commitment_to_cdots_text = Text(
-            r"...", font=PRIMARY_FONT, font_size=20, color=PRIMARY_COLOR
+            r"...", font=PRIMARY_FONT, font_size=30, color=PRIMARY_COLOR
         ).move_to(self.commitment_cdots.get_center())
 
         self.commitmentcdots = VGroup(self.commitment_to_cdots_text)
@@ -133,10 +134,10 @@ class ThreeLevelVerkleTree(SlideBase):
             height=0.8,
             fill_opacity=0.15,
             stroke_width=0.0,
-        ).set_color(HIGHLIGHT_COLOR)
+        ).set_color(PRIMARY_COLOR)
         self.rectangle_node_commitments.move_to(
             self.commitment_to_cdots_text.get_center()
-        )
+        ).shift(LEFT*0.2)
 
         self.commitment_to_ec_values = Text(
             "commitment to EC points?",
@@ -146,7 +147,7 @@ class ThreeLevelVerkleTree(SlideBase):
         )
 
         self.hashaes_of_commitments_rec = [
-            rectangle.copy().scale(1.8).set_color(PRIMARY_COLOR) for _ in range(2)
+            rectangle.copy().scale(1.).set_color(PRIMARY_COLOR) for _ in range(2)
         ]
         self.hashaes_of_commitments_rec = VGroup(
             *self.hashaes_of_commitments_rec
@@ -162,7 +163,7 @@ class ThreeLevelVerkleTree(SlideBase):
             *self.hashaes_of_commitments_rec, *self.text_hashes_of_commitments
         )
 
-        self.commitment_C01_rec = rectangle.copy().scale(1.8).set_color(HIGHLIGHT_COLOR)
+        self.commitment_C01_rec = rectangle.copy().scale(1.).set_color(HIGHLIGHT_COLOR)
         self.commiemtnt_c01_text = MathTex(
             r"C_0^1", font_size=26, color=PRIMARY_COLOR
         ).move_to(self.commitment_C01_rec.get_center())
@@ -170,7 +171,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.commitment_C01 = VGroup(self.commitment_C01_rec, self.commiemtnt_c01_text)
 
         self.other_commitments = [
-            rectangle.copy().scale(1.8).set_color(HIGHLIGHT_COLOR) for _ in range(1)
+            rectangle.copy().scale(1.).set_color(HIGHLIGHT_COLOR) for _ in range(1)
         ]
         self.other_commitments = VGroup(*self.other_commitments).arrange(
             RIGHT, buff=3.5
@@ -186,7 +187,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.text_other_commitments = VGroup(*self.text_other_commitments)
 
         self.other_hashes_rec = [
-            rectangle.copy().stretch(1, 2).scale(1.8).set_color(HIGHLIGHT_COLOR)
+            rectangle.copy().stretch(1, 2).scale(1.).set_color(HIGHLIGHT_COLOR)
             for _ in range(2)
         ]
         self.other_hashes_rec = VGroup(*self.other_hashes_rec).arrange(RIGHT, buff=2.5)
@@ -200,7 +201,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.other_hashes = VGroup(*self.other_hashes_rec, *self.text_other_hashes)
 
         self.final_parent_node_rec = (
-            rectangle.copy().scale(2).set_color(SECONDARY_COLOR)
+            rectangle.copy().scale(1.).set_color(SECONDARY_COLOR)
         )
         self.final_parent_node_text = MathTex(
             r"C_0^2", font_size=30, color=SECONDARY_COLOR
@@ -238,9 +239,9 @@ class ThreeLevelVerkleTree(SlideBase):
         )
 
         hashes_copy_recs = [
-            rectangle.copy().scale(1.8).set_color(HIGHLIGHT_COLOR) for _ in range(2)
+            rectangle.copy().scale(1.).set_color(HIGHLIGHT_COLOR) for _ in range(2)
         ]
-        self.hashes_copy_recs = VGroup(*hashes_copy_recs).arrange(RIGHT, buff=1.0)
+        self.hashes_copy_recs = VGroup(*hashes_copy_recs).arrange(RIGHT, buff=1.5)
 
         self.rectangle_with_hashes = RoundedRectangle(
             corner_radius=0.05,
@@ -248,10 +249,10 @@ class ThreeLevelVerkleTree(SlideBase):
             height=0.8,
             fill_opacity=0.15,
             stroke_width=0.0,
-        ).set_color(HIGHLIGHT_COLOR)
+        ).set_color(PRIMARY_COLOR)
         self.rectangle_node_commitments2 = (
             self.rectangle_with_hashes.copy()
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(PRIMARY_COLOR)
             .move_to(self.hashes_copy_recs.get_center())
         )
 
@@ -275,21 +276,20 @@ class ThreeLevelVerkleTree(SlideBase):
             height=0.8,
             fill_opacity=0.15,
             stroke_width=0.0,
-        ).set_color(HIGHLIGHT_COLOR)
+        ).set_color(PRIMARY_COLOR)
         self.cdots_text = Text(
             "...", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=30
         )
 
         self.cdots_node1 = (
-            self.cdots_text.copy()
-            .next_to(self.internal_node[0], RIGHT, buff=0.17)
-            .scale(2)
+            self.cdots_text.copy().scale(2.)
+            .next_to(self.internal_node[0], RIGHT, buff=0.05)
         )
         self.cdots_node2 = self.cdots_text.copy().next_to(
-            self.internal_node2[0], RIGHT, buff=0.03
+            self.internal_node2[0], RIGHT, buff=0.02
         )
         self.cdots_node3 = self.cdots_text.copy().next_to(
-            self.internal_node2[0], LEFT, buff=0.15
+            self.internal_node2[0], LEFT, buff=0.1
         )
 
         self.cdots_hashes1 = self.cdots_text.copy()
@@ -298,21 +298,21 @@ class ThreeLevelVerkleTree(SlideBase):
             values[0], RIGHT, buff=0.03
         )
         self.cdots_right_nodes3 = self.cdots_text.copy().next_to(
-            values[1], RIGHT, buff=0.15
+            values[1], RIGHT, buff=0.18
         )
         self.cdots_right_nodes2 = self.cdots_text.copy().next_to(
             values2[0], RIGHT, buff=0.03
         )
         self.cdots_right_hashes = self.cdots_text.copy().next_to(
-            self.hashes_copy_recs[0], RIGHT, buff=0.35
+            self.hashes_copy_recs[0], RIGHT, buff=0.65
         )
         
         self.cdots_value_right_left = self.cdots_text.copy().next_to(
-            values[0], LEFT, buff=0.5
+            values[0], LEFT, buff=0.0
         )
         
         self.cdots_commitments_right_left = self.cdots_text.copy().next_to(
-            self.rectangle_node_commitments2, LEFT, buff=0.3
+            self.rectangle_node_commitments2, LEFT, buff=0.01
         )
 
         self.right_commitments = VGroup(
@@ -334,9 +334,6 @@ class ThreeLevelVerkleTree(SlideBase):
         self.values_right = VGroup(*values, *values2)
 
     def animate_in(self, scene):
-        # self.new_subsection(scene, "3 levels", "data/sound/e7/slide4-0.mp3")
-        # self.generate_multi_level_snapshot(scene)
-
         self.new_subsection(scene, "C0", "data/sound/e7/slide4-1.mp3")
         scene.play(Write(self.title_label), run_time=1)
         scene.play(
@@ -410,12 +407,12 @@ class ThreeLevelVerkleTree(SlideBase):
             scene.play(Indicate(commitment), run_time=0.4)
 
         self.new_subsection(scene, "parent to 256 value", "data/sound/e7/slide4-3.mp3")
-        scene.wait(1)
+        scene.wait(0.5)
         scene.play(Indicate(self.commitment_to_C0, color=PRIMARY_COLOR), run_time=0.8)
-        scene.play(Indicate(self.internal_node_whole, color=PRIMARY_COLOR), run_time=1)
-
         scene.play(Indicate(self.commitment_to_C255, color=PRIMARY_COLOR), run_time=0.8)
-        scene.play(Indicate(self.internal_node2_whole, color=PRIMARY_COLOR), run_time=1)
+        scene.play(Indicate(self.internal_node, color=PRIMARY_COLOR), run_time=0.8)
+
+        scene.play(Indicate(self.internal_node2, color=PRIMARY_COLOR), run_time=0.8)
 
         all_nodes = VGroup(self.internal_node_whole, self.internal_node2_whole)
 
@@ -537,7 +534,7 @@ class ThreeLevelVerkleTree(SlideBase):
         ).next_to(self.commitment_size_ipa, DOWN, buff=0.7)
         hash_255 = MathTex(
             r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.commitment_to_C255, UP, buff=0.3).shift(RIGHT * 0.2)
+        ).next_to(self.commitment_to_C255, UP, buff=0.3).shift(RIGHT * 0.25)
         arrow_hash = Arrow(
             hash.get_bottom(),
             self.commitment_to_C0.get_top(),
@@ -556,7 +553,7 @@ class ThreeLevelVerkleTree(SlideBase):
             TransformMatchingShapes(self.commitment_size_ipa, self.scalar_size_hash),
             run_time=1,
         )
-        scene.wait(2)
+        scene.wait(0.5)
         scene.play(Indicate(self.scalar_size_hash), run_time=1)
         scene.play(Indicate(self.scalar_size_ipa), run_time=1)
 
@@ -596,9 +593,10 @@ class ThreeLevelVerkleTree(SlideBase):
         )
         self.whole_tree_until_C10.generate_target()
         self.whole_tree_until_C10.target.shift(DOWN)
-        scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=1)
+        scene.play(MoveToTarget(self.whole_tree_until_C10),
+                   hash.animate.shift(DOWN*0.23+LEFT*0.2), run_time=1)
         self.commitment_C01.next_to(self.commitmentcdots, UP, buff=0.9)
-        scene.play(Create(self.commitment_C01), hash.animate.shift(DOWN*0.15+LEFT*0.2), run_time=1)
+        scene.play(Create(self.commitment_C01), run_time=1)
 
         self.arrow_commitment_C01 = []
         for rectangle in self.commitments:
@@ -636,7 +634,7 @@ class ThreeLevelVerkleTree(SlideBase):
         self.right_commitments.next_to(self.other_commitments[0], DOWN, buff=0.78).shift(LEFT*0.3)
         self.rectangle_on_parent_commitments.move_to(
             self.other_commitments.get_center()
-        ).shift(LEFT * 2.2)
+        ).shift(LEFT * 2.05)
 
         self.cdots_hashes2.next_to(self.commitment_C01, RIGHT, buff=1.5)
         self.other_commitments.add(self.cdots_hashes2)
@@ -672,12 +670,10 @@ class ThreeLevelVerkleTree(SlideBase):
         ).next_to(self.commitment_C01, UP, buff=0.2)
         hash_parent_255 = MathTex(
             r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.other_hashes[:][3], UP, buff=0.3)
-        self.whole_tree_until_C10.add(self.other_hashes, hash_parent, hash_parent_255)
+        ).next_to(self.other_hashes[:][3], UP, buff=0.33)
+        self.whole_tree_until_C10.add(hash_parent, hash_parent_255)
         scene.play(
-            Create(self.other_hashes),
             FadeIn(hash_parent_255, hash_parent),
-            FadeOut(self.other_commitments, self.commitment_C01),
             run_time=1,
         )
         scene.wait(1)
@@ -694,7 +690,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.arrow_commitment_C01,
             self.rectangle_on_parent_commitments,
             self.right_commitments,
-            self.cdots_hashes2,
+            self.other_commitments, self.commitment_C01
         )
 
         self.new_subsection(scene, "simple math", "data/sound/e7/slide4-11.mp3")
@@ -733,14 +729,14 @@ class ThreeLevelVerkleTree(SlideBase):
         )
         self.single_commitment.next_to(self.values256, UP, buff=0.3)
         self.values2_to_8.next_to(self.whole_tree_until_C10, RIGHT, buff=1.0).shift(
-            RIGHT * 0.5 + UP * 0.5
+            RIGHT * 1.5 + UP * 0.5
         )
         self.values2_to_24.next_to(self.values2_to_8, DOWN, buff=1.0)
         self.three_level.next_to(self.values2_to_24, UP, buff=0.3)
         self.four_level.next_to(self.values2_to_8, DOWN, buff=0.3)
         self.values_four_level.next_to(self.values2_to_8, DOWN, buff=1.0).shift(
             RIGHT * 0.5
-        ).scale(0.7)
+        ).scale(0.9)
         scene.play(Write(self.values256), Write(self.single_commitment), run_time=1)
         scene.play(
             self.commitment_to_c0_text.animate.set_opacity(1.0),
@@ -911,7 +907,7 @@ class ThreeLevelVerkleTree(SlideBase):
             run_time=1,
         )
 
-    def create_arrow(self, start, end, arrows):
+    def create_arrow(self, start, end, arrows, dash_density=10.):
         arrow = Arrow(
             start.get_bottom(),
             end.get_top(),
@@ -922,6 +918,9 @@ class ThreeLevelVerkleTree(SlideBase):
             tip_length=0.1,
             tip_shape=StealthTip,
         )
+        arrow_length = arrow.get_length()
+        num_dashes = max(2, int(arrow_length * dash_density)) 
+        arrow = DashedVMobject(arrow, num_dashes= num_dashes)
         arrows.append(arrow)
 
     def create_ethereum_addresses_counter(self, scene):

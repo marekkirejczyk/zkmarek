@@ -42,18 +42,18 @@ class Proofs(SlideBase):
         ## values (1 level)
         values_rectangles = RoundedRectangle(
             corner_radius=0.05,
-            width=0.5,
-            height=0.3,
+            width=0.6,
+            height=0.6,
             fill_opacity=0.25,
             stroke_width=0.0,
         ).set_color(SECONDARY_COLOR)
 
         self.values = VGroup(*[values_rectangles.copy() for _ in range(2)]).arrange(
-            RIGHT, buff=0.65
+            RIGHT, buff=0.35
         )
         self.cdots = Text(
             "...", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=30
-        ).next_to(self.values[0], RIGHT, buff=0.21)
+        ).next_to(self.values[0], RIGHT, buff=0.05)
         self.values.add(self.cdots)
 
         self.values2 = self.values.copy()
@@ -82,14 +82,14 @@ class Proofs(SlideBase):
         ## commitments (2 level)
         commitments_rectangles = RoundedRectangle(
             corner_radius=0.05,
-            width=0.9,
+            width=0.6,
             height=0.6,
             fill_opacity=0.25,
             stroke_width=0.0,
         ).set_color(PRIMARY_COLOR)
         self.hashes_commitments_level2 = (
             VGroup(*[commitments_rectangles.copy() for _ in range(4)])
-            .arrange(RIGHT, buff=1.43)
+            .arrange(RIGHT, buff=1.6)
             .next_to(self.values_all, UP, buff=1.3)
         )
         text_commitment_C0 = MathTex(
@@ -112,7 +112,7 @@ class Proofs(SlideBase):
                 fill_opacity=0.22,
                 stroke_width=0.0,
             )
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(PRIMARY_COLOR)
             .move_to(self.cdots_level2.get_center())
         )
         self.rectangle_all_commitments_right = (
@@ -123,14 +123,14 @@ class Proofs(SlideBase):
                 fill_opacity=0.22,
                 stroke_width=0.0,
             )
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(PRIMARY_COLOR)
             .move_to(self.cdots_level2_2.get_center())
         )
         self.hash = MathTex(
-            r"\texttt{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.hashes_commitments_level2[0], UP, buff=0.6)
         hash_255 = MathTex(
-            r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6).shift(RIGHT*0.1)
         self.hashes_commitments_level2.add(
             text_commitment_C0,
@@ -164,14 +164,14 @@ class Proofs(SlideBase):
                 fill_opacity=0.22,
                 stroke_width=0.0,
             )
-            .set_color(HIGHLIGHT_COLOR)
+            .set_color(PRIMARY_COLOR)
             .move_to(self.cdots_level3.get_center())
         )
         self.hash_parent = MathTex(
-            r"\texttt{hash}(C_0^1)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_0^1)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.hashes_commitments_level3[0], UP, buff=0.6)
         hash_255_parent = MathTex(
-            r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=21
+            r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
         ).next_to(self.hashes_commitments_level3[1], UP, buff=0.6)
 
         self.hashes_commitments_level3.add(
@@ -280,7 +280,7 @@ class Proofs(SlideBase):
                 font_size=35,
             )
             .to_edge(RIGHT)
-            .shift(UP * 1 + LEFT * 0.05)
+            .shift(UP * 1 + LEFT * 0.01)
         )
 
         self.verify_function2_commitment = (
@@ -372,7 +372,7 @@ class Proofs(SlideBase):
             r"\sim 2\cdot 32  \ \texttt{B}", color=HIGHLIGHT_COLOR, font_size=35
         )
         self.ipa_proof = Text(
-            "     3 x 16 x\n EC points",
+            "   3 x 16 x\n EC points",
             font=PRIMARY_FONT,
             color=HIGHLIGHT_COLOR,
             font_size=25,
@@ -423,8 +423,8 @@ class Proofs(SlideBase):
 
         self.verify_function = (
             MathTex(
-                r"\texttt{verify}",
-                r"({a_{255},\;}",
+                r"\texttt{verify}()",
+                r"{a_{255},\;}",
                 r"{C_0^2,\;}",
                 r"\texttt{ verkleProof = }",
                 r"[{\pi^0,}\;",
@@ -611,7 +611,7 @@ class Proofs(SlideBase):
             .next_to(self.verify_function_REST[2], DOWN, buff=1.0)
         )
         self.ipa_proof.next_to(self.kzg_ecpoint2, DOWN, buff=0.8)
-        self.ipa_proof2.next_to(self.ipa_ec_point, LEFT, buff=1.0)
+        self.ipa_proof2.next_to(self.ipa_ec_point, LEFT, buff=0.15)
 
         self.proof_ipa1.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
         self.proof_ipa2.next_to(self.ipa_ec_point, RIGHT, buff=0.6)
@@ -633,12 +633,9 @@ class Proofs(SlideBase):
         scene.wait(1)
 
         self.new_subsection(scene, "total 240 B", "data/sound/e7/slide5-6e.mp3")
-        scene.wait(1)
-
-        scene.play(Write(self.proof_kzg1), run_time=1)
-        scene.wait(1)
+        scene.wait(3)
         scene.play(
-            TransformMatchingShapes(self.proof_kzg1, self.proof_kzg2), run_time=1
+            Write(self.proof_kzg2), run_time=1
         )
         scene.wait(2)
 
@@ -652,15 +649,9 @@ class Proofs(SlideBase):
         scene.play(TransformMatchingShapes(self.ipa_proof, self.ipa_proof2), run_time=1)
 
         self.new_subsection(scene, "total 1.5 kB", "data/sound/e7/slide5-6c.mp3")
-        scene.wait(1)
-        scene.play(Write(self.proof_ipa1), run_time=1)
-        scene.wait(1)
+        scene.wait(4)
         scene.play(
-            TransformMatchingShapes(self.proof_ipa1, self.proof_ipa2), run_time=1
-        )
-        scene.wait(1)
-        scene.play(
-            TransformMatchingShapes(self.proof_ipa2, self.proof_ipa3), run_time=1
+            Write(self.proof_ipa3), run_time=1
         )
         scene.wait(1)
 
@@ -695,7 +686,7 @@ class Proofs(SlideBase):
             ),
             run_time=1,
         )
-        scene.wait(6.5)
+        scene.wait(5.)
 
         self.all = Group(
             self.title_label,
@@ -718,7 +709,7 @@ class Proofs(SlideBase):
     def animate_out(self, scene):
         scene.play(FadeOut(self.all), run_time=1.0)
 
-    def create_arrow(self, start, end, arrow_array, dash_density=2.):
+    def create_arrow(self, start, end, arrow_array, dash_density=10.):
         arrow = Arrow(
             start.get_bottom(),
             end.get_top(),

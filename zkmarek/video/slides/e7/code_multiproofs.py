@@ -65,7 +65,6 @@ class Multiproofs(CodeSlide):
         scene.wait(3.5)
         self.indicate_code(scene, self.code, "(p_i(x) - vi) / (x - xi)", run_time=1)
         scene.wait(1)
-        self.indicate_code(scene, self.code, "r ** i", run_time=1)
         
         self.new_subsection(scene, "for each opening - quotient", "data/sound/e7/slide7-6.mp3")
         scene.wait(1)

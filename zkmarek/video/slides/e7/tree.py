@@ -1,4 +1,4 @@
-from manim import VGroup, DOWN, Text, RoundedRectangle, RIGHT, StealthTip, Arrow, DashedVMobject, UP, interpolate
+from manim import VGroup, DOWN, Text, RoundedRectangle, RIGHT, StealthTip, Arrow, DashedVMobject, UP
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
 
 class Node(VGroup):

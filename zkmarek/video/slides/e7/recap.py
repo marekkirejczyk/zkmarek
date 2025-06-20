@@ -500,8 +500,8 @@ class Recap(SlideBase):
         ).scale(0.27).shift(DOWN*0.12)
         kzg = Text("KZG", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=32).move_to(envelope.get_center())
         envelope = VGroup(envelope, envelope_flap_closed, kzg).shift(LEFT*2+UP)
-        person = ImageMobject("data/images/person.png").scale(0.7).shift(LEFT*3)
-        person2 = ImageMobject("data/images/person_blue.png").scale(0.7).shift(RIGHT*3)
+        person = ImageMobject("data/images/person_new.png").scale(0.7).shift(LEFT*3)
+        person2 = ImageMobject("data/images/person_new2.png").scale(0.7).shift(RIGHT*3)
         scene.play(FadeIn(person), FadeIn(person2))
 
         self.new_subsection(
