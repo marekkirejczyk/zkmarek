@@ -591,9 +591,9 @@ class ThreeLevelVerkleTree(SlideBase):
             FadeIn(hash_255),
             run_time=0.5,
         )
+        scene.play(hash.animate.shift(DOWN*0.13+LEFT*0.2), run_time=0.5)
         self.whole_tree_until_C10.generate_target()
         self.whole_tree_until_C10.target.shift(DOWN)
-        scene.play(hash.animate.shift(DOWN*0.13+LEFT*0.2), run_time=0.5)
         scene.play(MoveToTarget(self.whole_tree_until_C10), run_time=1)
         self.commitment_C01.next_to(self.commitmentcdots, UP, buff=0.9)
         scene.play(Create(self.commitment_C01), run_time=1)
@@ -636,7 +636,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.other_commitments.get_center()
         ).shift(LEFT * 2.05)
 
-        self.cdots_hashes2.next_to(self.commitment_C01, RIGHT, buff=1.5)
+        self.cdots_hashes2.next_to(self.commitment_C01, RIGHT, buff=1.65)
         self.other_commitments.add(self.cdots_hashes2)
         scene.play(
             Create(self.right_commitments),
@@ -667,10 +667,10 @@ class ThreeLevelVerkleTree(SlideBase):
         self.other_hashes[:][3].move_to(self.other_commitments[0][0].get_center())
         hash_parent = MathTex(
             r"\texttt{hash}(C_0^{1})", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.commitment_C01, UP, buff=0.2)
+        ).next_to(self.commitment_C01, UP, buff=0.2).shift(LEFT*0.15 * DOWN*0.03)
         hash_parent_255 = MathTex(
             r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.other_hashes[:][3], UP, buff=0.33).shift(RIGHT*0.05)
+        ).next_to(self.other_hashes[:][3], UP, buff=0.33).shift(RIGHT*0.15)
         self.whole_tree_until_C10.add(hash_parent, hash_parent_255)
         scene.play(
             FadeIn(hash_parent_255, hash_parent),
@@ -706,15 +706,20 @@ class ThreeLevelVerkleTree(SlideBase):
             self.other_commitments, self.commitment_C01,
             self.final_parent_node_rec,
         )
-
+        cdots = VGroup(self.cdots_node1, self.cdots_node2, self.cdots_node3,
+                    #    self.cdots_hashes1, self.cdots_hashes2,
+                       self.cdots_right_nodes1, self.cdots_right_nodes2,
+                       self.cdots_right_nodes3, self.cdots_value_right_left,
+                       self.cdots_commitments_right_left, self.cdots_right_hashes,
+                       self.commitmentcdots)
         texts = VGroup(
             self.node2_texts,
             self.node1_texts,
             self.commitment_to_c0_text,
             self.commitment_to_c255_text,
             self.final_parent_node_text,
-            *self.text_other_hashes,
             hash, hash_255, hash_parent, hash_parent_255,
+            cdots,
         )
         scene.play(
             nodes.animate.set_opacity(0.15), texts.animate.set_opacity(0.15), run_time=2
@@ -740,7 +745,7 @@ class ThreeLevelVerkleTree(SlideBase):
         scene.play(Write(self.values256), Write(self.single_commitment), run_time=1)
         scene.play(
             self.commitment_to_c0_text.animate.set_opacity(1.0),
-            self.commitment_to_c255_text.animate.set_opacity(1.0),
+            # self.commitment_to_c255_text.animate.set_opacity(1.0),
             run_time=0.5,
         )
 

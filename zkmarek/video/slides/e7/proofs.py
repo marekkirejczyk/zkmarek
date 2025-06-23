@@ -128,10 +128,10 @@ class Proofs(SlideBase):
         )
         self.hash = MathTex(
             r"\texttt{hash}(C_0^0)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.hashes_commitments_level2[0], UP, buff=0.6)
+        ).next_to(self.hashes_commitments_level2[0], UP, buff=0.6).shift(LEFT*0.2)
         hash_255 = MathTex(
             r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6).shift(RIGHT*0.1)
+        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6).shift(RIGHT*0.2)
         self.hashes_commitments_level2.add(
             text_commitment_C0,
             self.cdots_level2,
@@ -172,7 +172,7 @@ class Proofs(SlideBase):
         ).next_to(self.hashes_commitments_level3[0], UP, buff=0.6)
         hash_255_parent = MathTex(
             r"\texttt{hash}(C_{255}^1)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.hashes_commitments_level3[1], UP, buff=0.6)
+        ).next_to(self.hashes_commitments_level3[1], UP, buff=0.6).shift(RIGHT*0.05)
 
         self.hashes_commitments_level3.add(
             text_hash_commitmentH0, self.cdots_level3, self.rectangle_parent_commitments,
@@ -283,7 +283,7 @@ class Proofs(SlideBase):
                 font_size=35,
             )
             .to_edge(RIGHT)
-            .shift(UP * 1 + LEFT * 0.01)
+            .shift(UP * 1 + RIGHT * 0.01)
         )
 
         self.verify_function2_commitment = (
@@ -333,17 +333,17 @@ class Proofs(SlideBase):
                 stroke_width=1.0,
             )
             .move_to(self.values.get_top())
-            .shift(UP * 0.7)
+            .shift(UP * 0.5)
         )
         self.rectancle_C0 = DashedVMobject(rectangle_C0, num_dashes=60)
 
         rectangle_C1 = RoundedRectangle(
             corner_radius=0.05,
             width=self.values_all.width/2+0.2,
-            height=4.3,
+            height=4.4,
             fill_opacity=0.0,
             stroke_width=1.0,
-        ).move_to(self.hashes_commitments_level2.get_center()).shift(UP*0.15+LEFT*1.8)
+        ).move_to(self.hashes_commitments_level2.get_center()).shift(UP*0.07+LEFT*1.8)
         self.rectancle_C1 = DashedVMobject(rectangle_C1, num_dashes=120)
 
         rectangle_C2 = RoundedRectangle(
@@ -443,6 +443,8 @@ class Proofs(SlideBase):
             .to_edge(RIGHT)
             .shift(UP * 1 + LEFT * 0.1)
         )
+        self.brace_pub_in = Brace(self.verify_function[1:3], UP, buff=0.1, color=HIGHLIGHT_COLOR)
+        self.public_input2 = Text("public input", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25).next_to(self.brace_pub_in, UP, buff=0.1)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "85: proof C, opening", "data/sound/e7/slide5-1.mp3")
@@ -591,13 +593,13 @@ class Proofs(SlideBase):
         scene.wait(1.5)
         scene.play(Indicate(self.verify_function[1], scale_factor=1.5), run_time=0.7)
         scene.play(Indicate(self.verify_function[2], scale_factor=1.5), run_time=0.7)
-        
+        scene.play(Write(self.public_input2), FadeIn(self.brace_pub_in), run_time=1.0)
 
         self.new_subsection(scene, "different weight", "data/sound/e7/slide5-6a.mp3")
         scene.wait(1.5)
 
         self.verify_function_REST = self.verify_function[3:]
-        scene.play(FadeOut(self.verify_function[0:3]), run_time=1)
+        scene.play(FadeOut(self.verify_function[0:3], self.brace_pub_in, self.public_input2), run_time=1)
         self.verify_function_REST.generate_target()
         self.verify_function_REST.target.shift(LEFT * 2.2).scale(1.3)
         scene.play(

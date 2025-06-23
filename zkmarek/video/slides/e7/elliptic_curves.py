@@ -89,10 +89,10 @@ class EllipticCurves(SlideBase):
         ).next_to(self.p, RIGHT, buff = 0.7)
         
         self.curve_ec = Text(
-            "BLS12-381", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=28
+            "BLS12-381", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=28
         ).next_to(self.chart_ec, UP, buff=0.1)
         self.curve_ec_bander = Text(
-            "BanderSnatch", color=PRIMARY_COLOR, font=PRIMARY_FONT, font_size=28
+            "BanderSnatch", color=HIGHLIGHT_COLOR, font=PRIMARY_FONT, font_size=28
         ).next_to(self.chart_bander, UP, buff=0.1)
         self.r = (
             MathTex(r"{{r}} \approx 2^{255}", color=SECONDARY_COLOR, font_size=32)
@@ -170,10 +170,10 @@ class EllipticCurves(SlideBase):
         
         self.pairings = MathTex(r"e({{G_1}}, {{G_2}}) \rightarrow {{G_T}}", color = PRIMARY_COLOR, font_size = 30).next_to(self.scalar_Fr, DOWN, buff = 1.0).shift(RIGHT)
         self.cross_out_pairings = Line(LEFT, RIGHT, color = PRIMARY_COLOR, stroke_width = 2).scale(1.2).move_to(self.pairings.get_center())
-        self.kzg = Text("KZG", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 30)
+        self.kzg = Text("KZG", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30)
         self.cross_out_line = Line(LEFT, RIGHT, color = PRIMARY_COLOR, stroke_width = 2).scale(0.4).move_to(self.kzg.get_center())
-        self.ipa = Text("Inner Product Argument", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT*3)
-        self.ipa2 = Text("IPA", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT * 3)
+        self.ipa = Text("Inner Product Argument", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT*3)
+        self.ipa2 = Text("IPA", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 30).shift(RIGHT * 3)
         
         self.pairing_operation_bls = self.pairings.copy()
         self.pairing_operatio_bander = self.pairings.copy()
