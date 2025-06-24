@@ -64,12 +64,12 @@ class SingleLevelVerkleTree(SlideBase):
         self.commitment = MathTex(r"\texttt{commitment}\ C^0", color = HIGHLIGHT_COLOR, font_size = 28).move_to(self.envelope.get_center())
         
         self.verifier1 = ImageMobject("data/images/person_new.png").scale(0.7).to_edge(RIGHT).shift(UP*1.5+LEFT)
-        self.verifier_label = Text("verification function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, DOWN, buff = 0.1)
-        self.verifier_label2 = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.verifier1, UP, buff = 0.1)
+        self.verifier_label = Text("verification function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 27).next_to(self.verifier1, DOWN, buff = 0.1)
+        self.verifier_label2 = Text("Verifier", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 27).next_to(self.verifier1, UP, buff = 0.1)
         self.verifier = Group(self.verifier1, self.verifier_label)
         self.prover1 = ImageMobject("data/images/person_new2.png").scale(0.7).shift(UP*1.5)
-        self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, UP, buff = 0.1)
-        self.prover_label2 = Text("insert function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.prover1, DOWN, buff = 0.1)
+        self.prover_label = Text("Prover", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 27).next_to(self.prover1, UP, buff = 0.1)
+        self.prover_label2 = Text("insert function", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 27).next_to(self.prover1, DOWN, buff = 0.1)
         
         self.proof_pi = MathTex(r"{{\pi^0}}", color = HIGHLIGHT_COLOR, font_size = 50).next_to(self.prover1, LEFT, buff = 0.1)
         self.proof = Text("proof", color = HIGHLIGHT_COLOR, font_size = 25, font=PRIMARY_FONT).next_to(self.proof_pi, LEFT, buff = 0.1).shift(DOWN * 0.1)

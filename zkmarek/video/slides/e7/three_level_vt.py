@@ -289,7 +289,7 @@ class ThreeLevelVerkleTree(SlideBase):
             self.internal_node2[0], RIGHT, buff=0.02
         )
         self.cdots_node3 = self.cdots_text.copy().next_to(
-            self.internal_node2[0], LEFT, buff=0.13
+            self.internal_node2[0], LEFT, buff=0.15
         )
 
         self.cdots_hashes1 = self.cdots_text.copy()
@@ -360,10 +360,6 @@ class ThreeLevelVerkleTree(SlideBase):
             Indicate(self.internal_node[1], color=PRIMARY_COLOR),
             Indicate(self.node1_texts[1], color=PRIMARY_COLOR),
             run_time=0.5,
-        )
-        scene.wait(1.5)
-        scene.play(
-            Indicate(self.commitment_to_c0_text, color=PRIMARY_COLOR), run_time=1
         )
 
         self.new_subsection(scene, "internal node", "data/sound/e7/slide4-2.mp3")
@@ -518,6 +514,9 @@ class ThreeLevelVerkleTree(SlideBase):
         self.new_subsection(
             scene, "both are too small", "data/sound/e7/slide4-5c.mp3"
         )
+        scene.wait(2)
+        scene.play(Indicate(self.commitment_size_ipa), run_time=1)
+        
         self.new_subsection(scene, "truncate", "data/sound/e7/slide4-6.mp3")
 
         self.hashaes_of_commitments.move_to(self.commitmentcdots.get_center())

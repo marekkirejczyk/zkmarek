@@ -290,11 +290,11 @@ class Multiproofs(SlideBase):
         
         self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
                                                                   -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
-                                                                  +4.2790892673006296 * x ** (0)) - y, color=SECONDARY_COLOR)
+                                                                  +4.2790892673006296 * x ** (0)) - y, color=PRIMARY_COLOR)
 
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph).shift(DOWN * 0.5)
-        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * x ** (4) - 3 * x ** (3) + 2 * x ** (2) - 5 * x + 80) - y, color=SECONDARY_COLOR)
-        self.polynomial3 = self.new_axes.plot_implicit_curve(lambda x, y: (1.2 * x ** (4) - 5 * x ** (3) + 2 * x ** (2) - 5 * x + 80) - y, color=SECONDARY_COLOR)
+        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * (x+5) ** (4) - 3 * (x+5) ** (3) + 2 * (x+5) ** (2) - 5 * (x+5) + 80) - y, color=HIGHLIGHT_COLOR)
+        self.polynomial3 = self.new_axes.plot_implicit_curve(lambda x, y: (1.2 * (x+8) ** (4) - 5 * (x+8) ** (3) + 2 * (x+8) ** (2) - 5 * (x+8) + 80) - y, color=SECONDARY_COLOR)
         values = [
             (0, 4), (1, 16), (2, 22), (3, 23), (4, 22), (5, 20), (6, 20), (7, 20),
             (8, 22), (9, 28), (10, 35), (11, 45), (12, 55), (13, 66), (14, 76), (15, 85)

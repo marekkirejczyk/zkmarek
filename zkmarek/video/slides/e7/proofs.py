@@ -656,7 +656,7 @@ class Proofs(SlideBase):
         scene.play(FadeIn(self.ipa_ec_point), run_time=1)
         scene.wait(3.5)
         scene.play(FadeIn(self.ipa_proof), run_time=1)
-        scene.wait(6)
+        scene.wait(7)
         scene.play(TransformMatchingShapes(self.ipa_proof, self.ipa_proof2), run_time=1)
 
         self.new_subsection(scene, "total 1.5 kB", "data/sound/e7/slide5-6c.mp3")
