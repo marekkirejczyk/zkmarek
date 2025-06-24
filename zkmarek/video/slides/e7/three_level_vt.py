@@ -515,6 +515,9 @@ class ThreeLevelVerkleTree(SlideBase):
         scene.wait(1)
         scene.play(Indicate(self.scalar_size_ipa), run_time=1)
 
+        self.new_subsection(
+            scene, "both are too small", "data/sound/e7/slide4-5c.mp3"
+        )
         self.new_subsection(scene, "truncate", "data/sound/e7/slide4-6.mp3")
 
         self.hashaes_of_commitments.move_to(self.commitmentcdots.get_center())

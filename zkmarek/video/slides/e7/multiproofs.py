@@ -1,6 +1,6 @@
 from manim import (Text, UP, DOWN, RIGHT, LEFT, FadeOut, Write, MathTex, TransformMatchingShapes, VGroup,
                    Axes, RoundedRectangle, FadeIn, ValueTracker, Indicate, MoveToTarget, Line, ImageMobject,
-                   CurvedArrow, StealthTip, Arrow, Group)
+                   CurvedArrow, StealthTip, Arrow, Group, Create)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -109,8 +109,8 @@ class Multiproofs(SlideBase):
 
         
         self.opening__0 = MathTex(r"p_0({x_0})=a_0", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
-        self.opening__1 = MathTex(r"p_1({x_{0}})=\texttt{hash}(C_0^0)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
-        self.opening__2 = MathTex(r"p_2({x_{0}})=\texttt{hash}(C_0^1)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening__1, DOWN, buff=0.5)
+        self.opening__1 = MathTex(r"p_1({x_{1}})=\texttt{hash}(C_0^0)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
+        self.opening__2 = MathTex(r"p_2({x_{2}})=\texttt{hash}(C_0^1)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening__1, DOWN, buff=0.5)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "VP: three proofs, three commitments", "data/sound/e7/slide6-1.mp3")
@@ -169,13 +169,13 @@ class Multiproofs(SlideBase):
                    self.dots[6].animate.shift(LEFT *2),
                    self.line_ai.animate.shift(LEFT * 2), run_time=1)
         scene.play(self.opening.animate.shift(LEFT * 1.1), run_time=1)
-        # scene.play(Write(self.opening__0), run_time=1)
-        scene.play(Write(self.opening__1), run_time=1)
-        scene.play(Write(self.opening__2), run_time=1)
-        scene.wait(1.5)
+        
+        scene.play(Write(self.opening__1), Create(self.polynomial2), run_time=1)
+        scene.play(Write(self.opening__2), Create(self.polynomial3), run_time=1)
+        scene.wait(2)
         
         scene.play(FadeOut(self.vector, self.rectangles_values, self.indices,
-                           self.opening__1, self.opening__2), run_time=1)
+                           self.opening__1, self.opening__2, self.polynomial2, self.polynomial3), run_time=1)
         
         self.new_subsection(scene, "p(xi)-ai=0", "data/sound/e7/slide6-4.mp3")
         scene.play(Write(self.new_polynomial), run_time=1)
@@ -291,7 +291,10 @@ class Multiproofs(SlideBase):
         self.polynomial_graph = self.new_axes.plot_implicit_curve(lambda x, y: (-0.013005328649673187  * x ** (4) + 0.44002953745582507 * x ** (3) 
                                                                   -4.368305697782954 * x ** (2) + 15.731787164922928 * x ** (1)
                                                                   +4.2790892673006296 * x ** (0)) - y, color=SECONDARY_COLOR)
+
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph).shift(DOWN * 0.5)
+        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * x ** (4) - 3 * x ** (3) + 2 * x ** (2) - 5 * x + 80) - y, color=SECONDARY_COLOR)
+        self.polynomial3 = self.new_axes.plot_implicit_curve(lambda x, y: (1.2 * x ** (4) - 5 * x ** (3) + 2 * x ** (2) - 5 * x + 80) - y, color=SECONDARY_COLOR)
         values = [
             (0, 4), (1, 16), (2, 22), (3, 23), (4, 22), (5, 20), (6, 20), (7, 20),
             (8, 22), (9, 28), (10, 35), (11, 45), (12, 55), (13, 66), (14, 76), (15, 85)

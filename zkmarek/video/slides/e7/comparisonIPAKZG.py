@@ -16,9 +16,9 @@ class TableKZGIPA(VGroup):
         sizes_kzg = ["<32 B", "<48 B", "<48 B"]
         sizes_ipa = ["<32 B", "<32 B", "each\n<32 B"]
 
-        cell_width = 2.4
+        cell_width = 2.7
         cell_height = 0.8
-        corner_radius = 0.2
+        corner_radius = 0.1
         spacing = 0.1 
         num_rows = len(kzg_values)
 
@@ -77,9 +77,9 @@ class TableKZGIPA(VGroup):
 
             if i < 3:
                 key_cell_true = key_cell_ec_scalar
-                size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.1)
-                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.33).shift(RIGHT * 0.2)
-                size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.1)
+                size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.08)
+                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.27).shift(RIGHT * 0.2)
+                size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.08)
 
             else:
                 key_cell_true = key_cell

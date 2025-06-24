@@ -77,6 +77,7 @@ class EllipticCurves(SlideBase):
             .scale(0.7)
             .shift(RIGHT * 3 + DOWN * 0.5)
         )
+        self.chart_bander.ax.set_color(HIGHLIGHT_COLOR)
 
         self.p = (
             MathTex(r"{{p}} \approx 2^{381}", color=HIGHLIGHT_COLOR, font_size=32)
@@ -85,7 +86,7 @@ class EllipticCurves(SlideBase):
         self.ec_points = Text("EC points", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size=24).next_to(self.p, LEFT, buff = 0.4)
         
         self.bytes_p2 = MathTex(
-            r"\sim {{48}} \ \mathrm{B}", color=HIGHLIGHT_COLOR, font_size=32
+            r"\sim {{48}} \ \texttt{B}", color=HIGHLIGHT_COLOR, font_size=32
         ).next_to(self.p, RIGHT, buff = 0.7)
         
         self.curve_ec = Text(
@@ -184,8 +185,8 @@ class EllipticCurves(SlideBase):
         
         self.kzg_ipa_table = TableKZGIPA()
         self.base_field_bander = MathTex(r"F_{p'}: p' \approx 2^{255}", font_size = 40, color = HIGHLIGHT_COLOR).next_to(self.chart_bander, DOWN, buff = 0.5).shift(LEFT*1.5)
-        self.scalar_field_bander = MathTex(r"F_{r'} \approx 2^{253} ", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
-        self.size_base_field_bander = Text("< 32 B", font_size = 25, color = HIGHLIGHT_COLOR).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.05)
+        self.scalar_field_bander = MathTex(r"F_{r'}: r'\approx 2^{253} ", font_size = 40, color = SECONDARY_COLOR).next_to(self.base_field_bander, RIGHT, buff = 1.5)
+        self.size_base_field_bander = Text("< 32 B", font_size = 25, color = HIGHLIGHT_COLOR, font = PRIMARY_FONT).next_to(self.base_field_bander, RIGHT, buff = 0.1).shift(UP*0.05)
         self.size_scalar_bander = self.size_base_field_bander.copy().next_to(self.scalar_field_bander, RIGHT, buff = 0.1).set_color(SECONDARY_COLOR)
         
         self.ipa_proof = MathTex(r"\pi \sim 2\log({{n}})", color = HIGHLIGHT_COLOR, font_size = 30)
@@ -247,7 +248,7 @@ class EllipticCurves(SlideBase):
         scene.play(Write(self.kzg))
         scene.wait(0.5)
         scene.play(Write(self.cross_out_line), run_time=1)
-        scene.wait(2.7)
+        scene.wait(3.7)
         scene.play(Write(self.cross_out_pairings), run_time=1)
         
         self.new_subsection(scene, "Pedersen commitments & Bandersnatch", "data/sound/e7/slide2-3a.mp3")
@@ -374,10 +375,10 @@ class EllipticCurves(SlideBase):
                    Create(self.kzg_ipa_table.vec_column[:][4]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.key_cells[:][3]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.key_cells[:][4]), run_time=1)
-        scene.wait(2)
+        scene.wait(5)
         scene.play(Create(self.kzg_ipa_table.value_cells[:][3]), run_time=1)
         scene.play(Create(self.kzg_ipa_table.value_cells[:][4]), run_time=1)
-        scene.wait(4)
+        scene.wait(2.5)
        
        
     def animate_out(self, scene):

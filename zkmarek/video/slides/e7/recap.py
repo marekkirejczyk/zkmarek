@@ -299,6 +299,7 @@ class Recap(SlideBase):
             FadeIn(self.slide_proof.dots),
             run_time=2,
         )
+        scene.wait(0.9)
         scene.play(Indicate(self.slide_proof.merkle_tree.extension2, color=SECONDARY_COLOR, scale_factor=1.1),
                    Indicate(self.slide_proof.merkle_tree.root, color = SECONDARY_COLOR, scale_factor=1.1), run_time=0.8)
         scene.play(Indicate(self.slide_proof.merkle_tree.branch1, color=SECONDARY_COLOR, scale_factor=1.1),

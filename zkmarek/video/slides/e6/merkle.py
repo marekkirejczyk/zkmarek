@@ -681,10 +681,10 @@ class MerkleTree(SlideBase):
             nodes_needed_to_proof[0]
             .animate.set_opacity(0.4)
             .set_color(HIGHLIGHT2_COLOR),
-            Indicate(self.nodes_copy[0], color=HIGHLIGHT2_COLOR),
+            Indicate(self.nodes_copy[0], color=HIGHLIGHT2_COLOR),run_time=0.2
         )
         scene.play(
-            node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR),
+            node_prove.animate.set_opacity(0.4).set_color(SECONDARY_COLOR), run_time=0.2
         )
         scene.play(
             nodes_directly_used[1].set_color(SECONDARY_COLOR).animate.set_opacity(0.4),
