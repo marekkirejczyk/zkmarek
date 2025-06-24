@@ -1,6 +1,6 @@
 from manim import (Text, UP, DOWN, RIGHT, LEFT, FadeOut, Write, MathTex, TransformMatchingShapes, VGroup,
                    Axes, RoundedRectangle, FadeIn, ValueTracker, Indicate, MoveToTarget, Line, ImageMobject,
-                   CurvedArrow, StealthTip, Arrow, Group, Create)
+                   CurvedArrow, StealthTip, Arrow, Group, Create, Circle)
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.constant import PRIMARY_COLOR, PRIMARY_FONT, SECONDARY_COLOR, HIGHLIGHT_COLOR
 from zkmarek.video.mobjects.dot_on_curve import DotOnCurve
@@ -172,9 +172,10 @@ class Multiproofs(SlideBase):
         
         scene.play(Write(self.opening__1), Create(self.polynomial2), run_time=1)
         scene.play(Write(self.opening__2), Create(self.polynomial3), run_time=1)
+        scene.play(Create(self.dot1), Create(self.dot2), run_time=1)
         scene.wait(2)
         
-        scene.play(FadeOut(self.vector, self.rectangles_values, self.indices,
+        scene.play(FadeOut(self.vector, self.rectangles_values, self.indices, self.dot1, self.dot2,
                            self.opening__1, self.opening__2, self.polynomial2, self.polynomial3), run_time=1)
         
         self.new_subsection(scene, "p(xi)-ai=0", "data/sound/e7/slide6-4.mp3")
@@ -293,7 +294,7 @@ class Multiproofs(SlideBase):
                                                                   +4.2790892673006296 * x ** (0)) - y, color=PRIMARY_COLOR)
 
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph).shift(DOWN * 0.5)
-        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * (x) ** (4) - 3 * (x) ** (3) + 2 * (x) ** (2) - 5 * (x) + 80)*0.4 - y, color=HIGHLIGHT_COLOR)
+        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * (x) ** (4) - 3 * (x) ** (3) + 2 * (x) ** (2) - 5 * (x) + 80)*1.2 - y, color=HIGHLIGHT_COLOR)
         self.polynomial3 = self.new_axes.plot_implicit_curve(lambda x, y: (1.2 * (x) ** (4) - 5 * (x) ** (3) + 2 * (x) ** (2) - 5 * (x) + 80)*0.4 - y, color=SECONDARY_COLOR)
         self.polynomial2.shift(LEFT * 2)
         self.polynomial3.shift(LEFT * 2)
@@ -307,6 +308,9 @@ class Multiproofs(SlideBase):
             curve = Curve.from_x(tracker.get_value())
             dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve).dot
             self.dots.add(dot)
+            
+        self.dot1 = Circle(radius=0.05, fill_opacity=1, color = SECONDARY_COLOR).next_to(self.dots[6], UP+LEFT, buff = 0.4).shift(LEFT * 1.8+UP*0.5)
+        self.dot2 = Circle(radius=0.05, fill_opacity=1, color = SECONDARY_COLOR).next_to(self.dots[6], UP+RIGHT, buff = 0.1).shift(LEFT * 2+UP*0.5)
             
         self.line_ai = Line(self.dots[6].get_center(), self.new_axes.c2p(6, 0), color=PRIMARY_COLOR, stroke_width=2)
     

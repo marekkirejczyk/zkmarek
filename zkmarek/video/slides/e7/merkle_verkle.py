@@ -34,7 +34,7 @@ class MerkleVerkle(SlideBase):
         self.slide_VT.construct()
         self.tree_VT = self.slide_VT.tree.shift(RIGHT * 6).scale(0.8)
         
-        self.brace_MT = Brace(self.tree_MT.branch2.copy(), DOWN, buff = 0.7).set_color(PRIMARY_COLOR).shift(LEFT*1.45).move_to(self.tree_MT.get_bottom() + DOWN * 0.04)
+        self.brace_MT = Brace(self.tree_MT.branch2.copy().scale(0.8), DOWN, buff = 0.7).set_color(PRIMARY_COLOR).move_to(self.tree_MT.get_bottom() + DOWN * 0.04).shift(LEFT*1.)
         self.brace_VT = Brace(self.tree_VT.copy().scale(0.2), DOWN, buff = 0.1).set_color(PRIMARY_COLOR).shift(LEFT*0.73+DOWN*2.)
         
         self.VT_children= Text("256 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_VT, DOWN, buff=0.1)

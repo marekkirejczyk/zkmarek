@@ -76,14 +76,14 @@ class TableKZGIPA(VGroup):
             ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing))
 
             if i < 3:
-                key_cell_true = key_cell_ec_scalar
-                size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.08)
+                key_cell_true = key_cell_ec_scalar.shift(LEFT*0.065)
+                size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.04)
                 value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.15).shift(RIGHT * 0.2)
-                size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.08)
+                size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.04)
 
             else:
-                key_cell_true = key_cell
-                value_cell_true = key_cell.copy().shift(RIGHT * (cell_width + 0.3)+RIGHT * 0.2)
+                key_cell_true = key_cell.shift(RIGHT * 0.075)
+                value_cell_true = key_cell.copy().shift(RIGHT * (cell_width + 0.3)+RIGHT * 0.11)
                 
             vec_cell = key_cell.copy().shift(LEFT * (cell_width + 0.3)).set_color(HIGHLIGHT_COLOR)
             vec_text = Text(vec_column, font=PRIMARY_FONT, font_size=23, color=HIGHLIGHT_COLOR).move_to(vec_cell)

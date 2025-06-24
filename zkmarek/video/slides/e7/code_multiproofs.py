@@ -61,7 +61,7 @@ class Multiproofs(CodeSlide):
         
         self.new_subsection(scene, "g - random linear combination", "data/sound/e7/slide7-5.mp3")
         scene.wait(3)
-        self.indicate_code(scene, self.code, "g = 0", run_time=1)
+        self.indicate_code(scene, self.code, "g = polynomial.zero()", run_time=1)
         scene.wait(3.5)
         self.indicate_code(scene, self.code, "(p_i(x) - vi) / (x - xi)", run_time=1)
         scene.wait(1)
@@ -94,11 +94,11 @@ class Multiproofs(CodeSlide):
         
         self.new_subsection(scene, "generate proof", "data/sound/e7/slide7-10.mp3")
         scene.wait(1)
-        self.indicate_code(scene, self.code, "pi = open(D, s, value)", run_time=1)
+        self.indicate_code(scene, self.code, "pi = generate_proof(D, s, value)", run_time=1)
         
         self.new_subsection(scene, "pi - multiproof", "data/sound/e7/slide7-11.mp3")
         scene.wait(3)
-        self.indicate_code(scene, self.code, "return MultiProof(pi, c0, c1)", run_time=1)
+        self.indicate_code(scene, self.code, "return (pi, c0, c1)", run_time=1)
         scene.wait(5)
 
         
