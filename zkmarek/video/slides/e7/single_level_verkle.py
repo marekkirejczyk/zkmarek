@@ -79,7 +79,7 @@ class SingleLevelVerkleTree(SlideBase):
         self.opening3 = MathTex(r"{{a_{252} }} = 55", color = PRIMARY_COLOR, font_size = 40).next_to(self.verifier, DOWN, buff = 1.0)
         self.elliptic_curve_point = Text("1 EC point", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 30).next_to(self.envelope, UP, buff = 0.8)
         
-        self.dots2048 = Text("...", color = SECONDARY_COLOR, font = PRIMARY_FONT, font_size = 40)
+        self.dots2048 = Text("...", color = HIGHLIGHT_COLOR, font = PRIMARY_FONT, font_size = 40)
         indeces = [0, 1, 2, 3, 4, 2043, 2044, 2045, 2046, 2047]
         self.indeces = VGroup(*[Text(str(i), color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 17) for i in indeces]).arrange(RIGHT, buff=0.1)
         indeces256 = [0, 1, 2, 3, 4, 251, 252, 253, 254, 255]
@@ -146,7 +146,10 @@ class SingleLevelVerkleTree(SlideBase):
         scene.play(Write(self.verifier_label2), run_time=1.0)
         self.verifier.add(self.verifier_label2)
         scene.wait(3.5)
-        
+        scene.play(Indicate(self.verifier, color = PRIMARY_COLOR), run_time=1.0)
+        scene.wait(3)
+        scene.play(Indicate(self.commitment, color = PRIMARY_COLOR), run_time=1.0)
+        scene.wait(0.5)
         scene.play(Write(self.proof), run_time=0.7)
         scene.wait(1)
         scene.play(Write(self.opening), run_time=0.7)

@@ -131,7 +131,7 @@ class Proofs(SlideBase):
         ).next_to(self.hashes_commitments_level2[0], UP, buff=0.6).shift(LEFT*0.2)
         hash_255 = MathTex(
             r"\texttt{hash}(C_{255}^0)", color=PRIMARY_COLOR, font_size=25
-        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6).shift(RIGHT*0.2)
+        ).next_to(self.hashes_commitments_level2[3], UP, buff=0.6).shift(RIGHT*0.25)
         self.hashes_commitments_level2.add(
             text_commitment_C0,
             self.cdots_level2,
@@ -377,7 +377,7 @@ class Proofs(SlideBase):
             r"\sim 2\cdot 32  \ \texttt{B}", color=HIGHLIGHT_COLOR, font_size=35
         )
         self.ipa_proof = Text(
-            "   3 x 16 x\n EC points",
+            "   3 x 16  \n x EC points",
             font=PRIMARY_FONT,
             color=HIGHLIGHT_COLOR,
             font_size=25,
@@ -691,17 +691,10 @@ class Proofs(SlideBase):
             ),
             run_time=1,
         )
-        scene.play(
-            TransformMatchingShapes(
-                VGroup(self.verify_function_REST[4:].copy()), self.multicommitment
-            ),
-            run_time=1,
-        )
-        scene.wait(5.)
+        scene.wait(6.)
 
         self.all = Group(
             self.title_label,
-            self.multicommitment,
             self.kzg,
             self.kzg_ec_point,
             self.kzg_ecpoint2,

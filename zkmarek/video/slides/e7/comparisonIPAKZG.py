@@ -67,7 +67,7 @@ class TableKZGIPA(VGroup):
             ).move_to(self.background.get_top()).shift(DOWN * (i + 1.5) * (cell_height + spacing)+LEFT*0.4)
             
             key_cell_size = RoundedRectangle(
-                width=cell_width*10/33,
+                width=cell_width*13/33,
                 height=cell_height,
                 corner_radius=corner_radius,
                 fill_opacity=0.3,
@@ -78,7 +78,7 @@ class TableKZGIPA(VGroup):
             if i < 3:
                 key_cell_true = key_cell_ec_scalar
                 size_kzg_cell = key_cell_size.copy().next_to(key_cell_true, RIGHT, buff = 0.08)
-                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.27).shift(RIGHT * 0.2)
+                value_cell_true = key_cell_ec_scalar.copy().next_to(size_kzg_cell, RIGHT, buff = 0.15).shift(RIGHT * 0.2)
                 size_ipa_cell = key_cell_size.copy().next_to(value_cell_true, RIGHT, buff = 0.08)
 
             else:

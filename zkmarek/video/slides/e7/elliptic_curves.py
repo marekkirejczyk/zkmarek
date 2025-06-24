@@ -78,6 +78,7 @@ class EllipticCurves(SlideBase):
             .shift(RIGHT * 3 + DOWN * 0.5)
         )
         self.chart_bander.ax.set_color(HIGHLIGHT_COLOR)
+        self.chart_bander.labels.set_color(HIGHLIGHT_COLOR)
 
         self.p = (
             MathTex(r"{{p}} \approx 2^{381}", color=HIGHLIGHT_COLOR, font_size=32)

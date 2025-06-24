@@ -16,22 +16,22 @@ class MerkleVerkleTable(VGroup):
         merkle_values = [
             "Hashes",
             "~9",
-            "~4 KB",
+            "~4 kB",
             "~4 MB",
         ]
 
         ipa_values = [
             "IPA vector commitment",
             "~4",
-            "~1.3 KB",
-            "~45 KB",
+            "~600 B",
+            "~72 kB",
         ]
 
         kzg_values = [
             "KZG commitment",
             "~4",
-            "~600 B",
-            "~15 KB",
+            "~200 B",
+            "~109 kB",
         ]
 
         cell_width = 2.7

@@ -3,7 +3,6 @@ from manim import (FadeIn, Text, UP, FadeOut, Create, RIGHT, LEFT, DOWN, Brace, 
 from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
-# from zkmarek.video.slides.e7.tree import MerkleTree as MT16
 from zkmarek.video.slides.e6.proof_sizes import ProofSize
 from zkmarek.video.slides.e7.proofs import Proofs
 from zkmarek.video.slides.e7.table_proofs import MerkleVerkleTable
@@ -48,7 +47,13 @@ class MerkleVerkle(SlideBase):
         
         self.horizontals = Tex(r"\texttt{verify({{opening: scalar}}, root: EC\_point, \\ VerklePath(commitment, proof))}", color = PRIMARY_COLOR, font_size = 30).next_to(self.table, DOWN, buff = 0.8)
         self.horizontals2 = Tex(r"\texttt{verify({{opening: List[scalar]}}, root: EC\_point, \\ VerklePath(commitment, proof))}", color = PRIMARY_COLOR, font_size = 30).next_to(self.table, DOWN, buff = 0.8)
+        
+        self.multiproof_ipa = MathTex(r"\texttt{IPA: } 2256\times \texttt{32 B}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN).shift(RIGHT* 2)
+        self.multiproof_kzg = MathTex(r"\texttt{KZG: } 2256\times \texttt{48 B}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN).shift(LEFT* 2)
     
+        self.multiproof_vs_commitments_IPA = MathTex(r"\texttt{512 B}<<\texttt{72 kB}", color = PRIMARY_COLOR, font_size = 35).next_to(self.multiproof_ipa, DOWN, buff=0.0)
+        self.multiproof_vs_commitments_KZG = MathTex(r"\texttt{48 B}<<\texttt{109 kB}", color = PRIMARY_COLOR, font_size = 35).next_to(self.multiproof_kzg, DOWN, buff=0.0)
+
     def animate_in(self, scene):
         self.new_subsection(scene, "depth -MT", "data/sound/e7/slide8-1.mp3")
         scene.play(FadeIn(self.title_label))
@@ -106,23 +111,25 @@ class MerkleVerkle(SlideBase):
         scene.wait(2.5)
         scene.play(Indicate(self.table.kzg_col[2]), run_time=1  )
         
-        self.new_subsection(scene, "1000 VP: 45 kB, 1000 VP: 15 kB", "data/sound/e7/slide8-9.mp3")
+        self.new_subsection(scene, "4 level VT", "data/sound/e7/slide8-9.mp3")
+        self.new_subsection(scene, "1000 VP: 72 kB, 1000 VP: 109 kB", "data/sound/e7/slide8-9a.mp3")
         scene.wait(4)
-        scene.play(Write(self.horizontals), run_time=1.5)
+        scene.play(Write(self.multiproof_ipa), run_time=1)
+        scene.play(Write(self.multiproof_kzg), run_time=1)
         scene.wait(2)
-        scene.play(Indicate(self.horizontals[1]), run_time=1)
-        scene.wait(0.7)
-        scene.play(TransformMatchingShapes(self.horizontals, self.horizontals2), run_time=1.5)
-        scene.wait(2.5)
         scene.play(Create(self.table.ipa_col[3]), run_time=1)
         scene.play(Create(self.table.kzg_col[3]), run_time=1)
         scene.wait(1.5)
-        scene.play(Indicate(self.table.ipa_col[3]), FadeOut(self.horizontals2), run_time=1)
-        scene.wait(2.5)
-        scene.play(Indicate(self.table.kzg_col[3]), run_time=1)
+        self.new_subsection(scene, "horizontals", "data/sound/e7/slide8-10.mp3")
+        scene.wait(1)
+        scene.play(FadeOut(self.multiproof_ipa, self.multiproof_kzg), run_time=1)
+        scene.play(Write(self.multiproof_vs_commitments_KZG), run_time=1)
+        scene.play(Write(self.multiproof_vs_commitments_IPA), run_time=1)
+        scene.wait(5)
+        scene.play(FadeOut(self.multiproof_vs_commitments_KZG, self.multiproof_vs_commitments_IPA), run_time=1)
         
         self.new_subsection(scene, "can be the future", "data/sound/e7/slide8-11.mp3")
-        scene.wait(9)
+        scene.wait(8)
         
     def animate_out(self, scene):
-        scene.play(FadeOut(self.title_label))
+        scene.play(FadeOut(self.title_label, self.table))

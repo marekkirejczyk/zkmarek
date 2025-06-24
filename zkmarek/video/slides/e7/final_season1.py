@@ -1,4 +1,4 @@
-from manim import FadeIn, Text, UP
+from manim import FadeIn, Text, UP, FadeOut
 from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 from zkmarek.video.slides.e6.merkle import MerkleTree
@@ -46,7 +46,7 @@ class FinalSeason1(SlideBase):
         
         self.slide_merkle.animate_miniature_final_season(scene)
         self.slide_blobs.animate_miniature_final_season(scene)
-        scene.wait(0.6)
         
-        
+    def animate_out(self, scene):
+        scene.play(FadeOut(self))
         

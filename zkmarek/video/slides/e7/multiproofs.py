@@ -75,8 +75,8 @@ class Multiproofs(SlideBase):
         self.quotient_g[7].set_color(HIGHLIGHT_COLOR)
         self.quotient_g[11].set_color(SECONDARY_COLOR)
         
-        self.powers_of_r = MathTex(r"r\sim \texttt{hash}({{C_0^0}},\; {{C_0^1}},\; {{C_0^2}},\; {{x_0}},\; {{x_1}},\; {{x_2}},\; {{a_{255}}},\; {{\texttt{hash}(C_0^0)}},\; {{\texttt{hash}(C_0^1)}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.quotient_g, DOWN, buff = 0.5)
-        for i in range(18):
+        self.powers_of_r = MathTex(r"r\sim \texttt{hash}({{C_0^0}},\; {{C_0^1}},\; {{C_0^2}},\;  {{a_{255}}},\; {{\texttt{hash}(C_0^0)}},\; {{\texttt{hash}(C_0^1)}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.quotient_g, DOWN, buff = 0.5)
+        for i in range(len(self.powers_of_r)):
             if i % 6 == 1:
                 self.powers_of_r[i].set_color(PRIMARY_COLOR)
             elif i % 6 == 3:
@@ -89,7 +89,7 @@ class Multiproofs(SlideBase):
                                                 tip_shape=StealthTip, color=PRIMARY_COLOR)
         self.proof_label_arrow = Text("quotient corresponding \n       to the opening", color = PRIMARY_COLOR, font = PRIMARY_FONT, font_size = 18).next_to(self.curved_arrow_proof, RIGHT, buff = 0.1)
         
-        self.random_t = MathTex(r"s\sim \texttt{hash(...)}", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.6).shift(RIGHT*2.)
+        self.random_t = MathTex(r"s\sim \texttt{hash}({{D}},\; {{C_0^0}},\; {{C_0^1}},\; {{C^2_0}},\; {{a_{255}}}, \; \texttt{hash}({{C_0^0}}), \texttt{hash}({{C^1_0}}))", color = PRIMARY_COLOR, font_size = 30).next_to(self.quotient_g, DOWN, buff = 0.6).shift(RIGHT*2.)
         
         self.proof_to_g = MathTex(r"\pi", color = PRIMARY_COLOR, font_size = 50).next_to(self.quotient_g2, DOWN, buff = 0.65)
         self.arrow_proof_to_g = Arrow(self.quotient_g2.get_bottom(), self.proof_to_g.get_top(),
@@ -108,8 +108,8 @@ class Multiproofs(SlideBase):
         self.indices = VGroup(*[Text(str(i), font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=18) for i in idxs]).arrange(RIGHT, buff = 0.42)
 
         
-        self.opening__0 = MathTex(r"p_0({x_0})=a_0", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
-        self.opening__1 = MathTex(r"p_1({x_{1}})=\texttt{hash}(C_0^0)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
+        self.opening__0 = MathTex(r"p_0({x_0})=a_0", color=PRIMARY_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
+        self.opening__1 = MathTex(r"p_1({x_{1}})=\texttt{hash}(C_0^0)", color=HIGHLIGHT_COLOR, font_size=35).next_to(self.opening, DOWN, buff=0.5).shift(LEFT * 2)
         self.opening__2 = MathTex(r"p_2({x_{2}})=\texttt{hash}(C_0^1)", color=SECONDARY_COLOR, font_size=35).next_to(self.opening__1, DOWN, buff=0.5)
         
     def animate_in(self, scene):
@@ -152,8 +152,8 @@ class Multiproofs(SlideBase):
         self.opening1.shift(RIGHT * 3.5+UP*1.5)
         for i in range(6):
             scene.play(Indicate(self.vector[i]), run_time=0.3)
-        scene.play(self.vector[6].animate.set_color(SECONDARY_COLOR), run_time=1)
-        scene.play(Indicate(self.vector[6], scale_factor=1.5), run_time=1)
+        scene.play(self.vector[11].animate.set_color(SECONDARY_COLOR), run_time=1)
+        scene.play(Indicate(self.vector[11], scale_factor=1.5), run_time=1)
         scene.wait(1)
         self.opening.move_to(self.opening1.get_center())
         scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening), run_time=1)
@@ -244,13 +244,13 @@ class Multiproofs(SlideBase):
         scene.wait(1)
         scene.play(FadeOut(self.powers_of_r), run_time=1)
         scene.wait(1)
-        commitment_D = MathTex(r"D = \texttt{commit}({{g}})", color=PRIMARY_COLOR, font_size=35).next_to(self.quotient_g, DOWN, buff=0.5)
+        commitment_D = MathTex(r"D = \texttt{commit}({{g}})", color=PRIMARY_COLOR, font_size=35).next_to(self.quotient_g, DOWN, buff=0.65)
         scene.play(FadeIn(commitment_D), run_time=1)
         
         self.new_subsection(scene, "g(s)", "data/sound/e7/slide6-13.mp3")
         scene.wait(2)
         scene.play(TransformMatchingShapes(self.quotient_g, self.quotient_g2), run_time=1)
-        scene.play(commitment_D.animate.shift(LEFT * 2.5))
+        scene.play(commitment_D.animate.shift(LEFT * 3.5))
         scene.play(FadeIn(self.random_t), run_time=1)
         scene.wait(1)
         
@@ -293,8 +293,10 @@ class Multiproofs(SlideBase):
                                                                   +4.2790892673006296 * x ** (0)) - y, color=PRIMARY_COLOR)
 
         self.polynomial_chart = VGroup(self.new_axes, self.polynomial_graph).shift(DOWN * 0.5)
-        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * (x+5) ** (4) - 3 * (x+5) ** (3) + 2 * (x+5) ** (2) - 5 * (x+5) + 80) - y, color=HIGHLIGHT_COLOR)
-        self.polynomial3 = self.new_axes.plot_implicit_curve(lambda x, y: (1.2 * (x+8) ** (4) - 5 * (x+8) ** (3) + 2 * (x+8) ** (2) - 5 * (x+8) + 80) - y, color=SECONDARY_COLOR)
+        self.polynomial2 = self.new_axes.plot_implicit_curve(lambda x, y: (0.45 * (x) ** (4) - 3 * (x) ** (3) + 2 * (x) ** (2) - 5 * (x) + 80)*0.4 - y, color=HIGHLIGHT_COLOR)
+        self.polynomial3 = self.new_axes.plot_implicit_curve(lambda x, y: (1.2 * (x) ** (4) - 5 * (x) ** (3) + 2 * (x) ** (2) - 5 * (x) + 80)*0.4 - y, color=SECONDARY_COLOR)
+        self.polynomial2.shift(LEFT * 2)
+        self.polynomial3.shift(LEFT * 2)
         values = [
             (0, 4), (1, 16), (2, 22), (3, 23), (4, 22), (5, 20), (6, 20), (7, 20),
             (8, 22), (9, 28), (10, 35), (11, 45), (12, 55), (13, 66), (14, 76), (15, 85)
@@ -306,5 +308,5 @@ class Multiproofs(SlideBase):
             dot = DotOnCurve(self.new_axes, f"({{{x}}}, {{{y}}})", curve).dot
             self.dots.add(dot)
             
-        self.line_ai = Line(self.dots[6].get_center(), self.new_axes.c2p(6, 0), color=SECONDARY_COLOR, stroke_width=2)
+        self.line_ai = Line(self.dots[6].get_center(), self.new_axes.c2p(6, 0), color=PRIMARY_COLOR, stroke_width=2)
     
