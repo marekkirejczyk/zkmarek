@@ -34,7 +34,7 @@ class MerkleVerkle(SlideBase):
         self.slide_VT.construct()
         self.tree_VT = self.slide_VT.tree.shift(RIGHT * 6).scale(0.8)
         
-        self.brace_MT = Brace(self.tree_MT.branch2.copy().scale(0.8), DOWN, buff = 0.7).set_color(PRIMARY_COLOR).move_to(self.tree_MT.get_bottom() + DOWN * 0.04).shift(LEFT*1.)
+        self.brace_MT = Brace(self.tree_MT.branch2.copy().scale(0.9), DOWN, buff = 0.7).set_color(PRIMARY_COLOR).move_to(self.tree_MT.get_bottom() + DOWN * 0.04).shift(LEFT*0.45)
         self.brace_VT = Brace(self.tree_VT.copy().scale(0.2), DOWN, buff = 0.1).set_color(PRIMARY_COLOR).shift(LEFT*0.73+DOWN*2.)
         
         self.VT_children= Text("256 children", font=PRIMARY_FONT, color=PRIMARY_COLOR, font_size=30).next_to(self.brace_VT, DOWN, buff=0.1)
@@ -103,12 +103,12 @@ class MerkleVerkle(SlideBase):
         scene.play(Create(self.table.ipa_col[0]), run_time=1)
         scene.play(Create(self.table.kzg_col[0]), run_time=1)
         
-        self.new_subsection(scene, "IPA VT: 1.3 kB, KZG VP: 600 B ", "data/sound/e7/slide8-8.mp3")
+        self.new_subsection(scene, "IPA VT: 600 B, KZG VP: 200 B ", "data/sound/e7/slide8-8.mp3")
         scene.play(Create(self.table.ipa_col[1:3]), run_time=1)
         scene.play(Create(self.table.kzg_col[1:3]), run_time=1)
-        scene.wait(2.5)
+        scene.wait(1.8)
         scene.play(Indicate(self.table.ipa_col[2]), run_time=1)
-        scene.wait(2.5)
+        scene.wait(2.3)
         scene.play(Indicate(self.table.kzg_col[2]), run_time=1  )
         
         self.new_subsection(scene, "4 level VT", "data/sound/e7/slide8-9.mp3")
@@ -129,7 +129,7 @@ class MerkleVerkle(SlideBase):
         scene.play(FadeOut(self.multiproof_vs_commitments_KZG, self.multiproof_vs_commitments_IPA), run_time=1)
         
         self.new_subsection(scene, "can be the future", "data/sound/e7/slide8-11.mp3")
-        scene.wait(8)
+        scene.wait(10)
         
     def animate_out(self, scene):
         scene.play(FadeOut(self.title_label, self.table))

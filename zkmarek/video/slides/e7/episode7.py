@@ -17,7 +17,7 @@ from zkmarek.video.slides.common.subscribe import Subscribe
 EPISODE7 = [
     Intro(
         sound="data/sound/e7/slide0-0.mp3",
-        background_sound="data/sound/e6/background.mp3",
+        background_sound="data/sound/e7/background.mp3",
     ),
     Sponsored(),
     FinalSeason1(),

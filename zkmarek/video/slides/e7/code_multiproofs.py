@@ -19,13 +19,15 @@ class Multiproofs(CodeSlide):
         )
         self.code = Code("data/snippets/make_multiproof.py", 
                          background="rectangle", 
-            language="python",).scale(0.65).shift(DOWN * 0.5)
+            language="python",).scale(0.55).shift(DOWN * 0.5)
         
     def animate_in(self, scene):
         self.new_subsection(scene, "prover quoery", "data/sound/e7/slide7-1.mp3")
         scene.play(Write(self.title_label))
         scene.play(FadeIn(self.code))
-        scene.wait(2.5)
+        scene.wait(1.5)
+        self.indicate_code(scene, self.code, "def generateMultiProof", run_time=1)
+        scene.wait(5)
         self.indicate_code(scene, self.code, "x_i", run_time=1)
         scene.wait(2)
         self.indicate_code(scene, self.code, "a_i", run_time=1)

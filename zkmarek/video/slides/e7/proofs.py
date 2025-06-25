@@ -41,7 +41,7 @@ class Proofs(SlideBase):
 
         ## values (1 level)
         values_rectangles = RoundedRectangle(
-            corner_radius=0.05,
+            corner_radius=0.2,
             width=0.6,
             height=0.6,
             fill_opacity=0.25,
@@ -81,7 +81,7 @@ class Proofs(SlideBase):
 
         ## commitments (2 level)
         commitments_rectangles = RoundedRectangle(
-            corner_radius=0.05,
+            corner_radius=0.2,
             width=0.6,
             height=0.6,
             fill_opacity=0.25,
@@ -106,7 +106,7 @@ class Proofs(SlideBase):
         )
         self.rectangle_all_commitments_left = (
             RoundedRectangle(
-                corner_radius=0.05,
+                corner_radius=0.2,
                 width=3.8,
                 height=0.8,
                 fill_opacity=0.22,
@@ -117,7 +117,7 @@ class Proofs(SlideBase):
         )
         self.rectangle_all_commitments_right = (
             RoundedRectangle(
-                corner_radius=0.05,
+                corner_radius=0.2,
                 width=3.8,
                 height=0.8,
                 fill_opacity=0.22,
@@ -158,7 +158,7 @@ class Proofs(SlideBase):
         )
         self.rectangle_parent_commitments = (
             RoundedRectangle(
-                corner_radius=0.05,
+                corner_radius=0.2,
                 width=6.0,
                 height=0.8,
                 fill_opacity=0.22,
@@ -249,7 +249,7 @@ class Proofs(SlideBase):
             self.verify_function0[1:3], UP, buff=0.1, color=HIGHLIGHT_COLOR
         )
         self.public_imput = Text(
-            "public input", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25
+            "public", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25
         ).next_to(self.brace_public, UP, buff=0.1)
 
         self.verify_function1_commitment = (
@@ -444,7 +444,7 @@ class Proofs(SlideBase):
             .shift(UP * 1 + LEFT * 0.1)
         )
         self.brace_pub_in = Brace(self.verify_function[1:3], UP, buff=0.1, color=HIGHLIGHT_COLOR)
-        self.public_input2 = Text("public input", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25).next_to(self.brace_pub_in, UP, buff=0.1)
+        self.public_input2 = Text("public", font=PRIMARY_FONT, color=HIGHLIGHT_COLOR, font_size=25).next_to(self.brace_pub_in, UP, buff=0.1)
 
     def animate_in(self, scene):
         self.new_subsection(scene, "85: proof C, opening", "data/sound/e7/slide5-1.mp3")
