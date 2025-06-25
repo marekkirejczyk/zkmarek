@@ -36,7 +36,6 @@ class Multiproofs(CodeSlide):
         scene.wait(1)
         self.indicate_code(scene, self.code, "c0, c1 = VerklePath", run_time=1)
         scene.wait(2.7)
-        self.indicate_code(scene, self.code, "c2", run_time=1)
         
         self.new_subsection(scene, "+ list of polynomials", "data/sound/e7/slide7-2.mp3")
         scene.wait(1)
