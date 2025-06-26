@@ -933,7 +933,7 @@ class ThreeLevelVerkleTree(SlideBase):
     def create_ethereum_addresses_counter(self, scene):
         scene.play(FadeOut(self.values2_to_8, self.single_commitment))
         self.block = RoundedRectangle(
-            corner_radius=0.05, width=4, height=2, fill_opacity=0.25, stroke_width=0.0
+            corner_radius=0.05, width=4.3, height=2, fill_opacity=0.25, stroke_width=0.0
         ).set_color(PRIMARY_COLOR)
         self.block.next_to(self.four_level, DOWN, buff=1.5)
         self.ethereum_addresses = (

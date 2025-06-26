@@ -176,6 +176,7 @@ class Multiproofs(SlideBase):
         scene.play(Indicate(self.opening__1), Indicate(self.dot2), run_time=1)
         scene.play(Indicate(self.opening__2), Indicate(self.dot1), run_time=1)
         
+        self.new_subsection(scene, "opening p(x0)=a255", "data/sound/e7/slide6-3a.mp3")
         scene.play(FadeOut(self.vector, self.rectangles_values, self.indices, self.dot1, self.dot2,
                            self.opening__1, self.opening__2, self.polynomial2, self.polynomial3), run_time=1)
         
