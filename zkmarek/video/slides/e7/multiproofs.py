@@ -150,34 +150,26 @@ class Multiproofs(SlideBase):
         
         self.new_subsection(scene, "opening p(xi)=ai", "data/sound/e7/slide6-3.mp3")
         self.opening1.shift(RIGHT * 3.5+UP*1.5)
-        for i in range(6):
-            scene.play(Indicate(self.vector[i]), run_time=0.3)
+        scene.play(self.polynomial_chart.animate.shift(LEFT * 2),
+                   self.commtiment_C.animate.shift(LEFT * 2), run_time=1)
+        scene.play(self.opening.animate.shift(LEFT * 2.0), run_time=1)
+        self.line_ai.shift(LEFT * 2.0)
+        self.dots[6].shift(LEFT * 2.0)
         scene.play(self.vector[11].animate.set_color(SECONDARY_COLOR), run_time=1)
         scene.play(Indicate(self.vector[11], scale_factor=1.5), run_time=1)
         scene.wait(1)
-        self.opening.move_to(self.opening1.get_center())
-        scene.play(FadeIn(self.dots[6], self.line_ai), Write(self.opening), run_time=1)
+        scene.play(FadeIn(self.dots[6], self.line_ai), run_time=1)
         scene.wait(3)
-        scene.play(Indicate(self.new_axes[0]))
-        for i, idx in enumerate(self.indices):
-            idx.next_to(self.vector[i], DOWN, buff = 0.2)
-            
-        scene.play(Indicate(self.indices))
         
-        scene.play(self.polynomial_chart.animate.shift(LEFT * 2),
-                   self.commtiment_C.animate.shift(LEFT * 2),
-                   self.dots[6].animate.shift(LEFT *2),
-                   self.line_ai.animate.shift(LEFT * 2), run_time=1)
-        scene.play(self.opening.animate.shift(LEFT * 1.1), run_time=1)
-        scene.play(Indicate(self.opening), Indicate(self.dots[6]), run_time=1)
         scene.play(Write(self.opening__1), Create(self.polynomial2), Create(self.dot2), run_time=1)
-        scene.play(Write(self.opening__2), Create(self.polynomial3), Create(self.dot1), run_time=1)
         scene.wait(2)
+        scene.play(Write(self.opening__2), Create(self.polynomial3), Create(self.dot1), run_time=1)
+        scene.wait(4.5)
         scene.play(Indicate(self.opening__1), Indicate(self.dot2), run_time=1)
         scene.play(Indicate(self.opening__2), Indicate(self.dot1), run_time=1)
         
         self.new_subsection(scene, "opening p(x0)=a255", "data/sound/e7/slide6-3a.mp3")
-        scene.play(FadeOut(self.vector, self.rectangles_values, self.indices, self.dot1, self.dot2,
+        scene.play(FadeOut(self.vector, self.rectangles_values, self.dot1, self.dot2,
                            self.opening__1, self.opening__2, self.polynomial2, self.polynomial3), run_time=1)
         
         self.new_subsection(scene, "p(xi)-ai=0", "data/sound/e7/slide6-4.mp3")

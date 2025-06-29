@@ -21,7 +21,7 @@ class MerkleVerkleTable(VGroup):
         ]
 
         ipa_values = [
-            "IPA vector commitment",
+            "IPA commitment",
             "~4",
             "~600 B",
             "~72 kB",

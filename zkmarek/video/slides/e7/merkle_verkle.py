@@ -1,6 +1,6 @@
 from manim import (FadeIn, Text, UP, FadeOut, Create, RIGHT, LEFT, DOWN, Brace, Indicate, 
                    MathTex, Write, TransformMatchingShapes, Tex)
-from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR
+from zkmarek.video.constant import PRIMARY_FONT, PRIMARY_COLOR, SECONDARY_COLOR
 from zkmarek.video.slides.common.slide_base import SlideBase
 
 from zkmarek.video.slides.e6.proof_sizes import ProofSize
@@ -51,9 +51,16 @@ class MerkleVerkle(SlideBase):
         self.multiproof_ipa = MathTex(r"\texttt{IPA: } 2256\times \texttt{32 B}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN).shift(RIGHT* 2)
         self.multiproof_kzg = MathTex(r"\texttt{KZG: } 2256\times \texttt{48 B}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN).shift(LEFT* 2)
     
-        self.multiproof_vs_commitments_IPA = MathTex(r"\texttt{512 B}<<\texttt{72 kB}", color = PRIMARY_COLOR, font_size = 35).next_to(self.multiproof_ipa, DOWN, buff=0.0)
-        self.multiproof_vs_commitments_KZG = MathTex(r"\texttt{48 B}<<\texttt{109 kB}", color = PRIMARY_COLOR, font_size = 35).next_to(self.multiproof_kzg, DOWN, buff=0.0)
-
+        self.multiproof_vs_commitments_IPA = MathTex(r"\texttt{512 B}<<\texttt{2256 * 48 B}", color = PRIMARY_COLOR, font_size = 35).next_to(self.multiproof_ipa, DOWN, buff=0.0)
+        self.multiproof_vs_commitments_KZG = MathTex(r"\texttt{48 B}<<\texttt{2256 * 32 B}", color = PRIMARY_COLOR, font_size = 35).next_to(self.multiproof_kzg, DOWN, buff=0.0)
+        
+        self.thousand_values = MathTex(r"\texttt{1000 values}\rightarrow \texttt{1000 parent commitments}", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN, buff=0.5)
+        self.verkle_path = MathTex(r"\texttt{VerkleProof}({{C_0}}, {{C_1}}, {{C_2}}, {{C_3}}, {{...}}, {{\pi}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN, buff=0.5)
+        self.verkle_path_2256 = MathTex(r"\texttt{VerkleProof}({{C_0}}, {{C_1}}, {{C_2}}, {{C_3}}, {{...}}, {{C_{2255}}}, {{\pi}})", color = PRIMARY_COLOR, font_size = 35).next_to(self.table, DOWN, buff=0.5)
+        self.kzg_size_brace = Brace(self.verkle_path_2256[3], DOWN, buff=0.1).set_color(PRIMARY_COLOR)
+        self.kzg_size_label = MathTex(r"\texttt{KZG: 48 B}", color=PRIMARY_COLOR, font_size=35).next_to(self.kzg_size_brace, DOWN, buff=0.1)
+        self.ipa_size_label = MathTex(r"\texttt{IPA: 32 B}", color=PRIMARY_COLOR, font_size=35).next_to(self.kzg_size_brace, DOWN, buff=0.1)
+        
     def animate_in(self, scene):
         self.new_subsection(scene, "depth -MT", "data/sound/e7/slide8-1.mp3")
         scene.play(FadeIn(self.title_label))
@@ -112,17 +119,27 @@ class MerkleVerkle(SlideBase):
         scene.play(Indicate(self.table.kzg_col[2]), run_time=1  )
         
         self.new_subsection(scene, "4 level VT", "data/sound/e7/slide8-9.mp3")
+        scene.wait(3)
+        scene.play(Write(self.thousand_values), run_time=1)
+        scene.wait(3)
+        scene.play(FadeOut(self.thousand_values), FadeIn(self.verkle_path), run_time=1)
+        scene.play(self.verkle_path[11].animate.set_color(SECONDARY_COLOR))
+        scene.play(TransformMatchingShapes(self.verkle_path, self.verkle_path_2256), run_time=1)
+        
         self.new_subsection(scene, "1000 VP: 72 kB, 1000 VP: 109 kB", "data/sound/e7/slide8-9a.mp3")
-        scene.wait(4)
-        scene.play(Write(self.multiproof_ipa), run_time=1)
-        scene.play(Write(self.multiproof_kzg), run_time=1)
         scene.wait(2)
+        scene.play(Write(self.kzg_size_brace), Write(self.ipa_size_label), run_time=1)
+        scene.wait(1)
+        scene.play(FadeOut(self.ipa_size_label), Write(self.kzg_size_label), run_time=1)
+        scene.wait(1)
+        scene.play(FadeOut(self.kzg_size_label), FadeIn(self.ipa_size_label), run_time=1)
+        scene.wait(1)
         scene.play(Create(self.table.ipa_col[3]), run_time=1)
         scene.play(Create(self.table.kzg_col[3]), run_time=1)
         scene.wait(1.5)
         self.new_subsection(scene, "horizontals", "data/sound/e7/slide8-10.mp3")
         scene.wait(1)
-        scene.play(FadeOut(self.multiproof_ipa, self.multiproof_kzg), run_time=1)
+        scene.play(FadeOut(self.verkle_path_2256, self.ipa_size_label, self.kzg_size_brace), run_time=1)
         scene.play(Write(self.multiproof_vs_commitments_KZG), run_time=1)
         scene.play(Write(self.multiproof_vs_commitments_IPA), run_time=1)
         scene.wait(5)
