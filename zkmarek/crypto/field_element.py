@@ -57,6 +57,15 @@ class FieldElement:
     def __hash__(self):
         return hash((self.value, self.order))
 
+    def sqrt(self):
+        if 131 % 4 != 3:
+            raise NotImplementedError("sqrt only implemented for p ≡ 3 mod 4")
+
+        root = self ** ((137 + 1) // 4)
+        if (root * root) == self:
+            return root
+        else:
+            return None
     @staticmethod
     def random(p) -> "FieldElement":
         return FieldElement(secrets.randbelow(p), p)
@@ -67,6 +76,8 @@ class FieldElement:
             assert modulus is not None
             return FieldElement(other, modulus)
         return other
+
+
 
 
 FieldLike = Union[int, FieldElement]

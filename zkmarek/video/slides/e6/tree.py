@@ -1,5 +1,6 @@
 from manim import VGroup, DOWN, Text, RoundedRectangle, RIGHT, StealthTip, Arrow, DashedVMobject, UP
 from zkmarek.video.constant import BACKGROUND_COLOR, PRIMARY_COLOR, PRIMARY_FONT, HIGHLIGHT_COLOR
+
 class Node(VGroup):
     def __init__(self, value=None, font_size=32):
         super().__init__()
@@ -94,16 +95,6 @@ class MerkleTree(VGroup):
                         self.add(arrow)
 
     def get_node(self, level_idx, node_idx):
-        """
-        Retrieve a node at a specific level and index.
-
-        Parameters:
-            level_idx (int): The level of the node (0 for root, and so on).
-            node_idx (int): The index of the node at the given level (0 for leftmost node).
-
-        Returns:
-            Node: The specified node.
-        """
         if level_idx >= self.num_levels or node_idx >= len(self.nodes[level_idx]):
             raise IndexError("Invalid level or node index.")
         return self.nodes[level_idx][node_idx]

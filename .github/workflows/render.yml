@@ -49,5 +49,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Movie HQ
-        path: media/videos/main/1080p60/Episode6.mp4
+        path: media/videos/main/1080p60/Episode7.mp4
         retention-days: 5

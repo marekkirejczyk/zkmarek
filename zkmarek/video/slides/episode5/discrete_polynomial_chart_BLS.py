@@ -1,8 +1,8 @@
 from manim import Axes, Dot, VGroup, TexTemplate, Tex, DashedLine, GrowFromPoint, Line, MathTex
 from zkmarek.crypto.ec_affine import ECAffine
 from zkmarek.crypto.weierstrass_curve import BLS12381
-from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR
-
+from zkmarek.video.constant import SECONDARY_COLOR, PRIMARY_COLOR, HIGHLIGHT_COLOR
+from zkmarek.crypto.field_element import FieldElement
 
 class DotOnCurve(Dot):
     coords: ECAffine
@@ -17,11 +17,6 @@ class DotOnCurve(Dot):
         
 class PolynomialOnCurve(VGroup):
     def __init__(self, curve=BLS12381, dot_color=SECONDARY_COLOR, include_numbers = True, label = None):
-        """
-        Initialize the PolynomialOnCurve visualization.
-        :param curve: WeierstrassCurve instance (e.g., BLS12381)
-        :param dot_color: The color of the dots representing points
-        """
         super().__init__()
         self.curve = curve
         self.dots = []
@@ -62,29 +57,40 @@ class PolynomialOnCurve(VGroup):
             dot.set_z_index(10, family=True)
             self.dots.append(dot)
             self.add(dot)
+                
+    def get_point(self, x: FieldElement, sgn: int = 0):
+        point = ECAffine.from_x(x.value, sgn, self.curve)
 
-    def animate_create_vertical_line(self, scene, x, y_top):
+        if point is None:
+            return None 
+
+        dot = Dot(self.ax.c2p(float(point.x.value), float(point.y.value)), color=HIGHLIGHT_COLOR)
+        dot.set_z_index(10, family=True)
+        return dot
+
+
+
+    def animate_create_vertical_line(self, scene, x, y_top, run_time=1):
         s = self.ax.c2p(x, -1)
         e = self.ax.c2p(x, y_top)
         line = Line(s, e, color=SECONDARY_COLOR, z_index=0)
-        scene.play(GrowFromPoint(line, point=s))
+        scene.play(GrowFromPoint(line, point=s), run_time=run_time)
         return line
 
-    def animate_create_horizontal_line(self, scene, y, x_left, x_right):
+    def animate_create_horizontal_line(self, scene, y, x_left, x_right, run_time=1):
         s = self.ax.c2p(x_left, y)
         e = self.ax.c2p(x_right, y)
         line = DashedLine(s, e, color=SECONDARY_COLOR, z_index=0)
-        scene.play(GrowFromPoint(line, point=s))
-        scene.wait(1)
+        scene.play(GrowFromPoint(line, point=s), run_time=run_time)
         return line
     
     def add_xaxis_label(self, x, label):
         label = MathTex(label, color=PRIMARY_COLOR)
-        label.move_to(self.ax.coords_to_point(x, -3))
+        label.move_to(self.ax.coords_to_point(x, -9))
         self.add(label)
         return label
     
     def add_yaxis_label(self, y, label):
         label = MathTex(label, color=PRIMARY_COLOR)
-        label.move_to(self.ax.coords_to_point(-5.5, y))
+        label.move_to(self.ax.coords_to_point(-9, y))
         self.add(label)
