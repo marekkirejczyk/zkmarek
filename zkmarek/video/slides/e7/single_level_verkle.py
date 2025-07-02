@@ -216,7 +216,7 @@ class SingleLevelVerkleTree(SlideBase):
         self.blob.target.shift(DOWN*4)
         scene.wait(2)
         scene.play(MoveToTarget(self.blob, rate_func = rate_functions.ease_out_bounce), run_time=2)
-        scene.wait(2)
+        scene.wait(4)
         self.remaining_vector_values = VGroup(self.vector_values[0][0:5], self.vector_values[1][0:5],
                                               self.vector_values[0][11:], self.vector_values[1][11:],)
         

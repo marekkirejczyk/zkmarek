@@ -283,7 +283,7 @@ class Proofs(SlideBase):
                 font_size=35,
             )
             .to_edge(RIGHT)
-            .shift(UP * 1 + RIGHT * 0.01)
+            .shift(UP * 1 + RIGHT * 0.1)
         )
 
         self.verify_function2_commitment = (
@@ -292,8 +292,8 @@ class Proofs(SlideBase):
                 r"a_{255}=85,\; ",
                 r"C_0^2,\; ",
                 r"C_0^1,\;",
-                r"C_0^0\;",
-                r"\pi^0\;",
+                r"C_0^0,\;",
+                r"\pi^0,\;",
                 r"\pi^1",
                 r")",
                 font_size=35,
